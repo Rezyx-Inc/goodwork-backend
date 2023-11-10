@@ -1,0 +1,297 @@
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel Book';
+  src: url('../font/neue_kabel/NeueKabel-Book.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel Book';
+  src: url('../font/neue_kabel/NeueKabel-BookItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-ExtraBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Kabel';
+  src: url('../font/neue_kabel/NeueKabel-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+
+
+body,
+button,
+input,
+optgroup,
+select,
+textarea{
+  font-family: 'Neue Kabel';
+  letter-spacing: 0.03em;
+}
+.fs-10{
+  font-size: 10px !important;
+}
+.fs-12{
+  font-size: 12px !important;
+} 
+.fs-14{
+  font-size: 14px !important;
+} 
+.fs-16{
+  font-size: 16px !important;
+} 
+.fs-18{
+  font-size: 18px !important;
+}  
+.fs-20{
+  font-size: 20px !important;
+}  
+.fs-24{
+  font-size: 24px !important;
+} 
+.fs-30{
+  font-size: 30px !important;
+}
+.fs-32{
+  font-size: 32px !important;
+} 
+.fs-34{
+  font-size: 34px !important;
+} 
+.fs-36{
+  font-size: 36px !important;
+} 
+.fs-40{
+  font-size: 40px !important;
+} 
+.fs-48{
+  font-size: 48px !important;
+} 
+.fs-50{
+  font-size: 50px !important;
+} 
+.fs-60{
+  font-size: 60px !important;
+} 
+.fs-70{
+  font-size: 70px !important;
+}  
+.fw-400{
+  font-weight: 400 !important;
+}
+.fw-500{
+  font-weight: 500 !important;
+}
+.fw-600{
+  font-weight: 600 !important;
+}
+.fw-700{
+  font-weight: 700 !important;
+}
+.fw-normal{
+  font-weight: normal !important;
+}
+.fw-bold{
+  font-weight: bold !important;
+}
+.text_black{
+  color: #000000 !important;
+}
+.text_dark{
+  color: #071B20 !important;
+}
+.text_light{
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+.text_semi_light{
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.text_white{
+  color: #FFFFFF !important;
+}
+.text_detail_color{
+  color: #B5649E !important;
+}
+.text_blue{
+  color: #006BC9 !important;
+}
+.text_detail_color_light{
+  color: #FFEDEE !important;
+}
+.text_darkpurple{
+  color: #3D2C39 !important;
+}
+.text_red{
+  color: #CE1124 !important;
+}
+
+
+.text_success{
+  color: #98F045 !important;
+}
+.text_warn_sussess{
+  color: #D5FC44 !important;
+}
+.text_warning{
+  color: #FBD50C !important;
+}
+.text_banana_flash{
+  color: #EBFB02 !important;
+}
+.text_carmine_pink{
+  color:#ed4f48 !important;
+}
+.text_coppersmith{
+  color:#D88C40 !important;
+}
+.text_cappuccino_bombe{
+  color: #B68C81 !important;
+}
+.text_aquarius{
+  color: #3CB9D6 !important;
+}
+.lh-1{
+  line-height: 1;
+}
+.lh-1-2{
+  line-height: 1.2;
+}
+.lh-1-5{
+  line-height: 1.5;
+}
+.lh-1-7{
+  line-height: 1.7;
+}
+.lh-2{
+  line-height: 2;
+}
+.text-justify{
+  text-align: justify !important;
+}
