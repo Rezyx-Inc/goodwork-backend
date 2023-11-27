@@ -1,0 +1,25 @@
+name: Trello Integretion
+
+on:
+  pull_request:
+    types: [opened, closed]
+    branches: [ main ]
+  issues:
+    types: [opened, reopened]
+
+jobs:
+  create_trello_card: 
+    name: Create Trello Card
+    runs-on: ubuntu-latest
+    steps:
+    - name: Do github-trello-actions
+      id: do-github-trello-actions
+      uses: isobecci/github-trello-actions@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
+        TRELLO_API_TOKEN: ${{ secrets.TRELLO_API_TOKEN }}
+        TRELLO_BOARD_ID: ${{ secrets.TRELLO_BOARD_ID }}
+        TRELLO_TODO_LIST_ID: ${{ secrets.TRELLO_TODO_LIST_ID }}
+        TRELLO_DOING_LIST_ID: ${{ secrets.TRELLO_DOING_LIST_ID }}
+        TRELLO_DONE_LIST_ID: ${{ secrets.TRELLO_DONE_LIST_ID }}
