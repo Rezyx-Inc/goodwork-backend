@@ -4,7 +4,7 @@
 @section('form')
 <form action="{{route('my-profile')}}" class="redirect-after-submit">
     <div class="ss-persnl-frm-hed">
-        <p><span><img src="{{URL::asset('public/frontend/img/my-per--con-user.png')}}" /></span>Professional Information</p>
+        <p><span><img src="{{URL::asset('frontend/img/my-per--con-user.png')}}" /></span>Professional Information</p>
         <div class="progress">
             <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>

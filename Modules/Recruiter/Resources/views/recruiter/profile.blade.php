@@ -14,9 +14,9 @@
                         <form method="post" action="" id="edit-profile-form" class="ss-rec-profl-img-dv">
                             <input type="file" name="profile_picture" id="imgInp" accept=".jpg,.jpeg,.png" hidden>
                             <div class="ss-acount-prof">
-                                <img src="{{URL::asset('public/images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
+                                <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
                                 <div class="ss-profil-camer-img">
-                                    <a href="javascript:void(0)" onclick="click_on_file()"><img src="{{URL::asset('public/frontend/img/profile-camera.png')}}" /></a>
+                                    <a href="javascript:void(0)" onclick="click_on_file()"><img src="{{URL::asset('frontend/img/profile-camera.png')}}" /></a>
                                 </div>
                             </div>
                             <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
@@ -24,16 +24,16 @@
 
                         <ul class="nav nav-tabs ss-profile-btn-div" id="myTab" role="tablist">
                             <li class="nav-item w-100" role="presentation">
-                                <button class="employer-btn-click active" id="employers-tab" data-bs-toggle="tab" data-bs-target="#employers" type="button" role="tab" aria-controls="employers" aria-selected="true"><img src="{{URL::asset('public/recruiter/assets/images/user.png')}}" /> Employers</button>
+                                <button class="employer-btn-click active" id="employers-tab" data-bs-toggle="tab" data-bs-target="#employers" type="button" role="tab" aria-controls="employers" aria-selected="true"><img src="{{URL::asset('recruiter/assets/images/user.png')}}" /> Employers</button>
                             </li>
                             <li class="nav-item w-100" role="presentation">
-                                <button class="employer-btn-click" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="false"><img src="{{URL::asset('public/recruiter/assets/images/user.png')}}" /> Account Info</button>
+                                <button class="employer-btn-click" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="false"><img src="{{URL::asset('recruiter/assets/images/user.png')}}" /> Account Info</button>
                             </li>
                             <li class="nav-item w-100" role="presentation">
-                                <button class="employer-btn-click" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false"><img src="{{URL::asset('public/recruiter/assets/images/user.png')}}" /> About Me</button>
+                                <button class="employer-btn-click" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false"><img src="{{URL::asset('recruiter/assets/images/user.png')}}" /> About Me</button>
                             </li>
                             <li class="nav-item w-100" role="presentation">
-                                <button class="employer-btn-click" id="help-tab" data-bs-toggle="tab" data-bs-target="#help" type="button" role="tab" aria-controls="help" aria-selected="false"><img src="{{URL::asset('public/recruiter/assets/images/user.png')}}" /> Help & Support</button>
+                                <button class="employer-btn-click" id="help-tab" data-bs-toggle="tab" data-bs-target="#help" type="button" role="tab" aria-controls="help" aria-selected="false"><img src="{{URL::asset('recruiter/assets/images/user.png')}}" /> Help & Support</button>
                             </li>
                         </ul>
                     </div>
@@ -119,14 +119,14 @@
                                 <h6>About Me</h6>
                                 <ul class="ss-rec-abt-hi-my-slf">
                                     <li>
-                                        <h5>Hi There <img src="{{URL::asset('public/recruiter/assets/images/hand-img.png')}}" /></h5>
+                                        <h5>Hi There <img src="{{URL::asset('recruiter/assets/images/hand-img.png')}}" /></h5>
                                         <p>Myself {{ $user->first_name }} {{ $user->last_name }}.</p>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0)" class="ss-rec-abt-me-edit-icn" onclick="editprofile()">
-                                            <img src="{{URL::asset('public/recruiter/assets/images/rec-profile-edit-icon.png')}}" />
+                                            <img src="{{URL::asset('recruiter/assets/images/rec-profile-edit-icon.png')}}" />
                                         </a>
-                                        <img src="{{URL::asset('public/images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
+                                        <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
                                     </li>
                                 </ul>
                                 <div id="personal-info">
@@ -176,7 +176,7 @@
                                                 <li>
                                                     <p>{{ $value }}</p>
                                                 </li>
-                                                <li><a href="javascript:void(0)" onclick="removeQualities('{{ $value }}')"><img src="{{URL::asset('public/recruiter/assets/images/delete-blue-icon.png')}}" /></a></li>
+                                                <li><a href="javascript:void(0)" onclick="removeQualities('{{ $value }}')"><img src="{{URL::asset('recruiter/assets/images/delete-blue-icon.png')}}" /></a></li>
                                             </ul>
                                             @endforeach
                                             @else
@@ -196,10 +196,10 @@
                                     <!-- <div class="ss-rec-abt-scl-dv">
                                         <h4>Explore us on social media</h4>
                                         <ul>
-                                            <li><a href="#"><img src="{{URL::asset('public/recruiter/assets/images/Facebook.png')}}" /></a></li>
-                                            <li><a href="#"><img src="{{URL::asset('public/recruiter/assets/images/instagram.png')}}" /></a></li>
-                                            <li><a href="#"><img src="{{URL::asset('public/recruiter/assets/images/twitter.png')}}" /></a></li>
-                                            <li><a href="#"><img src="{{URL::asset('public/recruiter/assets/images/linkedin.png')}}" /></a></li>
+                                            <li><a href="#"><img src="{{URL::asset('recruiter/assets/images/Facebook.png')}}" /></a></li>
+                                            <li><a href="#"><img src="{{URL::asset('recruiter/assets/images/instagram.png')}}" /></a></li>
+                                            <li><a href="#"><img src="{{URL::asset('recruiter/assets/images/twitter.png')}}" /></a></li>
+                                            <li><a href="#"><img src="{{URL::asset('recruiter/assets/images/linkedin.png')}}" /></a></li>
                                         </ul>
                                     </div> -->
                                     <!-- </div> -->
@@ -270,7 +270,7 @@
 
                                 <div class="ss-help-pop-sprt-text-dv">
                                     <ul>
-                                        <li><img src="{{URL::asset('public/recruiter/assets/images/help-logo.png')}}" /></li>
+                                        <li><img src="{{URL::asset('recruiter/assets/images/help-logo.png')}}" /></li>
                                         <li><span id="issuereplydate">Aug 20</span></li>
                                     </ul>
                                     <h6 id="issuereplysubject">Login(Subject)</h6>

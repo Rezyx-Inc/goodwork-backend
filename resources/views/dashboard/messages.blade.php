@@ -13,7 +13,7 @@
 
             <div class="ss-mesg-sml-div">
               <ul class="ss-msg-user-ul-dv">
-                <li><img src="{{URL::asset('public/frontend/img/message-img1.png')}}" /></li>
+                <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
                 <li>
                   <h5>Recruiter #01</h5>
                   <p>Check the prescription</p>
@@ -28,7 +28,7 @@
 
              <div class="ss-mesg-sml-div">
               <ul class="ss-msg-user-ul-dv">
-                <li><img src="{{URL::asset('public/frontend/img/message-img2.png')}}" /></li>
+                <li><img src="{{URL::asset('frontend/img/message-img2.png')}}" /></li>
                 <li>
                   <h5>Recruiter #02</h5>
                   <p>Check the prescription</p>
@@ -44,7 +44,7 @@
 
              <div class="ss-mesg-sml-div">
               <ul class="ss-msg-user-ul-dv">
-                <li><img src="{{URL::asset('public/frontend/img/message-img3.png')}}" /></li>
+                <li><img src="{{URL::asset('frontend/img/message-img3.png')}}" /></li>
                 <li>
                   <h5>Recruiter #03</h5>
                   <p>Check the prescription</p>
@@ -59,7 +59,7 @@
 
              <div class="ss-mesg-sml-div">
               <ul class="ss-msg-user-ul-dv">
-                <li><img src="{{URL::asset('public/frontend/img/message-img4.png')}}" /></li>
+                <li><img src="{{URL::asset('frontend/img/message-img4.png')}}" /></li>
                 <li>
                   <h5>Recruiter #04</h5>
                   <p>Check the prescription</p>
@@ -79,7 +79,7 @@
           <div class="ss-msg-rply-mn-div">
             <div class="ss-msg-rply-profile-sec">
               <ul>
-                <li><img src="{{URL::asset('public/frontend/img/msg-rply-box-img.png')}}" /></li>
+                <li><img src="{{URL::asset('frontend/img/msg-rply-box-img.png')}}" /></li>
                 <li>
                   <h6>Recruiter #01</h6>
                   <p>Travel Nurse CRNA/.....</p>
@@ -105,7 +105,7 @@
 
             <div class="ss-rply-msg-input">
               <input type="text" id="fname" name="fname" placeholder="Express yourself here!">
-              <button type="text"><img src="{{URL::asset('public/frontend/img/msg-rply-btn.png')}}" /></button>
+              <button type="text"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
             </div>
           </div>
         </div>

@@ -54,8 +54,26 @@ class SiteController extends Controller {
     /** about us page */
     public function about_us(Request $request) {
         $data = [];
-        $data['model'] = Cms::where('slug','about-us')->first();
+        // $data['model'] = Cms::where('slug','about-us')->first();
         return view('site.about_us', $data);
+    }
+
+    /** for-employers page */
+
+    public function for_employers(Request $request){
+        return view('site.for_employers');
+    }
+
+    /** for-employers page */
+
+    public function for_recruiters(Request $request){
+        return view('site.for_recruiters');
+    }
+
+    /** explore-jobs page */
+
+    public function explore_jobs(Request $request){
+        return view('site.explore_jobs');
     }
 
     /** contact us page */

@@ -20,16 +20,16 @@
             <h4>{{$model->job_name}}</h4>
             <h6>{{ $model->facility->name ?? 'NA' }}</h6>
             <ul>
-              <li><a href="javascript:void(0)"><img src="{{URL::asset('public/frontend/img/location.png')}}"> {{$model->job_city}}, {{$model->job_state}}</a></li>
-              <li><a href="javascript:void(0)"><img src="{{URL::asset('public/frontend/img/calendar.png')}}">  {{$model->preferred_assignment_duration}} wks</a></li>
-              <li><a href="javascript:void(0)"><img src="{{URL::asset('public/frontend/img/dollarcircle.png')}}">  {{$model->weekly_pay}}/wk</a></li>
+              <li><a href="javascript:void(0)"><img src="{{URL::asset('frontend/img/location.png')}}"> {{$model->job_city}}, {{$model->job_state}}</a></li>
+              <li><a href="javascript:void(0)"><img src="{{URL::asset('frontend/img/calendar.png')}}">  {{$model->preferred_assignment_duration}} wks</a></li>
+              <li><a href="javascript:void(0)"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}">  {{$model->weekly_pay}}/wk</a></li>
             </ul>
             <h5>Recently Added</h5>
             <a href="javascript:void(0)" data-id="{{$model->id}}" onclick="save_jobs(this)" class="ss-jb-prfl-save-ico">
                 @if($jobSaved->check_if_saved($model->id))
-                <img src="{{URL::asset('public/frontend/img/bookmark.png')}}" />
+                <img src="{{URL::asset('frontend/img/bookmark.png')}}" />
                 @else
-                <img src="{{URL::asset('public/frontend/img/job-icon-bx-Vector.png')}}" />
+                <img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" />
                 @endif
             </a>
           </div>
@@ -44,7 +44,7 @@
     <div class="ss-job-apply-on-tx-bx-hed-dv">
       <ul>
       <li><p>Recruiter</p></li>
-      <li><img src="{{URL::asset('public/images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li>
+      <li><img src="{{URL::asset('images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li>
     </ul>
 
     <ul>

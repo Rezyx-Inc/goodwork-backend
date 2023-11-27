@@ -8,10 +8,10 @@
           <div class="ss-login-work-logo-div">
             <h4>What’s your <span>role?</span></h4>
             <div class="ss-login-logo-dv">
-              <img src="{{URL::asset('public/landing/img/login-logo.png')}}" />
+              <img src="{{URL::asset('landing/img/login-logo.png')}}" />
             </div>
 
-            <a href="{{route('/')}}"><img src="{{URL::asset('public/landing/img/logo.png')}}" /></a>
+            <a href="{{route('/')}}"><img src="{{URL::asset('landing/img/logo.png')}}" /></a>
           </div>
         </div>
 

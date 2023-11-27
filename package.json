@@ -24,7 +24,10 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@vue/compiler-sfc": "^3.3.9",
         "update": "^0.7.4",
-        "vuelidate": "^0.7.5"
+        "vue-loader": "^17.3.1",
+        "vuelidate": "^0.7.5",
+        "webpack": "^4.47.0"
     }
 }

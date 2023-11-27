@@ -4,7 +4,7 @@
 @section('form')
 <form method="post" action="{{route('certification')}}" class="no-redirect-form">
     <div class="ss-persnl-frm-hed">
-        <p><span><img src="{{URL::asset('public/frontend/img/my-per--con-key.png')}}" /></span>Certifications</p>
+        <p><span><img src="{{URL::asset('frontend/img/my-per--con-key.png')}}" /></span>Certifications</p>
         <div class="progress">
             <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>

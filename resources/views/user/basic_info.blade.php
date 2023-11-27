@@ -4,7 +4,7 @@
 @section('form')
 <form method="post" action="{{route('my-profile')}}" id="basic-info-form">
     <div class="ss-persnl-frm-hed">
-      <p><span><img src="{{URL::asset('public/frontend/img/my-per--con-user.png')}}" /></span>Professional Information</p>
+      <p><span><img src="{{URL::asset('frontend/img/my-per--con-user.png')}}" /></span>Professional Information</p>
       <div class="progress">
          <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
      </div>
@@ -31,12 +31,12 @@
             {{-- <ul>
                 <li>ICU</li>
                 <li>4 Years</li>
-                <li><button><img src="{{URL::asset('public/frontend/img/delete-img.png')}}" /></button></li>
+                <li><button><img src="{{URL::asset('frontend/img/delete-img.png')}}" /></button></li>
             </ul>
             <ul>
                 <li>L&D</li>
                 <li>2 Years</li>
-                <li><button><img src="{{URL::asset('public/frontend/img/delete-img.png')}}" /></button></li>
+                <li><button><img src="{{URL::asset('frontend/img/delete-img.png')}}" /></button></li>
             </ul> --}}
         </div>
        <ul>
@@ -173,7 +173,7 @@ function list_specialities()
             str += '<ul>';
             str += '<li>'+key+'</li>';
             str += '<li>'+value+' Years</li>';
-            str += '<li><button type="button" data-key="'+key+'" onclick="remove_speciality(this)"><img src="'+full_path+'public/frontend/img/delete-img.png'+'" /></button></li>';
+            str += '<li><button type="button" data-key="'+key+'" onclick="remove_speciality(this)"><img src="'+full_path+'frontend/img/delete-img.png'+'" /></button></li>';
             str += '</ul>';
         }
     }

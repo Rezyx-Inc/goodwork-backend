@@ -11,13 +11,13 @@
             <div class="ss-my-profil-div">
                 <h2>My <span class="ss-pink-color">Profile</span></h2>
                 <div class="ss-my-profil-img-div">
-                    <img src="{{URL::asset('public/images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/>
+                    <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/>
                     <h4>{{$user->first_name}}</h4>
                     <p>{{$model->id}} </p>
                 </div>
                 <div class="ss-profil-complet-div">
                     <ul>
-                        <li><img src="{{URL::asset('public/frontend/img/progress.png')}}" /></li>
+                        <li><img src="{{URL::asset('frontend/img/progress.png')}}" /></li>
                         <li>
                         <h6>Profile Incomplete</h6>
                         <p>You're just a few percent away from revenue. Complete your profile and get 5%.</p>
@@ -33,9 +33,9 @@
                             <label for="option-1" class="option option-1">
                                 <div class="dot"></div>
                                 <ul>
-                                    <li><img src="{{URL::asset('public/frontend/img/my-per--con-user.png')}}" /></li>
+                                    <li><img src="{{URL::asset('frontend/img/my-per--con-user.png')}}" /></li>
                                     <li><p>Professional Information </p></li>
-                                    <li><span class="img-white"><img src="{{URL::asset('public/frontend/img/arrowcircleright.png')}}" /></span></li>
+                                    <li><span class="img-white"><img src="{{URL::asset('frontend/img/arrowcircleright.png')}}" /></span></li>
                                 </ul>
                             </label>
                         </div>
@@ -45,9 +45,9 @@
                             <label for="option-2" class="option option-2">
                                 <div class="dot"></div>
                                 <ul>
-                                    <li><img src="{{URL::asset('public/frontend/img/my-per--con-vaccine.png')}}" /></li>
+                                    <li><img src="{{URL::asset('frontend/img/my-per--con-vaccine.png')}}" /></li>
                                     <li><p>Vaccinations & Immunizations</p> </li>
-                                        <li><span class="img-white"><img src="{{URL::asset('public/frontend/img/arrowcircleright.png')}}" /></span></li>
+                                        <li><span class="img-white"><img src="{{URL::asset('frontend/img/arrowcircleright.png')}}" /></span></li>
                                 </ul>
                             </label>
                         </div>
@@ -57,9 +57,9 @@
                             <label for="option-3" class="option option-3">
                             <div class="dot"></div>
                                 <ul>
-                                    <li><img src="{{URL::asset('public/frontend/img/my-per--con-refren.png')}}" /></li>
+                                    <li><img src="{{URL::asset('frontend/img/my-per--con-refren.png')}}" /></li>
                                     <li><p>References</p> </li>
-                                    <li><span class="img-white"><img src="{{URL::asset('public/frontend/img/arrowcircleright.png')}}" /></span></li>
+                                    <li><span class="img-white"><img src="{{URL::asset('frontend/img/arrowcircleright.png')}}" /></span></li>
                                 </ul>
                             </label>
                         </div>
@@ -69,9 +69,9 @@
                             <label for="option-4" class="option option-4">
                             <div class="dot"></div>
                                 <ul>
-                                    <li><img src="{{URL::asset('public/frontend/img/my-per--con-key.png')}}" /></li>
+                                    <li><img src="{{URL::asset('frontend/img/my-per--con-key.png')}}" /></li>
                                     <li><p>Certifications</p> </li>
-                                    <li><span class="img-white"><img src="{{URL::asset('public/frontend/img/arrowcircleright.png')}}" /></span></li>
+                                    <li><span class="img-white"><img src="{{URL::asset('frontend/img/arrowcircleright.png')}}" /></span></li>
                                 </ul>
                             </label>
                         </div>

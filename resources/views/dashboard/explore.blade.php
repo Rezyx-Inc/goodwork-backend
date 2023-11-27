@@ -5,7 +5,7 @@
 <main style="padding-top: 130px" class="ss-main-body-sec">
     <div class="container">
 
-      <!--------Explore Jobs------->
+      <!--------Explore Jobs ------->
 
     <div class="ss-dsh-explre-jb-mn-dv">
       <div class="row">
@@ -200,7 +200,7 @@
               <div class="ss-dash-profile-4-bx-dv">
                 <div class="ss-job-prfle-sec">
             <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
+            <h4>Manager CRNA - Anesthesia</h4>   
             <h6>Medical Solutions Recruiter</h6>
             <ul>
               <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>

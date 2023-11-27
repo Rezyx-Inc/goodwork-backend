@@ -45,13 +45,13 @@
                         <h4>{{$j->job_name}}</h4>
                         <h6>{{$j->facility->name ?? 'NA'}}</h6>
                         <ul>
-                        <li><a href="#"><img src="{{URL::asset('public/frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
-                        <li><a href="#"><img src="{{URL::asset('public/frontend/img/calendar.png')}}"> {{$j->preferred_assignment_duration}} wks</a></li>
-                        <li><a href="#"><img src="{{URL::asset('public/frontend/img/dollarcircle.png')}}"> ${{$j->weekly_pay}}/wk</a></li>
+                        <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
+                        <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> {{$j->preferred_assignment_duration}} wks</a></li>
+                        <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> ${{$j->weekly_pay}}/wk</a></li>
                         </ul>
                         <h5>Recently Added</h5>
                         @if($type == 'saved')
-                        <a  href="javascript:void(0)" data-id="{{$j->id}}" onclick="save_jobs(this, true)" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('public/frontend/img/bookmark.png')}}" /></a>
+                        <a  href="javascript:void(0)" data-id="{{$j->id}}" onclick="save_jobs(this, true)" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/bookmark.png')}}" /></a>
                         @endif
                     </div>
                     @empty

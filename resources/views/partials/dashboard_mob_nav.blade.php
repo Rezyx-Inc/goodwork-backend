@@ -6,7 +6,7 @@ $user = auth()->guard('frontend')->user();
     <div class="logo-sec">
         <div class="clearfix d-flex">
             <div class="col-xs-6 col-4">
-                <a href="{{route('/')}}"><img src="{{asset('public/frontend/dashboard/images/logo.png')}}" alt="" class="img-responsive"></a>
+                <a href="{{route('/')}}"><img src="{{asset('frontend/dashboard/images/logo.png')}}" alt="" class="img-responsive"></a>
             </div>
             <div class="col-xs-6 col-8 text-right">
                 <div class="mobtop">
@@ -60,7 +60,7 @@ $user = auth()->guard('frontend')->user();
                                 <div class="dropdown dash-drop">
                                     <span data-toggle="dropdown" aria-expanded="false">
                                         <img class="img-responsive rounded-circle headr-prof-pic"
-                                             src="{{ asset('public/uploads/frontend/profile_picture/thumb/'.$user->profile_picture)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="profile-picture">
+                                             src="{{ asset('uploads/frontend/profile_picture/thumb/'.$user->profile_picture)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="profile-picture">
                                         <h1>{{$user->first_name}}<i class="icofont-caret-down"></i></h1>
                                     </span>
                                     <ul class="dropdown-menu dropdown-menu-right nw-drp alignarea">

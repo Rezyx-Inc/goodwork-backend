@@ -25,11 +25,11 @@
         <div class="col-lg-6">
           <div class="ss-login-work-logo-div">
             <div class="ss-login-logo-dv">
-              <img src="{{URL::asset('public/landing/img/admin-login-logo.png')}}" />
+              <img src="{{URL::asset('landing/img/admin-login-logo.png')}}" />
             </div>
             <p>Building a better way for healthcare workers & employers to find each other</p>
 
-            <a href="{{route('/')}}"><img src="{{URL::asset('public/landing/img/logo.png')}}" /></a>
+            <a href="{{route('/')}}"><img src="{{URL::asset('landing/img/logo.png')}}" /></a>
           </div>
         </div>
 

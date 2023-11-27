@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-5">
                 <div class="ss-foot-log-div">
-                    <a href="#"><img src="{{URL::asset('public/landing/img/footer-logo.png')}}" /></a>
+                    <a href="#"><img src="{{URL::asset('landing/img/footer-logo.png')}}" /></a>
                     <p>Lorem ipsum dolor sit amet consectetur. Scelerisque vitae et vitae suspendisse vulputate vestibulum tortor nisl cursus. Egestas nulla in </p>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <div class="ss-foot-scl-sec">
                     <h4>Contact Information</h4>
                     <ul class="ss-fot-env-sec">
-                        <li><img src="{{URL::asset('public/landing/img/footer-env-icon.png')}}" /></li>
+                        <li><img src="{{URL::asset('landing/img/footer-env-icon.png')}}" /></li>
                         <li><a href="mailto:goodwork@gmail.com">goodwork@gmail.com</a></li>
                     </ul>
 

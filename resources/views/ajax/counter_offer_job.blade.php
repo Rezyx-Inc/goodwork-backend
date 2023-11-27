@@ -1,7 +1,7 @@
 <!----------------jobs applay view details--------------->
 
 <div class="ss-counter-ofred-mn-div">
-    <h4><a href="javascript:void(0)" title="Back"  data-id="{{$model->id}}" data-type="offered" onclick="fetch_job_content(this)"><img src="{{URL::asset('public/frontend/img/counter-left-img.png')}}" /></a> Counter Offer</h4>
+    <h4><a href="javascript:void(0)" title="Back"  data-id="{{$model->id}}" data-type="offered" onclick="fetch_job_content(this)"><img src="{{URL::asset('frontend/img/counter-left-img.png')}}" /></a> Counter Offer</h4>
 
     <div class="ss-job-view-off-text-fst-dv">
         <p>On behalf of <a href="">Albus Percival , Hogwarts</a> would like to offer <a href="#">GWJ234065</a> to <a href="#">James Bond</a> with the following terms. This offer is only available for the next <a hre="#">6 weeks:</a></p>
@@ -623,7 +623,7 @@ function list_elements(type)
                 str += '<li>';
                 str += '<p>'+value+'</p>';
                 str += '</li>';
-                str += '<li><a href="#" data-type="'+type+'" data-key="'+value+'" onclick="remove_element(this)"><img src="{{URL::asset('public/frontend/img/delete-img.png')}}"/></a></li>';
+                str += '<li><a href="#" data-type="'+type+'" data-key="'+value+'" onclick="remove_element(this)"><img src="{{URL::asset('frontend/img/delete-img.png')}}"/></a></li>';
                 str += '</ul>';
 
             });

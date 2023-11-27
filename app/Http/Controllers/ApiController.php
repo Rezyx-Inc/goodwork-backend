@@ -74,6 +74,9 @@ class ApiController extends Controller
         return hash_hmac('sha256', Str::random(40) . time(), config('app.key'));
     }
 
+
+    // we can use 
+
     public function timeAgo($time = NULL)
     {
         // Calculate difference between current

@@ -44,12 +44,12 @@
                         <h4>{{$j->job_name}}</h4>
                         <h6>Medical Solutions Recruiter</h6>
                         <ul>
-                        <li><a href="#"><img src="{{URL::asset('public/forntend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
-                        <li><a href="#"><img src="{{URL::asset('public/forntend/img/calendar.png')}}"> 10 wks</a></li>
-                        <li><a href="#"><img src="{{URL::asset('public/forntend/img/dollarcircle.png')}}"> 2500/wk</a></li>
+                        <li><a href="#"><img src="{{URL::asset('forntend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
+                        <li><a href="#"><img src="{{URL::asset('forntend/img/calendar.png')}}"> 10 wks</a></li>
+                        <li><a href="#"><img src="{{URL::asset('forntend/img/dollarcircle.png')}}"> 2500/wk</a></li>
                         </ul>
                         <h5>Recently Added</h5>
-                        <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('public/forntend/img/bookmark.png')}}" /></a>
+                        <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('forntend/img/bookmark.png')}}" /></a>
                     </div>
                     @endforelse
 

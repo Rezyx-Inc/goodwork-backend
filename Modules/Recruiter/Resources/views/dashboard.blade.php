@@ -11,19 +11,19 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ss-home-graph-div1">
-                        <img src="{{URL::asset('public/frontend/img/home-graph-1.png')}}" />
+                        <img src="{{URL::asset('frontend/img/home-graph-1.png')}}" />
                     </div>
                 </div>
 
                 <div class="col-lg-7">
                     <div class="ss-home-graph-div2">
-                        <img src="{{URL::asset('public/frontend/img/home-graph-2.png')}}" />
+                        <img src="{{URL::asset('frontend/img/home-graph-2.png')}}" />
                     </div>
                 </div>
 
                 <div class="col-lg-5">
                     <div class="ss-home-graph-div3">
-                        <img src="{{URL::asset('public/frontend/img/home-graph-3.png')}}" />
+                        <img src="{{URL::asset('frontend/img/home-graph-3.png')}}" />
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
             <div class="col-md-4">
                 <div class="ss-rec-start-rec-div-sec">
                     <h6>Start Posting Your Job Request</h6>
-                    <a href="{{ route('recruiter-application') }}"><img src="{{URL::asset('public/recruiter/assets/images/plus-icon.png')}}" /></a>
+                    <a href="{{ route('recruiter-application') }}"><img src="{{URL::asset('recruiter/assets/images/plus-icon.png')}}" /></a>
                 </div>
             </div>
         </div>

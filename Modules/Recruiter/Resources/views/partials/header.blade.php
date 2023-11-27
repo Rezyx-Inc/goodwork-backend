@@ -56,7 +56,7 @@ $user = auth()->guard('recruiter')->user();
           <!-- Avatar -->
           <li class="nav-item dropdown">
             <a class="ss-hed-user-log-sec nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-              <img src="{{URL::asset('public/frontend/img/profile-icon-img.png')}}" class="rounded-circle" height="40" alt="" loading="lazy" /> <span class="color-dark">
+              <img src="{{URL::asset('frontend/img/profile-icon-img.png')}}" class="rounded-circle" height="40" alt="" loading="lazy" /> <span class="color-dark">
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">My profile</a></li>

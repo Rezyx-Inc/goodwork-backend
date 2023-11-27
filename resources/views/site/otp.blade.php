@@ -2,7 +2,7 @@
 @section('mytitle', ' Otp page | Saas')
 @section('content')
 <section class="page_banner">
-<img class="page_banner_grid" src="{{asset('public/frontend/assets/images/images/page_point.png')}}" alt="">
+<img class="page_banner_grid" src="{{asset('frontend/assets/images/images/page_point.png')}}" alt="">
 </section>
 
 <section class="login_section">

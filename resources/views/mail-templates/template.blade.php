@@ -102,7 +102,7 @@
                                     <table style="margin-bottom: 20px;">
                                         <tr>
                                             <td>
-                                                <img width="200" height="" src="{{ url('public/images/goodworklogo.png') }}" alt="">
+                                                <img width="200" height="" src="{{ url('images/goodworklogo.png') }}" alt="">
                                             </td>
                                         </tr>
                                     </table>

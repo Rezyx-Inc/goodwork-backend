@@ -24,6 +24,7 @@ Route::prefix('recruiter')->group(function () {
         Route::post('recruiter-otp', ['uses' => 'RecruiterAuthController@submit_otp', 'as' => 'recruiter.otp']);
         Route::get('/signup', ['uses' => 'RecruiterAuthController@get_signup', 'as' => 'recruiter-signup']);
         Route::post('signup', ['uses' => 'RecruiterAuthController@post_signup', 'as' => 'recruiter.signup']);
+        
     });
     Route::middleware(['recruiter_logged_in'])->group(function () {
         /** Dashboard routes */

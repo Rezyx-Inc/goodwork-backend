@@ -22,13 +22,13 @@
         <div class="col-lg-6">
           <div class="ss-hm-baner-img-dv">
             <ul class="ss-ban-top-map-txt">
-              <li><img src="{{URL::asset('public/landing/img/banner-map-icon.png')}}" /></li>
+              <li><img src="{{URL::asset('landing/img/banner-map-icon.png')}}" /></li>
               <li><h5>Los Angeles, CA</h5></li>
             </ul>
-            <img src="{{URL::asset('public/landing/img/banner-image.png')}}" />
+            <img src="{{URL::asset('landing/img/banner-image.png')}}" />
 
             <ul class="ss-ban-top-map-txt2">
-              <li><img src="{{URL::asset('public/landing/img/banner-map-icon.png')}}" /></li>
+              <li><img src="{{URL::asset('landing/img/banner-map-icon.png')}}" /></li>
               <li><h5>Fredericksburg, VA</h5></li>
             </ul>
           </div>
@@ -53,7 +53,7 @@
       <div class="row">
         <div class="col-lg-6">
           <div class="ss-hm-img-abt">
-            <img src="{{URL::asset('public/landing/img/about-us-image.png')}}">
+            <img src="{{URL::asset('landing/img/about-us-image.png')}}">
           </div>
         </div>
 
@@ -177,7 +177,7 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('public/landing/img/join-icon-1.png')}}" />
+            <img src="{{URL::asset('landing/img/join-icon-1.png')}}" />
             <h5>Tailored Opportunities</h5>
             <p>Discover a wide range of nursing shifts that align with your expertise and desired schedule. From early morning to overnight, we've got you covered.</p>
           </div>
@@ -185,7 +185,7 @@
 
         <div class="col-lg-3">
           <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('public/landing/img/join-icon-2.png')}}" />
+            <img src="{{URL::asset('landing/img/join-icon-2.png')}}" />
             <h5>Effortless Application</h5>
             <p>Say goodbye to complicated application processes. With just a few clicks, you can express your interest in shifts that pique your interest.</p>
           </div>
@@ -193,7 +193,7 @@
 
         <div class="col-lg-3">
           <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('public/landing/img/join-icon-3.png')}}" />
+            <img src="{{URL::asset('landing/img/join-icon-3.png')}}" />
             <h5>Streamlined Communication</h5>
             <p> Receive updates, notifications, and interview requests directly on our platform. No more phone tag – stay informed every step of the way.</p>
           </div>
@@ -201,7 +201,7 @@
 
         <div class="col-lg-3">
           <div class="ss-join-icon-div-sec">
-            <img src="{{URL::asset('public/landing/img/join-icon-4.png')}}" />
+            <img src="{{URL::asset('landing/img/join-icon-4.png')}}" />
             <h5>Career Growth</h5>
             <p> Our platform is more than just shifts; it's a nurturing ground for your career. Engage and forge a pathway to a thriving nursing future."</p>
           </div>
@@ -237,9 +237,9 @@
             <h4>Manager CRNA - Anesthesia</h4>
             <h6>Medical Solutions Recruiter</h6>
             <ul>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
             </ul>
             <h5>Recently Added</h5>
           </div>
@@ -250,9 +250,9 @@
             <h4>Manager CRNA - Anesthesia</h4>
             <h6>Medical Solutions Recruiter</h6>
             <ul>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
             </ul>
             <h5>Recently Added</h5>
           </div>
@@ -263,9 +263,9 @@
             <h4>Manager CRNA - Anesthesia</h4>
             <h6>Medical Solutions Recruiter</h6>
             <ul>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
             </ul>
             <h5>Recently Added</h5>
           </div>
@@ -280,9 +280,9 @@
             <h4>Manager CRNA - Anesthesia</h4>
             <h6>Medical Solutions Recruiter</h6>
             <ul>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
             </ul>
             <h5>Recently Added</h5>
           </div>
@@ -293,9 +293,9 @@
             <h4>Manager CRNA - Anesthesia</h4>
             <h6>Medical Solutions Recruiter</h6>
             <ul>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
             </ul>
             <h5>Recently Added</h5>
           </div>
@@ -306,9 +306,9 @@
             <h4>Manager CRNA - Anesthesia</h4>
             <h6>Medical Solutions Recruiter</h6>
             <ul>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/location.png')}}" /> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/calendar.png')}}" /> 10 wks</a></li>
-              <li><a href="#"><img src="{{URL::asset('public/landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/location.png')}}" /> Los Angeles, CA</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/calendar.png')}}" /> 10 wks</a></li>
+              <li><a href="#"><img src="{{URL::asset('landing/img/dollarcircle.png')}}" /> 2500/wk</a></li>
             </ul>
             <h5>Recently Added</h5>
           </div>
@@ -397,7 +397,7 @@
       <div class="row">
         <div class="col-lg-6">
           <div class="ss-hm-img-abt">
-            <img src="{{URL::asset('public/landing/img/about-us-image.png')}}" />
+            <img src="{{URL::asset('landing/img/about-us-image.png')}}" />
           </div>
         </div>
 
@@ -439,7 +439,7 @@
 
             <!----slider-1--->
             <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('public/landing/img/feed-img.svg')}}" /></div>
+              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
               <h4>Name Here </h4>
               <ul>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -455,7 +455,7 @@
 
             <!----slider-1--->
             <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('public/landing/img/feed-img.svg')}}" /></div>
+              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
               <h4>Name Here </h4>
               <ul>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -469,7 +469,7 @@
 
             <!----slider-1--->
             <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('public/landing/img/feed-img.svg')}}" /></div>
+              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
               <h4>Name Here </h4>
               <ul>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -486,7 +486,7 @@
 
             <!----slider-1--->
             <div class="ss-feed-slid-bx">
-              <div><img src="{{URL::asset('public/landing/img/feed-img.svg')}}" /></div>
+              <div><img src="{{URL::asset('landing/img/feed-img.svg')}}" /></div>
               <h4>Name Here </h4>
 
               <ul>
@@ -548,7 +548,7 @@
 
             <div class="col-lg-5">
             <div class="ss-app-img-dv">
-                <img src="{{URL::asset('public/landing/img/mobile-app-img.png')}}" />
+                <img src="{{URL::asset('landing/img/mobile-app-img.png')}}" />
             </div>
             </div>
         </div>

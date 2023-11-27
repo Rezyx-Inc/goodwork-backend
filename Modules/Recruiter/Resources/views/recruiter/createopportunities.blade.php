@@ -904,7 +904,7 @@
                 str += '<ul>';
                 str += '<li>' + specialityname + '</li>';
                 str += '<li>' + value + ' Years</li>';
-                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-speciality" data-key="' + key + '" onclick="remove_speciality(this, ' + key + ')"><img src="{{URL::asset("public/frontend/img/delete-img.png")}}" /></button></li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-speciality" data-key="' + key + '" onclick="remove_speciality(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
                 str += '</ul>';
             }
         }
@@ -974,7 +974,7 @@
                 const value = certificate[key];
                 str += '<ul>';
                 str += '<li class="w-50">' + certificatename + '</li>';
-                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-certificate" data-key="' + key + '" onclick="remove_certificate(this, ' + key + ')"><img src="{{URL::asset("public/frontend/img/delete-img.png")}}" /></button></li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-certificate" data-key="' + key + '" onclick="remove_certificate(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
                 str += '</ul>';
             }
         }
@@ -1086,7 +1086,7 @@
                 const value = vaccinations[key];
                 str += '<ul>';
                 str += '<li>' + vaccinationsname + '</li>';
-                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-vaccinations" data-key="' + key + '" onclick="remove_vaccinations(this, ' + key + ')"><img src="{{URL::asset("public/frontend/img/delete-img.png")}}" /></button></li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-vaccinations" data-key="' + key + '" onclick="remove_vaccinations(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
                 str += '</ul>';
             }
         }

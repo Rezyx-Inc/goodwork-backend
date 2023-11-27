@@ -11,7 +11,7 @@
 
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('public/frontend/img/message-img1.png')}}" /></li>
+                                <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
                                 <li>
                                     <h5>Recruiter #01</h5>
                                     <p>Check the prescription</p>
@@ -28,7 +28,7 @@
 
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('public/frontend/img/message-img2.png')}}" /></li>
+                                <li><img src="{{URL::asset('frontend/img/message-img2.png')}}" /></li>
                                 <li>
                                     <h5>Recruiter #02</h5>
                                     <p>Check the prescription</p>
@@ -46,7 +46,7 @@
 
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('public/frontend/img/message-img3.png')}}" /></li>
+                                <li><img src="{{URL::asset('frontend/img/message-img3.png')}}" /></li>
                                 <li>
                                     <h5>Recruiter #03</h5>
                                     <p>Check the prescription</p>
@@ -63,7 +63,7 @@
 
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('public/frontend/img/message-img4.png')}}" /></li>
+                                <li><img src="{{URL::asset('frontend/img/message-img4.png')}}" /></li>
                                 <li>
                                     <h5>Recruiter #04</h5>
                                     <p>Check the prescription</p>
@@ -116,7 +116,7 @@
                         <!-- <div class="ss-rply-msg-input"> -->
                         <form class="ss-rply-msg-input" id="messageForm">
                             <input type="text" id="message" name="message" placeholder="Express yourself here!">
-                            <button type="submit"><img src="{{URL::asset('public/frontend/img/msg-rply-btn.png')}}" /></button>
+                            <button type="submit"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
                         </form>
                         <!-- </div> -->
                     </div>
@@ -398,9 +398,9 @@
                 }
                 console.log(result.data.image);
                 if(result.data.image){
-                    console.log('{{ asset("public/images/nurses/profile/") }}' + '/' + result.data.image);
-                    // document.getElementById("userprofile").src = "URL::asset('public/images/nurses/profile/)" + result.data.image; 
-                    document.getElementById("userprofile").src = '{{ asset("public/images/nurses/profile/") }}' + '/' + result.data.image;
+                    console.log('{{ asset("images/nurses/profile/") }}' + '/' + result.data.image);
+                    // document.getElementById("userprofile").src = "URL::asset('images/nurses/profile/)" + result.data.image; 
+                    document.getElementById("userprofile").src = '{{ asset("images/nurses/profile/") }}' + '/' + result.data.image;
                 }
             })
             .fail(function(error) {
