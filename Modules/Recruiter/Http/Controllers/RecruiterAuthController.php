@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\{Response, JsonResponse};
+use Illuminate\Support\Facades\Session;
 
 class RecruiterAuthController extends Controller
 {
@@ -107,16 +108,21 @@ class RecruiterAuthController extends Controller
                 $data_msg = [];
                 $input = $request->only('id');
                 $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'RECRUITER')->where("active","1")->first();
+                
                 session()->put('otp_user_id', $model->id);
+                session()->save();
                 // Check if the value has been stored in the session
+                // Checked
 
                 $otp = $this->commonFunctionController->rand_number(4);
                 $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-                $email_data = $this->commonFunctionController->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
-                $email_data['to'] = $model->email;
-                $email_data['subject'] = 'One Time Password for login';
-                $this->commonFunctionController->sendMail($email_data);
+                //sending to the email dosn't work for now
+
+                //$email_data = $this->commonFunctionController->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
+                // $email_data['to'] = $model->email;
+                // $email_data['subject'] = 'One Time Password for login';
+                //$this->commonFunctionController->sendMail($email_data);
                 $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
                 $data_msg['success'] = true;
                 $data_msg['link'] = Route('recruiter.verify');
@@ -127,7 +133,7 @@ class RecruiterAuthController extends Controller
     }
 
     public function verify() {
-        if (session()->has('otp_user_id')) {
+       if (session()->has('otp_user_id')) {
             $data = [];
             $user = User::findOrFail(session()->get('otp_user_id'));
             if (time() < strtotime($user->otp_expiry) ) {

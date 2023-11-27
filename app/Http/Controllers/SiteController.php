@@ -158,10 +158,10 @@ class SiteController extends Controller {
                 ]);
                 $model->assignRole('NURSE');
 
+                
                 $email_data = $this->getEmailData('new_registration', ['NAME'=>$model->first_name.' '.$model->last_name]);
                 $email_data['to'] = $model->email;
                 $this->sendMail($email_data);
-
                 session()->put('otp_user_id', $model->id);
                 $otp = $this->rand_number(4);
                 $model->update(['otp'=>$otp,'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
@@ -191,10 +191,12 @@ class SiteController extends Controller {
             $otp = $this->rand_number(4);
             $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-            $email_data = $this->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
-            $email_data['to'] = $model->email;
-            $email_data['subject'] = 'One Time Password for login';
-            $this->sendMail($email_data);
+            //sending to the email dosn't work for now
+
+           // $email_data = $this->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
+           //$email_data['to'] = $model->email;
+           //$email_data['subject'] = 'One Time Password for login';
+           // $this->sendMail($email_data);
 
             $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
             $data_msg['success'] = true;

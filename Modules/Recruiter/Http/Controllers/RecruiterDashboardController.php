@@ -116,6 +116,7 @@ class RecruiterDashboardController extends Controller
     public function profile()
     {
         $id = Auth::guard('recruiter')->user()->id;
+        // facility_id qualities about_me are been added in user table
         $user = User::select('first_name', 'last_name', 'image', 'user_name', 'email', 'date_of_birth', 'mobile', 'about_me', 'qualities', 'facility_id')->find($id);
         if($user && isset($user->facility_id)){
             $facilityIds = json_decode($user->facility_id);
@@ -124,13 +125,17 @@ class RecruiterDashboardController extends Controller
                 $user->facilities = $facilities->name;
             }
         }
-        $helpsupportdata = DB::table('keywords')->where('filter', 'subjectType')->get();
-        $helpsupportcomments = DB::table('help_support')->get();
-        foreach ($helpsupportcomments as $key => $value) {
-            $commentuser = User::select('first_name','last_name')->find($id);
-            $value->first_name = $commentuser->first_name;
-            $value->last_name = $commentuser->last_name;
-        }
+        // help_support table and keywordsdosn't exist yet
+        $helpsupportdata =[];
+        $helpsupportcomments = [];
+
+        // $helpsupportdata = DB::table('keywords')->where('filter', 'subjectType')->get();
+        // $helpsupportcomments = DB::table('help_support')->get();
+        // foreach ($helpsupportcomments as $key => $value) {
+        //     $commentuser = User::select('first_name','last_name')->find($id);
+        //     $value->first_name = $commentuser->first_name;
+        //     $value->last_name = $commentuser->last_name;
+        // }
         return view('recruiter::recruiter/profile', compact('user', 'helpsupportdata', 'helpsupportcomments'));
     }
 
@@ -138,6 +143,7 @@ class RecruiterDashboardController extends Controller
     {
         // $user = User::select('first_name', 'last_name', 'image')->find($id);
         // return view('recruiter::recruiter/communication', compact('user'));
+        
         return view('recruiter::recruiter/communication');
     }
     
