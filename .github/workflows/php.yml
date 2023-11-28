@@ -26,6 +26,8 @@ jobs:
           ${{ runner.os }}-php-
     - name: update composer
       run: composer self-update
+    - name: Update composer
+      run: composer update
     - name: Install dependencies
       run: composer install
     - name: Install Node Deps
