@@ -25,7 +25,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
     - name: update composer
-      run: composer update-self
+      run: composer self-update
     - name: Install dependencies
       run: composer install
     - name: Install Node Deps
