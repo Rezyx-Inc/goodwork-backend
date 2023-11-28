@@ -15,12 +15,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Configure PHP 7.3
+      uses: shivammathur/setup-php@v2
+      env:
+        runner: self-hosted
+      with:
+        php-version: '7.4'
+        tools: composer, phpunit
+        extensions: mbstring,PDO,grpc,tokenizer,xml,json,ctype,fileinfo,openssl,bcmath
     - uses: actions/checkout@v3
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
       with:
-        php-version: 7.4
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
