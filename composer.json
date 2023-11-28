@@ -13,7 +13,7 @@
         "bensampo/laravel-enum": "^1.36",
         "bugsnag/bugsnag-laravel": "^2.0",
         "doctrine/cache": "2.2.0",
-        "doctrine/dbal": "^2.10.0",
+        "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
