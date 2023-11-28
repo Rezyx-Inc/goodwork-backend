@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Api\Worker\WorkerController;
 
 
 /*
@@ -62,11 +63,13 @@ Route::post('experience', 'ApiController@Experience');
 Route::post('get-experience', 'ApiController@workerExperience');
 Route::post('facility-types', 'ApiController@facilityTypes');
 Route::post('nurse-experience-selections', 'ApiController@nurseExperienceSelectionOptions');
+
 // Route::post('highest-nursing-degrees', 'ApiController@NursingDegrees');
 Route::post('certification-type-list', 'ApiController@searchForCredentialsOptions');
 Route::post('media-options', 'ApiController@getMediaOptions');
 Route::post('get-cerner-medtech-epic-options', 'ApiController@getEHRProficiencyExpOptions');
 Route::post('nursing-degrees-options', 'ApiController@getNursingDegreesOptions');
+
 // New Apis
 Route::post('add-certification', 'ApiController@addCredentials');
 Route::post('edit-certification', 'ApiController@editCredentials');
@@ -94,47 +97,48 @@ Route::post('get-offer-notification', 'ApiController@offerNotification');
 Route::post('remove-notification', 'ApiController@removeNotification');
 Route::post('settings', 'ApiController@settings');
 Route::post('get-nurse-profile', 'ApiController@NurseProfileInfo');
+
 // Get nurse information
-Route::post('set-banking-details', 'ApiController@setBankingDetails');
-Route::post('get-banking-details', 'ApiController@getBankingDetails');
-Route::post('worker-profile-HomeScreen', 'ApiController@workerProfileHomeScreen');
-Route::post('worker-home-screen', 'ApiController@workerHomeScreen');
-Route::post('home-screen-graph', 'ApiController@graphHomeScreen');
-Route::post('get-worker-info', 'ApiController@workerInfo');
-Route::post('get-worker-basicinfo', 'ApiController@workerBasicInfo');
-Route::post('get-worker-skills', 'ApiController@workerSkills');
-Route::post('get-worker-vaccination', 'ApiController@workerVaccination');
-Route::post('get-worker-referrence', 'ApiController@workerReferrence');
-Route::post('get-worker-certificate', 'ApiController@workerCertificates');
-Route::post('get-worker-urgency', 'ApiController@workerUrgency');
+Route::post('set-banking-details', 'WorkerController@setBankingDetails');
+Route::post('get-banking-details', 'WorkerController@getBankingDetails');
+Route::post('worker-profile-HomeScreen', 'WorkerController@workerProfileHomeScreen');
+Route::post('worker-home-screen', 'WorkerController@workerHomeScreen');
+Route::post('home-screen-graph', 'WorkerController@graphHomeScreen');
+Route::post('get-worker-info', 'WorkerController@workerInfo');
+Route::post('get-worker-basicinfo', 'WorkerController@workerBasicInfo');
+Route::post('get-worker-skills', 'WorkerController@workerSkills');
+Route::post('get-worker-vaccination', 'WorkerController@workerVaccination');
+Route::post('get-worker-referrence', 'WorkerController@workerReferrence');
+Route::post('get-worker-certificate', 'WorkerController@workerCertificates');
+Route::post('get-worker-urgency', 'WorkerController@workerUrgency');
 
-Route::post('get-worker-facilityinfo', 'ApiController@workerFacilityInfo');
-Route::post('get-patient-ratio', 'ApiController@patientRatio');
-Route::post('get-worker-dates', 'ApiController@interviewDate');
-Route::post('get-worker-bonus', 'ApiController@workerBonus');
-Route::post('get-worker-feelshour', 'ApiController@workerFeelsLikeHour');
+Route::post('get-worker-facilityinfo', 'WorkerController@workerFacilityInfo');
+Route::post('get-patient-ratio', 'WorkerController@patientRatio');
+Route::post('get-worker-dates', 'WorkerController@interviewDate');
+Route::post('get-worker-bonus', 'WorkerController@workerBonus');
+Route::post('get-worker-feelshour', 'WorkerController@workerFeelsLikeHour');
 
-Route::post('get-nurse-profile-by-mobile', 'ApiController@NurseProfileInfoBymobile');
-Route::post('get-emedical-records', 'ApiController@getEMedicalRecordsOptions');
-Route::post('update-profile-picture', 'ApiController@profilePictureUpload');
-Route::post('update-role-interest', 'ApiController@updateRoleInterest');
-Route::post('nurse-resume', 'ApiController@resume');
-Route::post('terms-conditions', 'ApiController@termsAndConditions');
-Route::post('privacy-policy', 'ApiController@privacyPolicy');
-Route::post('about-app', 'ApiController@aboutAPP');
-Route::post('change-password', 'ApiController@changePassword');
-Route::post('forgot-password', 'ApiController@sendResetLinkEmail');
-Route::post('view-job-detail', 'ApiController@viewJobOffered');
-Route::post('facility-rating', 'ApiController@facilityRatings');
-Route::post('new-phone-number', 'ApiController@newPhoneNumber');
-Route::post('confirm-otp', 'ApiController@confirmOTP');
-Route::post('get-countries', 'ApiController@getCountries');
-Route::post('get-states', 'ApiController@getStates');
-Route::post('get-cities', 'ApiController@getCities');
-Route::post('worker-information', 'ApiController@workerInformation');
-Route::post('skip-worker-information', 'ApiController@workerInformationSkip');
-Route::post('update-worker-information', 'ApiController@updateWorkerInformation');
-Route::post('jobs-information', 'ApiController@jobInformation');
+Route::post('get-nurse-profile-by-mobile', 'WorkerController@NurseProfileInfoBymobile');
+Route::post('get-emedical-records', 'WorkerController@getEMedicalRecordsOptions');
+Route::post('update-profile-picture', 'WorkerController@profilePictureUpload');
+Route::post('update-role-interest', 'WorkerController@updateRoleInterest');
+Route::post('nurse-resume', 'WorkerController@resume');
+Route::post('terms-conditions', 'WorkerController@termsAndConditions');
+Route::post('privacy-policy', 'WorkerController@privacyPolicy');
+Route::post('about-app', 'WorkerController@aboutAPP');
+Route::post('change-password', 'WorkerController@changePassword');
+Route::post('forgot-password', 'WorkerController@sendResetLinkEmail');
+Route::post('view-job-detail', 'WorkerController@viewJobOffered');
+Route::post('facility-rating', 'WorkerController@facilityRatings');
+Route::post('new-phone-number', 'WorkerController@newPhoneNumber');
+Route::post('confirm-otp', 'WorkerController@confirmOTP');
+Route::post('get-countries', 'WorkerController@getCountries');
+Route::post('get-states', 'WorkerController@getStates');
+Route::post('get-cities', 'WorkerController@getCities');
+Route::post('worker-information', 'WorkerController@workerInformation');
+Route::post('skip-worker-information', 'WorkerController@workerInformationSkip');
+Route::post('update-worker-information', 'WorkerController@updateWorkerInformation');
+Route::post('jobs-information', 'WorkerController@jobInformation');
 
 
 // user recruiter's api

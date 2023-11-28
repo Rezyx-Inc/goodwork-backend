@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+
+//MODELS :
 use App\Models\User;
 use App\Models\Keyword;
+
+//WORKER
 use App\Models\Nurse;
 use App\Models\Availability;
 use App\Models\Certification;
@@ -17,6 +21,8 @@ use App\Models\Offer;
 use App\Models\NurseAsset;
 use App\Models\NurseReference;
 use App\Models\Follows;
+
+//FACILITY
 use App\Models\FacilityFollows;
 use App\Models\Facility;
 use App\Models\FacilityRating;
@@ -26,6 +32,7 @@ use App\Models\JobAsset;
 use App\Models\JobOffer;
 use App\Models\NurseRating;
 use App\Models\EmailTemplate;
+
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -539,6 +546,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // login according to the role 
     public function login(Request $request)
     {
         if (isset($request->email) && $request->email != "" && isset($request->password) && $request->password != "" && isset($request->fcm_token) && $request->fcm_token != "") {
@@ -570,6 +578,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // send reset link acccording to the role 
     public function sendResetLinkEmail(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -609,6 +618,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // register nurse added to workerController
     public function register(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -681,7 +691,7 @@ class ApiController extends Controller
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-
+    // nurse information added to workerController
     public function workerAccountInfo(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -1449,6 +1459,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+     // added to worker controller 
     public function getEMedicalRecordsOptions()
     {
         $controller = new controller();
@@ -1864,6 +1875,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // added to worker controller
     public function resume(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -3790,7 +3802,7 @@ class ApiController extends Controller
         
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-
+    // added to workerController
     public function setBankingDetails(Request $request)
     {
         // $this->return_data = [];
@@ -3841,7 +3853,7 @@ class ApiController extends Controller
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-
+    // added to workerController
     public function getBankingDetails(Request $request)
     {
         // $this->return_data = [];
@@ -4582,6 +4594,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller
     public function workerInfo(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -4902,7 +4915,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
     }
-
+    // added to worker controller
     public function workerBasicInfo(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -4960,6 +4973,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller
     public function workerSkills(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5123,6 +5137,7 @@ class ApiController extends Controller
 
     }
 
+     // added to worker controller
     public function workerVaccination(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5227,6 +5242,7 @@ class ApiController extends Controller
 
     }
 
+     // added to worker controller
     public function workerReferrence(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5365,6 +5381,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller  
     public function workerCertificates(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5447,6 +5464,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller
     public function workerUrgency(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5496,6 +5514,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller
     public function workerFacilityInfo(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5561,6 +5580,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller
     public function patientRatio(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5611,6 +5631,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller 
     public function interviewDate(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5663,6 +5684,7 @@ class ApiController extends Controller
 
     }
 
+     // added to worker controller 
     public function workerBonus(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5712,7 +5734,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
     }
-
+     // added to worker controller 
     public function workerFeelsLikeHour(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5797,6 +5819,7 @@ class ApiController extends Controller
 
     }
 
+    // added to worker controller 
     public function NurseProfileInfoBymobile(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -5821,6 +5844,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // added to worker controller
     public function updateRoleInterest(Request $request)
     {
         $messages = [
@@ -5999,6 +6023,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // added to worker controller 
     public function profilePictureUpload(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -6050,6 +6075,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // added to worker controller  / still be needed for different purposes 
     public function termsAndConditions()
     {
         $this->message = "Terms and Conditions";
@@ -6058,6 +6084,7 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    // added to worker controller / still be needed for different purposes 
     public function privacyPolicy(Request $request)
     {
 
@@ -6079,6 +6106,7 @@ class ApiController extends Controller
         }
     }
 
+    // added to worker controller / still be needed for different purposes 
     public function aboutAPP(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -6098,6 +6126,7 @@ class ApiController extends Controller
         }
     }
 
+    // add to worker controller
     public function changePassword(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -10510,7 +10539,8 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    // Worker side
+    // Worker side 
+    // added to workerController
     public function workerProfileHomeScreen(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -10547,6 +10577,7 @@ class ApiController extends Controller
 
     }
 
+    //added to workerController
     public function workerHomeScreen(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -10607,6 +10638,7 @@ class ApiController extends Controller
 
     }
 
+    //added to workerController
     public function graphHomeScreen(Request $request)
     {
         $validator = \Validator::make($request->all(), [

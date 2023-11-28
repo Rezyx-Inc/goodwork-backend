@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afffb07fb9c2b49ca11342509f383a48",
+    "content-hash": "2d8de2cce230de1df61f5d68cd24e9c0",
     "packages": [
         {
             "name": "aranyasen/laravel-adminer",
@@ -692,7 +692,7 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.3.8",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
