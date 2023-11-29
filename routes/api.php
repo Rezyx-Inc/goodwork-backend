@@ -2,8 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\FacilityController;
 use App\Http\Controllers\Api\Worker\WorkerController;
+use App\Http\Controllers\Api\Recruiter\RecruiterController;
+use App\Http\Controllers\Api\Employer\ApiEmployerController;
 
 
 /*
@@ -20,6 +23,9 @@ use App\Http\Controllers\Api\Worker\WorkerController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// no ProfileController controller created
+//Route::post('country/{name}/states', 'ProfileController@stateJson')->name('state-json');
 
 Route::post('send-otp', 'ApiController@sendOtp');
 Route::post('mobile-otp', 'ApiController@mobileOtp');
@@ -63,6 +69,17 @@ Route::post('experience', 'ApiController@Experience');
 Route::post('get-experience', 'ApiController@workerExperience');
 Route::post('facility-types', 'ApiController@facilityTypes');
 Route::post('nurse-experience-selections', 'ApiController@nurseExperienceSelectionOptions');
+Route::post('forgot-password', 'ApiController@sendResetLinkEmail');
+Route::post('new-phone-number', 'ApiController@newPhoneNumber');
+Route::post('get-countries', 'ApiController@getCountries');
+Route::post('get-states', 'ApiController@getStates');
+Route::post('get-cities', 'ApiController@getCities');
+Route::post('terms-conditions', 'ApiController@termsAndConditions');
+Route::post('privacy-policy', 'ApiController@privacyPolicy');
+Route::post('about-app', 'ApiController@aboutAPP');
+//worker Details new function dosn't exist in ApiController
+// Route::post('get-worker-detail-new', 'ApiController@workerDetailsNew');
+// Route::post('nurse-certification-detail', 'ApiController@nursecertificationDetail');
 
 // Route::post('highest-nursing-degrees', 'ApiController@NursingDegrees');
 Route::post('certification-type-list', 'ApiController@searchForCredentialsOptions');
@@ -98,7 +115,8 @@ Route::post('remove-notification', 'ApiController@removeNotification');
 Route::post('settings', 'ApiController@settings');
 Route::post('get-nurse-profile', 'ApiController@NurseProfileInfo');
 
-// Get nurse information
+
+// Get nurse information // edited 
 Route::post('set-banking-details', 'WorkerController@setBankingDetails');
 Route::post('get-banking-details', 'WorkerController@getBankingDetails');
 Route::post('worker-profile-HomeScreen', 'WorkerController@workerProfileHomeScreen');
@@ -123,138 +141,130 @@ Route::post('get-emedical-records', 'WorkerController@getEMedicalRecordsOptions'
 Route::post('update-profile-picture', 'WorkerController@profilePictureUpload');
 Route::post('update-role-interest', 'WorkerController@updateRoleInterest');
 Route::post('nurse-resume', 'WorkerController@resume');
-Route::post('terms-conditions', 'WorkerController@termsAndConditions');
-Route::post('privacy-policy', 'WorkerController@privacyPolicy');
-Route::post('about-app', 'WorkerController@aboutAPP');
+
+
+
 Route::post('change-password', 'WorkerController@changePassword');
-Route::post('forgot-password', 'WorkerController@sendResetLinkEmail');
+
 Route::post('view-job-detail', 'WorkerController@viewJobOffered');
 Route::post('facility-rating', 'WorkerController@facilityRatings');
-Route::post('new-phone-number', 'WorkerController@newPhoneNumber');
+
 Route::post('confirm-otp', 'WorkerController@confirmOTP');
-Route::post('get-countries', 'WorkerController@getCountries');
-Route::post('get-states', 'WorkerController@getStates');
-Route::post('get-cities', 'WorkerController@getCities');
+
 Route::post('worker-information', 'WorkerController@workerInformation');
 Route::post('skip-worker-information', 'WorkerController@workerInformationSkip');
 Route::post('update-worker-information', 'WorkerController@updateWorkerInformation');
-Route::post('jobs-information', 'WorkerController@jobInformation');
 
 
+
+
+
+/* facility */
+Route::post('facility-dropdown-{type}', 'FacilityController@facilityDropdown');
+Route::post('facility-profile', 'FacilityController@facilityDetail');
+Route::post('change-facility-logo', 'FacilityController@changeFacilityLogo');
+Route::post('browse-nurses', 'FacilityController@browseNurses');
+Route::post('get-seniority-level', 'FacilityController@getSeniorityLevelOptions');
+Route::post('job-offered-{type}', 'FacilityController@offeredNurses');
+Route::post('job-{type}', 'FacilityController@createJob');
+Route::post('get-job-function', 'FacilityController@getJobFunctionOptions');
+Route::post('apply', 'FacilityController@apiJobApply');
+Route::post('send-offer', 'FacilityController@apiJobInvite');
+Route::post('my-jobs-{type}', 'FacilityController@facilityPostedJobs');
+Route::post('offer-job-to-nurse-dropdown', 'FacilityController@apiJobsList');
+Route::post('job-info-short', 'FacilityController@apiJobFacility');
+Route::post('nurses-applied-jobs', 'FacilityController@appliedNurses');
+Route::post('nurse-rating', 'FacilityController@nurseRating');
+Route::post('remove-job-asset', 'FacilityController@removeJobDocument');
+Route::post('facility-settings', 'FacilityController@settingsFacility');
+Route::post('facility-notifications', 'FacilityController@notificationFacility');
+Route::post('jobs-information', 'FacilityController@jobInformation');
+Route::post('get-user-images', 'FacilityController@userImages');
+Route::post('testing', 'FacilityController@test');
+Route::post('get-search-status', 'FacilityController@getSearchStatusOptions')->name('search-status');
+Route::post('get-license-types', 'FacilityController@getLicenseTypeOptions')->name('license-types');
+Route::post('get-license-status', 'FacilityController@getLicenseStatusOptions')->name('license-status');
+Route::post('nurse-license-detail', 'FacilityController@nurseLicenseDetail');
+Route::post('addUserActivity', 'FacilityController@addUserActivity');
+Route::post('explore', 'FacilityController@explore');
+Route::post('save-job', 'FacilityController@saveJob');
+Route::post('remove-saved-job', 'FacilityController@removesavedJob');
+Route::post('my-saved-jobs', 'FacilityController@jobSaved');
+Route::post('nurse-saved-jobs', 'FacilityController@nurseJobSaved');
+Route::post('my-applied-jobs', 'FacilityController@myjobApplied');
+Route::post('my-offered-jobs', 'FacilityController@myjobOffered');
+Route::post('my-hired-jobs', 'FacilityController@myjobHired');
+Route::post('my-past-jobs', 'FacilityController@myjobPast');
+Route::post('nurse-personal-detail', 'FacilityController@nursepersonalDetail');
+Route::delete('delete-nurse', 'FacilityController@deleteNurse');
+Route::post('nurse-education-detail', 'FacilityController@nurseEducationDetail');
+Route::post('add-experience-detail', 'FacilityController@addnurseExperienceDetail');
+Route::post('edit-experience-detail', 'FacilityController@editnurseExperienceDetail');
+Route::post('experience-type-list', 'FacilityController@experienceTpesOptions');
+Route::post('get-employer-list', 'FacilityController@getfacilities');
+
+/* Recruiter */ //Edited 
 // user recruiter's api
-Route::post('user-recruiter', 'ApiController@userRecruiter');
-Route::post('edit-user-recruiter', 'ApiController@editUserRecruiter');
-Route::post('user-profile-picture', 'ApiController@recruiterProfilePictureUpload');
+Route::post('user-recruiter', 'RecruiterController@userRecruiter');
+Route::post('edit-user-recruiter', 'RecruiterController@editUserRecruiter');
+Route::post('user-profile-picture', 'RecruiterController@recruiterProfilePictureUpload');
+Route::post('recruiter-register', 'RecruiterController@registerRecruiter');
+Route::post('home-screen', 'RecruiterController@homeScreen');
+Route::post('account-info', 'RecruiterController@accountInfo');
+Route::post('update_account-info', 'RecruiterController@updateAccInfo');
+Route::post('get-recruiter-by-mobile', 'RecruiterController@accountInfoByMobile');
 
-/* facility */
-Route::post('facility-dropdown-{type}', 'ApiController@facilityDropdown');
-Route::post('facility-profile', 'ApiController@facilityDetail');
-Route::post('change-facility-logo', 'ApiController@changeFacilityLogo');
-Route::post('browse-nurses', 'ApiController@browseNurses');
-Route::post('get-seniority-level', 'ApiController@getSeniorityLevelOptions');
-Route::post('job-offered-{type}', 'ApiController@offeredNurses');
-Route::post('job-{type}', 'ApiController@createJob');
-Route::post('get-job-function', 'ApiController@getJobFunctionOptions');
-Route::post('apply', 'ApiController@apiJobApply');
-Route::post('send-offer', 'ApiController@apiJobInvite');
-Route::post('my-jobs-{type}', 'ApiController@facilityPostedJobs');
-Route::post('offer-job-to-nurse-dropdown', 'ApiController@apiJobsList');
-Route::post('job-info-short', 'ApiController@apiJobFacility');
-Route::post('nurses-applied-jobs', 'ApiController@appliedNurses');
-Route::post('nurse-rating', 'ApiController@nurseRating');
-Route::post('remove-job-asset', 'ApiController@removeJobDocument');
-Route::post('facility-settings', 'ApiController@settingsFacility');
-Route::post('facility-notifications', 'ApiController@notificationFacility');
+Route::post('get-applications', 'RecruiterController@applications');
+Route::post('get-new-applications', 'RecruiterController@newApplications');
+Route::post('get-screening-applications', 'RecruiterController@screeningApplications');
+Route::post('get-submitted-applications', 'RecruiterController@submittedApplications');
+Route::post('get-offered-applications', 'RecruiterController@offeredApplications');
+Route::post('get-draft-applications', 'RecruiterController@draftedApplications');
+Route::post('get-published-applications', 'RecruiterController@publishedApplications');
+Route::post('get-hidden-applications', 'RecruiterController@hiddenApplications');
+Route::post('get-closed-applications', 'RecruiterController@closedApplications');
+Route::post('draft-job', 'RecruiterController@draftJob');
+Route::post('get-onboarding-applications', 'RecruiterController@onboardingApplications');
+Route::post('get-working-applications', 'RecruiterController@workingApplications');
+Route::post('get-done-applications', 'RecruiterController@doneApplications');
+Route::post('get-rejected-applications', 'RecruiterController@rejectedApplications');
+Route::post('get-blocked-applications', 'RecruiterController@blockedApplications');
+Route::post('get-application-status', 'RecruiterController@applicationStatus');
+Route::post('get-worker-detail', 'RecruiterController@workerDetails');
+Route::post('update-status', 'RecruiterController@updateStatus');
+Route::post('recruiter-information', 'RecruiterController@recruiterInformation');
 
-/* facility */
-Route::post('get-user-images', 'ApiController@userImages');
-
-Route::post('country/{name}/states', 'ProfileController@stateJson')->name('state-json');
-Route::post('testing', 'ApiController@test');
-
-Route::post('get-search-status', 'ApiController@getSearchStatusOptions')->name('search-status');
-Route::post('get-license-types', 'ApiController@getLicenseTypeOptions')->name('license-types');
-Route::post('get-license-status', 'ApiController@getLicenseStatusOptions')->name('license-status');
-Route::post('nurse-license-detail', 'ApiController@nurseLicenseDetail');
-Route::post('addUserActivity', 'ApiController@addUserActivity');
-
-Route::post('get-worker-detail-new', 'ApiController@workerDetailsNew');
-Route::post('explore', 'ApiController@explore');
-Route::post('save-job', 'ApiController@saveJob');
-Route::post('remove-saved-job', 'ApiController@removesavedJob');
-Route::post('my-saved-jobs', 'ApiController@jobSaved');
-Route::post('nurse-saved-jobs', 'ApiController@nurseJobSaved');
-
-Route::post('my-applied-jobs', 'ApiController@myjobApplied');
-Route::post('my-offered-jobs', 'ApiController@myjobOffered');
-Route::post('my-hired-jobs', 'ApiController@myjobHired');
-Route::post('my-past-jobs', 'ApiController@myjobPast');
-
-Route::post('nurse-personal-detail', 'ApiController@nursepersonalDetail');
-Route::delete('delete-nurse', 'ApiController@deleteNurse');
-// Route::post('nurse-certification-detail', 'ApiController@nursecertificationDetail');
-Route::post('nurse-education-detail', 'ApiController@nurseEducationDetail');
-Route::post('add-experience-detail', 'ApiController@addnurseExperienceDetail');
-Route::post('edit-experience-detail', 'ApiController@editnurseExperienceDetail');
-Route::post('experience-type-list', 'ApiController@experienceTpesOptions');
-
-/* Recruiter */
-Route::post('recruiter-register', 'ApiController@registerRecruiter');
-Route::post('home-screen', 'ApiController@homeScreen');
-Route::post('account-info', 'ApiController@accountInfo');
-Route::post('update_account-info', 'ApiController@updateAccInfo');
-Route::post('get-recruiter-by-mobile', 'ApiController@accountInfoByMobile');
-Route::post('get-employers', 'ApiController@employers');
-Route::post('get-applications', 'ApiController@applications');
-Route::post('get-new-applications', 'ApiController@newApplications');
-Route::post('get-screening-applications', 'ApiController@screeningApplications');
-Route::post('get-submitted-applications', 'ApiController@submittedApplications');
-Route::post('get-offered-applications', 'ApiController@offeredApplications');
-Route::post('get-draft-applications', 'ApiController@draftedApplications');
-Route::post('get-published-applications', 'ApiController@publishedApplications');
-Route::post('get-hidden-applications', 'ApiController@hiddenApplications');
-Route::post('get-closed-applications', 'ApiController@closedApplications');
-Route::post('draft-job', 'ApiController@draftJob');
-Route::post('get-onboarding-applications', 'ApiController@onboardingApplications');
-Route::post('get-working-applications', 'ApiController@workingApplications');
-Route::post('get-done-applications', 'ApiController@doneApplications');
-Route::post('get-rejected-applications', 'ApiController@rejectedApplications');
-Route::post('get-blocked-applications', 'ApiController@blockedApplications');
-Route::post('get-application-status', 'ApiController@applicationStatus');
-Route::post('get-worker-detail', 'ApiController@workerDetails');
-Route::post('update-status', 'ApiController@updateStatus');
-Route::post('recruiter-information', 'ApiController@recruiterInformation');
-Route::post('get-employer-list', 'ApiController@getfacilities');
-Route::post('explore-screen', 'ApiController@exploreScreen');
-Route::post('update-recruiter-information', 'ApiController@updateRecruiterInformation');
-Route::post('get-facility-list', 'ApiController@getFacilityList');
-Route::post('get-shift', 'ApiController@getShift');
-Route::post('get-shift_time_of_day', 'ApiController@getShiftTimeOfDay');
-Route::post('get-recruiter-info', 'ApiController@recruiterInfo');
-Route::post('get-recruiter-applied-jobs', 'ApiController@recruiterAppliedJobs');
-Route::post('recruiter-information', 'ApiController@recruiterInformation');
-Route::post('update-recruiter-information', 'ApiController@updateRecruiterInformation');
-Route::post('get-application-info', 'ApiController@applicationInfo');
-Route::post('get-jobs-applied-worker', 'ApiController@jobAppliedWorkers');
-Route::post('get-unblock-worker', 'ApiController@unblockWorker');
-Route::post('get-hide-application', 'ApiController@hideStatusApplication');
-Route::post('get-close-application', 'ApiController@closeStatusApplication');
-Route::post('send-notification', 'ApiController@sendRecordNotification');
-Route::post('push-notification', 'ApiController@pushNotification');
-Route::post('get-job-keys', 'ApiController@getJobKeys');
-Route::post('remove-draft-job', 'ApiController@removeDraftJob');
-Route::post('send-offer-job', 'ApiController@sendOfferJob');
-Route::post('get-offer-job', 'ApiController@getOfferJob');
-Route::post('get-offer-joblist', 'ApiController@getOfferJoblist');
-Route::post('get-drafted-offer-job', 'ApiController@getDraftOfferJob');
-Route::post('get-worker-offer-job', 'ApiController@workerGetOfferJob');
-Route::post('rejected-counter-offer', 'ApiController@rejectedCounterOffer');
-Route::post('counter-offer-job', 'ApiController@counterOfferJob');
-Route::post('counter-offer-joblist', 'ApiController@getCounterOfferJoblist');
-Route::post('get-counter-offer', 'ApiController@getCounterOfferJob');
-Route::post('get-draft-counter-offer', 'ApiController@getDraftCounterOfferJob');
-Route::post('get-drafted-offered-joblist', 'ApiController@getDraftOfferedJoblist');
-Route::post('get-drafted-counteroffered-list', 'ApiController@getDraftCounterOfferedJoblist');
+Route::post('explore-screen', 'RecruiterController@exploreScreen');
+Route::post('update-recruiter-information', 'RecruiterController@updateRecruiterInformation');
+Route::post('get-facility-list', 'RecruiterController@getFacilityList');
+Route::post('get-shift', 'RecruiterController@getShift');
+Route::post('get-shift_time_of_day', 'RecruiterController@getShiftTimeOfDay');
+Route::post('get-recruiter-info', 'RecruiterController@recruiterInfo');
+Route::post('get-recruiter-applied-jobs', 'RecruiterController@recruiterAppliedJobs');
+Route::post('recruiter-information', 'RecruiterController@recruiterInformation');
+Route::post('update-recruiter-information', 'RecruiterController@updateRecruiterInformation');
+Route::post('get-application-info', 'RecruiterController@applicationInfo');
+Route::post('get-jobs-applied-worker', 'RecruiterController@jobAppliedWorkers');
+Route::post('get-unblock-worker', 'RecruiterController@unblockWorker');
+Route::post('get-hide-application', 'RecruiterController@hideStatusApplication');
+Route::post('get-close-application', 'RecruiterController@closeStatusApplication');
+Route::post('send-notification', 'RecruiterController@sendRecordNotification');
+Route::post('push-notification', 'RecruiterController@pushNotification');
+Route::post('get-job-keys', 'RecruiterController@getJobKeys');
+Route::post('remove-draft-job', 'RecruiterController@removeDraftJob');
+Route::post('send-offer-job', 'RecruiterController@sendOfferJob');
+Route::post('get-offer-job', 'RecruiterController@getOfferJob');
+Route::post('get-offer-joblist', 'RecruiterController@getOfferJoblist');
+Route::post('get-drafted-offer-job', 'RecruiterController@getDraftOfferJob');
+Route::post('get-worker-offer-job', 'RecruiterController@workerGetOfferJob');
+Route::post('rejected-counter-offer', 'RecruiterController@rejectedCounterOffer');
+Route::post('counter-offer-job', 'RecruiterController@counterOfferJob');
+Route::post('counter-offer-joblist', 'RecruiterController@getCounterOfferJoblist');
+Route::post('get-counter-offer', 'RecruiterController@getCounterOfferJob');
+// getDraftCounterOfferJob function in the controller doesn't exist 
+// Route::post('get-draft-counter-offer', 'RecruiterController@getDraftCounterOfferJob');
+Route::post('get-drafted-offered-joblist', 'RecruiterController@getDraftOfferedJoblist');
+Route::post('get-drafted-counteroffered-list', 'RecruiterController@getDraftCounterOfferedJoblist');
 
 /* Employer as Facility */
 Route::post('employer-send-otp', 'ApiEmployerController@sendOtp');
@@ -277,9 +287,11 @@ Route::post('employer-working', 'ApiEmployerController@employerWorkingList');
 Route::post('employer-rejected', 'ApiEmployerController@employerRejectedList');
 Route::post('employer-blocked', 'ApiEmployerController@employerBlockedList');
 Route::post('employer-worker-info', 'ApiEmployerController@workerInfo');
+
 // Strip Payment gateway
 Route::post('create-account', 'ApiController@createAccount');
 Route::post('/send-money', 'ApiController@send_money')->name('send_money');
+Route::post('get-employers', 'ApiController@employers');
 // Route::post('/session', 'ApiController@session')->name('session');
 // Route::post('/make-payment', 'ApiController@make_payment')->name('make_payment');
 
