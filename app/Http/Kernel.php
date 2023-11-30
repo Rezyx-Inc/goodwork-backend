@@ -79,5 +79,8 @@ class Kernel extends HttpKernel
 
         'recruiter_logged_in' => \App\Http\Middleware\RecruiterAuth::class,
         'recruiter_not_logged_in' => \App\Http\Middleware\RecruiterNotAuth::class,
+
+        'employer_logged_in' => \App\Http\Middleware\EmployerAuth::class,
+        'employer_not_logged_in' => \App\Http\Middleware\EmployerNotAuth::class,
     ];
 }
