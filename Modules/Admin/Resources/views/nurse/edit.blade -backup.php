@@ -65,7 +65,7 @@
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="{{URL::asset('public/images/nurses/profile/'.$model->user->profile_image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="{{URL::asset('images/nurses/profile/'.$model->user->profile_image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="Avatar" title="Change the avatar">
                         </div>
                       </div>
                       <h3>{{$model->user->first_name}} {{$model->user->last_name}}</h3>
@@ -152,7 +152,7 @@
                             <!-- start recent activity -->
                             <ul class="messages">
                               <li>
-                                <img src="{{URL::asset('public/backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
+                                <img src="{{URL::asset('backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-info">24</h3>
                                   <p class="month">May</p>
@@ -168,7 +168,7 @@
                                 </div>
                               </li>
                               <li>
-                                <img src="{{URL::asset('public/backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
+                                <img src="{{URL::asset('backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-error">21</h3>
                                   <p class="month">May</p>
@@ -184,7 +184,7 @@
                                 </div>
                               </li>
                               <li>
-                                <img src="{{URL::asset('public/backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
+                                <img src="{{URL::asset('backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-info">24</h3>
                                   <p class="month">May</p>
@@ -200,7 +200,7 @@
                                 </div>
                               </li>
                               <li>
-                                <img src="{{URL::asset('public/backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
+                                <img src="{{URL::asset('backend/assets/images/img.jpg')}}" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-error">21</h3>
                                   <p class="month">May</p>
@@ -771,7 +771,7 @@
                                             <input type="file" name="diploma" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/diploma/'.$diplomaCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/diploma/'.$diplomaCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -814,7 +814,7 @@
                                             <input type="file" name="driving_license" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/driving_license/'.$driving_license->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/driving_license/'.$driving_license->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -899,7 +899,7 @@
                                         <input type="file" name="old_skill[]" class="form-control" />
                                     </div>
                                     <div class="col-md-4 col-sm-4">
-                                        <a href="{{URL::asset('public/images/nurses/skill/'.$s->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                        <a href="{{URL::asset('images/nurses/skill/'.$s->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                     </div>
                                     @else
                                     <div class="col-md-6 col-sm-6">
@@ -1328,7 +1328,7 @@
                                             <input type="file" name="covid" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/vaccination/'.$covidVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/vaccination/'.$covidVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1378,7 +1378,7 @@
                                             <input type="file" name="flu" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/vaccination/'.$fluVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/vaccination/'.$fluVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1514,7 +1514,7 @@
                                                 <input type="file" name="old_image[]" class="form-control" />
                                             </div>
                                             <div class="col-md-4 col-sm-4">
-                                                <a href="{{URL::asset('public/images/nurses/reference/'.$ref->image)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                                <a href="{{URL::asset('images/nurses/reference/'.$ref->image)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                             </div>
                                             @else
                                             <div class="col-md-6 col-sm-6">
@@ -1581,7 +1581,7 @@
                                             <input type="file" name="bls" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/vaccination/'.$blsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/vaccination/'.$blsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1624,7 +1624,7 @@
                                             <input type="file" name="acls" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/vaccination/'.$aclsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/vaccination/'.$aclsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1667,7 +1667,7 @@
                                             <input type="file" name="pals" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/vaccination/'.$palsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/vaccination/'.$palsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1706,7 +1706,7 @@
                                             <input type="file" name="other" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('public/images/nurses/vaccination/'.$otherCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/nurses/vaccination/'.$otherCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">

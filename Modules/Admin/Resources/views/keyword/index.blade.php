@@ -103,7 +103,7 @@
         </div>
                         </li>
                         <li>
-                            <button class="ss-export-btn-sec"><img src="http://localhost/Goodwork-admin-newtheme/public\backend\assets\images/filter-img.png">Filter</button>
+                            <button class="ss-export-btn-sec"><img src="{{URL::asset('backend/assets/images/filter-img.png')}}">Filter</button>
                         </li>
                         
                         <li><button class="ss-add-role-btn" data-toggle="modal" data-target="#exampleModal">Add Keyword</button></li>

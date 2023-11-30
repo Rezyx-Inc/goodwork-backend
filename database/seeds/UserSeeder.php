@@ -27,6 +27,6 @@ class UserSeeder extends Seeder
             'mobile' => '1234657890'
         ]);
 
-        $admin->assignRole('Administrator');
+       // $admin->assignRole('Administrator');
     }
 }

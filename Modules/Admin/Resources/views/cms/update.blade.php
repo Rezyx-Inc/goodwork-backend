@@ -51,7 +51,7 @@
                         <label class="col-md-2 control-label">Image </label>
                         <div class="col-md-9">
                             @if ($model->content_body != '')
-                            <img class="img-responsive" style="width:200px; height:auto;" src="{{ URL::asset('public/uploads/admin/cms/pictures/preview/' . $model->content_body) }}" alt="{{ $model->content_body }}">
+                            <img class="img-responsive" style="width:200px; height:auto;" src="{{ URL::asset('uploads/admin/cms/pictures/preview/' . $model->content_body) }}" alt="{{ $model->content_body }}">
                             <br/>
                             @endif
                             <input type="file" class="form-control" name="content_body">
@@ -69,7 +69,7 @@
                         <div class="col-md-9">
                             @if ($model->content_body != '')
                             <video controls class="img-responsive" name="content_body">
-                                <source src="{{ URL::asset('public/uploads/admin/cms/videos/' . $model->content_body) }}" type="video/mp4" alt="{{ $model->content_body }}">
+                                <source src="{{ URL::asset('uploads/admin/cms/videos/' . $model->content_body) }}" type="video/mp4" alt="{{ $model->content_body }}">
                             </video>
                             <br/>
                             @endif

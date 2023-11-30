@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\{Response, JsonResponse};
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\login;
+use App\Mail\register;
 
 class RecruiterAuthController extends Controller
 {
@@ -117,12 +120,10 @@ class RecruiterAuthController extends Controller
                 $otp = $this->commonFunctionController->rand_number(4);
                 $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-                //sending to the email dosn't work for now
+                 // sending email verification otp after registring 
+                 $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
+                 Mail::to($model->email)->send(new login($email_data));
 
-                //$email_data = $this->commonFunctionController->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
-                // $email_data['to'] = $model->email;
-                // $email_data['subject'] = 'One Time Password for login';
-                //$this->commonFunctionController->sendMail($email_data);
                 $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
                 $data_msg['success'] = true;
                 $data_msg['link'] = Route('recruiter.verify');
@@ -142,7 +143,7 @@ class RecruiterAuthController extends Controller
                 return view('recruiter::auth.verify', $data);
             }
         }
-        return redirect()->route('recruiter::auth.login');
+        return redirect()->route('recruiter::recruiter.dashboard');
     }
 
     public function post_signup(Request $request) {
@@ -174,18 +175,17 @@ class RecruiterAuthController extends Controller
                     'role' => 'RECRUITER',
                 ]);
 
-                $email_data = $this->commonFunctionController->getEmailData('new_registration', ['NAME'=>$model->first_name.' '.$model->last_name]);
-                $email_data['to'] = $model->email;
-                $this->commonFunctionController->sendMail($email_data);
+                 // sending mail infromation 
+                 $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
+                 Mail::to($model->email)->send(new register($email_data));
 
                 session()->put('otp_user_id', $model->id);
                 $otp = $this->commonFunctionController->rand_number(4);
                 $model->update(['otp'=>$otp,'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-                $email_data = $this->commonFunctionController->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
-                $email_data['to'] = $model->email;
-                $email_data['subject'] = 'One Time Password for login';
-                $this->commonFunctionController->sendMail($email_data);
+                 // sending email verification otp after registring 
+                 $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
+                 Mail::to($model->email)->send(new login($email_data));
 
                 $response['msg'] = 'You are registered successfully! an OTP sent to your registered email and mobile number.';
                 $response['success'] = true;

@@ -6,25 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\EmailTemplate;
 
-class RegistrationMailable extends Mailable
+class login extends Mailable
 {
     use Queueable, SerializesModels;
-    
 
+    public $data;
     /**
      * Create a new message instance.
      *
-     * @param $first_name - first_name of nurse
-     * @param $last_name - last_name of nurse
-     * @param $email - email id of nurse
-     *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        
+        $this->data = $data;
     }
 
     /**
@@ -34,6 +29,6 @@ class RegistrationMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('mail-templates.template');
+        return $this->view('mail-templates.login',$this->data);
     }
 }

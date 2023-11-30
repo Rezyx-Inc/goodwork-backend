@@ -100,7 +100,7 @@
                       <div class="profile_img avatar-upload">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" id="imagePreview" width="220px" height="220px" src="{{URL::asset('public/uploads/admin/profile_picture/original/'.$model->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" id="imagePreview" width="220px" height="220px" src="{{URL::asset('uploads/admin/profile_picture/original/'.$model->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="Avatar" title="Change the avatar">
                         </div>
                         <div class="avatar-edit">
                             <input type='file' name="profile_picture" id="imageUpload" accept=".png, .jpg, .jpeg" />

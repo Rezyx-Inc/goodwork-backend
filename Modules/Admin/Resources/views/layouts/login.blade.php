@@ -14,17 +14,17 @@
     <title>{{env('PROJECT_NAME', 'Goodwork')}}</title>
 
     <!-- Bootstrap -->
-    <link href="{{URL::asset('public/backend/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('backend/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{URL::asset('public/backend/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('backend/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
     <!-- NProgress -->
-    <link href="{{URL::asset('public/backend/vendors/nprogress/nprogress.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('backend/vendors/nprogress/nprogress.css')}}" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="{{URL::asset('public/backend/vendors/animate.css/animate.min.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('backend/vendors/animate.css/animate.min.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{URL::asset('public/backend/custom/css/custom.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/backend/vendors/notie/dist/notie.css') }}">
+    <link href="{{URL::asset('backend/custom/css/custom.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
   </head>
 
   <body class="login">
@@ -37,12 +37,12 @@
       </div>
     </div>
     <!-- jQuery -->
-    <script src="{{URL::asset('public/backend/vendors/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{URL::asset('backend/vendors/jquery/dist/jquery.min.js')}}"></script>
     <!-- Notie alert -->
-    <script type="text/javascript" src="{{URL::asset('public/backend/vendors/notie/dist/notie.min.js') }}"></script>
+    <script type="text/javascript" src="{{URL::asset('backend/vendors/notie/dist/notie.min.js') }}"></script>
     <!-- Custom -->
-    <script src="{{URL::asset('public/backend/custom/js/profile.js')}}"></script>
-    <script src="{{URL::asset('public/backend/custom/js/script.js')}}"></script>
+    <script src="{{URL::asset('backend/custom/js/profile.js')}}"></script>
+    <script src="{{URL::asset('backend/custom/js/script.js')}}"></script>
     @include('admin::partials.flashMsg')
   </body>
 </html>

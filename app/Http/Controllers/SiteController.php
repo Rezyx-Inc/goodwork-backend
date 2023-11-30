@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\login;
+use App\Mail\register;
 use Illuminate\Http\Request;
 use Illuminate\Http\{Response, JsonResponse};
 use Illuminate\Support\Facades\{ Hash, Auth, Session, Cache };
@@ -156,20 +158,23 @@ class SiteController extends Controller {
                 $availability = Availability::create([
                     'nurse_id' => $nurse->id
                 ]);
-                $model->assignRole('NURSE');
 
-                
-                $email_data = $this->getEmailData('new_registration', ['NAME'=>$model->first_name.' '.$model->last_name]);
-                $email_data['to'] = $model->email;
-                $this->sendMail($email_data);
+                // suppose Nurse role should be inserted on db, had this error : at register "{\"Errors\":\"There is no role named `NURSE`.\"}"
+                // $model->assignRole('NURSE');
+
+
+                 // sending mail infromation 
+                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
+                  Mail::to($model->email)->send(new register($email_data));
+
                 session()->put('otp_user_id', $model->id);
                 $otp = $this->rand_number(4);
                 $model->update(['otp'=>$otp,'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-                $email_data = $this->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
-                $email_data['to'] = $model->email;
-                $email_data['subject'] = 'One Time Password for login';
-                $this->sendMail($email_data);
+               
+                // sending email verification otp after registring 
+                $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
+                Mail::to($model->email)->send(new login($email_data));
 
                 $response['msg'] = 'You are registered successfully! an OTP sent to your registered email and mobile number.';
                 $response['success'] = true;
@@ -183,6 +188,7 @@ class SiteController extends Controller {
 
     /** Login form submit */
     public function post_login(LoginRequest $request) {
+        
         if ($request->ajax()) {
             $data_msg = [];
             $input = $request->only('id');
@@ -191,12 +197,10 @@ class SiteController extends Controller {
             $otp = $this->rand_number(4);
             $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-            //sending to the email dosn't work for now
 
-           // $email_data = $this->getEmailData('otp-for', ['NAME'=>$model->first_name.' '.$model->last_name,'OTP'=> $otp, 'FOR'=> 'sign in']);
-           //$email_data['to'] = $model->email;
-           //$email_data['subject'] = 'One Time Password for login';
-           // $this->sendMail($email_data);
+           // sending mail verification 
+           $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
+           Mail::to($model->email)->send(new login($email_data));
 
             $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
             $data_msg['success'] = true;
@@ -335,7 +339,7 @@ class SiteController extends Controller {
     }
 
     public function verify() {
-
+       
         if (session()->has('otp_user_id')) {
             $data = [];
             $user = User::findOrFail(session()->get('otp_user_id'));

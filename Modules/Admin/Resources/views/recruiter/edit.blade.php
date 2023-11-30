@@ -123,7 +123,7 @@
             <div class="ss-my-profil-div">
           <h2>Profile</h2>
           <div class="ss-my-profil-img-div">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/profile-pic-big.png">
+            <img src="{{URL::asset('backend/assets/images/profile-pic-big.png')}}">
             <h4>James Bond</h4>
             <a href="#">Abc Healthcare Hospital</a>
           </div>
@@ -164,7 +164,7 @@
                     </ul>
                 </div>
                 <div class="ss-recru-prfil-grph-dv">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/worker-profile-graph.png">
+            <img src="{{URL::asset('backend/assets/images/worker-profile-graph.png')}}">
           </div>
             </div>
 

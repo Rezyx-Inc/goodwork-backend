@@ -42,12 +42,12 @@
           <div class="ss-my-profil-div">
           <h2>Profile</h2>
           <div class="ss-my-profil-img-div">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/profile-pic-big.png">
+            <img src="{{URL::asset('backend/assets/images/profile-pic-big.png')}}">
             <h4>James Bond</h4>
           </div>
           <div class="ss-profil-complet-div">
             <ul>
-              <li><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/progress.png"></li>
+              <li><img src="{{URL::asset('backend/assets/images/progress.png')}}"></li>
               <li>
                 <h6>Profile Incomplete</h6>
                 <a href="#">mohan07@gmail.com</a>
@@ -77,7 +77,7 @@
 
           <!--------------graph div----->
           <div class="ss-wrkr-prfil-grph-dv">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/worker-profile-graph.png" />
+            <img src="{{URL::asset('backend/assets/images/worker-profile-graph.png')}}" />
           </div>
 
           <!---------- Applied Jobs------------------>
@@ -230,12 +230,12 @@
           <div class="ss-my-profil-div ss-prof-prfil-dv">
           <h2>Professional Information</h2>
           <div class="ss-my-profil-img-div">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/profile-pic-big.png">
+            <img src="{{URL::asset('backend/assets/images/profile-pic-big.png')}}">
             <h4>James Bond</h4>
           </div>
           <div class="ss-profil-complet-div">
             <ul>
-              <li><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/progress.png"></li>
+              <li><img src="{{URL::asset('backend/assets/images/progress.png')}}"></li>
               <li>
                 <h6>Profile Incomplete</h6>
                 <a href="#">mohan07@gmail.com</a>
@@ -270,7 +270,7 @@
           <div class="ss-pers-info-form-mn-dv ss-wrkr-prfs-info-open">
            <form>
              <div class="ss-persnl-frm-hed">
-               <p><span><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png"></span>Basic Info</p>
+               <p><span><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}"></span>Basic Info</p>
             </div>
 
               <div class="ss-form-group">
@@ -295,12 +295,12 @@
                   <ul>
                     <li>ICU</li>
                     <li>4 Years</li>
-                    <li><button><img src="img/delete-img.png"></button></li>
+                    <li><button><img src="img/delete-img.png')}}"></button></li>
                   </ul>
                   <ul>
                     <li>L&amp;D</li>
                     <li>2 Years</li>
-                    <li><button><img src="img/delete-img.png"></button></li>
+                    <li><button><img src="img/delete-img.png')}}"></button></li>
                   </ul>
                 </div> -->
                 <ul>
@@ -376,7 +376,7 @@
          <div class="ss-pers-info-form-mn-dv ss-wrkr-per-infosub-ope">
            <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png">Info required to submit</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}">Info required to submit</p>
                
             </div>
 
@@ -468,7 +468,7 @@
           <div class="ss-pers-info-form-mn-dv ss-wrkr-per-urgncy-ope">
             <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png">Urgency</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}">Urgency</p>
                
             </div>
 
@@ -531,7 +531,7 @@
            <div class="ss-pers-info-form-mn-dv ss-wrkr-per-flot-req-ope">
              <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png"> Float Requirements</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}"> Float Requirements</p>
                
             </div>
 
@@ -637,7 +637,7 @@
            <div class="ss-pers-info-form-mn-dv ss-wrkr-per-pnt-rtio-ope">
              <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png"> Patient Ratio</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}"> Patient Ratio</p>
                
             </div>
 
@@ -722,7 +722,7 @@
             <div class="ss-pers-info-form-mn-dv ss-wrkr-per-int-dat-ope">
               <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png"> Interview Dates</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}"> Interview Dates</p>
              
             </div>
 
@@ -821,7 +821,7 @@
               <div class="ss-pers-info-form-mn-dv ss-wrkr-per-sin-bon-ope">
                 <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png">Sign-On Bonus</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}">Sign-On Bonus</p>
                
             </div>
 
@@ -922,7 +922,7 @@
                <div class="ss-pers-info-form-mn-dv ss-wrkr-per-overtime-ope">
                  <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png"> Overtime</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}"> Overtime</p>
                
             </div>
 
@@ -1056,12 +1056,12 @@
           <div class="ss-my-profil-div ss-prof-prfil-dv">
           <h2>Vaccination & Immunization</h2>
           <div class="ss-my-profil-img-div">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/profile-pic-big.png">
+            <img src="{{URL::asset('backend/assets/images/profile-pic-big.png')}}">
             <h4>James Bond</h4>
           </div>
           <div class="ss-profil-complet-div">
             <ul>
-              <li><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/progress.png"></li>
+              <li><img src="{{URL::asset('backend/assets/images/progress.png')}}"></li>
               <li>
                 <h6>Profile Incomplete</h6>
                 <a href="#">mohan07@gmail.com</a>
@@ -1080,7 +1080,7 @@
            <div class="ss-pers-info-form-mn-dv ss-vaccnt-immu-form-mn-dv" style="display: block;">
            <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per-con-user.png"> Vaccinations &amp; Immunizations</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per-con-user.png')}}"> Vaccinations &amp; Immunizations</p>
                
             </div>
 
@@ -1147,12 +1147,12 @@
           <div class="ss-my-profil-div ss-prof-prfil-dv">
           <h2>References</h2>
           <div class="ss-my-profil-img-div">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/profile-pic-big.png">
+            <img src="{{URL::asset('backend/assets/images/profile-pic-big.png')}}">
             <h4>James Bond</h4>
           </div>
           <div class="ss-profil-complet-div">
             <ul>
-              <li><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/progress.png"></li>
+              <li><img src="{{URL::asset('backend/assets/images/progress.png')}}"></li>
               <li>
                 <h6>Profile Incomplete</h6>
                 <a href="#">mohan07@gmail.com</a>
@@ -1170,7 +1170,7 @@
           <div class="ss-pers-info-form-mn-dv ss-profl-refrnc-form-mn-dv" style="display: block;">
            <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per--con-refren.png"> References</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per--con-refren.png')}}"> References</p>
                
             </div>
 
@@ -1271,12 +1271,12 @@
           <div class="ss-my-profil-div ss-prof-prfil-dv">
           <h2>Certifications</h2>
           <div class="ss-my-profil-img-div">
-            <img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/profile-pic-big.png">
+            <img src="{{URL::asset('backend/assets/images/profile-pic-big.png')}}">
             <h4>James Bond</h4>
           </div>
           <div class="ss-profil-complet-div">
             <ul>
-              <li><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/progress.png"></li>
+              <li><img src="{{URL::asset('backend/assets/images/progress.png')}}"></li>
               <li>
                 <h6>Profile Incomplete</h6>
                 <a href="#">mohan07@gmail.com</a>
@@ -1294,7 +1294,7 @@
           <div class="ss-pers-info-form-mn-dv ss-profl-certif-form-mn-dv">
            <form>
              <div class="ss-persnl-frm-hed">
-               <p><img src="http://localhost/Goodwork-admin-newtheme/public/backend/assets/images/my-per--con-key.png"> Certifications</p>
+               <p><img src="{{URL::asset('backend/assets/images/my-per--con-key.png')}}"> Certifications</p>
               
             </div>
 

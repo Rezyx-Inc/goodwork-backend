@@ -112,7 +112,7 @@
         </div>
                         </li>
                         <li>
-                            <button class="ss-export-btn-sec"><img src="http://localhost/Goodwork-admin-newtheme/public\backend\assets\images/export-icon.png" />Export</button>
+                            <button class="ss-export-btn-sec"><img src="{{URL::asset('backend\assets\images/export-icon.png')}}" />Export</button>
                         </li>
                         <li><button class="ss-add-role-btn" data-toggle="modal" data-target="#exampleModal">Add Worker</button></li>
                         <li><button class="ss-rol-delete-btn">Delete</button></li>

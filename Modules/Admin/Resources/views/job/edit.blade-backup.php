@@ -761,7 +761,7 @@
                                                 <input type="file" name="old_image[]" class="form-control" />
                                             </div>
                                             <div class="col-md-4 col-sm-4">
-                                                <a href="{{URL::asset('public/uploads/frontend/jobs/images/'.$ref->image)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                                <a href="{{URL::asset('uploads/frontend/jobs/images/'.$ref->image)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                             </div>
                                             @else
                                             <div class="col-md-6 col-sm-6">

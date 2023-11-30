@@ -111,7 +111,7 @@
                                     <table style="margin: 0 auto;" cellpadding="0" cellspacing="0" width="400" class="w320">
                                         <tr>
                                             <td align="center" valign="top" bgcolor="#ffffff" style="padding: 50px; border: 1px solid #E5E5E5;">
-                                               {!! $content !!}
+                                            @yield('content')
                                             </td>
                                         </tr>
                                     </table>

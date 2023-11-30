@@ -4,7 +4,7 @@ $user = auth()->guard('admin')->user();
 <div class="col-md-3 left_col"> <!-- menu_fixed class for fixed sidebar -->
     <div class="left_col scroll-view">
       <div class="navbar nav_title" style="border: 0;">
-        <a href="{{route('admin-dashboard')}}" class="site_title"><img class="sidebar-logo" src="{{ asset('public/frontend/assets/images/logoOneLine.png') }}" alt=""></a>
+        <a href="{{route('admin-dashboard')}}" class="site_title"><img class="sidebar-logo" src="{{ URL::asset('frontend/assets/images/logoOneLine.png') }}" alt=""></a>
       </div>
 
       <div class="clearfix"></div>
@@ -12,7 +12,7 @@ $user = auth()->guard('admin')->user();
       <!-- menu profile quick info -->
       <div class="profile clearfix">
         <div class="profile_pic">
-          <img src="{{URL::asset('public/uploads/admin/profile_picture/thumb/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" class="img-circle profile_img">
+          <img src="{{URL::asset('uploads/admin/profile_picture/thumb/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" class="img-circle profile_img">
         </div>
         <div class="profile_info">
           <span>Welcome,</span>

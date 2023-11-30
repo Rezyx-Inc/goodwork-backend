@@ -50,7 +50,8 @@ Route::prefix('admin')->group(function() {
         Route::get('admin-updateemail/{id}', ['uses' => 'EmailController@get_update', 'as' => 'admin-updateemail']);
         Route::post('admin-updateemail/{id}', ['uses' => 'EmailController@post_update', 'as' => 'admin-updateemail']);
 
-        Route::get('admin-faqs', ['uses' => 'FaqController@index', 'as' => 'admin-faqs']);
+        Route::get('admin-faqs', ['uses' => 'FaqController@index', 'as' => 'admin-faqs']); 
+        
         Route::get('admin-createfaq', ['uses' => 'FaqController@get_create', 'as' => 'admin-createfaq']);
         Route::post('admin-createfaq', ['uses' => 'FaqController@post_create', 'as' => 'admin-createfaq']);
         Route::get('admin-viewfaq/{id}', ['uses' => 'FaqController@view', 'as' => 'admin-viewfaq']);

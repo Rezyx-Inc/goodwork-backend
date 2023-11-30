@@ -53,13 +53,13 @@
                             @if ($model->type == '2')
                             <label class="control-label col-md-3">Image:</label>
                             <div class="col-md-9">
-                                <img class="img-responsive" style="width:200px; height:auto;" src="{{ URL::asset('public/uploads/admin/cms/pictures/preview/' . $model->content_body) }}" alt="{{ $model->content_body }}">
+                                <img class="img-responsive" style="width:200px; height:auto;" src="{{ URL::asset('uploads/admin/cms/pictures/preview/' . $model->content_body) }}" alt="{{ $model->content_body }}">
                             </div>
                             @elseif ($model->type == '3')
                             <label class="control-label col-md-3">Video:</label>
                             <div class="col-md-9">
                                 <video controls class="img-responsive">
-                                    <source src="{{ URL::asset('public/uploads/admin/cms/videos/' . $model->content_body) }}" type="video/mp4" alt="{{ $model->content_body }}">
+                                    <source src="{{ URL::asset('uploads/admin/cms/videos/' . $model->content_body) }}" type="video/mp4" alt="{{ $model->content_body }}">
                                 </video>
                             </div>
                             @else

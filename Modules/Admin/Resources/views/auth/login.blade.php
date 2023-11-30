@@ -6,8 +6,8 @@
     <title>GoodWork</title>
     @include('frontend.common.styles')
       <!-- Custom Theme Style -->
-      <link href="{{URL::asset('public/backend/custom/css/custom.min.css')}}" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/backend/vendors/notie/dist/notie.css') }}">
+      <!-- <link href="{{URL::asset('backend/custom/css/custom.min.css')}}" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}"> -->
 </head>
 
 <body>
@@ -17,10 +17,10 @@
         <div class="col left_side">
           <div class="mx-auto text-center">
             <a href="/login" class="brand">
-              <img src="{{ asset('public/frontend/assets/images/logoOneLine.png') }}" alt="">
+              <img src="{{ asset('frontend/assets/images/logoOneLine.png') }}" alt="">
             </a>
             <div class="cc23_img my-4">
-              <img class="" src="{{ asset('public/frontend/assets/images/admin_cc23.png') }}" alt="">
+              <img class="" src="{{ asset('frontend/assets/images/admin_cc23.png') }}" alt="">
             </div>
             <p class="my-4 fs-24 fw-400">We help healthcare workers <br/>& employers find each other</p>
           </div>
@@ -74,11 +74,11 @@
     </section>
 
   </body>
-  <script src="{{URL::asset('public/backend/vendors/jquery/dist/jquery.min.js')}}"></script>
+  <script src="{{URL::asset('backend/vendors/jquery/dist/jquery.min.js')}}"></script>
   @include('frontend.common.scripts')
   <!-- Notie alert -->
-  <script type="text/javascript" src="{{URL::asset('public/backend/vendors/notie/dist/notie.min.js') }}"></script>
+  <script type="text/javascript" src="{{URL::asset('backend/vendors/notie/dist/notie.min.js') }}"></script>
   <!-- Custom -->
-  <script src="{{URL::asset('public/backend/custom/js/profile.js')}}"></script>
-  <script src="{{URL::asset('public/backend/custom/js/script.js')}}"></script>
+  <script src="{{URL::asset('backend/custom/js/profile.js')}}"></script>
+  <script src="{{URL::asset('backend/custom/js/script.js')}}"></script>
 </html>
