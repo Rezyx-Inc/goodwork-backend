@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\FacilityController;
+namespace App\Http\Controllers\Api\Facility;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+
 
 // Models
 
@@ -3659,6 +3660,199 @@ class FacilityController extends Controller
         $this->check = "1";
         $this->message = "Employer has been listed successfully";
         $this->return_data = $facilities;
+
+        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
+    }
+
+    
+    public function browse_facilities(Request $request)
+    {
+        if (isset($request->facility_id) && $request->facility_id != "") {
+            $whereCond = ['facilities.id' => $request->facility_id, 'facilities.active' => true];
+        } else {
+            // $whereCond = ['facilities.active' => true, 'jobs.is_open' => "1"];
+            $whereCond = ['facilities.active' => true];
+        }
+
+        $ret = Facility::select('facilities.id as facility_id', 'facilities.*', 'jobs.preferred_specialty')
+            ->leftJoin('jobs', function ($join) {
+                $join->on('facilities.id', '=', 'jobs.facility_id');
+            })
+            ->where($whereCond);
+
+        if (isset($request->facility_type) && $request->facility_type  != "") {
+            $type = $request->facility_type;
+            $ret->where(function (Builder $query) use ($type) {
+                $query->whereIn('type', $type);
+            });
+        }
+
+        if (isset($request->electronic_medical_records) && $request->electronic_medical_records != "") {
+            $electronic_medical_records = $request->electronic_medical_records;
+            $ret->where(function (Builder $query) use ($electronic_medical_records) {
+                $query->whereIn('f_emr', $electronic_medical_records);
+            });
+        }
+
+        /* name search for api */
+        if (isset($request->search_keyword) && $request->search_keyword != "") {
+            $search_keyword = $request->search_keyword;
+            $ret->search([
+                'name'
+            ], $search_keyword);
+        }
+        /* name search for api */
+
+        /*new update jan 10*/
+        $open_assignment_type = (isset($request->open_assignment_type) && $request->open_assignment_type != "") ? $request->open_assignment_type : "";
+        /*if ($open_assignment_type) {
+                $ret->where('jobs.preferred_specialty', '=', $open_assignment_type);
+        }*/
+        if ($open_assignment_type != "") {
+            $ret->where(function (Builder $query) use ($open_assignment_type) {
+                $query->whereIn('jobs.preferred_specialty', $open_assignment_type);
+            });
+        }
+        /*new update jan 10*/
+
+        /*new update jan 10*/
+        /* state city and postcode new update */
+        $states = (isset($request->state) && $request->state != "") ? $request->state : "";
+        if (isset($states) && $states != "") {
+            $getStates = States::where(['id' => $states])->get();
+            if ($getStates->count() > 0) {
+                $selected_state = $getStates->first();
+                $name = $selected_state->name;
+                $iso2 = $selected_state->iso2;
+                $ret->where(function (Builder $query1) use ($name, $iso2) {
+                    $query1->where('state', array($name));
+                    $query1->orWhere('state', array($iso2));
+                });
+            }
+        }
+
+        $cities = (isset($request->city) && $request->city != "") ? $request->city : "";
+        if (isset($cities) && $cities != "") {
+            $getCities = Cities::where(['id' => $cities])->get();
+            if ($getCities->count() > 0) {
+                $selected_city = $getCities->first();
+                $name = $selected_city->name;
+                $ret->where(function (Builder $query1) use ($name) {
+                    $query1->where('city', array($name));
+                });
+            }
+        }
+
+        $zipcode = (isset($request->zipcode) && $request->zipcode != "") ? $request->zipcode : "";
+        if (isset($zipcode) && $zipcode != "") {
+            $ret->where(function (Builder $query_zip) use ($zipcode) {
+                $query_zip->where('postcode', array($zipcode));
+            });
+            /*$zipcode_inp = [];
+                $nearest = $this->getNearestMiles($zipcode);
+                if (isset($nearest['results']) && !empty($nearest['results'])) {
+                    foreach ($nearest['results'] as $zipkey => $zip_res) {
+                        $zipcode_inp[] = $zip_res['code'];
+                    }
+                }
+                if (!empty($zipcode_inp)) {
+                    $ret->where(function (Builder $query_zip) use ($zipcode_inp) {
+                        $query_zip->whereIn('postcode', $zipcode_inp);
+                    });
+                } else {
+                    $ret->where(function (Builder $query_zip) use ($zipcode) {
+                        $query_zip->where('postcode', array($zipcode));
+                    });
+                }*/
+        }
+        /* state city and postcode new update */
+        /*new update jan 10*/
+
+        $ret->groupBy('facilities.id')->orderBy('created_at', 'desc');
+        $facility_data = (isset($request->facility_id) && $request->facility_id != "") ? $ret->paginate(1) : $ret->paginate(10);
+        $user_id = (isset($request->user_id) && $request->user_id != "") ? $request->user_id : "";
+
+        $response = $this->facilityData($facility_data, $user_id);
+        // $response = $this->facilityData($facility_data, $user_id = $request->user_id);
+
+        $this->check = "1";
+        $this->message = "Facilities listed below";
+        $this->return_data = $response;
+
+        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
+    }
+
+    
+    public function facilityFollows(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'user_id' => 'required',
+            'facility_id' => 'required',
+            'type' => 'required',
+            'api_key' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            $this->message = $validator->errors()->first();
+        } else {
+            $check_exists = FacilityFollows::where([
+                'user_id' => $request->user_id,
+                'facility_id' => $request->facility_id,
+            ]);
+            if ($check_exists->count() > 0) {
+                $follows = FacilityFollows::where([
+                    'user_id' => $request->user_id,
+                    'facility_id' => $request->facility_id,
+                ])->update(['follow_status' => strval($request->type)]);
+            } else {
+                $follows = FacilityFollows::create([
+                    'user_id' => $request->user_id,
+                    'facility_id' => $request->facility_id,
+                    'follow_status' => strval($request->type)
+                ]);
+            }
+
+            $this->check = "1";
+            $this->message = ($request->type == "1") ? "Followed successfully" : "Unfollowed successfully";
+        }
+
+        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
+    }
+    
+    public function facilityLikes(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'user_id' => 'required',
+            'facility_id' => 'required',
+            'like' => 'required',
+            'api_key' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            $this->message = $validator->errors()->first();
+        } else {
+            $check_exists = FacilityFollows::where([
+                'user_id' => $request->user_id,
+                'facility_id' => $request->facility_id,
+            ]);
+            if ($check_exists->count() > 0) {
+                $follows = FacilityFollows::where([
+                    'user_id' => $request->user_id,
+                    'facility_id' => $request->facility_id,
+                ])->update(['like_status' => $request->like]);
+            } else {
+                $follows = FacilityFollows::create([
+                    'user_id' => $request->user_id,
+                    'facility_id' => $request->facility_id,
+                    'like_status' => $request->like
+                ]);
+            }
+
+            $this->check = "1";
+            $this->message = ($request->like == "1") ? "Liked successfully" : "Disliked successfully";
+        }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
