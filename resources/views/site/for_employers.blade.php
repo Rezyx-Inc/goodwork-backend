@@ -13,8 +13,8 @@
           <h2>Empower Your Nursing Team with Our Platform</h2>
           <p>Discover Seamless Talent Acquisition: Our platform streamlines the process of finding qualified nurses for your facility. With intuitive search tools and comprehensive profiles, you can easily identify candidates whose skills and experience align with your staffing needs. Say goodbye to sifting through countless resumes – our platform connects you with top nursing talent effortlessly.</p>
           <ul>
-            <li><a href="#">Schedule a demo now</a></li>
-            
+            <li><a href="{{route('employer.login')}}">Schedule a demo now</a></li>
+
           </ul>
         </div>
       </div>
@@ -56,12 +56,12 @@
       <div class="col-lg-12">
       <div class="ss-benefit-hed-sed">
         <h6>Benefits for Recruiters</h6>
-        <h2>We help healthcare <span class="ss-clr-pink">workers 
+        <h2>We help healthcare <span class="ss-clr-pink">workers
 & employers</span> find each other</h2>
 <div class="ss-flower-img-div">
   <img src="{{URL::asset('landing/img/emplyoyers-flower-img.png')}}" />
 </div>
-      </div>        
+      </div>
       </div>
     </div>
   </div>
@@ -82,7 +82,7 @@
      <div class="col-lg-12">
        <div class="ss-hm-hed-sec">
          <h4>Valuable Feedback</h4>
-         <h2>What the <span class="ss-clr-pink">professionals</span> are 
+         <h2>What the <span class="ss-clr-pink">professionals</span> are
 saying about us  </h2>
        </div>
 
@@ -156,7 +156,7 @@ saying about us  </h2>
 
      </div>
    </div>
- </div> 
+ </div>
 </section>
 
 
@@ -170,7 +170,7 @@ saying about us  </h2>
       <div class="col-lg-7">
         <div class="ss-downld-app-txt-hed">
          <h4>Download <span class="ss-fnt-nrml">Goodwork</span></h4>
-         <h2>Easy-to-apply <span class="ss-clr-pink">dream jobs</span>, 
+         <h2>Easy-to-apply <span class="ss-clr-pink">dream jobs</span>,
 all on one app</h2>
 <p>sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu</p>
 
@@ -212,11 +212,11 @@ all on one app</h2>
     <div class="row">
       <div class="col-lg-12">
         <h2>sign up to explore your career options today!</h2>
-        <a href="#">Sign Up Now</a>
+        <a href="{{route('employer-signup')}}">Sign Up Now</a>
       </div>
     </div>
   </div>
 </section>
 
-   
+
 @stop

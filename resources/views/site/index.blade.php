@@ -67,7 +67,7 @@
   </p>
   <p>sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu</p>
 
-  <a href="#">Explore Jobs</a>
+  <a href="{{route('explore-jobs')}}">Explore Jobs</a>
          </div>
         </div>
       </div>
@@ -94,7 +94,7 @@
   <p>
     Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing.</p>
 
-  <a href="#">Explore Jobs</a>
+  <a href="{{route('explore-jobs')}}">Explore Jobs</a>
          </div>
 
   <!----slider---->
@@ -316,7 +316,7 @@
 
       </div>
       <div class="ss-hm-job-prfile-red-sec">
-        <a href="#">View All Jobs</a>
+        <a href="{{route('explore-jobs')}}">View All Jobs</a>
       </div>
     </div>
 
@@ -337,7 +337,7 @@
   <p>
     Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing.</p>
 
-  <a href="#">Explore Jobs</a>
+  <a href="{{route('explore-jobs')}}">Explore Jobs</a>
          </div>
         </div>
 
@@ -411,7 +411,7 @@
   </p>
   <p>sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu</p>
 
-  <a href="#">Explore Jobs</a>
+  <a href="{{route('explore-jobs')}}">Explore Jobs</a>
          </div>
         </div>
       </div>

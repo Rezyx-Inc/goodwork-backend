@@ -12,10 +12,10 @@
                 <div class="ss-foot-link-sec">
                     <h4>Useful Links</h4>
                     <ul>
-                        <li><a href="#">Explore Jobs</a></li>
-                        <li><a href="#">For Employers</a></li>
-                        <li><a href="#">For Recruiters</a></li>
-                        <li><a href="#">About Us</a></li>
+                        <li><a href="{{route('explore-jobs')}}">Explore Jobs</a></li>
+                        <li><a href="{{route('for-employers')}}">For Employers</a></li>
+                        <li><a href="{{route('for-recruiters')}}">For Recruiters</a></li>
+                        <li><a href="{{route('about-us')}}">About Us</a></li>
 
                     </ul>
                 </div>
@@ -25,10 +25,10 @@
                 <div class="ss-foot-link-sec">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="#">Explore Jobs</a></li>
-                        <li><a href="#">For Employers</a></li>
-                        <li><a href="#">For Recruiters</a></li>
-                        <li><a href="#">About Us</a></li>
+                    <li><a href="{{route('explore-jobs')}}">Explore Jobs</a></li>
+                        <li><a href="{{route('for-employers')}}">For Employers</a></li>
+                        <li><a href="{{route('for-recruiters')}}">For Recruiters</a></li>
+                        <li><a href="{{route('about-us')}}">About Us</a></li>
 
                     </ul>
                 </div>
