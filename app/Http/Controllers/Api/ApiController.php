@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Carbon\Carbon;
 
@@ -54,7 +54,7 @@ use Stripe\Account;
 use Stripe\Payout;
 use Stripe\PaymentIntent;
 use DB;
-
+use App\Http\Controllers\Controller;
 class ApiController extends Controller
 {
     /**
@@ -81,7 +81,7 @@ class ApiController extends Controller
     }
 
 
-    // we can use 
+    // we can use
 
     public function timeAgo($time = NULL)
     {
@@ -173,16 +173,16 @@ class ApiController extends Controller
         $certifications = $this->getCertifications()->pluck('title', 'id');
         $preferredShifts = $this->getPreferredShift()->pluck('title', 'id');
         $experiencesTypes = $this->getExperienceTypes()->pluck('title', 'id');
-        
+
         $licenseStatus = $this->getSearchStatus()->pluck('title', 'id');
         $licenseType = $this->getLicenseType()->pluck('title', 'id');
         // $data = [];
         // foreach ($licenseType as $key => $value) {
         //     $data[] = ['id' => strval($key), "name" => $value];
         // }
-        
+
         $nurse = Nurse::where('user_id', '=', $user->id)->get()->first();
-        
+
         if(isset($nurse->id)){
             $offer = DB::select("SELECT status FROM `offers` WHERE nurse_id = '$nurse->id'");
             if(!empty($offer)){
@@ -190,11 +190,11 @@ class ApiController extends Controller
             }
         }
         $availability = Availability::where('nurse_id', '=', $nurse->id)->get()->first();
-                   
+
         /* profile status flag */
-        $profile_detail_flag = "0"; 
+        $profile_detail_flag = "0";
         $profile_completion = 0;
-        
+
         if (
             (isset($user->first_name) && $user->first_name != "") &&
             (isset($user->last_name) && $user->last_name != "") &&
@@ -210,7 +210,7 @@ class ApiController extends Controller
             (isset($nurse->state) && $nurse->state != "") &&
             // (isset($nurse->postcode) && $nurse->postcode != "") &&
             (isset($nurse->country) && $nurse->country != "")
-            
+
         ) $profile_detail_flag = "1";
         /* profile status flag */
 
@@ -238,7 +238,7 @@ class ApiController extends Controller
         $return_data['security_number'] = (isset($user->security_number) && $user->security_number != "") ? $user->security_number : "";
         $return_data['email_notification'] = (isset($user->email_notification) && $user->email_notification != "") ? strval($user->email_notification) : "";
         $return_data['sms_notification'] = (isset($user->sms_notification) && $user->sms_notification != "") ? strval($user->sms_notification) : "";
-        
+
         $return_data['first_name'] = (isset($user->first_name) && $user->first_name != "") ? $user->first_name : "";
         $return_data['last_name'] = (isset($user->last_name) && $user->last_name != "") ? $user->last_name : "";
         $return_data['email'] = (isset($user->email) && $user->email != "") ? $user->email : "";
@@ -277,7 +277,7 @@ class ApiController extends Controller
         // }else{
         //     $return_data['work_location_definition'] = '';
         // }
-        
+
         $return_data['address'] = (isset($nurse->address) && $nurse->address != "") ? $nurse->address : "";
 
         $return_data['search_status'] = (isset($nurse->search_status) && $nurse->search_status != "") ? strval($nurse->search_status) : "";
@@ -325,7 +325,7 @@ class ApiController extends Controller
                 $crt_data['total_experience'] = $exp_acute_care+$exp_ambulatory_care;
                 $crt_data['total_experience'] = (int)$crt_data['total_experience'];
                 $experience[] = $crt_data;
-        
+
             }
         }
         $return_data['experience'] = $experience;
@@ -362,7 +362,7 @@ class ApiController extends Controller
                 // $crt_data['active'] = (isset($v->active) && $v->active != "") ? $v->active : "";
                 // $crt_data['deleted_at'] = (isset($v->deleted_at) && $v->deleted_at != "") ? $v->deleted_at : "";
                    $crt_data['created_at'] = (isset($v->created_at) && $v->created_at != "") ? $v->created_at : "";
-                    // $crt_data['updated_at'] = (isset($v->updated_at) && $v->updated_at != "") ? $v->updated_at : ""; 
+                    // $crt_data['updated_at'] = (isset($v->updated_at) && $v->updated_at != "") ? $v->updated_at : "";
                 $certitficate[] = $crt_data;
                 // }
             }
@@ -422,7 +422,7 @@ class ApiController extends Controller
             $return_data['profile_details'] = 'true';
         }else{
             $return_data['profile_details'] = 'false';
-        } 
+        }
 
         if(!empty($return_data['highest_nursing_degree'])){
             $profile_completion++;
@@ -584,7 +584,7 @@ class ApiController extends Controller
     {
         $result = [];
         if (!empty($jobdata)) {
-            
+
             $controller = new Controller();
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             $assignmentDurations = $this->getAssignmentDurations()->pluck('title', 'id');
@@ -616,7 +616,7 @@ class ApiController extends Controller
                 $j_data["employer_weekly_amount"] = isset($job['employer_weekly_amount']) ? $job['employer_weekly_amount'] : "";
                 $j_data["weekly_pay"] = isset($job['weekly_pay']) ? $job['weekly_pay'] : "";
                 $j_data["hours_per_week"] = isset($job['hours_per_week']) ? $job['hours_per_week'] : 0;
-                
+
                 $j_data["preferred_specialty"] = isset($job['preferred_specialty']) ? $job['preferred_specialty'] : "";
                 $j_data["preferred_specialty_definition"] = isset($specialties[$job['preferred_specialty']])  ? $specialties[$job['preferred_specialty']] : "";
 
@@ -625,10 +625,10 @@ class ApiController extends Controller
                 if(isset($j_data["preferred_assignment_duration_definition"]) && !empty($j_data["preferred_assignment_duration_definition"])){
                     $assignment = explode(" ", $assignmentDurations[$job['preferred_assignment_duration']]);
                     $j_data["preferred_assignment_duration_definition"] = $assignment[0]; // 12 Week
-                } 
+                }
                 $j_data["preferred_shift_duration"] = isset($job['preferred_shift']) ? $job['preferred_shift'] : "";
                 // $j_data["preferred_shift_duration_definition"] = isset($shifts[$job->preferred_shift_duration]) ? $shifts[$job->preferred_shift_duration] : "";
-                
+
                 $j_data["preferred_work_location"] = isset($job['preferred_work_location']) ? $job['preferred_work_location'] : "";
                 $j_data["preferred_work_location_definition"] = isset($workLocations[$job['preferred_work_location']]) ? $workLocations[$job['preferred_work_location']] : "";
 
@@ -646,13 +646,13 @@ class ApiController extends Controller
                 }
                 $j_data["created_at"] = isset($job['created_at']) ? date('d-F-Y h:i A', strtotime($job['created_at'])) : "";
                 $j_data["created_at_definition"] = isset($job['created_at']) ?date('M d Y', strtotime($job['created_at'])) : "";
-                
+
                 $j_data["updated_at"] = isset($job->updated_at) ? date('M d Y', strtotime($job->updated_at)) : "";
                 $j_data["deleted_at"] = isset($job->deleted_at) ? date('d-F-Y h:i A', strtotime($job->deleted_at)) : "";
                 $j_data["created_by"] = isset($job->created_by) ? $job->created_by : "";
                 $j_data["slug"] = isset($job['slug']) ? $job['slug'] : "";
                 $j_data["facility_id"] = isset($job['facility_id']) ? $job['facility_id'] : "";
-                
+
                 $j_data["seniority_level"] = isset($job->seniority_level) ? $job->seniority_level : "";
                 $j_data["seniority_level_definition"] = isset($seniorityLevels[$job->seniority_level]) ? $seniorityLevels[$job->seniority_level] : "";
 
@@ -681,7 +681,7 @@ class ApiController extends Controller
                 $j_data["city"] = isset($job['job_city']) ? $job['job_city'] : "";
                 $j_data["state"] = isset($job['job_state']) ? $job['job_state']: "";
                 $j_data["postcode"] = isset($job['facility']->postcode) ? $job['facility']->postcode : "";
-                
+
                 $j_data["facility_logo"] = isset($job->facility->facility_logo) ? url("public/images/facilities/" . $job->facility->facility_logo) : "";
                 $j_data["facility_email"] = isset($job->facility->facility_email) ? $job->facility->facility_email : "";
                 $j_data["facility_phone"] = isset($job->facility->facility_phone) ? $job->facility->facility_phone : "";
@@ -689,10 +689,10 @@ class ApiController extends Controller
                 $j_data["cno_message"] = isset($job->facility->cno_message) ? $job->facility->cno_message : "";
 
                 $j_data["cno_image"] = isset($job->facility->cno_image) ? url("public/images/facilities/cno_image".$job->facility->cno_image) : "";
-                
+
                 $j_data["about_facility"] = isset($job->facility->about_facility) ? $job->facility->about_facility : "";
                 $j_data["facility_website"] = isset($job->facility->facility_website) ? $job->facility->facility_website : "";
-                
+
                 $j_data["f_emr"] = isset($job->facility->f_emr) ? $job->facility->f_emr : "";
                 $j_data["f_emr_other"] = isset($job->facility->f_emr_other) ? $job->facility->f_emr_other : "";
                 $j_data["f_bcheck_provider"] = isset($job->facility->f_bcheck_provider) ? $job->facility->f_bcheck_provider : "";
@@ -711,7 +711,7 @@ class ApiController extends Controller
                 $j_data["worker_hours_shift"] = isset($job->facility->worker_hours_shift) ? $job->facility->worker_hours_shift : "";
                 $j_data["worker_shifts_week"] = isset($job->facility->worker_shifts_week) ? $job->facility->worker_shifts_week : "";
                 $j_data["facility_shift_cancelation_policy"] = isset($job->facility->facility_shift_cancelation_policy) ? $job->facility->facility_shift_cancelation_policy : "";
-                
+
                 /* total applied */
                 $total_follow_count = Follows::where(['job_id' => $job['job_id'], "applied_status" => "1", 'status' => "1"])->distinct('user_id')->count();
                 $j_data["total_applied"] = strval($total_follow_count);
@@ -729,7 +729,7 @@ class ApiController extends Controller
                 $is_liked = "0";
                 if ($user_id != "")
                     $is_liked = Follows::where(['job_id' => $job['job_id'], "like_status" => "1", 'status' => "1", "user_id" => $user_id])->count();
-                
+
                 /* liked */
                 $j_data["is_liked"] = strval($is_liked);
 
@@ -753,11 +753,11 @@ class ApiController extends Controller
                         $saveret = \DB::table('job_saved')
                         ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
                         ->where($whereCond);
-                        
+
                         if ($saveret->count() > 0) {
                             $is_saved = '1';
                         }
-                        
+
                     }
                 }
                 $j_data["is_saved"] = $is_saved;
@@ -767,7 +767,7 @@ class ApiController extends Controller
         return $result;
     }
 
-    
+
 
     public function facilityData($facility_result, $user_id = "")
     {
@@ -776,7 +776,7 @@ class ApiController extends Controller
             foreach ($facility_result as $key => $facility_data) {
                 $facility["id"] = (isset($facility_data->id) && $facility_data->id != "") ? $facility_data->facility_id : "";
                 $facility["facility_logo"]  = (isset($facility_data->facility_logo) && $facility_data->facility_logo != "") ?  url("public/images/facilities/" . $facility_data->facility_logo) : "";
-                
+
                 $facility["created_by"] = (isset($facility_data->created_by) && $facility_data->created_by != "") ? $facility_data->created_by : "";
                 $facility["name"] = (isset($facility_data->name) && $facility_data->name != "") ? $facility_data->name : "";
                 $facility["address"] = (isset($facility_data->address) && $facility_data->address != "") ? $facility_data->address : "";
@@ -895,7 +895,7 @@ class ApiController extends Controller
         return $result;
     }
 
-    
+
 
     public function jobActive(Request $request)
     {
@@ -1011,14 +1011,14 @@ class ApiController extends Controller
         $certifications = $this->getCertifications()->pluck('title', 'id');
         $preferredShifts = $this->getPreferredShift()->pluck('title', 'id');
         $experiencesTypes = $this->getExperienceTypes()->pluck('title', 'id');
-        
+
         $licenseStatus = $this->getSearchStatus()->pluck('title', 'id');
         $licenseType = $this->getLicenseType()->pluck('title', 'id');
         // $data = [];
         // foreach ($licenseType as $key => $value) {
         //     $data[] = ['id' => strval($key), "name" => $value];
         // }
-        
+
         $nurse = Nurse::where('id', '=', $type)->get()->first();
         if(isset($nurse->id)){
             $offer = DB::select("SELECT status FROM `offers` WHERE nurse_id = '$nurse->id'");
@@ -1045,7 +1045,7 @@ class ApiController extends Controller
             (isset($nurse->state) && $nurse->state != "") &&
             (isset($nurse->postcode) && $nurse->postcode != "") &&
             (isset($nurse->country) && $nurse->country != "")
-            
+
         ) $profile_detail_flag = "1";
         /* profile status flag */
 
@@ -1166,7 +1166,7 @@ class ApiController extends Controller
                 $crt_data['total_experience'] = $exp_acute_care+$exp_ambulatory_care;
                 $crt_data['total_experience'] = (int)$crt_data['total_experience'];
                 $experience[] = $crt_data;
-        
+
             }
         }
         $return_data['experience'] = $experience;
@@ -1203,7 +1203,7 @@ class ApiController extends Controller
                 // $crt_data['active'] = (isset($v->active) && $v->active != "") ? $v->active : "";
                 // $crt_data['deleted_at'] = (isset($v->deleted_at) && $v->deleted_at != "") ? $v->deleted_at : "";
                    $crt_data['created_at'] = (isset($v->created_at) && $v->created_at != "") ? $v->created_at : "";
-                    // $crt_data['updated_at'] = (isset($v->updated_at) && $v->updated_at != "") ? $v->updated_at : ""; 
+                    // $crt_data['updated_at'] = (isset($v->updated_at) && $v->updated_at != "") ? $v->updated_at : "";
                 $certitficate[] = $crt_data;
                 // }
             }
@@ -1235,7 +1235,7 @@ class ApiController extends Controller
         /* nurse assets */
         $return_data['role_interest'] = $role_interest;
         /* role interest */
-        
+
         // new check
         if (
             (isset($user->date_of_birth) && $user->date_of_birth != "") &&
@@ -1246,7 +1246,7 @@ class ApiController extends Controller
             $return_data['profile_details'] = 'true';
         }else{
             $return_data['profile_details'] = 'false';
-        } 
+        }
         // end new check
 
         if(!empty($return_data['highest_nursing_degree'])){
@@ -1295,8 +1295,8 @@ class ApiController extends Controller
         return $return_data;
     }
 
-   
-    
+
+
     public function confirmOTP(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -1314,11 +1314,11 @@ class ApiController extends Controller
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
                 if(isset($user->otp) && !empty($user->otp)){
-                    
+
                     if ($user->otp == $request->otp) {
                         $update_otp = USER::where(['id' => $user->id])->update(['otp' => NULL, 'fcm_token' => $request->fcm_token, 'email_verified_at' => date('Y-m-d H:i:s')]);
                         if ($update_otp) {
-    
+
                             if (isset($user->role) && $user->role == "NURSE") {
                                 $return_data = $this->profileCompletionFlagStatus($type = "login", $user);
                                 // $return_data = $this->profileCompletionFlagStatus($type = "login", $user);
@@ -1326,7 +1326,7 @@ class ApiController extends Controller
                                 $return_data['facility_details'] = $this->facilityProfileCompletionFlagStatus($type = "login", $user);
                                 $return_data['user_details'] = $user;
                             }
-                            
+
                             $this->check = "1";
                             $this->message = "Logged in successfully";
                         } else {
@@ -1352,7 +1352,7 @@ class ApiController extends Controller
     }
 
 
- 
+
 
     function moveElement(&$array, $a, $b)
     {
@@ -1366,7 +1366,7 @@ class ApiController extends Controller
 
         $states = $this->getStateOptions();
         $facilityTypes = $this->getFacilityType()->pluck('title', 'id');
-        
+
         $eMedicalRecords = $this->getEMedicalRecords()->pluck('title', 'id');
         $eMedicalRecords['0'] = 'Other';
 
@@ -1407,18 +1407,18 @@ class ApiController extends Controller
         //     }
         // }
         // $facility_info["facility_logo_base"] = ($facility_logo != "") ? 'data:image/jpeg;base64,' . base64_encode($facility_logo) : "";
-        
+
         $facility_info["facility_email"] = (isset($facility->facility_email) && $facility->facility_email != "") ? $facility->facility_email : "";
         $facility_info["facility_phone"] = (isset($facility->facility_phone) && $facility->facility_phone != "") ? $facility->facility_phone : "";
         $facility_info["specialty_need"] = (isset($facility->specialty_need) && $facility->specialty_need != "") ? $facility->specialty_need : "";
-        
+
         $facility_info["facility_type"] = (isset($facility->type) && $facility->type != "") ? strval($facility->type) : "";
         if(isset($facility) && !empty($facility)){
             $facility_info["facility_type_definition"] = (isset($facilityTypes[$facility->type]) && $facilityTypes[$facility->type] != "") ? $facilityTypes[$facility->type] : "";
         }else{
             $facility_info["facility_type_definition"] = "";
         }
-        
+
         // $facility_info["active"] = (isset($facility->active) && $facility->active != "") ? $facility->active : "";
         // $facility_info["deleted_at"] = (isset($facility->deleted_at) && $facility->deleted_at != "") ? $facility->deleted_at : "";
         // $facility_info["created_at"] = (isset($facility->created_at) && $facility->created_at != "") ? $facility->created_at : "";
@@ -1449,7 +1449,7 @@ class ApiController extends Controller
 
         /* facility_emr */
         $facility_info["facility_emr"] = (isset($facility->f_emr) && $facility->f_emr != "") ? strval($facility->f_emr) : "";
-        
+
         if(isset($facility) && !empty($facility)){
             $facility_info["facility_emr_definition"] = (isset($eMedicalRecords[$facility->f_emr]) && $eMedicalRecords[$facility->f_emr] != "") ? $eMedicalRecords[$facility->f_emr] : "";
         }else{
@@ -1460,7 +1460,7 @@ class ApiController extends Controller
 
         /* facility_bcheck_provider */
         $facility_info["facility_bcheck_provider"] = (isset($facility->f_bcheck_provider) && $facility->f_bcheck_provider != "") ? strval($facility->f_bcheck_provider) : "";
-        
+
         if(isset($facility) && !empty($facility)){
             $facility_info["facility_bcheck_provider_definition"] = (isset($bCheckProviders[$facility->f_bcheck_provider]) && $bCheckProviders[$facility->f_bcheck_provider] != "") ? $bCheckProviders[$facility->f_bcheck_provider] : "";
         }else{
@@ -1471,7 +1471,7 @@ class ApiController extends Controller
 
         /* nurse_cred_soft */
         $facility_info["nurse_cred_soft"] = (isset($facility->nurse_cred_soft) && $facility->nurse_cred_soft != "") ? strval($facility->nurse_cred_soft) : "";
-        
+
         if(isset($facility) && !empty($facility)){
             $facility_info["nurse_cred_soft_definition"] = (isset($nCredentialingSoftwares[$facility->nurse_cred_soft]) && $nCredentialingSoftwares[$facility->nurse_cred_soft] != "") ? $nCredentialingSoftwares[$facility->nurse_cred_soft] : "";
         }else{
@@ -1482,7 +1482,7 @@ class ApiController extends Controller
 
         /* nurse_scheduling_sys */
         $facility_info["nurse_scheduling_sys"] = (isset($facility->nurse_scheduling_sys) && $facility->nurse_scheduling_sys != "") ? strval($facility->nurse_scheduling_sys) : "";
-        
+
         if(isset($facility) && !empty($facility)){
             $facility_info["nurse_scheduling_sys_definition"] = (isset($nSchedulingSystems[$facility->nurse_scheduling_sys]) && $nSchedulingSystems[$facility->nurse_scheduling_sys] != "") ? $nSchedulingSystems[$facility->nurse_scheduling_sys] : "";
         }else{
@@ -1493,7 +1493,7 @@ class ApiController extends Controller
 
         /* time_attend_sys */
         $facility_info["time_attend_sys"] = (isset($facility->time_attend_sys) && $facility->time_attend_sys != "") ? strval($facility->time_attend_sys) : "";
-        
+
         if(isset($facility) && !empty($facility)){
             $facility_info["time_attend_sys_definition"] = (isset($timeAttendanceSystems[$facility->time_attend_sys]) &&  $timeAttendanceSystems[$facility->time_attend_sys] != "") ?  $timeAttendanceSystems[$facility->time_attend_sys] : "";
         }else{
@@ -1506,7 +1506,7 @@ class ApiController extends Controller
 
         /* trauma_designation */
         $facility_info["trauma_designation"] = (isset($facility->trauma_designation) && $facility->trauma_designation != "") ? strval($facility->trauma_designation) : "";
-        
+
         if(isset($facility) && !empty($facility)){
             $facility_info["trauma_designation_definition"] = (isset($traumaDesignations[$facility->trauma_designation]) && $traumaDesignations[$facility->trauma_designation] != "") ? $traumaDesignations[$facility->trauma_designation] : "";
         }else{
@@ -1741,7 +1741,7 @@ class ApiController extends Controller
             'api_key' => 'required',
             'job_name' => 'required',
             'type' => 'required'
-            
+
         ];
         if ($check_type == "update") {
             $validation_array = array_merge($validation_array, ['job_id' => 'required']);
@@ -1786,7 +1786,7 @@ class ApiController extends Controller
             // $update_array["facility_id"] = isset($request->facility_id)?$request->facility_id:$facility_id;
             $update_array["facility"] = 'Testing Facility';
             $update_array["facility_id"] = "GWf000001";
-            
+
             $update_array["clinical_setting"] = isset($request->clinical_setting)?$request->clinical_setting:'';
             $update_array["Patient_ratio"] = isset($request->Patient_ratio)?$request->Patient_ratio:'';
             $update_array["emr"] = isset($request->emr)?$request->emr:'';
@@ -1801,7 +1801,7 @@ class ApiController extends Controller
             }else{
                 $update_array["start_date"] = isset($request->start_date)?$request->start_date:'';
             }
-            
+
             $update_array["rto"] = isset($request->rto)?$request->rto:'';
             $update_array["preferred_shift"] = isset($request->preferred_shift)?$request->preferred_shift:'';
             $update_array["hours_per_week"] = isset($request->hours_per_week)?$request->hours_per_week:'';
@@ -1862,7 +1862,7 @@ class ApiController extends Controller
             $update_array["job_city"] = isset($request->city)?$request->city:'';
             $update_array["job_state"] = isset($request->state)?$request->state:'';
             $update_array["active"] = isset($request->active)?$request->active:'0';
-            
+
             if ($check_type == "update") {
                 /* update job */
                 if(isset($request->job_id)){
@@ -1915,9 +1915,9 @@ class ApiController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    }    
+    }
 
-   
+
     public function explore_jobData($jobdata, $user_id = "")
     {
         $result = [];
@@ -1933,8 +1933,8 @@ class ApiController extends Controller
             $ehrProficienciesExp = $this->getEHRProficiencyExp()->pluck('title', 'id');
             $weekDays = $this->getWeekDayOptions();
 
-            foreach ($jobdata as $key => $job) 
-            {    
+            foreach ($jobdata as $key => $job)
+            {
                 $j_data["keyword_id"] = isset($job->keyword_id) ? $job->keyword_id : "";
                 $j_data["job_title"] = isset($job->job_title) ? $job->job_title : "";
                 $j_data["job_filter"] = isset($job->job_filter) ? $job->job_filter : "";
@@ -1950,17 +1950,17 @@ class ApiController extends Controller
 
                 $j_data["preferred_specialty"] = isset($job->preferred_specialty) ? $job->preferred_specialty : "";
                 $j_data["preferred_specialty_definition"] = isset($specialties[$job->preferred_specialty])  ? $specialties[$job->preferred_specialty] : "";
-                
+
                 $j_data["preferred_assignment_duration"] = isset($job->preferred_assignment_duration) ? $job->preferred_assignment_duration : "";
                 $j_data["preferred_assignment_duration_definition"] = isset($assignmentDurations[$job->preferred_assignment_duration]) ? $assignmentDurations[$job->preferred_assignment_duration] : "";
-                
+
                 $j_data["preferred_shift"] = isset($job->preferred_shift) ? $job->preferred_shift : "";
                 $j_data["preferred_shift_duration"] = isset($job->preferred_shift_duration) ? $job->preferred_shift_duration : "";
                 $j_data["preferred_shift_duration_definition"] = isset($shifts[$job->preferred_shift_duration]) ? $shifts[$job->preferred_shift_duration] : "";
 
                 $j_data["preferred_work_location"] = isset($job->preferred_work_location) ? $job->preferred_work_location : "";
                 $j_data["preferred_work_location_definition"] = isset($workLocations[$job->preferred_work_location]) ? $workLocations[$job->preferred_work_location] : "";
-                
+
                 $j_data["preferred_work_area"] = isset($job->preferred_work_area) ? $job->preferred_work_area : "";
                 $j_data["preferred_days_of_the_week"] = isset($job->preferred_days_of_the_week) ? explode(",", $job->preferred_days_of_the_week) : [];
                 $j_data["preferred_hourly_pay_rate"] = isset($job->preferred_hourly_pay_rate) ? $job->preferred_hourly_pay_rate : "";
@@ -1978,7 +1978,7 @@ class ApiController extends Controller
 
                 $j_data["seniority_level"] = isset($job->seniority_level) ? $job->seniority_level : "";
                 $j_data["seniority_level_definition"] = isset($seniorityLevels[$job->seniority_level]) ? $seniorityLevels[$job->seniority_level] : "";
-                
+
                 $j_data["job_function"] = isset($job->job_function) ? $job->job_function : "";
                 $j_data["job_function_definition"] = isset($jobFunctions[$job->job_function]) ? $jobFunctions[$job->job_function] : "";
 
@@ -1993,7 +1993,7 @@ class ApiController extends Controller
 
                 $j_data["job_epic_exp"] = isset($job->job_epic_exp) ? $job->job_epic_exp : "";
                 $j_data["job_epic_exp_definition"] = isset($ehrProficienciesExp[$job->job_epic_exp]) ? $ehrProficienciesExp[$job->job_epic_exp] : "";
-                
+
                 $j_data["job_other_exp"] = isset($job->job_other_exp) ? $job->job_other_exp : "";
                 // $j_data["job_photos"] = isset($job->job_photos) ? $job->job_photos : "";
                 $j_data["video_embed_url"] = isset($job->video_embed_url) ? $job->video_embed_url : "";
@@ -2006,7 +2006,7 @@ class ApiController extends Controller
                 $j_data["type"] = isset($job->facility->type) ? $job->facility->type : "";
 
                 $j_data["facility_logo"] = isset($job->facility->facility_logo) ? url("public/images/facilities/" . $job->facility->facility_logo) : "";
-         
+
                 $j_data["facility_email"] = isset($job->facility->facility_email) ? $job->facility->facility_email : "";
                 $j_data["facility_phone"] = isset($job->facility->facility_phone) ? $job->facility->facility_phone : "";
                 $j_data["specialty_need"] = isset($job->facility->specialty_need) ? $job->facility->specialty_need : "";
@@ -2048,7 +2048,7 @@ class ApiController extends Controller
                 $j_data["time_attend_sys_other"] = isset($job->facility->time_attend_sys_other) ? $job->facility->time_attend_sys_other : "";
                 $j_data["licensed_beds"] = isset($job->facility->licensed_beds) ? $job->facility->licensed_beds : "";
                 $j_data["trauma_designation"] = isset($job->facility->trauma_designation) ? $job->facility->trauma_designation : "";
-                
+
                 /* total applied */
                 $total_follow_count = Follows::where(['job_id' => $job->job_id, "applied_status" => "1", 'status' => "1"])->count();
                 $j_data["total_applied"] = strval($total_follow_count);
@@ -2087,7 +2087,7 @@ class ApiController extends Controller
                             'job_saved.nurse_id' => $nurse->user_id,
                             'job_saved.job_id' => $job->job_id,
                         ];
-        
+
                         $limit = 10;
                         $saveret = \DB::table('job_saved')
                         ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
@@ -2105,7 +2105,7 @@ class ApiController extends Controller
                             'offers.status' => 'Offered',
                             'offers.nurse_id' => $nurse->id
                         ];
-    
+
                         $ret = Job::select('jobs.id as job_id','jobs.job_type as job_type', 'jobs.*')
                             ->leftJoin('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -2113,18 +2113,18 @@ class ApiController extends Controller
                             ->join('offers', 'jobs.id', '=', 'offers.job_id')
                             ->where($whereCond1)
                             ->orderBy('offers.created_at', 'desc');
-                    
-    
+
+
                         // $job_data = $ret->paginate(10);
                         $job_data = $ret->get();
-    
+
                         $j_data['nurses_applied'] = $this->explore_jobData($job_data, $user_id);
                     }
                 }
                 $j_data["is_saved"] = $is_saved;
 
                 $j_data["popular_jobs"] = array();
-                
+
                 if ($user_id != ""){
                     $whereCond = [
                         'facilities.active' => true,
@@ -2180,7 +2180,7 @@ class ApiController extends Controller
             $controller = new Controller();
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             $assignmentDurations = $this->getAssignmentDurations()->pluck('title', 'id');
-            
+
             $user_info = USER::where('id', $request->user_id);
 
             if ($user_info->count() > 0) {
@@ -2205,7 +2205,7 @@ class ApiController extends Controller
                             ->orderBy('jobs.created_at', 'desc')->distinct('jobs.id');
                     $job_data = $ret->get();
                     // $job_data = $ret->paginate(10);
-                    
+
                     // $result['popular_jobs'] = $this->explore_jobData($job_data, $request->user_id);
                     $check_data['popular_jobs'] = $this->explore_jobData($job_data, $request->user_id);
                     foreach($check_data['popular_jobs'] as $check_rec){
@@ -2214,7 +2214,7 @@ class ApiController extends Controller
                             $result['popular_jobs'][] = $check_rec;
                         }
                     }
-                    
+
                     $n_c = 0;
                     foreach($result['popular_jobs'] as $rec){
                         $result['popular_jobs'][$n_c]['description'] = strip_tags($rec['description']);
@@ -2235,7 +2235,7 @@ class ApiController extends Controller
                         $data['popular_jobs'][] = $val;
                     }
                     // end skip code
-                    
+
                     $whereCond1 = [
                         'facilities.active' => true,
                         'jobs.is_open' => "1",
@@ -2258,7 +2258,7 @@ class ApiController extends Controller
                     // $job_data1 = $ret1->paginate(10);
 
                     $result['recommended_jobs'] = $this->explore_jobData($job_data1, $request->user_id);
-                        
+
                     // skip is_applied rrecord
                     if($result['recommended_jobs']){
                         foreach($result['recommended_jobs'] as $val){
@@ -2270,7 +2270,7 @@ class ApiController extends Controller
                         }
                     }
                     // end skip code
-                    
+
                     // Recently added jobs
                     $whereCond2 = [
                         'facilities.active' => true,
@@ -2289,13 +2289,13 @@ class ApiController extends Controller
                         })
                         ->where($whereCond2)
                         ->orderBy('jobs.created_at', 'desc')->distinct('jobs.id')->limit(3);
-                
+
 
                     $job_data2 = $ret2->get();
                     // $job_data2 = $ret2->paginate(10);
 
                     $result['recently_added'] = $this->explore_jobData($job_data2, $request->user_id);
-                        
+
                     // skip is_applied rrecord
                     if($result['recently_added']){
                         foreach($result['recently_added'] as $val){
@@ -2306,7 +2306,7 @@ class ApiController extends Controller
                             $data['recently_added'][] = $val;
                         }
                     }
-                    
+
                     // end skip code
 
                     $this->check = "1";
@@ -2325,7 +2325,7 @@ class ApiController extends Controller
             }
         }
 
-        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);    
+        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
 
@@ -2355,7 +2355,7 @@ class ApiController extends Controller
                 $j_data["type"] = isset($job['type']) ? $job['type'] : "";
                 $j_data["job_name"] = isset($job['job_name']) ? $job['job_name'] : "";
                 $j_data["keyword_id"] = isset($job['keyword_id']) ? $job['keyword_id'] : "";
-                
+
                 // $j_data["job_location"] = isset($workLocations[$job->job_location]) ? $workLocations[$job->job_location] : "";
                 $j_data["weekly_pay"] = isset($job['weekly_pay']) ? $job['weekly_pay'] : "";
                 $j_data["employer_weekly_amount"] = isset($job['employer_weekly_amount']) ? $job['employer_weekly_amount'] : "";
@@ -2408,14 +2408,14 @@ class ApiController extends Controller
                 $j_data["postcode"] = isset($job->facility->postcode) ? $job->facility->postcode : "";
 
                 $j_data["facility_logo"] = isset($job->facility->facility_logo) ? url("public/images/facilities/" . $job->facility->facility_logo) : "";
-         
+
                 $j_data["facility_email"] = isset($job->facility->facility_email) ? $job->facility->facility_email : "";
                 $j_data["facility_phone"] = isset($job->facility->facility_phone) ? $job->facility->facility_phone : "";
                 $j_data["specialty_need"] = isset($job->facility->specialty_need) ? $job->facility->specialty_need : "";
                 $j_data["cno_message"] = isset($job->facility->cno_message) ? $job->facility->cno_message : "";
 
                 $j_data["cno_image"] = isset($job->facility->cno_image) ? url("public/images/facilities/cno_image".$job->facility->cno_image) : "";
-                
+
                 $j_data["gallary_images"] = isset($job->facility->gallary_images) ? $job->facility->gallary_images : "";
                 $j_data["video"] = isset($job->facility->video) ? $job->facility->video : "";
                 $j_data["facebook"] = isset($job->facility->facebook) ? $job->facility->facebook : "";
@@ -2482,7 +2482,7 @@ class ApiController extends Controller
                             'job_saved.job_id' => $job['job_id'],
                             'job_saved.is_save' => "1",
                         ];
-        
+
                         $limit = 10;
                         $saveret = \DB::table('job_saved')
                         ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
@@ -2500,7 +2500,7 @@ class ApiController extends Controller
                             'offers.status' => 'Offered',
                             'offers.nurse_id' => $nurse->id
                         ];
-    
+
                         $ret = Job::select('jobs.id as job_id','jobs.job_type as job_type', 'jobs.*')
                             ->leftJoin('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -2508,18 +2508,18 @@ class ApiController extends Controller
                             ->join('offers', 'jobs.id', '=', 'offers.job_id')
                             ->where($whereCond1)
                             ->orderBy('offers.created_at', 'desc');
-                    
-    
+
+
                         $job_data = $ret->get();
                         // $job_data = $ret->paginate(10);
-    
+
                         $j_data['nurses_applied'] = $this->jobData($job_data, $user_id);
                     }
                 }
                 $j_data["is_saved"] = $is_saved;
 
                 // $j_data["popular_jobs"] = array();
-                
+
                 // if ($user_id != ""){
                 //     $whereCond = [
                 //         'facilities.active' => true,
@@ -2537,14 +2537,14 @@ class ApiController extends Controller
                 //         })
                 //         ->where($whereCond)
                 //         ->orderBy('jobs.created_at', 'desc');
-                
+
 
                 //     $job_data = $ret->paginate(10);
 
                 //     $j_data['popular_jobs'] = $this->jobData($job_data);
                 //     $num = 0;
                 //     foreach($j_data['popular_jobs'] as $rec){
-                        
+
                 //         $j_data['popular_jobs'][$num]['description'] = strip_tags($rec['description']);
                 //         $j_data['popular_jobs'][$num]['responsibilities'] = strip_tags($rec['responsibilities']);
                 //         $j_data['popular_jobs'][$num]['qualifications'] = strip_tags($rec['qualifications']);
@@ -2585,7 +2585,7 @@ class ApiController extends Controller
                 $j_data["type"] = isset($job->type) ? $job->type : "";
                 $j_data["job_name"] = isset($job->job_name) ? $job->job_name : "";
                 $j_data["keyword_id"] = isset($job->keyword_id) ? $job->keyword_id : "";
-                
+
                 // $j_data["job_location"] = isset($workLocations[$job->job_location]) ? $workLocations[$job->job_location] : "";
                 $j_data["weekly_pay"] = isset($job->weekly_pay) ? $job->weekly_pay : "";
                 $j_data["employer_weekly_amount"] = isset($job->employer_weekly_amount) ? $job->employer_weekly_amount : "";
@@ -2608,10 +2608,10 @@ class ApiController extends Controller
                 $j_data["active"] = isset($job->active) ? $job->active : "";
                 $j_data["facility_id"] = isset($job->facility_id) ? $job->facility_id : "";
 
-                
+
                 $j_data["is_open"] = isset($job->is_open) ? $job->is_open : "";
                 $j_data["name"] = isset($job->facility->name) ? $job->facility->name : "";
-                
+
                 /* total applied */
                 $total_follow_count = Follows::where(['job_id' => $job->job_id, "applied_status" => "1", 'status' => "1"])->count();
                 $j_data["total_applied"] = strval($total_follow_count);
@@ -2651,7 +2651,7 @@ class ApiController extends Controller
                             'job_saved.job_id' => $job->job_id,
                             'job_saved.is_save' => "1",
                         ];
-        
+
                         $limit = 10;
                         $saveret = \DB::table('job_saved')
                         ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
@@ -2669,7 +2669,7 @@ class ApiController extends Controller
                             'offers.status' => 'Offered',
                             'offers.nurse_id' => $nurse->id
                         ];
-    
+
                         $ret = Job::select('jobs.id as job_id','jobs.job_type as job_type', 'jobs.*')
                             ->leftJoin('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -2677,11 +2677,11 @@ class ApiController extends Controller
                             ->join('offers', 'jobs.id', '=', 'offers.job_id')
                             ->where($whereCond1)
                             ->orderBy('offers.created_at', 'desc');
-                    
-    
+
+
                         $job_data = $ret->get();
                         // $job_data = $ret->paginate(10);
-    
+
                         $j_data['nurses_applied'] = $this->jobData($job_data, $user_id);
                     }
                 }
@@ -2692,7 +2692,7 @@ class ApiController extends Controller
         return $result;
     }
 
-    
+
     public function employers(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -2715,7 +2715,7 @@ class ApiController extends Controller
                 $this->check = "1";
                 $this->message = "Employers listed successfully";
                 $this->return_data = $facility_name;
-    
+
             }else{
 
 
@@ -2724,7 +2724,7 @@ class ApiController extends Controller
                 // $this->return_data = $result;
 
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -2779,7 +2779,7 @@ class ApiController extends Controller
                 ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                 ->where($whereCond);
                 $job_data = $respond->get();
-                
+
                 foreach($job_data as $job)
                 {
                     if(isset($job->license_type)){
@@ -2846,7 +2846,7 @@ class ApiController extends Controller
                             if($certificate[$num_count]->id !=  193 && $certificate[$num_count]->id !=  89 && $certificate[$num_count]->id !=  44 && $certificate[$num_count]->id !=  43){
                                 $job->title = $job->title;
                             }
-                            
+
                             $num_count++;
                         }
                         $job->certificate = $certificate;
@@ -2865,27 +2865,27 @@ class ApiController extends Controller
                         }
                         $job->skills = $skills;
                     }
-                    
+
                     $job->recency_of_reference = isset($job->recency_of_reference) ? $job->recency_of_reference.' month' : '';
                     $job->start_date = isset($job->start_date) ? $job->start_date : 'As Soon As Possible';
                     $job->preferred_specialty_definition = isset($specialties[$job->preferred_specialty])  ? $specialties[$job->preferred_specialty] : "";
                     $job->worker_specialty_definition = isset($specialties[$job->specialty])  ? $specialties[$job->specialty] : "";
                     $job->preferred_shift_definition = (isset($preferredShifts[$job->preferred_shift]) &&  $preferredShifts[$job->preferred_shift] != "") ?  $preferredShifts[$job->preferred_shift] : "";
                     $job->preferred_assignment_duration_definition = isset($assignmentDurations[$job->preferred_assignment_duration]) ? $assignmentDurations[$job->preferred_assignment_duration] : "";
-                    
+
                     if(isset($job->preferred_assignment_duration_definition)){
                         $assignment = explode(" ", $job->preferred_assignment_duration_definition);
                         $job->preferred_assignment_duration_definition = $assignment[0]; // 12 Week
                     }
-                   
+
                     $job->preferred_work_location_definition = isset($workLocations[$job->preferred_work_location]) ? $workLocations[$job->preferred_work_location] : "";
-                    // $job->total_experience = isset($job->experience_as_acute_care_facility)?$job->experience_as_acute_care_facility:""+isset($job->experience_as_ambulatory_care_facility)?$job->experience_as_ambulatory_care_facility:"";                        
-                    $job->total_experience = isset($job->experience)?$job->experience:"";                        
+                    // $job->total_experience = isset($job->experience_as_acute_care_facility)?$job->experience_as_acute_care_facility:""+isset($job->experience_as_ambulatory_care_facility)?$job->experience_as_ambulatory_care_facility:"";
+                    $job->total_experience = isset($job->experience)?$job->experience:"";
                     $job->total_experience = (int)$job->total_experience;
-                    $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/nurses/resumes/' . $worker->id . '/' . $job->resume) : "";                      
-                    $job->highest_nursing_degree_definition = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";                       
+                    $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/nurses/resumes/' . $worker->id . '/' . $job->resume) : "";
+                    $job->highest_nursing_degree_definition = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";
                     $job->image = (isset($job->image) && $job->image != "") ? url("public/images/nurses/profile/" . $job->image) : "";
-                    
+
                     $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                     if ($job->image) {
                         $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $job->image);
@@ -2918,12 +2918,12 @@ class ApiController extends Controller
                             }
                             $crt_data['created_at'] = (isset($v->created_at) && $v->created_at != "") ? $v->created_at : "";
                             $worker_certitficate[] = $crt_data;
-                            
+
                         }
                     }
                     $job->worker_certitficate = $worker_certitficate;
                 }
-                
+
                 $result = [];
                 $result[0]['job'] = $job->job_state;
                 $result[0]['worker'] = $job->state;
@@ -3140,16 +3140,16 @@ class ApiController extends Controller
                 $result[52]['worker'] = $job->worked_at_facility_before;
                 $result[52]['name'] = 'worked_at_here_last_timing';
 
-                $result[53]['worker_id'] = $job->worker_id; 
-                $result[53]['job_id'] = $job->job_id; 
-                $result[53]['worker_user_id'] = $job->user_id; 
-                $result[53]['recruiter_name'] = $job->recruiter_first_name.' '.$job->recruiter_last_name; 
-                $result[53]['employer_name'] = $job->facility; 
-                $result[53]['workers_applied'] = $job->workers_applied; 
-                $result[53]['worker_diploma'] = $job->diploma; 
-                $result[53]['posted_on'] = $job->status_date; 
+                $result[53]['worker_id'] = $job->worker_id;
+                $result[53]['job_id'] = $job->job_id;
+                $result[53]['worker_user_id'] = $job->user_id;
+                $result[53]['recruiter_name'] = $job->recruiter_first_name.' '.$job->recruiter_last_name;
+                $result[53]['employer_name'] = $job->facility;
+                $result[53]['workers_applied'] = $job->workers_applied;
+                $result[53]['worker_diploma'] = $job->diploma;
+                $result[53]['posted_on'] = $job->status_date;
                 $result[53]['description'] = $job->description;
-                
+
                 $this->check = "1";
                 $this->message = "Worker details listed successfully";
                 $this->return_data = $result;
@@ -3157,7 +3157,7 @@ class ApiController extends Controller
                 $this->check = "1";
                 $this->message = "Worker Not Found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -3179,10 +3179,10 @@ class ApiController extends Controller
         $certifications = $this->getCertifications()->pluck('title', 'id');
         $preferredShifts = $this->getPreferredShift()->pluck('title', 'id');
         $experiencesTypes = $this->getExperienceTypes()->pluck('title', 'id');
-        
+
         $licenseStatus = $this->getSearchStatus()->pluck('title', 'id');
         $licenseType = $this->getLicenseType()->pluck('title', 'id');
-        
+
         $nurse = Nurse::where('id', '=', $type)->get()->first();
         if(isset($nurse->id)){
             $offer = DB::select("SELECT * FROM `offers` WHERE nurse_id = '$nurse->id' AND status = '$status'");
@@ -3193,9 +3193,9 @@ class ApiController extends Controller
             $user = User::where('id', '=', $nurse->user_id)->get()->first();
 
         }
-        
+
         $availability = Availability::where('nurse_id', '=', $nurse->id)->get()->first();
-        
+
         /* Hourly rate and availability */
         $hourly_rate_and_availability = "0";
         if ((isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") &&
@@ -3262,7 +3262,7 @@ class ApiController extends Controller
 
         $return_data['hourly_pay_rate'] = (isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") ? strval($nurse->hourly_pay_rate) : "";
         $return_data['days_of_the_week'] = [];
-        
+
         // Education details
         $return_data['college_uni_name'] = (isset($nurse->college_uni_name) && $nurse->college_uni_name != "") ? $nurse->college_uni_name : "";
         $return_data['study_area'] = (isset($nurse->study_area) && $nurse->study_area != "") ? $nurse->study_area : "";
@@ -3293,7 +3293,7 @@ class ApiController extends Controller
                 $crt_data['total_experience'] = $exp_acute_care+$exp_ambulatory_care;
                 $crt_data['total_experience'] = (int)$crt_data['total_experience'];
                 $experience[] = $crt_data;
-        
+
             }
         }
         $return_data['experience'] = $experience;
@@ -3330,7 +3330,7 @@ class ApiController extends Controller
                 // $crt_data['active'] = (isset($v->active) && $v->active != "") ? $v->active : "";
                 // $crt_data['deleted_at'] = (isset($v->deleted_at) && $v->deleted_at != "") ? $v->deleted_at : "";
                    $crt_data['created_at'] = (isset($v->created_at) && $v->created_at != "") ? $v->created_at : "";
-                    // $crt_data['updated_at'] = (isset($v->updated_at) && $v->updated_at != "") ? $v->updated_at : ""; 
+                    // $crt_data['updated_at'] = (isset($v->updated_at) && $v->updated_at != "") ? $v->updated_at : "";
                 $certitficate[] = $crt_data;
                 // }
             }
@@ -3341,9 +3341,9 @@ class ApiController extends Controller
 
         return $return_data;
     }
-    
+
     // Remove extra charecter
-    function RemoveSpecialChar($str) 
+    function RemoveSpecialChar($str)
     {
         $res = str_replace( array('[', ']', '/', 'null', "\"", ","), "", $str);
         return $res;
@@ -3434,7 +3434,7 @@ class ApiController extends Controller
                     'token_id' => isset($account->id)?$account->id:NULL,
                     'acc_type' => $acc_type
                 ]);
-                
+
                 $this->check = "1";
                 $this->message = "Account Created Successfully";
             }
@@ -3445,7 +3445,7 @@ class ApiController extends Controller
     public function send_money(Request $request)
     {
         \Stripe\Stripe::setApiKey(config('stripe.sk'));
-        
+
         $validator = \Validator::make($request->all(), [
             'api_key' => 'required',
             'amount' => 'required',

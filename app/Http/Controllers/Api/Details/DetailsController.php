@@ -8,7 +8,7 @@ use App\Models\Keyword;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Controllers\Controller;
 class DetailsController extends Controller
 {
     public function getSpecialities()
@@ -40,7 +40,7 @@ class DetailsController extends Controller
         } else {
             $id = $request->profession_id;
             $keywords = Keyword::where(['active' => true, 'filter' => $id])->get()->pluck('title', 'id');
-            
+
             $data = [];
             foreach ($keywords as $key => $value) {
                 $data[] = ['id' => $key, "name" => $value];
@@ -90,7 +90,7 @@ class DetailsController extends Controller
             $this->return_data = $data;
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-   
+
 
     }
     public function getGeographicPreferences()

@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Controllers\Controller;
 class AuthApiController extends Controller
 {
 
@@ -75,14 +75,14 @@ class AuthApiController extends Controller
                         $from_user = "=?UTF-8?B?" . base64_encode('Goodwork') . "?=";
                         $subject = "=?UTF-8?B?" . base64_encode('One Time Password for login') . "?=";
                         $user_mail    =  env("MAIL_USERNAME");
-                        
+
                         // $headers = "From: $from_user <team@goodwork.com>\r\n" .
                         $headers = "From: $from_user <$user_mail>\r\n" .
                             "MIME-Version: 1.0" . "\r\n" .
                             "Content-type: text/html; charset=UTF-8" . "\r\n";
-    
+
                         mail($user->email, $subject, $message, $headers);
-    
+
                         $this->check = "1";
                         if($user->mobile == $request->id){
                             $this->message = "OTP send successfully to your number";
@@ -96,18 +96,18 @@ class AuthApiController extends Controller
                 }else{
                     $this->message = "Role does not match with your user id! Please check";
                 }
-                
+
             } else {
                 $this->message = "User not found";
             }
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    
+
 
     }
 
-    public function mobileOtp(Request $request)  
+    public function mobileOtp(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'api_key' => 'required',
@@ -118,7 +118,7 @@ class AuthApiController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $user_info = USER::where('email', $request->id)->orWhere('mobile',$request->id);
-            
+
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
                 if($user->role == strtoupper($request->role)){
@@ -137,7 +137,7 @@ class AuthApiController extends Controller
                             "body" => 'Your Account verification code is: '.$otp
                             )
                         );
-                
+
                         $this->check = "1";
                         if($user->mobile == $request->id){
                             $this->message = "OTP send successfully to your number";
@@ -151,7 +151,7 @@ class AuthApiController extends Controller
                 }else{
                     $this->message = "Role does not match with your user id! Please check";
                 }
-                
+
             } else {
                 $this->message = "User not found";
             }

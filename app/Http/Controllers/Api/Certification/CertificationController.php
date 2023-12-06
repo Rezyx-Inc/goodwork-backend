@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Certification;
 use App\Models\Nurse;
-
+use App\Http\Controllers\Controller;
 class CertificationController extends Controller
 {
     public function addCredentials(Request $request)
@@ -50,10 +50,10 @@ class CertificationController extends Controller
             }else{
                 $nurse_info = Nurse::where('user_id', '=', $request->user_id);
             }
-            
+
             if ($nurse_info->count() > 0) {
                 $nurse = $nurse_info->first();
-                
+
                 /* certification */
                 $add_array = [
                     'nurse_id' => $nurse->id,

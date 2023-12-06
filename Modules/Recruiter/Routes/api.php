@@ -13,4 +13,6 @@ use App\Http\Controllers\Api\AuthApi\AuthApiController;
 |
 */
 
-Route::middleware('auth:api')->get('/recruiter', 'AuthApiController@getUser');
+// Route::middleware('auth:api')->get('/recruiter', 'AuthApiController@getUser');
+
+Route::middleware('auth:api')->get('/recruiter', [AuthApiController::class, 'getUser']);

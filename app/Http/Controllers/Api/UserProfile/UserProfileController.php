@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\UserProfile;
 use Illuminate\Http\Request;
 
-//Enums 
+//Enums
 use App\Enums\State;
 
 //MODELS :
@@ -15,7 +15,7 @@ use App\Models\EmailTemplate;
 
 
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Controllers\Controller;
 class UserProfileController extends Controller
 {
     public function personalDetail(Request $request)
@@ -56,10 +56,10 @@ class UserProfileController extends Controller
                     $profile_image_name = pathinfo($profile_image_name_full, PATHINFO_FILENAME);
                     $profile_image_ext = $request->file('image')->getClientOriginalExtension();
                     $profile_image = $profile_image_name.'_'.time().'.'.$profile_image_ext;
-                    
+
                     $destinationPath = 'images/nurses/profile';
-                    $request->file('image')->move(public_path($destinationPath), $profile_image);   
-                
+                    $request->file('image')->move(public_path($destinationPath), $profile_image);
+
                     $user->image = $profile_image;
                 }
                 $u = $user->update();
@@ -149,7 +149,7 @@ class UserProfileController extends Controller
                 // }else{
                 //     $availability->unavailable_dates = array();
                 // }
-                
+
                 $a = $availability->update();
                 /* availability */
                 // Hourly Rate & Availability Updated
@@ -206,7 +206,7 @@ class UserProfileController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-   
+
 
 
     }
@@ -279,7 +279,7 @@ class UserProfileController extends Controller
         foreach (State::getKeys() as $key => $value) {
             $ret[]['state'] = $value;
         }
-       
+
         $this->check = "1";
         $this->message = "State's has been listed successfully";
         $this->return_data = $ret;
@@ -379,7 +379,7 @@ class UserProfileController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $worker = NURSE::where('id', $request->worker_id)->get()->first();
             $user = USER::where('id', $worker->user_id)->get()->first();
             if(isset($worker))
@@ -396,19 +396,19 @@ class UserProfileController extends Controller
                         $crt_data['exp_city'] = (isset($v->exp_city) && $v->exp_city != "") ? $v->exp_city : "";
                         $crt_data['facility_type'] = (isset($v->facility_type) && $v->facility_type != "") ? $v->facility_type : "";
                         $crt_data['type'] = (isset($v->type) && $v->type != "") ? $v->type : "";
-                        
+
                         $crt_data['type_definition'] = (isset($certifications[$v->type]) && $certifications[$v->type] != "") ? $certifications[$v->type] : "";
                         $crt_data['position_title'] = (isset($v->position_title) && $v->position_title != "") ? $v->position_title : "";
                         $crt_data['unit'] = (isset($v->unit) && $v->unit != "") ? $v->unit : "";
                         $crt_data['start_date'] = (isset($v->start_date) && $v->start_date != "") ? date('m/d/Y', strtotime($v->start_date)) : "";
                         $crt_data['end_date'] = (isset($v->end_date) && $v->end_date != "") ? date('m/d/Y', strtotime($v->end_date)) : "";
                         $crt_data['is_current_job'] = (isset($v->is_current_job) && $v->is_current_job != "") ? $v->is_current_job : "";
-                        
+
                         $experience[] = $crt_data;
-        
+
                     }
                 }
-                
+
                 $this->check = "1";
                 $this->message = "Worker exprience details listed successfully";
                 $this->return_data = $experience;
@@ -417,7 +417,7 @@ class UserProfileController extends Controller
                 $this->message = "Worker not found";
                 $this->return_data = [];
             }
-            
+
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -469,25 +469,25 @@ class UserProfileController extends Controller
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-     // send reset link acccording to the role 
+     // send reset link acccording to the role
      public function sendResetLinkEmail(Request $request)
      {
          $validator = \Validator::make($request->all(), [
              'email' => 'required|email',
              'api_key' => 'required',
          ]);
- 
+
          if ($validator->fails()) {
              $this->message = $validator->errors()->first();
          } else {
              // We will send the password reset link to this user. Once we have attempted
              // to send the link, we will examine the response then see the message we
              // need to show to the user. Finally, we'll send out a proper response.
- 
+
              $check_user = User::where(['email' => $request->email]);
              if ($check_user->count() > 0) {
                  $user = $check_user->first();
- 
+
                  $temp = EmailTemplate::where(['slug' => 'nurse_reset_password']);
                  if ($temp->count() > 0) {
                      $t = $temp->first();
@@ -505,7 +505,7 @@ class UserProfileController extends Controller
                  $this->message = "User not found";
              }
          }
- 
+
          return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
      }
 
@@ -516,7 +516,7 @@ class UserProfileController extends Controller
              'phone_number' => 'required|regex:/^[0-9 \+]+$/|min:4|max:20',
              'api_key' => 'required',
          ]);
- 
+
          if ($validator->fails()) {
              $this->message = $validator->errors()->first();
          } else {
@@ -537,17 +537,17 @@ class UserProfileController extends Controller
                  $this->message = "User not found";
              }
          }
- 
+
          return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
      }
- 
+
      public function settings(Request $request)
      {
          $validator = \Validator::make($request->all(), [
              'user_id' => 'required',
              'api_key' => 'required',
          ]);
- 
+
          if ($validator->fails()) {
              $this->message = $validator->errors()->first();
          } else {
@@ -563,7 +563,7 @@ class UserProfileController extends Controller
                      $response["full_name"] = $user->first_name . " " . $user->last_name;
                      // $response["profile_picture"] = url('storage/assets/nurses/profile/' . $nurse->user->image);
                      $response['profile_picture'] = url('public/images/nurses/profile/'.$user->image);
- 
+
                      // $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                      // if ($nurse->user->image) {
                      //     $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $nurse->user->image);
@@ -572,7 +572,7 @@ class UserProfileController extends Controller
                      //     }
                      // }
                      // $response["profile_picture_base"] = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
- 
+
                      $response["address"] = (isset($nurse->address) && $nurse->address != "") ? $nurse->address : "";
                      $response["city"] = (isset($nurse->city) && $nurse->city != "") ? $nurse->city : "";
                      $response["state"] = (isset($nurse->state) && $nurse->state != "") ? $nurse->state : "";
@@ -603,12 +603,12 @@ class UserProfileController extends Controller
                  $this->message = "User not found";
              }
          }
- 
+
          return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
      }
 
      public function NurseProfileInfo(Request $request)
-     {        
+     {
          if(isset($request->role) && $request->role == 'nurse'){
              $validator = \Validator::make($request->all(), [
                  'user_id' => 'required',
@@ -621,7 +621,7 @@ class UserProfileController extends Controller
                  'api_key' => 'required',
              ]);
          }
-         
+
          if ($validator->fails()) {
              $this->message = $validator->errors()->first();
          } else {
@@ -633,7 +633,7 @@ class UserProfileController extends Controller
                  $user_info = USER::where('id', $request->user_id);
                  $nurse = NURSE::where('user_id', $request->user_id)->get()->first();
              }
-             
+
              if ($user_info->count() > 0) {
                  $user = $user_info->get()->first();
                  $this->check = "1";
@@ -644,7 +644,7 @@ class UserProfileController extends Controller
                  $this->message = "Nurse not found";
              }
          }
- 
+
          return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
      }
 }

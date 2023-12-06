@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Recruiter;
 
-// Models 
+// Models
 use Illuminate\Http\Request;
 use App\Models\Nurse;
 use App\Models\Job;
@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 use DB;
-
+use App\Http\Controllers\Controller;
 class RecruiterController extends Controller
 {
 
-    //  should import models and used classes 
-    
+    //  should import models and used classes
+
     public function userRecruiter(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -60,8 +60,8 @@ class RecruiterController extends Controller
                 foreach($facility as $fac){
                     $facility_list = Facility::where('id', $fac)->select('name')->first();
                     $facilitys[] = $facility_list['name'];
-                    
-                } 
+
+                }
                     if(isset($nurse_id)){
                         $data['nurse_id']  = $nurse_id;
                     }
@@ -82,7 +82,7 @@ class RecruiterController extends Controller
                     $return_data['last_login_at'] = (isset($data->last_login_at) && $data->last_login_at != "") ? $data->last_login_at : "";
                     $return_data['last_login_ip'] = (isset($data->last_login_ip) && $data->last_login_ip != "") ? $data->last_login_ip : "";
                     $return_data['facility_id'] = (isset($data->facility_id) && $data->facility_id != "") ? json_decode($data->facility_id) : "";
-                    
+
                 $this->message = "Recruiter listed succcessfully";
                 $this->check = "1";
             } else {
@@ -90,7 +90,7 @@ class RecruiterController extends Controller
             }
         }
 
-        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $return_data], 200);    
+        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $return_data], 200);
     }
 
     public function editUserRecruiter(Request $request)
@@ -120,13 +120,13 @@ class RecruiterController extends Controller
                     $this->check = "0";
                     $return_data = '0';
                 }
-                
+
             } else {
                 $this->message = "User not found";
             }
         }
 
-        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $return_data], 200);    
+        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $return_data], 200);
     }
 
     public function recruiterProfilePictureUpload(Request $request)
@@ -149,7 +149,7 @@ class RecruiterController extends Controller
                     $profile_image_name = pathinfo($profile_image_name_full, PATHINFO_FILENAME);
                     $profile_image_ext = $request->file('profile_image')->getClientOriginalExtension();
                     $profile_image = $profile_image_name.'_'.time().'.'.$profile_image_ext;
-                    
+
                     $destinationPath = 'images/nurses/profile';
                     $request->file('profile_image')->move(public_path($destinationPath), $profile_image);
 
@@ -165,7 +165,7 @@ class RecruiterController extends Controller
                 } else {
                     $this->message = "Profile image not found";
                 }
-                
+
             } else {
                 $this->message = "User not found";
             }
@@ -196,7 +196,7 @@ class RecruiterController extends Controller
                 $facility_id = [];
                 $facility_id[] = 'GWf000001';
                 $facility = json_encode($facility_id);
-                
+
                 $user_data = User::where('email', '=', $request->email)->first();
                 if ($user_data === null) {
                     $user = User::create([
@@ -210,7 +210,7 @@ class RecruiterController extends Controller
                         'role' => Role::getKey(Role::RECRUITER),
                         'fcm_token' => $request->fcm_token
                     ]);
-                    
+
                     $user->assignRole('Recruiter');
 
                     $reg_user = User::where('email', '=', $request->email)->get()->first();
@@ -223,7 +223,7 @@ class RecruiterController extends Controller
                     // $replace_array = ['###USERNAME###' => $reg_user->first_name . ' ' . $reg_user->last_name];
                     // // $this->basic_email($template = "new_registration", $data, $replace_array);
 
-                    
+
                     // $userArray = array();
 
                     // $userArray['id'] = $reg_user->id;
@@ -269,7 +269,7 @@ class RecruiterController extends Controller
                 $result['Hired'] = 0;
                 $result['Done'] = 0;
                 $result['Rejected'] = 0;
-            
+
                 $result['total_goodwork_amount'] = '';
                 $result['total_employer_amount'] = '';
 
@@ -285,14 +285,14 @@ class RecruiterController extends Controller
             if ($user_info->count() > 0) {
 
                 $user = $user_info->get()->first();
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.job_type' => 'Local',
                     'jobs.is_closed' => "0",
                     'recruiter_id' => $request->user_id
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -308,7 +308,7 @@ class RecruiterController extends Controller
                     'jobs.is_closed' => "0",
                     'recruiter_id' => $request->user_id
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -324,7 +324,7 @@ class RecruiterController extends Controller
                     'jobs.is_closed' => "0",
                     'recruiter_id' => $request->user_id
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -340,7 +340,7 @@ class RecruiterController extends Controller
                     'jobs.is_closed' => "0",
                     'recruiter_id' => $request->user_id
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -356,28 +356,28 @@ class RecruiterController extends Controller
                                 ->select('status', DB::raw('count(*) as total'))
                                 ->groupBy('offers.status')
                                 ->get();
-                
+
                 $Offered = DB::table('jobs')
                                 ->join('offers','jobs.id', '=', 'offers.job_id')
                                 ->where(['jobs.recruiter_id' => $request->user_id, 'status' => 'Offered', 'jobs.is_closed' => '0'])
                                 ->select('status', DB::raw('count(*) as total'))
                                 ->groupBy('offers.status')
                                 ->get();
-  
+
                 $Onboard = DB::table('jobs')
                                 ->join('offers','jobs.id', '=', 'offers.job_id')
                                 ->where(['jobs.recruiter_id' => $request->user_id, 'status' => 'Onboarding', 'jobs.is_closed' => '0'])
                                 ->select('status', DB::raw('count(*) as total'))
                                 ->groupBy('offers.status')
                                 ->get();
-                                
+
                 $Working = DB::table('jobs')
                                 ->join('offers','jobs.id', '=', 'offers.job_id')
                                 ->where(['jobs.recruiter_id' => $request->user_id, 'status' => 'Working', 'jobs.is_closed' => '0'])
                                 ->select('status', DB::raw('count(*) as total'))
                                 ->groupBy('offers.status')
                                 ->get();
- 
+
                 $Done = DB::table('jobs')
                                 ->join('offers','jobs.id', '=', 'offers.job_id')
                                 ->where(['jobs.recruiter_id' => $request->user_id, 'status' => 'Done', 'jobs.is_closed' => '0'])
@@ -394,7 +394,7 @@ class RecruiterController extends Controller
                                         ->orderBy('notifications.created_at', 'desc')->distinct()
                                         ->get();
                 if(isset($result['Notification'])){
-                    
+
                     foreach($result['Notification'] as $rec){
                         if($rec->status == "Apply"){
                             $rec->status = 1;
@@ -407,11 +407,11 @@ class RecruiterController extends Controller
                         }else{
                             $rec->status = 5;
                         }
-                        
+
                         $rec->created_at_definition = $rec->created_at->format('l, jS F Y');
                         $rec->updated_at_definition = isset($rec->updated_at) ? $rec->updated_at->format('l, jS F Y') : NULL;
                         $rec->deleted_at_definition = isset($rec->deleted_at) ? $rec->deleted_at->format('l, jS F Y') : NULL;
-                        
+
                     }
                 }
 
@@ -442,7 +442,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
 
 
@@ -454,7 +454,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "Account info found";
                 $this->return_data = $return_data;
-    
+
             }else{
 
 
@@ -463,7 +463,7 @@ class RecruiterController extends Controller
                 // $this->return_data = $result;
 
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -472,20 +472,20 @@ class RecruiterController extends Controller
 
     public function updateAccInfo(Request $request)
     {
-        
+
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
             'api_key' => 'required',
             'email' => 'string|email|unique:users,email,'.$request->user_id,
             'mobile' => 'unique:users,mobile,'.$request->user_id,
         ]);
-        
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
 
             $user_info = USER::where('id', $request->user_id);
-            
+
             if ($user_info->count() > 0) {
                 $reg_user = $user_info->get()->first();
                 $reg_user->first_name = $request->first_name?$request->first_name:$reg_user->first_name;
@@ -493,7 +493,7 @@ class RecruiterController extends Controller
                 $reg_user->email = $request->email?$request->email:$reg_user->email;
                 $reg_user->user_name = $request->user_name?$request->user_name:$reg_user->user_name;
                 $reg_user->mobile = $request->mobile?$request->mobile:$reg_user->mobile;
-                
+
                 $affected = DB::table('users')
                 ->where('id', $request->user_id)
                 ->update(['first_name' => $reg_user->first_name, 'last_name' => $reg_user->last_name, 'email' => $reg_user->email, 'user_name' => $reg_user->user_name, 'mobile' => $reg_user->mobile]);
@@ -502,11 +502,11 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "Account Update successfully";
                 $this->return_data = $return_data;
-             
+
             }else{
                 $this->check = "1";
                 $this->message = "User not found";
-            }  
+            }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -523,7 +523,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('mobile', $request->mobile);
 
 
@@ -531,14 +531,14 @@ class RecruiterController extends Controller
 
                 $reg_user = $user_info->get()->first();
 
-               
+
 
                 $return_data = $this->recruiterData($reg_user);
 
                 $this->check = "1";
                 $this->message = "Account info found";
                 $this->return_data = $return_data;
-    
+
             }else{
 
 
@@ -547,7 +547,7 @@ class RecruiterController extends Controller
                 // $this->return_data = $result;
 
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -561,14 +561,14 @@ class RecruiterController extends Controller
             'api_key' => 'required',
         ]);
         if ($validator->fails()) {
-            
+
             $this->message = $validator->errors()->first();
             if(!isset($request->user_id)){
                 $status = ['Apply','Screening','Submitted','Offered','Draft Offer','Onboarding','Working','Done'];
                 $records = array();
                 foreach($status as $value)
                 {
-                    
+
                     if($value == 'Apply'){
                         $value = 'New';
                     }
@@ -581,7 +581,7 @@ class RecruiterController extends Controller
             }
         } else {
             $user_info = USER::where('id', $request->user_id);
-            if ($user_info->count() > 0) 
+            if ($user_info->count() > 0)
             {
                 $user = $user_info->get()->first();
                 // $status = ['Apply','Screening','Submitted','Offered','Onboarding','Working','Done','Rejected','Blocked','Hold'];
@@ -606,7 +606,7 @@ class RecruiterController extends Controller
                 }
                 $records = [];
                 foreach($return_data as $rec)
-                {    
+                {
                     if(($rec['name'] == 'Offered') && !empty($rec['applicants'])){
                         $rec['applicants'] = $rec['applicants']-$draftoffer;
                     }else{
@@ -639,7 +639,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -662,7 +662,7 @@ class RecruiterController extends Controller
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -685,13 +685,13 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "User not found";
 
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -707,7 +707,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -719,7 +719,7 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
-                    ->join('offers', 'jobs.id', '=', 'offers.job_id')    
+                    ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
@@ -729,7 +729,7 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc');
                 $job_data = $ret->get();
-               
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $screening)
@@ -757,7 +757,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -773,7 +773,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -785,7 +785,7 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
-                    ->join('offers', 'jobs.id', '=', 'offers.job_id')    
+                    ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
@@ -795,7 +795,7 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc');
                 $job_data = $ret->get();
-               
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $submitted)
@@ -823,7 +823,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
@@ -839,7 +839,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -851,7 +851,7 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
-                    ->join('offers', 'jobs.id', '=', 'offers.job_id')    
+                    ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
@@ -861,7 +861,7 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc');
                 $job_data = $ret->get();
-               
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $offered)
@@ -889,7 +889,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -909,11 +909,11 @@ class RecruiterController extends Controller
                 $this->return_data = '';
             }
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.recruiter_id' => $user->id,
@@ -962,7 +962,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -977,11 +977,11 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.created_by' => $user->id,
@@ -1000,7 +1000,7 @@ class RecruiterController extends Controller
                     ->orderBy('offers.created_at', 'desc');
 
                 $job_data = $ret->groupBy('id')->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $published)
@@ -1014,7 +1014,7 @@ class RecruiterController extends Controller
                     $result['type'] = isset($published['type'])?$published['type']:"";
                     $result['job_name'] = isset($published['job_name'])?$published['job_name']:"";
                     $result['job_location'] = isset($published['job_location'])?$published['job_location']:"";
-                    $result['job_city'] = isset($published['job_city'])?$published['job_city']:"";  
+                    $result['job_city'] = isset($published['job_city'])?$published['job_city']:"";
                     $result['job_state'] = isset($published['job_state'])?$published['job_state']:"";
                     $result['preferred_assignment_duration'] = isset($published['preferred_assignment_duration'])?$published['preferred_assignment_duration']:"";
                     $result['preferred_shift'] = isset($published['preferred_shift'])?$published['preferred_shift']:"";
@@ -1027,7 +1027,7 @@ class RecruiterController extends Controller
                     $result['experience'] = isset($published['preferred_experience'])?$published['preferred_experience']:"";
                     $record[] =  $result;
                 }
-                
+
                 $this->check = "1";
                 $this->message = "published Applications listed successfully";
                 $this->return_data = $record;
@@ -1035,7 +1035,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1050,11 +1050,11 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.created_by' => $user->id,
@@ -1073,7 +1073,7 @@ class RecruiterController extends Controller
                     ->orderBy('offers.created_at', 'desc');
 
                 $job_data = $ret->groupBy('id')->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $published)
@@ -1087,7 +1087,7 @@ class RecruiterController extends Controller
                     $result['type'] = isset($published['type'])?$published['type']:"";
                     $result['job_name'] = isset($published['job_name'])?$published['job_name']:"";
                     $result['job_location'] = isset($published['job_location'])?$published['job_location']:"";
-                    $result['job_city'] = isset($published['job_city'])?$published['job_city']:"";  
+                    $result['job_city'] = isset($published['job_city'])?$published['job_city']:"";
                     $result['job_state'] = isset($published['job_state'])?$published['job_state']:"";
                     $result['preferred_assignment_duration'] = isset($published['preferred_assignment_duration'])?$published['preferred_assignment_duration']:"";
                     $result['preferred_shift'] = isset($published['preferred_shift'])?$published['preferred_shift']:"";
@@ -1099,7 +1099,7 @@ class RecruiterController extends Controller
                     $result['experience'] = isset($published['preferred_experience'])?$published['preferred_experience']:"";
                     $record[] =  $result;
                 }
-                
+
                 $this->check = "1";
                 $this->message = "published Applications listed successfully";
                 $this->return_data = $record;
@@ -1107,7 +1107,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1122,11 +1122,11 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.recruiter_id' => $user->id,
@@ -1144,7 +1144,7 @@ class RecruiterController extends Controller
                     ->orderBy('offers.created_at', 'desc');
 
                 $job_data = $ret->groupBy('id')->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $published)
@@ -1158,7 +1158,7 @@ class RecruiterController extends Controller
                     $result['type'] = isset($published['type'])?$published['type']:"";
                     $result['job_name'] = isset($published['job_name'])?$published['job_name']:"";
                     $result['job_location'] = isset($published['job_location'])?$published['job_location']:"";
-                    $result['job_city'] = isset($published['job_city'])?$published['job_city']:"";  
+                    $result['job_city'] = isset($published['job_city'])?$published['job_city']:"";
                     $result['job_state'] = isset($published['job_state'])?$published['job_state']:"";
                     $result['preferred_assignment_duration'] = isset($published['preferred_assignment_duration'])?$published['preferred_assignment_duration']:"";
                     $result['preferred_shift'] = isset($published['preferred_shift'])?$published['preferred_shift']:"";
@@ -1170,7 +1170,7 @@ class RecruiterController extends Controller
                     $result['experience'] = isset($published['preferred_experience'])?$published['preferred_experience']:"";
                     $record[] =  $result;
                 }
-                
+
                 $this->check = "1";
                 $this->message = "published Applications listed successfully";
                 $this->return_data = $record;
@@ -1178,7 +1178,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1193,7 +1193,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -1205,7 +1205,7 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
-                    ->join('offers', 'jobs.id', '=', 'offers.job_id')    
+                    ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
@@ -1215,7 +1215,7 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc');
                 $job_data = $ret->get();
-               
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $onboarding)
@@ -1243,7 +1243,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1258,7 +1258,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -1270,7 +1270,7 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
-                    ->join('offers', 'jobs.id', '=', 'offers.job_id')    
+                    ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
@@ -1280,7 +1280,7 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc');
                 $job_data = $ret->get();
-               
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $working)
@@ -1308,7 +1308,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1323,7 +1323,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -1335,7 +1335,7 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
-                    ->join('offers', 'jobs.id', '=', 'offers.job_id')    
+                    ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
@@ -1345,7 +1345,7 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc');
                 $job_data = $ret->get();
-               
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $done)
@@ -1373,7 +1373,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1388,7 +1388,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -1400,7 +1400,7 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
-                    ->join('offers', 'jobs.id', '=', 'offers.job_id')    
+                    ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
@@ -1410,7 +1410,7 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc');
                 $job_data = $ret->get();
-               
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $done)
@@ -1438,7 +1438,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1453,23 +1453,23 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.recruiter_id' => $user->id,
                     'jobs.is_closed' => "0",
                     'blocked_users.recruiter_id' => $user->id
                 ];
-                
+
                 $ret = DB::table('blocked_users')
-                    ->leftJoin('offers', 'blocked_users.worker_id', '=', 'offers.nurse_id')    
+                    ->leftJoin('offers', 'blocked_users.worker_id', '=', 'offers.nurse_id')
                     ->leftJoin('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->leftJoin('users', 'nurses.user_id', '=', 'users.id')  
-                    ->leftJoin('jobs', 'offers.job_id', '=', 'jobs.id')  
+                    ->leftJoin('users', 'nurses.user_id', '=', 'users.id')
+                    ->leftJoin('jobs', 'offers.job_id', '=', 'jobs.id')
                     ->leftJoin('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -1504,7 +1504,7 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1558,10 +1558,10 @@ class RecruiterController extends Controller
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
                 $worker_info  = Nurse::where('id', $request->worker_id);
-                
+
                 if($worker_info->count() > 0){
                     $worker = $worker_info->get()->first();
-                    
+
                     $whereCond = [
                             'facilities.active' => true,
                             'offers.nurse_id' => $worker->id,
@@ -1586,15 +1586,15 @@ class RecruiterController extends Controller
                             $assignment = explode(" ", $job->preferred_assignment_duration_definition);
                             $job->preferred_assignment_duration_definition = $assignment[0]; // 12 Week
                         }
-                       
+
                         $job->preferred_work_location_definition = isset($workLocations[$job->preferred_work_location]) ? $workLocations[$job->preferred_work_location] : "";
-                        // $job->total_experience = isset($job->experience_as_acute_care_facility)?$job->experience_as_acute_care_facility:0+isset($job->experience_as_ambulatory_care_facility)?$job->experience_as_ambulatory_care_facility:0;                        
-                        $job->total_experience = isset($job->experience)?$job->experience:0;                        
+                        // $job->total_experience = isset($job->experience_as_acute_care_facility)?$job->experience_as_acute_care_facility:0+isset($job->experience_as_ambulatory_care_facility)?$job->experience_as_ambulatory_care_facility:0;
+                        $job->total_experience = isset($job->experience)?$job->experience:0;
                         $job->total_experience = (int)$job->total_experience;
-                        $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/nurses/resumes/' . $worker->id . '/' . $job->resume) : "";                      
-                        $job->highest_nursing_degree_definition = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";                       
+                        $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/nurses/resumes/' . $worker->id . '/' . $job->resume) : "";
+                        $job->highest_nursing_degree_definition = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";
                         $job->image = (isset($job->image) && $job->image != "") ? url("public/images/nurses/profile/" . $job->image) : "";
-                        
+
                         $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                         if ($job->image) {
                             $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $job->image);
@@ -1634,12 +1634,12 @@ class RecruiterController extends Controller
                     }
 
                     $response = [];
-                    
+
                     foreach($job_data as $res){
-                        
+
                         if(isset($res->recruiter_id) && $res->recruiter_id == $request->user_id){
                             $response['main'] = $res;
-                        }else{ 
+                        }else{
                             $response['other_Facility_jobs'][] =  $res;
                         }
                     }
@@ -1653,7 +1653,7 @@ class RecruiterController extends Controller
                     $this->check = "1";
                     $this->message = "Worker Not Found";
                 }
-                
+
             }else{
                 $this->check = "1";
                 $this->message = "User Not Found";
@@ -1688,7 +1688,7 @@ class RecruiterController extends Controller
                 $fields->job_id = $records['job_id'];
                 $fields->updated_at = NULL;
                 $fields->deleted_at = NULL;
-                $fields->created_at = date('Y-m-d h:i:s');  
+                $fields->created_at = date('Y-m-d h:i:s');
 
                 if($request->status == 'Offered'){
                     if(isset($records)){
@@ -1716,11 +1716,11 @@ class RecruiterController extends Controller
                         $this->check = "1";
                         $this->message = "Offer Record not found";
                     }
-                    
+
                 }else if($request->status == 'Onboarding'){
                     if(isset($records)){
                         $request->on_board_date = isset($request->on_board_date)?$request->on_board_date:now()->format('Y-m-d');
-                        
+
                         // Check total job hire
                         $is_vacancy = DB::select("SELECT COUNT(id) as hired_jobs, job_id FROM `offers` WHERE status = 'Onboarding' AND job_id = ".'"'.$records['job_id'].'"');
                         if(isset($is_vacancy)){
@@ -1763,7 +1763,7 @@ class RecruiterController extends Controller
                             $this->message = "Status not updated, This job have already fullfill Positions";
                         }
 
-                        
+
                     }else{
                         $this->check = "1";
                         $this->message = "Offer Record not found";
@@ -1775,7 +1775,7 @@ class RecruiterController extends Controller
                         $fields->title = 'Working to Done';
                         $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved from Working to Done by '. $user->first_name.' '.$user->last_name .' from Employer name';
                         $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
-                        
+
                         if($status != 0){
                             if(empty($check)){
                                 $notification = $fields->save();
@@ -1994,7 +1994,7 @@ class RecruiterController extends Controller
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                       
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.recruiter_id' => $request->user_id,
@@ -2007,7 +2007,7 @@ class RecruiterController extends Controller
                                 ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                                 ->where($whereCond);
                 $job_data = $respond->groupBy('jobs.id')->get();
-                 
+
                 foreach($job_data as $job){
                     $job->job_location = isset($job->job_location) ? $job->job_location : "";
                     $job->facility_name = isset($job->facility_name) ? $job->facility_name : "";
@@ -2052,7 +2052,7 @@ class RecruiterController extends Controller
 
     }
 
-    // M.ELH Note : the infromation retrived for a (worker,jobs,recruiter) not just a recruiter 
+    // M.ELH Note : the infromation retrived for a (worker,jobs,recruiter) not just a recruiter
     public function recruiterInformation(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -2080,7 +2080,7 @@ class RecruiterController extends Controller
                                 'nurses.id' => $worker->id,
                                 'jobs.id' => $request->job_id,
                             ];
-    
+
                         $respond = Nurse::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'nurses.*', 'jobs.*', 'offers.job_id as job_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'nurses.block_scheduling as worker_block_scheduling', 'nurses.float_requirement as worker_float_requirement', 'nurses.facility_shift_cancelation_policy as worker_facility_shift_cancelation_policy', 'nurses.contract_termination_policy as worker_contract_termination_policy', 'offers.id as offer_id', 'offers.start_date as posted_on', 'offers.status as job_status', 'jobs.created_at as created_at')
                                         ->join('users','users.id', '=', 'nurses.user_id')
                                         ->leftJoin('offers','offers.nurse_id', '=', 'nurses.id')
@@ -2093,15 +2093,15 @@ class RecruiterController extends Controller
                         $job_data['worker_float_requirement'] = $job_data['float_requirement'];
                         $job_data['worker_facility_shift_cancelation_policy'] = $job_data['facility_shift_cancelation_policy'];
                         $job_data['worker_contract_termination_policy'] = $job_data['contract_termination_policy'];
-                        
+
                         if(empty($job_data)){
                             $whereCond1 =  [
                                 'facilities.active' => true,
                                 'jobs.id' => $request->job_id,
                             ];
-                            
+
                             $worker_jobs = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'offers.start_date as posted_on', 'jobs.created_at as created_at')
-                            
+
                             ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
                             ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                             ->where($whereCond1)->groupBy('jobs.id')->first();
@@ -2126,7 +2126,7 @@ class RecruiterController extends Controller
                         $worker_reference = NURSE::select('nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
                         ->leftJoin('nurse_references','nurse_references.nurse_id', '=', 'nurses.id')
                         ->where('nurses.id', $worker->id)->get();
-                        
+
                         $job = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*')->where('id', $request->job_id)->first();
                         $worker_reference_name = '';
                         $worker_reference_title ='';
@@ -2150,8 +2150,8 @@ class RecruiterController extends Controller
                         }else{
                             $is_vacancy = '0';
                         }
-                        
-                        // Jobs speciality with experience 
+
+                        // Jobs speciality with experience
                         $speciality = explode(',',$job['preferred_specialty']);
                         $experiences = explode(',',$job['preferred_experience']);
                         $exp = [];
@@ -2165,12 +2165,12 @@ class RecruiterController extends Controller
                         foreach($experiences as $experience){
                             $exp[] = $experience;
                         }
-                       
+
                         for($j=0; $j< $i; $j++){
-                            $specialities[$j]['spe'] = $spe[$j]; 
-                            $specialities[$j]['exp'] = $exp[$j]; 
+                            $specialities[$j]['spe'] = $spe[$j];
+                            $specialities[$j]['exp'] = $exp[$j];
                         }
-    
+
                         // Worker speciality
                         $worker_speciality = explode(',',$worker->specialty);
                         $worker_experiences = explode(',',$worker->experience);
@@ -2185,12 +2185,12 @@ class RecruiterController extends Controller
                         foreach($experiences as $experience){
                             $worker_exp[] = $experience;
                         }
-                       
+
                         for($j=0; $j< $i; $j++){
-                            $worker_specialities[$j]['spe'] = $worker_spe[$j]; 
-                            $worker_specialities[$j]['exp'] = $worker_exp[$j]; 
+                            $worker_specialities[$j]['spe'] = $worker_spe[$j];
+                            $worker_specialities[$j]['exp'] = $worker_exp[$j];
                         }
-    
+
                         $worker_certificate = [];
                         // $skills_checklists = [];
                         $vaccinations = explode(',',$job['vaccinations']);
@@ -2205,12 +2205,12 @@ class RecruiterController extends Controller
                                 $skills_checklists[$i] = url('public/images/nurses/skill/'.$rec);
                                 $i++;
                             }
-                            
+
                         }
                         $vacc_image = NurseAsset::where(['filter' => 'vaccination', 'nurse_id' => $worker->id])->get();
                         $cert_image = NurseAsset::where(['filter' => 'certificate', 'nurse_id' => $worker->id])->get();
-                        $certificate = explode(',',$job['certificate']); 
-    
+                        $certificate = explode(',',$job['certificate']);
+
                         $result = [];
                         $result['job_id'] = isset($job['id'])?$job['id']:"";
                         $result['description'] = isset($job['description'])?$job['description']:"";
@@ -2232,7 +2232,7 @@ class RecruiterController extends Controller
                         }else{
                             $recs = false;
                         }
-    
+
                         if(isset($job_data['license_type']) && ($job_data['license_type'] != null) && ($job_data['profession'] == $job_data['license_type'])){
                             $profession = true;
                         }else{
@@ -2252,7 +2252,7 @@ class RecruiterController extends Controller
                         $num = [];
                         foreach($countable as $rec){
                             if(!empty($rec)){
-                                $num[] = $rec;        
+                                $num[] = $rec;
                             }
                         }
                         $countable = count($num);
@@ -2261,7 +2261,7 @@ class RecruiterController extends Controller
                         }else{
                             $worker_ref_num = false;
                         }
-    
+
                         $worker_info = [];
                         // $data =  [];
                         $data['job'] = 'College Diploma Required';
@@ -2278,7 +2278,7 @@ class RecruiterController extends Controller
                         $data['worker_image'] = !empty($job_data['diploma'])?url('public/images/nurses/diploma/'.$job_data['diploma']):"";
                         $worker_info[] = $data;
                         $data['worker_image'] = '';
-    
+
                         $data['job'] = 'Drivers License';
                         $data['match'] = !empty($job_data['driving_license'])?true:false;
                         $data['worker'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
@@ -2293,7 +2293,7 @@ class RecruiterController extends Controller
                         $data['worker_image'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
                         $worker_info[] = $data;
                         $data['worker_image'] = '';
-    
+
                         $data['job'] = !empty($job['job_worked_at_facility_before'])?$job['job_worked_at_facility_before']:"";
                         $data['match'] = $recs;
                         $data['worker'] = !empty($job_data['worked_at_facility_before'])?$job_data['worked_at_facility_before']:"";
@@ -2306,7 +2306,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = "Last 4 digit of SS# to submit";
                         $data['match'] = !empty($job_data['worker_ss_number'])?true:false;
                         $data['worker'] = !empty($job_data['worker_ss_number'])?$job_data['worker_ss_number']:"";
@@ -2319,7 +2319,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['profession'] == $job_data['highest_nursing_degree']){ $val = true; }else{ $val = false; }
                         $data['job'] = isset($job['profession'])?$job['profession']:"";
                         $data['match'] = $val;
@@ -2333,7 +2333,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['preferred_specialty'])?$job['preferred_specialty']:"";
                         $data['match'] = $speciality;
                         $data['worker'] = !empty($job_data['specialty'])?$job_data['specialty']:"";
@@ -2359,7 +2359,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job_data['nursing_license_state'] == $job['job_location']){ $val = true; }else{ $val = false; }
                         $data['job'] = isset($job['job_location'])?$job['job_location']:"";
                         $data['match'] = $val;
@@ -2394,7 +2394,7 @@ class RecruiterController extends Controller
                             // $data['worker_image'] = '';
                         }
                         $data['worker_image'] = '';
-                        
+
                         $data['job'] = isset($job['number_of_references'])?$job['number_of_references']:"";
                         $data['match'] = $worker_ref_num;
                         $data['worker'] = isset($worker_reference_name)?$worker_reference_name:"";
@@ -2407,7 +2407,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['min_title_of_reference'])?$job['min_title_of_reference']:"";
                         $data['match'] = !empty($worker_reference_title)?true:false;
                         $data['worker'] = isset($worker_reference_title)?$worker_reference_title:"";
@@ -2420,7 +2420,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['recency_of_reference'])?$job['recency_of_reference']:"";
                         $data['match'] = !empty($worker_reference_recency_reference)?true:false;
                         $data['worker'] = isset($worker_reference_recency_reference)?$worker_reference_recency_reference:"";
@@ -2452,7 +2452,7 @@ class RecruiterController extends Controller
                             $worker_info[] = $data;
                             $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                             $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
-                            $i++;    
+                            $i++;
                         }
                         $data['worker_image'] = '';
 
@@ -2472,7 +2472,7 @@ class RecruiterController extends Controller
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
                         $data['worker_image'] = '';
-    
+
                         if($job_data['eligible_work_in_us'] == 'yes'){ $eligible_work_in_us = true; }else{ $eligible_work_in_us = false; }
                         $data['job'] = "Eligible work in the us";
                         $data['match'] = $eligible_work_in_us;
@@ -2486,7 +2486,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['urgency'])?$job['urgency']:"";
                         $data['match'] = !empty($job_data['worker_urgency'])?true:false;
                         $data['worker'] = isset($job_data['worker_urgency'])?$job_data['worker_urgency']:"";
@@ -2504,7 +2504,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['position_available'])?$job['position_available']:"";
                         $data['match'] = !empty($job_data["available_position"])?true:false;
                         $data['worker'] = isset($job_data["available_position"])?$job_data["available_position"]:"";
@@ -2517,7 +2517,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['msp'])?$job['msp']:"";
                         $data['match'] = !empty($job_data['MSP'])?true:false;
                         $data['worker'] = isset($job_data['MSP'])?$job_data['MSP']:"";
@@ -2530,7 +2530,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['vms'])?$job['vms']:"";
                         $data['match'] = !empty($job_data['VMS'])?true:false;
                         $data['worker'] = isset($job_data['VMS'])?$job_data['VMS']:"";
@@ -2543,7 +2543,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['submission_of_vms'])?$job['submission_of_vms']:"";
                         $data['match'] = !empty($job_data['submission_VMS'])?true:false;
                         $data['worker'] = isset($job_data['submission_VMS'])?$job_data['submission_VMS']:"";
@@ -2556,7 +2556,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['block_scheduling'])?$job['block_scheduling']:"";
                         $data['match'] = !empty($job_data['worker_block_scheduling'])?true:false;
                         $data['worker'] = isset($job_data['worker_block_scheduling'])?$job_data['worker_block_scheduling']:"";
@@ -2569,7 +2569,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job_data['worker_float_requirement'] == 'Yes'){ $val = true; }else{ $val = false; }
                         $data['job'] = isset($job['float_requirement'])?$job['float_requirement']:"";
                         $data['match'] = $val;
@@ -2583,7 +2583,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-                        
+
                         $data['job'] = isset($job['facility_shift_cancelation_policy'])?$job['facility_shift_cancelation_policy']:"";
                         $data['match'] = !empty($job_data['worker_facility_shift_cancelation_policy'])?true:false;
                         $data['worker'] = isset($job_data['worker_facility_shift_cancelation_policy'])?$job_data['worker_facility_shift_cancelation_policy']:"";
@@ -2596,7 +2596,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['contract_termination_policy'])?$job['contract_termination_policy']:"";
                         $data['match'] = !empty($job_data['worker_contract_termination_policy'])?true:false;
                         $data['worker'] = isset($job_data['worker_contract_termination_policy'])?$job_data['worker_contract_termination_policy']:"";
@@ -2609,7 +2609,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if(isset($job_data['distance_from_your_home']) && ($job_data['distance_from_your_home'] != 0) ){
                             $data['worker'] = $job_data['distance_from_your_home'];
                         }else{
@@ -2628,7 +2628,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['facility'])?$job['facility']:"";
                         $data['match'] = !empty($job_data['facilities_you_like_to_work_at'])?true:false;
                         $data['worker'] = isset($job_data['facilities_you_like_to_work_at'])?$job_data['facilities_you_like_to_work_at']:"";
@@ -2641,7 +2641,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['facilitys_parent_system'])?$job['facilitys_parent_system']:"";
                         $data['match'] = !empty($job_data['worker_facility_parent_system'])?true:false;
                         $data['worker'] = isset($job_data['worker_facility_parent_system'])?$job_data['worker_facility_parent_system']:"";
@@ -2654,7 +2654,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if(isset($job_data['avg_rating_by_facilities']) && ($job_data['avg_rating_by_facilities'] != 0) ){
                             $data['worker'] = $job_data['avg_rating_by_facilities'];
                         }else{
@@ -2672,7 +2672,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if(isset($job_data['worker_avg_rating_by_recruiters']) && ($job_data['worker_avg_rating_by_recruiters'] != 0) ){
                             $data['worker'] = $job_data['worker_avg_rating_by_recruiters'];
                         }else{
@@ -2690,7 +2690,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if(isset($job_data['worker_avg_rating_by_employers']) && ($job_data['worker_avg_rating_by_employers'] != 0) ){
                             $data['worker'] = $job_data['worker_avg_rating_by_employers'];
                         }else{
@@ -2708,7 +2708,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['clinical_setting'] == $job_data['clinical_setting_you_prefer']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['clinical_setting'])?$job['clinical_setting']:"";
                         $data['match'] = $val;
@@ -2722,7 +2722,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-                        
+
                         $data['job'] = isset($job['Patient_ratio'])?$job['Patient_ratio']:"";
                         $data['match'] = !empty($job_data['worker_patient_ratio'])?true:false;
                         $data['worker'] = isset($job_data['worker_patient_ratio'])?$job_data['worker_patient_ratio']:"";
@@ -2735,7 +2735,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['emr'])?$job['emr']:"";
                         $data['match'] = !empty($job_data['worker_emr'])?true:false;
                         $data['worker'] = isset($job_data['worker_emr'])?$job_data['worker_emr']:"";
@@ -2748,7 +2748,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['Unit'])?$job['Unit']:"";
                         $data['match'] = !empty($job_data['worker_unit'])?true:false;
                         $data['worker'] = isset($job_data['worker_unit'])?$job_data['worker_unit']:"";
@@ -2761,7 +2761,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['Department'])?$job['Department']:"";
                         $data['match'] = !empty($job_data['worker_department'])?true:false;
                         $data['worker'] = isset($job_data['worker_department'])?$job_data['worker_department']:"";
@@ -2774,7 +2774,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['Bed_Size'])?$job['Bed_Size']:"";
                         $data['match'] = !empty($job_data['worker_bed_size'])?true:false;
                         $data['worker'] = isset($job_data['worker_bed_size'])?$job_data['worker_bed_size']:"";
@@ -2787,7 +2787,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['Trauma_Level'])?$job['Trauma_Level']:"";
                         $data['match'] = !empty($job_data['worker_trauma_level'])?true:false;
                         $data['worker'] = isset($job_data['worker_trauma_level'])?$job_data['worker_trauma_level']:"";
@@ -2800,7 +2800,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['scrub_color'] == $job_data['worker_scrub_color']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['scrub_color'])?$job['scrub_color']:"";
                         $data['match'] = $val;
@@ -2814,7 +2814,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['job_state'] == $job_data['worker_facility_state_code']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['job_state'])?$job['job_state']:"";
                         $data['match'] = $val;
@@ -2842,7 +2842,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = "InterviewDates";
                         $data['match'] = !empty($job_data['worker_interview_dates'])?true:false;
                         $data['worker'] = isset($job_data['worker_interview_dates'])?$job_data['worker_interview_dates']:"";
@@ -2855,7 +2855,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if(isset($job['as_soon_as']) && ($job['as_soon_as'] == '1')){
                             $data['job'] = "As Soon As";
                         }else{
@@ -2876,7 +2876,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['rto'] == $job_data['worker_rto']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['rto'])?$job['rto']:"";
                         $data['match'] = $val;
@@ -2890,7 +2890,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['preferred_shift'] == $job_data['worker_shift_time_of_day']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['preferred_shift'])?$job['preferred_shift']:"";
                         $data['match'] = $val;
@@ -2904,8 +2904,8 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
-    
+
+
                         if($job['hours_per_week'] == $job_data['worker_hours_per_week']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['hours_per_week'])?$job['hours_per_week']:"";
                         $data['match'] = $val;
@@ -2919,7 +2919,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['guaranteed_hours'] == $job_data['worker_guaranteed_hours']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['guaranteed_hours'])?$job['guaranteed_hours']:"";
                         $data['match'] = $val;
@@ -2933,7 +2933,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['hours_shift'] == $job_data['worker_hours_shift']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['hours_shift'])?$job['hours_shift']:"";
                         $data['match'] = $val;
@@ -2947,7 +2947,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['preferred_assignment_duration'] == $job_data['worker_weeks_assignment']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['preferred_assignment_duration'])?$job['preferred_assignment_duration']:"";
                         $data['match'] = $val;
@@ -2961,7 +2961,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['weeks_shift'] == $job_data['worker_shifts_week']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['weeks_shift'])?$job['weeks_shift']:"";
                         $data['match'] = $val;
@@ -2975,7 +2975,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['referral_bonus'] == $job_data['worker_referral_bonus']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['referral_bonus'])?$job['referral_bonus']:"";
                         $data['match'] = $val;
@@ -2989,7 +2989,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if(($job['sign_on_bonus'] == $job_data['worker_sign_on_bonus']) && (!empty($job_data['worker_sign_on_bonus']))){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['sign_on_bonus'])?$job['sign_on_bonus']:"";
                         $data['match'] = $val;
@@ -3003,7 +3003,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['completion_bonus'] == $job_data['worker_completion_bonus']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['completion_bonus'])?$job['completion_bonus']:"";
                         $data['match'] = $val;
@@ -3017,7 +3017,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['extension_bonus'] == $job_data['worker_extension_bonus']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['extension_bonus'])?$job['extension_bonus']:"";
                         $data['match'] = $val;
@@ -3031,7 +3031,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['other_bonus'])?$job['other_bonus']:"";
                         $data['match'] = !empty($job_data['worker_other_bonus'])?true:false;
                         $data['worker'] = isset($job_data['worker_other_bonus'])?$job_data['worker_other_bonus']:"";
@@ -3044,7 +3044,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['four_zero_one_k'])?$job['four_zero_one_k']:"";
                         $data['match'] = !empty($job_data['how_much_k'])?true:false;
                         $data['worker'] = isset($job_data['how_much_k'])?$job_data['how_much_k']:"";
@@ -3057,7 +3057,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['health_insaurance'])?$job['health_insaurance']:"";
                         $data['match'] = !empty($job_data['worker_health_insurance'])?true:false;
                         $data['worker'] = isset($job_data['worker_health_insurance'])?$job_data['worker_health_insurance']:"";
@@ -3070,7 +3070,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['dental'])?$job['dental']:"";
                         $data['match'] = !empty($job_data['worker_dental'])?true:false;
                         $data['worker'] = isset($job_data['worker_dental'])?$job_data['worker_dental']:"";
@@ -3083,7 +3083,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['vision'])?$job['vision']:"";
                         $data['match'] = !empty($job_data['worker_vision'])?true:false;
                         $data['worker'] = isset($job_data['worker_vision'])?$job_data['worker_vision']:"";
@@ -3096,7 +3096,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['actual_hourly_rate'] == $job_data['worker_actual_hourly_rate']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['actual_hourly_rate'])?$job['actual_hourly_rate']:"";
                         $data['match'] = $val;
@@ -3110,7 +3110,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['feels_like_per_hour'] == $job_data['worker_feels_like_hour']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['feels_like_per_hour'])?$job['feels_like_per_hour']:"";
                         $data['match'] = $val;
@@ -3124,7 +3124,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['overtime'])?$job['overtime']:"";
                         $data['match'] = !empty($job_data['worker_overtime'])?true:false;
                         $data['worker'] = isset($job_data['worker_overtime'])?$job_data['worker_overtime']:"";
@@ -3137,7 +3137,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['holiday'])?$job['holiday']:"";
                         $data['match'] = !empty($job_data['worker_holiday'])?true:false;
                         $data['worker'] = isset($job_data['worker_holiday'])?$job_data['worker_holiday']:"";
@@ -3150,7 +3150,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['on_call'])?$job['on_call']:"";
                         $data['match'] = !empty($job_data['worker_holiday'])?true:false;
                         $data['worker'] = isset($job_data['worker_on_call'])?$job_data['worker_on_call']:"";
@@ -3163,7 +3163,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['call_back'])?$job['call_back']:"";
                         $data['match'] = !empty($job_data['worker_call_back'])?true:false;
                         $data['worker'] = isset($job_data['worker_call_back'])?$job_data['worker_call_back']:"";
@@ -3176,7 +3176,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = isset($job['orientation_rate'])?$job['orientation_rate']:"";
                         $data['match'] = !empty($job_data['worker_orientation_rate'])?true:false;
                         $data['worker'] = isset($job_data['worker_orientation_rate'])?$job_data['worker_orientation_rate']:"";
@@ -3189,7 +3189,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['weekly_taxable_amount'] == $job_data['worker_weekly_taxable_amount']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['weekly_taxable_amount'])?$job['weekly_taxable_amount']:"";
                         $data['match'] = $val;
@@ -3203,7 +3203,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['weekly_non_taxable_amount'] == $job_data['worker_weekly_non_taxable_amount']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['weekly_non_taxable_amount'])?$job['weekly_non_taxable_amount']:"";
                         $data['match'] = $val;
@@ -3217,7 +3217,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['employer_weekly_amount'] == $job_data['worker_employer_weekly_amount']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['employer_weekly_amount'])?$job['employer_weekly_amount']:"";
                         $data['match'] = $val;
@@ -3231,7 +3231,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['goodwork_weekly_amount'] == $job_data['worker_goodwork_weekly_amount']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['goodwork_weekly_amount'])?$job['goodwork_weekly_amount']:"";
                         $data['match'] = $val;
@@ -3245,7 +3245,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['total_employer_amount'] == $job_data['worker_total_employer_amount']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['total_employer_amount'])?$job['total_employer_amount']:"";
                         $data['match'] = $val;
@@ -3259,7 +3259,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['total_goodwork_amount'] == $job_data['worker_total_goodwork_amount']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['total_goodwork_amount'])?$job['total_goodwork_amount']:"";
                         $data['match'] = $val;
@@ -3273,7 +3273,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         if($job['total_contract_amount'] == $job_data['worker_total_contract_amount']){ $val = true; }else{$val = false;}
                         $data['job'] = isset($job['total_contract_amount'])?$job['total_contract_amount']:"";
                         $data['match'] = $val;
@@ -3287,7 +3287,7 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $data['job'] = "Goodwork Number";
                         $data['match'] = !empty($job_data['worker_goodwork_number'])?true:false;
                         $data['worker'] = isset($job_data['worker_goodwork_number'])?$job_data['worker_goodwork_number']:"";
@@ -3300,21 +3300,21 @@ class RecruiterController extends Controller
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
                         $worker_info[] = $data;
-    
+
                         $result['worker_info'] = $worker_info;
-                        
-    
-                        
+
+
+
                         $this->check = "1";
                         $this->message = "Matching details listed successfully";
                         // $this->return_data = $data;
                         $this->return_data = $result;
-    
+
                     }else{
                         $this->check = "1";
                         $this->message = "User Not Found";
                     }
-                    
+
                 }else{
                     $this->check = "1";
                     $this->message = "Worker Not Found";
@@ -3327,7 +3327,7 @@ class RecruiterController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    // M.ELH Note : the infromation retrived for a (worker,jobs,recruiter) not just a recruiter 
+    // M.ELH Note : the infromation retrived for a (worker,jobs,recruiter) not just a recruiter
     public function updateRecruiterInformation(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -3372,7 +3372,7 @@ class RecruiterController extends Controller
                     }
 
                     // upload covid
-                    if ($request->hasFile('covid') && $request->file('covid') != null) 
+                    if ($request->hasFile('covid') && $request->file('covid') != null)
                     {
                         $dele = NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'covid')->forceDelete();
 
@@ -3382,14 +3382,14 @@ class RecruiterController extends Controller
                                 \File::delete(public_path('images/nurses/vaccination/').$vaccination[0]);
                             }
                         }
-                        
+
                         $covid_name_full = $request->file('covid')->getClientOriginalName();
                         $covid_name = pathinfo($covid_name_full, PATHINFO_FILENAME);
                         $covid_ext = $request->file('covid')->getClientOriginalExtension();
                         $covid = $covid_name.'_'.time().'.'.$covid_ext;
                         $destinationPath = 'images/nurses/vaccination';
                         $request->file('covid')->move(public_path($destinationPath), $covid);
-                        
+
                         // write image name in worker table
                         // $worker->covid = $covid;
                         $covid_date = isset($request->covid_date)?$request->covid_date:'';
@@ -3412,7 +3412,7 @@ class RecruiterController extends Controller
                     }
 
                     // Upload flu
-                    if ($request->hasFile('flu') && $request->file('flu') != null) 
+                    if ($request->hasFile('flu') && $request->file('flu') != null)
                     {
                         NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'flu')->forceDelete();
                         if(!empty($vaccination[1])){
@@ -3451,10 +3451,10 @@ class RecruiterController extends Controller
                         ]);
                     }
                     $worker->worker_vaccination = json_encode($vaccination);
-                    
+
                 // }
                 // Diploma
-                if ($request->hasFile('diploma') && $request->file('diploma') != null) 
+                if ($request->hasFile('diploma') && $request->file('diploma') != null)
                 {
                     NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'diploma')->forceDelete();
                     if(!empty($worker->diploma)){
@@ -3479,10 +3479,10 @@ class RecruiterController extends Controller
                         'filter' => 'diploma'
                     ]);
                 }
-                
+
                 // Driving License
-                if ($request->hasFile('driving_license') && $request->file('driving_license') != null) 
-                {    
+                if ($request->hasFile('driving_license') && $request->file('driving_license') != null)
+                {
                     NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'driving_license')->forceDelete();
                     if(!empty($worker->driving_license)){
                         if(\File::exists(public_path('images/nurses/driving_license/').$worker->driving_license))
@@ -3497,7 +3497,7 @@ class RecruiterController extends Controller
                     $driving_license = $driving_license_name.'_'.time().'.'.$driving_license_ext;
                     $destinationPath = 'images/nurses/driving_license';
                     $request->file('driving_license')->move(public_path($destinationPath), $driving_license);
-                    
+
                     // write image name in worker table
                     $worker->driving_license = $driving_license;
                     $license_expiration_date = isset($request->license_expiration_date)?$request->license_expiration_date:'';
@@ -3517,12 +3517,12 @@ class RecruiterController extends Controller
                 $worker->license_expiry_date = isset($request->license_expiry_date)?$request->license_expiry_date:$worker->license_expiry_date;
                 $worker->compact_license = isset($request->compact_license)?$request->compact_license:$worker->compact_license;
                 $worker->license_issue_date = isset($request->license_issue_date)?$request->license_issue_date:$worker->license_issue_date;
-                
+
                 $worker->worker_ss_number = isset($request->worker_ss_number)?$request->worker_ss_number:$worker->worker_ss_number;
                 $worker->worker_number_of_references = isset($request->worker_number_of_references)?$request->worker_number_of_references:$worker->worker_number_of_references;
-                
+
                 // BLS
-                if ($request->hasFile('BLS') && $request->file('BLS') != null) 
+                if ($request->hasFile('BLS') && $request->file('BLS') != null)
                 {
                     NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'BLS')->forceDelete();
 
@@ -3547,9 +3547,9 @@ class RecruiterController extends Controller
                         'filter' => 'BLS'
                     ]);
                 }
-                
+
                 // ACLS
-                if ($request->hasFile('ACLS') && $request->file('ACLS') != null) 
+                if ($request->hasFile('ACLS') && $request->file('ACLS') != null)
                 {
                     NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'ACLS')->forceDelete();
                     // unlink(public_path('images/nurses/certificate/').$worker->ACLS);
@@ -3577,7 +3577,7 @@ class RecruiterController extends Controller
                 }
 
                 // PALS
-                if ($request->hasFile('PALS') && $request->file('PALS') != null) 
+                if ($request->hasFile('PALS') && $request->file('PALS') != null)
                 {
                     NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'PALS')->forceDelete();
                     // unlink(public_path('images/nurses/certificate/').$worker->PALS);
@@ -3606,7 +3606,7 @@ class RecruiterController extends Controller
                 }
 
                 // OTHER
-                if ($request->hasFile('other') && $request->file('other') != null) 
+                if ($request->hasFile('other') && $request->file('other') != null)
                 {
                     NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'other')->forceDelete();
                     // unlink(public_path('images/nurses/certificate/').$worker->other);
@@ -3645,7 +3645,7 @@ class RecruiterController extends Controller
                 // rto means worker time off
                 $worker->worker_avg_rating_by_employers = isset($request->worker_avg_rating_by_employers)?$request->worker_avg_rating_by_employers:$worker->worker_avg_rating_by_employers;
                 $worker->clinical_setting_you_prefer = isset($request->clinical_setting_you_prefer)?$request->clinical_setting_you_prefer:$worker->clinical_setting_you_prefer;
-                
+
                 $worker->worker_patient_ratio = isset($request->worker_patient_ratio)?$request->worker_patient_ratio:$worker->worker_patient_ratio;
                 $worker->worker_emr = isset($request->worker_emr)?$request->worker_emr:$worker->worker_emr;
                 $worker->worker_unit = isset($request->worker_unit)?$request->worker_unit:$worker->worker_unit;
@@ -3699,19 +3699,19 @@ class RecruiterController extends Controller
                 $worker->worker_total_goodwork_amount = isset($request->worker_total_goodwork_amount)?$request->worker_total_goodwork_amount:$worker->worker_total_goodwork_amount;
                 $worker->worker_total_contract_amount = isset($request->worker_total_contract_amount)?$request->worker_total_contract_amount:$worker->worker_total_contract_amount;
                 $worker->worker_goodwork_number = $worker->id;
-                
+
                 $record = $worker->save();
 
                 $user_info = USER::where('id', $worker->user_id);
                 if(isset($record)){
                     $this->check = "1";
                     $this->message = "Worker record Updated successfully";
-                    $this->return_data = $worker; 
+                    $this->return_data = $worker;
                 }else{
                     $this->check = "1";
-                    $this->message = "Worker record Not uploaded";    
+                    $this->message = "Worker record Not uploaded";
                 }
-                
+
             }else{
                 $this->check = "1";
                 $this->message = "Worker Not Found";
@@ -3734,14 +3734,14 @@ class RecruiterController extends Controller
         } else {
             // $record = Facility::where(['created_by' => $request->recruiter_id,'active' => '1'])->get();
             $record = Facility::where(['active' => '1'])->get();
-            
+
             if(isset($record) && !empty($record)){
                 $this->check =  1;
                 $this->message = 'Facility records listed successfully';
             }else{
                 $this->check =  0;
                 $this->message = 'Facility records not listed successfully';
-                
+
             }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $record], 200);
@@ -3800,7 +3800,7 @@ class RecruiterController extends Controller
             $check_job = Job::where('id', $request->job_id)->first();
             if(isset($check_job) && $check_job['is_hidden'] != 1){
                 $worker_info  = Nurse::where('id', $request->worker_id);
-            
+
                 if ($worker_info->count() > 0) {
                     $worker = $worker_info->get()->first();
                     $user_info = USER::where('id', $worker->user_id);
@@ -3817,7 +3817,7 @@ class RecruiterController extends Controller
                                     'nurses.id' => $worker->id,
                                     'jobs.id' => $request->job_id
                                 ];
-        
+
                             $respond = Nurse::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.nurse_id=nurses.id) as workers_applied"), 'nurses.*', 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'nurses.block_scheduling as worker_block_scheduling', 'nurses.float_requirement as worker_float_requirement', 'nurses.facility_shift_cancelation_policy as worker_facility_shift_cancelation_policy', 'nurses.contract_termination_policy as worker_contract_termination_policy', 'offers.start_date as posted_on', 'jobs.created_at as created_at', 'jobs.recruiter_id as recruiter_id')
                                             ->join('users','users.id', '=', 'nurses.user_id')
                                             ->leftJoin('offers','offers.nurse_id', '=', 'nurses.id')
@@ -3825,8 +3825,8 @@ class RecruiterController extends Controller
                                             ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                                             ->where($whereCond);
                             $job_data = $respond->groupBy('jobs.id')->first();
-                            
-                            
+
+
                             $job_data['worker_block_scheduling'] = $job_data['block_scheduling'];
                             $job_data['worker_float_requirement'] = $job_data['float_requirement'];
                             $job_data['worker_facility_shift_cancelation_policy'] = $job_data['facility_shift_cancelation_policy'];
@@ -3853,7 +3853,7 @@ class RecruiterController extends Controller
                                 // $job_data['posted_on'] = isset($published['start_date'])?'Posted on '.date('M j Y', strtotime($worker_jobs['posted_on'])):"";
                                 $job_data['created_at'] = $worker_jobs['created_at'];
                             }
-                            
+
                             if(isset($job_data['recruiter_id']) && !empty($job_data['recruiter_id'])){
                                 $recruiter_info = USER::where('id', $job_data['recruiter_id'])->get()->first();
                                 $recruiter_name = $recruiter_info->first_name.' '.$recruiter_info->last_name;
@@ -3865,13 +3865,13 @@ class RecruiterController extends Controller
                             $worker_reference = NURSE::select('nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
                             ->leftJoin('nurse_references','nurse_references.nurse_id', '=', 'nurses.id')
                             ->where('nurses.id', $worker->id)->get();
-        
+
                             $job = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*')->where('id', $request->job_id)->first();
                             $job_data['posted_on'] = $job_data['created_at'];
                             $worker_reference_name = '';
                             $worker_reference_title ='';
                             $worker_reference_recency_reference ='';
-                            
+
                             foreach($worker_reference as $val){
                                 if(!empty($val['name'])){
                                     $worker_reference_name = $val['name'].','.$worker_reference_name;
@@ -3883,8 +3883,8 @@ class RecruiterController extends Controller
                                     $worker_reference_recency_reference = $val['recency_of_reference'].','.$worker_reference_recency_reference;
                                 }
                             }
-                            
-                            // Jobs speciality with experience 
+
+                            // Jobs speciality with experience
                             $speciality = explode(',',$job['preferred_specialty']);
                             $experiences = explode(',',$job['preferred_experience']);
                             $exp = [];
@@ -3898,12 +3898,12 @@ class RecruiterController extends Controller
                             foreach($experiences as $experience){
                                 $exp[] = $experience;
                             }
-                           
+
                             for($j=0; $j< $i; $j++){
-                                $specialities[$j]['spe'] = $spe[$j]; 
-                                $specialities[$j]['exp'] = $exp[$j]; 
+                                $specialities[$j]['spe'] = $spe[$j];
+                                $specialities[$j]['exp'] = $exp[$j];
                             }
-        
+
                             // Worker speciality
                             $worker_speciality = explode(',',$worker->specialty);
                             $worker_experiences = explode(',',$worker->experience);
@@ -3918,12 +3918,12 @@ class RecruiterController extends Controller
                             foreach($experiences as $experience){
                                 $worker_exp[] = $experience;
                             }
-                           
+
                             for($j=0; $j< $i; $j++){
-                                $worker_specialities[$j]['spe'] = $worker_spe[$j]; 
-                                $worker_specialities[$j]['exp'] = $worker_exp[$j]; 
+                                $worker_specialities[$j]['spe'] = $worker_spe[$j];
+                                $worker_specialities[$j]['exp'] = $worker_exp[$j];
                             }
-        
+
                             // Worker vaccination
                             $worker_vaccination = json_decode($job_data['worker_vaccination']);
                             $worker_certificate_name = json_decode($job_data['worker_certificate_name']);
@@ -3936,12 +3936,12 @@ class RecruiterController extends Controller
                                     $skills_checklists[$i] = url('public/images/nurses/skill/'.$rec);
                                     $i++;
                                 }
-                                
+
                             }
                             $vacc_image = NurseAsset::where(['filter' => 'vaccination', 'nurse_id' => $worker->id])->get();
                             $cert_image = NurseAsset::where(['filter' => 'certificate', 'nurse_id' => $worker->id])->get();
                             $result = [];
-                            
+
                             $result['jobs_applied'] = isset($job_data['workers_applied'])?$job_data['workers_applied']:"";
                             $result['job_id'] = isset($job['id'])?$job['id']:"";
                             $result['description'] = isset($job_data['description'])?$job_data['description']:"";
@@ -3963,7 +3963,7 @@ class RecruiterController extends Controller
                             }else{
                                 $recs = false;
                             }
-        
+
                             if(isset($job_data['license_type']) && ($job_data['license_type'] != null) && ($job_data['profession'] == $job_data['license_type'])){
                                 $profession = true;
                             }else{
@@ -3983,7 +3983,7 @@ class RecruiterController extends Controller
                             $num = [];
                             foreach($countable as $rec){
                                 if(!empty($rec)){
-                                    $num[] = $rec;        
+                                    $num[] = $rec;
                                 }
                             }
                             $countable = count($num);
@@ -4000,7 +4000,7 @@ class RecruiterController extends Controller
                             $data['worker1'] = !empty($job_data['specialty'])?$job_data['specialty']:"-";
                             $data['name1'] = 'Speciality';
                             $worker_info[] = $data;
-        
+
                             if($job_data['nursing_license_state'] == $job_data['job_location']){ $val = true; }else{ $val = false; }
                             $data['worker'] = !empty($job_data['nursing_license_state'])?$job_data['nursing_license_state']:"-";
                             $data['name'] = 'Professional Licensure';
@@ -4013,74 +4013,74 @@ class RecruiterController extends Controller
                             $data['worker1'] = isset($worker_reference_title)?$worker_reference_title:"-";
                             $data['name1'] = 'Min Title Of References';
                             $worker_info[] = $data;
-        
-                            
+
+
                             // $data['worker1'] = isset($job_data['BLS'])?$job_data['BLS']:"-";
                             // $data['name1'] = 'BLS';
                             // $worker_info[] = $data;
-        
+
                             // $data['worker'] = isset($job_data['ACLS'])?$job_data['ACLS']:"-";
                             // $data['name'] = 'ACLS';
                             // $data['worker1'] = isset($job_data['PALS'])?$job_data['PALS']:"-";
                             // $data['name1'] = 'PALS';
                             // $worker_info[] = $data;
-        
+
                             $data['worker'] = isset($worker_reference_recency_reference)?$worker_reference_recency_reference:"-";
                             $data['name'] = 'Recency Of Reference';
                             $data['worker1'] = isset($job_data['skills_checklists'])?$job_data['skills_checklists']:"-";
                             $data['name1'] = 'Skills Checklist';
                             $worker_info[] = $data;
-        
+
                             $data['worker'] = isset($job_data['eligible_work_in_us'])?$job_data['eligible_work_in_us']:"-";
                             $data['name'] = 'Eligible To Work In The US';
                             $data['worker1'] = isset($job_data['worker_urgency'])?$job_data['worker_urgency']:"-";
                             $data['name1'] = 'Urgency';
                             $worker_info[] = $data;
-        
-        
+
+
                             if($job['traveler_distance_from_facility'] == $job_data['distance_from_your_home']){ $val = true; }else{$val = false;}
                             $data['worker'] = isset($job['traveler_distance_from_facility'])?$job['traveler_distance_from_facility']:"-";
                             $data['name'] = 'Traveler Distance from facility';
                             $data['worker1'] = isset($job_data['facilities_you_like_to_work_at'])?$job_data['facilities_you_like_to_work_at']:"-";
                             $data['name1'] = 'Facility';
                             $worker_info[] = $data;
-        
+
                             $data['worker'] = isset($job_data['state'])?$job_data['state']:"-";
                             $data['name'] = 'Location';
                             $data['worker1'] = isset($job_data['worker_shift_time_of_day'])?$job_data['worker_shift_time_of_day']:"-";
                             $data['name1'] = 'Shift';
                             $worker_info[] = $data;
-        
+
                             $data['worker'] = isset($job_data['distance_from_your_home'])?$job_data['distance_from_your_home']:"-";
                             $data['name'] = 'Distance from your home';
                             $data['worker1'] = isset($job_data['worked_at_facility_before'])?$job_data['worked_at_facility_before']:"-";
                             $data['name1'] = "Facilities you've worket at";
                             $worker_info[] = $data;
-        
+
                             $data['worker'] = isset($job_data['worker_facility_city'])?$job_data['worker_facility_state_code']:"-";
                             $data['name'] = 'Facility City';
                             $data['worker1'] = isset($job_data['worker_start_date'])?$job_data['worker_start_date']:"-";
                             $data['name1'] = 'Start Date';
                             $worker_info[] = $data;
-        
-        
+
+
                             $data['worker'] = "-";
                             $data['name'] = 'RTO';
                             $data['worker1'] = isset($job_data['worker_shift_time_of_day'])?$job_data['worker_shift_time_of_day']:"-";
                             $data['name1'] = 'Shift Time of Day';
                             $worker_info[] = $data;
-        
+
                             $data['worker'] = isset($job_data['worker_weeks_assignment'])?$job_data['worker_weeks_assignment']:"-";
                             $data['name'] = 'Assignment in weeks';
                             $data['worker1'] = isset($job_data['worker_employer_weekly_amount'])?$job_data['worker_employer_weekly_amount']:"-";
                             $data['name1'] = 'Employer Weekly Amount';
                             $worker_info[] = $data;
-        
-                            
+
+
                             $data['worker'] = isset($job_data['worker_goodwork_number'])?$job_data['worker_goodwork_number']:"-";
                             $data['name'] = 'Goodwork Number';
                             $worker_info[] = $data;
-                            
+
                             $data['worker'] = '';
                             $data['name'] = '';
                             $data['worker1'] = '';
@@ -4099,7 +4099,7 @@ class RecruiterController extends Controller
                                 $data['name'] = 'Vaccinations & Immunications ';
                                 $worker_vacc[] = $data;
                             }
-                            
+
 
                             $i = 0;
                             if(isset($worker_certificate_name)){
@@ -4115,15 +4115,15 @@ class RecruiterController extends Controller
                                 $data['name'] = 'Certification Name';
                                 $worker_cert[] = $data;
                             }
-        
+
                             $result['worker_info'] = $worker_info;
                             $result['worker_certificate'] = $worker_cert;
                             $result['worker_vaccination'] = $worker_vacc;
-                            
+
                             $this->check = "1";
                             $this->message = "Matching details listed successfully";
                             $this->return_data = $result;
-        
+
                         }else{
                             $this->check = "1";
                             $this->message = "User Not Found";
@@ -4132,8 +4132,8 @@ class RecruiterController extends Controller
                         $this->check = "1";
                         $this->message = "This worker offer Not Found";
                     }
-                    
-                    
+
+
                 }else{
                     $this->check = "1";
                     $this->message = "Worker Not Found";
@@ -4158,7 +4158,7 @@ class RecruiterController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $nurse_info = NURSE::where('id', $request->worker_id)->first();
-            
+
             $user_info = USER::where('id', $request->recruiter_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
@@ -4179,12 +4179,12 @@ class RecruiterController extends Controller
                     ->where($whereCond)
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
                 {
-                    
+
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
@@ -4208,19 +4208,19 @@ class RecruiterController extends Controller
                     $result['profession'] = isset($rec['profession'])?$rec['profession']:"";
                     $result['specialty'] = isset($rec['preferred_specialty'])?$rec['preferred_specialty']:"";
                     $result['experience'] = isset($rec['preferred_experience'])?$rec['preferred_experience'].' Years of Experience':"";
-                    
+
                     $record[] =  $result;
                 }
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "User not found";
 
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -4241,14 +4241,14 @@ class RecruiterController extends Controller
                 ];
 
             $respond = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'jobs.created_at as posted_on')
-                        ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')   
-                        ->leftJoin('offers','offers.job_id', '=', 'jobs.id')         
+                        ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
+                        ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
                         ->leftJoin('nurses', 'offers.nurse_id', '=', 'nurses.id')
                         ->leftJoin('users','nurses.user_id', '=', 'users.id')
                         ->where($whereCond);
             $job_data = $respond->groupBy('jobs.id')->first();
             $recruiter_info = User::where('id', $request->recruiter_id)->first();
-            
+
             $result = [];
             $result['jobs_applied'] = isset($job_data['workers_applied'])?$job_data['workers_applied']:"";
             $result['job_id'] = isset($job_data['id'])?$job_data['id']:"";
@@ -4264,7 +4264,7 @@ class RecruiterController extends Controller
             $result['recruiter_id'] = $recruiter_info->id;
             $result['facility_name'] = $job_data['facility_name'];
             $result['offer_id'] = $job_data['offer_id'];
-            
+
             $vaccinations = explode(',',$job_data['vaccinations']);
             $certificates = explode(',',$job_data['certificate']);
             $worker_info = [];
@@ -4286,7 +4286,7 @@ class RecruiterController extends Controller
             // $data['job1'] = isset($vaccinations[1])?$vaccinations[1]:"-";
             // $data['name1'] = 'Vaccinations & Immunications Flu';
             // $worker_info[] = $data;
-            
+
             $data['job'] = isset($job_data['number_of_references'])?$job_data['number_of_references']:"-";
             $data['name'] = 'Number Of References';
             $data['job1'] = isset($job_data['min_title_of_reference'])?$job_data['min_title_of_reference']:"-";
@@ -4307,7 +4307,7 @@ class RecruiterController extends Controller
 
             // $data['job'] = isset($certificates[2])?$certificates[2]:"-";
             // $data['name'] = 'other';
-            
+
 
             $data['job'] = isset($job_data['position_available'])?$job_data['position_available']:"-";
             $data['name'] = '# of Positions Available';
@@ -4446,7 +4446,7 @@ class RecruiterController extends Controller
             $data['job1'] = isset($job_data['call_back'])?$job_data['call_back']:"-";
             $data['name1'] = 'Call Back';
             $worker_info[] = $data;
-           
+
             $data['job'] = isset($job_data['orientation_rate'])?$job_data['orientation_rate']:"-";
             $data['name'] = "Orientation Rate";
             $data['job1'] = isset($job_data['weekly_taxable_amount'])?$job_data['weekly_taxable_amount']:"-";
@@ -4472,7 +4472,7 @@ class RecruiterController extends Controller
             $worker_info[] = $data;
 
             $data['job'] = isset($job_data['id'])?$job_data['id']:"-";
-            $data['name'] = "Goodwork Number"; 
+            $data['name'] = "Goodwork Number";
             $worker_info[] = $data;
 
             $data['job1'] ='';
@@ -4500,11 +4500,11 @@ class RecruiterController extends Controller
             }else{
                 $worker_cert = [];
             }
-            
+
             $result['worker_info'] = $worker_info;
             $result['worker_vaccination'] = $worker_vacc;
             $result['worker_certificate'] = $worker_cert;
-            
+
             $this->check = "1";
             $this->message = "Matching details listed successfully";
             $this->return_data = $result;
@@ -4524,7 +4524,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.recruiter_id' => $request->recruiter_id,
@@ -4574,7 +4574,7 @@ class RecruiterController extends Controller
                 $record['recruiter_name'] = $recruiter['first_name'].' '.$recruiter['last_name'];
                 $record['recruiter_id'] = $recruiter['id'];
                 $record['facility_name'] = isset($job['facility_name'])?$job['facility_name']:'';
-                
+
                 foreach($job_data as $rec)
                 {
                     $result['worker_id'] = $rec['id'];
@@ -4599,22 +4599,22 @@ class RecruiterController extends Controller
                     $result['profession'] = isset($rec['profession'])?$rec['profession']:"";
                     $result['specialty'] = isset($rec['preferred_specialty'])?$rec['preferred_specialty']:"";
                     $result['experience'] = isset($rec['preferred_experience'])?$rec['preferred_experience'].' Years of Experience':"";
-                    
+
                     $val[] =  $result;
                 }
                 $record["worker_info"] = $val;
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
-                
+
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
     public function unblockWorker(Request $request)
     {
-        
+
         $validator = \Validator::make($request->all(), [
             'worker_id' => 'required',
             'api_key' => 'required',
@@ -4624,10 +4624,10 @@ class RecruiterController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $nurse = Nurse::where('id', $request->worker_id)->first();
-            if ($nurse) {   
+            if ($nurse) {
                 $this->check = "1";
                 $nurse_deleted = DB::table('blocked_users')->where('worker_id', '=', $request->worker_id)->delete();
-                
+
                 if($nurse_deleted){
                     $this->message = "Worker unblocked successfully";
                     $this->return_data = 1;
@@ -4635,7 +4635,7 @@ class RecruiterController extends Controller
                     $this->message = "Worker not unblocked";
                     $this->return_data = 0;
                 }
-                
+
             } else {
                 $this->message = "Worker not exists";
                 $this->return_data = 0;
@@ -4643,8 +4643,8 @@ class RecruiterController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    } 
-    
+    }
+
     public function hideStatusApplication(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -4655,11 +4655,11 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $job_info = Job::where('id', $request->job_id);
             if ($job_info->count() > 0) {
                 $job = $job_info->first();
-                
+
                 $whereCond = [
                     'id' => $job['id']
                 ];
@@ -4671,17 +4671,17 @@ class RecruiterController extends Controller
                     }else{
                         $this->message = "Applications unhide successfully";
                     }
-                    
+
                 }else{
                     $this->check = "0";
                     $this->message = "Applications not hide";
                 }
-                
+
             }else{
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message], 200);
     }
@@ -4696,11 +4696,11 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $job_info = Job::where('id', $request->job_id);
             if ($job_info->count() > 0) {
                 $job = $job_info->first();
-                
+
                 $whereCond = [
                     'id' => $job['id']
                 ];
@@ -4712,17 +4712,17 @@ class RecruiterController extends Controller
                     }else{
                         $this->message = "Applications open successfully";
                     }
-                    
+
                 }else{
                     $this->check = "0";
                     $this->message = "Applications not closed";
                 }
-                
+
             }else{
                 $this->check = "1";
                 $this->message = "User not found";
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message], 200);
     }
@@ -4743,7 +4743,7 @@ class RecruiterController extends Controller
             $user = User::where('id', $nurse['user_id'])->first();
             $check = DB::table('ask_worker')->where(['text_field' => $request->update, 'worker_id' => $request->worker_id])->first();
             if(empty($check)){
-                
+
                 $notification = Notification::create(['created_by' => $user['id'], 'title' => $request->update, 'job_id' => $request->job_id, 'isAskWorker' => '1', 'text' => 'Please update '.$request->update]);
                 $record = DB::table('ask_worker')->insert(['text_field' => $request->update, 'update_key' => $request->update_key, 'worker_id' => $request->worker_id]);
                 if($notification){
@@ -4763,7 +4763,7 @@ class RecruiterController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    } 
+    }
 
     public function pushNotification(Request $request)
     {
@@ -4803,7 +4803,7 @@ class RecruiterController extends Controller
             $return_data = [];
             $jobs = Job::where('id', $request->job_id)->first();
 
-            if (isset($jobs)) {  
+            if (isset($jobs)) {
                 $job_data['job_id'] = $jobs['id'];
                 $job_data["job_name"] = isset($jobs['job_name'])?$jobs['job_name']:'';
                 $job_data["end_date"] = isset($jobs['end_date'])?$jobs['end_date']:'';
@@ -4834,7 +4834,7 @@ class RecruiterController extends Controller
                 // $job_data["facility_id"] = isset($jobs->facility_id)?$jobs->facility_id:$facility_id;
                 $job_data["facility"] = 'Testing Facility';
                 $job_data["facility_id"] = "GWf000001";
-                
+
                 $job_data["clinical_setting"] = isset($jobs['clinical_setting'])?$jobs['clinical_setting']:'';
                 $job_data["Patient_ratio"] = isset($jobs['Patient_ratio'])?$jobs['Patient_ratio']:'';
                 $job_data["emr"] = isset($jobs['emr'])?$jobs['emr']:'';
@@ -4868,7 +4868,7 @@ class RecruiterController extends Controller
                 $job_data["orientation_rate"] = isset($jobs['orientation_rate'])?$jobs['orientation_rate']:'';
                 $job_data["weekly_non_taxable_amount"] = isset($jobs['weekly_non_taxable_amount'])?$jobs['weekly_non_taxable_amount']:'';
                 $job_data["description"] = isset($jobs['description'])?$jobs['description']:'';
-                
+
                 $job_data["facilitys_parent_system"] = isset($jobs['facilitys_parent_system'])?$jobs['facilitys_parent_system']:'';
                 $job_data["facility_average_rating"] = isset($jobs['facility_average_rating'])?$jobs['facility_average_rating']:'';
                 $job_data["recruiter_average_rating"] = isset($jobs['recruiter_average_rating'])?$jobs['recruiter_average_rating']:'';
@@ -4889,7 +4889,7 @@ class RecruiterController extends Controller
                 }else{
                     $job_data["feels_like_per_hour"] = $job_data["employer_weekly_amount"]/$job_data["hours_per_week"];
                 }
-                
+
                 $this->check = "1";
                 $this->message = "Job listed successfully";
                 $this->return_data = $job_data;
@@ -4901,14 +4901,14 @@ class RecruiterController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    } 
+    }
 
     public function removeDraftJob(Request $request)
     {
         if (
             isset($request->recruiter_id) && $request->recruiter_id != "" &&
             isset($request->job_id) && $request->job_id != "" &&
-            isset($request->api_key) && $request->api_key != "" 
+            isset($request->api_key) && $request->api_key != ""
         ) {
             $user = User::where('id', '=', $request->recruiter_id)->first();
 
@@ -4919,7 +4919,7 @@ class RecruiterController extends Controller
             }else{
                 $this->message = "This Job not deleted";
             }
-             
+
         } else {
             $this->message = $this->param_missing;
         }
@@ -4938,7 +4938,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $update_array["job_id"] = isset($request->job_id)?$request->job_id:'';
             $update_array["recruiter_id"] = isset($request->recruiter_id)?$request->recruiter_id:'';
             $update_array["worker_user_id"] = isset($request->worker_user_id)?$request->worker_user_id:'';
@@ -4968,7 +4968,7 @@ class RecruiterController extends Controller
             $update_array["traveler_distance_from_facility"] = isset($request->traveler_distance_from_facility)?$request->traveler_distance_from_facility:'';
             $update_array["facility"] = isset($request->facility)?$request->facility:'';
             $update_array["facility_id"] = isset($request->facility_id)?$request->facility_id:'';
-            
+
             $update_array["clinical_setting"] = isset($request->clinical_setting)?$request->clinical_setting:'';
             $update_array["Patient_ratio"] = isset($request->Patient_ratio)?$request->Patient_ratio:'';
             $update_array["emr"] = isset($request->emr)?$request->emr:'';
@@ -5028,7 +5028,7 @@ class RecruiterController extends Controller
             $update_array["employer_average_rating"] = isset($request->employer_average_rating)?$request->employer_average_rating:'';
             $update_array["job_city"] = isset($request->city)?$request->city:'';
             $update_array["job_state"] = isset($request->state)?$request->state:'';
-            
+
             $check = DB::table('offer_jobs')->where(['job_id' => $request->job_id, 'worker_user_id' => $request->worker_user_id, 'recruiter_id' => $request->recruiter_id])->first();
             if(isset($check))
             {
@@ -5075,7 +5075,7 @@ class RecruiterController extends Controller
                     }else{
                         $this->message = "Offer send successfully!";
                     }
-                    
+
                 }
             }
             if($update_array["is_draft"] == '0'){
@@ -5089,10 +5089,10 @@ class RecruiterController extends Controller
                 }
                 $offer_status = 'Offered';
                 $check_notification = Notification::where(['job_id' => $request->job_id, 'recruiter_id' => $request->recruiter_id, 'isAskWorker' => '0'])->first();
-               
+
                 $text = 'Received a Offer for job name- '.$update_array["job_name"].' ('. $request->job_id .') by ';
                 if(empty($check_notification)){
-                    
+
                     $check_notification_again = Notification::where(['job_id' => $request->job_id, 'created_by' => $request->worker_user_id, 'recruiter_id' => NULL, 'isAskWorker' => '0'])->first();
                     if(empty($check_notification_again)){
                         $notification = Notification::create(['job_id' => $request->job_id, 'created_by' => $request->worker_user_id, 'recruiter_id' => NULL, 'title' => 'Send Offer', 'text' => $text]);
@@ -5105,11 +5105,11 @@ class RecruiterController extends Controller
                     }
                 }else if(isset($check_notification)){
                     $notification = Notification::where('id', $check_notification->id)->update(['job_id' => $request->job_id, 'created_by' => $request->worker_user_id, 'recruiter_id' => NULL, 'title' => 'Send Offer', 'text' => $text, 'updated_at' => date('Y-m-d h:i:s')]);
-                    
+
                 }
             }
-            
-            
+
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -5127,7 +5127,7 @@ class RecruiterController extends Controller
                 $this->message = $validator->errors()->first();
             } else {
                 $job = DB::table('offer_jobs')->select('offer_jobs.*')->where(['job_id' => $request->job_id, 'is_draft' => '0', 'offer_jobs.is_counter' => '0', 'worker_user_id' => $request->worker_user_id])->first();
-                
+
                 if ($job) {
                     $this->check = "1";
                     $this->message = "Send Offer Job listed successfully";
@@ -5193,7 +5193,7 @@ class RecruiterController extends Controller
                 $this->message = $validator->errors()->first();
             } else {
                 $job = DB::table('offer_jobs')->select('offer_jobs.*')->where(['job_id' => $request->job_id, 'is_draft' => '1', 'worker_user_id' => $request->worker_user_id])->first();
-                
+
                 if ($job) {
                     $this->check = "1";
                     $this->message = "Send draft Offer Job listed successfully";
@@ -5250,8 +5250,8 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(isset($job->type) && !empty($job->type) && ($job->type != $job_data['type']))
-                    {    
-                        $popup['name'] = 'Type';      
+                    {
+                        $popup['name'] = 'Type';
                         $popup['value'] = $job->type;
                         $jobs["name"] = 'Type';
                         $jobs["job"] = $job->type;
@@ -5263,8 +5263,8 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->terms != $job_data['terms']) && isset($job->terms) && !empty($job->terms))
-                    {    
-                        $popup['name'] = 'Terms';      
+                    {
+                        $popup['name'] = 'Terms';
                         $popup['value'] = $job->terms;
                         $jobs["name1"] = 'Terms';
                         $jobs["job1"] = $job->terms;
@@ -5277,8 +5277,8 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->profession != $job_data['profession']) && isset($job->profession) && !empty($job->profession))
-                    {    
-                        $popup['name'] = 'Profession';      
+                    {
+                        $popup['name'] = 'Profession';
                         $popup['value'] = $job->profession;
                         $jobs["name"] = 'Profession';
                         $jobs["job"] = $job->profession;
@@ -5290,11 +5290,11 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->preferred_specialty != $job_data['preferred_specialty']) && isset($job->preferred_specialty) && !empty($job->preferred_specialty))
-                    {    
-                        $popup['name'] = 'Specialty';      
+                    {
+                        $popup['name'] = 'Specialty';
                         $popup['value'] = $job->preferred_specialty;
                         $jobs["name1"] = 'Specialty';
-                        $jobs["job1"] = $job->preferred_specialty;                        
+                        $jobs["job1"] = $job->preferred_specialty;
                     }else{
                         $jobs["name1"] = 'Specialty';
                         $jobs["job1"] = $job_data['preferred_specialty'];
@@ -5303,9 +5303,9 @@ class RecruiterController extends Controller
                     $worker_info[] = $jobs;
                     $popup['name'] = '';
                     $popup['value'] = '';
-                    
+
                     if(($job->compact != $job_data['compact']) && isset($job->compact) && !empty($job->compact))
-                    {    
+                    {
                         $popup['name'] = 'Compact';
                         $popup['value'] = $job->compact;
                         $jobs["compact"] = $job->compact;
@@ -5316,7 +5316,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->job_location != $job_data['job_location']) && isset($job->job_location) && !empty($job->job_location))
-                    {  
+                    {
                         $popup['name'] = 'Professional Licensure';
                         $popup['value'] = $job->preferred_experience;
                         $jobs["name"] = 'Professional Licensure';
@@ -5329,7 +5329,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->preferred_experience != $job_data['preferred_experience']) && isset($job->preferred_experience) && !empty($job->preferred_experience))
-                    {    
+                    {
                         $popup['name'] = 'Experience';
                         $popup['value'] = $job->preferred_experience;
                         $jobs["name1"] = 'Experience';
@@ -5342,9 +5342,9 @@ class RecruiterController extends Controller
                     $popup_info[] = $popup;
                     $popup['name'] = '';
                     $popup['value'] = '';
-                    
+
                     if(($job->number_of_references != $job_data['number_of_references']) && isset($job->number_of_references) && !empty($job->number_of_references))
-                    {    
+                    {
                         $popup['name'] = 'Number Of References';
                         $popup['value'] = $job->number_of_references;
                         $jobs["name"] = 'Number Of References';
@@ -5357,7 +5357,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->min_title_of_reference != $job_data['min_title_of_reference']) && isset($job->min_title_of_reference) && !empty($job->min_title_of_reference))
-                    {    
+                    {
                         $popup['name'] = 'Min Title Of References';
                         $popup['value'] = $job->min_title_of_reference;
                         $jobs["name1"] = 'Min Title Of References';
@@ -5371,7 +5371,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->recency_of_reference != $job_data['recency_of_reference']) && isset($job->recency_of_reference) && !empty($job->recency_of_reference))
-                    {    
+                    {
                         $popup['name'] = 'Recency Of Reference';
                         $popup['value'] = $job->recency_of_reference;
                         $jobs["name"] = 'Recency Of Reference';
@@ -5384,7 +5384,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->skills != $job_data['skills']) && isset($job->skills) && !empty($job->skills))
-                    {    
+                    {
                         $popup['name'] = 'Skills Checklist';
                         $popup['value'] = $job->skills;
                         $jobs["name1"] = 'Skills Checklist';
@@ -5398,7 +5398,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->position_available != $job_data['position_available']) && isset($job->position_available) && !empty($job->position_available))
-                    {    
+                    {
                         $popup['name'] = '# Possition Available';
                         $popup['value'] = $job->position_available;
                         $jobs["name"] = '# Possition Available';
@@ -5411,7 +5411,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->msp != $job_data['msp']) && isset($job->msp) && !empty($job->msp))
-                    {  
+                    {
                         $popup['name'] = 'MSP';
                         $popup['value'] = $job->msp;
                         $jobs["name1"] = 'MSP';
@@ -5425,7 +5425,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->vms != $job_data['vms']) && isset($job->vms) && !empty($job->vms))
-                    {    
+                    {
                         $popup['name'] = 'VMS';
                         $popup['value'] = $job->vms;
                         $jobs["name"] = 'VMS';
@@ -5438,7 +5438,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->submission_of_vms != $job_data['submission_of_vms']) && isset($job->submission_of_vms) && !empty($job->submission_of_vms))
-                    {    
+                    {
                         $popup['name'] = '# of Submission in VMS';
                         $popup['value'] = $job->submission_of_vms;
                         $jobs["name1"] = '# of Submission in VMS';
@@ -5452,7 +5452,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->block_scheduling != $job_data['block_scheduling']) && isset($job->block_scheduling) && !empty($job->block_scheduling))
-                    {    
+                    {
                         $popup['name'] = 'Block Scheduling';
                         $popup['value'] = $job->block_scheduling;
                         $jobs["name"] = 'Block Scheduling';
@@ -5465,7 +5465,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facility_shift_cancelation_policy != $job_data['facility_shift_cancelation_policy']) && isset($job->facility_shift_cancelation_policy) && !empty($job->facility_shift_cancelation_policy))
-                    {    
+                    {
                         $popup['name'] = 'Facility Shift Cancelation Policy';
                         $popup['value'] = $job->facility_shift_cancelation_policy;
                         $jobs["name1"] = 'Facility Shift Cancelation Policy';
@@ -5476,11 +5476,11 @@ class RecruiterController extends Controller
                     }
                     $worker_info[] = $jobs;
                     $popup_info[] = $popup;
-                    
+
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->contract_termination_policy != $job_data['contract_termination_policy']) && isset($job->contract_termination_policy) && !empty($job->contract_termination_policy))
-                    {    
+                    {
                         $popup['name'] = 'Contract Termination Policy';
                         $popup['value'] = $job->contract_termination_policy;
                         $jobs["name"] = 'Contract Termination Policy';
@@ -5493,7 +5493,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->traveler_distance_from_facility != $job_data['traveler_distance_from_facility']) && isset($job->traveler_distance_from_facility) && !empty($job->traveler_distance_from_facility))
-                    {    
+                    {
                         $popup['name'] = 'Traveler Distance From Facility';
                         $popup['value'] = $job->traveler_distance_from_facility;
                         $jobs["name1"] = 'Traveler Distance From Facility';
@@ -5507,7 +5507,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facility != $job_data['facility']) && isset($job->facility) && !empty($job->facility))
-                    {    
+                    {
                         $popup['name'] = 'Facility';
                         $popup['value'] = $job->facility;
                         $jobs["name"] = 'Facility';
@@ -5520,7 +5520,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facilitys_parent_system != $job_data['facilitys_parent_system']) && isset($job->facilitys_parent_system) && !empty($job->facilitys_parent_system))
-                    {    
+                    {
                         $popup['name'] = "Facility's Parent System";
                         $popup['value'] = $job->facilitys_parent_system;
                         $jobs["name1"] = "Facility's Parent System";
@@ -5534,7 +5534,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facility_average_rating != $job_data['facility_average_rating']) && isset($job->facility_average_rating) && !empty($job->facility_average_rating))
-                    {    
+                    {
                         $popup['name'] = "Facility Average Rating";
                         $popup['value'] = $job->facility_average_rating;
                         $jobs["name"] = "Facility Average Rating";
@@ -5547,7 +5547,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->recruiter_average_rating != $job_data['recruiter_average_rating']) && isset($job->recruiter_average_rating) && !empty($job->recruiter_average_rating))
-                    {    
+                    {
                         $popup['name'] = "Recruiter Average Rating";
                         $popup['value'] = $job->recruiter_average_rating;
                         $jobs["name1"] = "Recruiter Average Rating";
@@ -5561,7 +5561,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->employer_average_rating != $job_data['employer_average_rating']) && isset($job->employer_average_rating) && !empty($job->employer_average_rating))
-                    {    
+                    {
                         $popup['name'] = "Employer Average Rating";
                         $popup['value'] = $job->employer_average_rating;
                         $jobs["name"] = "Employer Average Rating";
@@ -5574,7 +5574,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->clinical_setting != $job_data['clinical_setting']) && isset($job->clinical_setting) && !empty($job->clinical_setting))
-                    {    
+                    {
                         $popup['name'] = "Clinical Setting";
                         $popup['value'] = $job->clinical_setting;
                         $jobs["name1"] = "Clinical Setting";
@@ -5588,7 +5588,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Patient_ratio != $job_data['Patient_ratio']) && isset($job->Patient_ratio) && !empty($job->Patient_ratio))
-                    {    
+                    {
                         $popup['name'] = "Patient Ratio";
                         $popup['value'] = $job->Patient_ratio;
                         $jobs["name"] = "Patient Ratio";
@@ -5601,7 +5601,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->emr != $job_data['emr']) && isset($job->emr) && !empty($job->emr))
-                    {    
+                    {
                         $popup['name'] = "EMR";
                         $popup['value'] = $job->emr;
                         $jobs["name1"] = "EMR";
@@ -5615,7 +5615,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Unit != $job_data['Unit']) && isset($job->Unit) && !empty($job->Unit))
-                    {    
+                    {
                         $popup['name'] = "Unit";
                         $popup['value'] = $job->Unit;
                         $jobs["name"] = "Unit";
@@ -5628,7 +5628,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Department != $job_data['Department']) && isset($job->Department) && !empty($job->Department))
-                    {    
+                    {
                         $popup['name'] = "Department";
                         $popup['value'] = $job->Department;
                         $jobs["name1"] = "Department";
@@ -5642,7 +5642,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Bed_Size != $job_data['Bed_Size']) && isset($job->Bed_Size) && !empty($job->Bed_Size))
-                    {    
+                    {
                         $popup['name'] = "Bed Size";
                         $popup['value'] = $job->Bed_Size;
                         $jobs["name"] = "Bed Size";
@@ -5655,7 +5655,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Trauma_Level != $job_data['Trauma_Level']) && isset($job->Trauma_Level) && !empty($job->Trauma_Level))
-                    {    
+                    {
                         $popup['name'] = "Trauma Level";
                         $popup['value'] = $job->Trauma_Level;
                         $jobs["name1"] = "Trauma Level";
@@ -5669,7 +5669,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->scrub_color != $job_data['scrub_color']) && isset($job->scrub_color) && !empty($job->scrub_color))
-                    {    
+                    {
                         $popup['name'] = "Scrub Color";
                         $popup['value'] = $job->scrub_color;
                         $jobs["name"] = "Scrub Color";
@@ -5682,7 +5682,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->job_city != $job_data['job_city']) && isset($job->job_city) && !empty($job->job_city))
-                    {    
+                    {
                         $popup['name'] = "Facility City";
                         $popup['value'] = $job->job_city;
                         $jobs["name1"] = "Facility City";
@@ -5696,7 +5696,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->job_state != $job_data['job_state']) && isset($job->job_state) && !empty($job->job_state))
-                    {    
+                    {
                         $popup['name'] = "Facility State Code";
                         $popup['value'] = $job->job_state;
                         $jobs["name1"] = "Facility State Code";
@@ -5709,7 +5709,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->start_date != $job_data['start_date']) && isset($job->start_date) && !empty($job->start_date))
-                    {    
+                    {
                         $popup['name'] = "Start Date";
                         $popup['value'] = $job->start_date;
                         $jobs["name1"] = "Start Date";
@@ -5723,7 +5723,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->rto != $job_data['rto']) && isset($job->rto) && !empty($job->rto))
-                    {    
+                    {
                         $popup['name'] = "RTO";
                         $popup['value'] = $job->rto;
                         $jobs["name"] = "RTO";
@@ -5736,7 +5736,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->preferred_shift != $job_data['preferred_shift']) && isset($job->preferred_shift) && !empty($job->preferred_shift))
-                    {    
+                    {
                         $popup['name'] = "Shift Time Of Day";
                         $popup['value'] = $job->preferred_shift;
                         $jobs["name1"] = "Shift Time Of Day";
@@ -5750,7 +5750,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->hours_per_week != $job_data['hours_per_week']) && isset($job->hours_per_week) && !empty($job->hours_per_week))
-                    {    
+                    {
                         $popup['name'] = "Hours/Week";
                         $popup['value'] = $job->hours_per_week;
                         $jobs["name"] = "Hours/Week";
@@ -5763,7 +5763,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->guaranteed_hours != $job_data['guaranteed_hours']) && isset($job->guaranteed_hours) && !empty($job->guaranteed_hours))
-                    {    
+                    {
                         $popup['name'] = "Gauranteed Hours";
                         $popup['value'] = $job->guaranteed_hours;
                         $jobs["name1"] = "Gauranteed Hours";
@@ -5777,7 +5777,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->hours_shift != $job_data['hours_shift']) && isset($job->hours_shift) && !empty($job->hours_shift))
-                    {    
+                    {
                         $popup['name'] = "Hours/Shift";
                         $popup['value'] = $job->hours_shift;
                         $jobs["name"] = "Hours/Shift";
@@ -5787,7 +5787,7 @@ class RecruiterController extends Controller
                         $jobs["job"] = $job_data['hours_shift'];
                     }
                     if(($job->preferred_assignment_duration != $job_data['preferred_assignment_duration']) && isset($job->preferred_assignment_duration) && !empty($job->preferred_assignment_duration))
-                    {    
+                    {
                         $popup['name'] = "Weeks/Assignment";
                         $popup['value'] = $job->preferred_assignment_duration;
                         $jobs["name1"] = "Weeks/Assignment";
@@ -5801,7 +5801,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->weeks_shift != $job_data['weeks_shift']) && isset($job->weeks_shift) && !empty($job->weeks_shift))
-                    {    
+                    {
                         $popup['name'] = "Shifts/Week";
                         $popup['value'] = $job->weeks_shift;
                         $jobs["name"] = "Shifts/Week";
@@ -5814,7 +5814,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->referral_bonus != $job_data['referral_bonus']) && isset($job->referral_bonus) && !empty($job->referral_bonus))
-                    {    
+                    {
                         $popup['name'] = "Referral Bonus";
                         $popup['value'] = $job->referral_bonus;
                         $jobs["name1"] = "Referral Bonus";
@@ -5828,7 +5828,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->sign_on_bonus != $job_data['sign_on_bonus']) && isset($job->sign_on_bonus) && !empty($job->sign_on_bonus))
-                    {    
+                    {
                         $popup['name'] = "Sign-On Bonus";
                         $popup['value'] = $job->sign_on_bonus;
                         $jobs["name"] = "Sign-On Bonus";
@@ -5841,7 +5841,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->completion_bonus != $job_data['completion_bonus']) && isset($job->completion_bonus) && !empty($job->completion_bonus))
-                    {    
+                    {
                         $popup['name'] = "Completion Bonus";
                         $popup['value'] = $job->completion_bonus;
                         $jobs["name1"] = "Completion Bonus";
@@ -5855,7 +5855,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->extension_bonus != $job_data['extension_bonus']) && isset($job->extension_bonus) && !empty($job->extension_bonus))
-                    {    
+                    {
                         $popup['name'] = "Extension Bonus";
                         $popup['value'] = $job->extension_bonus;
                         $jobs["name"] = "Extension Bonus";
@@ -5868,7 +5868,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->other_bonus != $job_data['other_bonus']) && isset($job->other_bonus) && !empty($job->other_bonus))
-                    {    
+                    {
                         $popup['name'] = "Other Bonus";
                         $popup['value'] = $job->other_bonus;
                         $jobs["name1"] = "Other Bonus";
@@ -5882,7 +5882,7 @@ class RecruiterController extends Controller
                     $popup['value'] = '';
 
                     if(($job->four_zero_one_k != $job_data['four_zero_one_k']) && isset($job->four_zero_one_k) && !empty($job->four_zero_one_k))
-                    {    
+                    {
                         $popup['name'] = "401K";
                         $popup['value'] = $job->four_zero_one_k;
                         $jobs["name"] = "401K";
@@ -5895,7 +5895,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->health_insaurance != $job_data['health_insaurance']) && isset($job->health_insaurance) && !empty($job->health_insaurance))
-                    {    
+                    {
                         $popup['name'] = "Health Insaurance";
                         $popup['value'] = $job->health_insaurance;
                         $jobs["name1"] = "Health Insaurance";
@@ -5909,7 +5909,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->dental != $job_data['dental']) && isset($job->dental) && !empty($job->dental))
-                    {    
+                    {
                         $popup['name'] = "Dental";
                         $popup['value'] = $job->dental;
                         $jobs["name"] = "Dental";
@@ -5922,11 +5922,11 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->vision != $job_data['vision']) && isset($job->vision) && !empty($job->vision))
-                    {   
+                    {
                         $popup['name'] = "Vision";
                         $popup['value'] = $job->vision;
                         $jobs["name1"] = "Vision";
-                        $jobs["job1"] = $job->vision; 
+                        $jobs["job1"] = $job->vision;
                     }else{
                         $jobs["name1"] = "Vision";
                         $jobs["job1"] = $job_data['vision'];
@@ -5936,7 +5936,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->actual_hourly_rate != $job_data['actual_hourly_rate']) && isset($job->actual_hourly_rate) && !empty($job->actual_hourly_rate))
-                    {    
+                    {
                         $popup['name'] = "Actual Hourly Rate";
                         $popup['value'] = $job->actual_hourly_rate;
                         $jobs["name"] = "Actual Hourly Rate";
@@ -5949,7 +5949,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->feels_like_per_hour != $job_data['feels_like_per_hour']) && isset($job->feels_like_per_hour) && !empty($job->feels_like_per_hour))
-                    {    
+                    {
                         $popup['name'] = "Feels Like $/hr";
                         $popup['value'] = $job->feels_like_per_hour;
                         $jobs["name1"] = "Feels Like $/hr";
@@ -5963,7 +5963,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->overtime != $job_data['overtime']) && isset($job->overtime) && !empty($job->overtime))
-                    {    
+                    {
                         $popup['name'] = "Overtime";
                         $popup['value'] = $job->overtime;
                         $jobs["name"] = "Overtime";
@@ -5976,7 +5976,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->holiday != $job_data['holiday']) && isset($job->holiday) && !empty($job->holiday))
-                    {    
+                    {
                         $popup['name'] = "Holiday";
                         $popup['value'] = $job->holiday;
                         $jobs["name1"] = "Holiday";
@@ -5990,7 +5990,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->on_call != $job_data['on_call']) && isset($job->on_call) && !empty($job->on_call))
-                    {    
+                    {
                         $popup['name'] = "On Call";
                         $popup['value'] = $job->on_call;
                         $jobs["name"] = "On Call";
@@ -6003,7 +6003,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->call_back != $job_data['call_back']) && isset($job->call_back) && !empty($job->call_back))
-                    {    
+                    {
                         $popup['name'] = "Call Back";
                         $popup['value'] = $job->call_back;
                         $jobs["name1"] = "Call Back";
@@ -6017,7 +6017,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->orientation_rate != $job_data['orientation_rate']) && isset($job->orientation_rate) && !empty($job->orientation_rate))
-                    {    
+                    {
                         $popup['name'] = "Orientation Rate";
                         $popup['value'] = $job->orientation_rate;
                         $jobs["name"] = "Orientation Rate";
@@ -6030,7 +6030,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->weekly_taxable_amount != $job_data['weekly_taxable_amount']) && isset($job->weekly_taxable_amount) && !empty($job->weekly_taxable_amount))
-                    {    
+                    {
                         $popup['name'] = "Weekly Taxable Amount";
                         $popup['value'] = $job->weekly_taxable_amount;
                         $jobs["name1"] = "Weekly Taxable Amount";
@@ -6044,7 +6044,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->weekly_non_taxable_amount != $job_data['weekly_non_taxable_amount']) && isset($job->weekly_non_taxable_amount) && !empty($job->weekly_non_taxable_amount))
-                    {    
+                    {
                         $popup['name'] = "Weekly Non Taxable Amount";
                         $popup['value'] = $job->weekly_non_taxable_amount;
                         $jobs["name"] = "Weekly Non Taxable Amount";
@@ -6057,7 +6057,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->employer_weekly_amount != $job_data['employer_weekly_amount']) && isset($job->employer_weekly_amount) && !empty($job->employer_weekly_amount))
-                    {    
+                    {
                         $popup['name'] = "Employer Weekly Amount";
                         $popup['value'] = $job->employer_weekly_amount;
                         $jobs["name1"] = "Employer Weekly Amount";
@@ -6071,7 +6071,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->goodwork_weekly_amount != $job_data['goodwork_weekly_amount']) && isset($job->goodwork_weekly_amount) && !empty($job->goodwork_weekly_amount))
-                    {    
+                    {
                         $popup['name'] = "Goodwork Weekly Amount";
                         $popup['value'] = $job->goodwork_weekly_amount;
                         $jobs["name"] = "Goodwork Weekly Amount";
@@ -6084,7 +6084,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->total_employer_amount != $job_data['total_employer_amount']) && isset($job->total_employer_amount) && !empty($job->total_employer_amount))
-                    {    
+                    {
                         $popup['name'] = "Total Employer Amount";
                         $popup['value'] = $job->total_employer_amount;
                         $jobs["name1"] = "Total Employer Amount";
@@ -6098,7 +6098,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->total_goodwork_amount != $job_data['total_goodwork_amount']) && isset($job->total_goodwork_amount) && !empty($job->total_goodwork_amount))
-                    {    
+                    {
                         $popup['name'] = "Total Goodwork Amount";
                         $popup['value'] = $job->total_goodwork_amount;
                         $jobs["name"] = "Total Goodwork Amount";
@@ -6111,7 +6111,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->total_contract_amount != $job_data['total_contract_amount']) && isset($job->total_contract_amount) && !empty($job->total_contract_amount))
-                    {    
+                    {
                         $popup['name'] = "Total Contract Amount";
                         $popup['value'] = $job->total_contract_amount;
                         $jobs["name1"] = "Total Contract Amount";
@@ -6124,9 +6124,9 @@ class RecruiterController extends Controller
                     $popup_info[] = $popup;
                     $popup['name'] = '';
                     $popup['value'] = '';
-                
+
                     if(($job->goodwork_number != $job_data['goodwork_number']) && isset($job->goodwork_number) && !empty($job->goodwork_number))
-                    {    
+                    {
                         $popup['name'] = "Goodwork Number";
                         $popup['value'] = $job->goodwork_number;
                         $jobs["name"] = "Goodwork Number";
@@ -6139,7 +6139,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(isset($job->additional_terms) && !empty($job->additional_terms))
-                    {    
+                    {
                         $popup['name'] = "Additional Terms";
                         $popup['value'] = $job->additional_terms;
                         $jobs["name1"] = "Additional Terms";
@@ -6155,7 +6155,7 @@ class RecruiterController extends Controller
                     $jobs["name1"] = '';
                     $jobs["job1"] = '';
                     if(($job->vaccinations != $job_data['vaccinations']) && isset($job->vaccinations) && !empty($job->vaccinations))
-                    {    
+                    {
                         $popup['name'] = 'Vaccinations & Immunizations';
                         $popup['value'] = $job->vaccinations;
                         $jod_details = explode(',', $job->vaccinations);
@@ -6177,7 +6177,7 @@ class RecruiterController extends Controller
                     $popup['value'] = '';
 
                     if(($job->certificate != $job_data['certificate']) && isset($job->certificate) && !empty($job->certificate))
-                    {    
+                    {
                         $popup['name'] = 'Certification';
                         $popup['value'] = $job->certificate;
                         $jod_details = explode(',', $job->certificate);
@@ -6205,7 +6205,7 @@ class RecruiterController extends Controller
                     $this->check = "1";
                     $this->message = "Get Send Offer Job Not Found";
                 }
-                
+
             }
             return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
         }
@@ -6221,11 +6221,11 @@ class RecruiterController extends Controller
         ]);
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
-        } else {    
+        } else {
             $nurse = Nurse::where('user_id', $request->worker_user_id)->first();
             $offer_job = Offer::where(['nurse_id' => $nurse->id, 'job_id' => $request->job_id, 'status' => 'Offered'])->forceDelete();
             $job = DB::table('offer_jobs')->where(['recruiter_id' => $request->recruiter_id, 'job_id' => $request->job_id, 'worker_user_id' => $request->worker_user_id])->delete();
-            
+
             if ($job) {
                 $this->check = "1";
                 $this->message = "Offer Rejected Successfully";
@@ -6249,7 +6249,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $update_array["job_id"] = isset($request->job_id)?$request->job_id:'';
             $update_array["recruiter_id"] = isset($request->recruiter_id)?$request->recruiter_id:'';
             $update_array["worker_user_id"] = isset($request->worker_user_id)?$request->worker_user_id:'';
@@ -6279,7 +6279,7 @@ class RecruiterController extends Controller
             $update_array["traveler_distance_from_facility"] = isset($request->traveler_distance_from_facility)?$request->traveler_distance_from_facility:'';
             $update_array["facility"] = isset($request->facility)?$request->facility:'';
             $update_array["facility_id"] = isset($request->facility_id)?$request->facility_id:'';
-            
+
             $update_array["clinical_setting"] = isset($request->clinical_setting)?$request->clinical_setting:'';
             $update_array["Patient_ratio"] = isset($request->Patient_ratio)?$request->Patient_ratio:'';
             $update_array["emr"] = isset($request->emr)?$request->emr:'';
@@ -6321,9 +6321,9 @@ class RecruiterController extends Controller
             $update_array["employer_average_rating"] = isset($request->employer_average_rating)?$request->employer_average_rating:'';
             $update_array["job_city"] = isset($request->city)?$request->city:'';
             $update_array["job_state"] = isset($request->state)?$request->state:'';
-            
-            
-            
+
+
+
             $check = DB::table('offer_jobs')->where(['job_id' => $request->job_id, 'worker_user_id' => $request->worker_user_id, 'recruiter_id' => $request->recruiter_id])->first();
             if(isset($check))
             {
@@ -6371,7 +6371,7 @@ class RecruiterController extends Controller
                     $notification = Notification::where('id', $check_notification->id)->update(['job_id' => $request->job_id, 'created_by' => $request->worker_user_id, 'recruiter_id' => $request->recruiter_id, 'title' => 'Send Counter Offer', 'text' => $text, 'updated_at' => date('Y-m-d h:i:s')]);
                 }
             }
-            
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -6440,7 +6440,7 @@ class RecruiterController extends Controller
                 $result = [];
                 $worker_info = [];
                 $popup_info = [];
-    
+
                 $result['job_id'] = isset($job_data['id'])?$job_data['id']:"";
                 $result['description'] = isset($job_data['description'])?$job_data['description']:"";
                 $result['worker_name'] = $worker_name;
@@ -6450,14 +6450,14 @@ class RecruiterController extends Controller
                 $result['offer_id'] = isset($offer['id'])?$offer['id']:'';
                 $result['recruiter_id'] = $request->recruiter_id;
                 $result['offer_valid'] = isset($job_data['preferred_assignment_duration'])?$job_data['preferred_assignment_duration'].' Weeks':'';
-    
+
                 if(isset($job)){
                     $popup = [];
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->type != $job_data['type']) && isset($job->type) && !empty($job->type))
-                    {    
-                        $popup['name'] = 'Type';      
+                    {
+                        $popup['name'] = 'Type';
                         $popup['value'] = $job->type;
                         $jobs["name"] = 'Type';
                         $jobs["job"] = $job->type;
@@ -6469,8 +6469,8 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->terms != $job_data['terms']) && isset($job->terms) && !empty($job->terms))
-                    {    
-                        $popup['name'] = 'Terms';      
+                    {
+                        $popup['name'] = 'Terms';
                         $popup['value'] = $job->terms;
                         $jobs["name1"] = 'Terms';
                         $jobs["job1"] = $job->terms;
@@ -6483,8 +6483,8 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->profession != $job_data['profession']) && isset($job->profession) && !empty($job->profession))
-                    {    
-                        $popup['name'] = 'Profession';      
+                    {
+                        $popup['name'] = 'Profession';
                         $popup['value'] = $job->profession;
                         $jobs["name"] = 'Profession';
                         $jobs["job"] = $job->profession;
@@ -6496,11 +6496,11 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->preferred_specialty != $job_data['preferred_specialty']) && isset($job->preferred_specialty) && !empty($job->preferred_specialty))
-                    {    
-                        $popup['name'] = 'Specialty';      
+                    {
+                        $popup['name'] = 'Specialty';
                         $popup['value'] = $job->preferred_specialty;
                         $jobs["name1"] = 'Specialty';
-                        $jobs["job1"] = $job->preferred_specialty;                        
+                        $jobs["job1"] = $job->preferred_specialty;
                     }else{
                         $jobs["name1"] = 'Specialty';
                         $jobs["job1"] = $job_data['preferred_specialty'];
@@ -6510,7 +6510,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->compact != $job_data['compact']) && isset($job->compact) && !empty($job->compact))
-                    {    
+                    {
                         $popup['name'] = 'Compact';
                         $popup['value'] = $job->compact;
                         $jobs["compact"] = $job->compact;
@@ -6521,7 +6521,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->job_location != $job_data['job_location']) && isset($job->job_location) && !empty($job->job_location))
-                    {    
+                    {
                         $popup['name'] = 'Professional Licensure';
                         $popup['value'] = $job->preferred_experience;
                         $jobs["name"] = 'Professional Licensure';
@@ -6534,7 +6534,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->preferred_experience != $job_data['preferred_experience']) && isset($job->preferred_experience) && !empty($job->preferred_experience))
-                    {    
+                    {
                         $popup['name'] = 'Experience';
                         $popup['value'] = $job->preferred_experience;
                         $jobs["name1"] = 'Experience';
@@ -6548,7 +6548,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->number_of_references != $job_data['number_of_references']) && isset($job->number_of_references) && !empty($job->number_of_references))
-                    {    
+                    {
                         $popup['name'] = 'Number Of References';
                         $popup['value'] = $job->number_of_references;
                         $jobs["name"] = 'Number Of References';
@@ -6561,7 +6561,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->min_title_of_reference != $job_data['min_title_of_reference']) && isset($job->min_title_of_reference) && !empty($job->min_title_of_reference))
-                    {    
+                    {
                         $popup['name'] = 'Min Title Of References';
                         $popup['value'] = $job->min_title_of_reference;
                         $jobs["name1"] = 'Min Title Of References';
@@ -6575,7 +6575,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->recency_of_reference != $job_data['recency_of_reference']) && isset($job->recency_of_reference) && !empty($job->recency_of_reference))
-                    {    
+                    {
                         $popup['name'] = 'Recency Of Reference';
                         $popup['value'] = $job->recency_of_reference;
                         $jobs["name"] = 'Recency Of Reference';
@@ -6588,7 +6588,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->skills != $job_data['skills']) && isset($job->skills) && !empty($job->skills))
-                    {    
+                    {
                         $popup['name'] = 'Skills Checklist';
                         $popup['value'] = $job->skills;
                         $jobs["name1"] = 'Skills Checklist';
@@ -6602,7 +6602,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->position_available != $job_data['position_available']) && isset($job->position_available) && !empty($job->position_available))
-                    {    
+                    {
                         $popup['name'] = '# Possition Available';
                         $popup['value'] = $job->position_available;
                         $jobs["name"] = '# Possition Available';
@@ -6615,7 +6615,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->msp != $job_data['msp']) && isset($job->msp) && !empty($job->msp))
-                    {  
+                    {
                         $popup['name'] = 'MSP';
                         $popup['value'] = $job->msp;
                         $jobs["name1"] = 'MSP';
@@ -6629,7 +6629,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->vms != $job_data['vms']) && isset($job->vms) && !empty($job->vms))
-                    {    
+                    {
                         $popup['name'] = 'VMS';
                         $popup['value'] = $job->vms;
                         $jobs["name"] = 'VMS';
@@ -6642,7 +6642,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->submission_of_vms != $job_data['submission_of_vms']) && isset($job->submission_of_vms) && !empty($job->submission_of_vms))
-                    {    
+                    {
                         $popup['name'] = '# of Submission in VMS';
                         $popup['value'] = $job->submission_of_vms;
                         $jobs["name1"] = '# of Submission in VMS';
@@ -6656,7 +6656,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->block_scheduling != $job_data['block_scheduling']) && isset($job->block_scheduling) && !empty($job->block_scheduling))
-                    {    
+                    {
                         $popup['name'] = 'Block Scheduling';
                         $popup['value'] = $job->block_scheduling;
                         $jobs["name"] = 'Block Scheduling';
@@ -6669,7 +6669,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facility_shift_cancelation_policy != $job_data['facility_shift_cancelation_policy']) && isset($job->facility_shift_cancelation_policy) && !empty($job->facility_shift_cancelation_policy))
-                    {    
+                    {
                         $popup['name'] = 'Facility Shift Cancelation Policy';
                         $popup['value'] = $job->facility_shift_cancelation_policy;
                         $jobs["name1"] = 'Facility Shift Cancelation Policy';
@@ -6682,9 +6682,9 @@ class RecruiterController extends Controller
                     $popup_info[] = $popup;
                     $popup['name'] = '';
                     $popup['value'] = '';
-                    
+
                     if(($job->contract_termination_policy != $job_data['contract_termination_policy']) && isset($job->contract_termination_policy) && !empty($job->contract_termination_policy))
-                    {    
+                    {
                         $popup['name'] = 'Contract Termination Policy';
                         $popup['value'] = $job->contract_termination_policy;
                         $jobs["name"] = 'Contract Termination Policy';
@@ -6697,7 +6697,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->traveler_distance_from_facility != $job_data['traveler_distance_from_facility']) && isset($job->traveler_distance_from_facility) && !empty($job->traveler_distance_from_facility))
-                    {    
+                    {
                         $popup['name'] = 'Traveler Distance From Facility';
                         $popup['value'] = $job->traveler_distance_from_facility;
                         $jobs["name1"] = 'Traveler Distance From Facility';
@@ -6711,7 +6711,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facility != $job_data['facility']) && isset($job->facility) && !empty($job->facility))
-                    {    
+                    {
                         $popup['name'] = 'Facility';
                         $popup['value'] = $job->facility;
                         $jobs["name"] = 'Facility';
@@ -6724,7 +6724,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facilitys_parent_system != $job_data['facilitys_parent_system']) && isset($job->facilitys_parent_system) && !empty($job->facilitys_parent_system))
-                    {    
+                    {
                         $popup['name'] = "Facility's Parent System";
                         $popup['value'] = $job->facilitys_parent_system;
                         $jobs["name1"] = "Facility's Parent System";
@@ -6738,7 +6738,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->facility_average_rating != $job_data['facility_average_rating']) && isset($job->facility_average_rating) && !empty($job->facility_average_rating))
-                    {    
+                    {
                         $popup['name'] = "Facility Average Rating";
                         $popup['value'] = $job->facility_average_rating;
                         $jobs["name"] = "Facility Average Rating";
@@ -6751,7 +6751,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->recruiter_average_rating != $job_data['recruiter_average_rating']) && isset($job->recruiter_average_rating) && !empty($job->recruiter_average_rating))
-                    {    
+                    {
                         $popup['name'] = "Recruiter Average Rating";
                         $popup['value'] = isset( $job->recruiter_average_rating)? $job->recruiter_average_rating:'';
                         $jobs["name1"] = "Recruiter Average Rating";
@@ -6765,7 +6765,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->employer_average_rating != $job_data['employer_average_rating']) && isset($job->employer_average_rating) && !empty($job->employer_average_rating))
-                    {    
+                    {
                         $popup['name'] = "Employer Average Rating";
                         $popup['value'] = isset($job->employer_average_rating)?$job->employer_average_rating:'';
                         $jobs["name"] = "Employer Average Rating";
@@ -6778,7 +6778,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->clinical_setting != $job_data['clinical_setting']) && isset($job->clinical_setting) && !empty($job->clinical_setting))
-                    {    
+                    {
                         $popup['name'] = "Clinical Setting";
                         $popup['value'] = $job->clinical_setting;
                         $jobs["name1"] = "Clinical Setting";
@@ -6792,7 +6792,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Patient_ratio != $job_data['Patient_ratio']) && isset($job->Patient_ratio) && !empty($job->Patient_ratio))
-                    {    
+                    {
                         $popup['name'] = "Patient Ratio";
                         $popup['value'] = $job->Patient_ratio;
                         $jobs["name"] = "Patient Ratio";
@@ -6805,7 +6805,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->emr != $job_data['emr']) && isset($job->emr) && !empty($job->emr))
-                    {    
+                    {
                         $popup['name'] = "EMR";
                         $popup['value'] = $job->emr;
                         $jobs["name1"] = "EMR";
@@ -6819,7 +6819,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Unit != $job_data['Unit']) && isset($job->Unit) && !empty($job->Unit))
-                    {    
+                    {
                         $popup['name'] = "Unit";
                         $popup['value'] = $job->Unit;
                         $jobs["name"] = "Unit";
@@ -6832,7 +6832,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Department != $job_data['Department']) && isset($job->Department) && !empty($job->Department))
-                    {    
+                    {
                         $popup['name'] = "Department";
                         $popup['value'] = $job->Department;
                         $jobs["name1"] = "Department";
@@ -6846,7 +6846,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Bed_Size != $job_data['Bed_Size']) && isset($job->Bed_Size) && !empty($job->Bed_Size))
-                    {    
+                    {
                         $popup['name'] = "Bed Size";
                         $popup['value'] = $job->Bed_Size;
                         $jobs["name"] = "Bed Size";
@@ -6859,7 +6859,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->Trauma_Level != $job_data['Trauma_Level']) && isset($job->Trauma_Level) && !empty($job->Trauma_Level))
-                    {    
+                    {
                         $popup['name'] = "Trauma Level";
                         $popup['value'] = $job->Trauma_Level;
                         $jobs["name1"] = "Trauma Level";
@@ -6873,7 +6873,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->scrub_color != $job_data['scrub_color']) && isset($job->scrub_color) && !empty($job->scrub_color))
-                    {    
+                    {
                         $popup['name'] = "Scrub Color";
                         $popup['value'] = $job->scrub_color;
                         $jobs["name"] = "Scrub Color";
@@ -6886,7 +6886,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->job_city != $job_data['job_city']) && isset($job->job_city) && !empty($job->job_city))
-                    {    
+                    {
                         $popup['name'] = "Facility City";
                         $popup['value'] = $job->job_city;
                         $jobs["name1"] = "Facility City";
@@ -6900,7 +6900,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->job_state != $job_data['job_state']) && isset($job->job_state) && !empty($job->job_state))
-                    {    
+                    {
                         $popup['name'] = "Facility State Code";
                         $popup['value'] = $job->job_state;
                         $jobs["name1"] = "Facility State Code";
@@ -6913,7 +6913,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->start_date != $job_data['start_date']) && isset($job->start_date) && !empty($job->start_date))
-                    {    
+                    {
                         $popup['name'] = "Start Date";
                         $popup['value'] = $job->start_date;
                         $jobs["name1"] = "Start Date";
@@ -6927,7 +6927,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->rto != $job_data['rto']) && isset($job->rto) && !empty($job->rto))
-                    {    
+                    {
                         $popup['name'] = "RTO";
                         $popup['value'] = $job->rto;
                         $jobs["name"] = "RTO";
@@ -6940,7 +6940,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->preferred_shift != $job_data['preferred_shift']) && isset($job->preferred_shift) && !empty($job->preferred_shift))
-                    {    
+                    {
                         $popup['name'] = "Shift Time Of Day";
                         $popup['value'] = $job->preferred_shift;
                         $jobs["name1"] = "Shift Time Of Day";
@@ -6953,9 +6953,9 @@ class RecruiterController extends Controller
                     $popup_info[] = $popup;
                     $popup['name'] = '';
                     $popup['value'] = '';
-                    
+
                     if(($job->hours_per_week != $job_data['hours_per_week']) && isset($job->hours_per_week) && !empty($job->hours_per_week))
-                    {    
+                    {
                         $popup['name'] = "Hours/Week";
                         $popup['value'] = $job->hours_per_week;
                         $jobs["name"] = "Hors/Week";
@@ -6968,7 +6968,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->guaranteed_hours != $job_data['guaranteed_hours']) && isset($job->guaranteed_hours) && !empty($job->guaranteed_hours))
-                    {    
+                    {
                         $popup['name'] = "Gauranteed Hours";
                         $popup['value'] = $job->guaranteed_hours;
                         $jobs["name1"] = "Gauranteed Hours";
@@ -6982,7 +6982,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->hours_shift != $job_data['hours_shift']) && isset($job->hours_shift) && !empty($job->hours_shift))
-                    {    
+                    {
                         $popup['name'] = "Hours/Shift";
                         $popup['value'] = $job->hours_shift;
                         $jobs["name"] = "Hours/Shift";
@@ -6995,7 +6995,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->preferred_assignment_duration != $job_data['preferred_assignment_duration']) && isset($job->preferred_assignment_duration) && !empty($job->preferred_assignment_duration))
-                    {    
+                    {
                         $popup['name'] = "Weeks/Assignment";
                         $popup['value'] = $job->preferred_assignment_duration;
                         $jobs["name1"] = "Weeks/Assignment";
@@ -7009,7 +7009,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->weeks_shift != $job_data['weeks_shift']) && isset($job->weeks_shift) && !empty($job->weeks_shift))
-                    {    
+                    {
                         $popup['name'] = "Shifts/Week";
                         $popup['value'] = $job->weeks_shift;
                         $jobs["name"] = "Shifts/Week";
@@ -7022,7 +7022,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->referral_bonus != $job_data['referral_bonus']) && isset($job->referral_bonus) && !empty($job->referral_bonus))
-                    {    
+                    {
                         $popup['name'] = "Referral Bonus";
                         $popup['value'] = $job->referral_bonus;
                         $jobs["name1"] = "Referral Bonus";
@@ -7036,7 +7036,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->sign_on_bonus != $job_data['sign_on_bonus']) && isset($job->sign_on_bonus) && !empty($job->sign_on_bonus))
-                    {    
+                    {
                         $popup['name'] = "Sign-On Bonus";
                         $popup['value'] = $job->sign_on_bonus;
                         $jobs["name"] = "Sign-On Bonus";
@@ -7049,7 +7049,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->completion_bonus != $job_data['completion_bonus']) && isset($job->completion_bonus) && !empty($job->completion_bonus))
-                    {    
+                    {
                         $popup['name'] = "Completion Bonus";
                         $popup['value'] = $job->completion_bonus;
                         $jobs["name1"] = "Completion Bonus";
@@ -7063,7 +7063,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->extension_bonus != $job_data['extension_bonus']) && isset($job->extension_bonus) && !empty($job->extension_bonus))
-                    {    
+                    {
                         $popup['name'] = "Extension Bonus";
                         $popup['value'] = $job->extension_bonus;
                         $jobs["name"] = "Extension Bonus";
@@ -7076,7 +7076,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->other_bonus != $job_data['other_bonus']) && isset($job->other_bonus) && !empty($job->other_bonus))
-                    {    
+                    {
                         $popup['name'] = "Other Bonus";
                         $popup['value'] = $job->other_bonus;
                         $jobs["name1"] = "Other Bonus";
@@ -7088,9 +7088,9 @@ class RecruiterController extends Controller
                     $popup_info[] = $popup;
                     $popup['name'] = '';
                     $popup['value'] = '';
-    
+
                     if(($job->four_zero_one_k != $job_data['four_zero_one_k']) && isset($job->four_zero_one_k) && !empty($job->four_zero_one_k))
-                    {    
+                    {
                         $popup['name'] = "401K";
                         $popup['value'] = $job->four_zero_one_k;
                         $jobs["name"] = "401K";
@@ -7103,7 +7103,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->health_insaurance != $job_data['health_insaurance']) && isset($job->health_insaurance) && !empty($job->health_insaurance))
-                    {    
+                    {
                         $popup['name'] = "Health Insaurance";
                         $popup['value'] = $job->health_insaurance;
                         $jobs["name1"] = "Health Insaurance";
@@ -7117,7 +7117,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->dental != $job_data['dental']) && isset($job->dental) && !empty($job->dental))
-                    {    
+                    {
                         $popup['name'] = "Dental";
                         $popup['value'] = $job->dental;
                         $jobs["name"] = "Dental";
@@ -7130,11 +7130,11 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->vision != $job_data['vision']) && isset($job->vision) && !empty($job->vision))
-                    {   
+                    {
                         $popup['name'] = "Vision";
                         $popup['value'] = $job->vision;
                         $jobs["name1"] = "Vision";
-                        $jobs["job1"] = $job->vision; 
+                        $jobs["job1"] = $job->vision;
                     }else{
                         $jobs["name1"] = "Vision";
                         $jobs["job1"] = $job_data['vision'];
@@ -7144,7 +7144,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->actual_hourly_rate != $job_data['actual_hourly_rate']) && isset($job->actual_hourly_rate) && !empty($job->actual_hourly_rate))
-                    {    
+                    {
                         $popup['name'] = "Actual Hourly Rate";
                         $popup['value'] = $job->actual_hourly_rate;
                         $jobs["name"] = "Actual Hourly Rate";
@@ -7157,7 +7157,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->feels_like_per_hour != $job_data['feels_like_per_hour']) && isset($job->feels_like_per_hour) && !empty($job->feels_like_per_hour))
-                    {    
+                    {
                         $popup['name'] = "Feels Like $/hr";
                         $popup['value'] = $job->feels_like_per_hour;
                         $jobs["name1"] = "Feels Like $/hr";
@@ -7171,7 +7171,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->overtime != $job_data['overtime']) && isset($job->overtime) && !empty($job->overtime))
-                    {    
+                    {
                         $popup['name'] = "Overtime";
                         $popup['value'] = $job->overtime;
                         $jobs["name"] = "Overtime";
@@ -7184,7 +7184,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->holiday != $job_data['holiday']) && isset($job->holiday) && !empty($job->holiday))
-                    {    
+                    {
                         $popup['name'] = "Holiday";
                         $popup['value'] = $job->holiday;
                         $jobs["name1"] = "Holiday";
@@ -7198,7 +7198,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->on_call != $job_data['on_call']) && isset($job->on_call) && !empty($job->on_call))
-                    {    
+                    {
                         $popup['name'] = "On Call";
                         $popup['value'] = $job->on_call;
                         $jobs["name"] = "On Call";
@@ -7211,7 +7211,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->call_back != $job_data['call_back']) && isset($job->call_back) && !empty($job->call_back))
-                    {    
+                    {
                         $popup['name'] = "Call Back";
                         $popup['value'] = $job->call_back;
                         $jobs["name1"] = "Call Back";
@@ -7225,7 +7225,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->orientation_rate != $job_data['orientation_rate']) && isset($job->orientation_rate) && !empty($job->orientation_rate))
-                    {    
+                    {
                         $popup['name'] = "Orientation Rate";
                         $popup['value'] = $job->orientation_rate;
                         $jobs["name"] = "Orientation Rate";
@@ -7238,7 +7238,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->weekly_taxable_amount != $job_data['weekly_taxable_amount']) && isset($job->weekly_taxable_amount) && !empty($job->weekly_taxable_amount))
-                    {    
+                    {
                         $popup['name'] = "Weekly Taxable Amount";
                         $popup['value'] = $job->weekly_taxable_amount;
                         $jobs["name1"] = "Weekly Taxable Amount";
@@ -7252,7 +7252,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->weekly_non_taxable_amount != $job_data['weekly_non_taxable_amount']) && isset($job->weekly_non_taxable_amount) && !empty($job->weekly_non_taxable_amount))
-                    {    
+                    {
                         $popup['name'] = "Weekly Non Taxable Amount";
                         $popup['value'] = $job->weekly_non_taxable_amount;
                         $jobs["name"] = "Weekly Non Taxable Amount";
@@ -7265,7 +7265,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->employer_weekly_amount != $job_data['employer_weekly_amount']) && isset($job->employer_weekly_amount) && !empty($job->employer_weekly_amount))
-                    {    
+                    {
                         $popup['name'] = "Employer Weekly Amount";
                         $popup['value'] = $job->employer_weekly_amount;
                         $jobs["name1"] = "Employer Weekly Amount";
@@ -7279,7 +7279,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->goodwork_weekly_amount != $job_data['goodwork_weekly_amount']) && isset($job->goodwork_weekly_amount) && !empty($job->goodwork_weekly_amount))
-                    {    
+                    {
                         $popup['name'] = "Goodwork Weekly Amount";
                         $popup['value'] = $job->goodwork_weekly_amount;
                         $jobs["name"] = "Goodwork Weekly Amount";
@@ -7292,7 +7292,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->total_employer_amount != $job_data['total_employer_amount']) && isset($job->total_employer_amount) && !empty($job->total_employer_amount))
-                    {    
+                    {
                         $popup['name'] = "Total Employer Amount";
                         $popup['value'] = $job->total_employer_amount;
                         $jobs["name1"] = "Total Employer Amount";
@@ -7306,7 +7306,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->total_goodwork_amount != $job_data['total_goodwork_amount']) && isset($job->total_goodwork_amount) && !empty($job->total_goodwork_amount))
-                    {    
+                    {
                         $popup['name'] = "Total Goodwork Amount";
                         $popup['value'] = $job->total_goodwork_amount;
                         $jobs["name"] = "Total Goodwork Amount";
@@ -7319,7 +7319,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(($job->total_contract_amount != $job_data['total_contract_amount']) && isset($job->total_contract_amount) && !empty($job->total_contract_amount))
-                    {    
+                    {
                         $popup['name'] = "Total Contract Amount";
                         $popup['value'] = $job->total_contract_amount;
                         $jobs["name1"] = "Total Contract Amount";
@@ -7332,9 +7332,9 @@ class RecruiterController extends Controller
                     $popup_info[] = $popup;
                     $popup['name'] = '';
                     $popup['value'] = '';
-                    
+
                     if(($job->goodwork_number != $job_data['goodwork_number']) && isset($job->goodwork_number) && !empty($job->goodwork_number))
-                    {    
+                    {
                         $popup['name'] = "Goodwork Number";
                         $popup['value'] = $job->goodwork_number;
                         $jobs["name"] = "Goodwork Number";
@@ -7347,7 +7347,7 @@ class RecruiterController extends Controller
                     $popup['name'] = '';
                     $popup['value'] = '';
                     if(isset($job->additional_terms) && !empty($job->additional_terms))
-                    {    
+                    {
                         $popup['name'] = "Additional Terms";
                         $popup['value'] = $job->additional_terms;
                         $jobs["name1"] = "Additional Terms";
@@ -7363,7 +7363,7 @@ class RecruiterController extends Controller
                     $jobs["name1"] = '';
                     $jobs["job1"] = '';
                     if(($job->vaccinations != $job_data['vaccinations']) && isset($job->vaccinations) && !empty($job->vaccinations))
-                    {    
+                    {
                         $popup['name'] = 'Vaccinations & Immunizations';
                         $popup['value'] = $job->vaccinations;
                         $jod_details = explode(',', $job->vaccinations);
@@ -7385,7 +7385,7 @@ class RecruiterController extends Controller
                     $popup['value'] = '';
 
                     if(($job->certificate != $job_data['certificate']) && isset($job->certificate) && !empty($job->certificate))
-                    {    
+                    {
                         $popup['name'] = 'Certification';
                         $popup['value'] = $job->certificate;
                         $jod_details = explode(',', $job->certificate);
@@ -7405,7 +7405,7 @@ class RecruiterController extends Controller
                     $popup_info[] = $popup;
                     $result['worker_info'] = $worker_info;
                     $result['popup_info'] = $popup_info;
-    
+
                     $this->check = "1";
                     $this->message = "Get send Offer listed successfully";
                     $this->return_data = $result;
@@ -7417,10 +7417,10 @@ class RecruiterController extends Controller
                 $this->check = "1";
                 $this->message = "Offer Not Found";
             }
-            
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-        
+
     }
 
     public function getDraftOfferedJoblist(Request $request)
@@ -7515,22 +7515,22 @@ class RecruiterController extends Controller
             'preferred_assignment_duration' => 'required',
             'preferred_hourly_pay_rate' => 'required|numeric',
             'description' => 'required|min:10',
-            
+
         ];
-        
+
         $validator = \Validator::make($request->all(), $validation_array, $messages);
 
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $facility_id = Facility::where('created_by', $request->user_id)->get()->first();
             if(isset($facility_id) && !empty($facility_id)){
                 $facility_id = $facility_id->id;
             }else{
                 $facility_id =  '';
             }
-            
+
             $update_array["facility_id"] = (isset($request->facility_id) && $request->facility_id != "") ? $request->facility_id : $facility_id;
             $update_array["preferred_assignment_duration"] = (isset($request->preferred_assignment_duration) && $request->preferred_assignment_duration != "") ? $request->preferred_assignment_duration : "";
             $update_array["job_name"] = (isset($request->job_name) && $request->job_name != "") ? $request->job_name : "";
@@ -7550,7 +7550,7 @@ class RecruiterController extends Controller
             $update_array["start_date"] = (isset($request->start_date) && $request->start_date != "") ? date('Y-m-d', strtotime($request->start_date)) : NULL;
             $update_array["end_date"] = (isset($request->end_date) && $request->end_date != "") ? date('Y-m-d', strtotime($request->end_date)) : NULL;
             $update_array["recruiter_id"] = (isset($request->recruiter_id) && $request->recruiter_id != "") ? $request->recruiter_id : $request->user_id;
-            
+
             if (isset($request->job_video) && $request->job_video != "") {
                 if (preg_match('/https?:\/\/(?:[\w]+\.)*youtube\.com\/watch\?v=[^&]+/', $request->job_video, $vresult)) {
                     $youTubeID = $this->parse_youtube($request->job_video);
@@ -7562,7 +7562,7 @@ class RecruiterController extends Controller
                     $update_array['video_embed_url'] = $embedURL;
                 }
             }
-            
+
             /* create job */
             $update_array["created_by"] = (isset($request->user_id) && $request->user_id != "") ? $request->user_id : "";
             $job = Job::create($update_array);
@@ -7580,7 +7580,7 @@ class RecruiterController extends Controller
                     JobAsset::create(['job_id' => $job_id_val, 'name' => $job_photo_finalname, 'filter' => 'job_photos']);
                 }
             }
-            
+
             if (isset($job)) {
                 $insert_offer["nurse_id"] = $request->user_id;
                 $insert_offer["created_by"] = $request->user_id;

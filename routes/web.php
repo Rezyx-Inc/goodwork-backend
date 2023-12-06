@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware(['web'])->group(function () {
     Route::get('/', ['uses' => 'SiteController@index', 'as' => '/']);
     Route::post('subscription-response', ['uses' => 'SiteController@subscription_renew', 'as' => 'subscription-response']);
-    
+
     Route::get('about-us', ['uses' => 'SiteController@about_us', 'as' => 'about-us']);
     Route::get('contact-us', ['uses' => 'SiteController@contact_us', 'as' => 'contact-us']);
     Route::post('contact-us-submit', ['uses' => 'SiteController@contact_us_submit', 'as' => 'contact-us-submit']);
@@ -25,7 +25,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('test', ['uses' => 'SiteController@test', 'as' => 'test']);
     Route::get('privacy-policy', ['uses' => 'SiteController@privacy_policy', 'as' => 'privacy-policy']);
 
-    // add for_employers root 
+    // add for_employers root
     Route::get('for-employers', ['uses' => 'SiteController@for_employers', 'as' => 'for-employers']);
 
     // add for_recruiters root

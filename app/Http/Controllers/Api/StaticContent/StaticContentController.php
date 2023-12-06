@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\StaticContent;
 
 
-//Models 
+//Models
 //FACILITY
 use App\Models\States;
 use App\Models\Cities;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 use DB;
-
+use App\Http\Controllers\Controller;
 class StaticContentController extends Controller
 {
     public function getCountries()
@@ -111,7 +111,7 @@ class StaticContentController extends Controller
             $this->message = "Privacy Policy";
             $this->check = "1";
             $this->url = url('/privacy-policy');
-            
+
             // $this->return_data = '<p>Provides an online resource for health care professionals. These terms may be changed from time to time and without further notice. Your continued use of the Site after any such changes constitutes your acceptance of the new terms. If you do not agree to abide by these or any future terms, please do not use the Site or download materials from it. GE Healthcare, a division of General Electric Company ("GE"), may terminate, change, suspend or discontinue any aspect of the Site, including the availability of any features, at any time. GE may remove, modify or otherwise change any content, including that of third parties, on or from this Site.</p><p>Provides an online resource for health care professionals. These terms may be changed from time to time and without further notice. Your continued use of the Site after any such changes constitutes your acceptance of the new terms. If you do not agree to abide by these or any future terms, please do not use the Site or download materials from it. GE Healthcare, a division of General Electric Company ("GE"), may terminate, change, suspend or discontinue any aspect of the Site, including the availability of any features, at any time. GE may remove, modify or otherwise change any content, including that of third parties, on or from this Site. </p> <p>Provides an online resource for health care professionals. These terms may be changed from time to time and without further notice. Your continued use of the Site after any such changes constitutes your acceptance of the new terms. If you do not agree to abide by these or any future terms, please do not use the Site or download materials from it. GE Healthcare, a division of General Electric Company ("GE"), may terminate, change, suspend or discontinue any aspect of the Site, including the availability of any features, at any time. GE may remove, modify or otherwise change any content, including that of third parties, on or from this Site. </p>';
             return response()->json(["api_status" => $this->check, "About-web" => $this->url, "message" => $this->message, "data" => $this->return_data], 200);
         }

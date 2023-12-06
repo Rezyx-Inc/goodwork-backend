@@ -9,10 +9,10 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 use DB;
 class SupportController extends Controller
-{ 
+{
     public function helpSupport(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -36,7 +36,7 @@ class SupportController extends Controller
                     'comment_status' => "Pending for review",
                     'isPending' => "1",
                 );
-                
+
                 \DB::table('help_support')->insert($insert);
                 $this->check = "1";
                 $this->message = "Comment submitted successfully";
@@ -45,7 +45,7 @@ class SupportController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
                 $this->return_data = "0";
-            }                
+            }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -67,7 +67,7 @@ class SupportController extends Controller
                 $insert = array(
                     "user_id" => $request->user_id
                 );
-                
+
                 $data = DB::table('help_support')->where($insert)->get();
                 foreach($data as $val){
                     $val->created_at = isset($val->created_at) ? date('M d', strtotime($val->created_at)) : "";
@@ -79,7 +79,7 @@ class SupportController extends Controller
                     $val->admin_reply_at = isset($val->admin_reply_at) ? $val->admin_reply_at : "";
                     $rec = USER::where('id', $val->user_id)->first();
                     $val->name = $rec['first_name'].' '.$rec['last_name'];
-                } 
+                }
                 $this->check = "1";
                 $this->message = "Comment listed successfully";
                 $this->return_data = $data;
@@ -87,7 +87,7 @@ class SupportController extends Controller
                 $this->check = "1";
                 $this->message = "User not found";
                 $this->return_data = [];
-            }                
+            }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -113,7 +113,7 @@ class SupportController extends Controller
                     'isPending' => "0",
                     'admin_reply_at' => date('Y-m-d H:i:s')
                 );
-                
+
                 \DB::table('help_support')->where('id', $request->id)->update($update);
                 $this->check = "1";
                 $this->message = "Admin reply submitted successfully";
@@ -122,7 +122,7 @@ class SupportController extends Controller
                 $this->check = "1";
                 $this->message = "Comment not found";
                 $this->return_data = "0";
-            }                
+            }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -144,7 +144,7 @@ class SupportController extends Controller
                 $insert = array(
                     "id" => $request->id
                 );
-                
+
                 $val = DB::table('help_support')->where($insert)->first();
                 if(isset($val)){
                     $val->created_at = isset($val->created_at) ? date('M d', strtotime($val->created_at)) : "";
@@ -164,12 +164,12 @@ class SupportController extends Controller
                     $this->message = "Comment not found";
                     $this->return_data = [];
                 }
-                
+
             }else{
                 $this->check = "1";
                 $this->message = "User not found";
                 $this->return_data = [];
-            }                
+            }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }

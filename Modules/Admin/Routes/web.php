@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ModeratorController;
 
 Route::prefix('admin')->group(function() {
     Route::get('list', 'TempController@listing');
@@ -50,8 +52,8 @@ Route::prefix('admin')->group(function() {
         Route::get('admin-updateemail/{id}', ['uses' => 'EmailController@get_update', 'as' => 'admin-updateemail']);
         Route::post('admin-updateemail/{id}', ['uses' => 'EmailController@post_update', 'as' => 'admin-updateemail']);
 
-        Route::get('admin-faqs', ['uses' => 'FaqController@index', 'as' => 'admin-faqs']); 
-        
+        Route::get('admin-faqs', ['uses' => 'FaqController@index', 'as' => 'admin-faqs']);
+
         Route::get('admin-createfaq', ['uses' => 'FaqController@get_create', 'as' => 'admin-createfaq']);
         Route::post('admin-createfaq', ['uses' => 'FaqController@post_create', 'as' => 'admin-createfaq']);
         Route::get('admin-viewfaq/{id}', ['uses' => 'FaqController@view', 'as' => 'admin-viewfaq']);
@@ -155,13 +157,51 @@ Route::prefix('admin')->group(function() {
         Route::post('admin-updatemember/{id}',['uses'=>'UserController@member_post_update','as'=>'admin-updatemember']);
         Route::get('admin-deletemember',['uses'=>'UserController@member_delete','as'=>'admin-deletemember']);
 
-	Route::get('admin-category',['uses'=>'CategoryController@index','as'=>'admin-category']);
-        Route::get('admin-addcategory',['uses'=>'CategoryController@add','as'=>'admin-addcategory']);
-        Route::post('admin-addcategory',['uses'=>'CategoryController@post_category','as'=>'admin-addcategory']);
-        Route::get('admin-category-list-datatable',['uses'=>'CategoryController@category_list','as'=>"admin-category-list-datatable"]);
-        Route::get('admin-deletecategory',['uses'=>'CategoryController@delete','as'=>'admin-deletecategory']);
-        Route::get('admin-updatecategory/{id}',['uses'=>'CategoryController@edit','as'=>'admin-updatecategory']);
-        Route::post('admin-updatecategory/{id}',['uses'=>'CategoryController@post_update','as'=>'admin-updatecategory']);
+	// Route::get('admin-category',['uses'=>'CategoryController@index','as'=>'admin-category']);
+    //     Route::get('admin-addcategory',['uses'=>'CategoryController@add','as'=>'admin-addcategory']);
+    //     Route::post('admin-addcategory',['uses'=>'CategoryController@post_category','as'=>'admin-addcategory']);
+    //     Route::get('admin-category-list-datatable',['uses'=>'CategoryController@category_list','as'=>"admin-category-list-datatable"]);
+    //     Route::get('admin-deletecategory',['uses'=>'CategoryController@delete','as'=>'admin-deletecategory']);
+    //     Route::get('admin-updatecategory/{id}',['uses'=>'CategoryController@edit','as'=>'admin-updatecategory']);
+    //     Route::post('admin-updatecategory/{id}',['uses'=>'CategoryController@post_update','as'=>'admin-updatecategory']);
+
+
+
+Route::get('admin-category', [
+    'uses' => [CategoryController::class, 'index'],
+    'as' => 'admin-category'
+]);
+
+Route::get('admin-addcategory', [
+    'uses' => [CategoryController::class, 'add'],
+    'as' => 'admin-addcategory'
+]);
+
+Route::post('admin-addcategory', [
+    'uses' => [CategoryController::class, 'post_category'],
+    'as' => 'admin-addcategory'
+]);
+
+Route::get('admin-category-list-datatable', [
+    'uses' => [CategoryController::class, 'category_list'],
+    'as' => "admin-category-list-datatable"
+]);
+
+Route::get('admin-deletecategory', [
+    'uses' => [CategoryController::class, 'delete'],
+    'as' => 'admin-deletecategory'
+]);
+
+Route::get('admin-updatecategory/{id}', [
+    'uses' => [CategoryController::class, 'edit'],
+    'as' => 'admin-updatecategory'
+]);
+
+Route::post('admin-updatecategory/{id}', [
+    'uses' => [CategoryController::class, 'post_update'],
+    'as' => 'admin-updatecategory'
+]);
+
 
 
     });
@@ -169,12 +209,50 @@ Route::prefix('admin')->group(function() {
     Route::middleware(['moderator_logged_in'])->group(function () {
         /*         * ****************ModeratorController**************** */
 
-        Route::get('admin-moderator',['uses'=>'ModeratorController@index','as'=>'admin-moderator']);
-        Route::get('admin-moderator-list-datatable',['uses'=>'ModeratorController@moderator_list','as'=>"admin-moderator-list-datatable"]);
-        Route::get('admin-addmoderator',['uses'=>'ModeratorController@add','as'=>'admin-addmoderator']);
-        Route::post('admin-addmoderator',['uses'=>'ModeratorController@post_add','as'=>'admin-addmoderator']);
-        Route::get('admin-updatemoderator/{id}',['uses'=>'ModeratorController@edit','as'=>"admin-updatemoderator"]);
-        Route::post('admin-updatemoderator/{id}',['uses'=>'ModeratorController@post_update','as'=>'admin-updatemoderator']);
-        Route::get('admin-deletemoderator',['uses'=>'ModeratorController@delete','as'=>"admin-deletemoderator"]);
+        // Route::get('admin-moderator',['uses'=>'ModeratorController@index','as'=>'admin-moderator']);
+        // Route::get('admin-moderator-list-datatable',['uses'=>'ModeratorController@moderator_list','as'=>"admin-moderator-list-datatable"]);
+        // Route::get('admin-addmoderator',['uses'=>'ModeratorController@add','as'=>'admin-addmoderator']);
+        // Route::post('admin-addmoderator',['uses'=>'ModeratorController@post_add','as'=>'admin-addmoderator']);
+        // Route::get('admin-updatemoderator/{id}',['uses'=>'ModeratorController@edit','as'=>"admin-updatemoderator"]);
+        // Route::post('admin-updatemoderator/{id}',['uses'=>'ModeratorController@post_update','as'=>'admin-updatemoderator']);
+        // Route::get('admin-deletemoderator',['uses'=>'ModeratorController@delete','as'=>"admin-deletemoderator"]);
+
+
+
+Route::get('admin-moderator', [
+    'uses' => [ModeratorController::class, 'index'],
+    'as' => 'admin-moderator'
+]);
+
+Route::get('admin-moderator-list-datatable', [
+    'uses' => [ModeratorController::class, 'moderator_list'],
+    'as' => "admin-moderator-list-datatable"
+]);
+
+Route::get('admin-addmoderator', [
+    'uses' => [ModeratorController::class, 'add'],
+    'as' => 'admin-addmoderator'
+]);
+
+Route::post('admin-addmoderator', [
+    'uses' => [ModeratorController::class, 'post_add'],
+    'as' => 'admin-addmoderator'
+]);
+
+Route::get('admin-updatemoderator/{id}', [
+    'uses' => [ModeratorController::class, 'edit'],
+    'as' => "admin-updatemoderator"
+]);
+
+Route::post('admin-updatemoderator/{id}', [
+    'uses' => [ModeratorController::class, 'post_update'],
+    'as' => 'admin-updatemoderator'
+]);
+
+Route::get('admin-deletemoderator', [
+    'uses' => [ModeratorController::class, 'delete'],
+    'as' => "admin-deletemoderator"
+]);
+
     });
 });

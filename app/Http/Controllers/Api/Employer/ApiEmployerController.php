@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Employer;
+namespace App\Http\Controllers\Api\Employer;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -44,7 +44,7 @@ use Stripe\Stripe;
 use Stripe\Charge;
 use Stripe\Payout;
 use Stripe\PaymentIntent;
-
+use App\Http\Controllers\Controller;
 class ApiEmployerController extends Controller
 {
     /**
@@ -328,7 +328,7 @@ class ApiEmployerController extends Controller
                     $from_user = "=?UTF-8?B?" . base64_encode('Goodwork') . "?=";
                     $subject = "=?UTF-8?B?" . base64_encode('One Time Password for login') . "?=";
                     $user_mail    =  env("MAIL_USERNAME");
-                    
+
                     // $headers = "From: $from_user <team@goodwork.com>\r\n" .
                     $headers = "From: $from_user <$user_mail>\r\n" .
                         "MIME-Version: 1.0" . "\r\n" .
@@ -346,19 +346,19 @@ class ApiEmployerController extends Controller
                 } else {
                     $this->message = "Failed to send otp, Please try again later";
                 }
-                
-                
+
+
             } else {
                 $this->message = "facility not found";
             }
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    
+
 
     }
 
-    public function mobileOtp(Request $request)  
+    public function mobileOtp(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'api_key' => 'required',
@@ -368,7 +368,7 @@ class ApiEmployerController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::Where('facility_phone',$request->id);
-            if ($facility_info->count() > 0) 
+            if ($facility_info->count() > 0)
             {
                 $facility = $facility_info->get()->first();
                 $otp = substr(str_shuffle("0123456789"), 0, 4);
@@ -386,7 +386,7 @@ class ApiEmployerController extends Controller
                         "body" => 'Your Account verification code is: '.$otp
                         )
                     );
-            
+
                     $this->check = "1";
                     if($facility->facility_phone == $request->id){
                         $this->message = "OTP send successfully to your number";
@@ -397,7 +397,7 @@ class ApiEmployerController extends Controller
                 } else {
                     $this->message = "Failed to send otp, Please try again later";
                 }
-                
+
             } else {
                 $this->message = "facility not found";
             }
@@ -422,7 +422,7 @@ class ApiEmployerController extends Controller
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->first();
                 if(isset($facility->otp) && !empty($facility->otp)){
-                    
+
                     if ($facility->otp == $request->otp) {
                         $update_otp = Facility::where(['id' => $facility->id])->update(['otp' => NULL, 'fcm_token' => $request->fcm_token, 'email_verified_at' => date('Y-m-d H:i:s')]);
                         if ($update_otp) {
@@ -513,7 +513,7 @@ class ApiEmployerController extends Controller
                 $records = array();
                 foreach($status as $value)
                 {
-                    
+
                     if($value == 'Apply'){
                         $value = 'New';
                     }
@@ -580,14 +580,14 @@ class ApiEmployerController extends Controller
             $employer_info = Facility::where('id', $request->employer_id);
             if ($employer_info->count() > 0) {
                 $employer = $employer_info->get()->first();
-                
+
                 $New = DB::table('jobs')
                                 ->join('offers','jobs.id', '=', 'offers.job_id')
                                 ->where(['jobs.facility_id' => $request->employer_id, 'status' => 'Apply', 'jobs.is_closed' => '0'])
                                 ->select('status', DB::raw('count(*) as total'))
                                 ->groupBy('offers.status')
                                 ->get();
-                
+
                 $Offered = DB::table('jobs')
                                 ->join('offers','jobs.id', '=', 'offers.job_id')
                                 ->where(['jobs.facility_id' => $request->employer_id, 'status' => 'Offered', 'jobs.is_closed' => '0'])
@@ -601,7 +601,7 @@ class ApiEmployerController extends Controller
                                 ->select('status', DB::raw('count(*) as total'))
                                 ->groupBy('offers.status')
                                 ->get();
-                                
+
                 $Working = DB::table('jobs')
                                 ->join('offers','jobs.id', '=', 'offers.job_id')
                                 ->where(['jobs.facility_id' => $request->employer_id, 'status' => 'Working', 'jobs.is_closed' => '0'])
@@ -648,24 +648,24 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required',
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $employer_info = Facility::where('id', $request->employer_id);
             if ($employer_info->count() > 0) {
-    
+
                 $reg_employer = $employer_info->get()->first();
                 $employer_info = [];
                 $employer_info['name'] = $reg_employer->name;
                 $employer_info['phone'] = $reg_employer->facility_phone;
                 $employer_info['email'] = $reg_employer->facility_email;
                 $employer_info['image'] = $reg_employer->facility_logo;
-    
+
                 $this->check = "1";
                 $this->message = "Account info found";
                 $this->return_data = $employer_info;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
@@ -688,13 +688,13 @@ class ApiEmployerController extends Controller
             if ($employer_info->count() > 0) {
 
                 $employer = $employer_info->get()->first();
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'facilities.id' => $employer->id,
                     'jobs.job_type' => '412'
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->Join('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -708,7 +708,7 @@ class ApiEmployerController extends Controller
                     'facilities.id' => $employer->id,
                     'jobs.job_type' => '413'
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -722,7 +722,7 @@ class ApiEmployerController extends Controller
                     'facilities.id' => $employer->id,
                     'jobs.job_type' => '414'
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -737,7 +737,7 @@ class ApiEmployerController extends Controller
                     // 'offers.status' => 'Working',
                     'jobs.job_type' => '415'
                 ];
-    
+
                 $ret = Job::select('jobs.id as job_id', 'jobs.*')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -776,7 +776,7 @@ class ApiEmployerController extends Controller
                             ->select('status', DB::raw('count(*) as total'))
                             ->groupBy('offers.status')
                             ->get();
-                
+
                 $Offered = DB::table('jobs')
                             ->join('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -796,7 +796,7 @@ class ApiEmployerController extends Controller
                             ->select('status', DB::raw('count(*) as total'))
                             ->groupBy('offers.status')
                             ->get();
-  
+
                 $Onboard = DB::table('jobs')
                             ->join('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -806,7 +806,7 @@ class ApiEmployerController extends Controller
                             ->select('status', DB::raw('count(*) as total'))
                             ->groupBy('offers.status')
                             ->get();
-                                
+
                 $Working = DB::table('jobs')
                             ->join('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -836,7 +836,7 @@ class ApiEmployerController extends Controller
                             ->select('status', DB::raw('count(*) as total'))
                             ->groupBy('offers.status')
                             ->get();
-                
+
                 $result['New'] = isset($New[0])?$New[0]->total:0;
                 $result['Screening'] = isset($Screening[0])?$Screening[0]->total:0;
                 $result['Submitted'] = isset($Submitted[0])?$Submitted[0]->total:0;
@@ -857,7 +857,7 @@ class ApiEmployerController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
     }
-    
+
     public function employerNewList(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -884,12 +884,12 @@ class ApiEmployerController extends Controller
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -917,13 +917,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
 
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -934,32 +934,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Screening'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -987,13 +987,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1004,32 +1004,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Submitted'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -1057,13 +1057,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1074,32 +1074,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Offered'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -1127,13 +1127,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1144,32 +1144,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Done'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -1197,13 +1197,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1214,32 +1214,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Onboarding'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -1267,13 +1267,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1284,32 +1284,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Working'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -1337,13 +1337,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1354,32 +1354,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Rejected'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -1407,13 +1407,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1424,32 +1424,32 @@ class ApiEmployerController extends Controller
             'employer_id' => 'required',
             'api_key' => 'required'
         ]);
-    
+
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
             $facility_info = Facility::where('id', $request->employer_id);
             if ($facility_info->count() > 0) {
                 $facility = $facility_info->get()->first();
-    
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.facility_id' => $facility->id,
                     'jobs.is_closed' => "0",
                     'offers.status' => 'Blocked'
                 ];
-    
+
                 $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.updated_at as updated_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
                     ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
                     ->join('users', 'nurses.user_id', '=', 'users.id')
-                    
+
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
                 ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
-                
+
                 $result = [];
                 $record = [];
                 foreach($job_data as $rec)
@@ -1477,13 +1477,13 @@ class ApiEmployerController extends Controller
                 $this->check = "1";
                 $this->message = "Data listed successfully";
                 $this->return_data = $record;
-    
+
             }else{
                 $this->check = "1";
                 $this->message = "Employer not found";
-    
+
             }
-                
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
@@ -1498,7 +1498,7 @@ class ApiEmployerController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-           
+
             $whereCond = [
                 'facilities.id' => $request->employer_id,
             ];
@@ -1507,7 +1507,7 @@ class ApiEmployerController extends Controller
                                 ->where($whereCond)
                                 ->select('facilities.cno_message as about_me','facilities.specialty_need as qualities','facilities.name as Agency_name', 'facilities.*')
                                 ->first();
-                                
+
                 $record['qualities'] = (isset($result->qualities) && $result->qualities != "") ? json_decode($result->qualities) : [];
                 $record['about_me'] = (isset($result->about_me) && $result->about_me != "") ? strip_tags($result->about_me) : "";
                 $record['Agency_name'] = (isset($result->Agency_name) && $result->Agency_name != "") ? strip_tags($result->Agency_name) : "";
@@ -1518,13 +1518,13 @@ class ApiEmployerController extends Controller
                 $record['facility_id'] = (isset($result->id) && $result->id != "") ? strip_tags($result->id) : "";
                 $record['image'] = (isset($result->cno_image) && $result->cno_image != "") ? url("public/images/nurses/profile/" . $result->cno_image) : "";
 
-            
+
             $return_data = $record;
             $this->message = "Recruter listed succcessfully";
             $this->check = "1";
         }
 
-        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $return_data], 200);    
+        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $return_data], 200);
     }
 
     function workerInfo(Request $request)
@@ -1538,7 +1538,7 @@ class ApiEmployerController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $worker = Nurse::where('nurses.id', $request->worker_id)
-                    ->leftJoin('offers','offers.nurse_id', '=', 'nurses.id') 
+                    ->leftJoin('offers','offers.nurse_id', '=', 'nurses.id')
                     ->select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.nurse_id=nurses.id) as workers_applied"),'nurses.*')
                     ->first();
             $worker_reference = NURSE::select('nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
@@ -1547,7 +1547,7 @@ class ApiEmployerController extends Controller
             $worker_reference_name = '';
             $worker_reference_title ='';
             $worker_reference_recency_reference ='';
-            
+
             foreach($worker_reference as $val){
                 if(!empty($val['name'])){
                     $worker_reference_name = $val['name'].','.$worker_reference_name;
@@ -1640,11 +1640,11 @@ class ApiEmployerController extends Controller
                 $data['name1'] = 'Employer Weekly Amount';
                 $worker_info[] = $data;
 
-                
+
                 $data['worker'] = isset($worker['worker_goodwork_number'])?$worker['worker_goodwork_number']:"";
                 $data['name'] = 'Goodwork Number';
                 $worker_info[] = $data;
-                
+
                 $data['worker'] = '';
                 $data['name'] = '';
                 $data['worker1'] = '';
@@ -1663,7 +1663,7 @@ class ApiEmployerController extends Controller
                     $data['name'] = 'Vaccinations & Immunications ';
                     $worker_info[] = $data;
                 }
-                
+
                 $data['worker'] = '';
                 $data['name'] = '';
                 $data['worker1'] = '';

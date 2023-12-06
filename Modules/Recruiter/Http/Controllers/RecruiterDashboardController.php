@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Validator;
 
-define('USER_IMG', asset('public/frontend/img/profile-pic-big.png'));
+// define('USER_IMG', asset('public/frontend/img/profile-pic-big.png'));
 
 class RecruiterDashboardController extends Controller
 {
@@ -42,7 +42,7 @@ class RecruiterDashboardController extends Controller
                     ->where('job_id', $value->id)
                     ->groupBy('status')
                     ->get();
-        
+
                 foreach ($statusCountsQuery as $statusCount) {
                     $statusCounts[$statusCount->status] = $statusCount->count;
                 }
@@ -143,10 +143,10 @@ class RecruiterDashboardController extends Controller
     {
         // $user = User::select('first_name', 'last_name', 'image')->find($id);
         // return view('recruiter::recruiter/communication', compact('user'));
-        
+
         return view('recruiter::recruiter/communication');
     }
-    
+
     public function helpAndSupport(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -170,7 +170,7 @@ class RecruiterDashboardController extends Controller
                     'subject' => $request->subject,
                     'issue' => $request->issue,
                 );
-                
+
                 $data = DB::table('help_support')->insert($insert);
                 if($data){
                     $responseData = [
@@ -188,13 +188,13 @@ class RecruiterDashboardController extends Controller
                     'status' => 'error',
                     'message' => 'Somthing went wrong',
                 ];
-            }                
+            }
         }
         return response()->json($responseData);
     }
     public function updateProfile(Request $request){
-        $aboutme = $request->input('about-me'); 
-        $newqualities = $request->input('qualities'); 
+        $aboutme = $request->input('about-me');
+        $newqualities = $request->input('qualities');
         $id = Auth::guard('recruiter')->user()->id;
         $oldqualities = Auth::guard('recruiter')->user()->qualities;
         if(isset($oldqualities)){
@@ -219,7 +219,7 @@ class RecruiterDashboardController extends Controller
         return response()->json($responseData);
     }
     public function recruiterRemoveQualities(Request $request){
-        $quality = $request->input('quality'); 
+        $quality = $request->input('quality');
         $id = Auth::guard('recruiter')->user()->id;
         $oldqualities = Auth::guard('recruiter')->user()->qualities;
         if(isset($oldqualities)){
@@ -276,7 +276,7 @@ class RecruiterDashboardController extends Controller
             }else{
                 $responseData = [
                     'status' => 'success',
-                    'message' => 'Message send successfully',   
+                    'message' => 'Message send successfully',
                 ];
             }
         }
@@ -287,8 +287,8 @@ class RecruiterDashboardController extends Controller
         $data = User::select('first_name', 'last_name', 'image', 'mobile')->where('id', $nurse['user_id'])->first();
         $data->profession = $nurse->highest_nursing_degree;
         $responseData = [
-            'data' => $data,   
-        ];   
+            'data' => $data,
+        ];
         return response()->json($responseData);
     }
 }

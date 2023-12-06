@@ -13,4 +13,6 @@ use App\Http\Controllers\Api\AuthApi\AuthApiController;
 |
 */
 
-Route::middleware('auth:api')->get('/admin', 'AuthApiController@getUser');
+//Route::middleware('auth:api')->get('/admin', 'AuthApiController@getUser');
+
+Route::middleware('auth:api')->get('/admin', [AuthApiController::class, 'getUser']);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Job;
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 class JobControllerApi extends Controller
 {
 
@@ -41,7 +41,7 @@ class JobControllerApi extends Controller
                     ->where($whereCond)
                     ->whereNotIN('jobs.id', $jobs_id)
                     ->orderBy('jobs.created_at', 'desc');
-    
+
                 if (isset($request->profession) && $request->profession != "") {
                     $ret->where('jobs.profession', '=', $request->profession);
                 }
@@ -49,33 +49,33 @@ class JobControllerApi extends Controller
                 if (isset($request->type) && $request->type != "") {
                     $ret->where('jobs.type', '=', $request->type);
                 }
-    
+
                 if (isset($request->preferred_specialty) && $request->preferred_specialty != "") {
                     $ret->where('jobs.preferred_specialty', '=', $request->preferred_specialty);
                 }
-    
+
                 if (isset($request->preferred_experience) && $request->preferred_experience != "") {
                     $ret->where('jobs.preferred_experience', '=', $request->preferred_experience);
                 }
-    
+
                 if (isset($request->search_location) && $request->search_location != "") $ret->search(['job_city', 'job_state'], $request->search_location);
-    
+
                 if(isset($request->job_type) && $request->job_type != ""){
                     $ret->where('jobs.job_type', '=', $request->job_type);
                 }
-    
+
                 if (isset($request->end_date) && !empty($request->end_date)) {
                     $ret->where('jobs.end_date', '<=', $request->end_date);
                 }
-    
+
                 if (isset($request->preferred_shift) && $request->preferred_shift != "") {
                     $ret->where('jobs.preferred_shift', '=', $request->preferred_shift);
                 }
-    
+
                 if (isset($request->auto_offers) && $request->auto_offers != "") {
                     $ret->where('jobs.auto_offers', '=', $request->auto_offers);
                 }
-                
+
                 $weekly_pay_from = (isset($request->weekly_pay_from) && $request->weekly_pay_from != "") ? $request->weekly_pay_from : "";
                 $weekly_pay_to = (isset($request->weekly_pay_to) && $request->weekly_pay_to != "") ? $request->weekly_pay_to : "";
                 if ($weekly_pay_from != "" && $weekly_pay_to != "") {
@@ -83,7 +83,7 @@ class JobControllerApi extends Controller
                         $query->whereBetween('weekly_pay', array(intval($weekly_pay_from), intval($weekly_pay_to)));
                     });
                 }
-    
+
                 $hourly_pay_from = (isset($request->hourly_pay_from) && $request->hourly_pay_from != "") ? $request->hourly_pay_from : "";
                 $hourly_pay_to = (isset($request->hourly_pay_to) && $request->hourly_pay_to != "") ? $request->hourly_pay_to : "";
                 if ($hourly_pay_from != "" && $hourly_pay_to != "") {
@@ -91,7 +91,7 @@ class JobControllerApi extends Controller
                         $query->whereBetween('hours_shift', array(intval($hourly_pay_from), intval($hourly_pay_to)));
                     });
                 }
-    
+
                 $hours_per_week_from = (isset($request->hours_per_week_from) && $request->hours_per_week_from != "") ? $request->hours_per_week_from : "";
                 $hours_per_week_to = (isset($request->hours_per_week_to) && $request->hours_per_week_to != "") ? $request->hours_per_week_to : "";
                 if ($hours_per_week_from != "" && $hours_per_week_to != "") {
@@ -99,7 +99,7 @@ class JobControllerApi extends Controller
                         $query->whereBetween('hours_per_week', array(intval($hours_per_week_from), intval($hours_per_week_to)));
                     });
                 }
-    
+
                 $assignment_from = (isset($request->assignment_from) && $request->assignment_from != "") ? $request->assignment_from : "";
                 $assignment_to = (isset($request->assignment_to) && $request->assignment_to != "") ? $request->assignment_to : "";
                 if ($assignment_from != "" && $assignment_to != "") {
@@ -107,7 +107,7 @@ class JobControllerApi extends Controller
                         $query->whereBetween('preferred_assignment_duration', array(intval($assignment_from), intval($assignment_to)));
                     });
                 }
-                
+
                 $job_data = $ret->get();
                 $records = $this->jobData($job_data, $request->user_id);
 
@@ -131,7 +131,7 @@ class JobControllerApi extends Controller
                         }
                     }
                 }
-                
+
                 $num = 0;
                 $newDate = '';
                 $new_result = [];
@@ -152,7 +152,7 @@ class JobControllerApi extends Controller
                         }
                     }
                 }else{
-                    
+
                     foreach($result as $rec){
                         $new_result[] = $rec;
                         $new_result[$num]['created_at_definition'] = $rec['created_at_browse'];
@@ -173,7 +173,7 @@ class JobControllerApi extends Controller
                     }
                     $data[] = $val;
                 }
-    
+
                 $datas = [];
                 foreach($data as $val){
                     if($val['is_saved'] == '1'){
@@ -181,7 +181,7 @@ class JobControllerApi extends Controller
                     }
                     $datas[] = $val;
                 }
-    
+
                 $this->check = "1";
                 $this->message = "Jobs listed successfully";
                 $this->return_data = $datas;
@@ -275,7 +275,7 @@ class JobControllerApi extends Controller
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-    
+
     public function jobLikes(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -295,7 +295,7 @@ class JobControllerApi extends Controller
             }
 
             $check_exists = DB::table('follows')->where(['user_id' => $user_id, 'job_id' => $request->job_id,])->get()->first();
-            
+
             if (!empty($check_exists->id)) {
                 if($check_exists->like_status != '1'){
                     $follows = DB::table('follows')->where([
@@ -316,14 +316,14 @@ class JobControllerApi extends Controller
                 $this->message = "Removed job from save successfully";
                 $this->return_data = $follows;
                 }
-                
+
             } else {
                 $follows = Follows::create([
                     'user_id' => $user_id,
                     'job_id' => $request->job_id,
                     'like_status' => $request->like_status ? $request->like_status:'1'
                 ]);
-                
+
                 $this->check = "1";
                 $this->message = "Job save successfully";
                 $this->return_data = $follows;
@@ -365,7 +365,7 @@ class JobControllerApi extends Controller
                         'jobs.is_open' => "1",
                         'jobs.is_closed' => "0"
                     ];
-    
+
                     // new code
                     $ret = DB::table('jobs')
                     ->leftJoin('facilities', 'facilities.id', '=', 'jobs.facility_id')
@@ -376,38 +376,38 @@ class JobControllerApi extends Controller
                     ->orderBy('jobs.created_at', 'desc');
                     $job_data = $ret->get();
                     // $job_data = $ret->paginate(10);
-    
+
                     $num = 0;
                     foreach($job_data as $val){
                         $val->shift = isset($val->preferred_shift)?$val->preferred_shift:'';
                         $val->job_location = isset($workLocations[$val->job_location]) ? $workLocations[$val->job_location] : "";
                         $val->created_at_definition = isset($val->created_at) ? "Posted " . $this->timeAgo(date(strtotime($val->created_at))) : "";
-                    
+
                         $is_applied = "0";
                         if ($request->user_id != "")
                             $is_applied = Follows::where(['job_id' => $val->job_id, "applied_status" => "1", 'status' => "1", "user_id" => $request->user_id])->distinct('user_id')->count();
                         $val->is_applied = strval($is_applied);
-    
+
                         $val->applied_nurses = 0;
                         $applied_nurses = Offer::where(['job_id' => $val->job_id, 'status'=>'Apply'])->count();
                         $val->applied_nurses = strval($applied_nurses);
-    
+
                         $is_saved = '0';
                         $whereCond = [
                             'job_saved.nurse_id' => $request->user_id,
                             'job_saved.job_id' => $val->job_id,
                         ];
-    
+
                         $limit = 10;
                         $saveret = \DB::table('job_saved')
                         ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
                         ->where($whereCond);
-    
+
                         if ($saveret->count() > 0) {
                             $is_saved = '1';
                         }
                         $val->is_saved = $is_saved;
-    
+
                         $job_data[$num]->description = strip_tags($val->description);
                         $job_data[$num]->responsibilities = strip_tags($val->responsibilities);
                         $job_data[$num]->qualifications = strip_tags($val->qualifications);
@@ -415,7 +415,7 @@ class JobControllerApi extends Controller
                         $job_data[$num]->about_facility = strip_tags($val->about_facility);
                         $num++;
                     }
-    
+
                     $data = [];
                     foreach($job_data as $val){
                         if($val->is_applied != '0'){
@@ -424,7 +424,7 @@ class JobControllerApi extends Controller
                         // print_r($val->is_applied);
                         $data[] = $val;
                     }
-                    
+
                     $this->check = "1";
                     $this->message = "Popular Jobs listed successfully";
                     $this->return_data = $data;
@@ -437,7 +437,7 @@ class JobControllerApi extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    
+
     }
 
     public function jobOffered(Request $request)
@@ -700,7 +700,7 @@ class JobControllerApi extends Controller
     {
         if(isset($request->role) && !empty($request->role) && !empty($request->user_id))
         {
-            $nurse_info = NURSE::where('user_id', $request->user_id);    
+            $nurse_info = NURSE::where('user_id', $request->user_id);
             // for worker or nurse
             if ($nurse_info->count() > 0) {
                 $nurse = $nurse_info->first();
@@ -730,7 +730,7 @@ class JobControllerApi extends Controller
                 if (isset($ask_worker_notification)) {
                     // $notifications = $ret;
                     $results = [];
-                    foreach ($ask_worker_notification as $notification) 
+                    foreach ($ask_worker_notification as $notification)
                     {
                         if($notification['title'] != "Send Counter Offer"){
                             $notification->created_at = Carbon::parse($notification['created_at']);
@@ -744,7 +744,7 @@ class JobControllerApi extends Controller
                             }else{
                                 $notification->job_name  = '';
                             }
-    
+
                             if(isset($notification['worker_user_id'])){
                                 $worker = User::where('id', $notification['worker_user_id'])->first();
                                 if(isset($worker)){
@@ -755,7 +755,7 @@ class JobControllerApi extends Controller
                             }else{
                                 $notification->worker_name = '';
                             }
-    
+
                             if(isset($notification['recruiter_id'])){
                                 $recruiter = User::where('id', $notification['recruiter_id'])->first();
                                 if(isset($recruiter)){
@@ -763,17 +763,17 @@ class JobControllerApi extends Controller
                                 }else{
                                     $notification->recruiter_name  = '';
                                 }
-                                
+
                             }else{
                                 $notification->recruiter_name = '';
                             }
-    
+
                             if($notification['updated_at'] >= date('Y-m-d')){
                                 $notification->status = 'New';
                             }else{
                                 $notification->status = 'Older';
                             }
-    
+
                             if($notification['title'] == 'Send Offer'){
                                 $notification->isCounter = '0';
                                 $notification->isAskWorker = '0';
@@ -793,8 +793,8 @@ class JobControllerApi extends Controller
                             }
                             $results[] = $notification;
                         }
-                        
-                        
+
+
                     }
                     $this->check = "1";
                     $this->message = "Notifications has been listed successfully";
@@ -832,7 +832,7 @@ class JobControllerApi extends Controller
                 if ($ret->count() > 0) {
                     $n = [];
                     $notifications = $ret;
-                    
+
                     foreach ($notifications as $notification) {
                         $notification->created_at = Carbon::parse($notification->created_at);
                         $notification->date = $notification->created_at->diffForHumans();
@@ -850,7 +850,7 @@ class JobControllerApi extends Controller
                 $this->message = "Recruiter not found";
             }
         }
-        
+
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
@@ -866,7 +866,7 @@ class JobControllerApi extends Controller
              if ($validator->fails()) {
                  $this->message = $validator->errors()->first();
              } else {
-                 $nurse_info = NURSE::where('user_id', $request->worker_user_id);    
+                 $nurse_info = NURSE::where('user_id', $request->worker_user_id);
                  // for worker or nurse
                  if ($nurse_info->count() > 0) {
                      $nurse = $nurse_info->first();
@@ -881,7 +881,7 @@ class JobControllerApi extends Controller
                                              ->where('offers.expiration', '>=', date('Y-m-d H:i:s'))
                                              ->orderBy('notifications.created_at', 'desc')->distinct()
                                              ->get();
-     
+
                      if ($ret->count() > 0) {
                          $n = [];
                          $notifications = $ret;
@@ -913,7 +913,7 @@ class JobControllerApi extends Controller
                                  }else{
                                      $notification->recruiter_name  = '';
                                  }
-                                 
+
                              }else{
                                  $notification->recruiter_name = '';
                              }
@@ -927,7 +927,7 @@ class JobControllerApi extends Controller
                              }else{
                                  $notification->isCounter = '1';
                              }
-                             
+
                          }
                          $this->check = "1";
                          $this->message = "Notifications has been listed successfully";
@@ -941,7 +941,7 @@ class JobControllerApi extends Controller
                      $this->message = "Nurse not found";
                  }
              }
-             
+
          }else{
              $validator = \Validator::make($request->all(), [
                  'api_key' => 'required',
@@ -957,7 +957,7 @@ class JobControllerApi extends Controller
                      $whereCond = [
                          'notifications.recruiter_id' => $request->recruiter_id
                      ];
-                     
+
                      $ret = Notification::select('offers.status as status', 'offers.nurse_id as nurse_id', 'notifications.*', 'nurses.id as worker_id')
                                              ->leftJoin('offers', 'notifications.job_id', 'offers.job_id')
                                              ->leftJoin('nurses', 'notifications.created_by', 'nurses.user_id')
@@ -972,14 +972,14 @@ class JobControllerApi extends Controller
                          $n = [];
                          $notifications = $ret;
                          $result = [];
-                         foreach ($notifications as $notification) 
+                         foreach ($notifications as $notification)
                          {
                              if($notification['worker_id'] == $notification['nurse_id']){
                                  $notification->created_at = Carbon::parse($notification['created_at']);
                                  $notification->date = $notification->created_at->diffForHumans();
                                  $notification->recruiter_id = isset($notification['recruiter_id'])?$notification['recruiter_id']:'';
                                  $notification->worker_user_id  = isset($notification['created_by'])?$notification['created_by']:'';
-                                 
+
                                  if(isset($notification['job_id'])){
                                      $job = Job::where('id', $notification['job_id'])->first();
                                      $notification->job_name  = $job['job_name'];
@@ -1005,7 +1005,7 @@ class JobControllerApi extends Controller
                                      $notification->worker_name = '';
                                      $notification->worker_id  = '';
                                  }
-                                 
+
                                  if(isset($notification['recruiter_id'])){
                                      $recruiter = User::where('id', $notification['recruiter_id'])->first();
                                      if(isset($recruiter)){
@@ -1028,7 +1028,7 @@ class JobControllerApi extends Controller
                                  }
                                  $result[] = $notification;
                              }
-                             
+
                          }
                          $this->check = "1";
                          $this->message = "Notifications has been listed successfully";
@@ -1041,9 +1041,9 @@ class JobControllerApi extends Controller
                      $this->message = "Recruiter not found";
                  }
              }
-             
+
          }
-         
+
          return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
      }
 
@@ -1063,7 +1063,7 @@ class JobControllerApi extends Controller
             }else{
                 $nurse_info = NURSE::where('user_id', $request->user_id)->get();
             }
-            
+
             if ($nurse_info->count() > 0) {
                 $nurse = $nurse_info->first();
 

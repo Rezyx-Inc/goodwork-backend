@@ -31,10 +31,10 @@ use App\Models\EmailTemplate;
 
 
 use DB;
-
+use App\Http\Controllers\Controller;
 class FacilityController extends Controller
 {
-    
+
     public function facilityDropdown($type)
     {
         if ($type == "getmedicalrecords") {
@@ -209,8 +209,8 @@ class FacilityController extends Controller
                 //Upload Image
                 // $request->file('facility_logo')->storeAs('assets/facilities/facility_logo', $facility_logo);
                 $destinationPath = 'images/facilities';
-                $request->file('facility_logo')->move(public_path($destinationPath), $facility_logo);   
-        
+                $request->file('facility_logo')->move(public_path($destinationPath), $facility_logo);
+
             }
 
             if ($request->hasFile('cno_image')) {
@@ -223,8 +223,8 @@ class FacilityController extends Controller
                 // $request->file('cno_image')->storeAs('assets/facilities/cno_image', $cno_image);
                 // $facility->update();
                 $destinationPath = 'images/facilities/cno_image';
-                $request->file('cno_image')->move(public_path($destinationPath), $cno_image);   
-        
+                $request->file('cno_image')->move(public_path($destinationPath), $cno_image);
+
             }
 
             if (isset($update_array) && !empty($update_array) && $facility_id != "") {
@@ -266,8 +266,8 @@ class FacilityController extends Controller
                 //Upload Image
                 // $request->file('facility_logo')->storeAs('assets/facilities/facility_logo', $facility_logo);
                 $destinationPath = 'images/facilities';
-                $request->file('facility_logo')->move(public_path($destinationPath), $facility_logo);   
-        
+                $request->file('facility_logo')->move(public_path($destinationPath), $facility_logo);
+
 
                 $update = Facility::where(['id' => $facility_id])->update($update_array);
                 if ($update) {
@@ -646,7 +646,7 @@ class FacilityController extends Controller
             $insert_offer["job_id"] = $request->job_id;
             $now = date("Y-m-d");
             // $now = isset($request->start_date)?$request->start_date:date("Y-m-d", strtotime('+48 hours', strtotime($now)));
-            
+
             $insert_offer["expiration"] = date("Y-m-d", strtotime('+48 hours', strtotime($now)));
             $insert_offer["start_date"] = $now;
             // follow records
@@ -658,7 +658,7 @@ class FacilityController extends Controller
             // end follow data
             $check_offer = Offer::where(['nurse_id' => $request->nurse_id, 'job_id' => $request->job_id])->get()->first();
             $today = date('Y-m-d H:i:s');
-            
+
             if(isset($check_offer) && $check_offer['expiration'] > $today){
                 $this->check = "0";
                 $this->message = "You are already apply for this job";
@@ -673,7 +673,7 @@ class FacilityController extends Controller
                     $off_data["start_date"] = (isset($offer->start_date) && $offer->start_date != "") ? $offer->start_date : "";
                     $off_data["job_id"] = (isset($offer->job_id) && $offer->job_id != "") ? $offer->job_id : "";
                     $off_data["expiration"] = (isset($offer->expiration) && $offer->expiration != "") ? $offer->expiration : "";
-    
+
                     /* mail */
                     $nurse_info = Nurse::where(['id' => $request->nurse_id]);
                     if ($nurse_info->count() > 0) {
@@ -703,7 +703,7 @@ class FacilityController extends Controller
                         }
                     }
                     /* mail */
-    
+
                     $this->check = "1";
                     $this->message = "Job applied successfully";
                     $this->return_data = $off_data;
@@ -712,11 +712,11 @@ class FacilityController extends Controller
                     $this->message = "Failed to apply for job, Please try again later";
                 }
             }
-            
+
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-  
+
 
     }
 
@@ -1350,7 +1350,7 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $whereCond = [
                     'facilities.active' => true,
                     'jobs.id' => $request->job_id
@@ -1361,15 +1361,15 @@ class FacilityController extends Controller
                             ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                             ->where($whereCond);
             $job_data = $respond->groupBy('jobs.id')->first();
-            
+
             if(empty($job_data)){
                 $whereCond1 =  [
                     'facilities.active' => true,
                     'jobs.id' => $request->job_id,
                 ];
-                
+
                 $worker_jobs = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'jobs.created_at as posted_on')
-                
+
                 ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
                 ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                 ->where($whereCond1)->groupBy('jobs.id')->first();
@@ -1400,8 +1400,8 @@ class FacilityController extends Controller
             $worker_reference_name = '';
             $worker_reference_title ='';
             $worker_reference_recency_reference ='';
-            
-            // Jobs speciality with experience 
+
+            // Jobs speciality with experience
             $speciality = explode(',',$job['preferred_specialty']);
             $experiences = explode(',',$job['preferred_experience']);
             $exp = [];
@@ -1415,14 +1415,14 @@ class FacilityController extends Controller
             foreach($experiences as $experience){
                 $exp[] = $experience;
             }
-            
+
             for($j=0; $j< $i; $j++){
-                $specialities[$j]['spe'] = $spe[$j]; 
-                $specialities[$j]['exp'] = $exp[$j]; 
+                $specialities[$j]['spe'] = $spe[$j];
+                $specialities[$j]['exp'] = $exp[$j];
             }
 
             // Jobs Certificate
-            $certificate = explode(',',$job['certificate']); 
+            $certificate = explode(',',$job['certificate']);
             $worker_certificate = [];
             // $skills_checklists = [];
             $vaccinations = explode(',',$job['vaccinations']);
@@ -1437,13 +1437,13 @@ class FacilityController extends Controller
                     $i++;
                     $skills_checklists[$i] = url('public/images/nurses/skill/'.$rec);
                 }
-                
+
             }
             // $vacc_image = NurseAsset::where(['filter' => 'vaccination', 'nurse_id' => $worker->id])->get();
             // $cert_image = NurseAsset::where(['filter' => 'certificate', 'nurse_id' => $worker->id])->get();
             $vacc_image = '';
             $cert_image = '';
-            $certificate = explode(',',$job['certificate']); 
+            $certificate = explode(',',$job['certificate']);
             if(isset($job_data['recruiter_id'])){
                 $recruiter_info = User::where('id', $job_data['recruiter_id'])->first();
             }else{
@@ -1487,7 +1487,7 @@ class FacilityController extends Controller
             $num = [];
             foreach($countable as $rec){
                 if(!empty($rec)){
-                    $num[] = $rec;        
+                    $num[] = $rec;
                 }
             }
             $countable = count($num);
@@ -1812,7 +1812,7 @@ class FacilityController extends Controller
             $data['worker_title'] = 'Are you willing float to?';
             $data['job_title'] = !empty($job['float_requirement'])?$job['float_requirement']:'Float requirements';
             $worker_info[] = $data;
-            
+
             $data['job'] = isset($job['facility_shift_cancelation_policy'])?$job['facility_shift_cancelation_policy']:"";
             $data['match'] = !empty($job_data['worker_facility_shift_cancelation_policy'])?true:false;
             $data['worker'] = isset($job_data['worker_facility_shift_cancelation_policy'])?$job_data['worker_facility_shift_cancelation_policy']:"";
@@ -1924,7 +1924,7 @@ class FacilityController extends Controller
             $data['worker_title'] = 'What setting do you prefer?';
             $data['job_title'] = (isset($data['job']) && !empty($data['job']))?$data['job']:' Clinical Setting';
             $worker_info[] = $data;
-            
+
             $data['job'] = isset($job['Patient_ratio'])?$job['Patient_ratio']:"";
             $data['match'] = !empty($job_data['worker_patient_ratio'])?true:false;
             $data['worker'] = isset($job_data['worker_patient_ratio'])?$job_data['worker_patient_ratio']:"";
@@ -2378,9 +2378,9 @@ class FacilityController extends Controller
             $worker_info[] = $data;
 
             $result['worker_info'] = $worker_info;
-            
 
-            
+
+
             $this->check = "1";
             $this->message = "Matching details listed successfully";
             // $this->return_data = $data;
@@ -2566,7 +2566,7 @@ class FacilityController extends Controller
 
             $return_data = [];
             if ($user) {
-                
+
 
                 /*  Nurse */
                 if (isset($request->nursing_license_number) && $request->nursing_license_number != "") $nurse->nursing_license_number = $request->nursing_license_number;
@@ -2579,7 +2579,7 @@ class FacilityController extends Controller
                 if (isset($request->authority_Issue) && $request->authority_Issue != "") $nurse->authority_Issue = $request->authority_Issue;
                 $n = $nurse->update();
                 /*  Nurse */
-                
+
 
                 if ($n) {
                     $this->check = "1";
@@ -2595,7 +2595,7 @@ class FacilityController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    
+
 
     }
 
@@ -2621,11 +2621,11 @@ class FacilityController extends Controller
                     'device_lang' => $request->device_lang
                 );
                 \DB::table('user_activity')->insert($insert);
-            
+
                 $this->check = "1";
                 $this->message = "User activity has been added successfully";
                 $this->return_data = $insert;
-             
+
         } else {
             $this->message = $this->param_missing;
         }
@@ -2670,7 +2670,7 @@ class FacilityController extends Controller
         if(isset($request->job_type) && $request->job_type != ""){
             $ret->where('jobs.job_type', '=', $request->job_type);
         }
-        
+
         if (isset($request->end_date) && !empty($request->end_date)) {
             $ret->where('jobs.end_date', '<=', $request->end_date);
         }
@@ -2682,7 +2682,7 @@ class FacilityController extends Controller
         if (isset($request->auto_offers) && $request->auto_offers != "") {
             $ret->where('jobs.auto_offers', '=', $request->auto_offers);
         }
-        
+
         $weekly_pay_from = (isset($request->weekly_pay_from) && $request->weekly_pay_from != "") ? $request->weekly_pay_from : "";
         $weekly_pay_to = (isset($request->weekly_pay_to) && $request->weekly_pay_to != "") ? $request->weekly_pay_to : "";
         if ($weekly_pay_from != "" && $weekly_pay_to != "") {
@@ -2714,14 +2714,14 @@ class FacilityController extends Controller
                 $query->whereBetween('preferred_assignment_duration', array(intval($assignment_from), intval($assignment_to)));
             });
         }
-        
+
         $job_data = $ret->get();
         $result = [];
         $data = [];
         $newDate = '';
         if (isset($request->start_date) && $request->start_date != "") {
             foreach($job_data as $val)
-            {    
+            {
                 $newDate = isset($val['start_date'])?date("Y-m-d", strtotime($val['start_date'])):'';
                 if(($newDate >= $request->start_date) && ($val['start_date'] != '')){
                     $result['start_date'] = isset($val['start_date'])?$val['start_date']:"";
@@ -2751,7 +2751,7 @@ class FacilityController extends Controller
             }
         }else{
             foreach($job_data as $val)
-            {    
+            {
                 $result['start_date'] = isset($val['start_date'])?$val['start_date']:"";
                 $result['job_id'] = isset($val['job_id'])?$val['job_id']:"";
                 $result['job_type'] = isset($val['job_type'])?$val['job_type']:"";
@@ -2784,7 +2784,7 @@ class FacilityController extends Controller
         if (
             isset($request->nurse_id) && $request->nurse_id != "" &&
             isset($request->job_id) && $request->job_id != "" &&
-            isset($request->api_key) && $request->api_key != "" 
+            isset($request->api_key) && $request->api_key != ""
         ) {
             if(!empty($request->role)){
                 $record = NURSE::where(['id' => $request->nurse_id])->get()->first();
@@ -2834,12 +2834,12 @@ class FacilityController extends Controller
         if (
             isset($request->nurse_id) && $request->nurse_id != "" &&
             isset($request->job_id) && $request->job_id != "" &&
-            isset($request->api_key) && $request->api_key != "" 
+            isset($request->api_key) && $request->api_key != ""
         ) {
             $nurse = Nurse::where('id', '=', $request->nurse_id)->first();
 
             $product = \DB::table('job_saved')->where('nurse_id', $nurse->user_id)->where('job_id', $request->job_id)->first();
-  
+
             if (!is_null($product)) {
                 \DB::table('job_saved')->where('nurse_id', $nurse->user_id)->where('job_id', $request->job_id)->update(['is_delete' => '1']);
             }else{
@@ -2858,7 +2858,7 @@ class FacilityController extends Controller
             }else{
                 $this->message = "Data not found";
             }
-             
+
         } else {
             $this->message = $this->param_missing;
         }
@@ -2866,7 +2866,7 @@ class FacilityController extends Controller
     }
 
     public function jobSaved(Request $request)
-    {    
+    {
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
             'api_key' => 'required',
@@ -2875,14 +2875,14 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             /*  dropdown data's */
             $controller = new Controller();
             $assignmentDurations = $this->getAssignmentDurations()->pluck('title', 'id');
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             /*  dropdown data's */
             $nurse_info = Nurse::where(['user_id' => $request->user_id]);
-            
+
             if ($nurse_info->count() > 0) {
                 $result = array();
                 $nurse = $nurse_info->first();
@@ -2903,7 +2903,7 @@ class FacilityController extends Controller
                             ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
                             ->where($whereCond)
                             ->select('jobs.*' ,'job_saved.*');
-                            
+
                             // ->paginate($limit);
                             $jobdata = $ret->get();
                             $result = $this->my_saved_jobData($jobdata, $request->user_id);
@@ -2930,7 +2930,7 @@ class FacilityController extends Controller
     }
 
     public function nurseJobSaved(Request $request)
-    {    
+    {
         $validator = \Validator::make($request->all(), [
             'nurse_id' => 'required',
             'api_key' => 'required',
@@ -2946,12 +2946,12 @@ class FacilityController extends Controller
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             /*  dropdown data's */
             $nurse_info = Nurse::where(['id' => $request->nurse_id]);
-            
+
             if ($nurse_info->count() > 0) {
                 $result = array();
                 $nurse = $nurse_info->get()->first();
                 // $user_id = $nurse->user_id;
-                
+
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.is_open' => "1",
@@ -2985,7 +2985,7 @@ class FacilityController extends Controller
                     $result[$n_c]['cno_message'] = strip_tags($rec['cno_message']);
                     $result[$n_c]['about_facility'] = strip_tags($rec['about_facility']);
                     $n_c++;
-                }                
+                }
 
                 $data = [];
                 foreach($result as $val){
@@ -3002,7 +3002,7 @@ class FacilityController extends Controller
                 $this->message = "Nurse not found";
             }
         }
-        
+
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
     }
@@ -3017,7 +3017,7 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
 
@@ -3041,7 +3041,7 @@ class FacilityController extends Controller
                             'offers.status' => 'Apply',
                             'offers.nurse_id' => $nurse->id
                         ];
-    
+
                         $ret = Job::select('jobs.id as job_id', 'jobs.*', 'offers.created_at as created_at')
                             ->leftJoin('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
@@ -3049,12 +3049,12 @@ class FacilityController extends Controller
                             ->join('offers', 'jobs.id', '=', 'offers.job_id')
                             ->where($whereCond)
                             ->orderBy('offers.created_at', 'desc');
-                    
+
                             $job_data = $ret->get();
                             // $job_data = $ret->paginate(10);
-    
+
                         $result = $this->jobData($job_data, $request->user_id);
-    
+
                         $num = 0;
                         foreach($result as $rec){
                             $result[$num]['description'] = strip_tags($rec['description']);
@@ -3064,7 +3064,7 @@ class FacilityController extends Controller
                             $result[$num]['about_facility'] = strip_tags($rec['about_facility']);
                             $num++;
                         }
-    
+
                         $this->check = "1";
                         $this->message = "Jobs applied successfully";
                         $this->return_data = $result;
@@ -3079,7 +3079,7 @@ class FacilityController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    } 
+    }
 
     public function myjobOffered(Request $request)
     {
@@ -3093,7 +3093,7 @@ class FacilityController extends Controller
         } else {
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
-                
+
                 $user = $user_info->get()->first();
                 $nurse_info = NURSE::where('user_id', $request->user_id);
                 if ($nurse_info->count() > 0) {
@@ -3121,7 +3121,7 @@ class FacilityController extends Controller
                             ->join('offers', 'jobs.id', '=', 'offers.job_id')
                             ->where($whereCond)
                             ->orderBy('offers.created_at', 'desc');
-                            
+
 
                         // $job_data = $ret->paginate(10);
                         $job_data = $ret->get();
@@ -3148,7 +3148,7 @@ class FacilityController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    
+
 
     }
 
@@ -3162,7 +3162,7 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            
+
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->first();
@@ -3178,7 +3178,7 @@ class FacilityController extends Controller
                         $this->message = "This Worker Blocked by Recruiter";
                         $this->return_data = [];
                     }else{
-                        
+
                         $whereCond = [
                             'facilities.active' => true,
                             'jobs.active' => "1",
@@ -3193,7 +3193,7 @@ class FacilityController extends Controller
                         ->leftJoin('facilities', 'facilities.id', '=', 'jobs.facility_id')
                         ->leftJoin('offers', 'jobs.id', '=', 'offers.job_id')
                         ->select('offers.status AS offers_status','offers.id AS offer_id', 'jobs.created_at AS start_date', 'jobs.id as job_id', 'jobs.*', 'jobs.created_at as created_at')
-                        
+
                         ->orderBy('jobs.created_at', 'desc');
                         // $jobdata = $ret->paginate(10);
                         $jobdata = $ret->get();
@@ -3213,12 +3213,12 @@ class FacilityController extends Controller
                             $res['preferred_shift'] = $rec['preferred_shift'];
                             $res['city'] = $rec['job_city'];
                             $res['state'] = $rec['job_state'];
-                            
+
                             $res['created_at_definition'] = isset($rec['created_at']) ? "Start Date: " .date('M j, Y', strtotime($rec['created_at'])) : "";
                             $result[] =$res;
                         }
-                        
-                        
+
+
                         $this->check = "1";
                         $this->message = "Hired Jobs listed successfully";
                         $this->return_data = $result;
@@ -3232,7 +3232,7 @@ class FacilityController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    
+
     }
 
     public function myjobPast(Request $request)
@@ -3293,7 +3293,7 @@ class FacilityController extends Controller
                             $res['preferred_shift'] = $rec['preferred_shift'];
                             $res['city'] = $rec['job_city'];
                             $res['state'] = $rec['job_state'];
-                            
+
                             $res['start_date'] = isset($rec['start_date']) ? "Start Date: " .date('M j Y', strtotime($rec['start_date'])) : "";
                             $res['end_date'] = isset($rec['end_date']) ? "End Date: " .date('M j Y', strtotime($rec['end_date'])) : "";
                             $res['posted_on'] = isset($rec['created_at']) ?date('M j Y', strtotime($rec['created_at'])) : "";
@@ -3340,11 +3340,11 @@ class FacilityController extends Controller
                 if (isset($request->date_of_birth) && $request->date_of_birth != "") $user->date_of_birth = $request->date_of_birth;
                 if (isset($request->driving_license) && $request->driving_license != "") $user->driving_license = $request->driving_license;
                 if (isset($request->security_number) && $request->security_number != "") $user->security_number = $request->security_number;
-                
+
                 $u = $user->update();
                 /* User */
 
-                
+
 
                 if ($u) {
                     $this->check = "1";
@@ -3376,8 +3376,8 @@ class FacilityController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $return_data = [];
-           
-            if ($nurse) {   
+
+            if ($nurse) {
                 $this->check = "1";
                 $nurse_id = $nurse->id;
                 $nurse_deleted = DB::table('nurses')->where('id', '=', $nurse_id)->delete();
@@ -3394,7 +3394,7 @@ class FacilityController extends Controller
                 }else{
                     $this->message = "Nurse record not deleted";
                 }
-                
+
             } else {
                 $this->message = "Nurse not exists";
             }
@@ -3402,7 +3402,7 @@ class FacilityController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    } 
+    }
 
     public function nurseEducationDetail(Request $request)
     {
@@ -3425,14 +3425,14 @@ class FacilityController extends Controller
             $return_data = [];
             $is_completion = 0;
             if ($user) {
-                
+
                 /*  Nurse */
                 if (isset($request->college_uni_name) && $request->college_uni_name != "") $nurse->college_uni_name = $request->college_uni_name;
                 if (isset($request->study_area) && $request->study_area != "") $nurse->study_area = $request->study_area;
                 if (isset($request->graduation_date) && $request->graduation_date != "") $nurse->graduation_date = $request->graduation_date;
                 // if (isset($request->highest_nursing_degree ) && $request->highest_nursing_degree  != "") $nurse->highest_nursing_degree  = $request->highest_nursing_degree ;
                 if (isset($request->highest_nursing_degree ) && $request->highest_nursing_degree  != ""){
-                    
+
                     // nurse degree changed into id
                     if($request->highest_nursing_degree == 'Master of Science in Nursing (MSN)'){
                         $nurse->highest_nursing_degree  = '23';
@@ -3444,11 +3444,11 @@ class FacilityController extends Controller
                         $nurse->highest_nursing_degree  = '24';
                     }
                 // end nurse degree convert into id
-                } 
-                
+                }
+
                 $n = $nurse->update();
                 /*  Nurse */
-                
+
                 if ($n) {
                     $this->check = "1";
                     $return_data = $this->profileCompletionFlagStatus($type = "", $user);
@@ -3463,7 +3463,7 @@ class FacilityController extends Controller
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    
+
 
     }
 
@@ -3495,7 +3495,7 @@ class FacilityController extends Controller
             }else{
                 $nurse = Nurse::where('user_id', '=', $request->user_id)->first();
             }
-            
+
             $check = Experience::where('nurse_id', '=', $nurse->id)->get()->first();
             if(isset($check)){
                 $this->check = "1";
@@ -3504,7 +3504,7 @@ class FacilityController extends Controller
             }else{
 
                 if (isset($nurse)) {
-    
+
                     /* experience */
                     $add_array = [
                         'nurse_id' => $nurse->id,
@@ -3516,13 +3516,13 @@ class FacilityController extends Controller
                         "is_current_job" => $request->is_current_job,
                     ];
                     $experience = Experience::create($add_array);
-    
-                    
+
+
                     /* experience */
-    
+
                     if ($experience == true) {
                         $cert_ret = Experience::where('id', '=', $experience->id)->first();
-    
+
                         /* experience data */
                         $experiences = $this->getExperienceTypes()->pluck('title', 'id');
                         $cert_data["experience_id"] = (isset($cert_ret->id) && $cert_ret->id != "") ? $cert_ret->id : "";
@@ -3536,7 +3536,7 @@ class FacilityController extends Controller
                         $cert_data["created_at"] = (isset($cert_ret->created_at) && $cert_ret->created_at != "") ?  date('m/d/Y H:i:s', strtotime($cert_ret->created_at)) : "";
                         $cert_data["is_current_job"] = (isset($cert_ret->is_current_job) && $cert_ret->is_current_job != "") ?  $cert_ret->is_current_job : "";
                         /* experience data */
-    
+
                         $this->check = "1";
                         $this->message = "Experience added successfully";
                         $this->return_data = $cert_data;
@@ -3548,10 +3548,10 @@ class FacilityController extends Controller
                 }
             }
 
-            
+
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-   
+
 
     }
 
@@ -3596,7 +3596,7 @@ class FacilityController extends Controller
                 ];
                 $experience = Experience::where(['id' => $request->experience_id])->update($experience_array);
 
-                
+
                 /* experience */
 
                 if ($experience == true) {
@@ -3627,7 +3627,7 @@ class FacilityController extends Controller
             }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-   
+
 
 
 
@@ -3653,7 +3653,7 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function getfacilities(Request $request) 
+    public function getfacilities(Request $request)
     {
         $facilities = Facility::where('active','=', true)->select('id','name')->get();
 
@@ -3664,7 +3664,7 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    
+
     public function browse_facilities(Request $request)
     {
         if (isset($request->facility_id) && $request->facility_id != "") {
@@ -3782,7 +3782,7 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    
+
     public function facilityFollows(Request $request)
     {
         $validator = \Validator::make($request->all(), [
@@ -3819,7 +3819,7 @@ class FacilityController extends Controller
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-    
+
     public function facilityLikes(Request $request)
     {
         $validator = \Validator::make($request->all(), [
