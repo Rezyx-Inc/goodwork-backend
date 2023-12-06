@@ -212,7 +212,7 @@ all on one app</h2>
     <div class="row">
       <div class="col-lg-12">
         <h2>sign up to explore your career options today!</h2>
-        <a href="#">Sign Up Now</a>
+        <a href="{{route('employer-signup')}}">Sign Up Now</a>
       </div>
     </div>
   </div>
