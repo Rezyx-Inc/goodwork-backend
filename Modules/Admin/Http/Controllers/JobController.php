@@ -156,7 +156,6 @@ class JobController extends AdminController
                 $input["contract_termination_policy"] = isset($request->contract_termination_policy)?$request->contract_termination_policy:'';
                 $input["traveler_distance_from_facility"] = isset($request->traveler_distance_from_facility)?$request->traveler_distance_from_facility:'';
                 $input["facility_id"] = isset($request->facility_id)?$request->facility_id : '';
-
                 $input["clinical_setting"] = isset($request->clinical_setting)?$request->clinical_setting:'';
                 $input["Patient_ratio"] = isset($request->Patient_ratio)?$request->Patient_ratio:'';
                 $input["emr"] = isset($request->emr)?$request->emr:'';

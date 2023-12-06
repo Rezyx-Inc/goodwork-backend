@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,11 +39,7 @@ Route::middleware(['web'])->group(function () {
     Route::post('get-speciality',['uses'=>'SiteController@get_speciality','as'=>'get-speciality']);
     Route::post('get-dropdown',['uses'=>'SiteController@get_dorpdown','as'=>'get-dropdown']);
 
-    Route::get('clear-cache', function () {
-        Artisan::call('cache:clear');
-        Artisan::call('view:clear');
-        return "Cache,View is cleared";
-    });
+    Route::get('clear-cache','SiteController@clear_cache');
 
     Route::middleware(['user_not_logged_in'])->group(function () {
         /* Registration and authentication routes */

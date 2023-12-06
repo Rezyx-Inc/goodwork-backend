@@ -13,6 +13,7 @@ class JobSaved extends Model
         'created_at',
         'is_delete',
         'is_save'
+        
     ];
     public $timestamps = false;
 

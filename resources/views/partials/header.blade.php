@@ -28,7 +28,9 @@
                             <span class="navbar-text">
                                 <div class="ss-log-div-sec">
                                     <ul>
-                                        @if(!auth()->guard('frontend')->check())
+
+                                    @if (request()->routeIs('/'))
+                                         @if(!auth()->guard('frontend')->check())
                                         <li>
                                             <a href="{{route('login')}}">Login</a>
                                         </li>
@@ -42,6 +44,42 @@
                                             <a href="{{route('dashboard')}}">Dashboard</a>
                                         </li>
                                         @endif
+                                    @elseif (request()->routeIs('for-recruiters'))
+                                        @if(!auth()->guard('frontend')->check())
+                                        <li>
+                                            <a href="{{route('recruiter.login')}}">Login</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('recruiter-signup')}}">Join Goodwork</a>
+                                        </li>
+
+                                        @else
+                                        <li></li>
+                                        <li>
+                                            <a href="{{route('dashboard')}}">Dashboard</a>
+                                        </li>
+                                        @endif
+
+                                    @elseif (request()->routeIs('for-employers'))
+                                     @if(!auth()->guard('frontend')->check())
+                                        <li>
+                                            <a href="{{route('employer.login')}}">Login</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('employer-signup')}}">Join Goodwork</a>
+                                        </li>
+
+                                        @else
+                                        <li></li>
+                                        <li>
+                                            <a href="{{route('dashboard')}}">Dashboard</a>
+                                        </li>
+                                        @endif
+
+                                    @endif
+
+
+
                                     </ul>
                                 </div>
                             </span>

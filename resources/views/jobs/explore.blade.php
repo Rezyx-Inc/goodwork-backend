@@ -26,7 +26,7 @@
                 <label for="cars">Profession</label>
                 <select name="profession" onchange="get_speciality(this, false)">
                     <option value="">Select</option>
-                    @foreach($professions as $k=>$v)
+                    @foreach($professions as $v)
                     <option value="{{$v->title}}" data-id="{{$v->id}}" {{ ($profession == $v->title) ? 'selected': ''}}>{{$v->title}}</option>
                     @endforeach
               </select>
@@ -165,13 +165,18 @@
                 @forelse($jobs as $j)
                 <div class="ss-job-prfle-sec">
                     <p>{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
-                    <h4><a href="{{route('job-details',['id'=>$j->id])}}">{{$j->job_name}}</a></h4>
-                    <h6>{{$j->facility->name ?? 'NA'}}</h6>
+                   
+                    
+                    <h4>{{$j->facility->name ?? 'NA'}}</h4>
+                     <!-- job details not yet implemented -->
+                    <!-- <h4><a href="{{route('job-details',['id'=>$j->id])}}">{{$j->job_name}}</a></h4> -->
+                    <h6>{{$j->job_name}}</h6>
                     <ul>
                     <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
                     <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> {{$j->preferred_assignment_duration}} wks</a></li>
                     <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> {{$j->weekly_pay}}/wk</a></li>
                     </ul>
+                    <!-- should be dynamic  -->
                     <h5>Recently Added</h5>
                     <a href="javascript:void(0)" data-id="{{$j->id}}" onclick="save_jobs(this)" class="ss-jb-prfl-save-ico">
                         @if($jobSaved->check_if_saved($j->id))
@@ -266,14 +271,9 @@
                     <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" /></a>
                 </div>
               </div> --}}
-
             </div>
-
-
         </div>
-
       </div>
-
     </div>
 
 

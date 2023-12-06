@@ -27,9 +27,7 @@ use App\Http\Controllers\Api\UserProfile\UserProfileController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get('/user', 'AuthApiController@getUser');
 
 // no ProfileController controller created
 //Route::post('country/{name}/states', 'ProfileController@stateJson')->name('state-json');
@@ -1080,8 +1078,8 @@ Route::post('role-and-interest/page-2', 'RoleController@rolePage2');
  * @bodyparam1: user_id (required) - ID of the user to fetch job list.
  * @bodyparam2: profession - Filter jobs by profession.
  * @bodyparam3: type - Filter jobs by type.
- * @bodyparam4: preferred_specialty - Filter jobs by preferred specialty.
- * @bodyparam5: preferred_experience - Filter jobs by preferred experience.
+ * -@bodyparam4: preferred_specialty - Filter jobs by preferred specialty.
+ * -@bodyparam5: preferred_experience - Filter jobs by preferred experience.
  * @bodyparam6: search_location - Search for jobs by location.
  * @bodyparam7: job_type - Filter jobs by job type.
  * @bodyparam8: end_date - Filter jobs by end date.
@@ -1327,6 +1325,8 @@ Route::post('get-nurse-profile', 'UserProfileController@NurseProfileInfo');
 
 // Get nurse information // edited 
 Route::post('register', 'WorkerController@register');
+
+
 Route::post('set-banking-details', 'WorkerController@setBankingDetails');
 Route::post('get-banking-details', 'WorkerController@getBankingDetails');
 Route::post('worker-profile-HomeScreen', 'WorkerController@workerProfileHomeScreen');

@@ -159,5 +159,7 @@ class AuthApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
 
     }
-    
+    public function getUser(Request $request) {
+        return $request->user();
+    }
 }

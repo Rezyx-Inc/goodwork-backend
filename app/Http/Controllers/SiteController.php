@@ -12,6 +12,9 @@ use App\Traits\HelperTrait;
 use Carbon\Carbon;
 use DB;
 use Validator;
+use App\Models\Job; 
+use Illuminate\Support\Facades\Artisan;
+
 // ************ Requests ************
 use App\Http\Requests\{LoginRequest, SignupRequest, ForgotRequest, ResetRequest, OTPRequest, ContactUsRequest};
 // ************ models ************
@@ -75,7 +78,84 @@ class SiteController extends Controller {
     /** explore-jobs page */
 
     public function explore_jobs(Request $request){
-        return view('site.explore_jobs');
+      
+        try {
+
+           // commenting this for now we need to return only jobs data
+
+        $data = [];
+        
+        
+        $data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
+        $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
+        $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
+        $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
+        $data['us_states'] = States::where('country_id', $usa->id)->get();
+        // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+
+        $data['profession'] = isset($request->profession) ? $request->profession : '';
+        $data['speciality'] = isset($request->speciality) ? $request->speciality : '';
+        $data['experience'] = isset($request->experience) ? $request->experience : '';
+        $data['city'] = isset($request->city) ? $request->city : '';
+        $data['state'] = isset($request->state) ? $request->state : '';
+        $data['job_type'] = isset($request->job_type) ? explode('-', $request->job_type) : [];
+        $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
+        $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
+        $data['shifts'] = isset($request->shifts) ? explode('-',$request->shifts) : [];
+        $data['auto_offers'] = isset($request->auto_offers) ? $request->auto_offers : 0;
+
+        $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
+        $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
+        $data['hourly_pay_from'] = isset($request->hourly_pay_from) ? $request->hourly_pay_from : 2;
+        $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
+        $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
+        $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
+        $data['assignment_from'] = isset($request->assignment_from) ? $request->assignment_from : 10;
+        $data['assignment_to'] = isset($request->assignment_to) ? $request->assignment_to : 150;
+
+        
+        
+
+        // $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
+
+        $whereCond = [
+            'facilities.active' => true,
+            'jobs.is_open' => "1",
+            'jobs.is_hidden' => "0",
+            'jobs.is_closed' => "0",
+            // 'job_saved.is_delete'=>'0',
+            // 'job_saved.nurse_id'=>$user->id,
+        ];
+
+            $resl = Job::select('jobs.*','name')
+            ->leftJoin('facilities', function ($join) {
+                $join->on('facilities.id', '=', 'jobs.facility_id');
+            });
+            $data['jobs'] = $resl->get();
+            
+            
+            // $data['jobSaved'] = [""];
+            // $data['prefered_shifts '] = [""];
+            // $data['terms'] = [""];
+            // $data['us_states'] = [""];
+            // $data['speciality'] = [""];
+            // $data['professions'] = ['title'=>'','id'=>''];
+            // $data['profession'] = "";
+
+        //$data['jobs'] = $result;
+
+
+        return view('site.explore_jobs',$data);
+        //return response()->json(['message' =>  $data['jobs']]);
+    } catch (\Exception $e) {
+        // Handle other exceptions
+       
+
+        // Display a generic error message or redirect with an error status
+         return redirect()->route('jobs.explore')->with('error', 'An unexpected error occurred. Please try again later.');
+        //return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+    }
+    
     }
 
     /** contact us page */
@@ -370,5 +450,10 @@ class SiteController extends Controller {
                 return $response;
             }
         }
+    }
+    public function clear_cache() {
+        Artisan::call('cache:clear');
+        Artisan::call('view:clear');
+        return "Cache,View is cleared";
     }
 }

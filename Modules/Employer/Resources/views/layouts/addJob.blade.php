@@ -55,7 +55,7 @@
                                         <li>
                                         </li>
                                         <li>
-                                            <a href="{{route('add-job')}}">Add Job</a>
+                                            <a href="{{route('employer-logout')}}">Add Job</a>
                                         </li>
                                         <li>
                                             <a href="{{route('employer-logout')}}">Logout</a>
@@ -75,27 +75,57 @@
 
     
     <section class="ss-login-work-sec ss-admin-login-sed">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="ss-login-work-logo-div">
-            <div class="ss-login-logo-dv">
-              <img src="{{URL::asset('landing/img/admin-login-logo.png')}}" />
-            </div>
-            <p>Building a better way for healthcare workers & employers to find each other</p>
-            <a href="{{route('/')}}"><img src="{{URL::asset('landing/img/logo.png')}}" /></a>
-          </div>
-        </div>
-       <div class="col-lg-6">
+    <div class="col-lg-12">
           <!--------login form------->
           <div class="ss-login-work-dv">
-            <h4>
-                <span>Employer Dashboard</span>  
-            </h4>
+            <h4><span>Save </span> New Job</h4>
+          
+            <form class="" method="post" action="{{route('addJob.store')}}" id="addJob-form-submit">
+            @csrf
+                <div class="ss-form-group">
+                    <input type="text" name="job_type" placeholder="Job Type">
+                    <span class="help-block"></span>
+                </div>
+
+                <div class="ss-form-group">
+                    <input type="text" name="job_name" placeholder="Job Name" />
+                    <span class="help-block"></span>
+                </div>
+                <div class="ss-form-group">
+                    <input type="text" name="job_city" placeholder="City">
+                    <span class="help-block"></span>
+                </div>
+                <div class="ss-form-group">
+                    <input type="text"  name="job_state" placeholder="State" >
+                    <span class="help-block"></span>
+                </div>
+                <div class="ss-form-group">
+                    <input type="text"  name="preferred_assignment_duration" placeholder="Weeks duration" >
+                    <span class="help-block"></span>
+                </div>
+                <div class="ss-form-group">
+                    <input type="text"  name="weekly_pay" placeholder="Weekly pay" >
+                    <span class="help-block"></span>
+                </div>
+                <div class="ss-form-group">
+                    <input type="text"  name="preferred_specialty" placeholder="Speciality" >
+                    <span class="help-block"></span>
+                </div>
+                
+                <div>
+                    <button type="submit">Confirm</button>
+                </div>
+              
+                
+            </form>
+
+
+            <!-- <div class="ss-skipfor-div">
+              <a href="#">Skip for now >></a>
+            </div> -->
           </div>
+
         </div>
-      </div>
-    </div>
 </section>
   
 

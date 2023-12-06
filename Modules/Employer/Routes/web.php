@@ -26,7 +26,9 @@ Route::prefix('employer')->group(function() {
 
     Route::middleware(['employer_logged_in'])->group(function () {
         Route::get('employer-logout', ['uses' => 'EmployerAuthController@logout', 'as' => 'employer-logout']);
-        Route::get('employer-dashboard', ['uses' => 'EmployerAuthController@index', 'as' => 'employer-dashboard']);
+        Route::get('employer-dashboard', ['uses' => 'EmployerController@index', 'as' => 'employer-dashboard']);
+        Route::get('add-job', ['uses' => 'EmployerController@addJob', 'as' => 'add-job']);
+        Route::post('add-job', ['uses' => 'EmployerController@addJobStore', 'as' => 'addJob.store']);
     }
     
     );

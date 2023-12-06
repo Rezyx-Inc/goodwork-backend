@@ -5,6 +5,11 @@ namespace Modules\Employer\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Job;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class EmployerController extends Controller
 {
@@ -14,7 +19,65 @@ class EmployerController extends Controller
      */
     public function index()
     {
-        return view('employer::index');
+        return view('employer::layouts.main');
+    }
+
+    public function addJob()
+    {
+        return view('employer::layouts.addJob');
+    }
+
+
+    public function addJobStore(Request $request)
+    {
+        try {
+
+            $facility_id = Auth::guard('employer')->user()->facility_id;
+            // Validate the form data
+            $validatedData = $request->validate([
+                'job_type' => 'required|string',
+                'job_name' => 'required|string',
+                'job_city' => 'required|string',
+                'job_state' => 'required|string',
+                'preferred_assignment_duration' => 'required|string',
+                'weekly_pay' => 'required|string',
+                'preferred_specialty' => 'required|string',
+            ]);
+
+            // Create a new Job instance with the validated data
+            $job = new Job();
+            $job->job_type = $validatedData['job_type'];
+            $job->job_name = $validatedData['job_name'];
+            $job->job_city = $validatedData['job_city'];
+            $job->job_state = $validatedData['job_state'];
+            $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
+            $job->weekly_pay = $validatedData['weekly_pay'];
+            $job->preferred_specialty = $validatedData['preferred_specialty'];
+            // facility id should be null for now since we dont add a facility with the employer signup
+            // $job->facility_id = $facility_id;
+
+            // Save the job data to the database
+            $job->save();
+
+            // Redirect back to the add job form with a success message
+            return redirect()->route('add-job')->with('success', 'Job added successfully!');
+
+            // return response()->json(['success' => true, 'message' => 'Job added successfully!']);
+        } catch (QueryException $e) {
+            // Log the error
+            Log::error('Error saving job: ' . $e->getMessage());
+
+            // Handle the error gracefully - display a generic error message or redirect with an error status
+             return redirect()->route('add-job')->with('error', 'Failed to add job. Please try again later.');
+              // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            Log::error('Exception: ' . $e->getMessage());
+
+            // Display a generic error message or redirect with an error status
+             return redirect()->route('add-job')->with('error', 'An unexpected error occurred. Please try again later.');
+           // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+        }
     }
 
     /**

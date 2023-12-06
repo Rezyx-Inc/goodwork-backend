@@ -31,10 +31,7 @@ class EmployerAuthController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
-    {
-        return view('employer::layouts.main');
-    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -116,9 +113,13 @@ class EmployerAuthController extends Controller
                     'mobile' => $request->mobile,
                     'email' => $request->email,
                     'user_name' => $request->email,
+                    // we should add facility id
+                    'facility_id'=>'1',
                     'active' => '1',
                     'role' => 'EMPLOYER',
                 ]);
+
+                // we should create a facility for this employer we need to retrieve data from the form for that
 
                  // sending mail infromation 
                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
