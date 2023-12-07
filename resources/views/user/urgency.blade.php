@@ -2,7 +2,7 @@
 @section('mytitle', 'My Profile')
 
 @section('form')
-<form action="{{route('my-profile')}}" class="redirect-after-submit">
+<form action="{{route('my-profile.store')}}" class="redirect-after-submit">
     <div class="ss-persnl-frm-hed">
       <p><span><img src="{{URL::asset('frontend/img/my-per--con-user.png')}}" /></span>Professional Information</p>
         <div class="progress">

@@ -796,7 +796,7 @@
       </div>
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form">
-            <form method="post" action="{{route('my-profile')}}" id="binary_modal_form" class="modal-form">
+            <form method="post" action="{{route('my-profile.store')}}" id="binary_modal_form" class="modal-form">
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4></h4>
                 <ul class="ss-jb-dtlpop-chck">
@@ -835,7 +835,7 @@
       </div>
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form">
-            <form method="post" action="{{route('my-profile')}}" id="input_modal_form" class="modal-form">
+            <form method="post" action="{{route('my-profile.store')}}" id="input_modal_form" class="modal-form">
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4></h4>
                 <div class="ss-form-group">
@@ -889,7 +889,7 @@
         </div>
         <div class="modal-body">
             <div class="ss-job-dtl-pop-form">
-                <form method="post"  action="{{route('my-profile')}}" id="dropdown_modal_form" class="modal-form">
+                <form method="post"  action="{{route('my-profile.store')}}" id="dropdown_modal_form" class="modal-form">
                     <h4></h4>
                     <div class="ss-form-group">
                         <select name=""></select>
@@ -919,7 +919,7 @@
       </div>
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
-            <form method="post" action="{{route('references')}}" id="ref-modal-form" enctype="multipart/form-data">
+            <form method="post" action="{{route('references.store')}}" id="ref-modal-form" enctype="multipart/form-data">
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4>Who are your References?</h4>
                 <div class="ss-form-group">

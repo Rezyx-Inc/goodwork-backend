@@ -22,7 +22,7 @@
             <h1>{{ ((isset($admin_model->first_name) && $admin_model->first_name != null) ? ucfirst(strtolower($admin_model->first_name)) : "Not Given") . ' ' . ((isset($admin_model->last_name) && $admin_model->last_name != null) ? ucfirst(strtolower($admin_model->last_name)) : "") }}</h1>
             <span class="email"> {{ $admin_model->email }} </span>
             <span class="locked"> Locked </span>
-            <form id="lock-form" class="login-form" action="{{ Route('admin-lockscreen') }}" method="POST">
+            <form id="lock-form" class="login-form" action="{{ Route('admin-lockscreen.store') }}" method="POST">
                 @csrf
                 <div class="input-group input-medium">
                     <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">

@@ -39,7 +39,7 @@
             <h4>Verification</h4>
             <p>We sent a verification code to<br>
             your registered email address and mobile number</p>
-            <form method="post" action="{{route('otp')}}" id="otp-form" class="">
+            <form method="post" action="{{route('otp.store')}}" id="otp-form" class="">
                 <ul class="ss-otp-v-ul">
                     <li><input type="text" name="otp1" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1></li>
                     <li><input type="text" name="otp2" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1></li>
@@ -65,7 +65,7 @@
     <h4>Verification</h4>
     <p>We sent a verification code to<br>
     (419) 405-7399 </p>
-    <form method="post" action="{{route('otp')}}" id="otp-form" class="">
+    <form method="post" action="{{route('otp.store')}}" id="otp-form" class="">
         <ul class="ss-otp-v-ul">
             <li><input type="text" name="otp1" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1></li>
             <li><input type="text" name="otp2" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1></li>

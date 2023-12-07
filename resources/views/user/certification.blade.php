@@ -2,7 +2,7 @@
 @section('mytitle', 'My Profile')
 
 @section('form')
-<form method="post" action="{{route('certification')}}" class="no-redirect-form">
+<form method="post" action="{{route('certification.store')}}" class="no-redirect-form">
     <div class="ss-persnl-frm-hed">
         <p><span><img src="{{URL::asset('frontend/img/my-per--con-key.png')}}" /></span>Certifications</p>
         <div class="progress">

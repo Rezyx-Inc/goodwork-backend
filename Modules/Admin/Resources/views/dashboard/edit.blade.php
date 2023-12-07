@@ -177,7 +177,7 @@
 
                         <div class="x_content">
                             <br />
-                            <form method="POST" action="{{route('admin-profile')}}" data-parsley-validate class="form-horizontal form-label-left" id="update-profile-form">
+                            <form method="POST" action="{{route('admin-profile.store')}}" data-parsley-validate class="form-horizontal form-label-left" id="update-profile-form">
 
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align"> First Name

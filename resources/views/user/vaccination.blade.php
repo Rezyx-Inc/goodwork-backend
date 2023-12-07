@@ -2,7 +2,7 @@
 @section('mytitle', 'My Profile')
 
 @section('form')
-<form method="post" action="{{route('vaccination')}}" class="no-redirect-form">
+<form method="post" action="{{route('vaccination.store')}}" class="no-redirect-form">
     <div class="ss-persnl-frm-hed">
       <p><span><img src="{{URL::asset('frontend/img/my-per--con-vaccine.png')}}" /></span>Vaccinations & Immunizations</p>
         <div class="progress">

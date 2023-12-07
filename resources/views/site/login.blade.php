@@ -22,7 +22,7 @@
                 {{-- <span>Admin</span> --}}
                 Login
             </h4>
-            <form method="post" action="{{route('login')}}" id="login-form" class="">
+            <form method="post" action="{{route('login.store')}}" id="login-form" class="">
                 <div class="ss-form-group">
                     <input type="text" name="id" placeholder="Enter phone number or email id">
                     <span class="help-block"></span>

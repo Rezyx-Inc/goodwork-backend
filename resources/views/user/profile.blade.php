@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="ss-account-form-lft-1">
-                        <form method="post" action="{{route('profile-setting')}}" id="edit-profile-form">
+                        <form method="post" action="{{route('profile-setting.store')}}" id="edit-profile-form">
                             <input type="file" name="profile_picture" id="imgInp" accept=".jpg,.jpeg,.png" hidden>
                             <div class="ss-acount-prof">
                                 <img src="{{URL::asset('images/nurses/profile/'.$model->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/>

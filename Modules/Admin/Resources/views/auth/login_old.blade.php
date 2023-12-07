@@ -2,7 +2,7 @@
 @section('content')
 <div class="animate form login_form">
     <section class="login_content">
-      <form method="post" action="{{route('admin-login')}}" id="login-form">
+      <form method="post" action="{{route('admin-login.store')}}" id="login-form">
         <h1>{{env('PROJECT_NAME', 'Goodwork')}}</h1>
         <div class="login-form">
           <input type="text" class="form-control" name="email" placeholder="Email" required="true" />

@@ -12,7 +12,7 @@ use App\Traits\HelperTrait;
 use Carbon\Carbon;
 use DB;
 use Validator;
-use App\Models\Job; 
+use App\Models\Job;
 use Illuminate\Support\Facades\Artisan;
 
 // ************ Requests ************
@@ -78,14 +78,14 @@ class SiteController extends Controller {
     /** explore-jobs page */
 
     public function explore_jobs(Request $request){
-      
+
         try {
 
            // commenting this for now we need to return only jobs data
 
         $data = [];
-        
-        
+
+
         $data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
         $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
         $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
@@ -113,8 +113,8 @@ class SiteController extends Controller {
         $data['assignment_from'] = isset($request->assignment_from) ? $request->assignment_from : 10;
         $data['assignment_to'] = isset($request->assignment_to) ? $request->assignment_to : 150;
 
-        
-        
+
+
 
         // $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
 
@@ -132,8 +132,8 @@ class SiteController extends Controller {
                 $join->on('facilities.id', '=', 'jobs.facility_id');
             });
             $data['jobs'] = $resl->get();
-            
-            
+
+
             // $data['jobSaved'] = [""];
             // $data['prefered_shifts '] = [""];
             // $data['terms'] = [""];
@@ -149,13 +149,13 @@ class SiteController extends Controller {
         //return response()->json(['message' =>  $data['jobs']]);
     } catch (\Exception $e) {
         // Handle other exceptions
-       
+
 
         // Display a generic error message or redirect with an error status
          return redirect()->route('jobs.explore')->with('error', 'An unexpected error occurred. Please try again later.');
         //return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
     }
-    
+
     }
 
     /** contact us page */
@@ -243,7 +243,7 @@ class SiteController extends Controller {
                 // $model->assignRole('NURSE');
 
 
-                 // sending mail infromation 
+                 // sending mail infromation
                   $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
                   Mail::to($model->email)->send(new register($email_data));
 
@@ -251,8 +251,8 @@ class SiteController extends Controller {
                 $otp = $this->rand_number(4);
                 $model->update(['otp'=>$otp,'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-               
-                // sending email verification otp after registring 
+
+                // sending email verification otp after registring
                 $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
                 Mail::to($model->email)->send(new login($email_data));
 
@@ -268,7 +268,7 @@ class SiteController extends Controller {
 
     /** Login form submit */
     public function post_login(LoginRequest $request) {
-        
+
         if ($request->ajax()) {
             $data_msg = [];
             $input = $request->only('id');
@@ -278,7 +278,7 @@ class SiteController extends Controller {
             $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
 
-           // sending mail verification 
+           // sending mail verification
            $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
            Mail::to($model->email)->send(new login($email_data));
 
@@ -377,6 +377,12 @@ class SiteController extends Controller {
         }
     }
 
+
+  
+
+
+
+
     public function get_city(Request $request){
 
         if ($request->ajax()) {
@@ -419,7 +425,7 @@ class SiteController extends Controller {
     }
 
     public function verify() {
-       
+
         if (session()->has('otp_user_id')) {
             $data = [];
             $user = User::findOrFail(session()->get('otp_user_id'));

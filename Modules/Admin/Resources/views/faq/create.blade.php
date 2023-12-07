@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal form-row-seperated" action="{{ Route('admin-createfaq') }}" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal form-row-seperated" action="{{ Route('admin-createfaq.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-body">
                     <div class="form-group {{ $errors->has('question') ? ' has-error' : '' }}">

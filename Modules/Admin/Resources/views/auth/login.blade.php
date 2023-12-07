@@ -32,7 +32,7 @@
               <p class="fs-32 fw-500">Log in as
                 <span class="text_detail_color">Admin</span>
               </p>
-              <form method="post" action="{{route('admin-login')}}" id="login-form">
+              <form method="post" action="{{route('admin-login.store')}}" id="login-form">
                 @csrf
                 <div class="col-12 mb-4">
                   <!-- <input type="text" class="form-control" id="" placeholder="Enter phone number or email id"> -->

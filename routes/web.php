@@ -44,11 +44,11 @@ Route::middleware(['web'])->group(function () {
     Route::middleware(['user_not_logged_in'])->group(function () {
         /* Registration and authentication routes */
         Route::get('signup', ['uses' => 'SiteController@signup', 'as' => 'signup']);
-        Route::post('signup', ['uses' => 'SiteController@post_signup', 'as' => 'signup']);
+        Route::post('signup', ['uses' => 'SiteController@post_signup', 'as' => 'signup.store']);
         Route::get('login', ['uses' => 'SiteController@login', 'as' => 'login']);
-        Route::post('login', ['uses' => 'SiteController@post_login', 'as' => 'login']);
+        Route::post('login', ['uses' => 'SiteController@post_login', 'as' => 'login.store']);
         Route::get('otp', ['uses' => 'SiteController@otp', 'as' => 'otp']);
-        Route::post('otp', ['uses' => 'SiteController@submit_otp', 'as' => 'otp']);
+        Route::post('otp', ['uses' => 'SiteController@submit_otp', 'as' => 'otp.store']);
         Route::get('resend-otp', ['uses' => 'SiteController@resend_otp', 'as' => 'resend-otp']);
         Route::get('verify', ['uses' => 'SiteController@verify', 'as' => 'verify']);
     });
@@ -57,7 +57,7 @@ Route::middleware(['web'])->group(function () {
             /** Dashboard routes */
         Route::get('dashboard', ['uses' => 'DashboardController@dashboard', 'as' => 'dashboard']);
         Route::get('profile-setting', ['uses' => 'DashboardController@setting', 'as' => 'profile-setting']);
-        Route::post('profile-setting', ['uses' => 'DashboardController@post_edit_profile', 'as' => 'profile-setting']);
+        Route::post('profile-setting', ['uses' => 'DashboardController@post_edit_profile', 'as' => 'profile-setting.store']);
 
         Route::post('update-password', ['uses' => 'DashboardController@post_change_password', 'as' => 'update-password']);
         // Route::get('my-profile', ['uses' => 'DashboardController@my_profile', 'as' => 'my-profile']);
@@ -66,15 +66,15 @@ Route::middleware(['web'])->group(function () {
         // Route::get('explore', ['uses' => 'DashboardController@explore', 'as' => 'explore']);
 
         Route::get('my-profile', ['uses' => 'UserController@edit', 'as' => 'my-profile']);
-            Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile']);
+            Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile.store']);
             Route::get('vaccination', ['uses' => 'UserController@edit', 'as' => 'vaccination']);
-            Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination']);
+            Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination.store']);
             Route::get('certification', ['uses' => 'UserController@edit', 'as' => 'certification']);
-            Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification']);
+            Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification.store']);
             Route::get('references', ['uses' => 'UserController@edit', 'as' => 'references']);
-            Route::post('references', ['uses' => 'UserController@post_references', 'as' => 'references']);
+            Route::post('references', ['uses' => 'UserController@post_references', 'as' => 'references.store']);
             Route::get('info-required', ['uses' => 'UserController@edit', 'as' => 'info-required']);
-            Route::post('info-required', ['uses' => 'UserController@skills_submit', 'as' => 'info-required']);
+            Route::post('info-required', ['uses' => 'UserController@skills_submit', 'as' => 'info-required.store']);
             Route::get('urgency', ['uses' => 'UserController@edit', 'as' => 'urgency']);
             Route::get('float-requirement', ['uses' => 'UserController@edit', 'as' => 'float-requirement']);
             Route::get('patient-ratio', ['uses' => 'UserController@edit', 'as' => 'patient-ratio']);

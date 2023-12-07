@@ -2,7 +2,7 @@
 @section('mytitle', 'My Profile')
 
 @section('form')
-<form method="post" action="{{route('references')}}" class="no-redirect-form">
+<form method="post" action="{{route('references.store')}}" class="no-redirect-form">
     <div class="ss-persnl-frm-hed">
         <p><span><img src="{{URL::asset('frontend/img/my-per--con-refren.png')}}" /></span>References</p>
         <div class="progress">

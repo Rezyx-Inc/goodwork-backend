@@ -2,7 +2,7 @@
 @section('mytitle', 'My Profile')
 
 @section('form')
-<form method="post" action="{{route('my-profile')}}" id="basic-info-form">
+<form method="post" action="{{route('my-profile.store')}}" id="basic-info-form">
     <div class="ss-persnl-frm-hed">
       <p><span><img src="{{URL::asset('frontend/img/my-per--con-user.png')}}" /></span>Professional Information</p>
       <div class="progress">
