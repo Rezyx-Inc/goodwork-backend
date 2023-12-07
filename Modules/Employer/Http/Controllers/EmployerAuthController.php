@@ -20,23 +20,23 @@ use App\Mail\register;
 class EmployerAuthController extends Controller
 {
 
-    
+
 
     public function __construct()
     {
-        
+
     }
 
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    
+
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
-     */    
+     */
     public function get_login()
     {
         return view('employer::auth.login');
@@ -53,7 +53,7 @@ class EmployerAuthController extends Controller
                 $data_msg = [];
                 $input = $request->only('id');
                 $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'EMPLOYER')->where("active","1")->first();
-                
+
                 session()->put('otp_user_id', $model->id);
                 session()->save();
                 // Check if the value has been stored in the session
@@ -62,7 +62,7 @@ class EmployerAuthController extends Controller
                 $otp = $this->rand_number(4);
                 $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-                 // sending email verification otp after registring 
+                 // sending email verification otp after registring
                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
                  Mail::to($model->email)->send(new login($email_data));
 
@@ -90,11 +90,19 @@ class EmployerAuthController extends Controller
 
     public function post_signup(Request $request) {
         if ($request->ajax()) {
+            // $validator = Validator::make($request->all(), [
+            //     'first_name' => 'required|max:255',
+            //     'last_name' => 'required',
+            //     'mobile'=> 'nullable|max:255',
+            //     'email' => 'email|max:255',
+            // ]);
+
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required|max:255',
-                'last_name' => 'required',
-                'mobile'=> 'nullable|max:255',
-                'email' => 'email|max:255',
+                'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+                'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+                'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                //'email' => 'required|email|max:255',
+                'email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/','max:255'],
             ]);
 
             $validator->after(function($validator) use ($request){
@@ -121,7 +129,7 @@ class EmployerAuthController extends Controller
 
                 // we should create a facility for this employer we need to retrieve data from the form for that
 
-                 // sending mail infromation 
+                 // sending mail infromation
                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
                  Mail::to($model->email)->send(new register($email_data));
 
@@ -129,7 +137,7 @@ class EmployerAuthController extends Controller
                 $otp = $this->rand_number(4);
                 $model->update(['otp'=>$otp,'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
 
-                 // sending email verification otp after registring 
+                 // sending email verification otp after registring
                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
                  Mail::to($model->email)->send(new login($email_data));
 
@@ -175,7 +183,7 @@ class EmployerAuthController extends Controller
         $guard = "employer";
         Auth::guard($guard)->logout();
         $request->session()->invalidate();
-        // $request->session()->regenerateToken(); 
+        // $request->session()->regenerateToken();
         return redirect()->route('/')->with('success', 'You are successfully logged out.');
     }
 

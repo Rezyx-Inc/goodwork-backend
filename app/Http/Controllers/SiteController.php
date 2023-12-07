@@ -152,8 +152,8 @@ class SiteController extends Controller {
 
 
         // Display a generic error message or redirect with an error status
-         return redirect()->route('jobs.explore')->with('error', 'An unexpected error occurred. Please try again later.');
-        //return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+         // return redirect()->route('jobs.explore')->with('error', 'An unexpected error occurred. Please try again later.');
+        return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
     }
 
     }
@@ -205,12 +205,21 @@ class SiteController extends Controller {
     /** Signup form submit */
     public function post_signup(Request $request) {
         if ($request->ajax()) {
+            // $validator = Validator::make($request->all(), [
+            //     'first_name' => 'required|max:255',
+            //     'last_name' => 'required',
+            //     'mobile'=> 'nullable|max:255',
+            //     'email' => 'email|max:255',
+            // ]);
+
             $validator = Validator::make($request->all(), [
-                'first_name' => 'required|max:255',
-                'last_name' => 'required',
-                'mobile'=> 'nullable|max:255',
-                'email' => 'email|max:255',
+                'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+                'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+                'mobile' => ['required', 'regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                //'email' => 'required|email|max:255',
+                'email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/','max:255'],
             ]);
+
 
             $validator->after(function($validator) use ($request){
                 $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
@@ -344,7 +353,7 @@ class SiteController extends Controller {
                     Auth::guard('frontend')->login($user, true);
                     session()->forget('otp_user_id');
 
-                    $response['link'] = route('dashboard');
+                    $response['link'] = route('explore');
                     if (session()->has('intended_url')) {
                         $response['link'] = session()->get('intended_url');
                         session()->forget('intended_url');
@@ -378,7 +387,7 @@ class SiteController extends Controller {
     }
 
 
-  
+
 
 
 
