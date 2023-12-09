@@ -21,28 +21,35 @@
             <h4><span>Worker </span> Sign Up</h4>
             <form class="" method="post" action="{{route('signup.store')}}" id="signup-form-submit">
                 <div class="ss-form-group">
-                    <input type="text" name="first_name" placeholder="First Name" required><br/>
-                    <span class="help-block"></span>
-                </div>
+    <input type="text" name="first_name" placeholder="First Name" required><br/>
+    <span class="help-block-first-name"></span> <!-- Unique class for first name error -->
+</div>
 
-                <div class="ss-form-group">
-                    <input type="text" name="last_name" placeholder="Last Name" required><br/>
-                    <span class="help-block"></span>
-                </div>
-                <div class="ss-form-group">
-                    <input type="email" name="email" placeholder="Email" required><br/>
-                    <span class="help-block"></span>
-                </div>
-                <div class="ss-form-group">
-                    <input type="tel" id="contact_number" name="mobile" placeholder="Mobile" onchange=contactNumber(this) required><br/>
-                    <span class="help-block"></span>
-                </div>
+<div class="ss-form-group">
+    <input type="text" name="last_name" placeholder="Last Name" required><br/>
+    <span class="help-block-last-name"></span> <!-- Unique class for last name error -->
+</div>
+
+<div class="ss-form-group">
+    <input type="email" name="email" placeholder="Email" required><br/>
+    <span class="help-block-email"></span> <!-- Unique class for email error -->
+</div>
+
+<div class="ss-form-group">
+    <input type="tel" id="contact_number" name="mobile" placeholder="Mobile" onchange="contactNumber(this)" required><br/>
+    <span class="help-block-mobile"></span> <!-- Unique class for mobile error -->
+</div>
+
                 <div>
-                    <button type="submit">Sign Up</button>
+                    <button id="submitBtn" type="submit">
+                    <span id="loading" class="d-none" >
+                          <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                    </span>
+                    <span id="sign"> Sign Up  </span> </button>
                 </div>
                 <p>Already have an account? <a href="{{route('login')}}">Login</a></p>
             </form>
-
 
             <div class="ss-skipfor-div">
               <a href="#">Skip for now >></a>
@@ -58,30 +65,15 @@
 @section('js')
 <script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script>
 <script>
- $('#contact_number').mask('+1 (999) 999-9999');
-  $('#contact_number').on('input', function() {
-    var inputValue = $(this).val();
-    if(inputValue.includes('() -')){
-      var numericValue = inputValue.replace(/\D/g, '');
-      $(this).val(numericValue);
-    }
-  });
-</script>
-@stop
+    $('#contact_number').mask('+1 (999) 999-9999');
 
-@section('css')
-<style>
-    .ss-form-group input{
-        margin-bottom: 3px;
-    }
-</style>
-@stop
 
-@section('js')
-<script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script>
-<script>
+  $('#submitBtn').click(function(event) {
 
-  $('#signup-form-submit').submit(function(event) {
+
+    event.preventDefault();
+    var access = true;
+    $(this).find('input, button').prop('disabled', true);
     var regexPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
     var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -91,32 +83,55 @@
     var mobile = $('#contact_number').val();
 
     if (firstName.trim() === '') {
-        event.preventDefault();
-        $('.help-block').text('Please enter your first name');
-        $('.help-block').addClass('text-danger');
-        return false;
-    }
+    $('.help-block-first-name').text('Please enter your first name');
+    $('.help-block-first-name').addClass('text-danger');
+     access = false;
+}else{
+    $('.help-block-first-name').text('');
+}
 
-    if (lastName.trim() === '') {
-        event.preventDefault();
-        $('.help-block').text('Please enter your last name');
-        $('.help-block').addClass('text-danger');
-        return false;
-    }
+if (lastName.trim() === '') {
+    $('.help-block-last-name').text('Please enter your last name');
+    $('.help-block-last-name').addClass('text-danger');
+    access = false;
+}else{
+    $('.help-block-last-name').text('');
+}
 
-    if (!regexEmail.test(email)) {
-        event.preventDefault();
-        $('.help-block').text('Please enter a valid email address');
-        $('.help-block').addClass('text-danger');
-        return false;
-    }
+if (!regexEmail.test(email)) {
+    $('.help-block-email').text('Please enter a valid email address');
+    $('.help-block-email').addClass('text-danger');
+    access = false;
+}else{
+    $('.help-block-email').text('');
+}
 
-    if (!regexPhone.test(mobile)) {
-        event.preventDefault();
-        $('.help-block').text('Please enter a valid phone number in the format: +1 (xxx) xxx-xxxx');
-        $('.help-block').addClass('text-danger');
-        return false;
-    }
+if (!regexPhone.test(mobile)) {
+    $('.help-block-mobile').text('Please enter a valid phone number in the format: +1 (xxx) xxx-xxxx');
+    $('.help-block-mobile').addClass('text-danger');
+    access = false;
+}else{
+    $('.help-block-mobile').text('');
+}
+if(access){
+    $('#loading').removeClass('d-none');
+    $('#sign').addClass('d-none');
+    $('#signup-form-submit').submit();
+}
+
   });
 </script>
 @stop
+
+
+@section('css')
+<style>
+    .ss-form-group input{
+        margin-bottom: 3px;
+    }
+    #loading,#sign,#loadSpan{
+        color:#fff;
+    }
+</style>
+@stop
+

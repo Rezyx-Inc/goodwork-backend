@@ -48,12 +48,29 @@ class EmployerAuthController extends Controller
 
 
     public function post_login(Request $request) {
+        try{
         if ($request->ajax()) {
-            if ($request->ajax()) {
-                $data_msg = [];
-                $input = $request->only('id');
-                $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'EMPLOYER')->where("active","1")->first();
+            $validator = Validator::make($request->all(), [
+                'id' => 'email:rfc,dns',
+            ]);
+            if ($validator->fails()) {
+                $data = [];
+                // $data['msg'] = $e->getMessage();
+                $data['msg'] =$validator->errors()->first();
+                $data['success'] = false;
 
+                 return response()->json($data);
+            }
+            $data_msg = [];
+            $input = $request->only('id');
+               $model = User::where(function ($query) use ($input) {
+                $query->where('email', $input['id'])
+                    ->orWhere('mobile', $input['id']);
+            })
+            ->where('ROLE', 'EMPLOYER')
+            ->where('active', '1')
+            ->first();
+            if (isset($model)) {
                 session()->put('otp_user_id', $model->id);
                 session()->save();
                 // Check if the value has been stored in the session
@@ -71,8 +88,22 @@ class EmployerAuthController extends Controller
                 $data_msg['link'] = Route('employer.verify');
 
                 return response()->json($data_msg);
+            }else{
+                $data = [];
+                // $data['msg'] = $e->getMessage();
+                $data['msg'] ='Wrong login information.';
+                 $data['success'] = false;
+                 return response()->json($data);
             }
         }
+    }
+    catch(\Exception $e){
+        $data = [];
+       // $data['msg'] = $e->getMessage();
+       $data['msg'] ='We encountered an error. Please try again later.';
+        $data['success'] = false;
+        return response()->json($data);
+    }
     }
 
     public function verify() {
@@ -89,31 +120,27 @@ class EmployerAuthController extends Controller
     }
 
     public function post_signup(Request $request) {
+        try{
         if ($request->ajax()) {
-            // $validator = Validator::make($request->all(), [
-            //     'first_name' => 'required|max:255',
-            //     'last_name' => 'required',
-            //     'mobile'=> 'nullable|max:255',
-            //     'email' => 'email|max:255',
-            // ]);
-
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
-                //'email' => 'required|email|max:255',
-                'email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/','max:255'],
+                'email' => 'email:rfc,dns'
             ]);
-
-            $validator->after(function($validator) use ($request){
+            if ($validator->fails()) {
+                $data = [];
+                $data['msg'] =$validator->errors()->first();;
+                 $data['success'] = false;
+                 return response()->json($data);
+            }else{
                 $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
                 if (!empty($check)) {
-                    $validator->errors()->add('email', 'Already exist.');
+                    $data = [];
+                    $data['msg'] ='Already exist.';
+                    $data['success'] = false;
+                    return response()->json($data);
                 }
-            });
-            if ($validator->fails()) {
-                return new JsonResponse(['errors' => $validator->errors()], 422);
-            }else{
                 $response = [];
                 $model = User::create([
                     'first_name' => $request->first_name,
@@ -148,6 +175,13 @@ class EmployerAuthController extends Controller
                 return response()->json($response);
             }
         }
+    }catch(\Exception $e){
+        $data = [];
+       // $data['msg'] = $e->getMessage();
+       $data['msg'] ='We encountered an error. Please try again later.';
+        $data['success'] = false;
+        return response()->json($data);
+    }
     }
 
     public function submit_otp(Request $request)

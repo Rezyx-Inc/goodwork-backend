@@ -5,7 +5,7 @@
 </template>
 <style lang="scss" scoped>
 .spinner-border{
-  font-size: 16px;
+  font-size: 6000px;
   vertical-align: middle;
 }
 </style>

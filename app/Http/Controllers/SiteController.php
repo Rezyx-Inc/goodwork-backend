@@ -204,32 +204,33 @@ class SiteController extends Controller {
 
     /** Signup form submit */
     public function post_signup(Request $request) {
-        if ($request->ajax()) {
-            // $validator = Validator::make($request->all(), [
-            //     'first_name' => 'required|max:255',
-            //     'last_name' => 'required',
-            //     'mobile'=> 'nullable|max:255',
-            //     'email' => 'email|max:255',
-            // ]);
 
+        try{
+        if ($request->ajax()) {
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'mobile' => ['required', 'regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
                 //'email' => 'required|email|max:255',
-                'email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/','max:255'],
+                'email' => 'email:rfc,dns'
             ]);
 
-
-            $validator->after(function($validator) use ($request){
-                $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
-                if (!empty($check)) {
-                    $validator->errors()->add('email', 'Already exist.');
-                }
-            });
             if ($validator->fails()) {
-                return new JsonResponse(['errors' => $validator->errors()], 422);
+                $data = [];
+                $data['msg'] =$validator->errors()->first();;
+                 $data['success'] = false;
+                 return response()->json($data);
+
             }else{
+                    $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
+                    if (!empty($check)) {
+                        $data = [];
+                        $data['msg'] ='Already exist.';
+                        $data['success'] = false;
+                        return response()->json($data);
+                    }
+
+
                 $response = [];
                 $model = User::create([
                     'first_name' => $request->first_name,
@@ -273,15 +274,35 @@ class SiteController extends Controller {
                 return response()->json($response);
             }
         }
+    }catch(\Exception $e){
+        $data = [];
+       // $data['msg'] = $e->getMessage();
+       $data['msg'] ='We encountered an error. Please try again later.';
+        $data['success'] = false;
+        return response()->json($data);
+    }
     }
 
     /** Login form submit */
-    public function post_login(LoginRequest $request) {
-
+    public function post_login(Request $request) {
+        try{
+            // issue if the id is a phone numbe
         if ($request->ajax()) {
+            $validator = Validator::make($request->all(), [
+                'id' => 'email:rfc,dns',
+            ]);
+            if ($validator->fails()) {
+                $data = [];
+                // $data['msg'] = $e->getMessage();
+                $data['msg'] ='it must be a valid email address';
+                 $data['success'] = false;
+
+                 return response()->json($data);
+            }
             $data_msg = [];
             $input = $request->only('id');
             $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'NURSE')->where("active","1")->first();
+            if (isset($model)) {
             session()->put('otp_user_id', $model->id);
             $otp = $this->rand_number(4);
             $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
@@ -296,7 +317,21 @@ class SiteController extends Controller {
             $data_msg['link'] = Route('verify');
 
             return response()->json($data_msg);
+            }else{
+                $data = [];
+                // $data['msg'] = $e->getMessage();
+                $data['msg'] ='Wrong login information.';
+                 $data['success'] = false;
+                 return response()->json($data);
+            }
         }
+    }catch(\Exception $e){
+        $data = [];
+       // $data['msg'] = $e->getMessage();
+       $data['msg'] ='We encountered an error. Please try again later.';
+        $data['success'] = false;
+        return response()->json($data);
+    }
     }
 
     /** logout */
@@ -353,7 +388,7 @@ class SiteController extends Controller {
                     Auth::guard('frontend')->login($user, true);
                     session()->forget('otp_user_id');
 
-                    $response['link'] = route('explore');
+                    $response['link'] = route('dashboard');
                     if (session()->has('intended_url')) {
                         $response['link'] = session()->get('intended_url');
                         session()->forget('intended_url');

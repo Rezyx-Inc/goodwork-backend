@@ -24,12 +24,14 @@ Session::forget('error');
 <script>
     var error_msg = $('#error_msg').val();
     $(document).ready(function () {
+        console.log('ho');
         notie.alert({
             type: 'error',
             text: '<i class="fa fa-times"></i> ' + error_msg,
             time: 6
         });
     });
+
 </script>
 
 @endif
