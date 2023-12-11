@@ -65,7 +65,7 @@
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="{{URL::asset('images/nurses/profile/'.$model->user->profile_image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="{{URL::asset('images/nurses/profile/'.$model->user->profile_image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_ADMIN}}';" alt="Avatar" title="Change the avatar">
                         </div>
                       </div>
                       <h3>{{$model->user->first_name}} {{$model->user->last_name}}</h3>

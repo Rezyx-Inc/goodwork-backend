@@ -17,7 +17,7 @@ $user = auth()->guard('admin')->user();
         <ul class=" navbar-right">
           <li class="nav-item dropdown open" style="padding-left: 15px;">
             <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-              <img src="{{URL::asset('uploads/admin/profile_picture/thumb/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" alt="Avatar">{{auth()->guard('admin')->user()->first_name.' '.auth()->guard('admin')->user()->last_name}}
+              <img src="{{URL::asset('uploads/admin/profile_picture/thumb/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_ADMIN}}';" alt="Avatar">{{auth()->guard('admin')->user()->first_name.' '.auth()->guard('admin')->user()->last_name}}
             </a>
             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item"  href="{{route('admin-profile')}}"> Profile</a>

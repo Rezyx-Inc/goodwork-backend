@@ -10,20 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ModeratorController;
 
 Route::prefix('admin')->group(function() {
-    Route::get('list', 'TempController@listing');
-    Route::get('form', 'TempController@form');
-    Route::get('profile', 'TempController@profile');
-    Route::middleware(['admin_not_logged_in'])->group(function () {
+
+        Route::get('list', 'TempController@listing');
+        Route::get('form', 'TempController@form');
+        Route::get('profile', 'TempController@profile');
+        Route::middleware(['admin_not_logged_in'])->group(function () {
         Route::get('/', ['uses'=>'AuthController@get_login', 'as'=>'admin.login']);
         Route::get('admin-login', ['uses' => 'AuthController@get_login', 'as' => 'admin-login']);
         Route::post('admin-login', ['uses' => 'AuthController@post_login', 'as' => 'admin-login.store']);
-        Route::post('admin-forgotpassword', ['uses' => 'AuthController@post_forgot_password', 'as' => 'admin-forgotpassword']);
-        Route::get('admin-lockscreen', ['uses' => 'AuthController@get_lockscreen', 'as' => 'admin-lockscreen']);
-        Route::post('admin-lockscreen', ['uses' => 'AuthController@post_lockscreen', 'as' => 'admin-lockscreen.store']);
+
+        // post_forgot_password doesn't exist in AuthController
+
+       // Route::post('admin-forgotpassword', ['uses' => 'AuthController@post_forgot_password', 'as' => 'admin-forgotpassword']);
+
+       // admin-lockscreen post_lockscreen methods doesnt exist : admin-lockscreen route get commented in blades views :
+
+        // Route::get('admin-lockscreen', ['uses' => 'AuthController@get_lockscreen', 'as' => 'admin-lockscreen']);
+        // Route::post('admin-lockscreen', ['uses' => 'AuthController@post_lockscreen', 'as' => 'admin-lockscreen.store']);
     });
 
     Route::middleware(['admin_logged_in'])->group(function () {
@@ -87,25 +92,25 @@ Route::prefix('admin')->group(function() {
         Route::resource('keywords', 'KeyWordController')->parameters(['keywords' => 'id'])->except(['destroy','show']);
         Route::post('delete-keyword',['uses'=>'KeyWordController@destroy','as'=>'delete-keyword']);
             /** professions routes */
-            Route::get('professions',['uses'=>'KeyWordController@settings','as'=>'key.profession']);
-            Route::get('add-profession',['uses'=>'KeyWordController@create_setting','as'=>'add-profession']);
+        Route::get('professions',['uses'=>'KeyWordController@settings','as'=>'key.profession']);
+        Route::get('add-profession',['uses'=>'KeyWordController@create_setting','as'=>'add-profession']);
             /** Specialities routes */
-            Route::get('specialities',['uses'=>'KeyWordController@specialities','as'=>'key.speciality']);
-            Route::get('add-speciality',['uses'=>'KeyWordController@add_speciality','as'=>'add-speciality']);
-            Route::get('speciality/{id}/edit',['uses'=>'KeyWordController@edit_speciality','as'=>'edit-speciality']);
-            /** msps routes */
-            Route::get('settings.dt',['uses'=>'KeyWordController@settings','as'=>'settings.dt']);
-            Route::get('msps',['uses'=>'KeyWordController@settings','as'=>'key.msp']);
-            Route::get('add-msp',['uses'=>'KeyWordController@create_setting','as'=>'add-msp']);
-            /** vms routes */
-            Route::get('vms',['uses'=>'KeyWordController@settings','as'=>'key.vms']);
-            Route::get('add-vms',['uses'=>'KeyWordController@create_setting','as'=>'add-vms']);
-            /** Shifts routes */
-            Route::get('shifts',['uses'=>'KeyWordController@settings','as'=>'key.shift']);
-            Route::get('add-shift',['uses'=>'KeyWordController@create_setting','as'=>'add-shift']);
-            /** clinical settings routes */
-            Route::get('clinical-setting',['uses'=>'KeyWordController@settings','as'=>'key.clinical']);
-            Route::get('add-clinical',['uses'=>'KeyWordController@create_setting','as'=>'add-clinical']);
+        Route::get('specialities',['uses'=>'KeyWordController@specialities','as'=>'key.speciality']);
+        Route::get('add-speciality',['uses'=>'KeyWordController@add_speciality','as'=>'add-speciality']);
+        Route::get('speciality/{id}/edit',['uses'=>'KeyWordController@edit_speciality','as'=>'edit-speciality']);
+        /** msps routes */
+        Route::get('settings.dt',['uses'=>'KeyWordController@settings','as'=>'settings.dt']);
+        Route::get('msps',['uses'=>'KeyWordController@settings','as'=>'key.msp']);
+        Route::get('add-msp',['uses'=>'KeyWordController@create_setting','as'=>'add-msp']);
+        /** vms routes */
+        Route::get('vms',['uses'=>'KeyWordController@settings','as'=>'key.vms']);
+        Route::get('add-vms',['uses'=>'KeyWordController@create_setting','as'=>'add-vms']);
+        /** Shifts routes */
+        Route::get('shifts',['uses'=>'KeyWordController@settings','as'=>'key.shift']);
+        Route::get('add-shift',['uses'=>'KeyWordController@create_setting','as'=>'add-shift']);
+        /** clinical settings routes */
+        Route::get('clinical-setting',['uses'=>'KeyWordController@settings','as'=>'key.clinical']);
+        Route::get('add-clinical',['uses'=>'KeyWordController@create_setting','as'=>'add-clinical']);
 
         Route::post('store-setting',['uses'=>'KeyWordController@store_setting','as'=>'store-setting']);
         Route::get('setting/{id}/edit',['uses'=>'KeyWordController@edit_setting','as'=>'edit-setting']);
@@ -117,7 +122,9 @@ Route::prefix('admin')->group(function() {
 
         /** Email Template routes */
         Route::resource('email-templates', 'EmailTemplateController')->parameters(['email-templates' => 'id'])->except(['destroy','show']);
-        Route::post('delete-email-template',['uses'=>'EmailTemplateController@destroy','as'=>'delete-email-template']);
+
+        // no destroy in EmailTemplateController
+        //Route::post('delete-email-template',['uses'=>'EmailTemplateController@destroy','as'=>'delete-email-template']);
 
         /** Recruiters routes */
         Route::resource('recruiters', 'RecruiterController')->parameters(['recruiters' => 'id'])->except(['destroy','show']);
@@ -143,22 +150,26 @@ Route::prefix('admin')->group(function() {
         Route::resource('tickets', 'SupportTicketController')->parameters(['tickets' => 'id'])->except(['destroy','show']);
         Route::post('delete-ticket',['uses'=>'SupportTicketController@destroy','as'=>'delete-ticket']);
 
-        Route::get('admin-creator',['uses'=>'UserController@creator_index','as'=>'admin-creator']);
-        Route::get('admin-addcustomer',['uses'=>'UserController@customer_add','as'=>'admin-addcustomer']);
-        Route::post('admin-addcustomer',['uses'=>'UserController@customer_post_add','as'=>'admin-addcustomer.store']);
-        Route::get('admin-customer-list-datatable',['uses'=>'UserController@get_customer_data','as'=>'admin-customer-list-datatable']);
-        Route::get('admin-updatecreator/{id}',['uses'=>'UserController@creator_update','as'=>'admin-updatecreator']);
-        Route::post('admin-updatecreator/{id}',['uses'=>'UserController@creator_post_update','as'=>'admin-updatecreator.store']);
-        Route::get('admin-deletecretor',['uses'=>'UserController@cretor_delete','as'=>'admin-deletecretor']);
+        // there is no creator_index / customer_add / customer_post_add / get_customer_data / creator_update / creator_post_update / cretor_delete in User Controller
+     // Route::get('admin-creator',['uses'=>'UserController@creator_index','as'=>'admin-creator']);
+     // Route::get('admin-addcustomer',['uses'=>'UserController@customer_add','as'=>'admin-addcustomer']);
+     // Route::post('admin-addcustomer',['uses'=>'UserController@customer_post_add','as'=>'admin-addcustomer.store']);
+     // Route::get('admin-customer-list-datatable',['uses'=>'UserController@get_customer_data','as'=>'admin-customer-list-datatable']);
+     // Route::get('admin-updatecreator/{id}',['uses'=>'UserController@creator_update','as'=>'admin-updatecreator']);
+     // Route::post('admin-updatecreator/{id}',['uses'=>'UserController@creator_post_update','as'=>'admin-updatecreator.store']);
+     // Route::get('admin-deletecretor',['uses'=>'UserController@cretor_delete','as'=>'admin-deletecretor']);
 
-        Route::get('admin-member',['uses'=>'UserController@member_index','as'=>'admin-member']);
-        Route::get('admin-booster-list-datatable',['uses'=>'UserController@get_booster_data','as'=>'admin-booster-list-datatable']);
-        Route::get('admin-addbooster',['uses'=>'UserController@booster_add','as'=>'admin-addbooster']);
-        Route::post('admin-addbooster',['uses'=>'UserController@booster_post_add','as'=>'admin-addbooster.store']);
-        Route::get('admin-updatemember/{id}',['uses'=>'UserController@member_update','as'=>'admin-updatemember']);
-        Route::post('admin-updatemember/{id}',['uses'=>'UserController@member_post_update','as'=>'admin-updatemember.store']);
-        Route::get('admin-deletemember',['uses'=>'UserController@member_delete','as'=>'admin-deletemember']);
 
+    // methods not found in UserController
+        // Route::get('admin-member',['uses'=>'UserController@member_index','as'=>'admin-member']);
+        // Route::get('admin-booster-list-datatable',['uses'=>'UserController@get_booster_data','as'=>'admin-booster-list-datatable']);
+        // Route::get('admin-addbooster',['uses'=>'UserController@booster_add','as'=>'admin-addbooster']);
+        // Route::post('admin-addbooster',['uses'=>'UserController@booster_post_add','as'=>'admin-addbooster.store']);
+        // Route::get('admin-updatemember/{id}',['uses'=>'UserController@member_update','as'=>'admin-updatemember']);
+        // Route::post('admin-updatemember/{id}',['uses'=>'UserController@member_post_update','as'=>'admin-updatemember.store']);
+        // Route::get('admin-deletemember',['uses'=>'UserController@member_delete','as'=>'admin-deletemember']);
+
+        // Category controller dosn't exist
 	// Route::get('admin-category',['uses'=>'CategoryController@index','as'=>'admin-category']);
     //     Route::get('admin-addcategory',['uses'=>'CategoryController@add','as'=>'admin-addcategory']);
     //     Route::post('admin-addcategory',['uses'=>'CategoryController@post_category','as'=>'admin-addcategory']);
@@ -168,93 +179,21 @@ Route::prefix('admin')->group(function() {
     //     Route::post('admin-updatecategory/{id}',['uses'=>'CategoryController@post_update','as'=>'admin-updatecategory']);
 
 
-
-Route::get('admin-category', [
-    'uses' => [CategoryController::class, 'index'],
-    'as' => 'admin-category'
-]);
-
-Route::get('admin-addcategory', [
-    'uses' => [CategoryController::class, 'add'],
-    'as' => 'admin-addcategory'
-]);
-
-Route::post('admin-addcategory', [
-    'uses' => [CategoryController::class, 'post_category'],
-    'as' => 'admin-addcategory.store'
-]);
-
-Route::get('admin-category-list-datatable', [
-    'uses' => [CategoryController::class, 'category_list'],
-    'as' => "admin-category-list-datatable"
-]);
-
-Route::get('admin-deletecategory', [
-    'uses' => [CategoryController::class, 'delete'],
-    'as' => 'admin-deletecategory'
-]);
-
-Route::get('admin-updatecategory/{id}', [
-    'uses' => [CategoryController::class, 'edit'],
-    'as' => 'admin-updatecategory'
-]);
-
-Route::post('admin-updatecategory/{id}', [
-    'uses' => [CategoryController::class, 'post_update'],
-    'as' => 'admin-updatecategory.store'
-]);
-
-
-
     });
 
-    Route::middleware(['moderator_logged_in'])->group(function () {
-        /*         * ****************ModeratorController**************** */
 
-        // Route::get('admin-moderator',['uses'=>'ModeratorController@index','as'=>'admin-moderator']);
-        // Route::get('admin-moderator-list-datatable',['uses'=>'ModeratorController@moderator_list','as'=>"admin-moderator-list-datatable"]);
-        // Route::get('admin-addmoderator',['uses'=>'ModeratorController@add','as'=>'admin-addmoderator']);
-        // Route::post('admin-addmoderator',['uses'=>'ModeratorController@post_add','as'=>'admin-addmoderator']);
-        // Route::get('admin-updatemoderator/{id}',['uses'=>'ModeratorController@edit','as'=>"admin-updatemoderator"]);
-        // Route::post('admin-updatemoderator/{id}',['uses'=>'ModeratorController@post_update','as'=>'admin-updatemoderator']);
-        // Route::get('admin-deletemoderator',['uses'=>'ModeratorController@delete','as'=>"admin-deletemoderator"]);
+    // Moderator Controller dosn't exist
+    // Route::middleware(['moderator_logged_in'])->group(function () {
+    //     /*         * ****************ModeratorController**************** */
 
+    //     Route::get('admin-moderator',['uses'=>'ModeratorController@index','as'=>'admin-moderator']);
+    //     Route::get('admin-moderator-list-datatable',['uses'=>'ModeratorController@moderator_list','as'=>"admin-moderator-list-datatable"]);
+    //     Route::get('admin-addmoderator',['uses'=>'ModeratorController@add','as'=>'admin-addmoderator']);
+    //     Route::post('admin-addmoderator',['uses'=>'ModeratorController@post_add','as'=>'admin-addmoderator']);
+    //     Route::get('admin-updatemoderator/{id}',['uses'=>'ModeratorController@edit','as'=>"admin-updatemoderator"]);
+    //     Route::post('admin-updatemoderator/{id}',['uses'=>'ModeratorController@post_update','as'=>'admin-updatemoderator']);
+    //     Route::get('admin-deletemoderator',['uses'=>'ModeratorController@delete','as'=>"admin-deletemoderator"]);
 
+    // });
 
-Route::get('admin-moderator', [
-    'uses' => [ModeratorController::class, 'index'],
-    'as' => 'admin-moderator'
-]);
-
-Route::get('admin-moderator-list-datatable', [
-    'uses' => [ModeratorController::class, 'moderator_list'],
-    'as' => "admin-moderator-list-datatable"
-]);
-
-Route::get('admin-addmoderator', [
-    'uses' => [ModeratorController::class, 'add'],
-    'as' => 'admin-addmoderator'
-]);
-
-Route::post('admin-addmoderator', [
-    'uses' => [ModeratorController::class, 'post_add'],
-    'as' => 'admin-addmoderator.store'
-]);
-
-Route::get('admin-updatemoderator/{id}', [
-    'uses' => [ModeratorController::class, 'edit'],
-    'as' => "admin-updatemoderator"
-]);
-
-Route::post('admin-updatemoderator/{id}', [
-    'uses' => [ModeratorController::class, 'post_update'],
-    'as' => 'admin-updatemoderator.store'
-]);
-
-Route::get('admin-deletemoderator', [
-    'uses' => [ModeratorController::class, 'delete'],
-    'as' => "admin-deletemoderator"
-]);
-
-    });
 });

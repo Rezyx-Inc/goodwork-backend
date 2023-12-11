@@ -12,7 +12,7 @@ $user = auth()->guard('admin')->user();
       <!-- menu profile quick info -->
       <div class="profile clearfix">
         <div class="profile_pic">
-          <img src="{{URL::asset('uploads/admin/profile_picture/thumb/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" class="img-circle profile_img">
+        <img src="{{URL::asset('uploads/admin/profile_picture/thumb/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_ADMIN}}';" class="img-circle profile_img">
         </div>
         <div class="profile_info">
           <span>Welcome,</span>

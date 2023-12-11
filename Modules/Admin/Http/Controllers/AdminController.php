@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Mail;
 use App\Models\{Email, EmailTemplate};
-//define('USER_IMG', asset('public/backend/assets/images/picture.jpg'));
+define('USER_IMG_ADMIN', asset('public/backend/assets/images/picture.jpg'));
 
 class AdminController extends Controller {
 

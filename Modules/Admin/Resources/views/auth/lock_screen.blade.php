@@ -8,7 +8,8 @@
 </style>
 <div class="page-lock">
     <div class="page-logo text-center">
-        <a class="brand" href="{{ Route('admin-lockscreen') }}">
+        <!-- <a class="brand" href="{{ Route('admin-lockscreen') }}"> -->
+        <a class="brand" href="">
             <img src="{{ URL::asset('backend/images/fav-icon.png') }}" width="140" alt="logo" />
         </a>
     </div>
@@ -22,7 +23,9 @@
             <h1>{{ ((isset($admin_model->first_name) && $admin_model->first_name != null) ? ucfirst(strtolower($admin_model->first_name)) : "Not Given") . ' ' . ((isset($admin_model->last_name) && $admin_model->last_name != null) ? ucfirst(strtolower($admin_model->last_name)) : "") }}</h1>
             <span class="email"> {{ $admin_model->email }} </span>
             <span class="locked"> Locked </span>
-            <form id="lock-form" class="login-form" action="{{ Route('admin-lockscreen.store') }}" method="POST">
+
+            <!-- post_lockscreen has been commented for now until post_lockscreen get inplimented -->
+            <!-- <form id="lock-form" class="login-form" action="{{ Route('admin-lockscreen.store') }}" method="POST">
                 @csrf
                 <div class="input-group input-medium">
                     <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
@@ -34,12 +37,13 @@
                     <span class="input-group-btn">
                         <button type="submit" class="btn green icn-only" name="lock-button"><i class="m-icon-swapright m-icon-white"></i></button>
                     </span>
-                </div>
+                </div> -->
                 <!-- /input-group -->
                 <!--            <div class="relogin">
                                 <a href="login.html"> Not Bob Nilson ? </a>
                             </div>-->
-            </form>
+            <!-- </form> -->
+            
         </div>
     </div>
     <div class="page-footer-custom"> {{ date('Y') }}&copy; {{env('PROJECT_NAME', 'Demo')}}. </div>

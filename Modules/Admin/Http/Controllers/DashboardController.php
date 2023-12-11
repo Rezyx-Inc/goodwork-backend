@@ -21,7 +21,12 @@ class DashboardController extends AdminController {
      * @return Response
      */
     public function index() {
-        $data = [];
+    //    try{
+
+    //    }catch(\Exception $ex){
+
+    //    }
+         $data = [];
         $data['total_workers_active'] = User::where(['active'=>'1','role'=>'NURSE'])->count();
         $data['total_recruiters_active'] = User::where(['active'=>'1','role'=>'RECRUITER'])->count();
         $data['total_job_active'] = Job::where(['active'=>'1'])->count();
