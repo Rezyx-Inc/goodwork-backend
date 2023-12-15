@@ -29,8 +29,14 @@ Route::prefix('employer')->group(function() {
         Route::get('employer-dashboard', ['uses' => 'EmployerController@index', 'as' => 'employer-dashboard']);
         Route::get('add-job', ['uses' => 'EmployerController@addJob', 'as' => 'add-job']);
         Route::post('add-job', ['uses' => 'EmployerController@addJobStore', 'as' => 'addJob.store']);
+        Route::get('home', ['uses' => 'EmployerController@home', 'as' => 'home']);
+        Route::get('explore-employees', ['uses' => 'EmployerController@explore_employees', 'as' => 'explore-employees']);
+        Route::get('employer-opportunities-manager', ['uses' => 'EmployerController@opportunities_manager', 'as' => 'employer-opportunities-manager']);
+        Route::get('employer-create-job-request', ['uses' => 'EmployerController@create_job_request', 'as' => 'employer-create-job-request']);
+        Route::get('employer-messages', ['uses' => 'EmployerController@get_messages', 'as' => 'employer-messages']);
+        Route::get('employer-profile', ['uses' => 'EmployerController@get_profile', 'as' => 'employer-profile']);
     }
-    
+
     );
 });
 

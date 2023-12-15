@@ -91,8 +91,8 @@
                                                             @if(isset($allKeywords['Speciality_old']))
                                                                 @foreach ($allKeywords['Speciality_old'] as $value)
                                                                     <option value="{{$value->id}}">{{$value->title}}</option>
-                                                                @endforeach 
-                                                            @endif 
+                                                                @endforeach
+                                                            @endif
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4">
@@ -201,8 +201,8 @@
                                             @if(isset($allKeywords['Certification']))
                                                 @foreach ($allKeywords['Certification'] as $value)
                                                     <option value="{{$value->id}}">{{$value->title}}</option>
-                                                @endforeach 
-                                            @endif 
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="col-md-1">
@@ -634,7 +634,7 @@
     //     var newField = document.createElement('input');
     //     newField.setAttribute('type', 'text');
     //     newField.setAttribute('name', 'vaccinations');
-    //     newField.setAttribute('onfocusout', "editJob('vacc-immu')"); 
+    //     newField.setAttribute('onfocusout', "editJob('vacc-immu')");
     //     newField.setAttribute('class', 'mb-3');
     //     newField.setAttribute('placeholder', 'Enter Vacc. or Immu. name');
     //     formfield.appendChild(newField);
@@ -659,7 +659,7 @@
     //     var formfieldcertificate = document.getElementById('add-more-certifications');
     //     var newField = document.createElement('input');
     //     newField.setAttribute('type', 'text');
-    //     newField.setAttribute('onfocusout', 'editJob("certifications")'); 
+    //     newField.setAttribute('onfocusout', 'editJob("certifications")');
     //     newField.setAttribute('name', 'certificate');
     //     newField.setAttribute('class', 'mb-3');
     //     newField.setAttribute('placeholder', 'Enter Certification');
@@ -944,7 +944,7 @@
                 var selectedOption = select.options[select.selectedIndex];
                 var optionText = selectedOption.textContent;
 
-                certificate[$('#certificate').val()] = optionText; 
+                certificate[$('#certificate').val()] = optionText;
                 $('#certificate').val('');
                 list_certifications();
             }
@@ -1056,7 +1056,7 @@
                 var selectedOption = select.options[select.selectedIndex];
                 var optionText = selectedOption.textContent;
 
-                vaccinations[$('#vaccinations').val()] = optionText; 
+                vaccinations[$('#vaccinations').val()] = optionText;
                 $('#vaccinations').val('');
                 list_vaccinations();
             }
@@ -1133,7 +1133,7 @@
             list_vaccinations();
             }
     }
-    
+
     const numberOfReferencesField = document.getElementById('number_of_references');
     numberOfReferencesField.addEventListener('input', function() {
         if (numberOfReferencesField.value.length > 9) {
@@ -1152,7 +1152,7 @@
             data: formData,
             dataType: 'json',
             success: function(data) {
-                var stateSelect = $('#facility-state-code'); 
+                var stateSelect = $('#facility-state-code');
                 stateSelect.empty();
                 stateSelect.append($('<option>', {
                     value: "",
@@ -1184,7 +1184,7 @@
             data: formData,
             dataType: 'json',
             success: function(data) {
-                var stateSelect = $('#facility-city'); 
+                var stateSelect = $('#facility-city');
                 stateSelect.empty();
                 stateSelect.append($('<option>', {
                     value: "",
@@ -1214,7 +1214,7 @@
             data: formData,
             dataType: 'json',
             success: function(data) {
-                var stateSelect = $('#preferred_specialty'); 
+                var stateSelect = $('#preferred_specialty');
                 stateSelect.empty();
                 stateSelect.append($('<option>', {
                     value: "",

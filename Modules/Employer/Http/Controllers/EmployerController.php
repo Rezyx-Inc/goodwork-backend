@@ -11,6 +11,8 @@ use App\Models\Job;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 
+use App\Models\Offer;
+
 class EmployerController extends Controller
 {
     /**
@@ -25,6 +27,7 @@ class EmployerController extends Controller
     public function addJob()
     {
         return view('employer::layouts.addJob');
+
     }
 
 
@@ -138,5 +141,48 @@ class EmployerController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function home()
+    {
+
+        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+        $statusCounts = [];
+        $offerLists = [];
+        foreach ($statusList as $status) {
+            $statusCounts[$status] = 0;
+        }
+        $statusCountsQuery = Offer::whereIn('status', $statusList)
+            ->select(\DB::raw('status, count(*) as count'))
+            ->groupBy('status')
+            ->get();
+        foreach ($statusCountsQuery as $statusCount) {
+            if ($statusCount)
+                $statusCounts[$statusCount->status] = $statusCount->count;
+            else
+                $statusCounts[$statusCount->status] = 0;
+        }
+        return view('employer::employer/home', compact('statusCounts'));
+    }
+    public function explore_employees()
+    {
+        return view('employer::employer/explore_employees');
+    }
+
+    public function opportunities_manager()
+    {
+        return view('employer::employer/opportunitiesmanager');
+    }
+    public function create_job_request()
+    {
+        return view('employer::employer/createjobrequest');
+    }
+
+    public function get_messages()
+    {
+        return view('employer::employer/messages');
+    }
+    public function get_profile()
+    {
+        return view('employer::employer/Profile');
     }
 }

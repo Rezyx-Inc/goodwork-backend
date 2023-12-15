@@ -93,6 +93,7 @@ class ApplicationController extends Controller
      */
     public function application()
     {
+        
         $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];
@@ -1487,7 +1488,7 @@ class ApplicationController extends Controller
                     </div>
                     <div class="ss-account-btns">
 <<<<<<< HEAD
-                        <a class="ss-counter-button d-block text-center" id="submit-job-offer" onclick="applicationType(\'' . $type . '\', \'' . $request->id . '\', \'joballdetails\', \''. $jobdetails['id'] .'\')">Send Offer</a>    
+                        <a class="ss-counter-button d-block text-center" id="submit-job-offer" onclick="applicationType(\'' . $type . '\', \'' . $request->id . '\', \'joballdetails\', \''. $jobdetails['id'] .'\')">Send Offer</a>
                         <button class="counter-save-for-button" id="ss-reject-offer-btn" onclick="applicationType(\'' . $type . '\', \'' . $request->id . '\', \'createdraft\', \''. $jobdetails['id'] .'\')">Save As Draft</button>
 =======
                         <a class="ss-counter-button d-block text-center" id="submit-job-offer" onclick="applicationType(\'' . $type . '\', \'' . $request->id . '\', \'joballdetails\', \''. $jobdetails['id'] .'\')">Send Offer</a>
@@ -2162,9 +2163,9 @@ class ApplicationController extends Controller
 
             /* create job */
             $update_array["created_by"] = (isset($job_data->recruiter_id) && $job_data->recruiter_id != "") ? $job_data->recruiter_id : "";
-            
+
             $offerexist = DB::table('offer_jobs')->where(['job_id' => $request->job_id, 'worker_user_id' => $request->worker_user_id, 'recruiter_id' => $request->recruiter_id])->first();
-            
+
             if($offerexist){
                 $job = DB::table('offer_jobs')->where(['job_id' => $request->job_id, 'worker_user_id' => $request->worker_user_id, 'recruiter_id' => $request->recruiter_id])->update($update_array);
             }else{

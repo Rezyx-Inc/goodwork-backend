@@ -167,7 +167,7 @@ class JobController extends Controller
                 $query->where('preferred_assignment_duration', '>=', $data['assignment_from']);
             });
         }
-    
+
 
         if ($data['assignment_to']) {
             $ret->where(function (Builder $query) use ($data) {
@@ -178,15 +178,15 @@ class JobController extends Controller
         $result = $ret->get();
 
 
-       
+
 
             $resl = Job::select('jobs.*','name')
             ->leftJoin('facilities', function ($join) {
                 $join->on('facilities.id', '=', 'jobs.facility_id');
             });
             $data['jobs'] = $resl->get();
-            
-            
+
+
             // $data['jobSaved'] = [""];
             // $data['prefered_shifts '] = [""];
             // $data['terms'] = [""];
@@ -202,7 +202,7 @@ class JobController extends Controller
         //return response()->json(['message' =>  $data['jobs']]);
     } catch (\Exception $e) {
         // Handle other exceptions
-       
+
 
         // Display a generic error message or redirect with an error status
          return redirect()->route('jobs.explore')->with('error', 'An unexpected error occurred. Please try again later.');

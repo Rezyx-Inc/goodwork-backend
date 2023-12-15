@@ -1204,7 +1204,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   background-color:#31639c;
   border-radius:50px;
 }
-}
+
 .ui-state-active {
   color: #ffffff;
   background-color:#31639c;
@@ -2140,3 +2140,4 @@ section.ss-about-story-sec {
         width:100%;
     }
     }
+

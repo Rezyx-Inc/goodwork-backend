@@ -115,7 +115,7 @@
     function applicationType(type, id = "", formtype, jobid = "") {
         window.scrollTo({
             top: 0,
-            behavior: "smooth" 
+            behavior: "smooth"
         });
 
         if(formtype == "joballdetails" || formtype == "createdraft"){
@@ -127,7 +127,7 @@
                 return;
             }
             var formData = $form.serialize();
-            
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -183,7 +183,7 @@
         if (doneElement.classList.contains("active")) {
             doneElement.classList.remove("active");
         }
-        
+
         document.getElementById(type).classList.add("active")
 
         document.getElementById('listingname').innerHTML = type + ' Application';
@@ -449,11 +449,11 @@
 </script>
 <script>
     var speciality = {};
-    
+
     // console.log(window.allspecialty)
     // console.log(window.allvaccinations)
     // console.log(window.allcertificate)
-    
+
     function add_speciality(obj) {
         if (!$('#preferred_specialty').val()) {
             notie.alert({
@@ -498,7 +498,7 @@
                         data: formData,
                         dataType: 'json',
                         success: function(data) {
-                            
+
                         },
                         error: function(error) {
                             console.log(error);
@@ -521,7 +521,7 @@
         }
         for (const key in speciality) {
             let specialityname = "";
-            
+
             var select = document.getElementById("preferred_specialty");
             var allspcldata = [];
             for (var i = 0; i < select.options.length; i++) {
@@ -531,7 +531,7 @@
                 };
                 allspcldata.push(obj);
             }
-            
+
             if (speciality.hasOwnProperty(key)) {
                 allspcldata.forEach(function(item) {
                     if (key == item.id) {
@@ -582,7 +582,7 @@
                 var selectedOption = select.options[select.selectedIndex];
                 var optionText = selectedOption.textContent;
 
-                vaccinations[$('#vaccinations').val()] = optionText; 
+                vaccinations[$('#vaccinations').val()] = optionText;
                 $('#vaccinations').val('');
                 list_vaccinations();
             }
@@ -606,7 +606,7 @@
                 };
                 allspcldata.push(obj);
             }
-            
+
             if (vaccinations.hasOwnProperty(key)) {
 
                 allspcldata.forEach(function(item) {
@@ -683,7 +683,7 @@
                 var selectedOption = select.options[select.selectedIndex];
                 var optionText = selectedOption.textContent;
 
-                certificate[$('#certificate').val()] = optionText; 
+                certificate[$('#certificate').val()] = optionText;
                 $('#certificate').val('');
                 list_certifications();
             }
@@ -745,7 +745,7 @@
                         data: formData,
                         dataType: 'json',
                         success: function(data) {
-                           
+
                         },
                         error: function(error) {
                             console.log(error);
@@ -786,7 +786,7 @@
             });
           },
           error: function(error) {
-            // Handle errors 
+            // Handle errors
           }
         });
       } else {
@@ -813,7 +813,7 @@
             data: formData,
             dataType: 'json',
             success: function(data) {
-                var stateSelect = $('#facility-state-code'); 
+                var stateSelect = $('#facility-state-code');
                 stateSelect.empty();
                 stateSelect.append($('<option>', {
                     value: "",
@@ -845,7 +845,7 @@
             data: formData,
             dataType: 'json',
             success: function(data) {
-                var stateSelect = $('#facility-city'); 
+                var stateSelect = $('#facility-city');
                 stateSelect.empty();
                 stateSelect.append($('<option>', {
                     value: "",
@@ -875,7 +875,7 @@
             data: formData,
             dataType: 'json',
             success: function(data) {
-                var stateSelect = $('#preferred_specialty'); 
+                var stateSelect = $('#preferred_specialty');
                 stateSelect.empty();
                 stateSelect.append($('<option>', {
                     value: "",

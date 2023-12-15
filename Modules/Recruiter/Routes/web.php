@@ -24,7 +24,7 @@ Route::prefix('recruiter')->group(function () {
         Route::post('recruiter-otp', ['uses' => 'RecruiterAuthController@submit_otp', 'as' => 'recruiter.otp']);
         Route::get('/signup', ['uses' => 'RecruiterAuthController@get_signup', 'as' => 'recruiter-signup']);
         Route::post('signup', ['uses' => 'RecruiterAuthController@post_signup', 'as' => 'recruiter.signup']);
-        
+
     });
     Route::middleware(['recruiter_logged_in'])->group(function () {
         /** Dashboard routes */
@@ -34,29 +34,29 @@ Route::prefix('recruiter')->group(function () {
         Route::post('help-and-support', ['uses' => 'RecruiterDashboardController@helpAndSupport', 'as' => 'help-and-support']);
         Route::post('recruiter-update-profile', ['uses' => 'RecruiterDashboardController@updateProfile', 'as' => 'recruiter-update-profile']);
         Route::post('recruiter-remove-qualities', ['uses' => 'RecruiterDashboardController@recruiterRemoveQualities', 'as' => 'recruiter-remove-qualities']);
-        
-        Route::get('recruiter-application', ['uses' => 'ApplicationController@application', 'as' => 'recruiter-application']);
+
+        Route::get('recruiter-application',  ['uses' => 'ApplicationController@application', 'as' => 'recruiter-application']);
         Route::post('get-application-listing', ['uses' => 'ApplicationController@getApplicationListing', 'as' => 'get-application-listing']);
         // Route::get('recruiter-single-job/{id}', ['uses' => 'RecruiterDashboardController@getSinglejob', 'as' => 'recruiter-single-job']);
         Route::post('update-application-status', ['uses' => 'ApplicationController@updateApplicationStatus', 'as' => 'update-application-status']);
         Route::post('recruiter-send-job-offer', ['uses' => 'ApplicationController@sendJobOffer', 'as' => 'recruiter-send-job-offer']);
-        
+
         Route::get('recruiter-opportunities-manager', ['uses' => 'OpportunitiesController@index', 'as' => 'recruiter-opportunities-manager']);
         Route::get('recruiter-create-opportunity', ['uses' => 'OpportunitiesController@create', 'as' => 'recruiter-create-opportunity']);
         Route::post('recruiter-create-opportunity/{check_type}', ['uses' => 'OpportunitiesController@store', 'as' => 'recruiter-create-opportunity-store']);
         Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'get-job-listing']);
-        
+
         Route::get('recruiter-logout', ['uses' => 'RecruiterAuthController@logout', 'as' => 'recruiter-logout']);
-        
+
         Route::post('remove/{id}', ['uses' => 'OpportunitiesController@recruiterRemoveInfo', 'as' => 'recruiter-remove-info']);
-        
+
         Route::post('ask-recruiter-notification', ['uses' => 'RecruiterDashboardController@askRecruiterNotification', 'as' => 'ask-recruiter-notification']);
-        
+
         Route::get('get-single-nurse-details/{id}', ['uses' => 'RecruiterDashboardController@getSingleNurseDetails', 'as' => 'get-single-nurse-details']);
 
         Route::post('send-job-offer-recruiter', ['uses' => 'ApplicationController@sendJobOfferRecruiter', 'as' => 'send-job-offer-recruiter']);
 
-        
+
 
     });
 });

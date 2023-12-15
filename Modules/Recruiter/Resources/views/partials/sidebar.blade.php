@@ -5,6 +5,7 @@ $user = auth()->guard('recruiter')->user();
 
     <div class="ss-side-user-ul">
         <ul>
+            
             <li><img src="{{URL::asset('frontend/img/logo.png')}}" /></li>
         </ul>
     </div>
