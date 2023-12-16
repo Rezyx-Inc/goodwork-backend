@@ -111,13 +111,13 @@
                                 <h4>Manager CRNA - Anesthesia</h4>
                                 <h6>Medical Solutions Recruiter</h6>
                                 <ul>
-                                    <li><a href="#"><img src="  {{URL::asset('frontend/img/location.png')}}">
+                                    <li><a href="#"><img src=" {{URL::asset('frontend/img/location.png')}}">
                                             Los
                                             Angeles, CA</a></li>
-                                    <li><a href="#"><img src="http://127.0.0.1:8000/frontend/img/calendar.png">
+                                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}">
                                             10
                                             wks</a></li>
-                                    <li><a href="#"><img src="http://127.0.0.1:8000/frontend/img/dollarcircle.png">
+                                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}">
                                             2500/wk</a></li>
                                 </ul>
 
@@ -263,15 +263,15 @@
                                                 <h6>Medical Solutions Recruiter</h6>
                                                 <ul>
                                                     <li><a href="#"><img
-                                                                src="http://127.0.0.1:8000/frontend/img/location.png">
+                                                                src="{{URL::asset('frontend/img/location.png')}}">
                                                             Los
                                                             Angeles, CA</a></li>
                                                     <li><a href="#"><img
-                                                                src="http://127.0.0.1:8000/frontend/img/calendar.png">
+                                                                src="{{URL::asset('frontend/img/calendar.png')}}">
                                                             10
                                                             wks</a></li>
                                                     <li><a href="#"><img
-                                                                src="http://127.0.0.1:8000/frontend/img/dollarcircle.png">
+                                                                src="{{URL::asset('frontend/img/dollarcircle.png')}}">
                                                             2500/wk</a></li>
                                                 </ul>
 
@@ -282,15 +282,15 @@
                                                 <h6>Medical Solutions Recruiter</h6>
                                                 <ul>
                                                     <li><a href="#"><img
-                                                                src="http://127.0.0.1:8000/frontend/img/location.png">
+                                                                src="{{URL::asset('frontend/img/location.png')}}">
                                                             Los
                                                             Angeles, CA</a></li>
                                                     <li><a href="#"><img
-                                                                src="http://127.0.0.1:8000/frontend/img/calendar.png">
+                                                                src="{{URL::asset('frontend/img/calendar.png')}}">
                                                             10
                                                             wks</a></li>
                                                     <li><a href="#"><img
-                                                                src="http://127.0.0.1:8000/frontend/img/dollarcircle.png">
+                                                                src="{{URL::asset('frontend/img/dollarcircle.png')}}">
                                                             2500/wk</a></li>
                                                 </ul>
 
@@ -385,7 +385,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="http://127.0.0.1:8000/recruiter/assets/images/recomand-img-1.png"
+                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-1.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -434,7 +434,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="http://127.0.0.1:8000/recruiter/assets/images/recomand-img-2.png"
+                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-2.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -494,7 +494,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="http://127.0.0.1:8000/recruiter/assets/images/recomand-img-3.png"
+                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-3.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -555,7 +555,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="http://127.0.0.1:8000/recruiter/assets/images/message-img4.png"
+                                                                    src="{{URL::asset('recruiter/assets/images/message-img4.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -593,30 +593,18 @@
                                                                 <div class="col-3"><a href="#" class="application-a">
                                                                         $2500/wk</a></div>
                                                             </div>
-
-
-
                                                             <!-- information of application -->
-
-
                                                         </div>
-
-
                                                     </div>
                                                 </div>
                                                 <!-- end forth card -->
-
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
-
                     <!-- published and Onhold details end-->
                 </div>
             </div>
