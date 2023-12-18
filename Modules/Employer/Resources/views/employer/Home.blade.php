@@ -1,6 +1,9 @@
 @extends('employer::layouts.main')
 
 @section('content')
+@php
+       $faker = app('Faker\Generator');
+@endphp
 <main style="padding-top: 170px" class="ss-main-body-sec">
     <div class="container">
         <div class="row emp-container applicants-header text-center">
@@ -152,7 +155,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-12 ">
                                                             <p class="app_info_home2">
-                                                                David Lee</p>
+                                                            {{$faker->fantasyName('fantasyNames')}}</p>
                                                         </div>
                                                         <div class="col-12 col-sm-12">
                                                             <p class="app_info_home3">
@@ -209,7 +212,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-12">
                                                             <p class="app_info_home2">
-                                                                Mary Smith</p>
+                                                            {{$faker->fantasyName('first_name')}}</p>
                                                         </div>
                                                         <div class="col-12 col-sm-12">
                                                             <p class="app_info_home3">
@@ -266,7 +269,7 @@
                                                         </div>
                                                         <div class="col-12 col-sm-12">
                                                             <p class="app_info_home2">
-                                                                Mary Smith</p>
+                                                            {{$faker->fantasyName('fantasyNames')}}</p>
                                                         </div>
                                                         <div class="col-12 col-sm-12">
                                                             <p class="app_info_home3">
@@ -368,7 +371,7 @@
                                     <div class="col-11 d-flex text-start">
                                         <div class="row">
                                             <div class="col-12 home_notification_message_messages">
-                                                Andi Lane texted to you ...</div>
+                                            {{$faker->fantasyName('fantasyNames')}} texted to you ...</div>
                                             <div class="col-12" style="color:#1C1C1C66; font-size: 12px;">Today, 11:59
                                                 AM</div>
                                         </div>
@@ -405,7 +408,7 @@
                                         </div>
                                         <div class="col-12 col-sm-12">
                                             <p class="app_info_home2">
-                                                James Bond</p>
+                                            {{$faker->fantasyName('fantasyNames')}}</p>
                                         </div>
                                         <div class="col-12 col-sm-12">
                                             <p class="app_info_home3">
@@ -444,7 +447,7 @@
                                         </div>
                                         <div class="col-12 col-sm-12">
                                             <p class="app_info_home2">
-                                                Mary Smith</p>
+                                            {{$faker->fantasyName('fantasyNames')}}</p>
                                         </div>
                                         <div class="col-12 col-sm-12">
                                             <p class="app_info_home3">
@@ -482,7 +485,7 @@
                                         </div>
                                         <div class="col-12 col-sm-12">
                                             <p class="app_info_home2">
-                                                David Lee
+                                            {{$faker->fantasyName('fantasyNames')}}
                                             </p>
                                         </div>
                                         <div class="col-12 col-sm-12">
