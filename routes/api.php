@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\StaticContent\StaticContentController;
 use App\Http\Controllers\Api\Support\SupportController;
 use App\Http\Controllers\Api\UserProfile\UserProfileController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -1779,6 +1780,11 @@ Route::post('create-account', [ApiController::class, 'createAccount']);
 Route::post('/send-money', [ApiController::class, 'send_money'])->name('send_money');
 Route::post('get-employers', [ApiController::class, 'employers']);
 
+
+Route::group(['middleware'=>'api','prefix'=> 'auth'], function () {
+    Route::post('/register',[AuthController::class,'register'])->name('register-jwt');
+    Route::post('/login',[AuthController::class,'login'])->name('login-jwt');
+});
 
 // Route::post('/session', 'ApiController@session')->name('session');
 // Route::post('/make-payment', 'ApiController@make_payment')->name('make_payment');

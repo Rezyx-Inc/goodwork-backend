@@ -86,7 +86,7 @@
                         <div class="ss-msg-rply-profile-sec">
                             <ul>
                                 <li>
-                                    <img id="userprofile" src="{{ asset('frontend/img/profile-pic-big.png') }}" onerror="this.onerror=null; this.src = '{{USER_IMG}}';" id="preview" width="50px" height="50px" style="object-fit: cover;" />
+                                    <img id="userprofile" src="{{ asset('frontend/img/profile-pic-big.png') }}" onerror="this.onerror=null; this.src = '{{USER_IMG_RECRUITER}}';" id="preview" width="50px" height="50px" style="object-fit: cover;" />
                                 </li>
                                 <li>
                                     <h6 id="username"></h6>
@@ -105,7 +105,7 @@
                                 <p>Hello! Jhon abraham</p>
                                 <span>09:25 AM</span>
                             </div>
-    
+
                             <div class="ss-msg-rply-recrut-dv">
                                 <h6>Recruiter #01</h6>
                                 <p>Have a great working week!!</p>
@@ -239,7 +239,7 @@
         //         console.log('User not found');
         //     }
         // });
-        
+
         // var userRef = firebase.database().ref('Users');
         // var userData = {
         //     Nu_id: localStorage.getItem("nurse_id"),
@@ -251,13 +251,13 @@
         //     Sm_mobile: '<?php echo auth()->guard('recruiter')->user()->mobile ?>',
         //     Sm_name: '<?php echo auth()->guard('recruiter')->user()->first_name ?>' + " " + '<?php echo auth()->guard('recruiter')->user()->last_name ?>',
         //     Worker_userid: "",
-        //     isOnline: "Onlineww", 
-        //     isRecOnline: "Online", 
+        //     isOnline: "Onlineww",
+        //     isRecOnline: "Online",
         //     message: message,
         //     time: timestamp,
         // };
         // if (userfirebaseid) {
-           
+
         //     userRef.child(userfirebaseid).once('value').then(function(snapshot) {
         //         if (snapshot.exists()) {
         //             // User exists, update the data
@@ -301,8 +301,8 @@
             Sm_mobile: '<?php echo auth()->guard('recruiter')->user()->mobile ?>',
             Sm_name: '<?php echo auth()->guard('recruiter')->user()->first_name ?>' + " " + '<?php echo auth()->guard('recruiter')->user()->last_name ?>',
             Worker_userid: "",
-            isOnline: "Online", 
-            isRecOnline: "Online", 
+            isOnline: "Online",
+            isRecOnline: "Online",
             message: message,
             time: timestamp,
         };
@@ -323,7 +323,7 @@
         } else {
             console.log('userfirebaseid is empty. Cannot perform database operation.');
         }
-        
+
     }
 
     function fetchMessages() {
@@ -388,18 +388,18 @@
                 console.log(result.data);
                 let fullname = result.data.first_name + " " + result.data.last_name;
                 if(fullname){
-                    document.getElementById("username").textContent = fullname; 
+                    document.getElementById("username").textContent = fullname;
                 }
                 if(result.data.profession){
-                    document.getElementById("profession").textContent = result.data.profession; 
+                    document.getElementById("profession").textContent = result.data.profession;
                 }
                 if(result.data.mobile){
-                    document.getElementById("usermobile").textContent = result.data.mobile; 
+                    document.getElementById("usermobile").textContent = result.data.mobile;
                 }
                 console.log(result.data.image);
                 if(result.data.image){
                     console.log('{{ asset("images/nurses/profile/") }}' + '/' + result.data.image);
-                    // document.getElementById("userprofile").src = "URL::asset('images/nurses/profile/)" + result.data.image; 
+                    // document.getElementById("userprofile").src = "URL::asset('images/nurses/profile/)" + result.data.image;
                     document.getElementById("userprofile").src = '{{ asset("images/nurses/profile/") }}' + '/' + result.data.image;
                 }
             })

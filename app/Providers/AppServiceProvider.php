@@ -13,7 +13,9 @@ use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Logging\Log;
 use Psr\Log\LoggerInterface;
+use Faker\Factory as FakerFactory;
 
+use Faker\Generator as FakerGenerator;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,7 +27,16 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->alias('bugsnag.logger', Log::class);
         $this->app->alias('bugsnag.logger', LoggerInterface::class);
+
+        // register fantasyNameProvider 
+        $this->app->singleton(FakerGenerator::class, function ($app) {
+            $faker = FakerFactory::create();
+            $faker->addProvider(new \App\Providers\FantasyNameProvider($faker));
+            return $faker;
+        });
     }
+
+
 
     public static function keywordTitle($id = null)
     {
@@ -185,6 +196,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Schema::defaultStringLength(255);
+
+
     }
 
     private function defaultId()

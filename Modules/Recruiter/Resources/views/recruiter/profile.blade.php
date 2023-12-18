@@ -14,7 +14,7 @@
                         <form method="post" action="" id="edit-profile-form" class="ss-rec-profl-img-dv">
                             <input type="file" name="profile_picture" id="imgInp" accept=".jpg,.jpeg,.png" hidden>
                             <div class="ss-acount-prof">
-                                <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
+                                <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_RECRUITER}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
                                 <div class="ss-profil-camer-img">
                                     <a href="javascript:void(0)" onclick="click_on_file()"><img src="{{URL::asset('frontend/img/profile-camera.png')}}" /></a>
                                 </div>
@@ -126,7 +126,7 @@
                                         <a href="javascript:void(0)" class="ss-rec-abt-me-edit-icn" onclick="editprofile()">
                                             <img src="{{URL::asset('recruiter/assets/images/rec-profile-edit-icon.png')}}" />
                                         </a>
-                                        <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
+                                        <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_RECRUITER}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
                                     </li>
                                 </ul>
                                 <div id="personal-info">
@@ -137,7 +137,7 @@
                                     <div class="ss-rec-agncy-txt-bx">
                                         <h4>Agency Name</h4>
                                         <p><a href="javascript:void(0)">{{ $user->facilities }} Recruiter</a></p>
-                                        
+
                                     </div>
                                     <div class="ss-rec-abt-qulty-dv">
                                         <h4>Qualities</h4>
@@ -208,7 +208,7 @@
                             <div class="tab-pane fade" id="help" role="tabpanel" aria-labelledby="help-tab">
                                 <!-- <div class="d-flex justify-content-between">
                                     <h5 class="mb-4">Help & Support</h5>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ New Help</a>                                    
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ New Help</a>
                                 </div> -->
                                 <div class="ss-rec-help-sup-mn-dv-open ss-acon-prfl-help-man-dv p-0 border-0 d-block">
                                     <ul>
@@ -363,7 +363,7 @@
         var newField = document.createElement('input');
         newField.setAttribute('type', 'text');
         newField.setAttribute('name', 'qualities[]');
-        // newField.setAttribute('onfocusout', "editJob('vacc-immu')"); 
+        // newField.setAttribute('onfocusout', "editJob('vacc-immu')");
         newField.setAttribute('class', 'mb-3');
         newField.setAttribute('placeholder', 'Enter Qualities');
         formfield.appendChild(newField);

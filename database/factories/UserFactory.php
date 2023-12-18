@@ -20,11 +20,16 @@ use Illuminate\Support\Facades\Hash;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+
+
+
     return [
         'id' => Str::uuid(),
         'role' => Role::getKey(Role::FULLADMIN),
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
+        // 'first_name' => $faker->firstName,
+        // 'last_name' => $faker->lastName,
+        'first_name' => $faker->fantasyName('first_name'),
+        'last_name' => $faker->fantasyName('second_name'),
         'image' => null,
         'email' => $faker->unique()->safeEmail,
         'user_name' => $faker->userName,
