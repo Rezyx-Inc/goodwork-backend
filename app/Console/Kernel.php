@@ -15,7 +15,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\weeklyCron::class,
-        Commands\monthlyCron::class
+        Commands\monthlyCron::class,
+        Commands\BuildLocal::class,
+        Commands\BuildRefresh::class,
     ];
 
     /**
