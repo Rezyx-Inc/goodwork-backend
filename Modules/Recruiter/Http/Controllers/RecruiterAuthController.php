@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\login;
 use App\Mail\register;
+use App\Events\UserCreated;
 
 class RecruiterAuthController extends Controller
 {
@@ -108,7 +109,7 @@ class RecruiterAuthController extends Controller
     public function post_login(Request $request) {
         try{
         if ($request->ajax()) {
-            
+
                 $validator = Validator::make($request->all(), [
                     'id' => 'email:rfc,dns',
                 ]);
@@ -215,6 +216,10 @@ class RecruiterAuthController extends Controller
                     'role' => 'RECRUITER',
                 ]);
 
+                // dispatching the event after creating user before validate
+                // new trigger needed for recruter or passing role as params 
+                // event(new UserCreated($model));
+
                  // sending mail infromation
                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
                  Mail::to($model->email)->send(new register($email_data));
@@ -262,6 +267,11 @@ class RecruiterAuthController extends Controller
                     // Auth::guard('frontend')->login($user, true);
                     Auth::guard('recruiter')->login($user, true);
                     session()->forget('otp_user_id');
+
+                     // generate accesstoken
+
+                //    $token = $user->createToken('authToken')->accessToken;
+                $token = $user->createToken('authToken',['some_Permession'])->accessToken;
 
                     $response['link'] = route('recruiter-dashboard');
                     if (session()->has('intended_url')) {

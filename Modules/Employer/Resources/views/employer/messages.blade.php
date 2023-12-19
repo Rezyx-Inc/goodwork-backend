@@ -26,7 +26,7 @@
                         </div>
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('recruiter/assets/images/message-img1.png')}}" /></li>
+                                <li><img src="{{URL::asset('employer/assets/images/message-img1.png')}}" /></li>
                                 <li>
                                     <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
                                     <p>Check the prescription</p>
@@ -43,7 +43,7 @@
 
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('recruiter/assets/images/message-img2.png')}}" /></li>
+                                <li><img src="{{URL::asset('employer/assets/images/message-img2.png')}}" /></li>
                                 <li>
                                     <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
                                     <p>Check the prescription</p>
@@ -61,7 +61,7 @@
 
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('recruiter/assets/images/message-img3.png')}}" /></li>
+                                <li><img src="{{URL::asset('employer/assets/images/message-img3.png')}}" /></li>
                                 <li>
                                     <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
                                     <p>Check the prescription</p>
@@ -78,7 +78,7 @@
 
                         <div class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('recruiter/assets/images/message-img4.png')}}" /></li>
+                                <li><img src="{{URL::asset('employer/assets/images/message-img4.png')}}" /></li>
                                 <li>
                                     <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
                                     <p>Check the prescription</p>
@@ -100,7 +100,7 @@
                     <div class="ss-msg-rply-mn-div">
                         <div class="ss-msg-rply-profile-sec">
                             <ul>
-                                <li><img src="{{URL::asset('recruiter/assets/images/msg-rply-box-img.png')}}" /></li>
+                                <li><img src="{{URL::asset('employer/assets/images/msg-rply-box-img.png')}}" /></li>
                                 <li>
                                     <h6>{{$faker->fantasyName('fantasyNames')}}</h6>
                                     <p>Associate Degree in Nursing</p>
@@ -135,7 +135,7 @@
 
     </div>
 
-    <div class="container" id="recruiters_messages">
+    <div class="container d-none" id="recruiters_messages">
 
         <div class="ss-message-pg-mn-div">
             <div class="row">

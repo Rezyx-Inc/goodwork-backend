@@ -1786,6 +1786,19 @@ Route::group(['middleware'=>'api','prefix'=> 'auth'], function () {
     Route::post('/login',[AuthController::class,'login'])->name('login-jwt');
 });
 
+
+// test api permession ex: employer
+Route::middleware(['auth:api','scopes:all_Permession'])->get('/allPermession',function(){
+    return response()->json(["role"=>'employer']);
+})->name('allPermession');
+
+// test api permession ex: recruiter
+Route::middleware(['auth:api','scopes:some_Permession'])->get('/somePermession',function(){
+    return response()->json(["success"=>'recruter']);
+})->name('somePermession');
+
+
+
 // Route::post('/session', 'ApiController@session')->name('session');
 // Route::post('/make-payment', 'ApiController@make_payment')->name('make_payment');
 

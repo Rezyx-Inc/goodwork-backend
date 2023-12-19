@@ -82,5 +82,8 @@ class Kernel extends HttpKernel
 
         'employer_logged_in' => \App\Http\Middleware\EmployerAuth::class,
         'employer_not_logged_in' => \App\Http\Middleware\EmployerNotAuth::class,
+
+        'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
+'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
     ];
 }

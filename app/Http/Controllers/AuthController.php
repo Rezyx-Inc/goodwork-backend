@@ -72,11 +72,7 @@ class AuthController extends Controller
             $otp = $this->rand_number(4);
             $model->update(['otp' => $otp, 'otp_expiry' => date('Y-m-d H:i:s', time() + 300)]);
 
-
             $response['msg'] = 'You are registered successfully! an OTP sent to your registered email and mobile number.';
-
-
-
 
             return response()->json($response);
         }
@@ -94,7 +90,7 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
-        
+
         // Generate JWT for the user
         $token = JWTAuth::fromUser($user);
 

@@ -29,7 +29,7 @@ $factory->define(User::class, function (Faker $faker) {
         // 'first_name' => $faker->firstName,
         // 'last_name' => $faker->lastName,
         'first_name' => $faker->fantasyName('first_name'),
-        'last_name' => $faker->fantasyName('second_name'),
+        'last_name' => $faker->fantasyName('last_name'),
         'image' => null,
         'email' => $faker->unique()->safeEmail,
         'user_name' => $faker->userName,

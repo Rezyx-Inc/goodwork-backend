@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\login;
 use App\Mail\register;
+use App\Events\UserCreated;
 
 class EmployerAuthController extends Controller
 {
@@ -154,6 +155,9 @@ class EmployerAuthController extends Controller
                     'role' => 'EMPLOYER',
                 ]);
 
+                // dispatching the event after creating user before validate
+                event(new UserCreated($model));
+
                 // we should create a facility for this employer we need to retrieve data from the form for that
 
                  // sending mail infromation
@@ -200,8 +204,13 @@ class EmployerAuthController extends Controller
                     $input['otp'] = null;
                     $user->update($input);
                     // Auth::guard('frontend')->login($user, true);
-                    Auth::guard('employer')->login($user, true);
+                     Auth::guard('employer')->login($user, true);
                     session()->forget('otp_user_id');
+
+                    // generate accesstoken
+
+                //    $token = $user->createToken('authToken')->accessToken;
+                $token = $user->createToken('authToken',['all_Permession'])->accessToken;
 
                     $response['link'] = route('employer-dashboard');
                     if (session()->has('intended_url')) {

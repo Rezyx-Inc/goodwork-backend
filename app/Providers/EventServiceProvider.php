@@ -23,6 +23,8 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Illuminate\Auth\Events\Lockout' => [
             'App\Listeners\LogLockout',
+        ],'App\Events\UserCreated' => [
+            'App\Listeners\GenerateJwtToken',
         ],
     ];
 

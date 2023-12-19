@@ -69,7 +69,7 @@
         <div class="ss-acount-profile">
             <div class="row">
                 <div class="col-lg-5" id="other_type">
-                    <div class="ss-account-form-lft-1" id="ss-account">
+                    <div class="ss-account-form-lft-1 d-none" id="ss-account">
                         <h5 class="mb-4" id="listingname">New application</h5>
                         <div id="application-list">
                             <!-- first card -->
@@ -80,7 +80,7 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-4 col-md-4 " style="width: 20%;">
                                             <img class="proffession_application_profil"
-                                                src="{{ URL::asset('recruiter/assets/images/recomand-img-1.png') }}"
+                                                src="{{ URL::asset('employer/assets/images/recomand-img-1.png') }}"
                                                 alt="">
                                         </div>
                                         <div class="col-9 col-sm-9">
@@ -91,7 +91,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home2">
-                                                        {{ $faker->fantasyName('fantasyNames')}}</p>
+                                                        {{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</p>
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home3">
@@ -149,7 +149,7 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-4 col-md-4 " style="width: 20%;">
                                             <img class="proffession_application_profil"
-                                                src="{{ URL::asset('recruiter/assets/images/recomand-img-1.png') }}"
+                                                src="{{ URL::asset('employer/assets/images/recomand-img-1.png') }}"
                                                 alt="">
                                         </div>
                                         <div class="col-9 col-sm-9">
@@ -160,7 +160,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home2">
-                                                        {{ $faker->fantasyName('fantasyNames')}}</p>
+                                                         {{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</p>
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home3">
@@ -195,7 +195,7 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-4 col-md-4 " style="width: 20%;">
                                             <img class="proffession_application_profil"
-                                                src="{{ URL::asset('recruiter/assets/images/recomand-img-1.png') }}"
+                                                src="{{ URL::asset('employer/assets/images/recomand-img-1.png') }}"
                                                 alt="">
                                         </div>
                                         <div class="col-9 col-sm-9">
@@ -206,7 +206,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home2">
-                                                        {{ $faker->fantasyName('fantasyNames')}}</p>
+                                                         {{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</p>
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home3">
@@ -238,7 +238,7 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-sm-4 col-md-4 " style="width: 20%;">
                                             <img class="proffession_application_profil"
-                                                src="{{ URL::asset('recruiter/assets/images/recomand-img-1.png') }}"
+                                                src="{{ URL::asset('employer/assets/images/recomand-img-1.png') }}"
                                                 alt="">
                                         </div>
                                         <div class="col-9 col-sm-9">
@@ -249,7 +249,7 @@
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home2">
-                                                        {{ $faker->fantasyName('fantasyNames')}}</p>
+                                                         {{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</p>
                                                 </div>
                                                 <div class="col-12 col-sm-12">
                                                     <p class="app_info_home3">
@@ -291,7 +291,7 @@
                 <div class="col-lg-7">
                     <div class="ss-journy-svd-jbdtl-dv">
                         <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
-                            <div class="row" id="application-details">
+                            <div class="row d-none" id="application-details">
 
 
                                 <div class="col-lg-3 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-start"
@@ -682,7 +682,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/update-application-status') }}",
+                url: "{{ url('employer/update-application-status') }}",
                 data: {
                     'token': csrfToken,
                     'type': type,
@@ -706,37 +706,37 @@
         }
     }
 
-    function offerSend(id, jobid, type) {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        if (csrfToken) {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                url: "{{ url('recruiter/send-job-offer-recruiter') }}",
-                data: {
-                    'token': csrfToken,
-                    'id': id,
-                    'jobid': jobid,
-                    'type': type,
-                },
-                type: 'POST',
-                dataType: 'json',
-                success: function (result) {
-                    notie.alert({
-                        type: 'success',
-                        text: '<i class="fa fa-check"></i> ' + result.message,
-                        time: 5
-                    });
-                },
-                error: function (error) {
-                    // Handle errors
-                }
-            });
-        } else {
-            console.error('CSRF token not found.');
-        }
-    }
+    // function offerSend(id, jobid, type) {
+    //     var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    //     if (csrfToken) {
+    //         $.ajax({
+    //             headers: {
+    //                 'X-CSRF-TOKEN': csrfToken
+    //             },
+    //             url: "{{ url('employer/send-job-offer-employer') }}",
+    //             data: {
+    //                 'token': csrfToken,
+    //                 'id': id,
+    //                 'jobid': jobid,
+    //                 'type': type,
+    //             },
+    //             type: 'POST',
+    //             dataType: 'json',
+    //             success: function (result) {
+    //                 notie.alert({
+    //                     type: 'success',
+    //                     text: '<i class="fa fa-check"></i> ' + result.message,
+    //                     time: 5
+    //                 });
+    //             },
+    //             error: function (error) {
+    //                 // Handle errors
+    //             }
+    //         });
+    //     } else {
+    //         console.error('CSRF token not found.');
+    //     }
+    // }
 
 </script>
 <script>
@@ -784,7 +784,7 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         type: 'POST',
-                        url: "{{ url('recruiter/remove') }}/" + removetype,
+                        url: "{{ url('employer/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function (data) {

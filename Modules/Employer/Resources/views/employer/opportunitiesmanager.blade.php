@@ -385,7 +385,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-1.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/recomand-img-1.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -434,7 +434,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-2.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/recomand-img-2.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -494,7 +494,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-3.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/recomand-img-3.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -555,7 +555,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/message-img4.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/message-img4.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -635,6 +635,8 @@
         } else {
             document.getElementById("details_onhold_published").classList.remove("d-none");
             document.getElementById("details_draft").classList.add("d-none");
+
+        document.getElementById('published-job-details').classList.remove('d-none');
         }
 
 
@@ -668,7 +670,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/get-job-listing') }}",
+                url: "{{ url('employer/get-job-listing') }}",
                 data: {
                     'token': csrfToken,
                     'type': type,
@@ -705,6 +707,7 @@
 
         opportunitiesType('published')
         document.getElementById("details_onhold_published").classList.add("d-none");
+        document.getElementById('published-job-details').classList.add('d-none');
     });
 
     function editOpportunity(id = "", formtype) {
@@ -714,7 +717,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/get-job-listing') }}",
+                url: "{{ url('employer/get-job-listing') }}",
                 data: {
                     'id': id,
                     'formtype': formtype
@@ -759,7 +762,7 @@
                     'X-CSRF-TOKEN': csrfToken
                 },
                 type: 'POST',
-                url: "{{ url('recruiter/recruiter-create-opportunity') }}/update",
+                url: "{{ url('employer/employer-create-opportunity') }}/update",
                 data: formData,
                 dataType: 'json',
                 success: function (data) {
@@ -812,7 +815,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     type: 'POST',
-                    url: "{{ url('recruiter/recruiter-create-opportunity') }}/" + check_type,
+                    url: "{{ url('employer/employer-create-opportunity') }}/" + check_type,
 
                     data: formData,
                     dataType: 'json',
@@ -843,7 +846,7 @@
 
 
 
-    function offerSend(id, jobid, type, workerid, recruiterid) {
+    function offerSend(id, jobid, type, workerid, employerid) {
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         if (csrfToken) {
             let counterstatus = "1";
@@ -854,14 +857,14 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/recruiter-send-job-offer') }}",
+                url: "{{ url('employer/employer-send-job-offer') }}",
                 data: {
                     'token': csrfToken,
                     'id': id,
                     'job_id': jobid,
                     'counterstatus': counterstatus,
                     'worker_user_id': workerid,
-                    'recruiter_id': recruiterid,
+                    'employer_id': employerid,
                     'is_draft': "1",
                 },
                 type: 'POST',
@@ -966,7 +969,7 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         type: 'POST',
-                        url: "{{ url('recruiter/remove') }}/" + removetype,
+                        url: "{{ url('employer/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function (data) {
@@ -1114,7 +1117,7 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         type: 'POST',
-                        url: "{{ url('recruiter/remove') }}/" + removetype,
+                        url: "{{ url('employer/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function (data) {
@@ -1213,7 +1216,7 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         type: 'POST',
-                        url: "{{ url('recruiter/remove') }}/" + removetype,
+                        url: "{{ url('employer/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function (data) {
@@ -1241,7 +1244,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/ask-recruiter-notification') }}",
+                url: "{{ url('employer/ask-employer-notification') }}",
                 data: {
                     'token': csrfToken,
                     'worker_id': workerid,

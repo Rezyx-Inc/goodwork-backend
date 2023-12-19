@@ -14,15 +14,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use App\Notifications\NurseifyRestPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Passport\HasApiTokens;
 use DB;
 
-class User extends Authenticatable implements HasMedia,JWTSubject
+class User extends Authenticatable implements HasMedia
 {
     use Notifiable;
     use SoftDeletes;
     use HasRoles;
     use HasMediaTrait;
     use LogsActivity;
+    use HasApiTokens;
 
     protected static function boot()
 	{
