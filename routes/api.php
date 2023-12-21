@@ -16,6 +16,8 @@ use App\Http\Controllers\Api\StaticContent\StaticContentController;
 use App\Http\Controllers\Api\Support\SupportController;
 use App\Http\Controllers\Api\UserProfile\UserProfileController;
 use App\Http\Controllers\AuthController;
+use App\Models\Cities;
+use App\Models\Countries;
 
 /*
 |--------------------------------------------------------------------------
@@ -1781,21 +1783,23 @@ Route::post('/send-money', [ApiController::class, 'send_money'])->name('send_mon
 Route::post('get-employers', [ApiController::class, 'employers']);
 
 
-Route::group(['middleware'=>'api','prefix'=> 'auth'], function () {
-    Route::post('/register',[AuthController::class,'register'])->name('register-jwt');
-    Route::post('/login',[AuthController::class,'login'])->name('login-jwt');
-});
+// Route::post('auth/register',[AuthController::class,'register'])->name('register-jwt');
 
+// authorize_access to api by email and api_key : return jwt token
 
-// test api permession ex: employer
-Route::middleware(['auth:api','scopes:all_Permession'])->get('/allPermession',function(){
-    return response()->json(["role"=>'employer']);
-})->name('allPermession');
+Route::post('auth/authorize',[AuthController::class,'authorize_access'])->name('authorize');
 
-// test api permession ex: recruiter
-Route::middleware(['auth:api','scopes:some_Permession'])->get('/somePermession',function(){
-    return response()->json(["success"=>'recruter']);
-})->name('somePermession');
+// test jwt auth token with scopes ex: employer
+
+Route::middleware(['auth:api','scopes:all_Permession'])->get('/allPermession',[ApiController::class,'all_permession_test'])->name('allPermession');
+
+// test jwt auth token with scopes ex: recruiter
+
+Route::middleware(['auth:api','scopes:some_Permession'])->get('/somePermession',[ApiController::class,'some_permession_test'])->name('somePermession');
+
+// test api key and rate limit 60 hits per minute
+
+Route::middleware(['auth:api','ThrottleMiddleware:60,1','controllHeaders'])->get('/getData',[ApiController::class,'get_cities']);
 
 
 

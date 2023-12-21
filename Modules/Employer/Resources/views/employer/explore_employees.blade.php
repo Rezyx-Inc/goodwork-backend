@@ -682,7 +682,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('employer/update-application-status') }}",
+                url: "{{ url('employer/employer-update-application-status') }}",
                 data: {
                     'token': csrfToken,
                     'type': type,

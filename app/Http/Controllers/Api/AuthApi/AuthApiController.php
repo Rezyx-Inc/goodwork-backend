@@ -162,4 +162,8 @@ class AuthApiController extends Controller
     public function getUser(Request $request) {
         return $request->user();
     }
+
+   
 }
+
+

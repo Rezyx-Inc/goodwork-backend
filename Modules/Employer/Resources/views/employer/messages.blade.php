@@ -28,7 +28,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('employer/assets/images/message-img1.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -45,7 +45,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('employer/assets/images/message-img2.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -63,7 +63,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('employer/assets/images/message-img3.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -80,7 +80,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('employer/assets/images/message-img4.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -102,7 +102,7 @@
                             <ul>
                                 <li><img src="{{URL::asset('employer/assets/images/msg-rply-box-img.png')}}" /></li>
                                 <li>
-                                    <h6>{{$faker->fantasyName('fantasyNames')}}</h6>
+                                    <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
                                     <p>Associate Degree in Nursing</p>
                                 </li>
                             </ul>
@@ -112,13 +112,13 @@
                             <p>Today</p>
                         </div>
                         <div class="ss-msg-rply-blue-dv">
-                            <h6>{{$faker->fantasyName('fantasyNames')}}</h6>
+                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
                             <p>Hello! Jhon abraham</p>
                             <span>09:25 AM</span>
                         </div>
 
                         <div class="ss-msg-rply-recrut-dv">
-                            <h6>{{$faker->fantasyName('fantasyNames')}}</h6>
+                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
                             <p>Have a great working week!!</p>
                             <p>Hope you like it</p>
                             <span>09:25 AM</span>
@@ -157,7 +157,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -174,7 +174,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('frontend/img/message-img2.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -192,7 +192,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('frontend/img/message-img3.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -209,7 +209,7 @@
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('frontend/img/message-img4.png')}}" /></li>
                                 <li>
-                                    <h5>{{$faker->fantasyName('fantasyNames')}}</h5>
+                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
                                     <p>Check the prescription</p>
                                 </li>
                             </ul>
@@ -231,7 +231,7 @@
                             <ul>
                                 <li><img src="{{URL::asset('frontend/img/msg-rply-box-img.png')}}" /></li>
                                 <li>
-                                    <h6>{{$faker->fantasyName('fantasyNames')}}</h6>
+                                    <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
                                     <p>Travel Nurse CRNA/.....</p>
                                 </li>
                             </ul>
@@ -241,13 +241,13 @@
                             <p>Today</p>
                         </div>
                         <div class="ss-msg-rply-blue-dv">
-                            <h6>{{$faker->fantasyName('fantasyNames')}}</h6>
-                            <p>Hello! {{$faker->fantasyName('fantasyNames')}}</p>
+                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
+                            <p>Hello! {{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</p>
                             <span>09:25 AM</span>
                         </div>
 
                         <div class="ss-msg-rply-recrut-dv">
-                            <h6>{{$faker->fantasyName('fantasyNames')}}</h6>
+                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
                             <p>Have a great working week!!</p>
                             <p>Hope you like it</p>
                             <span>09:25 AM</span>

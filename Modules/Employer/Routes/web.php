@@ -41,20 +41,20 @@ Route::prefix('employer')->group(function() {
         
         // Route::get('employer-messages', ['uses' => 'EmployerDashboardController@communication', 'as' => 'employer-messages']);
         // Route::get('employer-profile', ['uses' => 'EmployerDashboardController@profile', 'as' => 'employer-profile']);
-        Route::post('help-and-support', ['uses' => 'EmployerDashboardController@helpAndSupport', 'as' => 'help-and-support']);
+        Route::post('help-and-support', ['uses' => 'EmployerDashboardController@helpAndSupport', 'as' => 'employer-help-and-support']);
         Route::post('employer-update-profile', ['uses' => 'EmployerDashboardController@updateProfile', 'as' => 'employer-update-profile']);
         Route::post('employer-remove-qualities', ['uses' => 'EmployerDashboardController@employerRemoveQualities', 'as' => 'employer-remove-qualities']);
 
         Route::get('employer-application',  ['uses' => 'ApplicationController@application', 'as' => 'employer-application']);
-        Route::post('get-application-listing', ['uses' => 'ApplicationController@getApplicationListing', 'as' => 'get-application-listing']);
+        Route::post('get-application-listing', ['uses' => 'ApplicationController@getApplicationListing', 'as' => 'employer-get-application-listing']);
         // Route::get('employer-single-job/{id}', ['uses' => 'EmployerDashboardController@getSinglejob', 'as' => 'employer-single-job']);
-        Route::post('update-application-status', ['uses' => 'ApplicationController@updateApplicationStatus', 'as' => 'update-application-status']);
+        Route::post('update-application-status', ['uses' => 'ApplicationController@updateApplicationStatus', 'as' => 'employer-update-application-status']);
         Route::post('employer-send-job-offer', ['uses' => 'ApplicationController@sendJobOffer', 'as' => 'employer-send-job-offer']);
 
         Route::get('employer-opportunities-manager', ['uses' => 'OpportunitiesController@index', 'as' => 'employer-opportunities-manager']);
         Route::get('employer-create-opportunity', ['uses' => 'OpportunitiesController@create', 'as' => 'employer-create-opportunity']);
         Route::post('employer-create-opportunity/{check_type}', ['uses' => 'OpportunitiesController@store', 'as' => 'employer-create-opportunity-store']);
-        Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'get-job-listing']);
+        Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'employer-get-job-listing']);
 
 
 
@@ -62,7 +62,7 @@ Route::prefix('employer')->group(function() {
 
         Route::post('ask-employer-notification', ['uses' => 'EmployerDashboardController@askEmployerNotification', 'as' => 'ask-employer-notification']);
 
-        Route::get('get-single-nurse-details/{id}', ['uses' => 'EmployerDashboardController@getSingleNurseDetails', 'as' => 'get-single-nurse-details']);
+        Route::get('get-single-nurse-details/{id}', ['uses' => 'EmployerDashboardController@getSingleNurseDetails', 'as' => 'employer-get-single-nurse-details']);
 
         Route::post('send-job-offer-employer', ['uses' => 'ApplicationController@sendJobOfferEmployer', 'as' => 'send-job-offer-employer']);
     }

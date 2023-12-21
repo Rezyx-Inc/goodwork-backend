@@ -44,22 +44,20 @@
                     <h5>Create Job Request</h5>
                 </div>
                 <div class="row">
-                    <form class="ss-emplor-form-sec" id="create-new-job">
-                        <div class="row">
+                    <form class="ss-emplor-form-sec" method="post" action="{{route('addJob.store')}}" id="create-new-job">
+                    @csrf
+                        <div class="row">  
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name"
-                                    placeholder="Enter Job Location (City, State)">
-                            </div>
-                            <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
                                 <input type="text" name="job_name" id="job_name" placeholder="Enter job name">
                             </div>
+                             <div class="ss-form-group col-md-4"> 
+                                <input type="text" name="job_type" id="job_type"
+                                    placeholder="Enter job type">
+                            </div>
+
                             <div class="ss-form-group col-md-4">
 
-                                <select name="terms" id="term">
+                                <select name="preferred_specialty" id="perferred_specialty">
                                     <option value="">Specialty</option>
                                     <option value="1">Term Option 1</option>
                                     <option value="2">Term Option 2</option>
@@ -68,36 +66,55 @@
                                 </select>
 
                             </div>
+                             <div class="ss-form-group col-md-4">
+
+                                <select name="perferred_profession" id="perferred_profession">
+                                    <option value="">Proffession</option>
+                                    <option value="1">Term Option 1</option>
+                                    <option value="2">Term Option 2</option>
+                                    <option value="3">Term Option 3</option>
+                                    <!-- Add more static options as needed -->
+                                </select>
+
+                            </div>
+
                             <div class="ss-form-group col-md-4">
 
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name" placeholder="Enter Work Location">
+<input type="text" name="job_city" id="job_city"
+    placeholder="Enter Job Location (City)">
+</div>
+
+<div class="ss-form-group col-md-4">
+
+
+<input type="text" name="job_state" id="job_state"
+    placeholder="Enter Job Location (State)">
+</div>
+                            <div class="ss-form-group col-md-4">
+
+                                
+                                <input type="text" name="preferred_work_location" id="preferred_work_location" placeholder="Enter Work Location">
                             </div>
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name" placeholder="Enter Work Duration">
+                                <input type="text" name="preferred_assignment_duration" id="preferred_assignment_duration" placeholder="Enter Work Duration">
                             </div>
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name" placeholder="Enter Weekly Pay">
+                                <input type="text" name="weekly_pay" id="weekly_pay" placeholder="Enter Weekly Pay">
                             </div>
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <textarea type="text" name="job_name" id="job_name"
+                                <textarea type="text" name="description" id="description"
                                     placeholder="Enter Job Description"></textarea>
                             </div>
-
                         </div>
                         <div class="ss-crt-opper-buttons">
                             <a href="javascript:void(0)" class="ss-reject-offer-btn text-center w-50"
                                 onclick="createDraft()">Save As Draft</a>
-                            <a href="javascript:void(0)" class="ss-counter-button text-center w-50"
-                                onclick="createJob()">Publish Now</a>
+                            <!-- <a href="javascript:void(0)" class="ss-counter-button text-center w-50"
+                                onclick="createJob()">Publish Now</a> -->
+                                <button type="submit" class="ss-counter-button text-center w-50">Publish Now</button>
                         </div>
                     </form>
+
                 </div>
             </div>
 
@@ -630,9 +647,12 @@
 
 
         if (type == "drafts") {
+            document.getElementById("no-job-posted").classList.add("d-none");
             document.getElementById("details_draft").classList.remove("d-none");
             document.getElementById("details_onhold_published").classList.add("d-none");
+            document.getElementById('published-job-details').classList.remove('d-none');
         } else {
+            document.getElementById("no-job-posted").classList.add("d-none");
             document.getElementById("details_onhold_published").classList.remove("d-none");
             document.getElementById("details_draft").classList.add("d-none");
 
@@ -670,7 +690,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('employer/get-job-listing') }}",
+                url: "{{ url('employer/employer-get-job-listing') }}",
                 data: {
                     'token': csrfToken,
                     'type': type,
@@ -689,10 +709,11 @@
                     list_specialities();
                     list_vaccinations();
                     list_certifications();
-                    if (result.joblisting != "") {
-                        document.getElementById("published-job-details").classList.remove("d-none");
-                        document.getElementById("no-job-posted").classList.add("d-none");
-                    }
+                    // console.log(result.joblisting);
+                    // if (result.joblisting != "") {
+                    //     document.getElementById("published-job-details").classList.remove("d-none");
+                    //     document.getElementById("no-job-posted").classList.add("d-none");
+                    // }
                 },
                 error: function (error) {
                     // Handle errors
@@ -705,8 +726,9 @@
     }
     $(document).ready(function () {
 
-        opportunitiesType('published')
+        
         document.getElementById("details_onhold_published").classList.add("d-none");
+        document.getElementById("details_draft").classList.add("d-none");
         document.getElementById('published-job-details').classList.add('d-none');
     });
 
@@ -717,7 +739,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('employer/get-job-listing') }}",
+                url: "{{ url('employer/employer-get-job-listing') }}",
                 data: {
                     'id': id,
                     'formtype': formtype

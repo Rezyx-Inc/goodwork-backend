@@ -43,6 +43,7 @@
     <script type="text/javascript">
 </script>
     @yield('js')
+    @include('partials.flashMsg')
 </body>
 
 </html>

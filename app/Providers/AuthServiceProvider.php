@@ -32,8 +32,11 @@ class AuthServiceProvider extends ServiceProvider
         // passport routes
         Passport::routes();
 
-        // ttl time
-        Passport::personalAccessTokensExpireIn(now()->addMinutes(30));
+        // ttl time 30 minutes
+        //Passport::personalAccessTokensExpireIn(now()->addMinutes(30));
+
+        // ttl time 2 hours
+        Passport::personalAccessTokensExpireIn(now()->addHour(2));
 
         // scopes
         Passport::tokensCan([

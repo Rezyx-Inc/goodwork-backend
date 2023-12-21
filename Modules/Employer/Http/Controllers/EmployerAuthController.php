@@ -127,6 +127,7 @@ class EmployerAuthController extends Controller
                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                //needs net` access
                 'email' => 'email:rfc,dns'
             ]);
             if ($validator->fails()) {
@@ -181,8 +182,8 @@ class EmployerAuthController extends Controller
         }
     }catch(\Exception $e){
         $data = [];
-        $data['msg'] = $e->getMessage();
-      // $data['msg'] ='We encountered an error. Please try again later.';
+       // $data['msg'] = $e->getMessage();
+        $data['msg'] ='We encountered an error. Please try again later.';
         $data['success'] = false;
         return response()->json($data);
     }
@@ -212,7 +213,7 @@ class EmployerAuthController extends Controller
                 //    $token = $user->createToken('authToken')->accessToken;
                 $token = $user->createToken('authToken',['all_Permession'])->accessToken;
 
-                    $response['link'] = route('employer-dashboard');
+                    $response['link'] = route('home');
                     if (session()->has('intended_url')) {
                         $response['link'] = session()->get('intended_url');
                         session()->forget('intended_url');

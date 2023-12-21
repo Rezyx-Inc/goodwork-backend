@@ -21,6 +21,8 @@ use App\Models\Offer;
 use App\Models\NurseAsset;
 use App\Models\NurseReference;
 use App\Models\Follows;
+use App\Models\API_KEY;
+use App\Models\Countries;
 
 //FACILITY
 use App\Models\FacilityFollows;
@@ -3462,6 +3464,30 @@ class ApiController extends Controller
             ]);
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $transfer], 200);
+    }
+
+     function get_cities(Request $request){
+
+        $validator = \Validator::make($request->all(), [
+            'api_key' => 'required',
+        ]);
+
+        $key = $request->input('api_key');
+        $api_key  = API_KEY::where('key', $key)->first();
+        // Check if is a valid api key
+        if (!$api_key) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+       
+        $cities = Countries::all();
+        return response()->json(['data'=>$cities]);
+    }
+    function all_permession_test(){
+        return response()->json(["role"=>'employer']);
+    }
+
+    function some_permession_test(){
+        return response()->json(["success"=>'recruter']);
     }
 
 

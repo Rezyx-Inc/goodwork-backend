@@ -180,6 +180,9 @@ return [
 
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
+        // API KEY SERVICE PROVIDER
+        Ejarnutowski\LaravelApiKey\Providers\ApiKeyServiceProvider::class,
+
 
 
     ],
@@ -238,6 +241,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
        
     ],
 
