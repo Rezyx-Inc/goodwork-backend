@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Policies\JobPolicy;
 use App\Models\Job;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // passport routes
+        Passport::routes();
+
+        // ttl time 30 minutes
+        //Passport::personalAccessTokensExpireIn(now()->addMinutes(30));
+
+        // ttl time 2 hours
+        Passport::personalAccessTokensExpireIn(now()->addHour(2));
+
+        // scopes
+        Passport::tokensCan([
+            'all_Permession' => 'all Permession',
+            'some_Permession' => 'some Permession',
+        ]);
+
     }
 }

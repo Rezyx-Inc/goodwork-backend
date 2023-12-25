@@ -180,8 +180,10 @@ return [
 
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
-        //jwt provider
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        // API KEY SERVICE PROVIDER
+        Ejarnutowski\LaravelApiKey\Providers\ApiKeyServiceProvider::class,
+
+
 
     ],
 
@@ -239,9 +241,8 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        // ADD JWT ALIASES
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTAuthFactory' => Tymon\JWTAuth\Facades\JWTAuthFactory::class,
+        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
+       
     ],
 
 ];

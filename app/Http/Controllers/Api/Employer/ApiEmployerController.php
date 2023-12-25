@@ -457,7 +457,7 @@ class ApiEmployerController extends Controller
         $validator = \Validator::make($request->all(), [
             'email' => 'required|unique:facilities,facility_email',
             'api_key' => 'required',
-            'mobile' => 'required|unique:facilities,facility_phone'
+            'mobile' => 'nullable|unique:facilities,facility_phone'
         ]);
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();

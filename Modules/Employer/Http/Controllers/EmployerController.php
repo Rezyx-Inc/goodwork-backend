@@ -45,6 +45,9 @@ class EmployerController extends Controller
                 'preferred_assignment_duration' => 'required|string',
                 'weekly_pay' => 'required|string',
                 'preferred_specialty' => 'required|string',
+                'preferred_work_location'=>'required|string',
+                'description'=>'required|string',
+                
             ]);
 
             // Create a new Job instance with the validated data
@@ -63,7 +66,7 @@ class EmployerController extends Controller
             $job->save();
 
             // Redirect back to the add job form with a success message
-            return redirect()->route('add-job')->with('success', 'Job added successfully!');
+            return redirect()->route('employer-opportunities-manager')->with('success', 'Job added successfully!');
 
             // return response()->json(['success' => true, 'message' => 'Job added successfully!']);
         } catch (QueryException $e) {
@@ -71,14 +74,14 @@ class EmployerController extends Controller
             Log::error('Error saving job: ' . $e->getMessage());
 
             // Handle the error gracefully - display a generic error message or redirect with an error status
-             return redirect()->route('add-job')->with('error', 'Failed to add job. Please try again later.');
+             return redirect()->route('employer-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
               // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
         } catch (\Exception $e) {
             // Handle other exceptions
             Log::error('Exception: ' . $e->getMessage());
 
             // Display a generic error message or redirect with an error status
-             return redirect()->route('add-job')->with('error', 'An unexpected error occurred. Please try again later.');
+             return redirect()->route('employer-opportunities-manager')->with('error','An unexpected error occurred. Please try again later.' );
            // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
         }
     }

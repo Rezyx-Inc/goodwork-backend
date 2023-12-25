@@ -44,22 +44,20 @@
                     <h5>Create Job Request</h5>
                 </div>
                 <div class="row">
-                    <form class="ss-emplor-form-sec" id="create-new-job">
-                        <div class="row">
+                    <form class="ss-emplor-form-sec" method="post" action="{{route('addJob.store')}}" id="create-new-job">
+                    @csrf
+                        <div class="row">  
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name"
-                                    placeholder="Enter Job Location (City, State)">
-                            </div>
-                            <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
                                 <input type="text" name="job_name" id="job_name" placeholder="Enter job name">
                             </div>
+                             <div class="ss-form-group col-md-4"> 
+                                <input type="text" name="job_type" id="job_type"
+                                    placeholder="Enter job type">
+                            </div>
+
                             <div class="ss-form-group col-md-4">
 
-                                <select name="terms" id="term">
+                                <select name="preferred_specialty" id="perferred_specialty">
                                     <option value="">Specialty</option>
                                     <option value="1">Term Option 1</option>
                                     <option value="2">Term Option 2</option>
@@ -68,36 +66,55 @@
                                 </select>
 
                             </div>
+                             <div class="ss-form-group col-md-4">
+
+                                <select name="perferred_profession" id="perferred_profession">
+                                    <option value="">Proffession</option>
+                                    <option value="1">Term Option 1</option>
+                                    <option value="2">Term Option 2</option>
+                                    <option value="3">Term Option 3</option>
+                                    <!-- Add more static options as needed -->
+                                </select>
+
+                            </div>
+
                             <div class="ss-form-group col-md-4">
 
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name" placeholder="Enter Work Location">
+<input type="text" name="job_city" id="job_city"
+    placeholder="Enter Job Location (City)">
+</div>
+
+<div class="ss-form-group col-md-4">
+
+
+<input type="text" name="job_state" id="job_state"
+    placeholder="Enter Job Location (State)">
+</div>
+                            <div class="ss-form-group col-md-4">
+
+                                
+                                <input type="text" name="preferred_work_location" id="preferred_work_location" placeholder="Enter Work Location">
                             </div>
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name" placeholder="Enter Work Duration">
+                                <input type="text" name="preferred_assignment_duration" id="preferred_assignment_duration" placeholder="Enter Work Duration">
                             </div>
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <input type="text" name="job_name" id="job_name" placeholder="Enter Weekly Pay">
+                                <input type="text" name="weekly_pay" id="weekly_pay" placeholder="Enter Weekly Pay">
                             </div>
                             <div class="ss-form-group col-md-4">
-
-                                <input type="text" name="job_id" id="job_id" placeholder="Enter job id" class="d-none">
-                                <textarea type="text" name="job_name" id="job_name"
+                                <textarea type="text" name="description" id="description"
                                     placeholder="Enter Job Description"></textarea>
                             </div>
-
                         </div>
                         <div class="ss-crt-opper-buttons">
                             <a href="javascript:void(0)" class="ss-reject-offer-btn text-center w-50"
                                 onclick="createDraft()">Save As Draft</a>
-                            <a href="javascript:void(0)" class="ss-counter-button text-center w-50"
-                                onclick="createJob()">Publish Now</a>
+                            <!-- <a href="javascript:void(0)" class="ss-counter-button text-center w-50"
+                                onclick="createJob()">Publish Now</a> -->
+                                <button type="submit" class="ss-counter-button text-center w-50">Publish Now</button>
                         </div>
                     </form>
+
                 </div>
             </div>
 
@@ -385,7 +402,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-1.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/recomand-img-1.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -434,7 +451,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-2.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/recomand-img-2.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -494,7 +511,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/recomand-img-3.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/recomand-img-3.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -555,7 +572,7 @@
                                                             <div class="col-lg-3 col-sm-4 col-md-4 "
                                                                 style="width: 20%;">
                                                                 <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('recruiter/assets/images/message-img4.png')}}"
+                                                                    src="{{URL::asset('employer/assets/images/message-img4.png')}}"
                                                                     alt="">
                                                             </div>
                                                             <div class="col-7 col-sm-7">
@@ -630,11 +647,16 @@
 
 
         if (type == "drafts") {
+            document.getElementById("no-job-posted").classList.add("d-none");
             document.getElementById("details_draft").classList.remove("d-none");
             document.getElementById("details_onhold_published").classList.add("d-none");
+            document.getElementById('published-job-details').classList.remove('d-none');
         } else {
+            document.getElementById("no-job-posted").classList.add("d-none");
             document.getElementById("details_onhold_published").classList.remove("d-none");
             document.getElementById("details_draft").classList.add("d-none");
+
+        document.getElementById('published-job-details').classList.remove('d-none');
         }
 
 
@@ -668,7 +690,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/get-job-listing') }}",
+                url: "{{ url('employer/employer-get-job-listing') }}",
                 data: {
                     'token': csrfToken,
                     'type': type,
@@ -687,10 +709,11 @@
                     list_specialities();
                     list_vaccinations();
                     list_certifications();
-                    if (result.joblisting != "") {
-                        document.getElementById("published-job-details").classList.remove("d-none");
-                        document.getElementById("no-job-posted").classList.add("d-none");
-                    }
+                    // console.log(result.joblisting);
+                    // if (result.joblisting != "") {
+                    //     document.getElementById("published-job-details").classList.remove("d-none");
+                    //     document.getElementById("no-job-posted").classList.add("d-none");
+                    // }
                 },
                 error: function (error) {
                     // Handle errors
@@ -703,8 +726,10 @@
     }
     $(document).ready(function () {
 
-        opportunitiesType('published')
+        
         document.getElementById("details_onhold_published").classList.add("d-none");
+        document.getElementById("details_draft").classList.add("d-none");
+        document.getElementById('published-job-details').classList.add('d-none');
     });
 
     function editOpportunity(id = "", formtype) {
@@ -714,7 +739,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/get-job-listing') }}",
+                url: "{{ url('employer/employer-get-job-listing') }}",
                 data: {
                     'id': id,
                     'formtype': formtype
@@ -759,7 +784,7 @@
                     'X-CSRF-TOKEN': csrfToken
                 },
                 type: 'POST',
-                url: "{{ url('recruiter/recruiter-create-opportunity') }}/update",
+                url: "{{ url('employer/employer-create-opportunity') }}/update",
                 data: formData,
                 dataType: 'json',
                 success: function (data) {
@@ -812,7 +837,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     type: 'POST',
-                    url: "{{ url('recruiter/recruiter-create-opportunity') }}/" + check_type,
+                    url: "{{ url('employer/employer-create-opportunity') }}/" + check_type,
 
                     data: formData,
                     dataType: 'json',
@@ -843,7 +868,7 @@
 
 
 
-    function offerSend(id, jobid, type, workerid, recruiterid) {
+    function offerSend(id, jobid, type, workerid, employerid) {
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         if (csrfToken) {
             let counterstatus = "1";
@@ -854,14 +879,14 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/recruiter-send-job-offer') }}",
+                url: "{{ url('employer/employer-send-job-offer') }}",
                 data: {
                     'token': csrfToken,
                     'id': id,
                     'job_id': jobid,
                     'counterstatus': counterstatus,
                     'worker_user_id': workerid,
-                    'recruiter_id': recruiterid,
+                    'employer_id': employerid,
                     'is_draft': "1",
                 },
                 type: 'POST',
@@ -966,7 +991,7 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         type: 'POST',
-                        url: "{{ url('recruiter/remove') }}/" + removetype,
+                        url: "{{ url('employer/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function (data) {
@@ -1114,7 +1139,7 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         type: 'POST',
-                        url: "{{ url('recruiter/remove') }}/" + removetype,
+                        url: "{{ url('employer/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function (data) {
@@ -1213,7 +1238,7 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         type: 'POST',
-                        url: "{{ url('recruiter/remove') }}/" + removetype,
+                        url: "{{ url('employer/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function (data) {
@@ -1241,7 +1266,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                url: "{{ url('recruiter/ask-recruiter-notification') }}",
+                url: "{{ url('employer/ask-employer-notification') }}",
                 data: {
                     'token': csrfToken,
                     'worker_id': workerid,

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\login;
 use App\Mail\register;
+use App\Events\UserCreated;
 
 class EmployerAuthController extends Controller
 {
@@ -126,6 +127,7 @@ class EmployerAuthController extends Controller
                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                //needs net` access
                 'email' => 'email:rfc,dns'
             ]);
             if ($validator->fails()) {
@@ -154,6 +156,9 @@ class EmployerAuthController extends Controller
                     'role' => 'EMPLOYER',
                 ]);
 
+                // dispatching the event after creating user before validate
+                event(new UserCreated($model));
+
                 // we should create a facility for this employer we need to retrieve data from the form for that
 
                  // sending mail infromation
@@ -178,7 +183,7 @@ class EmployerAuthController extends Controller
     }catch(\Exception $e){
         $data = [];
        // $data['msg'] = $e->getMessage();
-       $data['msg'] ='We encountered an error. Please try again later.';
+        $data['msg'] ='We encountered an error. Please try again later.';
         $data['success'] = false;
         return response()->json($data);
     }
@@ -200,10 +205,15 @@ class EmployerAuthController extends Controller
                     $input['otp'] = null;
                     $user->update($input);
                     // Auth::guard('frontend')->login($user, true);
-                    Auth::guard('employer')->login($user, true);
+                     Auth::guard('employer')->login($user, true);
                     session()->forget('otp_user_id');
 
-                    $response['link'] = route('employer-dashboard');
+                    // generate accesstoken
+
+                //    $token = $user->createToken('authToken')->accessToken;
+                $token = $user->createToken('authToken',['all_Permession'])->accessToken;
+
+                    $response['link'] = route('home');
                     if (session()->has('intended_url')) {
                         $response['link'] = session()->get('intended_url');
                         session()->forget('intended_url');

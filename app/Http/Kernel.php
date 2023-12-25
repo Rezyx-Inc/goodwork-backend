@@ -40,7 +40,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'throttle:30,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -82,5 +82,12 @@ class Kernel extends HttpKernel
 
         'employer_logged_in' => \App\Http\Middleware\EmployerAuth::class,
         'employer_not_logged_in' => \App\Http\Middleware\EmployerNotAuth::class,
+
+        'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
+        'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
+
+        'ThrottleMiddleware' => \GrahamCampbell\Throttle\Http\Middleware\ThrottleMiddleware::class,
+
+        'controllHeaders' => \App\Http\Middleware\controllHeaders::class,
     ];
 }
