@@ -111,7 +111,7 @@
     <li><input type="checkbox" id="checkboxThree" value="Rarity"><label for="checkboxThree">Per Diem</label></li>
      <li><input type="checkbox" id="checkboxfour" value="Cotton Candy1"><label for="checkboxfour">Local</label></li>
     <li><input type="checkbox" id="checkboxfive" value="Rarity1"><label for="checkboxfive">Non Clinical</label></li>
-      
+
   </ul>
             </div>
 
@@ -119,10 +119,10 @@
             <div class="ss-explr-datepkr">
               <label>Availability</label>
               <ul class="ss-date-with">
-                <li><div>    
+                <li><div>
 <input placeholder="Start Date" type="text" name="checkIn" id="datepicker" value="" class="calendar"><i class="fa fa-sort-desc icon" aria-hidden="true"></i>
     </div></li>
-                <li><div>    
+                <li><div>
 <input placeholder="Start Date" type="text" name="checkIn" id="datepicker1" value="" class="calendar"><i class="fa fa-sort-desc icon" aria-hidden="true"></i>
     </div></li>
               </ul>
@@ -155,7 +155,7 @@
     <li><input type="checkbox" id="checkboxThree" value="Rarity"><label for="checkboxThree">Per Diem</label></li>
      <li><input type="checkbox" id="checkboxfour" value="Cotton Candy1"><label for="checkboxfour">Local</label></li>
     <li><input type="checkbox" id="checkboxfive" value="Rarity1"><label for="checkboxfive">Non Clinical</label></li>
-      
+
   </ul>
             </div>
 
@@ -163,7 +163,7 @@
               <button class="ss-fliter-btn">Apply</button>
             </div>
 
-     
+
 
 
           </form>
@@ -182,17 +182,17 @@
           <li><button class="this-week-tab">This Week</button></li>
 
         </ul>
-        
+
 
           <!--------------ss- job-ex-tabs------->
 
         <div class="classss-job-es-tabs-mn-dv">
-          
+
             <!--------today------->
 
             <div class="ss-explo-tab-today-open">
 
-              
+
 
 
         <div class="ss-dash-profile-jb-mn-dv">
@@ -201,9 +201,9 @@
   @forelse($jobs as $j)
   <div class="ss-job-prfle-sec">
       <p>{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
-     
-      
-      <h4>{{$j->facility->name ?? 'NA'}}</h4>
+
+
+      <h4>{{$j->facility->name ?? 'Unknown Facility Name'}}</h4>
        <!-- job details not yet implemented -->
       <!-- <h4><a href="{{route('job-details',['id'=>$j->id])}}">{{$j->job_name}}</a></h4> -->
       <h6>{{$j->job_name}}</h6>
@@ -215,9 +215,9 @@
       <!-- should be dynamic  -->
       <h5>Recently Added</h5>
       <a href="javascript:void(0)" data-id="{{$j->id}}" onclick="save_jobs(this)" class="ss-jb-prfl-save-ico">
-         
+
           <img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" />
-      
+
       </a>
   </div>
   @empty
@@ -470,7 +470,7 @@
           </ul>
           <h5>Recently Added</h5>
         </div>
-        
+
         </div>
 
 
@@ -481,5 +481,5 @@
 </section>
 
 
-   
+
 @stop

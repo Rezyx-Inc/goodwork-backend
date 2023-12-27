@@ -3468,17 +3468,7 @@ class ApiController extends Controller
 
      function get_cities(Request $request){
 
-        $validator = \Validator::make($request->all(), [
-            'api_key' => 'required',
-        ]);
 
-        $key = $request->input('api_key');
-        $api_key  = API_KEY::where('key', $key)->first();
-        // Check if is a valid api key
-        if (!$api_key) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-       
         $cities = Countries::all();
         return response()->json(['data'=>$cities]);
     }
@@ -3488,6 +3478,175 @@ class ApiController extends Controller
 
     function some_permession_test(){
         return response()->json(["success"=>'recruter']);
+    }
+
+
+    public function store(Request $request, $check_type = "create")
+    {
+        $user_id = Auth::guard('employer')->user()->id;
+        if ($check_type == "update") {
+            $validation_array = ['job_id' => 'required'];
+        } else if ($check_type == "published") {
+            $validation_array = ['job_id' => 'required'];
+        } else if ($check_type == "hidejob" || $check_type == "unhidejob") {
+            $validation_array = ['job_id' => 'required'];
+        } else {
+            $validation_array = [
+                'job_name' => 'required',
+                'type' => 'required'
+            ];
+        }
+        $validator = Validator::make($request->all(), $validation_array);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()]);
+        } else {
+            $facility_id = Facility::where('created_by', $user_id)->get()->first();
+            if (isset($facility_id) && !empty($facility_id)) {
+                $facility_id = $facility_id->id;
+            } else {
+                $facility_id =  '';
+            }
+
+            $update_array = $request->except('job_id');
+
+            $jobexist = Job::where('id', $request->job_id)->first();
+
+            if($jobexist){
+                $newstring = "";
+                if ($request->preferred_specialty) {
+                    $update_array['preferred_specialty'] = preg_replace('/^,/', '', $jobexist->preferred_specialty . ',' . $request->preferred_specialty);
+                }
+                if ($request->preferred_experience) {
+                    $update_array['preferred_experience'] = preg_replace('/^,/', '', $jobexist->preferred_experience . ',' . $request->preferred_experience);
+                }
+                if ($request->vaccinations) {
+                    $update_array['vaccinations'] = preg_replace('/^,/', '', $jobexist->vaccinations . ',' . $request->vaccinations);
+                }
+                if ($request->certificate) {
+                    $update_array['certificate'] = preg_replace('/^,/', '', $jobexist->certificate . ',' . $request->certificate);
+                }
+            }
+
+            // if (isset($request->job_video) && $request->job_video != "") {
+            //     if (preg_match('/https?:\/\/(?:[\w]+\.)*youtube\.com\/watch\?v=[^&]+/', $request->job_video, $vresult)) {
+            //         $youTubeID = $this->parse_youtube($request->job_video);
+            //         $embedURL = 'https://www.youtube.com/embed/' . $youTubeID[1];
+            //         $update_array['video_embed_url'] = $embedURL;
+            //     } elseif (preg_match('/https?:\/\/(?:[\w]+\.)*vimeo\.com(?:[\/\w]*\/videos?)?\/([0-9]+)[^\s]*+/', $request->job_video, $vresult)) {
+            //         $vimeoID = $this->parse_vimeo($request->job_video);
+            //         $embedURL = 'https://player.vimeo.com/video/' . $vimeoID[1];
+            //         $update_array['video_embed_url'] = $embedURL;
+            //     }
+            // }
+
+            if ($check_type == "published") {
+                $jobexist = Job::find($request->job_id);
+                if (isset($jobexist->job_type))
+                    if (isset($jobexist->job_name))
+                        if (isset($jobexist->job_location))
+                            if (isset($jobexist->preferred_shift))
+                                // if (isset($jobexist->preferred_days_of_the_week))
+                                if (isset($jobexist->facility))
+                                    // if (isset($jobexist->weekly_pay))
+                                    $job = Job::where(['id' => $request->job_id])->update(['active' => '1']);
+                                // else
+                                //     return response()->json(['message' => 'Something went wrong! Please check weekly_pay']);
+                                else
+                                    return response()->json(['message' => 'Something went wrong! Please check Facility']);
+                            // else
+                            // return response()->json(['message' => 'Something went wrong! Please check preferred_days_of_the_week']);
+                            else
+                                return response()->json(['message' => 'Something went wrong! Please check Shift of Day']);
+                        else
+                            return response()->json(['message' => 'Something went wrong! Please check Professional Licensure']);
+                    else
+                        return response()->json(['message' => 'Something went wrong! Please check Job Name']);
+                else
+                    return response()->json(['message' => 'Something went wrong! Please check Job Type']);
+            } else if ($check_type == "update") {
+                /* update job */
+                if (isset($request->job_id)) {
+                    $job_id = $request->job_id;
+
+                    $job = Job::where(['id' => $job_id])->update($update_array);
+
+
+                    $jobDetails = Job::where('id', $request->job_id)->first();
+
+                    if($request->hours_per_week || $request->actual_hourly_rate || $request->weekly_taxable_amount || $request->weekly_non_taxable_amount || $request->employer_weekly_amount || $request->sign_on_bonus || $request->completion_bonus || $request->weeks_assignment || $request->goodwork_weekly_amount || $request->total_contract_amount || $request->total_employer_amount || $request->total_goodwork_amount){
+                        $update_amount = [];
+                        if(isset($jobDetails->hours_per_week) && isset($jobDetails->actual_hourly_rate)){
+                            $update_amount['weekly_taxable_amount'] = $jobDetails->hours_per_week * $jobDetails->actual_hourly_rate;
+                        }
+                        if(isset($jobDetails->weekly_taxable_amount) && isset($request->weekly_non_taxable_amount)){
+                            $update_amount['employer_weekly_amount'] = $jobDetails->weekly_taxable_amount + $request->weekly_non_taxable_amount;
+                            $update_amount['goodwork_weekly_amount'] = $jobDetails->employer_weekly_amount * 0.05;
+                        }
+                        if((isset($request->weeks_assignment) && isset($jobDetails->employer_weekly_amount)) || isset($request->sign_on_bonus) || isset($request->completion_bonus)){
+                            $update_amount['total_employer_amount'] = ($jobDetails->weeks_assignment * $jobDetails->employer_weekly_amount) + $jobDetails->sign_on_bonus + $jobDetails->completion_bonus;
+                        }
+                        if(isset($request->weeks_assignment) && isset($jobDetails->goodwork_weekly_amount)){
+                            $update_amount['total_goodwork_amount'] = $jobDetails->weeks_assignment * $jobDetails->goodwork_weekly_amount;
+                        }
+                        if(isset($jobDetails->total_employer_amount) && isset($jobDetails->total_goodwork_amount)){
+                            $update_amount['total_contract_amount'] = $jobDetails->total_employer_amount + $jobDetails->total_goodwork_amount;
+                        }
+                        $job = Job::where(['id' => $job_id])->update($update_amount);
+                    }
+                } else {
+                    // return back()->with('error', 'Something went wrong! Please check job_id');
+                    return response()->json(['message' => 'Something went wrong! Please check job_id']);
+                }
+                /* update job */
+            } else if ($check_type == "hidejob" || $check_type == "unhidejob") {
+                /* update job */
+                // is_hidden
+                if (isset($request->job_id)) {
+                    $job_id = $request->job_id;
+                    $job = Job::where(['id' => $job_id])->update(['is_hidden'=> $check_type == "hidejob" ? '1': '0']);
+                } else {
+                    // return back()->with('error', 'Something went wrong! Please check job_id');
+                    return response()->json(['message' => 'Something went wrong! Please check job_id']);
+                }
+                /* update job */
+            } else {
+                /* create job */
+                $update_array["created_by"] = (isset($user_id) && $user_id != "") ? $user_id : "";
+                $update_array["employer_id"] = (isset($user_id) && $user_id != "") ? $user_id : "";
+                $update_array["goodwork_number"] = uniqid();
+                $update_array["active"] = "0";
+                $job = Job::create($update_array);
+                Job::where('id', $job['id'])->update(['goodwork_number' => $job['id']]);
+                $job = Job::where('id', $job['id'])->first();
+                /* create job */
+            }
+
+            if (!empty($job) && $job_photos = $request->file('job_photos')) {
+                foreach ($job_photos as $job_photo) {
+                    $job_photo_name_full = $job_photo->getClientOriginalName();
+                    $job_photo_name = pathinfo($job_photo_name_full, PATHINFO_FILENAME);
+                    $job_photo_ext = $job_photo->getClientOriginalExtension();
+                    $job_photo_finalname = $job_photo_name . '_' . time() . '.' . $job_photo_ext;
+                    //Upload Image
+                    $job_id_val = ($check_type == "update") ? $job_id : $job->id;
+                    $job_photo->storeAs('assets/jobs/' . $job_id_val, $job_photo_finalname);
+                    JobAsset::create(['job_id' => $job_id_val, 'name' => $job_photo_finalname, 'filter' => 'job_photos']);
+                }
+            }
+            if ($job) {
+                if($check_type == 'hidejob'){
+                    $check_type = 'hide';
+                }else if($check_type == "unhidejob"){
+                    $check_type = 'unhide';
+                }
+                return response()->json(['message' => "Job {$check_type} successfully", 'job_id' => $job['id'], 'goodwork_number' => $job['goodwork_number']]);
+                // return back()->with('success', "Job " . $check_type . "d successfully");
+            } else {
+                return response()->json(['message' => 'Failed to create job, Please try again later']);
+                // return back()->with('error', "Failed to create job, Please try again later");
+            }
+        }
     }
 
 

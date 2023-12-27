@@ -58,7 +58,7 @@ class CreateJobsTable extends Migration
             $table->string('job_type')->nullable(); // Column for job type
 
             // Adding nullable float column
-            $table->float('weekly_pay', 8, 6)->nullable(); // Column for weekly pay
+            $table->float('weekly_pay', 8, 2)->nullable(); // Column for weekly pay
 
             // Adding nullable date columns
             $table->date('start_date')->nullable(); // Column for start date
