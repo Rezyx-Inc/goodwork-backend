@@ -127,7 +127,7 @@ class SiteController extends Controller {
             // 'job_saved.nurse_id'=>$user->id,
         ];
 
-            $resl = Job::select('jobs.*','name')
+            $resl = Job::select('jobs.*','name')->where('jobs.active','1')
             ->leftJoin('facilities', function ($join) {
                 $join->on('facilities.id', '=', 'jobs.facility_id');
             });

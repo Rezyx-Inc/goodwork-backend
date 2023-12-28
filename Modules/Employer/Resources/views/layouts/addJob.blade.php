@@ -1,3 +1,4 @@
+<!-- THIS BLADE FOR TESTING PURPOSE -->
 @extends('employer::layouts.main')
 
 @section('content')
@@ -18,7 +19,6 @@
                     </div>
                     <div class="check fas fa-check"></div>
                 </div>
-
                 <div class=" col-3 step">
                     <p>Preferences and Requirements</p>
                     <div class="bullet">
@@ -33,7 +33,6 @@
                     </div>
                     <div class="check fas fa-check"></div>
                 </div>
-
                 <div class="col-3 step">
                     <p>Work Schedule & Requirements</p>
                     <div class="bullet">
@@ -46,7 +45,6 @@
                 <form method="post" action="{{route('addJob.store')}}">
                     @csrf
                     <!-- first form slide required inputs for adding jobs -->
-
                     <div class=" page slide-page">
                         <div class="row">
                             <div class="ss-form-group col-md-4">
@@ -57,9 +55,7 @@
                                 <input type="text" name="job_type" id="job_type" placeholder="Enter job type">
                                 <span class="help-block-job_type"></span>
                             </div>
-
                             <div class="ss-form-group col-md-4">
-
                                 <select name="preferred_specialty" id="preferred_specialty">
                                     <option value="">Specialty</option>
                                     <option value="1">Term Option 1</option>
@@ -69,7 +65,6 @@
                                 <span class="help-block-preferred_specialty"></span>
                             </div>
                             <div class="ss-form-group col-md-4">
-
                                 <select name="perferred_profession" id="perferred_profession">
                                     <option value="">Proffession</option>
                                     <option value="1">Term Option 1</option>
@@ -78,23 +73,16 @@
                                 </select>
                                 <span class="help-block-perferred_profession"></span>
                             </div>
-
                             <div class="ss-form-group col-md-4">
-
                                 <input type="text" name="job_city" id="job_city"
                                     placeholder="Enter Job Location (City)">
-                                    <span class="help-block-job_city"></span>
+                                <span class="help-block-job_city"></span>
                             </div>
-
                             <div class="ss-form-group col-md-4">
-
-
                                 <input type="text" name="job_state" id="job_state"
                                     placeholder="Enter Job Location (State)">
-                                    <span class="help-block-job_state"></span>
+                                <span class="help-block-job_state"></span>
                             </div>
-
-
                             <div class="ss-form-group col-md-4">
                                 <input type="text" name="preferred_work_location" id="preferred_work_location"
                                     placeholder="Enter Work Location">
@@ -103,20 +91,17 @@
                                 </span>
                             </div>
                             <div class="ss-form-group col-md-4">
-
                                 <input type="number" name="preferred_assignment_duration"
                                     id="preferred_assignment_duration" placeholder="Enter Work Duration Per Week">
                                 <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                     (Duration not required)
                                 </span><br>
-
                             </div>
                             <div class="ss-form-group col-md-4">
-                                <input type="number" step="0.01" name="weekly_pay" id="weekly_pay" placeholder="Enter Weekly Pay">
+                                <input type="number" step="0.01" name="weekly_pay" id="weekly_pay"
+                                    placeholder="Enter Weekly Pay">
                                 <span class="help-block-weekly_pay"></span>
                             </div>
-
-
                             <div class="ss-form-group col-md-4">
                                 <textarea type="text" name="description" id="description"
                                     placeholder="Enter Job Description"></textarea>
@@ -124,7 +109,6 @@
                                     (Description not required)
                                 </span>
                             </div>
-
                             <div class="field btns col-12 d-flex justify-content-center">
                                 <button class="saveDrftBtn">Save as draft</button>
                                 <button class="firstNext next">Next</button>
@@ -230,11 +214,11 @@
                     <div class="page">
                         <div class="row">
                             <div class="ss-form-group col-md-4">
-                            <label>Start Date</label>
+                                <label>Start Date</label>
                                 <input type="date" name="start_date" id="start_date" placeholder="Enter Start Date">
                             </div>
                             <div class="ss-form-group col-md-4">
-                            <label>End Date</label>
+                                <label>End Date</label>
                                 <input type="date" name="end_date" id="end_date" placeholder="Enter End Date">
                             </div>
                             <div class="ss-form-group col-md-4">
@@ -359,9 +343,9 @@
             $('.help-block-weekly_pay').text('');
 
         }
-        if(access){
+        if (access) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -370,7 +354,7 @@
 
     nextBtnFirst.addEventListener("click", function (event) {
         event.preventDefault();
-        if(validateFirst()){
+        if (validateFirst()) {
             slidePage.style.marginLeft = "-25%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");

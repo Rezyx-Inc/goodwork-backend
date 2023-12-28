@@ -27,7 +27,11 @@ class OpportunitiesController extends Controller
      */
     public function index()
     {
-        return view('employer::employer/opportunitiesmanager');
+        $created_by = Auth::guard('employer')->user()->id;
+        $darftJobs = Job::where('created_by', $created_by)->where('active',0)->select('id','job_name','job_type','preferred_specialty','proffesion','job_city','job_state','preferred_work_location','preferred_assignment_duration','weekly_pay','description','preferred_work_area','preferred_experience','preferred_shift_duration','preferred_days_of_the_week','preferred_hourly_pay_rate','preferred_shift','job_function','job_cerner_exp','job_meditech_exp','seniority_level','job_epic_exp','job_other_exp','start_date','end_date','hours_shift','hours_per_week','responsibilities','qualifications')->get();
+
+        return view('employer::employer/opportunitiesmanager',compact('darftJobs'));
+       // return response()->json(['success' => false, 'message' => $darftJobs]);
     }
 
     /**

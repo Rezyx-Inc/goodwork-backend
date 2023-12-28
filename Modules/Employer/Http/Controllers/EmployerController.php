@@ -35,39 +35,82 @@ class EmployerController extends Controller
     {
         try {
 
-            $facility_id = Auth::guard('employer')->user()->facility_id;
+            $created_by = Auth::guard('employer')->user()->id;
             // Validate the form data
-            $validatedData = $request->validate([
-                'job_type' => 'required|string',
-                'job_name' => 'required|string',
-                'job_city' => 'required|string',
-                'job_state' => 'required|string',
-                'preferred_assignment_duration' => 'nullable|string',
-                'weekly_pay' => 'required|numeric',
-                'preferred_specialty' => 'required|string',
-                'preferred_work_location'=>'nullable|string',
-                'description'=>'nullable|string',
 
-                'preferred_shift_duration' => 'nullable|string',
-                'preferred_work_area' => 'nullable|string',
-                'preferred_days_of_the_week' => 'nullable|string',
-                'preferred_hourly_pay_rate' => 'nullable|string',
-                'preferred_experience' => 'nullable|string',
-                'preferred_shift' => 'nullable|string',
-                'job_function' => 'nullable|string',
-                'job_cerner_exp' => 'nullable|string',
-                'job_meditech_exp' => 'nullable|string',
-                'job_epic_exp' => 'nullable|string',
-                'seniority_level' => 'nullable|string',
-                'job_other_exp' => 'nullable|string',
-                'start_date' => 'nullable|date',
-                'end_date' => 'nullable|date',
-                'hours_shift' => 'nullable|integer',
-                'hours_per_week' => 'nullable|integer',
-                'responsibilities' => 'nullable|string',
-                'qualifications' => 'nullable|string',
+            $active = $request->input('active');
 
-            ]);
+            // $active = $activeRequest['active'];
+            $validatedData =[];
+
+            if($active == '0'){
+                $validatedData = $request->validate([
+                    'job_type' => 'nullable|string',
+                    'job_name' => 'string',
+                    'job_city' => 'nullable|string',
+                    'job_state' => 'nullable|string',
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'weekly_pay' => 'nullable|numeric',
+                    'preferred_specialty' => 'nullable|string',
+                    'preferred_work_location'=>'nullable|string',
+                    'description'=>'nullable|string',
+                    'active' => 'nullable|string',
+                    'preferred_shift_duration' => 'nullable|string',
+                    'preferred_work_area' => 'nullable|string',
+                    'preferred_days_of_the_week' => 'nullable|string',
+                    'preferred_hourly_pay_rate' => 'nullable|string',
+                    'preferred_experience' => 'nullable|string',
+                    'preferred_shift' => 'nullable|string',
+                    'job_function' => 'nullable|string',
+                    'job_cerner_exp' => 'nullable|string',
+                    'job_meditech_exp' => 'nullable|string',
+                    'job_epic_exp' => 'nullable|string',
+                    'seniority_level' => 'nullable|string',
+                    'job_other_exp' => 'nullable|string',
+                    'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
+                    'hours_shift' => 'nullable|integer',
+                    'hours_per_week' => 'nullable|integer',
+                    'responsibilities' => 'nullable|string',
+                    'qualifications' => 'nullable|string',
+
+                ]);
+            }else if($active == '1'){
+                $validatedData = $request->validate([
+                    'job_type' => 'required|string',
+                    'job_name' => 'required|string',
+                    'job_city' => 'required|string',
+                    'job_state' => 'required|string',
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'weekly_pay' => 'required|numeric',
+                    'preferred_specialty' => 'required|string',
+                    'preferred_work_location'=>'nullable|string',
+                    'description'=>'nullable|string',
+                    'active' => 'string',
+                    'preferred_shift_duration' => 'nullable|string',
+                    'preferred_work_area' => 'nullable|string',
+                    'preferred_days_of_the_week' => 'nullable|string',
+                    'preferred_hourly_pay_rate' => 'nullable|string',
+                    'preferred_experience' => 'nullable|string',
+                    'preferred_shift' => 'nullable|string',
+                    'job_function' => 'nullable|string',
+                    'job_cerner_exp' => 'nullable|string',
+                    'job_meditech_exp' => 'nullable|string',
+                    'job_epic_exp' => 'nullable|string',
+                    'seniority_level' => 'nullable|string',
+                    'job_other_exp' => 'nullable|string',
+                    'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
+                    'hours_shift' => 'nullable|integer',
+                    'hours_per_week' => 'nullable|integer',
+                    'responsibilities' => 'nullable|string',
+                    'qualifications' => 'nullable|string',
+
+                ]);
+            }else{
+                  return response()->json(['success' => false, 'message' => $active]);
+            }
+
 
             // Create a new Job instance with the validated data
             $job = new Job();
@@ -78,7 +121,7 @@ class EmployerController extends Controller
             $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
             $job->weekly_pay = $validatedData['weekly_pay'];
             $job->preferred_specialty = $validatedData['preferred_specialty'];
-
+            $job->active = $validatedData['active'];
             $job->description = $validatedData['description'];
             $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
             $job->preferred_work_area = $validatedData['preferred_work_area'];
@@ -98,6 +141,7 @@ class EmployerController extends Controller
             $job->hours_per_week = $validatedData['hours_per_week'];
             $job->responsibilities = $validatedData['responsibilities'];
             $job->qualifications = $validatedData['qualifications'];
+            $job->created_by = $created_by;
                         // facility id should be null for now since we dont add a facility with the employer signup
                         // $job->facility_id = $facility_id;
 
@@ -122,8 +166,8 @@ class EmployerController extends Controller
             // Display a generic error message or redirect with an error status
 
 
-             return redirect()->route('employer-opportunities-manager')->with('error',$e->getMessage() );
-           // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+             return redirect()->route('employer-opportunities-manager')->with('error','Try again later' );
+            //return response()->json(['success' => false, 'message' => $request->input('') ]);
         }
     }
 
@@ -164,7 +208,6 @@ class EmployerController extends Controller
                 'responsibilities' => 'nullable|string',
                 'qualifications' => 'nullable|string',
                 'active' => '0',
-
             ]);
 
             // Create a new Job instance with the validated data
@@ -195,7 +238,7 @@ class EmployerController extends Controller
             $job->hours_per_week = $validatedData['hours_per_week'];
             $job->responsibilities = $validatedData['responsibilities'];
             $job->qualifications = $validatedData['qualifications'];
-            
+
                         // facility id should be null for now since we dont add a facility with the employer signup
                         // $job->facility_id = $facility_id;
 

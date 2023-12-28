@@ -14,8 +14,11 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
+            // only job name is required since in the job saving process no required fields are required
+
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('preferred_specialty');
+            // type of speciallity changed from unsignedBigInteger to string since we have no relation between specialities and jobs table and we need the name of speciality in jobs table 
+            $table->string('preferred_specialty')->nullable();
             $table->unsignedBigInteger('preferred_assignment_duration')->nullable();
             $table->unsignedBigInteger('preferred_shift_duration')->nullable();
             $table->unsignedBigInteger('preferred_work_location')->nullable();
