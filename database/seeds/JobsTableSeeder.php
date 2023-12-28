@@ -59,6 +59,31 @@ class JobsTableSeeder extends Seeder
 
         ];
 
+        $preferredWorkLocations = [
+            'New York, NY',
+            'Los Angeles, CA',
+            'Chicago, IL',
+            'Houston, TX',
+            'Phoenix, AZ',
+            'Philadelphia, PA',
+            'San Antonio, TX',
+            'San Diego, CA',
+            'Dallas, TX',
+            'San Jose, CA',
+            'Austin, TX',
+            'Jacksonville, FL',
+            'San Francisco, CA',
+            'Indianapolis, IN',
+            'Columbus, OH',
+            'Fort Worth, TX',
+            'Charlotte, NC',
+            'Seattle, WA',
+            'Denver, CO',
+            'Washington, D.C.',
+
+        ];
+
+
         // Adjust the number of jobs you want to create
         $numberOfJobs = 10;
 
@@ -68,7 +93,7 @@ class JobsTableSeeder extends Seeder
                 'preferred_specialty' => $nursingSpecialties[array_rand($nursingSpecialties)],
                 'preferred_assignment_duration' => $faker->numberBetween(1, 10),
                 'preferred_shift_duration' => $faker->numberBetween(1, 8),
-                'preferred_work_location' => $faker->numberBetween(1, 10),
+                'preferred_work_location' => $preferredWorkLocations[array_rand($preferredWorkLocations)],
                 'preferred_work_area' => $faker->numberBetween(1, 10),
                 'preferred_days_of_the_week' => $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
                 'preferred_hourly_pay_rate' => $faker->randomFloat(2, 10, 50),

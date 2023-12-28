@@ -101,9 +101,9 @@
 
                                             <select name="preferred_specialty" id="preferred_specialty">
                                                 <option value="">Specialty</option>
-                                                <option value="1">Term Option 1</option>
-                                                <option value="2">Term Option 2</option>
-                                                <option value="3">Term Option 3</option>
+                                                @foreach($specialities as $specialty)
+                                                <option value="{{$specialty->full_name}}">{{$specialty->full_name}}</option>
+                                                @endforeach
                                             </select>
                                             <span class="help-block-preferred_specialty"></span>
                                         </div>
@@ -111,9 +111,9 @@
 
                                             <select name="perferred_profession" id="perferred_profession">
                                                 <option value="">Proffession</option>
-                                                <option value="1">Term Option 1</option>
-                                                <option value="2">Term Option 2</option>
-                                                <option value="3">Term Option 3</option>
+                                                @foreach($proffesions as $proffesion)
+                                                <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}</option>
+                                                @endforeach
                                             </select>
                                             <span class="help-block-perferred_profession"></span>
                                         </div>
@@ -197,7 +197,7 @@
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
-                                            <input type="number" name="preferred_hourly_pay_rate"
+                                            <input type="number" step="0.01"  name="preferred_hourly_pay_rate"
                                                 placeholder="Enter Preferred Hourly Pay Rate">
                                         </div>
 
@@ -318,8 +318,9 @@
                     <div class="col-lg-5">
                         <div class="ss-account-form-lft-1">
                             <h5 class="mb-4 text-capitalize" id="opportunitylistname"></h5>
+                            @php $counter = 0 @endphp
                             @foreach($darftJobs as $job)
-                            <div class="col-12 ss-job-prfle-sec">
+                            <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)" id="{{$counter}}">
                                 <p>Travel <span>+50 Applied</span></p>
                                 <h4>{{$job->proffesion}} - {{$job->preferred_specialty}}</h4>
                                 <h6>Medical Solutions Recruiter</h6>
@@ -334,6 +335,7 @@
                                 </ul>
 
                             </div>
+                            @php $counter++ @endphp
                             @endforeach
                             <div id="job-list">
                             </div>
@@ -344,7 +346,7 @@
                         <div class="all col-lg-7" id="details_draft">
                 <div class="bodyAll" style="width: 100%;">
                     <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
-                        <header>Create Job Request</header>
+                        <header>Select a job from Drafts</header>
                         <div class="row progress-bar-item">
                             <div class="col-3 step">
                                 <p>Job information</p>
@@ -404,9 +406,9 @@
 
                                             <select name="preferred_specialty" id="preferred_specialtyDraft">
                                                 <option value="">Specialty</option>
-                                                <option value="1">Term Option 1</option>
-                                                <option value="2">Term Option 2</option>
-                                                <option value="3">Term Option 3</option>
+                                                @foreach($specialities as $specialty)
+                                                <option value="{{$specialty->full_name}}">{{$specialty->full_name}}</option>
+                                                @endforeach
                                             </select>
                                             <span class="help-block-preferred_specialty"></span>
                                         </div>
@@ -414,9 +416,9 @@
 
                                             <select name="proffesion" id="perferred_professionDraft">
                                                 <option value="">Proffession</option>
-                                                <option value="1">Term Option 1</option>
-                                                <option value="2">Term Option 2</option>
-                                                <option value="3">Term Option 3</option>
+                                                @foreach($proffesions as $proffesion)
+                                                <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}</option>
+                                                @endforeach
                                             </select>
                                             <span class="help-block-perferred_profession"></span>
                                         </div>
@@ -490,17 +492,17 @@
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
-                                            <input type="number" name="preferred_shift_duration"
+                                            <input type="number" name="preferred_shift_duration" id="preferred_shift_durationDraft"
                                                 placeholder="Enter Preferred Shift Duration">
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
-                                            <input type="number" name="preferred_days_of_the_week"
+                                            <input type="text" name="preferred_days_of_the_week" id="preferred_days_of_the_weekDraft"
                                                 placeholder="Enter Preferred Days of the Week">
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
-                                            <input type="number" name="preferred_hourly_pay_rate"
+                                            <input type="number" step="0.01" name="preferred_hourly_pay_rate" id="preferred_hourly_pay_rateDraft"
                                                 placeholder="Enter Preferred Hourly Pay Rate">
                                         </div>
 
@@ -588,7 +590,7 @@
                                                 placeholder="Enter Hours per Shift">
                                         </div>
                                         <div class="ss-form-group col-md-4">
-                                            <input type="number" name="hours_per_week" id="hours_shiftDraft"
+                                            <input type="number" name="hours_per_week" id="hours_per_weekDraft"
                                                 placeholder="Enter Hours per week">
                                         </div>
                                         <div class="ss-form-group col-md-4">
@@ -1845,6 +1847,157 @@
 </script>
 @stop
 <script type="text/javascript">
+    const darftJobs = @json($darftJobs);
+        console.log(darftJobs[0].id);
+        console.log(darftJobs[0].job_name);
+        console.log(darftJobs[0].job_type);
+        console.log(darftJobs[0].preferred_specialty);
+        console.log(darftJobs[0].job_state);
+        console.log(darftJobs[0].preferred_work_location);
+        console.log(darftJobs[0].preferred_assignment_duration);
+        console.log(darftJobs[0].preferred_days_of_the_week);
+        console.log(darftJobs[0].preferred_hourly_pay_rate);
+        console.log(darftJobs[0].preferred_shift);
+        console.log(darftJobs[0].job_function);
+        console.log(darftJobs[0].job_cerner_exp);
+        console.log(darftJobs[0].job_meditech_exp);
+        console.log(darftJobs[0].seniority_level);
+        console.log(darftJobs[0].job_epic_exp);
+        console.log(darftJobs[0].job_other_exp);
+        console.log(darftJobs[0].start_date);
+        console.log(darftJobs[0].end_date);
+        console.log(darftJobs[0].hours_shift);
+        console.log(darftJobs[0].hours_per_week);
+        console.log(darftJobs[0].responsibilities);
+        console.log(darftJobs[0].qualifications);
+        console.log(darftJobs[0].description);
+        console.log(darftJobs[0].proffesion);
+
+        let job_name = darftJobs[0].job_name;
+        let job_type = darftJobs[0].job_type;
+        let preferred_specialty = darftJobs[0].preferred_specialty;
+        let job_state = darftJobs[0].job_state;
+        let job_city = darftJobs[0].job_city;
+        let preferred_work_location = darftJobs[0].preferred_work_location;
+        let preferred_assignment_duration = darftJobs[0].preferred_assignment_duration;
+        let preferred_days_of_the_week = darftJobs[0].preferred_days_of_the_week;
+        let preferred_hourly_pay_rate = darftJobs[0].preferred_hourly_pay_rate;
+        let preferred_shift = darftJobs[0].preferred_shift;
+        let job_function = darftJobs[0].job_function;
+        let job_cerner_exp = darftJobs[0].job_cerner_exp;
+        let job_meditech_exp = darftJobs[0].job_meditech_exp;
+        let seniority_level = darftJobs[0].seniority_level;
+        let job_epic_exp = darftJobs[0].job_epic_exp;
+        let job_other_exp = darftJobs[0].job_other_exp;
+        let start_date = darftJobs[0].start_date;
+        let end_date = darftJobs[0].end_date;
+        let hours_shift = darftJobs[0].hours_shift;
+        let hours_per_week = darftJobs[0].hours_per_week;
+        let responsibilities = darftJobs[0].responsibilities;
+        let qualifications = darftJobs[0].qualifications;
+        let description = darftJobs[0].description;
+        let proffesion = darftJobs[0].proffesion;
+        let weekly_pay = darftJobs[0].weekly_pay;
+        let preferred_work_area = darftJobs[0].preferred_work_area;
+        let preferred_experience = darftJobs[0].preferred_experience;
+        let preferred_shift_duration = darftJobs[0].preferred_shift_duration;
+
+
+
+
+
+        document.getElementById("job_nameDraft").value = job_name;
+        document.getElementById("job_typeDraft").value = job_type;
+        document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
+        document.getElementById("job_stateDraft").value = job_state;
+        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+        document.getElementById("preferred_days_of_the_weekDraft").value = preferred_days_of_the_week;
+        document.getElementById("preferred_hourly_pay_rateDraft").value = preferred_hourly_pay_rate;
+        document.getElementById("preferred_shiftDraft").value = preferred_shift;
+        document.getElementById("job_functionDraft").value = job_function;
+        document.getElementById("job_cerner_expDraft").value = job_cerner_exp;
+        document.getElementById("job_meditech_expDraft").value =job_meditech_exp ;
+        document.getElementById("seniority_levelDraft").value = seniority_level;
+        document.getElementById("job_epic_expDraft").value = job_epic_exp;
+        document.getElementById("job_other_expDraft").value = job_other_exp;
+        document.getElementById("start_dateDraft").value = start_date;
+        document.getElementById("end_dateDraft").value = end_date;
+        document.getElementById("hours_shiftDraft").value = hours_shift;
+        document.getElementById("hours_per_weekDraft").value = hours_per_week;
+        document.getElementById("responsibilitiesDraft").value = responsibilities;
+        document.getElementById("qualificationsDraft").value = qualifications;
+        document.getElementById("perferred_professionDraft").value = proffesion;
+        document.getElementById("descriptionDraft").value = description;
+        document.getElementById("job_cityDraft").value = job_city;
+        document.getElementById("weekly_payDraft").value = weekly_pay;
+        document.getElementById("preferred_work_areaDraft").value = preferred_work_area;
+        document.getElementById("preferred_experienceDraft").value = preferred_experience;
+        document.getElementById("preferred_shift_durationDraft").value = preferred_shift_duration;
+
+
+        function editDataJob(element) {
+        const jobId = element.id;
+
+        let job_name = darftJobs[jobId].job_name;
+        let job_type = darftJobs[jobId].job_type;
+        let preferred_specialty = darftJobs[jobId].preferred_specialty;
+        let job_state = darftJobs[jobId].job_state;
+        let job_city = darftJobs[jobId].job_city;
+        let preferred_work_location = darftJobs[jobId].preferred_work_location;
+        let preferred_assignment_duration = darftJobs[jobId].preferred_assignment_duration;
+        let preferred_days_of_the_week = darftJobs[jobId].preferred_days_of_the_week;
+        let preferred_hourly_pay_rate = darftJobs[jobId].preferred_hourly_pay_rate;
+        let preferred_shift = darftJobs[jobId].preferred_shift;
+        let job_function = darftJobs[jobId].job_function;
+        let job_cerner_exp = darftJobs[jobId].job_cerner_exp;
+        let job_meditech_exp = darftJobs[jobId].job_meditech_exp;
+        let seniority_level = darftJobs[jobId].seniority_level;
+        let job_epic_exp = darftJobs[jobId].job_epic_exp;
+        let job_other_exp = darftJobs[jobId].job_other_exp;
+        let start_date = darftJobs[jobId].start_date;
+        let end_date = darftJobs[jobId].end_date;
+        let hours_shift = darftJobs[jobId].hours_shift;
+        let hours_per_week = darftJobs[jobId].hours_per_week;
+        let responsibilities = darftJobs[jobId].responsibilities;
+        let qualifications = darftJobs[jobId].qualifications;
+        let description = darftJobs[jobId].description;
+        let proffesion = darftJobs[jobId].proffesion;
+        let weekly_pay = darftJobs[jobId].weekly_pay;
+        let preferred_work_area = darftJobs[jobId].preferred_work_area;
+        let preferred_experience = darftJobs[jobId].preferred_experience;
+        let preferred_shift_duration = darftJobs[jobId].preferred_shift_duration;
+
+        document.getElementById("job_nameDraft").value = job_name;
+        document.getElementById("job_typeDraft").value = job_type;
+        document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
+        document.getElementById("job_stateDraft").value = job_state;
+        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+        document.getElementById("preferred_days_of_the_weekDraft").value = preferred_days_of_the_week;
+        document.getElementById("preferred_hourly_pay_rateDraft").value = preferred_hourly_pay_rate;
+        document.getElementById("preferred_shiftDraft").value = preferred_shift;
+        document.getElementById("job_functionDraft").value = job_function;
+        document.getElementById("job_cerner_expDraft").value = job_cerner_exp;
+        document.getElementById("job_meditech_expDraft").value =job_meditech_exp ;
+        document.getElementById("seniority_levelDraft").value = seniority_level;
+        document.getElementById("job_epic_expDraft").value = job_epic_exp;
+        document.getElementById("job_other_expDraft").value = job_other_exp;
+        document.getElementById("start_dateDraft").value = start_date;
+        document.getElementById("end_dateDraft").value = end_date;
+        document.getElementById("hours_shiftDraft").value = hours_shift;
+        document.getElementById("hours_per_weekDraft").value = hours_per_week;
+        document.getElementById("responsibilitiesDraft").value = responsibilities;
+        document.getElementById("qualificationsDraft").value = qualifications;
+        document.getElementById("perferred_professionDraft").value = proffesion;
+        document.getElementById("descriptionDraft").value = description;
+        document.getElementById("job_cityDraft").value = job_city;
+        document.getElementById("weekly_payDraft").value = weekly_pay;
+        document.getElementById("preferred_work_areaDraft").value = preferred_work_area;
+        document.getElementById("preferred_experienceDraft").value = preferred_experience;
+        document.getElementById("preferred_shift_durationDraft").value = preferred_shift_duration;
+
+    }
 
 
     const slidePage = document.querySelector(".slide-page");
@@ -2035,6 +2188,7 @@
 
 
     function validateFirstDraft() {
+
         var access = true;
         var jobName = document.getElementById("job_nameDraft").value;
         var jobType = document.getElementById("job_typeDraft").value;
