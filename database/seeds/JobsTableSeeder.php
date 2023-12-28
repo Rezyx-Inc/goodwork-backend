@@ -97,7 +97,7 @@ class JobsTableSeeder extends Seeder
                 'preferred_work_area' => $faker->numberBetween(1, 10),
                 'preferred_days_of_the_week' => $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
                 'preferred_hourly_pay_rate' => $faker->randomFloat(2, 10, 50),
-                'preferred_experience' => $faker->randomElement(['Entry Level', 'Mid Level', 'Senior Level']),
+                'preferred_experience' => $faker->numberBetween(3, 10),
                 'description' => $faker->paragraph,
                 'created_by' => 'GWU000002',
                 'created_at' => now(),

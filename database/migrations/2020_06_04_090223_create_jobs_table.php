@@ -25,7 +25,7 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('preferred_work_area')->nullable();
             $table->string("preferred_days_of_the_week")->nullable();
             $table->string('preferred_hourly_pay_rate',4)->nullable();
-            $table->string('preferred_experience',10)->nullable();
+            $table->integer('preferred_experience')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->uuid('created_by')->nullable();

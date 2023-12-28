@@ -82,7 +82,7 @@
                                 <div class=" page slide-page">
                                     <div class="row">
 
-                                    <div class="ss-form-group col-md-4 d-none">
+                                        <div class="ss-form-group col-md-4 d-none">
                                             <input type="text" name="active" id="active">
                                         </div>
 
@@ -102,7 +102,8 @@
                                             <select name="preferred_specialty" id="preferred_specialty">
                                                 <option value="">Specialty</option>
                                                 @foreach($specialities as $specialty)
-                                                <option value="{{$specialty->full_name}}">{{$specialty->full_name}}</option>
+                                                <option value="{{$specialty->full_name}}">{{$specialty->full_name}}
+                                                </option>
                                                 @endforeach
                                             </select>
                                             <span class="help-block-preferred_specialty"></span>
@@ -112,7 +113,8 @@
                                             <select name="perferred_profession" id="perferred_profession">
                                                 <option value="">Proffession</option>
                                                 @foreach($proffesions as $proffesion)
-                                                <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}</option>
+                                                <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}
+                                                </option>
                                                 @endforeach
                                             </select>
                                             <span class="help-block-perferred_profession"></span>
@@ -197,7 +199,7 @@
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
-                                            <input type="number" step="0.01"  name="preferred_hourly_pay_rate"
+                                            <input type="number" step="0.01" name="preferred_hourly_pay_rate"
                                                 placeholder="Enter Preferred Hourly Pay Rate">
                                         </div>
 
@@ -315,9 +317,11 @@
 
             <div class="ss-acount-profile d-none" id="published-job-details">
                 <div class="row">
-                    <div class="col-lg-5">
+
+                    <!-- DRAFT CARDS -->
+                    <div class="col-lg-5 d-none" id="draftCards">
                         <div class="ss-account-form-lft-1">
-                            <h5 class="mb-4 text-capitalize" id="opportunitylistname"></h5>
+                            <h5 class="mb-4 text-capitalize">Draft</h5>
                             @php $counter = 0 @endphp
                             @foreach($darftJobs as $job)
                             <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)" id="{{$counter}}">
@@ -326,12 +330,12 @@
                                 <h6>Medical Solutions Recruiter</h6>
                                 <ul>
                                     <li><a href="#"><img src=" {{URL::asset('frontend/img/location.png')}}">
-                                    {{$job->job_city}},  {{$job->job_state}}</a></li>
+                                            {{$job->job_city}}, {{$job->job_state}}</a></li>
                                     <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}">
-                                    {{$job->preferred_assignment_duration}}
+                                            {{$job->preferred_assignment_duration}}
                                             wks</a></li>
                                     <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}">
-                                    {{$job->weekly_pay}}/wk</a></li>
+                                            {{$job->weekly_pay}}/wk</a></li>
                                 </ul>
 
                             </div>
@@ -341,279 +345,349 @@
                             </div>
                         </div>
                     </div>
+                    <!-- END DRAFT CARDS -->
+                    <!-- PUBLISHED CARDS -->
+                    <div class="col-lg-5 d-none" id="publishedCards">
+                        <div class="ss-account-form-lft-1">
+                            <h5 class="mb-4 text-capitalize">Published</h5>
+                            @php $counter = 0 @endphp
+                            @foreach($publishedJobs as $job)
+                            <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)" id="{{$counter}}">
+                                <p>Travel <span>+50 Applied</span></p>
+                                <h4>{{$job->proffesion}} - {{$job->preferred_specialty}}</h4>
+                                <h6>Medical Solutions Recruiter</h6>
+                                <ul>
+                                    <li><a href="#"><img src=" {{URL::asset('frontend/img/location.png')}}">
+                                            {{$job->job_city}}, {{$job->job_state}}</a></li>
+                                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}">
+                                            {{$job->preferred_assignment_duration}}
+                                            wks</a></li>
+                                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}">
+                                            {{$job->weekly_pay}}/wk</a></li>
+                                </ul>
 
-                    <!-- EDITING FORM -->
-                        <div class="all col-lg-7" id="details_draft">
-                <div class="bodyAll" style="width: 100%;">
-                    <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
-                        <header>Select a job from Drafts</header>
-                        <div class="row progress-bar-item">
-                            <div class="col-3 step">
-                                <p>Job information</p>
-                                <div class="bullet">
-                                    <span>1</span>
-                                </div>
-                                <div class="check fas fa-check"></div>
                             </div>
-
-                            <div class=" col-3 step">
-                                <p>Preferences and Requirements</p>
-                                <div class="bullet">
-                                    <span>1</span>
-                                </div>
-                                <div class="check fas fa-check"></div>
+                            @php $counter++ @endphp
+                            @endforeach
+                            <div id="job-list">
                             </div>
-                            <div class="col-3 step">
-                                <p>Job Details</p>
-                                <div class="bullet">
-                                    <span>1</span>
-                                </div>
-                                <div class="check fas fa-check"></div>
-                            </div>
-
-                            <div class="col-3 step">
-                                <p>Work Schedule & Requirements</p>
-                                <div class="bullet">
-                                    <span>4</span>
-                                </div>
-                                <div class="check fas fa-check"></div>
-                            </div>
-                        </div>
-                        <div class="form-outer">
-                            <form method="post" action="{{route('addJob.store')}}">
-                                @csrf
-                                <!-- first form slide required inputs for adding jobs -->
-
-                                <div class=" page slide-pageDraft">
-                                    <div class="row">
-
-                                    <div class="ss-form-group col-md-4 d-none">
-                                            <input type="text" name="active" id="activeDraft">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_name" id="job_nameDraft"
-                                                placeholder="Enter job name">
-                                            <span class="help-block-job_name"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_type" id="job_typeDraft"
-                                                placeholder="Enter job type">
-                                            <span class="help-block-job_type"></span>
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-
-                                            <select name="preferred_specialty" id="preferred_specialtyDraft">
-                                                <option value="">Specialty</option>
-                                                @foreach($specialities as $specialty)
-                                                <option value="{{$specialty->full_name}}">{{$specialty->full_name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <span class="help-block-preferred_specialty"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-
-                                            <select name="proffesion" id="perferred_professionDraft">
-                                                <option value="">Proffession</option>
-                                                @foreach($proffesions as $proffesion)
-                                                <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <span class="help-block-perferred_profession"></span>
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-
-                                            <input type="text" name="job_city" id="job_cityDraft"
-                                                placeholder="Enter Job Location (City)">
-                                            <span class="help-block-job_city"></span>
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-
-
-                                            <input type="text" name="job_state" id="job_stateDraft"
-                                                placeholder="Enter Job Location (State)">
-                                            <span class="help-block-job_state"></span>
-                                        </div>
-
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="preferred_work_location"
-                                                id="preferred_work_locationDraft" placeholder="Enter Work Location">
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                (Location not required)
-                                            </span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-
-                                            <input type="number" name="preferred_assignment_duration"
-                                                id="preferred_assignment_durationDraft"
-                                                placeholder="Enter Work Duration Per Week">
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                (Duration not required)
-                                            </span><br>
-
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" step="0.01" name="weekly_pay" id="weekly_payDraft"
-                                                placeholder="Enter Weekly Pay">
-                                            <span class="help-block-weekly_pay"></span>
-                                        </div>
-
-
-                                        <div class="ss-form-group col-md-4">
-                                            <textarea type="text" name="description" id="descriptionDraft"
-                                                placeholder="Enter Job Description"></textarea>
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                (Description not required)
-                                            </span>
-                                        </div>
-
-                                        <div class="field btns col-12 d-flex justify-content-center">
-                                            <button class="saveDrftBtnDraft">Save as draft</button>
-                                            <button class="firstNextDraft next">Next</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Second form slide required inputs for adding jobs -->
-                                <div class="page">
-                                    <div class="row">
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="preferred_work_area" id="preferred_work_areaDraft"
-                                                placeholder="Enter Preferred Work Area">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="preferred_experience" id="preferred_experienceDraft"
-                                                placeholder="Enter Preferred Experience">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="preferred_shift_duration" id="preferred_shift_durationDraft"
-                                                placeholder="Enter Preferred Shift Duration">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="preferred_days_of_the_week" id="preferred_days_of_the_weekDraft"
-                                                placeholder="Enter Preferred Days of the Week">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" step="0.01" name="preferred_hourly_pay_rate" id="preferred_hourly_pay_rateDraft"
-                                                placeholder="Enter Preferred Hourly Pay Rate">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="preferred_shift" id="preferred_shiftDraft"
-                                                placeholder="Enter Preferred Shift">
-                                        </div>
-
-                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                            ( The above fields are not required )
-                                        </span>
-                                        <div class="field btns col-12 d-flex justify-content-center">
-                                            <button class="saveDrftBtnDraft">Save as draft</button>
-                                            <button class="prev-1Draft prev">Previous</button>
-                                            <button class="next-1Draft next">Next</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Third form slide required inputs for adding jobs -->
-
-                                <div class="page">
-                                    <div class="row">
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_function" id="job_functionDraft"
-                                                placeholder="Enter Job Function">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_cerner_exp" id="job_cerner_expDraft"
-                                                placeholder="Enter Cerner Experience">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_meditech_exp" id="job_meditech_expDraft"
-                                                placeholder="Enter Meditech Experience">
-                                        </div>
-
-
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="seniority_level" id="seniority_levelDraft"
-                                                placeholder="Enter Seniority Level">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_epic_exp" id="job_epic_expDraft"
-                                                placeholder="Enter Epic Experience">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <textarea type="text" name="job_other_exp" id="job_other_expDraft"
-                                                placeholder="Enter Other Experiences"></textarea>
-
-                                        </div>
-                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                            ( The above fields are not required )
-                                        </span>
-
-                                        <div class="field btns col-12 d-flex justify-content-center">
-                                            <button class="saveDrftBtnDraft">Save as draft</button>
-                                            <button class="prev-2Draft prev">Previous</button>
-                                            <button class="next-2Draft next">Next</button>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <!-- Forth form slide for adding jobs -->
-
-                                <div class="page">
-                                    <div class="row">
-                                        <div class="ss-form-group col-md-4">
-                                            <label>Start Date</label>
-                                            <input type="date" name="start_date" id="start_dateDraft"
-                                                placeholder="Enter Start Date">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <label>End Date</label>
-                                            <input type="date" name="end_date" id="end_dateDraft"
-                                                placeholder="Enter End Date">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="hours_shift" id="hours_shiftDraft"
-                                                placeholder="Enter Hours per Shift">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="hours_per_week" id="hours_per_weekDraft"
-                                                placeholder="Enter Hours per week">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="responsibilities" id="responsibilitiesDraft"
-                                                placeholder="Enter Responsibilities">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="qualifications" id="qualificationsDraft"
-                                                placeholder="Enter Qualifications">
-                                        </div>
-                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                            ( The above fields are not required )
-                                        </span>
-                                        <div class="field btns col-12 d-flex justify-content-center">
-                                            <button class="prev-3Draft prev">Previous</button>
-                                            <button class="submitDraft">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
+                    <!-- END PUBLISHED CARDS -->
+
+                    <!-- ONHOLD CARDS -->
+                    <div class="col-lg-5 d-none" id="onholdCards">
+                        <div class="ss-account-form-lft-1">
+                            <h5 class="mb-4 text-capitalize">On Hold</h5>
+                            @php $counter = 0 @endphp
+                            @foreach($onholdJobs as $job)
+                            <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)" id="{{$counter}}">
+                                <p>Travel <span>+50 Applied</span></p>
+                                <h4>{{$job->proffesion}} - {{$job->preferred_specialty}}</h4>
+                                <h6>Medical Solutions Recruiter</h6>
+                                <ul>
+                                    <li><a href="#"><img src=" {{URL::asset('frontend/img/location.png')}}">
+                                            {{$job->job_city}}, {{$job->job_state}}</a></li>
+                                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}">
+                                            {{$job->preferred_assignment_duration}}
+                                            wks</a></li>
+                                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}">
+                                            {{$job->weekly_pay}}/wk</a></li>
+                                </ul>
+
+                            </div>
+                            @php $counter++ @endphp
+                            @endforeach
+                            <div id="job-list">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END ONHOLD CARDS -->
+
+                    <!-- EDITING FORM -->
+                    <div class="all col-lg-7" id="details_draft">
+                        <div class="bodyAll" style="width: 100%;">
+                            <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
+                                <header>Select a job from Drafts</header>
+                                <div class="row progress-bar-item">
+                                    <div class="col-3 step">
+                                        <p>Job information</p>
+                                        <div class="bullet">
+                                            <span>1</span>
+                                        </div>
+                                        <div class="check fas fa-check"></div>
+                                    </div>
+
+                                    <div class=" col-3 step">
+                                        <p>Preferences and Requirements</p>
+                                        <div class="bullet">
+                                            <span>1</span>
+                                        </div>
+                                        <div class="check fas fa-check"></div>
+                                    </div>
+                                    <div class="col-3 step">
+                                        <p>Job Details</p>
+                                        <div class="bullet">
+                                            <span>1</span>
+                                        </div>
+                                        <div class="check fas fa-check"></div>
+                                    </div>
+
+                                    <div class="col-3 step">
+                                        <p>Work Schedule & Requirements</p>
+                                        <div class="bullet">
+                                            <span>4</span>
+                                        </div>
+                                        <div class="check fas fa-check"></div>
+                                    </div>
+                                </div>
+                                <div class="form-outer">
+                                    <form method="post" action="{{route('addJob.store')}}">
+                                        @csrf
+                                        <!-- first form slide required inputs for adding jobs -->
+
+                                        <div class=" page slide-pageDraft">
+                                            <div class="row">
+
+                                                <div class="ss-form-group col-md-4 d-none">
+                                                    <input type="text" name="active" id="activeDraft">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="job_name" id="job_nameDraft"
+                                                        placeholder="Enter job name">
+                                                    <span class="help-block-job_name"></span>
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="job_type" id="job_typeDraft"
+                                                        placeholder="Enter job type">
+                                                    <span class="help-block-job_type"></span>
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+
+                                                    <select name="preferred_specialty" id="preferred_specialtyDraft">
+                                                        <option value="">Specialty</option>
+                                                        @foreach($specialities as $specialty)
+                                                        <option value="{{$specialty->full_name}}">
+                                                            {{$specialty->full_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="help-block-preferred_specialty"></span>
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+
+                                                    <select name="proffesion" id="perferred_professionDraft">
+                                                        <option value="">Proffession</option>
+                                                        @foreach($proffesions as $proffesion)
+                                                        <option value="{{$proffesion->full_name}}">
+                                                            {{$proffesion->full_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="help-block-perferred_profession"></span>
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+
+                                                    <input type="text" name="job_city" id="job_cityDraft"
+                                                        placeholder="Enter Job Location (City)">
+                                                    <span class="help-block-job_city"></span>
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+
+
+                                                    <input type="text" name="job_state" id="job_stateDraft"
+                                                        placeholder="Enter Job Location (State)">
+                                                    <span class="help-block-job_state"></span>
+                                                </div>
+
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="preferred_work_location"
+                                                        id="preferred_work_locationDraft"
+                                                        placeholder="Enter Work Location">
+                                                    <span style="color:#b5649e;" id="passwordHelpInline"
+                                                        class="form-text">
+                                                        (Location not required)
+                                                    </span>
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+
+                                                    <input type="number" name="preferred_assignment_duration"
+                                                        id="preferred_assignment_durationDraft"
+                                                        placeholder="Enter Work Duration Per Week">
+                                                    <span style="color:#b5649e;" id="passwordHelpInline"
+                                                        class="form-text">
+                                                        (Duration not required)
+                                                    </span><br>
+
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="number" step="0.01" name="weekly_pay"
+                                                        id="weekly_payDraft" placeholder="Enter Weekly Pay">
+                                                    <span class="help-block-weekly_pay"></span>
+                                                </div>
+
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <textarea type="text" name="description" id="descriptionDraft"
+                                                        placeholder="Enter Job Description"></textarea>
+                                                    <span style="color:#b5649e;" id="passwordHelpInline"
+                                                        class="form-text">
+                                                        (Description not required)
+                                                    </span>
+                                                </div>
+
+                                                <div class="field btns col-12 d-flex justify-content-center">
+                                                    <button class="saveDrftBtnDraft">Save as draft</button>
+                                                    <button class="firstNextDraft next">Next</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Second form slide required inputs for adding jobs -->
+                                        <div class="page">
+                                            <div class="row">
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="preferred_work_area"
+                                                        id="preferred_work_areaDraft"
+                                                        placeholder="Enter Preferred Work Area">
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="preferred_experience"
+                                                        id="preferred_experienceDraft"
+                                                        placeholder="Enter Preferred Experience">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="number" name="preferred_shift_duration"
+                                                        id="preferred_shift_durationDraft"
+                                                        placeholder="Enter Preferred Shift Duration">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="preferred_days_of_the_week"
+                                                        id="preferred_days_of_the_weekDraft"
+                                                        placeholder="Enter Preferred Days of the Week">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="number" step="0.01" name="preferred_hourly_pay_rate"
+                                                        id="preferred_hourly_pay_rateDraft"
+                                                        placeholder="Enter Preferred Hourly Pay Rate">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="preferred_shift" id="preferred_shiftDraft"
+                                                        placeholder="Enter Preferred Shift">
+                                                </div>
+
+                                                <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
+                                                    ( The above fields are not required )
+                                                </span>
+                                                <div class="field btns col-12 d-flex justify-content-center">
+                                                    <button class="saveDrftBtnDraft">Save as draft</button>
+                                                    <button class="prev-1Draft prev">Previous</button>
+                                                    <button class="next-1Draft next">Next</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Third form slide required inputs for adding jobs -->
+
+                                        <div class="page">
+                                            <div class="row">
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="job_function" id="job_functionDraft"
+                                                        placeholder="Enter Job Function">
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="job_cerner_exp" id="job_cerner_expDraft"
+                                                        placeholder="Enter Cerner Experience">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="job_meditech_exp"
+                                                        id="job_meditech_expDraft"
+                                                        placeholder="Enter Meditech Experience">
+                                                </div>
+
+
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="seniority_level" id="seniority_levelDraft"
+                                                        placeholder="Enter Seniority Level">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="job_epic_exp" id="job_epic_expDraft"
+                                                        placeholder="Enter Epic Experience">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <textarea type="text" name="job_other_exp" id="job_other_expDraft"
+                                                        placeholder="Enter Other Experiences"></textarea>
+
+                                                </div>
+                                                <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
+                                                    ( The above fields are not required )
+                                                </span>
+
+                                                <div class="field btns col-12 d-flex justify-content-center">
+                                                    <button class="saveDrftBtnDraft">Save as draft</button>
+                                                    <button class="prev-2Draft prev">Previous</button>
+                                                    <button class="next-2Draft next">Next</button>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Forth form slide for adding jobs -->
+
+                                        <div class="page">
+                                            <div class="row">
+                                                <div class="ss-form-group col-md-4">
+                                                    <label>Start Date</label>
+                                                    <input type="date" name="start_date" id="start_dateDraft"
+                                                        placeholder="Enter Start Date">
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <label>End Date</label>
+                                                    <input type="date" name="end_date" id="end_dateDraft"
+                                                        placeholder="Enter End Date">
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="number" name="hours_shift" id="hours_shiftDraft"
+                                                        placeholder="Enter Hours per Shift">
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="number" name="hours_per_week" id="hours_per_weekDraft"
+                                                        placeholder="Enter Hours per week">
+                                                </div>
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="responsibilities"
+                                                        id="responsibilitiesDraft" placeholder="Enter Responsibilities">
+                                                </div>
+
+                                                <div class="ss-form-group col-md-4">
+                                                    <input type="text" name="qualifications" id="qualificationsDraft"
+                                                        placeholder="Enter Qualifications">
+                                                </div>
+                                                <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
+                                                    ( The above fields are not required )
+                                                </span>
+                                                <div class="field btns col-12 d-flex justify-content-center">
+                                                    <button class="prev-3Draft prev">Previous</button>
+                                                    <button class="submitDraft">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
                             <div id="job-details">
                             </div>
@@ -621,128 +695,18 @@
                     </div>
                     <!-- END EDiTING FORM -->
 
-                    <!-- published and Onhold details start-->
+                    <!-- published details start-->
 
-                    <div class="col-lg-7" id="details_onhold_published">
+                    <div class="col-lg-7 d-none" id="details_published">
                         <div class="ss-journy-svd-jbdtl-dv">
                             <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
-                                <div class="row d-none" id="application-details">
-
-
-
-
-
-                                    <div class="col-lg-3 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-start"
-                                        style="padding-right:0px;  margin-top: 10px; ">
-                                        <button type="text" style="    width: auto; font-size: 15px;">Chat Now</button>
-                                    </div>
-
-                                    <div class="ss-jb-dtl-abt-txt">
-                                        <h6> About Nurse:</h6>
-
-                                        <ul style="gap: 33px;">
-
-                                            <li>
-                                                <h5>Preferred shift:</h5>
-                                                <p>Associate Degree in Nursing</p>
-                                            </li>
-                                            <li>
-                                                <h5> Years of Experience: </h5>
-                                                <p>3+ Years</p>
-                                            </li>
-                                            <li>
-                                                <h5>Relevant Certifications:</h5>
-                                                <p>BLS, CCRN</p>
-                                            </li>
-                                            <li>
-                                                <h5>Salary Expectation:</h5>
-                                                <p>$2500/wk</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-
-                                    <div class="ss-meditch-text-bx">
-                                        <div class="row">
-                                            <h6 class="col-6"> Resume:</h6>
-                                            <h6 class="col-6 text-end"><a href="#"
-                                                    class="emloyes_download_resume">Download</a></h6>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="ss-jb-dtl-disc-sec">
-                                        <h6>Employer</h6>
-                                        <p>AGC Hospital</p>
-                                    </div>
-                                    <div class="ss-jb-dtl-disc-sec">
-                                        <h5>Start Date:</h5>
-                                        <p>28th Feb, 2023</p>
-                                    </div>
-
-                                    <div class="ss-jb-dtl-disc-sec">
-                                        <h6>Jobs Applied(2)</h6>
-                                        <div class="row" style="width: 100%; flex-wrap: nowrap; gap:10px;">
-                                            <div class="col-6 ss-job-prfle-sec">
-                                                <p>Travel <span>+50 Applied</span></p>
-                                                <h4>Manager CRNA - Anesthesia</h4>
-                                                <h6>Medical Solutions Recruiter</h6>
-                                                <ul>
-                                                    <li><a href="#"><img
-                                                                src="{{URL::asset('frontend/img/location.png')}}">
-                                                            Los
-                                                            Angeles, CA</a></li>
-                                                    <li><a href="#"><img
-                                                                src="{{URL::asset('frontend/img/calendar.png')}}">
-                                                            10
-                                                            wks</a></li>
-                                                    <li><a href="#"><img
-                                                                src="{{URL::asset('frontend/img/dollarcircle.png')}}">
-                                                            2500/wk</a></li>
-                                                </ul>
-
-                                            </div>
-                                            <div class="col-6 ss-job-prfle-sec">
-                                                <p>Travel <span>+50 Applied</span></p>
-                                                <h4>Manager CRNA - Anesthesia</h4>
-                                                <h6>Medical Solutions Recruiter</h6>
-                                                <ul>
-                                                    <li><a href="#"><img
-                                                                src="{{URL::asset('frontend/img/location.png')}}">
-                                                            Los
-                                                            Angeles, CA</a></li>
-                                                    <li><a href="#"><img
-                                                                src="{{URL::asset('frontend/img/calendar.png')}}">
-                                                            10
-                                                            wks</a></li>
-                                                    <li><a href="#"><img
-                                                                src="{{URL::asset('frontend/img/dollarcircle.png')}}">
-                                                            2500/wk</a></li>
-                                                </ul>
-
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-12 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-center"
-                                                style="padding-right:0px;  margin-top: 10px; margin-bottom: 10px;">
-                                                <button type="text" id="change-button-type" data-target="file"
-                                                    data-hidden_name="diploma_cer" data-hidden_value="Yes" data-href=""
-                                                    data-title="Did you really graduate?" data-name="diploma"
-                                                    onclick="open_modal(this)">Move to Apply</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- details for apply type -->
-
                                 <div class="row" id="application-details-apply">
 
                                     <h5 class="job_details_h5">Job Detail</h5>
 
                                     <div class="ss-jb-dtl-disc-sec">
                                         <h6>Description</h6>
-                                        <p>This position is accountable and responsible for nursing care administered
+                                        <p id="publishedJobDescription">This position is accountable and responsible for nursing care administered
                                             under the direction of a Registered Nurse (Nurse Manager, Charge Nurse,
                                             and/or Staff Nurse). Nurse interns must utilize personal protective
                                             equipment such as gloves, gown, mask.</p>
@@ -754,6 +718,61 @@
                                         <ul style="gap: 33px;">
 
                                             <li>
+                                                <h5 >Preferred shift:</h5>
+                                                <p id="publishedJobPreferredShift">Associate Degree in Nursing</p>
+                                            </li>
+                                            <li>
+                                                <h5> Years of Experience: </h5>
+                                                <p><span id="publishedJobYearsOfExperience">3</span>+ Years</p>
+                                            </li>
+                                            <li>
+                                                <h5>Relevant Certifications:</h5>
+                                                <p>BLS, CCRN</p>
+                                            </li>
+                                            <li>
+                                                <h5>Salary Expectation:</h5>
+                                                <p>$<span id="publishedJobYearsOfExperience">2500</span>/wk</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="ss-jb-dtl-disc-sec">
+                                        <h5>Start Date:</h5>
+                                        <p>28th Feb, 2023</p>
+                                    </div>
+
+                                    <div class="ss-jb-dtl-disc-sec">
+                                        <div class="row">
+                                            <div class="col-lg-12 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-center"
+                                                style="padding-right:0px;  margin-top: 10px; margin-bottom: 10px;">
+                                                <button type="text" onclick="open_modal(this)">submit hidden</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- published details end-->
+
+                    <!-- onhold details start-->
+
+                    <div class="col-lg-7 d-none" id="details_onhold">
+                        <div class="ss-journy-svd-jbdtl-dv">
+                            <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
+                                <div class="row" id="application-details-apply">
+                                    <h5 class="job_details_h5">Job Detail</h5>
+                                    <div class="ss-jb-dtl-disc-sec">
+                                        <h6>Description</h6>
+                                        <p>This position is accountable and responsible for nursing care administered
+                                            under the direction of a Registered Nurse (Nurse Manager, Charge Nurse,
+                                            and/or Staff Nurse). Nurse interns must utilize personal protective
+                                            equipment such as gloves, gown, mask.</p>
+                                    </div>
+                                    <div class="ss-jb-dtl-abt-txt">
+                                        <h6> About Nurse:</h6>
+                                        <ul style="gap: 33px;">
+                                            <li>
                                                 <h5>Preferred shift:</h5>
                                                 <p>Associate Degree in Nursing</p>
                                             </li>
@@ -771,260 +790,15 @@
                                             </li>
                                         </ul>
                                     </div>
-
-
-
                                     <div class="ss-jb-dtl-disc-sec">
                                         <h5>Start Date:</h5>
                                         <p>28th Feb, 2023</p>
                                     </div>
-
                                     <div class="ss-jb-dtl-disc-sec">
-
                                         <div class="row">
                                             <div class="col-lg-12 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-center"
                                                 style="padding-right:0px;  margin-top: 10px; margin-bottom: 10px;">
-                                                <button type="text" id="change-button-type" data-target="file"
-                                                    data-hidden_name="diploma_cer" data-hidden_value="Yes" data-href=""
-                                                    data-title="Did you really graduate?" data-name="diploma"
-                                                    onclick="open_modal(this)">submit hidden</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end details for apply types -->
-                                <div class="modal fade ss-jb-dtl-pops-mn-dv" id="file_modal" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-sm modal-dialog-centered">
-                                        <div class="modal-content" style="border-radius: 36px; background: #FFF8FD;">
-                                            <div class="ss-pop-cls-vbtn">
-                                                <div> <button type="button" class="btn-close black"
-                                                        data-target="#file_modal" onclick="close_modal(this)"
-                                                        aria-label="Close"></button>
-                                                    <h4 class="modal_h4" id="title_model">Move to Apply</h4>
-                                                </div>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                                    <div class="ss-mesg-sml-div" style="padding:0px;">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-sm-4 col-md-4 "
-                                                                style="width: 20%;">
-                                                                <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('employer/assets/images/recomand-img-1.png')}}"
-                                                                    alt="">
-                                                            </div>
-                                                            <div class="col-7 col-sm-7">
-                                                                <div class="row">
-                                                                    <div class="col-12 col-sm-12 ">
-                                                                        <p class="app_info_home1">
-                                                                            Associate Degree in Nursing</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home2">
-                                                                            Mary Smith</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home3">
-                                                                            BLS, CCRN</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-2 d-flex justify-content-end"> <img
-                                                                    class="modal_icon"
-                                                                    class="proffession_application_profil"
-                                                                    src="{{URL::asset('frontend/img/comment.png')}}"
-                                                                    alt=""></div>
-
-                                                            <!-- information of application -->
-                                                            <div class="modal_location_card">
-                                                                <div class="col-3"> <a href="#" class="application-a">
-                                                                        Los Angeles, CA</a>
-                                                                </div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Permanent</a></div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Day Shift</a></div>
-                                                            </div>
-                                                            <!-- information of application -->
-                                                            <!-- end first card -->
-                                                        </div>
-                                                        <!-- start second card -->
-                                                    </div>
-                                                </div>
-                                                <!-- start second card -->
-                                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                                    <div class="ss-mesg-sml-div" style="padding:0px;">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-sm-4 col-md-4 "
-                                                                style="width: 20%;">
-                                                                <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('employer/assets/images/recomand-img-2.png')}}"
-                                                                    alt="">
-                                                            </div>
-                                                            <div class="col-7 col-sm-7">
-                                                                <div class="row">
-                                                                    <div class="col-12 col-sm-12 ">
-                                                                        <p class="app_info_home1">
-                                                                            Associate Degree in Nursing</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home2">
-                                                                            David Lee</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home3">
-                                                                            BLS</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-2 d-flex justify-content-end"> <img
-                                                                    class="modal_icon"
-                                                                    class="proffession_application_profil"
-                                                                    src="{{URL::asset('frontend/img/comment.png')}}"
-                                                                    alt=""></div>
-
-                                                            <!-- information of application -->
-                                                            <div class="modal_location_card">
-                                                                <div class="col-3"> <a href="#" class="application-a">
-                                                                        Los Angeles, CA</a>
-                                                                </div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Permanent</a></div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Day Shift</a></div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        $2500/wk</a></div>
-                                                            </div>
-
-
-
-                                                            <!-- information of application -->
-                                                            <!-- end first card -->
-
-
-
-
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                                <!-- start third card -->
-                                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                                    <div class="ss-mesg-sml-div" style="padding:0px;">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-sm-4 col-md-4 "
-                                                                style="width: 20%;">
-                                                                <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('employer/assets/images/recomand-img-3.png')}}"
-                                                                    alt="">
-                                                            </div>
-                                                            <div class="col-7 col-sm-7">
-                                                                <div class="row">
-                                                                    <div class="col-12 col-sm-12 ">
-                                                                        <p class="app_info_home1">
-                                                                            Associate Degree in Nursing</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home2">
-                                                                            Jane Johnson</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home3">
-                                                                            Anesthesia</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-2 d-flex justify-content-end"> <img
-                                                                    class="modal_icon"
-                                                                    class="proffession_application_profil"
-                                                                    src="{{URL::asset('frontend/img/comment.png')}}"
-                                                                    alt=""></div>
-
-                                                            <!-- information of application -->
-                                                            <div class="modal_location_card">
-                                                                <div class="col-3"> <a href="#" class="application-a">
-                                                                        Los Angeles, CA</a>
-                                                                </div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Permanent</a></div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Day Shift</a></div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        $2500/wk</a></div>
-                                                            </div>
-
-
-
-                                                            <!-- information of application -->
-
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                                <!-- end third card -->
-
-                                                <!-- start forth card -->
-
-
-
-                                                <div class="col-lg-12 col-sm-12 col-md-12">
-                                                    <div class="ss-mesg-sml-div" style="padding:0px;">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-sm-4 col-md-4 "
-                                                                style="width: 20%;">
-                                                                <img class="proffession_application_profil"
-                                                                    src="{{URL::asset('employer/assets/images/message-img4.png')}}"
-                                                                    alt="">
-                                                            </div>
-                                                            <div class="col-7 col-sm-7">
-                                                                <div class="row">
-                                                                    <div class="col-12 col-sm-12 ">
-                                                                        <p class="app_info_home1">
-                                                                            Associate Degree in Nursing</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home2">
-                                                                            Ben Stone</p>
-                                                                    </div>
-                                                                    <div class="col-12 col-sm-12">
-                                                                        <p class="app_info_home3">
-                                                                            BLS, CCRN</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-2 d-flex justify-content-end"> <img
-                                                                    class="modal_icon"
-                                                                    class="proffession_application_profil"
-                                                                    src="{{URL::asset('frontend/img/comment.png')}}"
-                                                                    alt=""></div>
-
-                                                            <!-- information of application -->
-                                                            <div class="modal_location_card">
-                                                                <div class="col-3"> <a href="#" class="application-a">
-                                                                        Los Angeles, CA</a>
-                                                                </div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Permanent</a></div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        Day Shift</a></div>
-                                                                <div class="col-3"><a href="#" class="application-a">
-                                                                        $2500/wk</a></div>
-                                                            </div>
-                                                            <!-- information of application -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- end forth card -->
+                                                <button type="text" onclick="open_modal(this)">submit hidden</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1032,7 +806,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- published and Onhold details end-->
+                    <!-- onhold details end-->
+
                 </div>
             </div>
         </div>
@@ -1044,7 +819,7 @@
 <script>
 
     function request_job_form_appear() {
-        document.getElementById('no-job-posted').classList.add('d-none');
+        doetElementById('no-job-posted').classList.add('d-none');
         document.getElementById('published-job-details').classList.add('d-none');
         document.getElementById('create_job_request_form').classList.remove('d-none');
 
@@ -1057,14 +832,37 @@
 
 
         if (type == "drafts") {
+            document.getElementById("onholdCards").classList.add('d-none');
+            document.getElementById("draftCards").classList.remove('d-none');
+            document.getElementById("publishedCards").classList.add('d-none');
+
             document.getElementById("no-job-posted").classList.add("d-none");
             document.getElementById("details_draft").classList.remove("d-none");
-            document.getElementById("details_onhold_published").classList.add("d-none");
+            document.getElementById("details_published").classList.add("d-none");
+            document.getElementById("details_onhold").classList.add("d-none");
             document.getElementById('published-job-details').classList.remove('d-none');
             document.getElementById("create_job_request_form").classList.add("d-none");
-        } else {
+        } else if(type == "published") {
+            document.getElementById("onholdCards").classList.add('d-none');
+            document.getElementById("draftCards").classList.add('d-none');
+            document.getElementById("publishedCards").classList.remove('d-none');
+
             document.getElementById("no-job-posted").classList.add("d-none");
-            document.getElementById("details_onhold_published").classList.remove("d-none");
+            document.getElementById("details_published").classList.remove("d-none");
+            document.getElementById("details_onhold").classList.add("d-none");
+            document.getElementById("details_draft").classList.add("d-none");
+
+            document.getElementById('published-job-details').classList.remove('d-none');
+            document.getElementById("create_job_request_form").classList.add("d-none");
+        }else if(type == "onhold") {
+            document.getElementById("draftCards").classList.add('d-none');
+            document.getElementById("publishedCards").classList.add('d-none');
+            document.getElementById("onholdCards").classList.remove('d-none');
+
+
+            document.getElementById("no-job-posted").classList.add("d-none");
+            document.getElementById("details_onhold").classList.remove("d-none");
+            document.getElementById("details_published").classList.add("d-none");
             document.getElementById("details_draft").classList.add("d-none");
 
             document.getElementById('published-job-details').classList.remove('d-none');
@@ -1095,7 +893,7 @@
             behavior: "smooth"
         });
         let activestatus = 0;
-        document.getElementById('opportunitylistname').innerHTML = type;
+        // document.getElementById('opportunitylistname').innerHTML = type;
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         if (csrfToken) {
             $.ajax({
@@ -1139,7 +937,7 @@
     $(document).ready(function () {
 
 
-        document.getElementById("details_onhold_published").classList.add("d-none");
+
         document.getElementById("details_draft").classList.add("d-none");
         document.getElementById('published-job-details').classList.add('d-none');
     });
@@ -1305,7 +1103,7 @@
                 dataType: 'json',
                 success: function (result) {
                     notie.alert({
-                        type: 'success',
+                type: 'success',
                         text: '<i class="fa fa-check"></i> ' + result.message,
                         time: 5
                     });
@@ -1431,7 +1229,7 @@
         for (const key in speciality) {
             let specialityname = "";
 
-            var select = document.getElementById("preferred_specialty");
+            var select =t.getElementById("preferred_specialty");
             var allspcldata = [];
             for (var i = 0; i < select.options.length; i++) {
                 var obj = {
@@ -1632,46 +1430,9 @@
         }
         $('.certificate-content').html(str);
     }
-
-    function remove_certificate(obj, key) {
-        if (certificate.hasOwnProperty($(obj).data('key'))) {
-            var element = document.getElementById("remove-certificate");
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                event.preventDefault();
-                if (document.getElementById('job_id').value) {
-                    let formData = {
-                        'job_id': document.getElementById('job_id').value,
-                        'certificate': key,
-                    }
-                    let removetype = 'certificate';
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        type: 'POST',
-                        url: "{{ url('employer/remove') }}/" + removetype,
-                        data: formData,
-                        dataType: 'json',
-                        success: function (data) {
-
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                }
-                delete window.allcertificate[$(obj).data('key')];
-                delete certificate[$(obj).data('key')];
-            } else {
-                console.error('CSRF token not found.');
-            }
-            list_certifications();
-        }
-    }
 </script>
 <script>
-    function askWorker(e, type, workerid, jobid) {
+function askWorker(e, type, workerid, jobid) {
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         if (csrfToken) {
             $.ajax({
@@ -1805,7 +1566,7 @@
 
 
 
-    function open_modal(obj) {
+function open_modal(obj) {
         let name, title, modal, form, target;
 
         name = $(obj).data('name');
@@ -1848,30 +1609,33 @@
 @stop
 <script type="text/javascript">
     const darftJobs = @json($darftJobs);
-        console.log(darftJobs[0].id);
-        console.log(darftJobs[0].job_name);
-        console.log(darftJobs[0].job_type);
-        console.log(darftJobs[0].preferred_specialty);
-        console.log(darftJobs[0].job_state);
-        console.log(darftJobs[0].preferred_work_location);
-        console.log(darftJobs[0].preferred_assignment_duration);
-        console.log(darftJobs[0].preferred_days_of_the_week);
-        console.log(darftJobs[0].preferred_hourly_pay_rate);
-        console.log(darftJobs[0].preferred_shift);
-        console.log(darftJobs[0].job_function);
-        console.log(darftJobs[0].job_cerner_exp);
-        console.log(darftJobs[0].job_meditech_exp);
-        console.log(darftJobs[0].seniority_level);
-        console.log(darftJobs[0].job_epic_exp);
-        console.log(darftJobs[0].job_other_exp);
-        console.log(darftJobs[0].start_date);
-        console.log(darftJobs[0].end_date);
-        console.log(darftJobs[0].hours_shift);
-        console.log(darftJobs[0].hours_per_week);
-        console.log(darftJobs[0].responsibilities);
-        console.log(darftJobs[0].qualifications);
-        console.log(darftJobs[0].description);
-        console.log(darftJobs[0].proffesion);
+    const publishedJobs = @json($publishedJobs);
+    const onholdJobs = @json($onholdJobs);
+
+        // console.log(darftJobs[0].id);
+        // console.log(darftJobs[0].job_name);
+        // console.log(darftJobs[0].job_type);
+        // console.log(darftJobs[0].preferred_specialty);
+        // console.log(darftJobs[0].job_state);
+        // console.log(darftJobs[0].preferred_work_location);
+        // console.log(darftJobs[0].preferred_assignment_duration);
+        // console.log(darftJobs[0].preferred_days_of_the_week);
+        // console.log(darftJobs[0].preferred_hourly_pay_rate);
+        // console.log(darftJobs[0].preferred_shift);
+        // console.log(darftJobs[0].job_function);
+        // console.log(darftJobs[0].job_cerner_exp);
+        // console.log(darftJobs[0].job_meditech_exp);
+        // console.log(darftJobs[0].seniority_level);
+        // console.log(darftJobs[0].job_epic_exp);
+        // console.log(darftJobs[0].job_other_exp);
+        // console.log(darftJobs[0].start_date);
+        // console.log(darftJobs[0].end_date);
+        // console.log(darftJobs[0].hours_shift);
+        // console.log(darftJobs[0].hours_per_week);
+        // console.log(darftJobs[0].responsibilities);
+        // console.log(darftJobs[0].qualifications);
+        // console.log(darftJobs[0].description);
+        // console.log(darftJobs[0].proffesion);
 
         let job_name = darftJobs[0].job_name;
         let job_type = darftJobs[0].job_type;
@@ -1883,14 +1647,14 @@
         let preferred_days_of_the_week = darftJobs[0].preferred_days_of_the_week;
         let preferred_hourly_pay_rate = darftJobs[0].preferred_hourly_pay_rate;
         let preferred_shift = darftJobs[0].preferred_shift;
-        let job_function = darftJobs[0].job_function;
+        let  job_function = darftJobs[0].job_function;
         let job_cerner_exp = darftJobs[0].job_cerner_exp;
         let job_meditech_exp = darftJobs[0].job_meditech_exp;
-        let seniority_level = darftJobs[0].seniority_level;
+        let seniority_level =  darftJobs[0].seniority_level;
         let job_epic_exp = darftJobs[0].job_epic_exp;
         let job_other_exp = darftJobs[0].job_other_exp;
         let start_date = darftJobs[0].start_date;
-        let end_date = darftJobs[0].end_date;
+         let end_date = darftJobs[0].end_date;
         let hours_shift = darftJobs[0].hours_shift;
         let hours_per_week = darftJobs[0].hours_per_week;
         let responsibilities = darftJobs[0].responsibilities;
@@ -1901,8 +1665,6 @@
         let preferred_work_area = darftJobs[0].preferred_work_area;
         let preferred_experience = darftJobs[0].preferred_experience;
         let preferred_shift_duration = darftJobs[0].preferred_shift_duration;
-
-
 
 
 
@@ -1926,7 +1688,7 @@
         document.getElementById("hours_shiftDraft").value = hours_shift;
         document.getElementById("hours_per_weekDraft").value = hours_per_week;
         document.getElementById("responsibilitiesDraft").value = responsibilities;
-        document.getElementById("qualificationsDraft").value = qualifications;
+        document.getElementById("qualifications").value = qualifications;
         document.getElementById("perferred_professionDraft").value = proffesion;
         document.getElementById("descriptionDraft").value = description;
         document.getElementById("job_cityDraft").value = job_city;
