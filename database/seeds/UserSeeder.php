@@ -27,6 +27,17 @@ class UserSeeder extends Seeder
             'mobile' => '1234657890'
         ]);
 
+        $employer = User::create([
+			'id' => Str::uuid(),
+            'first_name' => 'employer',
+            'last_name' => 'emp',
+            'email' => 'employer@gmail.com',
+            'ROLE'=>'EMPLOYER',
+            'user_name' => 'employer',
+            'mobile' => '+1 (555) 555-55',
+            'facility_id' => '1'
+        ]);
+
        // $admin->assignRole('Administrator');
     }
 }

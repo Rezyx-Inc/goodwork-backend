@@ -29,6 +29,11 @@ $user = auth()->guard('employer')->user();
         <a href="{{ route('employer-profile') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('employer/employer-profile') ? 'active' : '' }}">
         <img src="{{URL::asset('employer/assets/images/r-profile-icon.png')}}" /><span>My Profile</span>
         </a>
+
+        <a href="{{ route('employer-keys') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('employer/employer-profile') ? 'active' : '' }}">
+        <img src="{{URL::asset('employer/assets/images/plus-icon-white.png')}}" /><span>Check you API keys</span>
+        </a>
+
     </div>
     </div>
     <div class="ss-dash-logout-sec">

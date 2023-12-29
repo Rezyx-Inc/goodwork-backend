@@ -764,7 +764,7 @@
                                     <h5 class="job_details_h5">Job Detail</h5>
                                     <div class="ss-jb-dtl-disc-sec">
                                         <h6>Description</h6>
-                                        <p>This position is accountable and responsible for nursing care administered
+                                        <p id="onholdJobDescription">This position is accountable and responsible for nursing care administered
                                             under the direction of a Registered Nurse (Nurse Manager, Charge Nurse,
                                             and/or Staff Nurse). Nurse interns must utilize personal protective
                                             equipment such as gloves, gown, mask.</p>
@@ -774,11 +774,11 @@
                                         <ul style="gap: 33px;">
                                             <li>
                                                 <h5>Preferred shift:</h5>
-                                                <p>Associate Degree in Nursing</p>
+                                                <p id="onholdJobPreferredShift">Associate Degree in Nursing</p>
                                             </li>
                                             <li>
                                                 <h5> Years of Experience: </h5>
-                                                <p>3+ Years</p>
+                                                <p><span id="onholdJobYearsOfExperience">3</span> + Years</p>
                                             </li>
                                             <li>
                                                 <h5>Relevant Certifications:</h5>
@@ -786,7 +786,7 @@
                                             </li>
                                             <li>
                                                 <h5>Salary Expectation:</h5>
-                                                <p>$2500/wk</p>
+                                                <p>$<span id="onholdJobYearsOfExperience">2500</span>/wk</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -819,7 +819,7 @@
 <script>
 
     function request_job_form_appear() {
-        doetElementById('no-job-posted').classList.add('d-none');
+        document.getElementById('no-job-posted').classList.add('d-none');
         document.getElementById('published-job-details').classList.add('d-none');
         document.getElementById('create_job_request_form').classList.remove('d-none');
 

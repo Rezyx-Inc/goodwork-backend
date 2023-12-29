@@ -38,7 +38,7 @@ Route::prefix('employer')->group(function() {
         Route::get('employer-profile', ['uses' => 'EmployerController@get_profile', 'as' => 'employer-profile']);
 
         // added apis from recruiter module
-        
+
         // Route::get('employer-messages', ['uses' => 'EmployerDashboardController@communication', 'as' => 'employer-messages']);
         // Route::get('employer-profile', ['uses' => 'EmployerDashboardController@profile', 'as' => 'employer-profile']);
         Route::post('help-and-support', ['uses' => 'EmployerDashboardController@helpAndSupport', 'as' => 'employer-help-and-support']);
@@ -65,6 +65,11 @@ Route::prefix('employer')->group(function() {
         Route::get('get-single-nurse-details/{id}', ['uses' => 'EmployerDashboardController@getSingleNurseDetails', 'as' => 'employer-get-single-nurse-details']);
 
         Route::post('send-job-offer-employer', ['uses' => 'ApplicationController@sendJobOfferEmployer', 'as' => 'send-job-offer-employer']);
+
+        //api keys
+        Route::get('keys', ['uses' => 'EmployerController@keys', 'as' => 'employer-keys']);
+
+        Route::post('/get-api-key',['uses'=>'EmployerController@getapikey','as'=>'getApiKey']);
     }
 
     );

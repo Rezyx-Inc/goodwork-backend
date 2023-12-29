@@ -12,6 +12,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Offer;
+use DB;
+use Exception;
 
 class EmployerController extends Controller
 {
@@ -370,4 +372,87 @@ class EmployerController extends Controller
     {
         return view('employer::employer/Profile');
     }
+
+
+    public function keys()
+    {
+        $id = Auth::guard('employer')->user()->id;
+        $keys = DB::table('api_keys')->where('name',$id)->get();
+        return view('employer::employer/employer_api_keys',compact('keys'));
+        //return response()->json(['msg'=>$keys]);
+    }
+
+    public function getapikey(Request $request){
+
+        $case = $request->input('action');
+        if($case == 'add'){
+
+
+                $id = Auth::guard('employer')->user()->id;
+
+                // Check if there are already 3 or more records with the same name
+                $count = DB::table('api_keys')->where('name', $id)->count();
+                if ($count >= 3) {
+                    return redirect()->route('employer-keys')->with('error', 'You had already 3 keys.');
+                }
+                // Generate a random string for the token
+                $randomString = bin2hex(random_bytes(16)); // 16 bytes = 128 bits
+
+                // Create the token by hashing the random string with the secret key
+                $token = hash_hmac('sha256', $randomString, $id);
+
+                // Optionally, you can encode the token in base64 for a shorter representation
+                $base64Token = base64_encode($token);
+
+                $data = ['name'=>$id,'key'=>$base64Token,'active'=>'1'];
+                DB::table('api_keys')->insert($data);
+
+                return redirect()->route('employer-keys')->with('success', 'Key added successfully!');
+
+        }else if($case == 'save'){
+            
+            $id = Auth::guard('employer')->user()->id;
+        $keys = DB::table('api_keys')->where('name', $id)->pluck('id')->toArray();
+
+        $checkboxes = $request->input('keyCheckboxes');
+
+        if($checkboxes){
+            foreach($checkboxes as $key => $value){
+                DB::table('api_keys')
+        ->where('id', $value)
+        ->update([
+            'active' => '1',
+        ]);
+            }
+
+        }
+
+        if($checkboxes != null){
+            $uncheckedCheckboxes = array_diff($keys,$checkboxes);
+
+            if($uncheckedCheckboxes ){
+                foreach($uncheckedCheckboxes as $key => $value){
+                    DB::table('api_keys')
+            ->where('id', $value)
+            ->update([
+                'active' => '0',
+            ]);
+                }
+
+            }
+        }else{
+            DB::table('api_keys')
+            ->where('name', $id )
+            ->update([
+                'active' => '0',
+            ]);
+        }
+
+        return redirect()->route('employer-keys')->with('success', 'Saved');
+        }
+
+    }
+
+
+
 }
