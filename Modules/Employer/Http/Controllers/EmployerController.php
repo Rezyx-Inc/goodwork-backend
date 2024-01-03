@@ -410,7 +410,7 @@ class EmployerController extends Controller
                 return redirect()->route('employer-keys')->with('success', 'Key added successfully!');
 
         }else if($case == 'save'){
-            
+
             $id = Auth::guard('employer')->user()->id;
         $keys = DB::table('api_keys')->where('name', $id)->pluck('id')->toArray();
 
@@ -438,7 +438,6 @@ class EmployerController extends Controller
                 'active' => '0',
             ]);
                 }
-
             }
         }else{
             DB::table('api_keys')

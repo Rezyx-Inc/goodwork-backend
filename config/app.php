@@ -183,6 +183,9 @@ return [
         // API KEY SERVICE PROVIDER
         Ejarnutowski\LaravelApiKey\Providers\ApiKeyServiceProvider::class,
 
+        // Socialite Service Provider
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
 
 
     ],
@@ -242,7 +245,8 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
-       
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
     ],
 
 ];

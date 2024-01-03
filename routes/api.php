@@ -1803,6 +1803,10 @@ Route::middleware(['auth:api','scopes:some_Permession'])->get('/somePermession',
 
 Route::middleware(['auth:api','ThrottleMiddleware:60,1','controllHeaders','auth.apikey'])->get('/getData',[ApiController::class,'get_cities']);
 
+// Dev : test mongodb db connection
+
+// Route::get('/ping', function (Request  $request) {
+//     $connection = DB::connection('mongodb'); $msg = 'MongoDB is accessible!'; try { $connection->command(['ping' => 1]); } catch (\Exception  $e) { $msg = 'MongoDB is not accessible. Error: ' . $e->getMessage(); } return ['msg' => $msg]; });
 
 
 // Route::post('/session', 'ApiController@session')->name('session');

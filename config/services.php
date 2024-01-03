@@ -39,4 +39,11 @@ return [
         'secret' => env('RECAPTCHA_SECRET'),
     ],
 
+    'linkedin-openid' => [
+        'client_id' => '86aikrkrwln3m2',
+        'client_secret' => 'FgreyLF9g2BhHf5n',
+        'redirect' => 'http://127.0.0.1:8000/auth/linkedin/callback',
+
+    ],
+
 ];

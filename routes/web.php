@@ -104,5 +104,15 @@ Route::middleware(['web'])->group(function () {
         Route::get('logout', ['uses' => 'SiteController@logout', 'as' => 'logout']);
 
     });
+
+    // Dev : php information
+
+    // Route::get('/info', function () {
+    //     phpinfo();
+    // });
+    Route::get('auth/linkedin', ['uses'=>'LinkedinController@linkedinRedirect','as'=>'linkedin']);
+    Route::get('auth/linkedin/callback', ['uses'=>'LinkedinController@linkedinCallback','as'=>'linkedinCallback']);
+    Route::get('auth/test', ['uses'=>'LinkedinController@test','as'=>'testLink']);
+    
 });
 

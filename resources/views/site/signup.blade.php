@@ -46,7 +46,11 @@
                           <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Loading...
                     </span>
-                    <span id="sign"> Sign Up  </span> </button>
+                    <span id="sign"> Sign Up  </span> </button><br>
+
+
+                    <a href="{{route('linkedin')}}">Sign Up With Linkedin </a>  
+
                 </div>
                 <p>Already have an account? <a href="{{route('login')}}">Login</a></p>
             </form>
