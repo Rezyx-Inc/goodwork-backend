@@ -70,6 +70,7 @@ Route::prefix('employer')->group(function() {
         Route::get('keys', ['uses' => 'EmployerController@keys', 'as' => 'employer-keys']);
 
         Route::post('/get-api-key',['uses'=>'EmployerController@getapikey','as'=>'getApiKey']);
+        Route::post('/delete_apikey',['uses'=>'EmployerController@deleteapikey','as'=>'deleteApiKey']);
     }
 
     );

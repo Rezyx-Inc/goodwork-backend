@@ -450,7 +450,24 @@ class EmployerController extends Controller
         }
 
         return redirect()->route('employer-keys')->with('success', 'Saved');
+
         }
+
+    }
+
+    public function deleteapikey(Request $request){
+
+
+
+
+                $valuekeyid =  $request->input('delete_key');
+
+                DB::table('api_keys')
+                    ->where('id', $valuekeyid)
+                    ->delete();
+
+                return redirect()->route('employer-keys')->with('success', 'Deleted successfully');
+
 
     }
 
