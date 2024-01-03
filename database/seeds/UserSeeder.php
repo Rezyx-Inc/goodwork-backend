@@ -27,6 +27,8 @@ class UserSeeder extends Seeder
             'mobile' => '1234657890'
         ]);
 
+        // we seed this employer with the id "GWU000002" just for testing jobs, this record related to default seeding jobs
+
         $employer = User::create([
 			'id' => Str::uuid(),
             'first_name' => 'employer',

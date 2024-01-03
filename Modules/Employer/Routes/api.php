@@ -1,7 +1,10 @@
 <?php
 
+
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\AuthApi\AuthApiController;
+use Modules\Employer\Http\Controllers\OpportunitiesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,3 +19,5 @@ use App\Http\Controllers\Api\AuthApi\AuthApiController;
 // Route::middleware('auth:api')->get('/employer', 'AuthApiController@getUser');
 
 Route::middleware('auth:api')->get('/employer', [AuthApiController::class, 'getUser']);
+
+Route::get('/cities/{id}', [OpportunitiesController::class, 'get_cities']);

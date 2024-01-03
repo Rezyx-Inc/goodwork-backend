@@ -110,7 +110,8 @@ class EmployerController extends Controller
 
                 ]);
             }else{
-                  return response()->json(['success' => false, 'message' => $active]);
+                  //return response()->json(['success' => false, 'message' => $active]);
+                  return redirect()->route('employer-opportunities-manager')->with('error', 'Please Try Again Later');
             }
 
 
@@ -410,7 +411,7 @@ class EmployerController extends Controller
                 return redirect()->route('employer-keys')->with('success', 'Key added successfully!');
 
         }else if($case == 'save'){
-            
+
             $id = Auth::guard('employer')->user()->id;
         $keys = DB::table('api_keys')->where('name', $id)->pluck('id')->toArray();
 
