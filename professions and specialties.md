@@ -106,9 +106,7 @@ Certainly! Here's the comprehensive list organized in Markdown format with added
 |                                        | Infectious Disease Pharmacist                                           |                                                                      |
 |                                        | Industrial Pharmacist                                                   |                                                                      |
 |                                        | Emergency Medicine Pharmacist                                           |                                                                      |
-|
-
-                                        | Surgical Pharmacist                                                     |                                                                      |
+|                                        | Surgical Pharmacist                                                     |                                                                      |
 |                                        | Psychiatric Pharmacist                                                  |                                                                      |
 |                                        | Oncology Pharmacist                                                     |                                                                      |
 |                                        | Ambulatory Care Pharmacist                                              |                                                                      |
