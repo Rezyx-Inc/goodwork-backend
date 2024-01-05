@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * This file contains the implementation of the DetailsController class, which is responsible for handling API requests related to details.
+ */
+
 namespace App\Http\Controllers\Api\Details;
 
 //MODELS :
@@ -9,8 +13,28 @@ use App\Models\Keyword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+
+/**
+ * The DetailsController class handles the retrieval of details such as specialities, job types, and more.
+ */
 class DetailsController extends Controller
 {
+
+    protected $request;
+
+     /**
+     * Constructor method for the DetailsController class.
+     * @param Request $request The HTTP request object.
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+     /**
+     * Retrieves the list of specialities.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the specialities.
+     */
     public function getSpecialities()
     {
         $controller = new Controller();
@@ -28,9 +52,13 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function getSpecialitiesByProfession(Request $request)
+     /**
+     * Retrieve specialities based on the given profession ID.
+     * return data in JSON format.
+     */
+    public function getSpecialitiesByProfession()
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($this->request->all(), [
             'api_key' => 'required',
             'profession_id' => 'required'
         ]);
@@ -38,7 +66,7 @@ class DetailsController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $id = $request->profession_id;
+            $id = $this->request->profession_id;
             $keywords = Keyword::where(['active' => true, 'filter' => $id])->get()->pluck('title', 'id');
 
             $data = [];
@@ -51,9 +79,14 @@ class DetailsController extends Controller
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-    public function jobTypes(Request $request)
+
+    /**
+     * Retrieves the list of job types.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the job types.
+     */
+    public function jobTypes()
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($this->request->all(), [
             'api_key' => 'required',
         ]);
 
@@ -71,9 +104,14 @@ class DetailsController extends Controller
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-    public function subjectTypes(Request $request)
+
+    /**
+    * Retrieves the list of subject types.
+    * @return \Illuminate\Http\JsonResponse The JSON response containing the subject types.
+    */
+    public function subjectTypes()
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($this->request->all(), [
             'api_key' => 'required',
         ]);
 
@@ -93,6 +131,11 @@ class DetailsController extends Controller
 
 
     }
+   
+   /**
+   * Retrieves the list of geographic preferences.
+   * @return \Illuminate\Http\JsonResponse The JSON response containing the geographic preferences.
+   */
     public function getGeographicPreferences()
     {
         $controller = new Controller();
@@ -109,10 +152,14 @@ class DetailsController extends Controller
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-
-    public function getSettingType(Request $request)
+    
+    /**
+    * Retrieves the list of setting types.
+    * @return \Illuminate\Http\JsonResponse The JSON response containing the setting types.
+    */
+    public function getSettingType()
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($this->request->all(), [
             'api_key' => 'required',
         ]);
 
@@ -130,6 +177,11 @@ class DetailsController extends Controller
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
+    
+    /**
+    * Retrieves the list of VMS types.
+    * @return \Illuminate\Http\JsonResponse The JSON response containing the VMS types.
+    */
     public function getVMSType()
     {
         $controller = new Controller();
@@ -147,6 +199,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+    * Retrieves the list of clinical types.
+    * @return \Illuminate\Http\JsonResponse The JSON response containing the clinical types.
+    */
     public function getType()
     {
         $controller = new Controller();
@@ -164,6 +220,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+    * Retrieves the list of MSP types.
+    * @return \Illuminate\Http\JsonResponse The JSON response containing the MSP types.
+    */
     public function getMSPType()
     {
         $controller = new Controller();
@@ -181,7 +241,11 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function getContractTerminologyPolicy(Request $request)
+    /**
+    * Retrieves the list of contract termination policies.
+    * @return \Illuminate\Http\JsonResponse The JSON response containing the contract termination policies.
+    */
+    public function getContractTerminologyPolicy()
     {
         $keywords = Keyword::where('filter', 'ContractTerminationPolicy')->get()->pluck('title', 'id');
         $data = [];
@@ -194,6 +258,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+    * Retrieves the list of state licenses.
+    * @return \Illuminate\Http\JsonResponse The JSON response containing the state licenses.
+    */
     public function getStateLicense()
     {
         $controller = new Controller();
@@ -211,6 +279,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+   /**
+   * Retrieves the list of charting systems.
+   * @return \Illuminate\Http\JsonResponse The JSON response containing the charting systems.  
+   */
     public function getChartingSystem()
     {
         $controller = new Controller();
@@ -228,6 +300,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+     * Retrieves the list of professions.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the professions.
+     */
     public function getProfessionList()
     {
         $controller = new Controller();
@@ -244,6 +320,11 @@ class DetailsController extends Controller
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
+    
+    /**
+     * Retrieves the list of skills.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the skills.
+     */
     public function getSkillList()
     {
         $controller = new Controller();
@@ -261,32 +342,45 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+     * Retrieves the list of vaccinations.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the vaccinations.
+     */
     public function getVaccinationList()
     {
         $keywords = Keyword::where('filter', 'Vaccinations')->get()->pluck('title', 'id');
-            $data = [];
-            foreach ($keywords as $key => $value) {
-                $data[] = ['id' => $key, "name" => $value];
-            }
+        $data = [];
+        foreach ($keywords as $key => $value) {
+            $data[] = ['id' => $key, "name" => $value];
+        }
         $this->check = "1";
         $this->message = "Vaccinations has been listed successfully";
         $this->return_data = $data;
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+   
+    /**
+     * Retrieves the list of EMRs.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the EMRs.
+     */
     public function getEMRList()
     {
         $keywords = Keyword::where('filter', 'EMR')->get()->pluck('title', 'id');
-            $data = [];
-            foreach ($keywords as $key => $value) {
-                $data[] = ['id' => $key, "name" => $value];
-            }
+        $data = [];
+        foreach ($keywords as $key => $value) {
+            $data[] = ['id' => $key, "name" => $value];
+        }
         $this->check = "1";
         $this->message = "EMR has been listed successfully";
         $this->return_data = $data;
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+     * Retrieves the list of terms.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the termss.
+     */
     public function getTermsList()
     {
         $controller = new Controller();
@@ -304,6 +398,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+     * Retrieves the list of visions.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the visions.
+     */
     public function getVisionList()
     {
         $controller = new Controller();
@@ -321,6 +419,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+     * Retrieves the list of health insurances.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the health insurances.
+     */
     public function getHealthInsuranceList()
     {
         $controller = new Controller();
@@ -337,6 +439,11 @@ class DetailsController extends Controller
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
+    
+    /**
+     * Retrieves the list of dentals.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the dentals.
+     */
     public function getDentalList()
     {
         $controller = new Controller();
@@ -354,6 +461,10 @@ class DetailsController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
+    /**
+     * Retrieves the list of HowMuchK.
+     * @return \Illuminate\Http\JsonResponse the JSON response containing the HowMuchK.
+     */
     public function getHowMuchKList()
     {
         $controller = new Controller();
