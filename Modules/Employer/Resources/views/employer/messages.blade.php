@@ -231,7 +231,7 @@
                             <ul>
                                 <li><img src="{{URL::asset('frontend/img/msg-rply-box-img.png')}}" /></li>
                                 <li>
-                                    <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
+                                <h6>{{ $messages[0]['sender'] }} </h6>
                                     <p>Travel Nurse CRNA/.....</p>
                                 </li>
                             </ul>
@@ -240,18 +240,22 @@
                         <div class="ss-msgrply-tody">
                             <p>Today</p>
                         </div>
-                        <div class="ss-msg-rply-blue-dv">
-                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                            <p>Hello! {{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</p>
-                            <span>09:25 AM</span>
-                        </div>
 
+                        @foreach($messages as $message)
+                        @if ($message['sender'] == 'EMPLOYER')
+                        <div class="ss-msg-rply-blue-dv">
+                        @elseif ($message['sender'] == 'WORKER')
                         <div class="ss-msg-rply-recrut-dv">
-                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                            <p>Have a great working week!!</p>
-                            <p>Hope you like it</p>
-                            <span>09:25 AM</span>
+                        @endif
+                            <h6>{{ $message['sender'] }}</h6>
+                            <p>{{ $message['content'] }}</p>
+                            @if(is_array($message['time']))
+                            <span>{{ implode(', ', $message['time']) }}</span>
+                            @else
+                            <span>{{ $message['time'] }}</span>
+                            @endif
                         </div>
+                        @endforeach
 
                         <div class="ss-rply-msg-input">
                             <input type="text" id="fname" name="fname" placeholder="Express yourself here!">

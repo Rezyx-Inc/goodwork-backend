@@ -15,6 +15,10 @@ class BroadcastServiceProvider extends ServiceProvider
     public function boot()
     {
         Broadcast::routes();
+        Broadcast::channel('private-chat.{receiverId}', function ($user, $receiverId) {
+            // Replace this with your actual authorization logic
+            return $user->id === $receiverId;
+        });
 
         require base_path('routes/channels.php');
     }

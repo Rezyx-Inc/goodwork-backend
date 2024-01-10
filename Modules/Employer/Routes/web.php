@@ -71,6 +71,10 @@ Route::prefix('employer')->group(function() {
 
         Route::post('/get-api-key',['uses'=>'EmployerController@getapikey','as'=>'getApiKey']);
         Route::post('/delete_apikey',['uses'=>'EmployerController@deleteapikey','as'=>'deleteApiKey']);
+
+        // test messaging
+        Route::get('/send-message', ['uses' => 'EmployerController@sendMessages', 'as' => 'SendMessage']);
+        Route::get('/get-messages', ['uses' => 'EmployerController@getMessages', 'as' => 'GetMessages']);
     }
 
     );

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NewPrivateMessage;
 
 use App\Models\Job;
 use Illuminate\Database\QueryException;
@@ -365,10 +366,95 @@ class EmployerController extends Controller
         return view('employer::employer/createjobrequest');
     }
 
-    public function get_messages()
+    public function get_messages(Request $request)
     {
-        return view('employer::employer/messages');
+        $idWorker = $request->idWorker;
+
+
+        $id = Auth::guard('employer')->user()->id;
+        $chats = DB::connection('mongodb')->collection('chat')->where('employerId', $id)->where('workerId', $idWorker)->get();
+        $messages = $chats->pluck('messages')->first();
+        $rooms = $chats->pluck('workerId');
+
+       //  return view('employer::employer/messages',compact('messages'));
+    return response()->json(['messages' => $messages,'rooms'=> $request]);
     }
+
+    public function timeAgo($time = NULL)
+    {
+        // Calculate difference between current
+        // time and given timestamp in seconds
+        $diff     = time() - $time;
+        // Time difference in seconds
+        $sec     = $diff;
+        // Convert time difference in minutes
+        $min     = round($diff / 60);
+        // Convert time difference in hours
+        $hrs     = round($diff / 3600);
+        // Convert time difference in days
+        $days     = round($diff / 86400);
+        // Convert time difference in weeks
+        $weeks     = round($diff / 604800);
+        // Convert time difference in months
+        $mnths     = round($diff / 2600640);
+        // Convert time difference in years
+        $yrs     = round($diff / 31207680);
+        // Check for seconds
+        if ($sec <= 60) {
+            $string = "$sec seconds ago";
+        }
+        // Check for minutes
+        else if ($min <= 60) {
+            if ($min == 1) {
+                $string = "one minute ago";
+            } else {
+                $string = "$min minutes ago";
+            }
+        }
+        // Check for hours
+        else if ($hrs <= 24) {
+            if ($hrs == 1) {
+                $string = "an hour ago";
+            } else {
+                $string = "$hrs hours ago";
+            }
+        }
+        // Check for days
+        else if ($days <= 7) {
+            if ($days == 1) {
+                $string = "Yesterday";
+            } else {
+                $string = "$days days ago";
+            }
+        }
+        // Check for weeks
+        else if ($weeks <= 4.3) {
+            if ($weeks == 1) {
+                $string = "a week ago";
+            } else {
+                $string = "$weeks weeks ago";
+            }
+        }
+        // Check for months
+        else if ($mnths <= 12) {
+            if ($mnths == 1) {
+                $string = "a month ago";
+            } else {
+                $string = "$mnths months ago";
+            }
+        }
+        // Check for years
+        else {
+            if ($yrs == 1) {
+                $string = "one year ago";
+            } else {
+                $string = "$yrs years ago";
+            }
+        }
+        return $string;
+    }
+
+
     public function get_profile()
     {
         return view('employer::employer/Profile');
@@ -469,6 +555,26 @@ class EmployerController extends Controller
                 return redirect()->route('employer-keys')->with('success', 'Deleted successfully');
 
 
+    }
+
+    public function sendMessages()
+    {
+        $user = Auth::guard('employer')->user();
+        $id = $user->id;
+        $role = $user->role;
+        // event(new MyEvent('hello world', $user ));
+        // event(new NewMessage('hello', 'GWU000002'));
+        event(new NewPrivateMessage('hello', $id,'GWU000005',$role));
+        //    event(new NewMessage('hello'));
+    return true;
+    }
+
+    public function getMessages()
+    {
+
+        $user = Auth::guard('employer')->user();
+        $id = $user->id;
+        return view('employer::layouts.test',compact('id'));
     }
 
 
