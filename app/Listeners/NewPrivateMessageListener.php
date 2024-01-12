@@ -54,10 +54,12 @@ $employerId = $event->EmployerId;
 $workerId = $event->WorkerId;
 $message = $event->message;
 $senderRole = $event->senderRole;
+$messageTime = $event->messageTime;
 
 $chat = Chat::firstOrCreate(
     ['employerId' => $employerId, 'workerId' => $workerId],
-    ['lastMessage' => now()->toDateTimeString(), 'isActive' => true]
+    ['lastMessage' => now()->toDateTimeString(), 'isActive' => true],
+    ['messages' => []],
 );
 
 $newMessage = [
@@ -65,13 +67,21 @@ $newMessage = [
     'sender' => $senderRole,
     'type' => 'text',
     // 'time' => now()->format('h:i A'),
-    'time' => now()->toDateTimeString(),
+    'time' => $messageTime,
     'content' => $message
 ];
 
-$chat->push('messages', $newMessage);
 
-$chat->lastMessage =now()->toDateTimeString();
+// Get the current messages, or initialize as an empty array if null
+$messages = $chat->messages ?? [];
+
+// Prepend the new message
+array_unshift($messages, $newMessage);
+
+// Set the messages attribute to the new array
+$chat->messages = $messages;
+
+$chat->lastMessage = now()->toDateTimeString();
 $chat->save();
 
         //broadcast(new NewPrivatePrivateMessage($message, $receiverId))->toOthers();

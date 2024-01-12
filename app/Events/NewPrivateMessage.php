@@ -21,13 +21,15 @@ class NewPrivateMessage implements ShouldBroadcast
     public $WorkerId;
 
     public $senderRole;
+    public $messageTime;
 
-    public function __construct($message, $EmployerId,$WorkerId,$senderRole)
+    public function __construct($message, $EmployerId,$WorkerId,$senderRole,$messageTime)
     {
         $this->message = $message;
         $this->EmployerId = $EmployerId;
         $this->WorkerId = $WorkerId;
         $this->senderRole = $senderRole;
+        $this->messageTime = $messageTime;
 
     }
 

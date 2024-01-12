@@ -34,7 +34,9 @@ Route::prefix('employer')->group(function() {
         Route::get('explore-employees', ['uses' => 'EmployerController@explore_employees', 'as' => 'explore-employees']);
         Route::get('employer-opportunities-manager', ['uses' => 'EmployerController@opportunities_manager', 'as' => 'employer-opportunities-manager']);
         Route::get('employer-create-job-request', ['uses' => 'EmployerController@create_job_request', 'as' => 'employer-create-job-request']);
+        Route::get('employer-messages/{idWorker}', ['uses' => 'EmployerController@get_messages', 'as' => 'employer-messages']);
         Route::get('employer-messages', ['uses' => 'EmployerController@get_messages', 'as' => 'employer-messages']);
+        Route::get('/getMessages', ['uses'=>'EmployerController@get_private_messages', 'as'=>'getPrivateMessages']);
         Route::get('employer-profile', ['uses' => 'EmployerController@get_profile', 'as' => 'employer-profile']);
 
         // added apis from recruiter module

@@ -366,22 +366,48 @@ class EmployerController extends Controller
         return view('employer::employer/createjobrequest');
     }
 
-    public function get_messages(Request $request)
-    {
-        $idWorker = $request->idWorker;
+    public function get_private_messages(Request $request)
+{
+    $idWorker = $request->query('workerId');
+    $page = $request->query('page', 1);
+    
+    $idEmployer = Auth::guard('employer')->user()->id;
+   
+    // Calculate the number of messages to skip
+    $skip = ($page - 1) * 10;
 
+    // Get the messages string
+    $chat = DB::connection('mongodb')->collection('chat')
+    ->raw(function($collection) use ($idEmployer, $idWorker) {
+        return $collection->findOne(
+            ['employerId' => $idEmployer, 'workerId' => $idWorker],
+            ['projection' => ['messages' => 1]]
+        );
+    });
 
-        $id = Auth::guard('employer')->user()->id;
-        $chats = DB::connection('mongodb')->collection('chat')->where('employerId', $id)->where('workerId', $idWorker)->get();
-        $messages = $chats->pluck('messages')->first();
-        $rooms = $chats->pluck('workerId');
+    // Convert the messages string to an array
+    $messages = json_decode($chat['messages'], true);
 
-       //  return view('employer::employer/messages',compact('messages'));
-    return response()->json(['messages' => $messages,'rooms'=> $request]);
+    // Get the messages for the specified page
+    $messages = array_slice($messages, $skip, 10);
+
+    return response()->json(['messages' => $messages]);
+}
+
+    public function get_messages(){
+        $user = Auth::guard('employer')->user();
+        $id = $user->id;
+
+        return  view('employer::employer/messages',compact('id'));
     }
 
     public function timeAgo($time = NULL)
     {
+         // If $time is not a timestamp, try to convert it
+    if (!is_numeric($time)) {
+        $time = strtotime($time);
+    }
+
         // Calculate difference between current
         // time and given timestamp in seconds
         $diff     = time() - $time;
@@ -564,7 +590,8 @@ class EmployerController extends Controller
         $role = $user->role;
         // event(new MyEvent('hello world', $user ));
         // event(new NewMessage('hello', 'GWU000002'));
-        event(new NewPrivateMessage('hello', $id,'GWU000005',$role));
+        $time = now()->toDateTimeString();
+        event(new NewPrivateMessage('hello', $id,'GWU000005',$role,$time));
         //    event(new NewMessage('hello'));
     return true;
     }

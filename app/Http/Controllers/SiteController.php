@@ -289,7 +289,7 @@ class SiteController extends Controller {
             // issue if the id is a phone numbe
         if ($request->ajax()) {
             $validator = Validator::make($request->all(), [
-                'id' => 'email:rfc,dns',
+                'id' => 'email',
             ]);
             if ($validator->fails()) {
                 $data = [];

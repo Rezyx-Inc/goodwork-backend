@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Pusher Test</title>
+  <title>Private Message Broadcasting Test</title>
   <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="{{ asset('js/app.js') }}"></script>
@@ -34,7 +34,7 @@
         .listen('NewPrivateMessage', (event) => {
            // console.log('event:', event);
             messageText.innerHTML = "message : " + event.message + " role : " + event.senderRole
-            + " employer ID : " + event.EmployerId + " worker ID : " + event.WorkerId;
+            + " employer ID : " + event.EmployerId + " worker ID : " + event.WorkerId + "time : " + event.messageTime ;
         });
     
   }

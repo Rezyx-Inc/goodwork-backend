@@ -582,32 +582,33 @@
 </main>
 <script>
 
-    function getChat(id) {
-        var csrfToken = $('meta[name="csrf-token"]').attr('content');
-        if (csrfToken) {
-            console.log(id);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                url: "{{ route('employer-messages') }}",
-                data: {
+function getChat(id) {
+    // var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    // if (csrfToken) {
+    //     console.log(id);
+    //     $.ajax({
+    //         headers: {
+    //             'X-CSRF-TOKEN': csrfToken
+    //         },
+    //         url: "{{ route('employer-messages') }}",
+    //         data: {
+    //             'idWorker': id,
+    //         },
+    //         type: 'POST',
+    //         success: function (result) {
+    //             $('html').html(result);
+    //         },
+    //         error: function (error) {
+    //             console.error('Error:', error);
+    //         }
+    //     });
+    // } else {
+    //     console.error('CSRF token not found.');
+    // }
+   
+    window.location.href = "{{ route('employer-messages', ['idWorker' => "+$id + "]) }}";
 
-                    'idWorker': id,
-                },
-                type: 'GET',
-                dataType: 'json',
-                success: function (result) {
-                    window.location.href = "{{ route('employer-messages') }}";
-                },
-                error: function (error) {
-
-                }
-            });
-        } else {
-            console.error('CSRF token not found.');
-        }
-    }
+}
 
     function applicationType(type, id = "", formtype, jobid = "") {
         window.scrollTo({

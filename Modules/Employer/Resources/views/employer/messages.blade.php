@@ -4,6 +4,146 @@
 @php
        $faker = app('Faker\Generator');
 @endphp
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="{{ asset('js/app.js') }}"></script>
+<script>
+
+    function messageType(type) {
+        if (type == "workers") {
+            document.getElementById('recruiters_messages').classList.add('d-none');
+            document.getElementById('workers_messages').classList.remove('d-none');
+            document.getElementById('workers_btn').classList.add("active");
+        } else {
+            document.getElementById('recruiters_messages').classList.remove('d-none');
+            document.getElementById('workers_messages').classList.add('d-none');
+            document.getElementById('recruiters_btn').classList.add("active");
+
+            // it adjust the scroll bar to the bottom of the messages container : il faut le mettre dans les chats des recruteurs !!
+     var messagesArea = $('.messages-area');
+    messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+        }
+    }
+
+    $(document).ready(function () {
+        messageType('recruiters');
+        console.log('ready');
+        
+        $.get('/employer/getMessages?page=1&workerId=GWU000005', function(data) {
+                // Parse the returned data
+                var messages = data.messages;
+            
+                console.log(data.messages);
+
+                // Function to create the HTML for a message
+                function createMessageHTML(message) {
+                    var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+                    var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
+
+                    return `
+                        <div class="${senderClass}">
+                            <h6>${message.sender}</h6>
+                            <p>${message.content}</p>
+                            <span>${time}</span>
+                        </div>
+                    `;
+                }
+
+                // Create the HTML for each message and prepend it to the messages area
+                messages.forEach(function(message) {
+                    var messageHTML = createMessageHTML(message);
+                    $('.private-messages').append(messageHTML);
+                });
+                var messagesArea = $('.messages-area');
+    messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+                
+            });
+            var messagesArea = $('.messages-area');
+    messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+        //document.getElementById('workers_btn').classList.add("active");
+        var page = 1; // Initialize the page number
+    var workerId = 'GWU000005'; // Replace with the actual worker ID
+
+    $('.messages-area').scroll(function() {
+        if($(this).scrollTop() == 0) { // If the scrollbar is at the top
+            page++; // Increment the page number
+
+            // Make an AJAX request to the API
+            $.get('/employer/getMessages?page=' + page + '&workerId=GWU000005', function(data) {
+                // Parse the returned data
+                var messages = data.messages;
+
+                console.log(data.messages);
+
+                // Function to create the HTML for a message
+                function createMessageHTML(message) {
+                    var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+                    var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
+
+                    return `
+                        <div class="${senderClass}">
+                            <h6>${message.sender}</h6>
+                            <p>${message.content}</p>
+                            <span>${time}</span>
+                        </div>
+                    `;
+                }
+
+                // Create the HTML for each message and prepend it to the messages area
+                messages.forEach(function(message) {
+                    var messageHTML = createMessageHTML(message);
+                    $('.private-messages').prepend(messageHTML);
+                });
+            });
+        }
+    });
+    });
+
+    window.onload = function() {
+    let id = @json($id);
+    let PrivateChannel = 'private-chat.'+id+".GWU000005";
+
+    console.log(PrivateChannel);
+
+    let messageText = document.getElementById('message');
+    console.log(messageText);
+
+    function createRealMessageHTML(message) {
+                    var senderClass = message.senderRole == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+                    var time = Array.isArray(message.time) ? message.messageTime.join(', ') : message.messageTime;
+
+                    return `
+                        <div class="${senderClass}">
+                            <h6>${message.senderRole}</h6>
+                            <p>${message.message}</p>
+                            <span>${message.messageTime}</span>
+                        </div>
+                    `;
+                }
+
+    // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
+    window.Echo.channel('goodwork_database_messages')
+        .listen('NewMessage', (event) => {
+            console.log('New message:', event.message);
+        });
+
+    // Listen for NewPrivateMessage event on the goodwork_database_private-private-chat.UserId channel
+
+    window.Echo.private(PrivateChannel)
+        .listen('NewPrivateMessage', (event) => {
+           // console.log('event:', event);
+            // messageText.innerHTML = "message : " + event.message + " role : " + event.senderRole
+            // + " employer ID : " + event.EmployerId + " worker ID : " + event.WorkerId + "time : " + event.messageTime ;
+
+            var messageHTML = createRealMessageHTML(event);
+                    $('.private-messages').append(messageHTML);
+        });
+    
+  }
+    
+</script>
+
+
 <main style="padding-top: 130px" class="ss-main-body-sec">
     <div class="container" id="workers_messages">
 
@@ -226,12 +366,12 @@
                 </div>
 
                 <div class="col-lg-7">
-                    <div class="ss-msg-rply-mn-div">
+                    <div class="ss-msg-rply-mn-div messages-area">
                         <div class="ss-msg-rply-profile-sec">
                             <ul>
                                 <li><img src="{{URL::asset('frontend/img/msg-rply-box-img.png')}}" /></li>
                                 <li>
-                                <h6>{{ $messages[0]['sender'] }} </h6>
+                                
                                     <p>Travel Nurse CRNA/.....</p>
                                 </li>
                             </ul>
@@ -241,21 +381,8 @@
                             <p>Today</p>
                         </div>
 
-                        @foreach($messages as $message)
-                        @if ($message['sender'] == 'EMPLOYER')
-                        <div class="ss-msg-rply-blue-dv">
-                        @elseif ($message['sender'] == 'WORKER')
-                        <div class="ss-msg-rply-recrut-dv">
-                        @endif
-                            <h6>{{ $message['sender'] }}</h6>
-                            <p>{{ $message['content'] }}</p>
-                            @if(is_array($message['time']))
-                            <span>{{ implode(', ', $message['time']) }}</span>
-                            @else
-                            <span>{{ $message['time'] }}</span>
-                            @endif
+                        <div class="private-messages">
                         </div>
-                        @endforeach
 
                         <div class="ss-rply-msg-input">
                             <input type="text" id="fname" name="fname" placeholder="Express yourself here!">
@@ -269,24 +396,16 @@
     </div>
 
 </main>
-<script>
 
-    function messageType(type) {
-        if (type == "workers") {
-            document.getElementById('recruiters_messages').classList.add('d-none');
-            document.getElementById('workers_messages').classList.remove('d-none');
-            document.getElementById('workers_btn').classList.add("active");
-        } else {
-            document.getElementById('recruiters_messages').classList.remove('d-none');
-            document.getElementById('workers_messages').classList.add('d-none');
-            document.getElementById('recruiters_btn').classList.add("active");
-        }
-    }
+<style>
+    .messages-area {
+    height: 80vh; 
+    overflow-y: auto;
+}
+.ss-rply-msg-input{
+    margin-top: 10px;
+    position: relative;
+}
 
-    $(document).ready(function () {
-        messageType('workers');
-        document.getElementById('workers_btn').classList.add("active");
-
-    });
-</script>
+</style>
 @endsection
