@@ -18,7 +18,7 @@ class monthlyCron extends Command
      *
      * @var string
      */
-    protected $description = 'This command is for sending emails to nurses reminding to add availability of next 3 months, And this run on every 20th of month at 10:00 AM';
+    protected $description = 'This command is for sending emails to workers reminding to add availability of next 3 months, And this run on every 20th of month at 10:00 AM';
 
     /**
      * Create a new command instance.

@@ -53,10 +53,10 @@ class CreateFacilityTable extends Migration
             $table->string('f_emr_other',150)->nullable();
             $table->string('f_bcheck_provider',150)->nullable();
             $table->string('f_bcheck_provider_other',150)->nullable();
-            $table->string('nurse_cred_soft',150)->nullable();
-            $table->string('nurse_cred_soft_other',150)->nullable();
-            $table->string('nurse_scheduling_sys',150)->nullable();
-            $table->string('nurse_scheduling_sys_other',150)->nullable();
+            $table->string('worker_cred_soft',150)->nullable();
+            $table->string('worker_cred_soft_other',150)->nullable();
+            $table->string('worker_scheduling_sys',150)->nullable();
+            $table->string('worker_scheduling_sys_other',150)->nullable();
             $table->string('time_attend_sys',150)->nullable();
             $table->string('time_attend_sys_other',150)->nullable();
             $table->string('licensed_beds',50)->nullable();

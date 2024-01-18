@@ -39,7 +39,7 @@ class AuthApiController extends Controller
                     $user_data->fcm_token = $this->request->fcm_token;
                     if ($user_data->update()) {
                         $user = User::where('id', '=', $user_data->id)->get()->first();
-                        if (isset($user->role) && $user->role == "NURSE") {
+                        if (isset($user->role) && $user->role == "WORKER") {
                             $return_data = $this->profileCompletionFlagStatus($type = "login", $user);
                         } else {
                             $return_data = $this->facilityProfileCompletionFlagStatus($type = "login", $user);

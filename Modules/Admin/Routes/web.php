@@ -66,19 +66,19 @@ Route::prefix('admin')->group(function() {
         Route::post('admin-updatefaq/{id}', ['uses' => 'FaqController@post_update', 'as' => 'admin-updatefaq.store']);
         Route::get('admin-deletefaq', ['uses' => 'FaqController@delete', 'as' => 'admin-deletefaq']);
 
-        /** Nurses routes */
-        Route::resource('workers', 'NurseController')->parameters(['workers' => 'id'])->except(['destroy']);
-        Route::get('get-workers-dt',['uses'=>'NurseController@getData','as'=>'get-workers-dt']);
-        Route::post('delete-worker',['uses'=>'NurseController@destroy','as'=>'delete-worker']);
-        Route::post('invite-worker',['uses'=>'NurseController@invite','as'=>'invite-worker']);
+        /** Workers routes */
+        Route::resource('workers', 'WorkerController')->parameters(['workers' => 'id'])->except(['destroy']);
+        Route::get('get-workers-dt',['uses'=>'WorkerController@getData','as'=>'get-workers-dt']);
+        Route::post('delete-worker',['uses'=>'WorkerController@destroy','as'=>'delete-worker']);
+        Route::post('invite-worker',['uses'=>'WorkerController@invite','as'=>'invite-worker']);
 
 
-        Route::post('get-states',['uses'=>'NurseController@get_state','as'=>'get-states.admin']);
-        Route::post('get-cities',['uses'=>'NurseController@get_city','as'=>'get-cities.admin']);
-        Route::post('worker-references/{id}',['uses'=>'NurseController@submit_worker_reference','as'=>'worker-references']);
-        Route::post('worker-vaccination/{id}',['uses'=>'NurseController@vaccination_submit','as'=>'worker-vaccination']);
-        Route::post('worker-certification/{id}',['uses'=>'NurseController@certification_submit','as'=>'worker-certification']);
-        Route::post('worker-skills/{id}',['uses'=>'NurseController@skills_submit','as'=>'worker-skills']);
+        Route::post('get-states',['uses'=>'WorkerController@get_state','as'=>'get-states.admin']);
+        Route::post('get-cities',['uses'=>'WorkerController@get_city','as'=>'get-cities.admin']);
+        Route::post('worker-references/{id}',['uses'=>'WorkerController@submit_worker_reference','as'=>'worker-references']);
+        Route::post('worker-vaccination/{id}',['uses'=>'WorkerController@vaccination_submit','as'=>'worker-vaccination']);
+        Route::post('worker-certification/{id}',['uses'=>'WorkerController@certification_submit','as'=>'worker-certification']);
+        Route::post('worker-skills/{id}',['uses'=>'WorkerController@skills_submit','as'=>'worker-skills']);
 
         /** jobs routes */
         Route::resource('jobs', 'JobController')->parameters(['jobs' => 'id'])->except(['destroy']);

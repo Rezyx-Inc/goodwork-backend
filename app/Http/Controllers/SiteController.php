@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Artisan;
 // ************ Requests ************
 use App\Http\Requests\{LoginRequest, SignupRequest, ForgotRequest, ResetRequest, OTPRequest, ContactUsRequest};
 // ************ models ************
-use App\Models\{User, States, Countries, Nurse, Availability,Keyword};
+use App\Models\{User, States, Countries, Worker, Availability,Keyword};
 
 class SiteController extends Controller {
 
@@ -116,7 +116,7 @@ class SiteController extends Controller {
 
 
 
-        // $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
+        // $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
 
         $whereCond = [
             'facilities.active' => true,
@@ -124,7 +124,7 @@ class SiteController extends Controller {
             'jobs.is_hidden' => "0",
             'jobs.is_closed' => "0",
             // 'job_saved.is_delete'=>'0',
-            // 'job_saved.nurse_id'=>$user->id,
+            // 'job_saved.worker_id'=>$user->id,
         ];
 
             $resl = Job::select('jobs.*','name')->where('jobs.active','1')
@@ -239,18 +239,18 @@ class SiteController extends Controller {
                     'email' => $request->email,
                     'user_name' => $request->email,
                     'active' => '1',
-                    'role' => 'NURSE',
+                    'role' => 'WORKER',
                 ]);
 
-                $nurse = Nurse::create([
+                $worker = Worker::create([
                     'user_id' => $model->id,
                 ]);
                 $availability = Availability::create([
-                    'nurse_id' => $nurse->id
+                    'worker_id' => $worker->id
                 ]);
 
-                // suppose Nurse role should be inserted on db, had this error : at register "{\"Errors\":\"There is no role named `NURSE`.\"}"
-                // $model->assignRole('NURSE');
+                // suppose Worker role should be inserted on db, had this error : at register "{\"Errors\":\"There is no role named `WORKER`.\"}"
+                // $model->assignRole('WORKER');
 
 
                  // sending mail infromation
@@ -301,7 +301,7 @@ class SiteController extends Controller {
             }
             $data_msg = [];
             $input = $request->only('id');
-            $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'NURSE')->where("active","1")->first();
+            $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'WORKER')->where("active","1")->first();
             if (isset($model)) {
             session()->put('otp_user_id', $model->id);
             $otp = $this->rand_number(4);

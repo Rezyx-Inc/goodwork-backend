@@ -11,7 +11,7 @@ use Charts;
 use Hash;
 use App\Enums\Role;
 use File;
-use App\Models\{User, Nurse, Job};
+use App\Models\{User, Worker, Job};
 
 
 class DashboardController extends AdminController {
@@ -27,7 +27,7 @@ class DashboardController extends AdminController {
 
     //    }
          $data = [];
-        $data['total_workers_active'] = User::where(['active'=>'1','role'=>'NURSE'])->count();
+        $data['total_workers_active'] = User::where(['active'=>'1','role'=>'WORKER'])->count();
         $data['total_recruiters_active'] = User::where(['active'=>'1','role'=>'RECRUITER'])->count();
         $data['total_job_active'] = Job::where(['active'=>'1'])->count();
         return view('admin::dashboard.index', $data);

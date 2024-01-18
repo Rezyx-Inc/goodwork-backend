@@ -232,7 +232,7 @@
                                 <li><img src="{{URL::asset('frontend/img/msg-rply-box-img.png')}}" /></li>
                                 <li>
                                     <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                                    <p>Travel Nurse CRNA/.....</p>
+                                    <p>Travel Worker CRNA/.....</p>
                                 </li>
                             </ul>
                         </div>

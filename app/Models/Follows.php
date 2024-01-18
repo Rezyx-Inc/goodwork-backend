@@ -33,8 +33,8 @@ class Follows extends UuidModel
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function nurse()
+    public function worker()
     {
-        return $this->hasOne(Nurse::class, 'user_id');
+        return $this->hasOne(Worker::class, 'user_id');
     }
 }

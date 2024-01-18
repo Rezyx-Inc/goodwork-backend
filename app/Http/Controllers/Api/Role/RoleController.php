@@ -16,8 +16,8 @@ class RoleController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'serving_preceptor' => 'boolean',
-            'serving_interim_nurse_leader' => 'boolean',
-            'leadership_roles' => 'required_if:serving_interim_nurse_leader,1',
+            'serving_interim_worker_leader' => 'boolean',
+            'leadership_roles' => 'required_if:serving_interim_worker_leader,1',
             'clinical_educator' => 'boolean',
             'is_daisy_award_winner' => 'boolean',
             'employee_of_the_mth_qtr_yr' => 'boolean',
@@ -30,12 +30,12 @@ class RoleController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $return_data = [];
-            $nurse =  Nurse::where('user_id', '=', $request->id)->first();
+            $worker =  Worker::where('user_id', '=', $request->id)->first();
             $params = $request->toArray();
             $params['serving_preceptor'] =
                 isset($params['serving_preceptor']) && !!$params['serving_preceptor'];
-            $params['serving_interim_nurse_leader'] =
-                isset($params['serving_interim_nurse_leader']) && !!$params['serving_interim_nurse_leader'];
+            $params['serving_interim_worker_leader'] =
+                isset($params['serving_interim_worker_leader']) && !!$params['serving_interim_worker_leader'];
             $params['clinical_educator'] =
                 isset($params['clinical_educator']) && !!$params['clinical_educator'];
             $params['is_daisy_award_winner'] =
@@ -48,9 +48,9 @@ class RoleController extends Controller
                 isset($params['is_professional_practice_council']) && !!$params['is_professional_practice_council'];
             $params['is_research_publications'] =
                 isset($params['is_research_publications']) && !!$params['is_research_publications'];
-            $nurse->update($params);
+            $worker->update($params);
             $this->check = "1";
-            $this->return_data = $nurse;
+            $this->return_data = $worker;
             $this->message = "Role and Interest Updated Successfully";
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -82,19 +82,19 @@ class RoleController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             $return_data = [];
-            $nurse =  Nurse::where('user_id', '=', $request->id)->first();
-            $nurse->summary = $request->summary;
-            $nurse->save();
+            $worker =  Worker::where('user_id', '=', $request->id)->first();
+            $worker->summary = $request->summary;
+            $worker->save();
             if (preg_match('/https?:\/\/(?:[\w]+\.)*youtube\.com\/watch\?v=[^&]+/', $request->nu_video, $vresult)) {
                 $youTubeID = $this->parse_youtube($request->nu_video);
                 $embedURL = 'https://www.youtube.com/embed/' . $youTubeID[1];
-                $nurse->__set('nu_video_embed_url', $embedURL);
-                $nurse->update();
+                $worker->__set('nu_video_embed_url', $embedURL);
+                $worker->update();
             } elseif (preg_match('/https?:\/\/(?:[\w]+\.)*vimeo\.com(?:[\/\w]*\/videos?)?\/([0-9]+)[^\s]*+/', $request->nu_video, $vresult)) {
                 $vimeoID = $this->parse_vimeo($request->nu_video);
                 $embedURL = 'https://player.vimeo.com/video/' . $vimeoID[1];
-                $nurse->__set('nu_video_embed_url', $embedURL);
-                $nurse->update();
+                $worker->__set('nu_video_embed_url', $embedURL);
+                $worker->update();
             }
             if ($additional_photos = $request->file('additional_pictures')) {
                 foreach ($additional_photos as $additional_photo) {
@@ -103,9 +103,9 @@ class RoleController extends Controller
                     $additional_photo_ext = $additional_photo->getClientOriginalExtension();
                     $additional_photo_finalname = $additional_photo_name . '_' . time() . '.' . $additional_photo_ext;
                     //Upload Image
-                    $additional_photo->storeAs('assets/nurses/additional_photos/' . $nurse->id, $additional_photo_finalname);
-                    NurseAsset::create([
-                        'nurse_id' => $nurse->id,
+                    $additional_photo->storeAs('assets/workers/additional_photos/' . $worker->id, $additional_photo_finalname);
+                    WorkerAsset::create([
+                        'worker_id' => $worker->id,
                         'name' => $additional_photo_finalname,
                         'filter' => 'additional_photos'
                     ]);
@@ -118,16 +118,16 @@ class RoleController extends Controller
                     $additional_file_ext = $additional_file->getClientOriginalExtension();
                     $additional_file_finalname = $additional_file_name . '_' . time() . '.' . $additional_file_ext;
                     //Upload Image
-                    $additional_file->storeAs('assets/nurses/additional_files/' . $nurse->id, $additional_file_finalname);
-                    NurseAsset::create([
-                        'nurse_id' => $nurse->id,
+                    $additional_file->storeAs('assets/workers/additional_files/' . $worker->id, $additional_file_finalname);
+                    WorkerAsset::create([
+                        'worker_id' => $worker->id,
                         'name' => $additional_file_finalname,
                         'filter' => 'additional_files'
                     ]);
                 }
             }
             $this->check = "1";
-            $this->return_data = $nurse;
+            $this->return_data = $worker;
             $this->message = "Role and Interest Updated Successfully";
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -143,17 +143,17 @@ class RoleController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse_info = NURSE::where('user_id', $request->user_id)->get();
-            if ($nurse_info->count() > 0) {
-                $nurse = $nurse_info->first();
-                $nurse_assets = NurseAsset::where(['id' => $request->asset_id])->get();
-                if ($nurse_assets->count() > 0) {
-                    $nurseAsset = $nurse_assets->first();
-                    $t = Storage::exists('assets/nurses/' . $nurseAsset->filter . '/' . $nurse->id . '/' . $nurseAsset->name);
-                    if ($t && $nurseAsset->name) {
-                        Storage::delete('assets/nurses/' . $nurseAsset->filter . '/' . $nurse->id . '/' . $nurseAsset->name);
+            $worker_info = WORKER::where('user_id', $request->user_id)->get();
+            if ($worker_info->count() > 0) {
+                $worker = $worker_info->first();
+                $worker_assets = WorkerAsset::where(['id' => $request->asset_id])->get();
+                if ($worker_assets->count() > 0) {
+                    $workerAsset = $worker_assets->first();
+                    $t = Storage::exists('assets/workers/' . $workerAsset->filter . '/' . $worker->id . '/' . $workerAsset->name);
+                    if ($t && $workerAsset->name) {
+                        Storage::delete('assets/workers/' . $workerAsset->filter . '/' . $worker->id . '/' . $workerAsset->name);
                     }
-                    $delete = $nurseAsset->delete();
+                    $delete = $workerAsset->delete();
                     if ($delete) {
                         $this->check = "1";
                         $this->message = "Document removed successfully";
@@ -164,7 +164,7 @@ class RoleController extends Controller
                     $this->message = "Document already removed/not found";
                 }
             } else {
-                $this->message = "Nurse not found";
+                $this->message = "Worker not found";
             }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);

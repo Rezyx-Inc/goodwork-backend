@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Keyword;
 
 //WORKER
-use App\Models\Nurse;
+use App\Models\Worker;
 use App\Models\Availability;
 use App\Models\Certification;
 use App\Models\Experience;
@@ -18,8 +18,8 @@ use App\Models\Notification;
 use App\Enums\Role;
 use App\Enums\State;
 use App\Models\Offer;
-use App\Models\NurseAsset;
-use App\Models\NurseReference;
+use App\Models\WorkerAsset;
+use App\Models\WorkerReference;
 use App\Models\Follows;
 use App\Models\API_KEY;
 use App\Models\Countries;
@@ -32,7 +32,7 @@ use App\Models\States;
 use App\Models\Cities;
 use App\Models\JobAsset;
 use App\Models\JobOffer;
-use App\Models\NurseRating;
+use App\Models\WorkerRating;
 use App\Models\EmailTemplate;
 
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -183,15 +183,15 @@ class ApiController extends Controller
         //     $data[] = ['id' => strval($key), "name" => $value];
         // }
 
-        $nurse = Nurse::where('user_id', '=', $user->id)->get()->first();
+        $worker = Worker::where('user_id', '=', $user->id)->get()->first();
 
-        if(isset($nurse->id)){
-            $offer = DB::select("SELECT status FROM `offers` WHERE nurse_id = '$nurse->id'");
+        if(isset($worker->id)){
+            $offer = DB::select("SELECT status FROM `offers` WHERE worker_id = '$worker->id'");
             if(!empty($offer)){
                 $offer = $offer[0];
             }
         }
-        $availability = Availability::where('nurse_id', '=', $nurse->id)->get()->first();
+        $availability = Availability::where('worker_id', '=', $worker->id)->get()->first();
 
         /* profile status flag */
         $profile_detail_flag = "0";
@@ -202,23 +202,23 @@ class ApiController extends Controller
             (isset($user->last_name) && $user->last_name != "") &&
             (isset($user->email) && $user->email != "") &&
             (isset($user->mobile) && $user->mobile != "") &&
-            (isset($nurse->nursing_license_state) && $nurse->nursing_license_state != "") &&
-            (isset($nurse->nursing_license_number) && $nurse->nursing_license_number != "") &&
-            (isset($nurse->specialty) && $nurse->specialty != "") &&
+            (isset($worker->nursing_license_state) && $worker->nursing_license_state != "") &&
+            (isset($worker->nursing_license_number) && $worker->nursing_license_number != "") &&
+            (isset($worker->specialty) && $worker->specialty != "") &&
             (isset($availability->work_location) && $availability->work_location != "") &&
-            // (isset($nurse->address) && $nurse->address != "") &&
-            // (isset($nurse->city) && $nurse->city != "") &&
-            (isset($nurse->license_type) && $nurse->license_type != "" ) &&
-            (isset($nurse->state) && $nurse->state != "") &&
-            // (isset($nurse->postcode) && $nurse->postcode != "") &&
-            (isset($nurse->country) && $nurse->country != "")
+            // (isset($worker->address) && $worker->address != "") &&
+            // (isset($worker->city) && $worker->city != "") &&
+            (isset($worker->license_type) && $worker->license_type != "" ) &&
+            (isset($worker->state) && $worker->state != "") &&
+            // (isset($worker->postcode) && $worker->postcode != "") &&
+            (isset($worker->country) && $worker->country != "")
 
         ) $profile_detail_flag = "1";
         /* profile status flag */
 
         /* Hourly rate and availability */
         $hourly_rate_and_availability = "0";
-        if ((isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") &&
+        if ((isset($worker->hourly_pay_rate) && $worker->hourly_pay_rate != "") &&
             (isset($availability->shift_duration) && $availability->shift_duration != "") &&
             (isset($availability->assignment_duration) && $availability->assignment_duration != "") &&
             (isset($availability->preferred_shift) && $availability->preferred_shift != "") &&
@@ -230,7 +230,7 @@ class ApiController extends Controller
         $return_data['id'] = (isset($user->id) && $user->id != "") ? $user->id : "";
         $return_data['job_title'] = (isset($jobs->job_title) && $jobs->job_title != "") ? $jobs->job_title : "";
         $return_data['job_filter'] = (isset($jobs->job_filter) && $jobs->job_filter != "") ? $jobs->job_filter : "";
-        $return_data['nurse_id'] = (isset($nurse->id) && $nurse->id != "") ? $nurse->id : "";
+        $return_data['worker_id'] = (isset($worker->id) && $worker->id != "") ? $worker->id : "";
         $return_data['offer_status'] = (isset($offer->status) && $offer->status != "") ? $offer->status : "";
         $return_data['role'] = (isset($user->role) && $user->role != "") ? $user->role : "";
         $return_data['fcm_token'] = (isset($user->fcm_token) && $user->fcm_token != "") ? $user->fcm_token : "";
@@ -245,26 +245,26 @@ class ApiController extends Controller
         $return_data['last_name'] = (isset($user->last_name) && $user->last_name != "") ? $user->last_name : "";
         $return_data['email'] = (isset($user->email) && $user->email != "") ? $user->email : "";
 
-        $return_data['image'] = (isset($user->image) && $user->image != "") ? url("public/images/nurses/profile/" . $user->image) : "";
+        $return_data['image'] = (isset($user->image) && $user->image != "") ? url("public/images/workers/profile/" . $user->image) : "";
 
-        $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+        $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
         if (isset($user->image)) {
-            $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $user->image);
+            $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $user->image);
             if ($t) {
-                $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $user->image);
+                $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $user->image);
             }
         }
-        // $return_data["image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
+        // $return_data["image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileWorker);
 
         $return_data['mobile'] = (isset($user->mobile) && $user->mobile != "") ? $user->mobile : "";
-        $return_data['nursing_license_state'] = (isset($nurse->nursing_license_state) && $nurse->nursing_license_state != "") ? $nurse->nursing_license_state : "";
-        $return_data['nursing_license_number'] = (isset($nurse->nursing_license_number) && $nurse->nursing_license_number != "") ? $nurse->nursing_license_number : "";
-        $return_data['authority_Issue'] = (isset($nurse->authority_Issue) && $nurse->authority_Issue != "") ? $nurse->authority_Issue : "";
-        $return_data['highest_nursing_degree'] = (isset($nurse->highest_nursing_degree) && $nurse->highest_nursing_degree != "") ? $nurse->highest_nursing_degree : "";
-        $return_data['highest_nursing_degree_definition'] = (isset($nurse->highest_nursing_degree) && $nurse->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->highest_nursing_degree) : "";
+        $return_data['nursing_license_state'] = (isset($worker->nursing_license_state) && $worker->nursing_license_state != "") ? $worker->nursing_license_state : "";
+        $return_data['nursing_license_number'] = (isset($worker->nursing_license_number) && $worker->nursing_license_number != "") ? $worker->nursing_license_number : "";
+        $return_data['authority_Issue'] = (isset($worker->authority_Issue) && $worker->authority_Issue != "") ? $worker->authority_Issue : "";
+        $return_data['highest_nursing_degree'] = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? $worker->highest_nursing_degree : "";
+        $return_data['highest_nursing_degree_definition'] = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";
         $return_data['specialty'] = $spl = [];
-        if (isset($nurse->specialty) && $nurse->specialty != "") {
-            $specialty_array = explode(",", $nurse->specialty);
+        if (isset($worker->specialty) && $worker->specialty != "") {
+            $specialty_array = explode(",", $worker->specialty);
             if (is_array($specialty_array)) {
                 foreach ($specialty_array as $key => $spl_id) {
                     $spl_name = (isset($specialties[$spl_id])) ? $specialties[$spl_id] : "";
@@ -280,23 +280,23 @@ class ApiController extends Controller
         //     $return_data['work_location_definition'] = '';
         // }
 
-        $return_data['address'] = (isset($nurse->address) && $nurse->address != "") ? $nurse->address : "";
+        $return_data['address'] = (isset($worker->address) && $worker->address != "") ? $worker->address : "";
 
-        $return_data['search_status'] = (isset($nurse->search_status) && $nurse->search_status != "") ? strval($nurse->search_status) : "";
-        $return_data['search_status_definition'] = (isset($nurse->search_status) && $nurse->search_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->search_status) : "";
-        $return_data['license_type'] = (isset($nurse->license_type) && $nurse->license_type != "") ? strval($nurse->license_type) : "";
-        $return_data['license_type_definition'] = (isset($nurse->license_type) && $nurse->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->license_type) : "";
-        $return_data['license_status'] = (isset($nurse->license_status) && $nurse->license_status != "") ? strval($nurse->license_status) : "";
-        $return_data['license_status_definition'] = (isset($nurse->license_status) && $nurse->license_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->license_status) : "";
-        $return_data['license_expiry_date'] = (isset($nurse->license_expiry_date) && $nurse->license_expiry_date != "") ? strval($nurse->license_expiry_date) : "";
-        $return_data['license_issue_date'] = (isset($nurse->license_issue_date) && $nurse->license_issue_date != "") ? strval($nurse->license_issue_date) : "";
-        $return_data['license_renewal_date'] = (isset($nurse->license_renewal_date) && $nurse->license_renewal_date != "") ? strval($nurse->license_renewal_date) : "";
+        $return_data['search_status'] = (isset($worker->search_status) && $worker->search_status != "") ? strval($worker->search_status) : "";
+        $return_data['search_status_definition'] = (isset($worker->search_status) && $worker->search_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->search_status) : "";
+        $return_data['license_type'] = (isset($worker->license_type) && $worker->license_type != "") ? strval($worker->license_type) : "";
+        $return_data['license_type_definition'] = (isset($worker->license_type) && $worker->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->license_type) : "";
+        $return_data['license_status'] = (isset($worker->license_status) && $worker->license_status != "") ? strval($worker->license_status) : "";
+        $return_data['license_status_definition'] = (isset($worker->license_status) && $worker->license_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->license_status) : "";
+        $return_data['license_expiry_date'] = (isset($worker->license_expiry_date) && $worker->license_expiry_date != "") ? strval($worker->license_expiry_date) : "";
+        $return_data['license_issue_date'] = (isset($worker->license_issue_date) && $worker->license_issue_date != "") ? strval($worker->license_issue_date) : "";
+        $return_data['license_renewal_date'] = (isset($worker->license_renewal_date) && $worker->license_renewal_date != "") ? strval($worker->license_renewal_date) : "";
 
-        $return_data['city'] = (isset($nurse->city) && $nurse->city != "") ? $nurse->city : "";
-        $return_data['state'] = (isset($nurse->state) && $nurse->state != "") ? $nurse->state : "";
-        $return_data['postcode'] = (isset($nurse->postcode) && $nurse->postcode != "") ? $nurse->postcode : "";
-        $return_data['country'] = (isset($nurse->country) && $nurse->country != "") ? $nurse->country : "";
-        $return_data['hourly_pay_rate'] = (isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") ? strval($nurse->hourly_pay_rate) : "";
+        $return_data['city'] = (isset($worker->city) && $worker->city != "") ? $worker->city : "";
+        $return_data['state'] = (isset($worker->state) && $worker->state != "") ? $worker->state : "";
+        $return_data['postcode'] = (isset($worker->postcode) && $worker->postcode != "") ? $worker->postcode : "";
+        $return_data['country'] = (isset($worker->country) && $worker->country != "") ? $worker->country : "";
+        $return_data['hourly_pay_rate'] = (isset($worker->hourly_pay_rate) && $worker->hourly_pay_rate != "") ? strval($worker->hourly_pay_rate) : "";
         $return_data['shift_duration'] = (isset($availability->shift_duration) && $availability->shift_duration != "") ? strval($availability->shift_duration) : "";
         // $return_data['shift_duration_definition'] = (isset($shifts[$availability->shift_duration]) && $shifts[$availability->shift_duration] != "") ? $shifts[strval($availability->shift_duration)] : "";
         $return_data['assignment_duration'] = (isset($availability->assignment_duration) && $availability->assignment_duration != "") ? strval($availability->shift_duration) : "";
@@ -308,7 +308,7 @@ class ApiController extends Controller
         $return_data['earliest_start_date'] = (isset($availability->earliest_start_date) && $availability->earliest_start_date != "") ? date('m/d/Y', strtotime($availability->earliest_start_date)) : "";
 
         $experience = [];
-        $exp = Experience::where(['nurse_id' => $nurse->id])->whereNull('deleted_at')->get();
+        $exp = Experience::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
         if ($exp->count() > 0) {
             $e = $exp;
             foreach ($e as $key => $v) {
@@ -320,10 +320,10 @@ class ApiController extends Controller
                 $crt_data['start_date'] = (isset($v->start_date) && $v->start_date != "") ? date('m/d/Y', strtotime($v->start_date)) : "";
                 $crt_data['end_date'] = (isset($v->end_date) && $v->end_date != "") ? date('m/d/Y', strtotime($v->end_date)) : "";
                 $crt_data['is_current_job'] = (isset($v->is_current_job) && $v->is_current_job != "") ? $v->is_current_job : "";
-                $crt_data["experience_as_acute_care_facility"] = (isset($nurse->experience_as_acute_care_facility) && $nurse->experience_as_acute_care_facility != "") ? $nurse->experience_as_acute_care_facility : "";
-                $crt_data["experience_as_ambulatory_care_facility"] = (isset($nurse->experience_as_ambulatory_care_facility) && $nurse->experience_as_ambulatory_care_facility != "") ? $nurse->experience_as_ambulatory_care_facility : "";
-                $exp_acute_care = isset($nurse->experience_as_acute_care_facility)? $nurse->experience_as_acute_care_facility : '0';
-                $exp_ambulatory_care = isset($nurse->experience_as_ambulatory_care_facility)? $nurse->experience_as_ambulatory_care_facility : '0';
+                $crt_data["experience_as_acute_care_facility"] = (isset($worker->experience_as_acute_care_facility) && $worker->experience_as_acute_care_facility != "") ? $worker->experience_as_acute_care_facility : "";
+                $crt_data["experience_as_ambulatory_care_facility"] = (isset($worker->experience_as_ambulatory_care_facility) && $worker->experience_as_ambulatory_care_facility != "") ? $worker->experience_as_ambulatory_care_facility : "";
+                $exp_acute_care = isset($worker->experience_as_acute_care_facility)? $worker->experience_as_acute_care_facility : '0';
+                $exp_ambulatory_care = isset($worker->experience_as_ambulatory_care_facility)? $worker->experience_as_ambulatory_care_facility : '0';
                 $crt_data['total_experience'] = $exp_acute_care+$exp_ambulatory_care;
                 $crt_data['total_experience'] = (int)$crt_data['total_experience'];
                 $experience[] = $crt_data;
@@ -335,7 +335,7 @@ class ApiController extends Controller
 
         /* certitficate */
         $certitficate = [];
-        $cert = Certification::where(['nurse_id' => $nurse->id])->whereNull('deleted_at')->get();
+        $cert = Certification::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
         if ($cert->count() > 0) {
             $c = $cert;
             foreach ($c as $key => $v) {
@@ -349,13 +349,13 @@ class ApiController extends Controller
                 $crt_data['expiration_date'] = (isset($v->expiration_date) && $v->expiration_date != "") ? date('m/d/Y', strtotime($v->expiration_date)) : "";
                 $crt_data['renewal_date'] = (isset($v->renewal_date) && $v->renewal_date != "") ? date('m/d/Y', strtotime($v->renewal_date)) : "";
 
-                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/nurses/certifications/' . $nurse->id . '/' . $v->certificate_image) : "";
+                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/workers/certifications/' . $worker->id . '/' . $v->certificate_image) : "";
 
                 $certificate_image_base = "";
                 if ($v->certificate_image) {
-                    $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/certifications/' . $v->certificate_image);
+                    $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/certifications/' . $v->certificate_image);
                     if ($t) {
-                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/nurses/certifications/' . $v->certificate_image);
+                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/workers/certifications/' . $v->certificate_image);
                     }
                 }
                 // $crt_data['certificate_image_base'] = ($certificate_image_base != "") ? 'data:image/jpeg;base64,' . base64_encode($certificate_image_base) : "";
@@ -370,48 +370,48 @@ class ApiController extends Controller
             }
         }
         $return_data['certitficate'] = $certitficate;
-        $return_data['resume'] = (isset($nurse->resume) && $nurse->resume != "") ? url('storage/assets/nurses/resumes/' . $nurse->id . '/' . $nurse->resume) : "";
+        $return_data['resume'] = (isset($worker->resume) && $worker->resume != "") ? url('storage/assets/workers/resumes/' . $worker->id . '/' . $worker->resume) : "";
         /* certitficate */
 
 
         /* role interest */
         $optyesno = ['1' => "Yes", '0' => "No"];
 
-        $role_interest["nu_video_embed_url"] = (isset($nurse->nu_video_embed_url) && $nurse->nu_video_embed_url != "") ? $nurse->nu_video_embed_url : "";
-        $role_interest["nu_video_embed_url_definition"] = (isset($optyesno[$nurse->nu_video_embed_url]) && $optyesno[$nurse->nu_video_embed_url] != "") ? $optyesno[$nurse->nu_video_embed_url] : "";
-        $role_interest['serving_preceptor'] = (isset($nurse->serving_preceptor)) ? strval($nurse->serving_preceptor) : "";
-        $role_interest['serving_preceptor_definition'] = (isset($optyesno[$nurse->serving_preceptor]) && $optyesno[$nurse->serving_preceptor] != "") ? $optyesno[$nurse->serving_preceptor] : "";
-        $role_interest['serving_interim_nurse_leader'] = (isset($nurse->serving_interim_nurse_leader)) ? strval($nurse->serving_interim_nurse_leader) : "";
-        $role_interest['serving_interim_nurse_leader_definition'] = (isset($optyesno[$nurse->serving_interim_nurse_leader]) && $optyesno[$nurse->serving_interim_nurse_leader] != "") ? $optyesno[$nurse->serving_interim_nurse_leader] : "";
-        $role_interest['clinical_educator'] = (isset($nurse->clinical_educator)) ? strval($nurse->clinical_educator) : "";
-        $role_interest['clinical_educator_definition'] = (isset($optyesno[$nurse->clinical_educator]) && $optyesno[$nurse->clinical_educator] != "") ? $optyesno[$nurse->clinical_educator] : "";
-        $role_interest['is_daisy_award_winner'] = (isset($nurse->is_daisy_award_winner)) ? strval($nurse->is_daisy_award_winner) : "";
-        $role_interest['is_daisy_award_winner_definition'] = (isset($optyesno[$nurse->is_daisy_award_winner]) && $optyesno[$nurse->is_daisy_award_winner] != "") ? $optyesno[$nurse->is_daisy_award_winner] : "";
-        $role_interest['employee_of_the_mth_qtr_yr'] = (isset($nurse->employee_of_the_mth_qtr_yr)) ? strval($nurse->employee_of_the_mth_qtr_yr) : "";
-        $role_interest['employee_of_the_mth_qtr_yr_definition'] = (isset($optyesno[$nurse->employee_of_the_mth_qtr_yr]) && $optyesno[$nurse->employee_of_the_mth_qtr_yr] != "") ? $optyesno[$nurse->employee_of_the_mth_qtr_yr] : "";
-        $role_interest['other_nursing_awards'] = (isset($nurse->other_nursing_awards)) ? strval($nurse->other_nursing_awards) : "";
-        $role_interest['other_nursing_awards_definition'] = (isset($optyesno[$nurse->other_nursing_awards]) && $optyesno[$nurse->other_nursing_awards] != "") ? $optyesno[$nurse->other_nursing_awards] : "";
-        $role_interest['is_professional_practice_council'] = (isset($nurse->is_professional_practice_council)) ? strval($nurse->is_professional_practice_council) : "";
-        $role_interest['is_professional_practice_council_definition'] = (isset($optyesno[$nurse->is_professional_practice_council]) && $optyesno[$nurse->is_professional_practice_council] != "") ? $optyesno[$nurse->is_professional_practice_council] : "";
-        $role_interest['is_research_publications'] = (isset($nurse->is_research_publications)) ? strval($nurse->is_research_publications) : "";
-        $role_interest['is_research_publications_definition'] = (isset($optyesno[$nurse->is_research_publications]) && $optyesno[$nurse->is_research_publications] != "") ? $optyesno[$nurse->is_research_publications] : "";
-        $role_interest['leadership_roles'] = (isset($nurse->leadership_roles) && $nurse->leadership_roles != "") ? strval($nurse->leadership_roles) : "";
-        $role_interest['leadership_roles_definition'] = (isset($leadershipRoles[$nurse->leadership_roles]) && $leadershipRoles[$nurse->leadership_roles] != "") ? $leadershipRoles[$nurse->leadership_roles] : "";
+        $role_interest["nu_video_embed_url"] = (isset($worker->nu_video_embed_url) && $worker->nu_video_embed_url != "") ? $worker->nu_video_embed_url : "";
+        $role_interest["nu_video_embed_url_definition"] = (isset($optyesno[$worker->nu_video_embed_url]) && $optyesno[$worker->nu_video_embed_url] != "") ? $optyesno[$worker->nu_video_embed_url] : "";
+        $role_interest['serving_preceptor'] = (isset($worker->serving_preceptor)) ? strval($worker->serving_preceptor) : "";
+        $role_interest['serving_preceptor_definition'] = (isset($optyesno[$worker->serving_preceptor]) && $optyesno[$worker->serving_preceptor] != "") ? $optyesno[$worker->serving_preceptor] : "";
+        $role_interest['serving_interim_worker_leader'] = (isset($worker->serving_interim_worker_leader)) ? strval($worker->serving_interim_worker_leader) : "";
+        $role_interest['serving_interim_worker_leader_definition'] = (isset($optyesno[$worker->serving_interim_worker_leader]) && $optyesno[$worker->serving_interim_worker_leader] != "") ? $optyesno[$worker->serving_interim_worker_leader] : "";
+        $role_interest['clinical_educator'] = (isset($worker->clinical_educator)) ? strval($worker->clinical_educator) : "";
+        $role_interest['clinical_educator_definition'] = (isset($optyesno[$worker->clinical_educator]) && $optyesno[$worker->clinical_educator] != "") ? $optyesno[$worker->clinical_educator] : "";
+        $role_interest['is_daisy_award_winner'] = (isset($worker->is_daisy_award_winner)) ? strval($worker->is_daisy_award_winner) : "";
+        $role_interest['is_daisy_award_winner_definition'] = (isset($optyesno[$worker->is_daisy_award_winner]) && $optyesno[$worker->is_daisy_award_winner] != "") ? $optyesno[$worker->is_daisy_award_winner] : "";
+        $role_interest['employee_of_the_mth_qtr_yr'] = (isset($worker->employee_of_the_mth_qtr_yr)) ? strval($worker->employee_of_the_mth_qtr_yr) : "";
+        $role_interest['employee_of_the_mth_qtr_yr_definition'] = (isset($optyesno[$worker->employee_of_the_mth_qtr_yr]) && $optyesno[$worker->employee_of_the_mth_qtr_yr] != "") ? $optyesno[$worker->employee_of_the_mth_qtr_yr] : "";
+        $role_interest['other_nursing_awards'] = (isset($worker->other_nursing_awards)) ? strval($worker->other_nursing_awards) : "";
+        $role_interest['other_nursing_awards_definition'] = (isset($optyesno[$worker->other_nursing_awards]) && $optyesno[$worker->other_nursing_awards] != "") ? $optyesno[$worker->other_nursing_awards] : "";
+        $role_interest['is_professional_practice_council'] = (isset($worker->is_professional_practice_council)) ? strval($worker->is_professional_practice_council) : "";
+        $role_interest['is_professional_practice_council_definition'] = (isset($optyesno[$worker->is_professional_practice_council]) && $optyesno[$worker->is_professional_practice_council] != "") ? $optyesno[$worker->is_professional_practice_council] : "";
+        $role_interest['is_research_publications'] = (isset($worker->is_research_publications)) ? strval($worker->is_research_publications) : "";
+        $role_interest['is_research_publications_definition'] = (isset($optyesno[$worker->is_research_publications]) && $optyesno[$worker->is_research_publications] != "") ? $optyesno[$worker->is_research_publications] : "";
+        $role_interest['leadership_roles'] = (isset($worker->leadership_roles) && $worker->leadership_roles != "") ? strval($worker->leadership_roles) : "";
+        $role_interest['leadership_roles_definition'] = (isset($leadershipRoles[$worker->leadership_roles]) && $leadershipRoles[$worker->leadership_roles] != "") ? $leadershipRoles[$worker->leadership_roles] : "";
 
-        $role_interest['summary'] = (isset($nurse->summary) && $nurse->summary != "") ? $nurse->summary : "";
-        $role_interest['languages'] = (isset($nurse->languages) && $nurse->languages != "") ? explode(",", $nurse->languages) : "";
+        $role_interest['summary'] = (isset($worker->summary) && $worker->summary != "") ? $worker->summary : "";
+        $role_interest['languages'] = (isset($worker->languages) && $worker->languages != "") ? explode(",", $worker->languages) : "";
 
-        /* nurse assets */
+        /* worker assets */
         $role_interest['additional_pictures'] = $role_interest['additional_files'] = [];
-        $nurse_assets = NurseAsset::where(['nurse_id' => $nurse->id, 'active' => '1'])->get();
+        $worker_assets = WorkerAsset::where(['worker_id' => $worker->id, 'active' => '1'])->get();
 
-        if ($nurse_assets->count() > 0) {
-            foreach ($nurse_assets as $nac_ => $na) {
-                if ($na->filter == "additional_photos") $role_interest['additional_pictures'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/nurses/additional_photos/' . $nurse->id . '/' . $na->name)];
-                else $role_interest['additional_files'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/nurses/additional_files/' . $nurse->id . '/' . $na->name)];
+        if ($worker_assets->count() > 0) {
+            foreach ($worker_assets as $nac_ => $na) {
+                if ($na->filter == "additional_photos") $role_interest['additional_pictures'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/workers/additional_photos/' . $worker->id . '/' . $na->name)];
+                else $role_interest['additional_files'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/workers/additional_files/' . $worker->id . '/' . $na->name)];
             }
         }
-        /* nurse assets */
+        /* worker assets */
         $return_data['role_interest'] = $role_interest;
         /* role interest */
         //profile completion
@@ -510,9 +510,9 @@ class ApiController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function getMediaOptions(Nurse $nurse)
+    public function getMediaOptions(Worker $worker)
     {
-        $certs = $nurse->getMedia('certificates');
+        $certs = $worker->getMedia('certificates');
         $data = [];
         foreach ($certs as $key => $value) {
             $data[] = ['id' => $key, "name" => $value];
@@ -699,10 +699,10 @@ class ApiController extends Controller
                 $j_data["f_emr_other"] = isset($job->facility->f_emr_other) ? $job->facility->f_emr_other : "";
                 $j_data["f_bcheck_provider"] = isset($job->facility->f_bcheck_provider) ? $job->facility->f_bcheck_provider : "";
                 $j_data["f_bcheck_provider_other"] = isset($job->facility->f_bcheck_provider_other) ? $job->facility->f_bcheck_provider_other : "";
-                $j_data["nurse_cred_soft"] = isset($job->facility->nurse_cred_soft) ? $job->facility->nurse_cred_soft : "";
-                $j_data["nurse_cred_soft_other"] = isset($job->facility->nurse_cred_soft_other) ? $job->facility->nurse_cred_soft_other : "";
-                $j_data["nurse_scheduling_sys"] = isset($job->facility->nurse_scheduling_sys) ? $job->facility->nurse_scheduling_sys : "";
-                $j_data["nurse_scheduling_sys_other"] = isset($job->facility->nurse_scheduling_sys_other) ? $job->facility->nurse_scheduling_sys_other : "";
+                $j_data["worker_cred_soft"] = isset($job->facility->worker_cred_soft) ? $job->facility->worker_cred_soft : "";
+                $j_data["worker_cred_soft_other"] = isset($job->facility->worker_cred_soft_other) ? $job->facility->worker_cred_soft_other : "";
+                $j_data["worker_scheduling_sys"] = isset($job->facility->worker_scheduling_sys) ? $job->facility->worker_scheduling_sys : "";
+                $j_data["worker_scheduling_sys_other"] = isset($job->facility->worker_scheduling_sys_other) ? $job->facility->worker_scheduling_sys_other : "";
                 $j_data["time_attend_sys"] = isset($job->facility->time_attend_sys) ? $job->facility->time_attend_sys : "";
                 $j_data["time_attend_sys_other"] = isset($job->facility->time_attend_sys_other) ? $job->facility->time_attend_sys_other : "";
                 $j_data["licensed_beds"] = isset($job->facility->licensed_beds) ? $job->facility->licensed_beds : "";
@@ -738,17 +738,17 @@ class ApiController extends Controller
                 // $j_data["shift"] = "Days";
                 $j_data["start_date"] = date('d F Y', strtotime($job['start_date']));
 
-                $j_data['applied_nurses'] = '0';
-                $applied_nurses = Offer::where(['job_id' => $job['job_id'], 'status'=>'Apply'])->count();
-                $j_data['applied_nurses'] = strval($applied_nurses);
+                $j_data['applied_workers'] = '0';
+                $applied_workers = Offer::where(['job_id' => $job['job_id'], 'status'=>'Apply'])->count();
+                $j_data['applied_workers'] = strval($applied_workers);
 
                 $is_saved = '0';
                 if ($user_id != ""){
-                    $nurse_info = NURSE::where('user_id', $user_id);
-                    if ($nurse_info->count() > 0) {
-                        $nurse = $nurse_info->first();
+                    $worker_info = WORKER::where('user_id', $user_id);
+                    if ($worker_info->count() > 0) {
+                        $worker = $worker_info->first();
                         $whereCond = [
-                            'job_saved.nurse_id' => $user_id,
+                            'job_saved.worker_id' => $user_id,
                             'job_saved.job_id' => $job['job_id'],
                         ];
                         $limit = 10;
@@ -822,15 +822,15 @@ class ApiController extends Controller
                 else $facility["f_bcheck_provider_definition"] = (isset($facility_data->f_bcheck_provider) && $facility_data->f_bcheck_provider != "") ? \App\Providers\AppServiceProvider::keywordTitle($facility_data->f_bcheck_provider) : "";
                 $facility["f_bcheck_provider_other"] = (isset($facility_data->f_bcheck_provider_other) && $facility_data->f_bcheck_provider_other != "") ? $facility_data->f_bcheck_provider_other : "";
 
-                $facility["nurse_cred_soft"] = (isset($facility_data->nurse_cred_soft) && $facility_data->nurse_cred_soft != "") ? $facility_data->nurse_cred_soft : "";
-                if ($facility["nurse_cred_soft"] == "0") $facility["nurse_cred_soft_definition"] = "Other";
-                else $facility["nurse_cred_soft_definition"] = (isset($facility_data->nurse_cred_soft) && $facility_data->nurse_cred_soft != "") ? \App\Providers\AppServiceProvider::keywordTitle($facility_data->nurse_cred_soft) : "";
-                $facility["nurse_cred_soft_other"] = (isset($facility_data->nurse_cred_soft_other) && $facility_data->nurse_cred_soft_other != "") ? $facility_data->nurse_cred_soft_other : "";
+                $facility["worker_cred_soft"] = (isset($facility_data->worker_cred_soft) && $facility_data->worker_cred_soft != "") ? $facility_data->worker_cred_soft : "";
+                if ($facility["worker_cred_soft"] == "0") $facility["worker_cred_soft_definition"] = "Other";
+                else $facility["worker_cred_soft_definition"] = (isset($facility_data->worker_cred_soft) && $facility_data->worker_cred_soft != "") ? \App\Providers\AppServiceProvider::keywordTitle($facility_data->worker_cred_soft) : "";
+                $facility["worker_cred_soft_other"] = (isset($facility_data->worker_cred_soft_other) && $facility_data->worker_cred_soft_other != "") ? $facility_data->worker_cred_soft_other : "";
 
-                $facility["nurse_scheduling_sys"] = (isset($facility_data->nurse_scheduling_sys) && $facility_data->nurse_scheduling_sys != "") ? $facility_data->nurse_scheduling_sys : "";
-                if ($facility["nurse_scheduling_sys"] == "0") $facility["nurse_scheduling_sys_definition"] = "Other";
-                else $facility["nurse_scheduling_sys_definition"] = (isset($facility_data->nurse_scheduling_sys) && $facility_data->nurse_scheduling_sys != "") ? \App\Providers\AppServiceProvider::keywordTitle($facility_data->nurse_scheduling_sys) : "";
-                $facility["nurse_scheduling_sys_other"] = (isset($facility_data->nurse_scheduling_sys_other) && $facility_data->nurse_scheduling_sys_other != "") ? $facility_data->nurse_scheduling_sys_other : "";
+                $facility["worker_scheduling_sys"] = (isset($facility_data->worker_scheduling_sys) && $facility_data->worker_scheduling_sys != "") ? $facility_data->worker_scheduling_sys : "";
+                if ($facility["worker_scheduling_sys"] == "0") $facility["worker_scheduling_sys_definition"] = "Other";
+                else $facility["worker_scheduling_sys_definition"] = (isset($facility_data->worker_scheduling_sys) && $facility_data->worker_scheduling_sys != "") ? \App\Providers\AppServiceProvider::keywordTitle($facility_data->worker_scheduling_sys) : "";
+                $facility["worker_scheduling_sys_other"] = (isset($facility_data->worker_scheduling_sys_other) && $facility_data->worker_scheduling_sys_other != "") ? $facility_data->worker_scheduling_sys_other : "";
 
                 $facility["time_attend_sys"] = (isset($facility_data->time_attend_sys) && $facility_data->time_attend_sys != "") ? $facility_data->time_attend_sys : "";
                 $facility["time_attend_sys_definition"] = (isset($facility_data->time_attend_sys) && $facility_data->time_attend_sys != "") ? \App\Providers\AppServiceProvider::keywordTitle($facility_data->time_attend_sys) : "";
@@ -847,32 +847,32 @@ class ApiController extends Controller
 
                 /* rating */
                 if ($user_id != "") {
-                    $nurse_id = "";
-                    $nurse = Nurse::where(['user_id' => $user_id]);
-                    if ($nurse->count() > 0) {
-                        $nurse_data = $nurse->first();
-                        $nurse_id = (isset($nurse_data->id) && $nurse_data->id != "") ? $nurse_data->id : "";
+                    $worker_id = "";
+                    $worker = Worker::where(['user_id' => $user_id]);
+                    if ($worker->count() > 0) {
+                        $worker_data = $worker->first();
+                        $worker_id = (isset($worker_data->id) && $worker_data->id != "") ? $worker_data->id : "";
                     }
-                    if ($nurse_id != "")
-                        $facility_rating_where = ['facility_id' => $facility_data->id, 'nurse_id' => $nurse_id];
+                    if ($worker_id != "")
+                        $facility_rating_where = ['facility_id' => $facility_data->id, 'worker_id' => $worker_id];
                     else $facility_rating_where = ['facility_id' => $facility_data->id];
                 } else {
                     $facility_rating_where = ['facility_id' => $facility_data->id];
                 }
                 $rating_info = FacilityRating::where($facility_rating_where);
-                $overall = $on_board = $nurse_team_work = $leadership_support = $tools_todo_my_job = $a = [];
+                $overall = $on_board = $worker_team_work = $leadership_support = $tools_todo_my_job = $a = [];
                 if ($rating_info->count() > 0) {
                     foreach ($rating_info->get() as $key => $r) {
                         $overall[] = $r->overall;
                         $on_board[] = $r->on_board;
-                        $nurse_team_work[] = $r->nurse_team_work;
+                        $worker_team_work[] = $r->worker_team_work;
                         $leadership_support[] = $r->leadership_support;
                         $tools_todo_my_job[] = $r->tools_todo_my_job;
                     }
                 }
                 $rating['over_all'] = $this->ratingCalculation(count($overall), $overall);
                 $rating['on_board'] = $this->ratingCalculation(count($on_board), $on_board);
-                $rating['nurse_team_work'] = $this->ratingCalculation(count($nurse_team_work), $nurse_team_work);
+                $rating['worker_team_work'] = $this->ratingCalculation(count($worker_team_work), $worker_team_work);
                 $rating['leadership_support'] = $this->ratingCalculation(count($leadership_support), $leadership_support);
                 $rating['tools_todo_my_job'] = $this->ratingCalculation(count($tools_todo_my_job), $tools_todo_my_job);
 
@@ -914,12 +914,12 @@ class ApiController extends Controller
             $assignmentDurations = $this->getAssignmentDurations()->pluck('title', 'id');
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             /*  dropdown data's */
-            $nurse_info = Nurse::where(['user_id' => $request->user_id]);
-            if ($nurse_info->count() > 0) {
-                $nurse = $nurse_info->first();
+            $worker_info = Worker::where(['user_id' => $request->user_id]);
+            if ($worker_info->count() > 0) {
+                $worker = $worker_info->first();
 
                 $limit = 25;
-                $ret = Offer::where(['active' => "1", 'nurse_id' => $nurse->id])
+                $ret = Offer::where(['active' => "1", 'worker_id' => $worker->id])
                     ->orderBy('created_at', 'desc');
                 // ->skip(0)->take($limit);
                 // $offer_info = $ret->paginate($limit);
@@ -989,7 +989,7 @@ class ApiController extends Controller
                 $this->message = "Active jobs listed successfully";
                 $this->return_data = $my_jobs;
             } else {
-                $this->message = "Nurse not found";
+                $this->message = "Worker not found";
             }
         }
 
@@ -997,7 +997,7 @@ class ApiController extends Controller
     }
 
 
-    public function nurseProfileCompletionFlagStatus($type, $user)
+    public function workerProfileCompletionFlagStatus($type, $user)
     {
         $controller = new Controller();
         $specialties = $controller->getSpecialities()->pluck('title', 'id');
@@ -1021,14 +1021,14 @@ class ApiController extends Controller
         //     $data[] = ['id' => strval($key), "name" => $value];
         // }
 
-        $nurse = Nurse::where('id', '=', $type)->get()->first();
-        if(isset($nurse->id)){
-            $offer = DB::select("SELECT status FROM `offers` WHERE nurse_id = '$nurse->id'");
+        $worker = Worker::where('id', '=', $type)->get()->first();
+        if(isset($worker->id)){
+            $offer = DB::select("SELECT status FROM `offers` WHERE worker_id = '$worker->id'");
             if(!empty($offer)){
                 $offer = $offer[0];
             }
         }
-        $availability = Availability::where('nurse_id', '=', $nurse->id)->get()->first();
+        $availability = Availability::where('worker_id', '=', $worker->id)->get()->first();
         /* profile status flag */
         $profile_detail_flag = "0";
         $profile_completion = 0;
@@ -1037,23 +1037,23 @@ class ApiController extends Controller
             (isset($user->last_name) && $user->last_name != "") &&
             (isset($user->email) && $user->email != "") &&
             (isset($user->mobile) && $user->mobile != "") &&
-            (isset($nurse->nursing_license_state) && $nurse->nursing_license_state != "") &&
-            (isset($nurse->nursing_license_number) && $nurse->nursing_license_number != "") &&
-            (isset($nurse->specialty) && $nurse->specialty != "") &&
+            (isset($worker->nursing_license_state) && $worker->nursing_license_state != "") &&
+            (isset($worker->nursing_license_number) && $worker->nursing_license_number != "") &&
+            (isset($worker->specialty) && $worker->specialty != "") &&
             (isset($availability->work_location) && $availability->work_location != "") &&
-            (isset($nurse->address) && $nurse->address != "") &&
-            (isset($nurse->city) && $nurse->city != "") &&
-            (isset($nurse->license_type) && $nurse->license_type != "" ) &&
-            (isset($nurse->state) && $nurse->state != "") &&
-            (isset($nurse->postcode) && $nurse->postcode != "") &&
-            (isset($nurse->country) && $nurse->country != "")
+            (isset($worker->address) && $worker->address != "") &&
+            (isset($worker->city) && $worker->city != "") &&
+            (isset($worker->license_type) && $worker->license_type != "" ) &&
+            (isset($worker->state) && $worker->state != "") &&
+            (isset($worker->postcode) && $worker->postcode != "") &&
+            (isset($worker->country) && $worker->country != "")
 
         ) $profile_detail_flag = "1";
         /* profile status flag */
 
         /* Hourly rate and availability */
         $hourly_rate_and_availability = "0";
-        if ((isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") &&
+        if ((isset($worker->hourly_pay_rate) && $worker->hourly_pay_rate != "") &&
             (isset($availability->shift_duration) && $availability->shift_duration != "") &&
             (isset($availability->assignment_duration) && $availability->assignment_duration != "") &&
             (isset($availability->preferred_shift) && $availability->preferred_shift != "") &&
@@ -1063,7 +1063,7 @@ class ApiController extends Controller
         /* Hourly rate and availability */
 
         $return_data['id'] = (isset($user->id) && $user->id != "") ? $user->id : "";
-        $return_data['nurse_id'] = (isset($nurse->id) && $nurse->id != "") ? $nurse->id : "";
+        $return_data['worker_id'] = (isset($worker->id) && $worker->id != "") ? $worker->id : "";
         $return_data['offer_status'] = (isset($offer->status) && $offer->status != "") ? $offer->status : "";
         $return_data['role'] = (isset($user->role) && $user->role != "") ? $user->role : "";
         $return_data['fcm_token'] = (isset($user->fcm_token) && $user->fcm_token != "") ? $user->fcm_token : "";
@@ -1078,26 +1078,26 @@ class ApiController extends Controller
         $return_data['last_name'] = (isset($user->last_name) && $user->last_name != "") ? $user->last_name : "";
         $return_data['email'] = (isset($user->email) && $user->email != "") ? $user->email : "";
 
-        $return_data['image'] = (isset($user->image) && $user->image != "") ? url("public/images/nurses/profile/" . $user->image) : "";
+        $return_data['image'] = (isset($user->image) && $user->image != "") ? url("public/images/workers/profile/" . $user->image) : "";
 
-        $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+        $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
         if (isset($user->image)) {
-            $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $user->image);
+            $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $user->image);
             if ($t) {
-                $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $user->image);
+                $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $user->image);
             }
         }
-        // $return_data["image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
+        // $return_data["image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileWorker);
 
         $return_data['mobile'] = (isset($user->mobile) && $user->mobile != "") ? $user->mobile : "";
-        $return_data['nursing_license_state'] = (isset($nurse->nursing_license_state) && $nurse->nursing_license_state != "") ? $nurse->nursing_license_state : "";
-        $return_data['nursing_license_number'] = (isset($nurse->nursing_license_number) && $nurse->nursing_license_number != "") ? $nurse->nursing_license_number : "";
-        $return_data['authority_Issue'] = (isset($nurse->authority_Issue) && $nurse->authority_Issue != "") ? $nurse->authority_Issue : "";
-        $return_data['highest_nursing_degree'] = (isset($nurse->highest_nursing_degree) && $nurse->highest_nursing_degree != "") ? $nurse->highest_nursing_degree : "";
-        $return_data['highest_nursing_degree_definition'] = (isset($nurse->highest_nursing_degree) && $nurse->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->highest_nursing_degree) : "";
+        $return_data['nursing_license_state'] = (isset($worker->nursing_license_state) && $worker->nursing_license_state != "") ? $worker->nursing_license_state : "";
+        $return_data['nursing_license_number'] = (isset($worker->nursing_license_number) && $worker->nursing_license_number != "") ? $worker->nursing_license_number : "";
+        $return_data['authority_Issue'] = (isset($worker->authority_Issue) && $worker->authority_Issue != "") ? $worker->authority_Issue : "";
+        $return_data['highest_nursing_degree'] = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? $worker->highest_nursing_degree : "";
+        $return_data['highest_nursing_degree_definition'] = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";
         $return_data['specialty'] = $spl = [];
-        if (isset($nurse->specialty) && $nurse->specialty != "") {
-            $specialty_array = explode(",", $nurse->specialty);
+        if (isset($worker->specialty) && $worker->specialty != "") {
+            $specialty_array = explode(",", $worker->specialty);
             if (is_array($specialty_array)) {
                 foreach ($specialty_array as $key => $spl_id) {
                     $spl_name = (isset($specialties[$spl_id])) ? $specialties[$spl_id] : "";
@@ -1108,23 +1108,23 @@ class ApiController extends Controller
         }
         $return_data['work_location'] = (isset($availability->work_location) && $availability->work_location != "") ? strval($availability->work_location) : "";
         // $return_data['work_location_definition'] = isset($workLocations[strval($availability->work_location)]) ? $workLocations[strval($availability->work_location)] : "";
-        $return_data['address'] = (isset($nurse->address) && $nurse->address != "") ? $nurse->address : "";
+        $return_data['address'] = (isset($worker->address) && $worker->address != "") ? $worker->address : "";
 
-        $return_data['search_status'] = (isset($nurse->search_status) && $nurse->search_status != "") ? strval($nurse->search_status) : "";
-        // $return_data['search_status_definition'] = (isset($nurse->search_status) && $nurse->search_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->search_status) : "";
-        $return_data['license_type'] = (isset($nurse->license_type) && $nurse->license_type != "") ? strval($nurse->license_type) : "";
-        // $return_data['license_type_definition'] = (isset($nurse->license_type) && $nurse->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->license_type) : "";
-        $return_data['license_status'] = (isset($nurse->license_status) && $nurse->license_status != "") ? strval($nurse->license_status) : "";
-        // $return_data['license_status_definition'] = (isset($nurse->license_status) && $nurse->license_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->license_status) : "";
-        $return_data['license_expiry_date'] = (isset($nurse->license_expiry_date) && $nurse->license_expiry_date != "") ? strval($nurse->license_expiry_date) : "";
-        $return_data['license_issue_date'] = (isset($nurse->license_issue_date) && $nurse->license_issue_date != "") ? strval($nurse->license_issue_date) : "";
-        $return_data['license_renewal_date'] = (isset($nurse->license_renewal_date) && $nurse->license_renewal_date != "") ? strval($nurse->license_renewal_date) : "";
+        $return_data['search_status'] = (isset($worker->search_status) && $worker->search_status != "") ? strval($worker->search_status) : "";
+        // $return_data['search_status_definition'] = (isset($worker->search_status) && $worker->search_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->search_status) : "";
+        $return_data['license_type'] = (isset($worker->license_type) && $worker->license_type != "") ? strval($worker->license_type) : "";
+        // $return_data['license_type_definition'] = (isset($worker->license_type) && $worker->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->license_type) : "";
+        $return_data['license_status'] = (isset($worker->license_status) && $worker->license_status != "") ? strval($worker->license_status) : "";
+        // $return_data['license_status_definition'] = (isset($worker->license_status) && $worker->license_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->license_status) : "";
+        $return_data['license_expiry_date'] = (isset($worker->license_expiry_date) && $worker->license_expiry_date != "") ? strval($worker->license_expiry_date) : "";
+        $return_data['license_issue_date'] = (isset($worker->license_issue_date) && $worker->license_issue_date != "") ? strval($worker->license_issue_date) : "";
+        $return_data['license_renewal_date'] = (isset($worker->license_renewal_date) && $worker->license_renewal_date != "") ? strval($worker->license_renewal_date) : "";
 
-        $return_data['city'] = (isset($nurse->city) && $nurse->city != "") ? $nurse->city : "";
-        $return_data['state'] = (isset($nurse->state) && $nurse->state != "") ? $nurse->state : "";
-        $return_data['postcode'] = (isset($nurse->postcode) && $nurse->postcode != "") ? $nurse->postcode : "";
-        $return_data['country'] = (isset($nurse->country) && $nurse->country != "") ? $nurse->country : "";
-        $return_data['hourly_pay_rate'] = (isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") ? strval($nurse->hourly_pay_rate) : "";
+        $return_data['city'] = (isset($worker->city) && $worker->city != "") ? $worker->city : "";
+        $return_data['state'] = (isset($worker->state) && $worker->state != "") ? $worker->state : "";
+        $return_data['postcode'] = (isset($worker->postcode) && $worker->postcode != "") ? $worker->postcode : "";
+        $return_data['country'] = (isset($worker->country) && $worker->country != "") ? $worker->country : "";
+        $return_data['hourly_pay_rate'] = (isset($worker->hourly_pay_rate) && $worker->hourly_pay_rate != "") ? strval($worker->hourly_pay_rate) : "";
         $return_data['shift_duration'] = (isset($availability->shift_duration) && $availability->shift_duration != "") ? strval($availability->shift_duration) : "";
         // $return_data['shift_duration_definition'] = (isset($shifts[$availability->shift_duration]) && $shifts[$availability->shift_duration] != "") ? $shifts[strval($availability->shift_duration)] : "";
         $return_data['assignment_duration'] = (isset($availability->assignment_duration) && $availability->assignment_duration != "") ? strval($availability->shift_duration) : "";
@@ -1139,9 +1139,9 @@ class ApiController extends Controller
         $return_data['hourly_rate_and_avail_flag'] = $hourly_rate_and_availability;
 
         // Education details
-        // $return_data['college_uni_name'] = (isset($nurse->college_uni_name) && $nurse->college_uni_name != "") ? $nurse->college_uni_name : "";
-        // $return_data['study_area'] = (isset($nurse->study_area) && $nurse->study_area != "") ? $nurse->study_area : "";
-        // $return_data['graduation_date'] = (isset($nurse->graduation_date) && $nurse->graduation_date != "") ? $nurse->graduation_date : "";
+        // $return_data['college_uni_name'] = (isset($worker->college_uni_name) && $worker->college_uni_name != "") ? $worker->college_uni_name : "";
+        // $return_data['study_area'] = (isset($worker->study_area) && $worker->study_area != "") ? $worker->study_area : "";
+        // $return_data['graduation_date'] = (isset($worker->graduation_date) && $worker->graduation_date != "") ? $worker->graduation_date : "";
 
         // $return_data['unavailable_dates'] = array();
         // if($availability->unavailable_dates){
@@ -1149,7 +1149,7 @@ class ApiController extends Controller
         // }
 
         $experience = [];
-        $exp = Experience::where(['nurse_id' => $nurse->id])->whereNull('deleted_at')->get();
+        $exp = Experience::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
         if ($exp->count() > 0) {
             $e = $exp;
             foreach ($e as $key => $v) {
@@ -1161,10 +1161,10 @@ class ApiController extends Controller
                 $crt_data['start_date'] = (isset($v->start_date) && $v->start_date != "") ? date('m/d/Y', strtotime($v->start_date)) : "";
                 $crt_data['end_date'] = (isset($v->end_date) && $v->end_date != "") ? date('m/d/Y', strtotime($v->end_date)) : "";
                 $crt_data['is_current_job'] = (isset($v->is_current_job) && $v->is_current_job != "") ? $v->is_current_job : "";
-                $crt_data["experience_as_acute_care_facility"] = (isset($nurse->experience_as_acute_care_facility) && $nurse->experience_as_acute_care_facility != "") ? $nurse->experience_as_acute_care_facility : "";
-                $crt_data["experience_as_ambulatory_care_facility"] = (isset($nurse->experience_as_ambulatory_care_facility) && $nurse->experience_as_ambulatory_care_facility != "") ? $nurse->experience_as_ambulatory_care_facility : "";
-                $exp_acute_care = isset($nurse->experience_as_acute_care_facility)? $nurse->experience_as_acute_care_facility : '0';
-                $exp_ambulatory_care = isset($nurse->experience_as_ambulatory_care_facility)? $nurse->experience_as_ambulatory_care_facility : '0';
+                $crt_data["experience_as_acute_care_facility"] = (isset($worker->experience_as_acute_care_facility) && $worker->experience_as_acute_care_facility != "") ? $worker->experience_as_acute_care_facility : "";
+                $crt_data["experience_as_ambulatory_care_facility"] = (isset($worker->experience_as_ambulatory_care_facility) && $worker->experience_as_ambulatory_care_facility != "") ? $worker->experience_as_ambulatory_care_facility : "";
+                $exp_acute_care = isset($worker->experience_as_acute_care_facility)? $worker->experience_as_acute_care_facility : '0';
+                $exp_ambulatory_care = isset($worker->experience_as_ambulatory_care_facility)? $worker->experience_as_ambulatory_care_facility : '0';
                 $crt_data['total_experience'] = $exp_acute_care+$exp_ambulatory_care;
                 $crt_data['total_experience'] = (int)$crt_data['total_experience'];
                 $experience[] = $crt_data;
@@ -1176,7 +1176,7 @@ class ApiController extends Controller
 
         /* certitficate */
         $certitficate = [];
-        $cert = Certification::where(['nurse_id' => $nurse->id])->whereNull('deleted_at')->get();
+        $cert = Certification::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
         if ($cert->count() > 0) {
             $c = $cert;
             foreach ($c as $key => $v) {
@@ -1190,13 +1190,13 @@ class ApiController extends Controller
                 $crt_data['expiration_date'] = (isset($v->expiration_date) && $v->expiration_date != "") ? date('m/d/Y', strtotime($v->expiration_date)) : "";
                 $crt_data['renewal_date'] = (isset($v->renewal_date) && $v->renewal_date != "") ? date('m/d/Y', strtotime($v->renewal_date)) : "";
 
-                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/nurses/certifications/' . $nurse->id . '/' . $v->certificate_image) : "";
+                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/workers/certifications/' . $worker->id . '/' . $v->certificate_image) : "";
 
                 $certificate_image_base = "";
                 if ($v->certificate_image) {
-                    $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/certifications/' . $v->certificate_image);
+                    $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/certifications/' . $v->certificate_image);
                     if ($t) {
-                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/nurses/certifications/' . $v->certificate_image);
+                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/workers/certifications/' . $v->certificate_image);
                     }
                 }
                 // $crt_data['certificate_image_base'] = ($certificate_image_base != "") ? 'data:image/jpeg;base64,' . base64_encode($certificate_image_base) : "";
@@ -1211,30 +1211,30 @@ class ApiController extends Controller
             }
         }
         $return_data['certitficate'] = $certitficate;
-        $return_data['resume'] = (isset($nurse->resume) && $nurse->resume != "") ? url('storage/assets/nurses/resumes/' . $nurse->id . '/' . $nurse->resume) : "";
+        $return_data['resume'] = (isset($worker->resume) && $worker->resume != "") ? url('storage/assets/workers/resumes/' . $worker->id . '/' . $worker->resume) : "";
         /* certitficate */
 
 
         /* role interest */
         $optyesno = ['1' => "Yes", '0' => "No"];
 
-        $role_interest['clinical_educator'] = (isset($nurse->clinical_educator)) ? strval($nurse->clinical_educator) : "";
-        // $role_interest['clinical_educator_definition'] = (isset($optyesno[$nurse->clinical_educator]) && $optyesno[$nurse->clinical_educator] != "") ? $optyesno[$nurse->clinical_educator] : "";
-        $role_interest['is_daisy_award_winner'] = (isset($nurse->is_daisy_award_winner)) ? strval($nurse->is_daisy_award_winner) : "";
-        // $role_interest['is_daisy_award_winner_definition'] = (isset($optyesno[$nurse->is_daisy_award_winner]) && $optyesno[$nurse->is_daisy_award_winner] != "") ? $optyesno[$nurse->is_daisy_award_winner] : "";
-        $role_interest['languages'] = (isset($nurse->languages) && $nurse->languages != "") ? explode(",", $nurse->languages) : "";
+        $role_interest['clinical_educator'] = (isset($worker->clinical_educator)) ? strval($worker->clinical_educator) : "";
+        // $role_interest['clinical_educator_definition'] = (isset($optyesno[$worker->clinical_educator]) && $optyesno[$worker->clinical_educator] != "") ? $optyesno[$worker->clinical_educator] : "";
+        $role_interest['is_daisy_award_winner'] = (isset($worker->is_daisy_award_winner)) ? strval($worker->is_daisy_award_winner) : "";
+        // $role_interest['is_daisy_award_winner_definition'] = (isset($optyesno[$worker->is_daisy_award_winner]) && $optyesno[$worker->is_daisy_award_winner] != "") ? $optyesno[$worker->is_daisy_award_winner] : "";
+        $role_interest['languages'] = (isset($worker->languages) && $worker->languages != "") ? explode(",", $worker->languages) : "";
 
-        /* nurse assets */
+        /* worker assets */
         $role_interest['additional_pictures'] = $role_interest['additional_files'] = [];
-        $nurse_assets = NurseAsset::where(['nurse_id' => $nurse->id, 'active' => '1'])->get();
+        $worker_assets = WorkerAsset::where(['worker_id' => $worker->id, 'active' => '1'])->get();
 
-        if ($nurse_assets->count() > 0) {
-            foreach ($nurse_assets as $nac_ => $na) {
-                if ($na->filter == "additional_photos") $role_interest['additional_pictures'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/nurses/additional_photos/' . $nurse->id . '/' . $na->name)];
-                else $role_interest['additional_files'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/nurses/additional_files/' . $nurse->id . '/' . $na->name)];
+        if ($worker_assets->count() > 0) {
+            foreach ($worker_assets as $nac_ => $na) {
+                if ($na->filter == "additional_photos") $role_interest['additional_pictures'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/workers/additional_photos/' . $worker->id . '/' . $na->name)];
+                else $role_interest['additional_files'][] = ['asset_id' => $na->id, 'photo' => url('storage/assets/workers/additional_files/' . $worker->id . '/' . $na->name)];
             }
         }
-        /* nurse assets */
+        /* worker assets */
         $return_data['role_interest'] = $role_interest;
         /* role interest */
 
@@ -1291,7 +1291,7 @@ class ApiController extends Controller
         }else{
             $return_data['isUserProfile'] = 'false';
         }
-        $return_data['worker_goodwork_number'] = (isset($nurse->worker_goodwork_number) && $nurse->worker_goodwork_number != "") ? $nurse->worker_goodwork_number : "";
+        $return_data['worker_goodwork_number'] = (isset($worker->worker_goodwork_number) && $worker->worker_goodwork_number != "") ? $worker->worker_goodwork_number : "";
         $return_data['profile_completion'] = $profile_completion;
         // end profile completion
         return $return_data;
@@ -1321,7 +1321,7 @@ class ApiController extends Controller
                         $update_otp = USER::where(['id' => $user->id])->update(['otp' => NULL, 'fcm_token' => $request->fcm_token, 'email_verified_at' => date('Y-m-d H:i:s')]);
                         if ($update_otp) {
 
-                            if (isset($user->role) && $user->role == "NURSE") {
+                            if (isset($user->role) && $user->role == "WORKER") {
                                 $return_data = $this->profileCompletionFlagStatus($type = "login", $user);
                                 // $return_data = $this->profileCompletionFlagStatus($type = "login", $user);
                             } else {
@@ -1471,27 +1471,27 @@ class ApiController extends Controller
         $facility_info["facility_bcheck_provider_other"] = (($facility_info["facility_bcheck_provider"] == "other" || $facility_info["facility_bcheck_provider"] == "0") && ((isset($facility->f_bcheck_provider_other) && $facility->f_bcheck_provider_other != ""))) ? $facility->f_bcheck_provider_other : "";
         /* facility_bcheck_provider */
 
-        /* nurse_cred_soft */
-        $facility_info["nurse_cred_soft"] = (isset($facility->nurse_cred_soft) && $facility->nurse_cred_soft != "") ? strval($facility->nurse_cred_soft) : "";
+        /* worker_cred_soft */
+        $facility_info["worker_cred_soft"] = (isset($facility->worker_cred_soft) && $facility->worker_cred_soft != "") ? strval($facility->worker_cred_soft) : "";
 
         if(isset($facility) && !empty($facility)){
-            $facility_info["nurse_cred_soft_definition"] = (isset($nCredentialingSoftwares[$facility->nurse_cred_soft]) && $nCredentialingSoftwares[$facility->nurse_cred_soft] != "") ? $nCredentialingSoftwares[$facility->nurse_cred_soft] : "";
+            $facility_info["worker_cred_soft_definition"] = (isset($nCredentialingSoftwares[$facility->worker_cred_soft]) && $nCredentialingSoftwares[$facility->worker_cred_soft] != "") ? $nCredentialingSoftwares[$facility->worker_cred_soft] : "";
         }else{
-            $facility_info["nurse_cred_soft_definition"] = "";
+            $facility_info["worker_cred_soft_definition"] = "";
         }
-        $facility_info["nurse_cred_soft_other"] = (($facility_info["nurse_cred_soft"] == "other" || $facility_info["nurse_cred_soft"] == "0") && ((isset($facility->nurse_cred_soft_other) && $facility->nurse_cred_soft_other != ""))) ? $facility->nurse_cred_soft_other : "";
-        /* nurse_cred_soft */
+        $facility_info["worker_cred_soft_other"] = (($facility_info["worker_cred_soft"] == "other" || $facility_info["worker_cred_soft"] == "0") && ((isset($facility->worker_cred_soft_other) && $facility->worker_cred_soft_other != ""))) ? $facility->worker_cred_soft_other : "";
+        /* worker_cred_soft */
 
-        /* nurse_scheduling_sys */
-        $facility_info["nurse_scheduling_sys"] = (isset($facility->nurse_scheduling_sys) && $facility->nurse_scheduling_sys != "") ? strval($facility->nurse_scheduling_sys) : "";
+        /* worker_scheduling_sys */
+        $facility_info["worker_scheduling_sys"] = (isset($facility->worker_scheduling_sys) && $facility->worker_scheduling_sys != "") ? strval($facility->worker_scheduling_sys) : "";
 
         if(isset($facility) && !empty($facility)){
-            $facility_info["nurse_scheduling_sys_definition"] = (isset($nSchedulingSystems[$facility->nurse_scheduling_sys]) && $nSchedulingSystems[$facility->nurse_scheduling_sys] != "") ? $nSchedulingSystems[$facility->nurse_scheduling_sys] : "";
+            $facility_info["worker_scheduling_sys_definition"] = (isset($nSchedulingSystems[$facility->worker_scheduling_sys]) && $nSchedulingSystems[$facility->worker_scheduling_sys] != "") ? $nSchedulingSystems[$facility->worker_scheduling_sys] : "";
         }else{
-            $facility_info["nurse_scheduling_sys_definition"] = "";
+            $facility_info["worker_scheduling_sys_definition"] = "";
         }
-        $facility_info["nurse_scheduling_sys_other"] = (($facility_info["nurse_scheduling_sys"] == "other" || $facility_info["nurse_scheduling_sys"] == "0") && ((isset($facility->nurse_scheduling_sys_other) && $facility->nurse_scheduling_sys_other != ""))) ? $facility->nurse_scheduling_sys_other : "";
-        /* nurse_scheduling_sys */
+        $facility_info["worker_scheduling_sys_other"] = (($facility_info["worker_scheduling_sys"] == "other" || $facility_info["worker_scheduling_sys"] == "0") && ((isset($facility->worker_scheduling_sys_other) && $facility->worker_scheduling_sys_other != ""))) ? $facility->worker_scheduling_sys_other : "";
+        /* worker_scheduling_sys */
 
         /* time_attend_sys */
         $facility_info["time_attend_sys"] = (isset($facility->time_attend_sys) && $facility->time_attend_sys != "") ? strval($facility->time_attend_sys) : "";
@@ -1540,8 +1540,8 @@ class ApiController extends Controller
             $facility_info["facility_postcode"] != "" &&
             $facility_info["facility_emr"] != "" &&
             $facility_info["facility_bcheck_provider"] != "" &&
-            $facility_info["nurse_cred_soft"] != "" &&
-            $facility_info["nurse_scheduling_sys"] != "" &&
+            $facility_info["worker_cred_soft"] != "" &&
+            $facility_info["worker_scheduling_sys"] != "" &&
             $facility_info["time_attend_sys"] != ""
         ) $facility_info['facility_profile_flag'] = "1";
 
@@ -1574,161 +1574,161 @@ class ApiController extends Controller
     }
     /* major cities in us, */
 
-    public function nurseInfo($nurse)
+    public function workerInfo($worker)
     {
         $controller = new Controller();
         $specialties = $controller->getSpecialities()->pluck('title', 'id');
         $ehrProficienciesExp = $this->getEHRProficiencyExp()->pluck('title', 'id');
 
-        $nurse_result = [];
-        foreach ($nurse as $key => $n) {
-            $nurse_data["nurse_id"] = (isset($n->id) && $n->id != "") ? $n->id : "";
-            $nurse_data["user_id"] = (isset($n->user_id) && $n->user_id != "") ? $n->user_id : "";
+        $worker_result = [];
+        foreach ($worker as $key => $n) {
+            $worker_data["worker_id"] = (isset($n->id) && $n->id != "") ? $n->id : "";
+            $worker_data["user_id"] = (isset($n->user_id) && $n->user_id != "") ? $n->user_id : "";
 
             /* user tables records */
-            $nurse_data["role"] = (isset($n->user->role) && $n->user->role != "") ? $n->user->role : "";
-            $nurse_data["first_name"] = (isset($n->user->first_name) && $n->user->first_name != "") ? $n->user->first_name : "";
-            $nurse_data["last_name"] = (isset($n->user->last_name) && $n->user->last_name != "") ? $n->user->last_name : "";
+            $worker_data["role"] = (isset($n->user->role) && $n->user->role != "") ? $n->user->role : "";
+            $worker_data["first_name"] = (isset($n->user->first_name) && $n->user->first_name != "") ? $n->user->first_name : "";
+            $worker_data["last_name"] = (isset($n->user->last_name) && $n->user->last_name != "") ? $n->user->last_name : "";
 
-            // $nurse_data["nurse_logo"] = (isset($n->user->image) && $n->user->image != "") ? url('storage/assets/nurses/profile/' . $n->user->image) : "";
-            $nurse_data['nurse_logo'] = (isset($n->user->image) && $n->user->image != '') ? url('public/images/nurses/profile/'.$n->user->image) : '';
-            // $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+            // $worker_data["worker_logo"] = (isset($n->user->image) && $n->user->image != "") ? url('storage/assets/workers/profile/' . $n->user->image) : "";
+            $worker_data['worker_logo'] = (isset($n->user->image) && $n->user->image != '') ? url('public/images/workers/profile/'.$n->user->image) : '';
+            // $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
             // if ($n->user->image) {
-            //     $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $n->user->image);
+            //     $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $n->user->image);
             //     if ($t) {
-            //         $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $n->user->image);
+            //         $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $n->user->image);
             //     }
             // }
-            // $nurse_data["nurse_logo_base"] = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
+            // $worker_data["worker_logo_base"] = 'data:image/jpeg;base64,' . base64_encode($profileWorker);
 
-            $nurse_data["nurse_email"] = (isset($n->user->email) && $n->user->email != "") ? $n->user->email : "";
-            $nurse_data["user_name"] = (isset($n->user->user_name) && $n->user->user_name != "") ? $n->user->user_name : "";
-            $nurse_data["fcm_token"] = (isset($n->user->fcm_token) && $n->user->fcm_token != "") ? $n->user->fcm_token : "";
-            // $nurse_data["email_verified_at"] = (isset($n->user->email_verified_at) && $n->user->email_verified_at != "") ? $n->user->email_verified_at : "";
-            $nurse_data["date_of_birth"] = (isset($n->user->date_of_birth) && $n->user->date_of_birth != "") ? $n->user->date_of_birth : "";
-            $nurse_data["mobile"] = (isset($n->user->mobile) && $n->user->mobile != "") ? $n->user->mobile : "";
-            $nurse_data["new_mobile"] = (isset($n->user->new_mobile) && $n->user->new_mobile != "") ? $n->user->new_mobile : "";
-            // $nurse_data["otp"] = (isset($n->user->otp) && $n->user->otp != "") ? $n->user->otp : "";
-            $nurse_data["email_notification"] = (isset($n->user->email_notification) && $n->user->email_notification != "") ? strval($n->user->email_notification) : "";
-            $nurse_data["sms_notification"] = (isset($n->user->sms_notification) && $n->user->sms_notification != "") ? strval($n->user->sms_notification) : "";
-            // $nurse_data["active"] = (isset($n->user->active) && $n->user->active != "") ? $n->user->active : "";
-            // $nurse_data["remember_token"] = (isset($n->user->remember_token) && $n->user->remember_token != "") ? $n->user->remember_token : "";
-            // $nurse_data["deleted_at"] = (isset($n->user->deleted_at) && $n->user->deleted_at != "") ? $n->user->deleted_at : "";
-            // $nurse_data["created_at"] = (isset($n->user->created_at) && $n->user->created_at != "") ? $n->user->created_at : "";
-            // $nurse_data["updated_at"] = (isset($n->user->updated_at) && $n->user->updated_at != "") ? $n->user->updated_at : "";
-            // $nurse_data["banned_until"] = (isset($n->user->banned_until) && $n->user->banned_until != "") ? $n->user->banned_until : "";
-            // $nurse_data["last_login_at"] = (isset($n->user->last_login_at) && $n->user->last_login_at != "") ? $n->user->last_login_at : "";
-            // $nurse_data["last_login_ip"] = (isset($n->user->last_login_ip) && $n->user->last_login_ip != "") ? $n->user->last_login_ip : "";
+            $worker_data["worker_email"] = (isset($n->user->email) && $n->user->email != "") ? $n->user->email : "";
+            $worker_data["user_name"] = (isset($n->user->user_name) && $n->user->user_name != "") ? $n->user->user_name : "";
+            $worker_data["fcm_token"] = (isset($n->user->fcm_token) && $n->user->fcm_token != "") ? $n->user->fcm_token : "";
+            // $worker_data["email_verified_at"] = (isset($n->user->email_verified_at) && $n->user->email_verified_at != "") ? $n->user->email_verified_at : "";
+            $worker_data["date_of_birth"] = (isset($n->user->date_of_birth) && $n->user->date_of_birth != "") ? $n->user->date_of_birth : "";
+            $worker_data["mobile"] = (isset($n->user->mobile) && $n->user->mobile != "") ? $n->user->mobile : "";
+            $worker_data["new_mobile"] = (isset($n->user->new_mobile) && $n->user->new_mobile != "") ? $n->user->new_mobile : "";
+            // $worker_data["otp"] = (isset($n->user->otp) && $n->user->otp != "") ? $n->user->otp : "";
+            $worker_data["email_notification"] = (isset($n->user->email_notification) && $n->user->email_notification != "") ? strval($n->user->email_notification) : "";
+            $worker_data["sms_notification"] = (isset($n->user->sms_notification) && $n->user->sms_notification != "") ? strval($n->user->sms_notification) : "";
+            // $worker_data["active"] = (isset($n->user->active) && $n->user->active != "") ? $n->user->active : "";
+            // $worker_data["remember_token"] = (isset($n->user->remember_token) && $n->user->remember_token != "") ? $n->user->remember_token : "";
+            // $worker_data["deleted_at"] = (isset($n->user->deleted_at) && $n->user->deleted_at != "") ? $n->user->deleted_at : "";
+            // $worker_data["created_at"] = (isset($n->user->created_at) && $n->user->created_at != "") ? $n->user->created_at : "";
+            // $worker_data["updated_at"] = (isset($n->user->updated_at) && $n->user->updated_at != "") ? $n->user->updated_at : "";
+            // $worker_data["banned_until"] = (isset($n->user->banned_until) && $n->user->banned_until != "") ? $n->user->banned_until : "";
+            // $worker_data["last_login_at"] = (isset($n->user->last_login_at) && $n->user->last_login_at != "") ? $n->user->last_login_at : "";
+            // $worker_data["last_login_ip"] = (isset($n->user->last_login_ip) && $n->user->last_login_ip != "") ? $n->user->last_login_ip : "";
             /* user tables records */
 
-            $nurse_data["specialty"] = (isset($n->specialty) && $n->specialty != "") ? $n->specialty : "";
-            $specialties_array = ($nurse_data["specialty"] != "") ? $spl = explode(",", $nurse_data["specialty"]) : [];
-            $nurse_data["specialty_definition"] = [];
+            $worker_data["specialty"] = (isset($n->specialty) && $n->specialty != "") ? $n->specialty : "";
+            $specialties_array = ($worker_data["specialty"] != "") ? $spl = explode(",", $worker_data["specialty"]) : [];
+            $worker_data["specialty_definition"] = [];
             foreach ($specialties_array as $spl) {
                 $spl_name = (isset($specialties[$spl]) && $specialties[$spl] != "") ? $specialties[$spl] : "";
                 if ($spl_name != "")
-                    $nurse_data["specialty_definition"][] = ['id' => $spl, 'name' => $spl_name];
+                    $worker_data["specialty_definition"][] = ['id' => $spl, 'name' => $spl_name];
             }
-            $nurse_data["nursing_license_state"] = (isset($n->nursing_license_state) && $n->nursing_license_state != "") ? $n->nursing_license_state : "";
-            $nurse_data["nursing_license_number"] = (isset($n->nursing_license_number) && $n->nursing_license_number != "") ? $n->nursing_license_number : "";
-            $nurse_data["highest_nursing_degree"] = (isset($n->highest_nursing_degree) && $n->highest_nursing_degree != "") ? strval($n->highest_nursing_degree) : "";
-            $nurse_data["serving_preceptor"] = (isset($n->serving_preceptor) && $n->serving_preceptor != "") ? strval($n->serving_preceptor) : "";
-            $nurse_data["serving_interim_nurse_leader"] = (isset($n->serving_interim_nurse_leader) && $n->serving_interim_nurse_leader != "") ? strval($n->serving_interim_nurse_leader) : "";
-            $nurse_data["leadership_roles"] = (isset($n->leadership_roles) && $n->leadership_roles != "") ? strval($n->leadership_roles) : "";
-            $nurse_data["address"] = (isset($n->address) && $n->address != "") ? $n->address : "";
-            $nurse_data["city"] = (isset($n->city) && $n->city != "") ? $n->city : "";
-            $nurse_data["state"] = (isset($n->state) && $n->state != "") ? $n->state : "";
-            $nurse_data["postcode"] = (isset($n->postcode) && $n->postcode != "") ? $n->postcode : "";
-            $nurse_data["country"] = (isset($n->country) && $n->country != "") ? $n->country : "";
-            $nurse_data["hourly_pay_rate"] = (isset($n->hourly_pay_rate) && $n->hourly_pay_rate != "") ? $n->hourly_pay_rate : "";
-            $nurse_data["experience_as_acute_care_facility"] = (isset($n->experience_as_acute_care_facility) && $n->experience_as_acute_care_facility != "") ? $n->experience_as_acute_care_facility : "";
-            $nurse_data["experience_as_ambulatory_care_facility"] = (isset($n->experience_as_ambulatory_care_facility) && $n->experience_as_ambulatory_care_facility != "") ? $n->experience_as_ambulatory_care_facility : "";
-            // $nurse_data["active"] = (isset($n->active) && $n->active != "") ? $n->active : "";
-            // $nurse_data["deleted_at"] = (isset($n->deleted_at) && $n->deleted_at != "") ? $n->deleted_at : "";
-            // $nurse_data["created_at"] = (isset($n->created_at) && $n->created_at != "") ? $n->created_at : "";
-            // $nurse_data["updated_at"] = (isset($n->updated_at) && $n->updated_at != "") ? $n->updated_at : "";
+            $worker_data["nursing_license_state"] = (isset($n->nursing_license_state) && $n->nursing_license_state != "") ? $n->nursing_license_state : "";
+            $worker_data["nursing_license_number"] = (isset($n->nursing_license_number) && $n->nursing_license_number != "") ? $n->nursing_license_number : "";
+            $worker_data["highest_nursing_degree"] = (isset($n->highest_nursing_degree) && $n->highest_nursing_degree != "") ? strval($n->highest_nursing_degree) : "";
+            $worker_data["serving_preceptor"] = (isset($n->serving_preceptor) && $n->serving_preceptor != "") ? strval($n->serving_preceptor) : "";
+            $worker_data["serving_interim_worker_leader"] = (isset($n->serving_interim_worker_leader) && $n->serving_interim_worker_leader != "") ? strval($n->serving_interim_worker_leader) : "";
+            $worker_data["leadership_roles"] = (isset($n->leadership_roles) && $n->leadership_roles != "") ? strval($n->leadership_roles) : "";
+            $worker_data["address"] = (isset($n->address) && $n->address != "") ? $n->address : "";
+            $worker_data["city"] = (isset($n->city) && $n->city != "") ? $n->city : "";
+            $worker_data["state"] = (isset($n->state) && $n->state != "") ? $n->state : "";
+            $worker_data["postcode"] = (isset($n->postcode) && $n->postcode != "") ? $n->postcode : "";
+            $worker_data["country"] = (isset($n->country) && $n->country != "") ? $n->country : "";
+            $worker_data["hourly_pay_rate"] = (isset($n->hourly_pay_rate) && $n->hourly_pay_rate != "") ? $n->hourly_pay_rate : "";
+            $worker_data["experience_as_acute_care_facility"] = (isset($n->experience_as_acute_care_facility) && $n->experience_as_acute_care_facility != "") ? $n->experience_as_acute_care_facility : "";
+            $worker_data["experience_as_ambulatory_care_facility"] = (isset($n->experience_as_ambulatory_care_facility) && $n->experience_as_ambulatory_care_facility != "") ? $n->experience_as_ambulatory_care_facility : "";
+            // $worker_data["active"] = (isset($n->active) && $n->active != "") ? $n->active : "";
+            // $worker_data["deleted_at"] = (isset($n->deleted_at) && $n->deleted_at != "") ? $n->deleted_at : "";
+            // $worker_data["created_at"] = (isset($n->created_at) && $n->created_at != "") ? $n->created_at : "";
+            // $worker_data["updated_at"] = (isset($n->updated_at) && $n->updated_at != "") ? $n->updated_at : "";
 
-            $nurse_data["ehr_proficiency_cerner"] = (isset($n->ehr_proficiency_cerner) && $n->ehr_proficiency_cerner != "") ? strval($n->ehr_proficiency_cerner) : "";
-            $nurse_data["ehr_proficiency_cerner_definition"] = (isset($ehrProficienciesExp[$n->ehr_proficiency_cerner]) && $ehrProficienciesExp[$n->ehr_proficiency_cerner] != "") ? $ehrProficienciesExp[$n->ehr_proficiency_cerner] : "";
-            $nurse_data["ehr_proficiency_meditech"] = (isset($n->ehr_proficiency_meditech) && $n->ehr_proficiency_meditech != "") ? strval($n->ehr_proficiency_meditech) : "";
-            $nurse_data["ehr_proficiency_meditech_definition"] = (isset($ehrProficienciesExp[$n->ehr_proficiency_meditech]) && $ehrProficienciesExp[$n->ehr_proficiency_meditech] != "") ? $ehrProficienciesExp[$n->ehr_proficiency_meditech] : "";
-            $nurse_data["ehr_proficiency_epic"] = (isset($n->ehr_proficiency_epic) && $n->ehr_proficiency_epic != "") ? strval($n->ehr_proficiency_epic) : "";
-            $nurse_data["ehr_proficiency_epic_definition"] = (isset($ehrProficienciesExp[$n->ehr_proficiency_epic]) && $ehrProficienciesExp[$n->ehr_proficiency_epic] != "") ? $ehrProficienciesExp[$n->ehr_proficiency_epic] : "";
+            $worker_data["ehr_proficiency_cerner"] = (isset($n->ehr_proficiency_cerner) && $n->ehr_proficiency_cerner != "") ? strval($n->ehr_proficiency_cerner) : "";
+            $worker_data["ehr_proficiency_cerner_definition"] = (isset($ehrProficienciesExp[$n->ehr_proficiency_cerner]) && $ehrProficienciesExp[$n->ehr_proficiency_cerner] != "") ? $ehrProficienciesExp[$n->ehr_proficiency_cerner] : "";
+            $worker_data["ehr_proficiency_meditech"] = (isset($n->ehr_proficiency_meditech) && $n->ehr_proficiency_meditech != "") ? strval($n->ehr_proficiency_meditech) : "";
+            $worker_data["ehr_proficiency_meditech_definition"] = (isset($ehrProficienciesExp[$n->ehr_proficiency_meditech]) && $ehrProficienciesExp[$n->ehr_proficiency_meditech] != "") ? $ehrProficienciesExp[$n->ehr_proficiency_meditech] : "";
+            $worker_data["ehr_proficiency_epic"] = (isset($n->ehr_proficiency_epic) && $n->ehr_proficiency_epic != "") ? strval($n->ehr_proficiency_epic) : "";
+            $worker_data["ehr_proficiency_epic_definition"] = (isset($ehrProficienciesExp[$n->ehr_proficiency_epic]) && $ehrProficienciesExp[$n->ehr_proficiency_epic] != "") ? $ehrProficienciesExp[$n->ehr_proficiency_epic] : "";
 
 
-            $nurse_data["slug"] = (isset($n->slug) && $n->slug != "") ? $n->slug : "";
-            $nurse_data["summary"] = (isset($n->summary) && $n->summary != "") ? $n->summary : "";
-            $nurse_data["nurses_video"] = (isset($n->nurses_video) && $n->nurses_video != "") ? $n->nurses_video : "";
-            $nurse_data["nurses_facebook"] = (isset($n->nurses_facebook) && $n->nurses_facebook != "") ? $n->nurses_facebook : "";
-            $nurse_data["nurses_twitter"] = (isset($n->nurses_twitter) && $n->nurses_twitter != "") ? $n->nurses_twitter : "";
-            $nurse_data["nurses_linkedin"] = (isset($n->nurses_linkedin) && $n->nurses_linkedin != "") ? $n->nurses_linkedin : "";
-            $nurse_data["nurses_instagram"] = (isset($n->nurses_instagram) && $n->nurses_instagram != "") ? $n->nurses_instagram : "";
-            $nurse_data["nurses_pinterest"] = (isset($n->nurses_pinterest) && $n->nurses_pinterest != "") ? $n->nurses_pinterest : "";
-            $nurse_data["nurses_tiktok"] = (isset($n->nurses_tiktok) && $n->nurses_tiktok != "") ? $n->nurses_tiktok : "";
-            $nurse_data["nurses_sanpchat"] = (isset($n->nurses_sanpchat) && $n->nurses_sanpchat != "") ? $n->nurses_sanpchat : "";
-            $nurse_data["nurses_youtube"] = (isset($n->nurses_youtube) && $n->nurses_youtube != "") ? $n->nurses_youtube : "";
-            $nurse_data["clinical_educator"] = (isset($n->clinical_educator) && $n->clinical_educator != "") ? strval($n->clinical_educator) : "";
-            $nurse_data["is_daisy_award_winner"] = (isset($n->is_daisy_award_winner) && $n->is_daisy_award_winner != "") ? strval($n->is_daisy_award_winner) : "";
-            $nurse_data["employee_of_the_mth_qtr_yr"] = (isset($n->employee_of_the_mth_qtr_yr) && $n->employee_of_the_mth_qtr_yr != "") ? strval($n->employee_of_the_mth_qtr_yr) : "";
-            $nurse_data["other_nursing_awards"] = (isset($n->other_nursing_awards) && $n->other_nursing_awards != "") ? strval($n->other_nursing_awards) : "";
-            $nurse_data["is_professional_practice_council"] = (isset($n->is_professional_practice_council) && $n->is_professional_practice_council != "") ? strval($n->is_professional_practice_council) : "";
-            $nurse_data["is_research_publications"] = (isset($n->is_research_publications) && $n->is_research_publications != "") ? $n->is_research_publications : "";
-            $nurse_data["credential_title"] = (isset($n->credential_title) && $n->credential_title != "") ? $n->credential_title : "";
-            $nurse_data["mu_specialty"] = (isset($n->mu_specialty) && $n->mu_specialty != "") ? $n->mu_specialty : "";
-            $nurse_data["additional_photos"] = (isset($n->additional_photos) && $n->additional_photos != "") ? $n->additional_photos : "";
-            $nurse_data["languages"] = (isset($n->languages) && $n->languages != "") ? $n->languages : "";
-            $nurse_data["additional_files"] = (isset($n->additional_files) && $n->additional_files != "") ? $n->additional_files : "";
-            $nurse_data["college_uni_name"] = (isset($n->college_uni_name) && $n->college_uni_name != "") ? $n->college_uni_name : "";
-            $nurse_data["college_uni_city"] = (isset($n->college_uni_city) && $n->college_uni_city != "") ? $n->college_uni_city : "";
-            $nurse_data["college_uni_state"] = (isset($n->college_uni_state) && $n->college_uni_state != "") ? $n->college_uni_state : "";
-            $nurse_data["college_uni_country"] = (isset($n->college_uni_country) && $n->college_uni_country != "") ? $n->college_uni_country : "";
-            $nurse_data["facility_hourly_pay_rate"] = (isset($n->facility_hourly_pay_rate) && $n->facility_hourly_pay_rate != "") ? $n->facility_hourly_pay_rate : "";
-            $nurse_data["n_lat"] = (isset($n->n_lat) && $n->n_lat != "") ? $n->n_lat : "";
-            $nurse_data["n_lang"] = (isset($n->n_lang) && $n->n_lang != "") ? $n->n_lang : "";
-            $nurse_data["resume"] = (isset($n->resume) && $n->resume != "") ? $n->resume : "";
-            $nurse_data["nu_video"] = (isset($n->nu_video) && $n->nu_video != "") ? $n->nu_video : "";
-            $nurse_data["nu_video_embed_url"] = (isset($n->nu_video_embed_url) && $n->nu_video_embed_url != "") ? $n->nu_video_embed_url : "";
-            $nurse_data["is_verified"] = (isset($n->is_verified) && $n->is_verified != "") ? $n->is_verified : "";
-            $nurse_data["is_verified_nli"] = (isset($n->is_verified_nli) && $n->is_verified_nli != "") ? $n->is_verified_nli : "";
-            $nurse_data["gig_account_id"] = (isset($n->gig_account_id) && $n->gig_account_id != "") ? $n->gig_account_id : "";
-            $nurse_data["is_gig_invite"] = (isset($n->is_gig_invite) && $n->is_gig_invite != "") ? $n->is_gig_invite : "";
-            $nurse_data["gig_account_create_date"] = (isset($n->gig_account_create_date) && $n->gig_account_create_date != "") ? $n->gig_account_create_date : "";
-            $nurse_data["gig_account_invite_date"] = (isset($n->gig_account_invite_date) && $n->gig_account_invite_date != "") ? $n->gig_account_invite_date : "";
-            $nurse_data["search_status"] = (isset($n->search_status) && $n->search_status != "") ? strval($n->search_status) : "";
-            $nurse_data["search_status_definition"] = (isset($n->search_status) && $n->search_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($n->search_status) : "";
-            $nurse_data["license_type"] = (isset($n->license_type) && $n->license_type != "") ? strval($n->license_type) : "";
-            $nurse_data["license_type_definition"] = (isset($n->license_type) && $n->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($n->license_type) : "";
+            $worker_data["slug"] = (isset($n->slug) && $n->slug != "") ? $n->slug : "";
+            $worker_data["summary"] = (isset($n->summary) && $n->summary != "") ? $n->summary : "";
+            $worker_data["workers_video"] = (isset($n->workers_video) && $n->workers_video != "") ? $n->workers_video : "";
+            $worker_data["workers_facebook"] = (isset($n->workers_facebook) && $n->workers_facebook != "") ? $n->workers_facebook : "";
+            $worker_data["workers_twitter"] = (isset($n->workers_twitter) && $n->workers_twitter != "") ? $n->workers_twitter : "";
+            $worker_data["workers_linkedin"] = (isset($n->workers_linkedin) && $n->workers_linkedin != "") ? $n->workers_linkedin : "";
+            $worker_data["workers_instagram"] = (isset($n->workers_instagram) && $n->workers_instagram != "") ? $n->workers_instagram : "";
+            $worker_data["workers_pinterest"] = (isset($n->workers_pinterest) && $n->workers_pinterest != "") ? $n->workers_pinterest : "";
+            $worker_data["workers_tiktok"] = (isset($n->workers_tiktok) && $n->workers_tiktok != "") ? $n->workers_tiktok : "";
+            $worker_data["workers_sanpchat"] = (isset($n->workers_sanpchat) && $n->workers_sanpchat != "") ? $n->workers_sanpchat : "";
+            $worker_data["workers_youtube"] = (isset($n->workers_youtube) && $n->workers_youtube != "") ? $n->workers_youtube : "";
+            $worker_data["clinical_educator"] = (isset($n->clinical_educator) && $n->clinical_educator != "") ? strval($n->clinical_educator) : "";
+            $worker_data["is_daisy_award_winner"] = (isset($n->is_daisy_award_winner) && $n->is_daisy_award_winner != "") ? strval($n->is_daisy_award_winner) : "";
+            $worker_data["employee_of_the_mth_qtr_yr"] = (isset($n->employee_of_the_mth_qtr_yr) && $n->employee_of_the_mth_qtr_yr != "") ? strval($n->employee_of_the_mth_qtr_yr) : "";
+            $worker_data["other_nursing_awards"] = (isset($n->other_nursing_awards) && $n->other_nursing_awards != "") ? strval($n->other_nursing_awards) : "";
+            $worker_data["is_professional_practice_council"] = (isset($n->is_professional_practice_council) && $n->is_professional_practice_council != "") ? strval($n->is_professional_practice_council) : "";
+            $worker_data["is_research_publications"] = (isset($n->is_research_publications) && $n->is_research_publications != "") ? $n->is_research_publications : "";
+            $worker_data["credential_title"] = (isset($n->credential_title) && $n->credential_title != "") ? $n->credential_title : "";
+            $worker_data["mu_specialty"] = (isset($n->mu_specialty) && $n->mu_specialty != "") ? $n->mu_specialty : "";
+            $worker_data["additional_photos"] = (isset($n->additional_photos) && $n->additional_photos != "") ? $n->additional_photos : "";
+            $worker_data["languages"] = (isset($n->languages) && $n->languages != "") ? $n->languages : "";
+            $worker_data["additional_files"] = (isset($n->additional_files) && $n->additional_files != "") ? $n->additional_files : "";
+            $worker_data["college_uni_name"] = (isset($n->college_uni_name) && $n->college_uni_name != "") ? $n->college_uni_name : "";
+            $worker_data["college_uni_city"] = (isset($n->college_uni_city) && $n->college_uni_city != "") ? $n->college_uni_city : "";
+            $worker_data["college_uni_state"] = (isset($n->college_uni_state) && $n->college_uni_state != "") ? $n->college_uni_state : "";
+            $worker_data["college_uni_country"] = (isset($n->college_uni_country) && $n->college_uni_country != "") ? $n->college_uni_country : "";
+            $worker_data["facility_hourly_pay_rate"] = (isset($n->facility_hourly_pay_rate) && $n->facility_hourly_pay_rate != "") ? $n->facility_hourly_pay_rate : "";
+            $worker_data["n_lat"] = (isset($n->n_lat) && $n->n_lat != "") ? $n->n_lat : "";
+            $worker_data["n_lang"] = (isset($n->n_lang) && $n->n_lang != "") ? $n->n_lang : "";
+            $worker_data["resume"] = (isset($n->resume) && $n->resume != "") ? $n->resume : "";
+            $worker_data["nu_video"] = (isset($n->nu_video) && $n->nu_video != "") ? $n->nu_video : "";
+            $worker_data["nu_video_embed_url"] = (isset($n->nu_video_embed_url) && $n->nu_video_embed_url != "") ? $n->nu_video_embed_url : "";
+            $worker_data["is_verified"] = (isset($n->is_verified) && $n->is_verified != "") ? $n->is_verified : "";
+            $worker_data["is_verified_nli"] = (isset($n->is_verified_nli) && $n->is_verified_nli != "") ? $n->is_verified_nli : "";
+            $worker_data["gig_account_id"] = (isset($n->gig_account_id) && $n->gig_account_id != "") ? $n->gig_account_id : "";
+            $worker_data["is_gig_invite"] = (isset($n->is_gig_invite) && $n->is_gig_invite != "") ? $n->is_gig_invite : "";
+            $worker_data["gig_account_create_date"] = (isset($n->gig_account_create_date) && $n->gig_account_create_date != "") ? $n->gig_account_create_date : "";
+            $worker_data["gig_account_invite_date"] = (isset($n->gig_account_invite_date) && $n->gig_account_invite_date != "") ? $n->gig_account_invite_date : "";
+            $worker_data["search_status"] = (isset($n->search_status) && $n->search_status != "") ? strval($n->search_status) : "";
+            $worker_data["search_status_definition"] = (isset($n->search_status) && $n->search_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($n->search_status) : "";
+            $worker_data["license_type"] = (isset($n->license_type) && $n->license_type != "") ? strval($n->license_type) : "";
+            $worker_data["license_type_definition"] = (isset($n->license_type) && $n->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($n->license_type) : "";
             /* rating */
             // for these below columns need to be created in DB
             /* $rating['over_all'] = (isset($n->over_all) && $n->over_all != "") ? $n->over_all : "0";
             $rating['clinical_skills'] = (isset($n->clinical_skills) && $n->clinical_skills != "") ? $n->clinical_skills : "0";
-            $rating['nurse_teamwork'] = (isset($n->nurse_teamwork) && $n->nurse_teamwork != "") ? $n->nurse_teamwork : "0";
+            $rating['worker_teamwork'] = (isset($n->worker_teamwork) && $n->worker_teamwork != "") ? $n->worker_teamwork : "0";
             $rating['interpersonal_skills'] = (isset($n->interpersonal_skills) && $n->interpersonal_skills != "") ? $n->interpersonal_skills : "0";
             $rating['work_ethic'] = (isset($n->work_ethic) && $n->work_ethic != "") ? $n->work_ethic : "0"; */
 
-            $rating_info = NurseRating::where(['nurse_id' => $n->id]);
-            $overall = $clinical_skills = $nurse_teamwork = $interpersonal_skills = $work_ethic = $a = [];
+            $rating_info = WorkerRating::where(['worker_id' => $n->id]);
+            $overall = $clinical_skills = $worker_teamwork = $interpersonal_skills = $work_ethic = $a = [];
             if ($rating_info->count() > 0) {
                 foreach ($rating_info->get() as $key => $r) {
                     $overall[] = $r->overall;
                     $clinical_skills[] = $r->clinical_skills;
-                    $nurse_teamwork[] = $r->nurse_teamwork;
+                    $worker_teamwork[] = $r->worker_teamwork;
                     $interpersonal_skills[] = $r->interpersonal_skills;
                     $work_ethic[] = $r->work_ethic;
                 }
             }
             $rating['over_all'] = $this->ratingCalculation(count($overall), $overall);
             $rating['clinical_skills'] = $this->ratingCalculation(count($clinical_skills), $clinical_skills);
-            $rating['nurse_teamwork'] = $this->ratingCalculation(count($nurse_teamwork), $nurse_teamwork);
+            $rating['worker_teamwork'] = $this->ratingCalculation(count($worker_teamwork), $worker_teamwork);
             $rating['interpersonal_skills'] = $this->ratingCalculation(count($interpersonal_skills), $interpersonal_skills);
             $rating['work_ethic'] = $this->ratingCalculation(count($work_ethic), $work_ethic);
-            $nurse_data["rating"] = $rating;
+            $worker_data["rating"] = $rating;
             /* rating */
-            $nurse_data['work_experience'] = (isset($n->work_experience) && $n->work_experience != "") ? $n->work_experience : "";
+            $worker_data['work_experience'] = (isset($n->work_experience) && $n->work_experience != "") ? $n->work_experience : "";
 
-            $nurse_result[] = $nurse_data;
+            $worker_result[] = $worker_data;
         }
-        return $nurse_result;
+        return $worker_result;
     }
 
     public function createJob($check_type = "create", Request $request)
@@ -2042,10 +2042,10 @@ class ApiController extends Controller
                 $j_data["f_emr_other"] = isset($job->facility->f_emr_other) ? $job->facility->f_emr_other : "";
                 $j_data["f_bcheck_provider"] = isset($job->facility->f_bcheck_provider) ? $job->facility->f_bcheck_provider : "";
                 $j_data["f_bcheck_provider_other"] = isset($job->facility->f_bcheck_provider_other) ? $job->facility->f_bcheck_provider_other : "";
-                $j_data["nurse_cred_soft"] = isset($job->facility->nurse_cred_soft) ? $job->facility->nurse_cred_soft : "";
-                $j_data["nurse_cred_soft_other"] = isset($job->facility->nurse_cred_soft_other) ? $job->facility->nurse_cred_soft_other : "";
-                $j_data["nurse_scheduling_sys"] = isset($job->facility->nurse_scheduling_sys) ? $job->facility->nurse_scheduling_sys : "";
-                $j_data["nurse_scheduling_sys_other"] = isset($job->facility->nurse_scheduling_sys_other) ? $job->facility->nurse_scheduling_sys_other : "";
+                $j_data["worker_cred_soft"] = isset($job->facility->worker_cred_soft) ? $job->facility->worker_cred_soft : "";
+                $j_data["worker_cred_soft_other"] = isset($job->facility->worker_cred_soft_other) ? $job->facility->worker_cred_soft_other : "";
+                $j_data["worker_scheduling_sys"] = isset($job->facility->worker_scheduling_sys) ? $job->facility->worker_scheduling_sys : "";
+                $j_data["worker_scheduling_sys_other"] = isset($job->facility->worker_scheduling_sys_other) ? $job->facility->worker_scheduling_sys_other : "";
                 $j_data["time_attend_sys"] = isset($job->facility->time_attend_sys) ? $job->facility->time_attend_sys : "";
                 $j_data["time_attend_sys_other"] = isset($job->facility->time_attend_sys_other) ? $job->facility->time_attend_sys_other : "";
                 $j_data["licensed_beds"] = isset($job->facility->licensed_beds) ? $job->facility->licensed_beds : "";
@@ -2073,20 +2073,20 @@ class ApiController extends Controller
                 $j_data["shift"] = "Days";
                 $j_data["start_date"] = date('d F Y', strtotime($job->start_date));
 
-                $j_data['applied_nurses'] = '0';
-                $applied_nurses = Offer::where(['job_id' => $job->job_id, 'status'=>'Apply'])->count();
-                $j_data['applied_nurses'] = strval($applied_nurses);
+                $j_data['applied_workers'] = '0';
+                $applied_workers = Offer::where(['job_id' => $job->job_id, 'status'=>'Apply'])->count();
+                $j_data['applied_workers'] = strval($applied_workers);
 
 
                 $is_saved = '0';
                 if ($user_id != ""){
-                    $nurse_info = NURSE::where('user_id', $user_id);
-                    if ($nurse_info->count() > 0) {
-                        $nurse = $nurse_info->first();
+                    $worker_info = WORKER::where('user_id', $user_id);
+                    if ($worker_info->count() > 0) {
+                        $worker = $worker_info->first();
 
                         $whereCond = [
-                            // 'job_saved.nurse_id' => $nurse->id,
-                            'job_saved.nurse_id' => $nurse->user_id,
+                            // 'job_saved.worker_id' => $worker->id,
+                            'job_saved.worker_id' => $worker->user_id,
                             'job_saved.job_id' => $job->job_id,
                         ];
 
@@ -2105,7 +2105,7 @@ class ApiController extends Controller
                             'facilities.active' => true,
                             // 'jobs.is_open' => "1",
                             'offers.status' => 'Offered',
-                            'offers.nurse_id' => $nurse->id
+                            'offers.worker_id' => $worker->id
                         ];
 
                         $ret = Job::select('jobs.id as job_id','jobs.job_type as job_type', 'jobs.*')
@@ -2120,7 +2120,7 @@ class ApiController extends Controller
                         // $job_data = $ret->paginate(10);
                         $job_data = $ret->get();
 
-                        $j_data['nurses_applied'] = $this->explore_jobData($job_data, $user_id);
+                        $j_data['workers_applied'] = $this->explore_jobData($job_data, $user_id);
                     }
                 }
                 $j_data["is_saved"] = $is_saved;
@@ -2187,11 +2187,11 @@ class ApiController extends Controller
 
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                $nurse_info = NURSE::where('user_id', $request->user_id);
-                if ($nurse_info->count() > 0) {
+                $worker_info = WORKER::where('user_id', $request->user_id);
+                if ($worker_info->count() > 0) {
                     $result = array();
                     $check_data = array();
-                    $nurse = $nurse_info->get()->first();
+                    $worker = $worker_info->get()->first();
 
                     $whereCond = [
                         'facilities.active' => true,
@@ -2211,7 +2211,7 @@ class ApiController extends Controller
                     // $result['popular_jobs'] = $this->explore_jobData($job_data, $request->user_id);
                     $check_data['popular_jobs'] = $this->explore_jobData($job_data, $request->user_id);
                     foreach($check_data['popular_jobs'] as $check_rec){
-                        $is_delete = DB::table('job_saved')->where(['job_id' => $check_rec['job_id'], 'nurse_id' => $request->user_id, 'is_delete' => '1'])->first();
+                        $is_delete = DB::table('job_saved')->where(['job_id' => $check_rec['job_id'], 'worker_id' => $request->user_id, 'is_delete' => '1'])->first();
                         if(empty($is_delete)){
                             $result['popular_jobs'][] = $check_rec;
                         }
@@ -2241,7 +2241,7 @@ class ApiController extends Controller
                     $whereCond1 = [
                         'facilities.active' => true,
                         'jobs.is_open' => "1",
-                        'jobs.preferred_specialty' => $nurse->specialty
+                        'jobs.preferred_specialty' => $worker->specialty
                     ];
 
                     $ret1 = Job::select('keywords.id as keyword_id','keywords.title as job_title','keywords.filter as job_filter','jobs.id as job_id', 'jobs.job_type as job_type', 'jobs.*')
@@ -2318,7 +2318,7 @@ class ApiController extends Controller
 
                 }else{
                     $this->check = "1";
-                    $this->message = "Nurse not exist";
+                    $this->message = "Worker not exist";
                 }
 
             }else{
@@ -2436,10 +2436,10 @@ class ApiController extends Controller
                 $j_data["f_emr_other"] = isset($job->facility->f_emr_other) ? $job->facility->f_emr_other : "";
                 $j_data["f_bcheck_provider"] = isset($job->facility->f_bcheck_provider) ? $job->facility->f_bcheck_provider : "";
                 $j_data["f_bcheck_provider_other"] = isset($job->facility->f_bcheck_provider_other) ? $job->facility->f_bcheck_provider_other : "";
-                $j_data["nurse_cred_soft"] = isset($job->facility->nurse_cred_soft) ? $job->facility->nurse_cred_soft : "";
-                $j_data["nurse_cred_soft_other"] = isset($job->facility->nurse_cred_soft_other) ? $job->facility->nurse_cred_soft_other : "";
-                $j_data["nurse_scheduling_sys"] = isset($job->facility->nurse_scheduling_sys) ? $job->facility->nurse_scheduling_sys : "";
-                $j_data["nurse_scheduling_sys_other"] = isset($job->facility->nurse_scheduling_sys_other) ? $job->facility->nurse_scheduling_sys_other : "";
+                $j_data["worker_cred_soft"] = isset($job->facility->worker_cred_soft) ? $job->facility->worker_cred_soft : "";
+                $j_data["worker_cred_soft_other"] = isset($job->facility->worker_cred_soft_other) ? $job->facility->worker_cred_soft_other : "";
+                $j_data["worker_scheduling_sys"] = isset($job->facility->worker_scheduling_sys) ? $job->facility->worker_scheduling_sys : "";
+                $j_data["worker_scheduling_sys_other"] = isset($job->facility->worker_scheduling_sys_other) ? $job->facility->worker_scheduling_sys_other : "";
                 $j_data["time_attend_sys"] = isset($job->facility->time_attend_sys) ? $job->facility->time_attend_sys : "";
                 $j_data["time_attend_sys_other"] = isset($job->facility->time_attend_sys_other) ? $job->facility->time_attend_sys_other : "";
                 $j_data["licensed_beds"] = isset($job->facility->licensed_beds) ? $job->facility->licensed_beds : "";
@@ -2467,20 +2467,20 @@ class ApiController extends Controller
                 // $j_data["shift"] = "Days";
                 // $j_data["start_date"] = date('d F Y', strtotime($job->start_date));
 
-                $j_data['applied_nurses'] = '0';
-                $applied_nurses = Offer::where(['job_id' => $job['job_id'], 'status'=>'Apply'])->count();
-                $j_data['applied_nurses'] = strval($applied_nurses);
+                $j_data['applied_workers'] = '0';
+                $applied_workers = Offer::where(['job_id' => $job['job_id'], 'status'=>'Apply'])->count();
+                $j_data['applied_workers'] = strval($applied_workers);
 
 
                 $is_saved = '0';
                 if ($user_id != ""){
-                    $nurse_info = NURSE::where('user_id', $user_id);
-                    if ($nurse_info->count() > 0) {
-                        $nurse = $nurse_info->first();
+                    $worker_info = WORKER::where('user_id', $user_id);
+                    if ($worker_info->count() > 0) {
+                        $worker = $worker_info->first();
 
                         $whereCond = [
-                            // 'job_saved.nurse_id' => $nurse->id,
-                            'job_saved.nurse_id' => $user_id,
+                            // 'job_saved.worker_id' => $worker->id,
+                            'job_saved.worker_id' => $user_id,
                             'job_saved.job_id' => $job['job_id'],
                             'job_saved.is_save' => "1",
                         ];
@@ -2500,7 +2500,7 @@ class ApiController extends Controller
                             'facilities.active' => true,
                             // 'jobs.is_open' => "1",
                             'offers.status' => 'Offered',
-                            'offers.nurse_id' => $nurse->id
+                            'offers.worker_id' => $worker->id
                         ];
 
                         $ret = Job::select('jobs.id as job_id','jobs.job_type as job_type', 'jobs.*')
@@ -2515,7 +2515,7 @@ class ApiController extends Controller
                         $job_data = $ret->get();
                         // $job_data = $ret->paginate(10);
 
-                        $j_data['nurses_applied'] = $this->jobData($job_data, $user_id);
+                        $j_data['workers_applied'] = $this->jobData($job_data, $user_id);
                     }
                 }
                 $j_data["is_saved"] = $is_saved;
@@ -2636,20 +2636,20 @@ class ApiController extends Controller
                 // $j_data["shift"] = "Days";
                 // $j_data["start_date"] = date('d F Y', strtotime($job->start_date));
 
-                $j_data['applied_nurses'] = '0';
-                $applied_nurses = Offer::where(['job_id' => $job->job_id, 'status'=>'Apply'])->count();
-                $j_data['applied_nurses'] = strval($applied_nurses);
+                $j_data['applied_workers'] = '0';
+                $applied_workers = Offer::where(['job_id' => $job->job_id, 'status'=>'Apply'])->count();
+                $j_data['applied_workers'] = strval($applied_workers);
 
 
                 $is_saved = '0';
                 if ($user_id != ""){
-                    $nurse_info = NURSE::where('user_id', $user_id);
-                    if ($nurse_info->count() > 0) {
-                        $nurse = $nurse_info->first();
+                    $worker_info = WORKER::where('user_id', $user_id);
+                    if ($worker_info->count() > 0) {
+                        $worker = $worker_info->first();
 
                         $whereCond = [
-                            // 'job_saved.nurse_id' => $nurse->id,
-                            'job_saved.nurse_id' => $user_id,
+                            // 'job_saved.worker_id' => $worker->id,
+                            'job_saved.worker_id' => $user_id,
                             'job_saved.job_id' => $job->job_id,
                             'job_saved.is_save' => "1",
                         ];
@@ -2669,7 +2669,7 @@ class ApiController extends Controller
                             'facilities.active' => true,
                             // 'jobs.is_open' => "1",
                             'offers.status' => 'Offered',
-                            'offers.nurse_id' => $nurse->id
+                            'offers.worker_id' => $worker->id
                         ];
 
                         $ret = Job::select('jobs.id as job_id','jobs.job_type as job_type', 'jobs.*')
@@ -2684,7 +2684,7 @@ class ApiController extends Controller
                         $job_data = $ret->get();
                         // $job_data = $ret->paginate(10);
 
-                        $j_data['nurses_applied'] = $this->jobData($job_data, $user_id);
+                        $j_data['workers_applied'] = $this->jobData($job_data, $user_id);
                     }
                 }
                 $j_data["is_saved"] = $is_saved;
@@ -2762,20 +2762,20 @@ class ApiController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $worker = Nurse::where('id', $request->worker_id)->get()->first();
+            $worker = Worker::where('id', $request->worker_id)->get()->first();
             $user = USER::where('id', $worker->user_id)->get()->first();
 
             if(!empty($worker))
             {
                 $whereCond = [
                     'facilities.active' => true,
-                    'offers.nurse_id' => $worker->id,
+                    'offers.worker_id' => $worker->id,
                     'jobs.id' => $request->job_id
                 ];
 
-                $respond = Nurse::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'keywords.filter as job_filter', 'keywords.title as job_title', 'nurses.*', 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'user_id as worker_user_id', 'offers.nurse_id as worker_id', 'users.first_name', 'users.last_name', 'users.image', 'facilities.name as employer_name',  'offers.status as offer_status', 'offers.start_date as status_date', 'offers.expiration as status_enddate')
-                ->join('offers','offers.nurse_id', '=', 'nurses.id')
-                ->leftJoin('users','users.id', '=', 'nurses.user_id')
+                $respond = Worker::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'keywords.filter as job_filter', 'keywords.title as job_title', 'workers.*', 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'user_id as worker_user_id', 'offers.worker_id as worker_id', 'users.first_name', 'users.last_name', 'users.image', 'facilities.name as employer_name',  'offers.status as offer_status', 'offers.start_date as status_date', 'offers.expiration as status_enddate')
+                ->join('offers','offers.worker_id', '=', 'workers.id')
+                ->leftJoin('users','users.id', '=', 'workers.user_id')
                 ->join('jobs', 'offers.job_id', '=', 'jobs.id')
                 ->leftJoin('keywords','jobs.job_type', '=', 'keywords.id')
                 ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
@@ -2884,20 +2884,20 @@ class ApiController extends Controller
                     // $job->total_experience = isset($job->experience_as_acute_care_facility)?$job->experience_as_acute_care_facility:""+isset($job->experience_as_ambulatory_care_facility)?$job->experience_as_ambulatory_care_facility:"";
                     $job->total_experience = isset($job->experience)?$job->experience:"";
                     $job->total_experience = (int)$job->total_experience;
-                    $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/nurses/resumes/' . $worker->id . '/' . $job->resume) : "";
+                    $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/workers/resumes/' . $worker->id . '/' . $job->resume) : "";
                     $job->highest_nursing_degree_definition = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";
-                    $job->image = (isset($job->image) && $job->image != "") ? url("public/images/nurses/profile/" . $job->image) : "";
+                    $job->image = (isset($job->image) && $job->image != "") ? url("public/images/workers/profile/" . $job->image) : "";
 
-                    $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+                    $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                     if ($job->image) {
-                        $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $job->image);
+                        $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $job->image);
                         if ($t) {
-                            $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $job->image);
+                            $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $job->image);
                         }
                     }
                     // Certificate
                     $worker_certitficate = [];
-                    $cert = Certification::where(['nurse_id' => $worker->id])->whereNull('deleted_at')->get();
+                    $cert = Certification::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
                     if ($cert->count() > 0) {
                         $c = $cert;
                         foreach ($c as $key => $v) {
@@ -2910,12 +2910,12 @@ class ApiController extends Controller
                             $crt_data['expiration_date'] = (isset($v->expiration_date) && $v->expiration_date != "") ? date('m/d/Y', strtotime($v->expiration_date)) : "";
                             $crt_data['renewal_date'] = (isset($v->renewal_date) && $v->renewal_date != "") ? date('m/d/Y', strtotime($v->renewal_date)) : "";
 
-                            $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/nurses/certifications/' . $nurse->id . '/' . $v->certificate_image) : "";
+                            $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/workers/certifications/' . $worker->id . '/' . $v->certificate_image) : "";
                             $certificate_image_base = "";
                             if ($v->certificate_image) {
-                                $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/certifications/' . $v->certificate_image);
+                                $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/certifications/' . $v->certificate_image);
                                 if ($t) {
-                                    $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/nurses/certifications/' . $v->certificate_image);
+                                    $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/workers/certifications/' . $v->certificate_image);
                                 }
                             }
                             $crt_data['created_at'] = (isset($v->created_at) && $v->created_at != "") ? $v->created_at : "";
@@ -3165,7 +3165,7 @@ class ApiController extends Controller
 
     }
 
-    public function nurseOfferStatus($type, $user, $status)
+    public function workerOfferStatus($type, $user, $status)
     {
         $controller = new Controller();
         $specialties = $controller->getSpecialities()->pluck('title', 'id');
@@ -3185,22 +3185,22 @@ class ApiController extends Controller
         $licenseStatus = $this->getSearchStatus()->pluck('title', 'id');
         $licenseType = $this->getLicenseType()->pluck('title', 'id');
 
-        $nurse = Nurse::where('id', '=', $type)->get()->first();
-        if(isset($nurse->id)){
-            $offer = DB::select("SELECT * FROM `offers` WHERE nurse_id = '$nurse->id' AND status = '$status'");
+        $worker = Worker::where('id', '=', $type)->get()->first();
+        if(isset($worker->id)){
+            $offer = DB::select("SELECT * FROM `offers` WHERE worker_id = '$worker->id' AND status = '$status'");
             if(!empty($offer)){
                 $offer = $offer[0];
             }
 
-            $user = User::where('id', '=', $nurse->user_id)->get()->first();
+            $user = User::where('id', '=', $worker->user_id)->get()->first();
 
         }
 
-        $availability = Availability::where('nurse_id', '=', $nurse->id)->get()->first();
+        $availability = Availability::where('worker_id', '=', $worker->id)->get()->first();
 
         /* Hourly rate and availability */
         $hourly_rate_and_availability = "0";
-        if ((isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") &&
+        if ((isset($worker->hourly_pay_rate) && $worker->hourly_pay_rate != "") &&
             (isset($availability->shift_duration) && $availability->shift_duration != "") &&
             (isset($availability->assignment_duration) && $availability->assignment_duration != "") &&
             (isset($availability->preferred_shift) && $availability->preferred_shift != "") &&
@@ -3209,8 +3209,8 @@ class ApiController extends Controller
         ) $hourly_rate_and_availability = "1";
         /* Hourly rate and availability */
 
-        $return_data['user_id'] = (isset($user->id) && $user->id != "") ? $user->id : $nurse->user_id;
-        $return_data['nurse_id'] = (isset($nurse->id) && $nurse->id != "") ? $nurse->id : "";
+        $return_data['user_id'] = (isset($user->id) && $user->id != "") ? $user->id : $worker->user_id;
+        $return_data['worker_id'] = (isset($worker->id) && $worker->id != "") ? $worker->id : "";
         $return_data['offer_status'] = (isset($offer->status) && $offer->status != "") ? $offer->status : "";
         $return_data['role'] = (isset($user->role) && $user->role != "") ? $user->role : "";
         $return_data['fcm_token'] = (isset($user->fcm_token) && $user->fcm_token != "") ? $user->fcm_token : "";
@@ -3225,26 +3225,26 @@ class ApiController extends Controller
         $return_data['last_name'] = (isset($user->last_name) && $user->last_name != "") ? $user->last_name : "";
         $return_data['email'] = (isset($user->email) && $user->email != "") ? $user->email : "";
 
-        $return_data['image'] = (isset($user->image) && $user->image != "") ? url("public/images/nurses/profile/" . $user->image) : "";
+        $return_data['image'] = (isset($user->image) && $user->image != "") ? url("public/images/workers/profile/" . $user->image) : "";
 
-        $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+        $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
         if (isset($user->image)) {
-            $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $user->image);
+            $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $user->image);
             if ($t) {
-                $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $user->image);
+                $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $user->image);
             }
         }
-        // $return_data["image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
+        // $return_data["image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileWorker);
 
         $return_data['mobile'] = (isset($user->mobile) && $user->mobile != "") ? $user->mobile : "";
-        $return_data['nursing_license_state'] = (isset($nurse->nursing_license_state) && $nurse->nursing_license_state != "") ? $nurse->nursing_license_state : "";
-        $return_data['nursing_license_number'] = (isset($nurse->nursing_license_number) && $nurse->nursing_license_number != "") ? $nurse->nursing_license_number : "";
-        $return_data['authority_Issue'] = (isset($nurse->authority_Issue) && $nurse->authority_Issue != "") ? $nurse->authority_Issue : "";
-        $return_data['highest_nursing_degree'] = (isset($nurse->highest_nursing_degree) && $nurse->highest_nursing_degree != "") ? $nurse->highest_nursing_degree : "";
-        $return_data['highest_nursing_degree_definition'] = (isset($nurse->highest_nursing_degree) && $nurse->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->highest_nursing_degree) : "";
+        $return_data['nursing_license_state'] = (isset($worker->nursing_license_state) && $worker->nursing_license_state != "") ? $worker->nursing_license_state : "";
+        $return_data['nursing_license_number'] = (isset($worker->nursing_license_number) && $worker->nursing_license_number != "") ? $worker->nursing_license_number : "";
+        $return_data['authority_Issue'] = (isset($worker->authority_Issue) && $worker->authority_Issue != "") ? $worker->authority_Issue : "";
+        $return_data['highest_nursing_degree'] = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? $worker->highest_nursing_degree : "";
+        $return_data['highest_nursing_degree_definition'] = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";
         $return_data['specialty'] = $spl = [];
-        if (isset($nurse->specialty) && $nurse->specialty != "") {
-            $specialty_array = explode(",", $nurse->specialty);
+        if (isset($worker->specialty) && $worker->specialty != "") {
+            $specialty_array = explode(",", $worker->specialty);
             if (is_array($specialty_array)) {
                 foreach ($specialty_array as $key => $spl_id) {
                     $spl_name = (isset($specialties[$spl_id])) ? $specialties[$spl_id] : "";
@@ -3254,21 +3254,21 @@ class ApiController extends Controller
             $return_data['specialty'] = $spl;
         }
 
-        $return_data['license_type'] = (isset($nurse->license_type) && $nurse->license_type != "") ? strval($nurse->license_type) : "";
-        $return_data['license_type_definition'] = (isset($nurse->license_type) && $nurse->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->license_type) : "";
-        $return_data['license_status'] = (isset($nurse->license_status) && $nurse->license_status != "") ? strval($nurse->license_status) : "";
-        $return_data['license_status_definition'] = (isset($nurse->license_status) && $nurse->license_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($nurse->license_status) : "";
-        $return_data['license_expiry_date'] = (isset($nurse->license_expiry_date) && $nurse->license_expiry_date != "") ? strval($nurse->license_expiry_date) : "";
-        $return_data['license_issue_date'] = (isset($nurse->license_issue_date) && $nurse->license_issue_date != "") ? strval($nurse->license_issue_date) : "";
-        $return_data['license_renewal_date'] = (isset($nurse->license_renewal_date) && $nurse->license_renewal_date != "") ? strval($nurse->license_renewal_date) : "";
+        $return_data['license_type'] = (isset($worker->license_type) && $worker->license_type != "") ? strval($worker->license_type) : "";
+        $return_data['license_type_definition'] = (isset($worker->license_type) && $worker->license_type != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->license_type) : "";
+        $return_data['license_status'] = (isset($worker->license_status) && $worker->license_status != "") ? strval($worker->license_status) : "";
+        $return_data['license_status_definition'] = (isset($worker->license_status) && $worker->license_status != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->license_status) : "";
+        $return_data['license_expiry_date'] = (isset($worker->license_expiry_date) && $worker->license_expiry_date != "") ? strval($worker->license_expiry_date) : "";
+        $return_data['license_issue_date'] = (isset($worker->license_issue_date) && $worker->license_issue_date != "") ? strval($worker->license_issue_date) : "";
+        $return_data['license_renewal_date'] = (isset($worker->license_renewal_date) && $worker->license_renewal_date != "") ? strval($worker->license_renewal_date) : "";
 
-        $return_data['hourly_pay_rate'] = (isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") ? strval($nurse->hourly_pay_rate) : "";
+        $return_data['hourly_pay_rate'] = (isset($worker->hourly_pay_rate) && $worker->hourly_pay_rate != "") ? strval($worker->hourly_pay_rate) : "";
         $return_data['days_of_the_week'] = [];
 
         // Education details
-        $return_data['college_uni_name'] = (isset($nurse->college_uni_name) && $nurse->college_uni_name != "") ? $nurse->college_uni_name : "";
-        $return_data['study_area'] = (isset($nurse->study_area) && $nurse->study_area != "") ? $nurse->study_area : "";
-        $return_data['graduation_date'] = (isset($nurse->graduation_date) && $nurse->graduation_date != "") ? $nurse->graduation_date : "";
+        $return_data['college_uni_name'] = (isset($worker->college_uni_name) && $worker->college_uni_name != "") ? $worker->college_uni_name : "";
+        $return_data['study_area'] = (isset($worker->study_area) && $worker->study_area != "") ? $worker->study_area : "";
+        $return_data['graduation_date'] = (isset($worker->graduation_date) && $worker->graduation_date != "") ? $worker->graduation_date : "";
 
         $return_data['unavailable_dates'] = array();
         if($availability->unavailable_dates){
@@ -3276,7 +3276,7 @@ class ApiController extends Controller
         }
 
         $experience = [];
-        $exp = Experience::where(['nurse_id' => $nurse->id])->whereNull('deleted_at')->get();
+        $exp = Experience::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
         if ($exp->count() > 0) {
             $e = $exp;
             foreach ($e as $key => $v) {
@@ -3288,10 +3288,10 @@ class ApiController extends Controller
                 $crt_data['start_date'] = (isset($v->start_date) && $v->start_date != "") ? date('m/d/Y', strtotime($v->start_date)) : "";
                 $crt_data['end_date'] = (isset($v->end_date) && $v->end_date != "") ? date('m/d/Y', strtotime($v->end_date)) : "";
                 $crt_data['is_current_job'] = (isset($v->is_current_job) && $v->is_current_job != "") ? $v->is_current_job : "";
-                $crt_data["experience_as_acute_care_facility"] = (isset($nurse->experience_as_acute_care_facility) && $nurse->experience_as_acute_care_facility != "") ? $nurse->experience_as_acute_care_facility : "";
-                $crt_data["experience_as_ambulatory_care_facility"] = (isset($nurse->experience_as_ambulatory_care_facility) && $nurse->experience_as_ambulatory_care_facility != "") ? $nurse->experience_as_ambulatory_care_facility : "";
-                $exp_acute_care = isset($nurse->experience_as_acute_care_facility)? $nurse->experience_as_acute_care_facility : '0';
-                $exp_ambulatory_care = isset($nurse->experience_as_ambulatory_care_facility)? $nurse->experience_as_ambulatory_care_facility : '0';
+                $crt_data["experience_as_acute_care_facility"] = (isset($worker->experience_as_acute_care_facility) && $worker->experience_as_acute_care_facility != "") ? $worker->experience_as_acute_care_facility : "";
+                $crt_data["experience_as_ambulatory_care_facility"] = (isset($worker->experience_as_ambulatory_care_facility) && $worker->experience_as_ambulatory_care_facility != "") ? $worker->experience_as_ambulatory_care_facility : "";
+                $exp_acute_care = isset($worker->experience_as_acute_care_facility)? $worker->experience_as_acute_care_facility : '0';
+                $exp_ambulatory_care = isset($worker->experience_as_ambulatory_care_facility)? $worker->experience_as_ambulatory_care_facility : '0';
                 $crt_data['total_experience'] = $exp_acute_care+$exp_ambulatory_care;
                 $crt_data['total_experience'] = (int)$crt_data['total_experience'];
                 $experience[] = $crt_data;
@@ -3303,7 +3303,7 @@ class ApiController extends Controller
 
         /* certitficate */
         $certitficate = [];
-        $cert = Certification::where(['nurse_id' => $nurse->id])->whereNull('deleted_at')->get();
+        $cert = Certification::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
         if ($cert->count() > 0) {
             $c = $cert;
             foreach ($c as $key => $v) {
@@ -3317,13 +3317,13 @@ class ApiController extends Controller
                 $crt_data['expiration_date'] = (isset($v->expiration_date) && $v->expiration_date != "") ? date('m/d/Y', strtotime($v->expiration_date)) : "";
                 $crt_data['renewal_date'] = (isset($v->renewal_date) && $v->renewal_date != "") ? date('m/d/Y', strtotime($v->renewal_date)) : "";
 
-                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/nurses/certifications/' . $nurse->id . '/' . $v->certificate_image) : "";
+                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/workers/certifications/' . $worker->id . '/' . $v->certificate_image) : "";
 
                 $certificate_image_base = "";
                 if ($v->certificate_image) {
-                    $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/certifications/' . $v->certificate_image);
+                    $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/certifications/' . $v->certificate_image);
                     if ($t) {
-                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/nurses/certifications/' . $v->certificate_image);
+                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/workers/certifications/' . $v->certificate_image);
                     }
                 }
                 // $crt_data['certificate_image_base'] = ($certificate_image_base != "") ? 'data:image/jpeg;base64,' . base64_encode($certificate_image_base) : "";
@@ -3338,7 +3338,7 @@ class ApiController extends Controller
             }
         }
         $return_data['certitficate'] = $certitficate;
-        $return_data['resume'] = (isset($nurse->resume) && $nurse->resume != "") ? url('storage/assets/nurses/resumes/' . $nurse->id . '/' . $nurse->resume) : "";
+        $return_data['resume'] = (isset($worker->resume) && $worker->resume != "") ? url('storage/assets/workers/resumes/' . $worker->id . '/' . $worker->resume) : "";
         /* certitficate */
 
         return $return_data;
@@ -3367,7 +3367,7 @@ class ApiController extends Controller
             $this->message = $validator->errors()->first();
         } else {
 
-            $check = DB::table('nurse_account')->where(['worker_user_id' => $request->worker_user_id])->first();
+            $check = DB::table('worker_account')->where(['worker_user_id' => $request->worker_user_id])->first();
             if(isset($request->paypal_details)){
                 $acc_type = '1';
             }else{
@@ -3389,7 +3389,7 @@ class ApiController extends Controller
                     ]);
                 }
 
-                $account = DB::table('nurse_account')->where([
+                $account = DB::table('worker_account')->where([
                     'worker_user_id' => $request->worker_user_id
                 ])->update([
                     'worker_user_id' => $request->worker_user_id,
@@ -3426,7 +3426,7 @@ class ApiController extends Controller
                     }
                 }
 
-                $account = DB::table('nurse_account')->insert([
+                $account = DB::table('worker_account')->insert([
                     'worker_user_id' => $request->worker_user_id,
                     'acc_no' => $request->account_number,
                     'routing_no' => $request->routing_number,

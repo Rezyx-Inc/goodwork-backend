@@ -632,8 +632,8 @@ Route::post('get-401k-list', [DetailsController::class, 'getHowMuchKList']);
  * - api_key (required): API key for authentication
  *
  * Functionality:
- * Updates personal details of a user and nurse in the system.
- * Validates the input data and updates the user and nurse details accordingly.
+ * Updates personal details of a user and worker in the system.
+ * Validates the input data and updates the user and worker details accordingly.
  * Returns success message upon successful update or appropriate error messages in case of failure.
  */
 
@@ -656,8 +656,8 @@ Route::post('personal-detail', [UserProfileController::class, 'personalDetail'])
  * - api_key (required): API key for authentication
  *
  * Functionality:
- * Updates nurse availability and hourly pay rate.
- * Validates the input data and updates the nurse's availability and hourly pay rate accordingly.
+ * Updates worker availability and hourly pay rate.
+ * Validates the input data and updates the worker's availability and hourly pay rate accordingly.
  * Returns success message upon successful update or appropriate error messages in case of failure.
  */
 
@@ -669,14 +669,14 @@ Route::post('availability', [UserProfileController::class, 'availability']);
  * Function: ApiController@getAvailability
  *
  * @parameters:
- * - nurse_id (required): Nurse ID for availability check
+ * - worker_id (required): Worker ID for availability check
  * - month (required): Month for availability check
  * - year (required): Year for availability check
  * - api_key (required): API key for authentication
  *
  * Functionality:
- * Retrieves unavailable dates for a nurse within a specific month and year.
- * Validates input parameters and retrieves unavailable dates based on nurse_id.
+ * Retrieves unavailable dates for a worker within a specific month and year.
+ * Validates input parameters and retrieves unavailable dates based on worker_id.
  * Filters and returns the unavailable dates within the given month and year.
  * Returns the list of unavailable dates or an appropriate error message if not found.
  */
@@ -770,7 +770,7 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  * - Success: {"api_status": "1", "message": "Experience updated successfully", "data": {...}}
  * - Failure: {"api_status": "0", "message": "Failed to update the experience, Please try again later", "data": null}
  *
- * Functionality: Handles the update of nursing experience information based on the provided request parameters. Validates the incoming request parameters and updates the nurse's experience if the user and nurse are found. Responds with a JSON indicating the status of the operation and any relevant messages.
+ * Functionality: Handles the update of nursing experience information based on the provided request parameters. Validates the incoming request parameters and updates the worker's experience if the user and worker are found. Responds with a JSON indicating the status of the operation and any relevant messages.
  */
 
  //Route::post('experience', 'UserProfileController@Experience');
@@ -789,7 +789,7 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  * - Success: {"api_status": "1", "message": "Worker experience details listed successfully", "data": [...] }
  * - Failure: {"api_status": "0", "message": "Worker not found", "data": []}
  *
- * Functionality: Retrieves worker (nurse) experience details based on the provided worker ID. Fetches certifications and details related to a worker's experience. Constructs and returns detailed information about a worker's experience.
+ * Functionality: Retrieves worker (worker) experience details based on the provided worker ID. Fetches certifications and details related to a worker's experience. Constructs and returns detailed information about a worker's experience.
  */
 
  //Route::post('get-experience', 'UserProfileController@workerExperience');
@@ -811,9 +811,9 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  //Route::post('facility-types', 'UserProfileController@facilityTypes');
  Route::post('facility-types', [UserProfileController::class, 'facilityTypes']);
 /**
- * Route: POST /nurse-experience-selections
+ * Route: POST /worker-experience-selections
  *
- * Function: ApiController@nurseExperienceSelectionOptions
+ * Function: ApiController@workerExperienceSelectionOptions
  *
  * @bodyparam1: id (required) - ID of the user
  * @bodyparam2: api_key (required) - API key for authentication
@@ -821,14 +821,14 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  *
  * @response:
  * - Success: {"api_status": "1", "message": "Facility type's have been listed successfully", "data": [...] }
- * - Failure: {"api_status": "0", "message": "Nurse not found", "data": null}
+ * - Failure: {"api_status": "0", "message": "Worker not found", "data": null}
  *
- * Functionality: Retrieves nurse experience selection options based on the provided nurse ID. Fetches nurse-specific experience selections and returns them successfully.
+ * Functionality: Retrieves worker experience selection options based on the provided worker ID. Fetches worker-specific experience selections and returns them successfully.
  */
 
-// Route::post('nurse-experience-selections', 'UserProfileController@nurseExperienceSelectionOptions');
+// Route::post('worker-experience-selections', 'UserProfileController@workerExperienceSelectionOptions');
 
- Route::post('nurse-experience-selections', [UserProfileController::class, 'nurseExperienceSelectionOptions']);
+ Route::post('worker-experience-selections', [UserProfileController::class, 'workerExperienceSelectionOptions']);
 
 
 
@@ -973,7 +973,7 @@ Route::post('about-app', [StaticContentController::class, 'aboutAPP']);
 
 //worker Details new function dosn't exist in ApiController
 // Route::post('get-worker-detail-new', 'ApiController@workerDetailsNew');
-// Route::post('nurse-certification-detail', 'ApiController@nursecertificationDetail');
+// Route::post('worker-certification-detail', 'ApiController@workercertificationDetail');
 // Route::post('highest-nursing-degrees', 'ApiController@NursingDegrees');
 
 
@@ -1093,8 +1093,8 @@ Route::post('get-languages-list', [ApiController::class, 'getLanguages']);
  *
  * @bodyparam1: id (required) - User ID for updating roles and interests.
  * @bodyparam2: serving_preceptor - Serving as a preceptor (boolean).
- * @bodyparam3: serving_interim_nurse_leader - Serving as an interim nurse leader (boolean).
- * @bodyparam4: leadership_roles - Selected leadership role (required if serving_interim_nurse_leader is true).
+ * @bodyparam3: serving_interim_worker_leader - Serving as an interim worker leader (boolean).
+ * @bodyparam4: leadership_roles - Selected leadership role (required if serving_interim_worker_leader is true).
  * @bodyparam5: clinical_educator - Clinical educator (boolean).
  * @bodyparam6: is_daisy_award_winner - Daisy award winner (boolean).
  * @bodyparam7: employee_of_the_mth_qtr_yr - Employee of the month/quarter/year (boolean).
@@ -1104,10 +1104,10 @@ Route::post('get-languages-list', [ApiController::class, 'getLanguages']);
  * @bodyparam11: api_key (required) - API key for authentication.
  *
  * @responseExample:
- * - Success: {"api_status": "1", "message": "Role and Interest Updated Successfully", "data": {...}} (Updated nurse details)
+ * - Success: {"api_status": "1", "message": "Role and Interest Updated Successfully", "data": {...}} (Updated worker details)
  * - Failure: {"api_status": "0", "message": "Failed to update roles and interests. Please try again later", "data": null}
  *
- * Functionality: Validates and updates nurse roles and interests based on provided parameters.
+ * Functionality: Validates and updates worker roles and interests based on provided parameters.
  */
 
  //Route::post('role-and-interest/page-1', 'RoleController@rolePage1');
@@ -1120,7 +1120,7 @@ Route::post('get-languages-list', [ApiController::class, 'getLanguages']);
  *
  * Function: ApiController@rolePage2
  *
- * @bodyparam1: id (required) - User ID for updating additional nurse details.
+ * @bodyparam1: id (required) - User ID for updating additional worker details.
  * @bodyparam2: additional_pictures - Additional photos (array of images, max: 4, max size: 5MB each, allowed types: jpeg, png, jpg).
  * @bodyparam3: additional_files - Additional files (array of documents, max: 4, max size: 1MB each, allowed types: pdf, doc, docx).
  * @bodyparam4: nu_video - Video URL (optional, YouTube or Vimeo valid link).
@@ -1128,10 +1128,10 @@ Route::post('get-languages-list', [ApiController::class, 'getLanguages']);
  * @bodyparam6: api_key (required) - API key for authentication.
  *
  * @responseExample:
- * - Success: {"api_status": "1", "message": "Role and Interest Updated Successfully", "data": {...}} (Updated nurse details)
- * - Failure: {"api_status": "0", "message": "Failed to update additional nurse details. Please try again later", "data": null}
+ * - Success: {"api_status": "1", "message": "Role and Interest Updated Successfully", "data": {...}} (Updated worker details)
+ * - Failure: {"api_status": "0", "message": "Failed to update additional worker details. Please try again later", "data": null}
  *
- * Functionality: Validates and updates additional nurse details for roles and interests.
+ * Functionality: Validates and updates additional worker details for roles and interests.
  */
 //Route::post('role-and-interest/page-2', 'RoleController@rolePage2');
 Route::post('role-and-interest/page-2', [RoleController::class, 'rolePage2']);
@@ -1149,7 +1149,7 @@ Route::post('role-and-interest/page-2', [RoleController::class, 'rolePage2']);
  * - Success: {"api_status": "1", "message": "Document removed successfully", "data": null}
  * - Failure: {"api_status": "0", "message": "Failed to remove document. Please try again later", "data": null}
  *
- * Functionality: Removes a specific document related to nurse roles and interests.
+ * Functionality: Removes a specific document related to worker roles and interests.
  */
 
  //Route::post('remove-role-interest-doc', 'RoleController@destroyRoleInterestDocument');
@@ -1184,7 +1184,7 @@ Route::post('role-and-interest/page-2', [RoleController::class, 'rolePage2']);
  * - Success: {"api_status": "1", "message": "Jobs listed successfully", "data": [...] (Array of job details)}
  * - Failure: {"api_status": "0", "message": "Failed to list jobs. Please try again later", "data": null}
  *
- * Functionality: Retrieves a list of available jobs based on provided criteria for a nurse.
+ * Functionality: Retrieves a list of available jobs based on provided criteria for a worker.
  */
 //Route::post('browse-jobs', 'JobControllerApi@jobList');
 Route::post('browse-jobs', [JobControllerApi::class, 'jobList']);
@@ -1327,9 +1327,9 @@ Route::post('facility-like', [RoleController::class, 'facilityLikes']);
 /**
  * Route: job-offers
  * Function: jobOffered(Request $request)
- * Objective: Retrieves job offers tailored for a nurse using their ID.
+ * Objective: Retrieves job offers tailored for a worker using their ID.
  * Parameters:
- *   - user_id: Nurse's ID
+ *   - user_id: Worker's ID
  *   - api_key: Authorization API key
  * Response: JSON response including detailed job offer information like facility details, job title, duration, shift, and dates.
  */
@@ -1342,9 +1342,9 @@ Route::post('job-offers', [JobControllerApi::class, 'jobOffered']);
 /**
  * Route: job-accept
  * Function: jobAcceptPost(Request $request)
- * Objective: Allows a nurse to accept a specific job offer.
+ * Objective: Allows a worker to accept a specific job offer.
  * Parameters:
- *   - user_id: Nurse's ID
+ *   - user_id: Worker's ID
  *   - offer_id: ID of the job offer
  *   - api_key: Authorization API key
  * Response: JSON response confirming the successful acceptance of the job offer.
@@ -1355,9 +1355,9 @@ Route::post('job-accept', [JobControllerApi::class, 'jobAcceptPost']);
 /**
  * Route: job-reject
  * Function: jobRejectPost(Request $request)
- * Objective: Enables a nurse to reject a specific job offer.
+ * Objective: Enables a worker to reject a specific job offer.
  * Parameters:
- *   - user_id: Nurse's ID
+ *   - user_id: Worker's ID
  *   - offer_id: ID of the job offer
  *   - api_key: Authorization API key
  * Response: JSON response confirming the successful rejection of the job offer.
@@ -1368,9 +1368,9 @@ Route::post('job-reject', [JobControllerApi::class, 'jobRejectPost']);
 /**
  * Route: job-completed
  * Function: jobCompleted(Request $request)
- * Objective: Lists completed jobs for a nurse based on their ID.
+ * Objective: Lists completed jobs for a worker based on their ID.
  * Parameters:
- *   - user_id: Nurse's ID
+ *   - user_id: Worker's ID
  *   - api_key: Authorization API key
  * Response: JSON response with information about completed jobs including facility details, work duration, shift, start and end dates.
  */
@@ -1381,9 +1381,9 @@ Route::post('job-completed', [JobControllerApi::class, 'jobCompleted']);
 /**
  * Route: get-notification
  * Function: notification(Request $request)
- * Objective: Retrieves and formats notifications for workers, nurses, or recruiters based on role and user ID.
+ * Objective: Retrieves and formats notifications for workers, workers, or recruiters based on role and user ID.
  * Parameters:
- *   - role: Role of the user (worker, nurse, recruiter)
+ *   - role: Role of the user (worker, worker, recruiter)
  *   - user_id: User ID to fetch notifications
  * Response: JSON response with formatted notification data or a message indicating no notifications.
  */
@@ -1392,9 +1392,9 @@ Route::post('get-notification', [JobControllerApi::class, 'notification']);
 /**
  * Route: get-offer-notification
  * Function: offerNotification(Request $request)
- * Objective: Fetches offer notifications for workers, nurses, or recruiters based on role and user ID.
+ * Objective: Fetches offer notifications for workers, workers, or recruiters based on role and user ID.
  * Parameters:
- *   - worker_user_id: Worker or nurse's ID for offer notifications
+ *   - worker_user_id: Worker or worker's ID for offer notifications
  *   - recruiter_id: Recruiter's ID for offer notifications
  * Response: JSON response containing fetched offer notifications or a message if no notifications are available.
  */
@@ -1427,19 +1427,19 @@ Route::post('remove-notification', [JobControllerApi::class, 'removeNotification
 //Route::post('settings', 'UserProfileController@settings');
 Route::post('settings', [UserProfileController::class, 'settings']);
 /**
- * Route: get-nurse-profile
- * Function: NurseProfileInfo(Request $request)
- * Objective: Retrieves nurse profile information based on user ID or nurse ID.
+ * Route: get-worker-profile
+ * Function: WorkerProfileInfo(Request $request)
+ * Objective: Retrieves worker profile information based on user ID or worker ID.
  * Parameters:
- *   - user_id: User ID or nurse ID for profile information
+ *   - user_id: User ID or worker ID for profile information
  *   - api_key: Authentication API key
- *   - nurse_id: Nurse ID (if different from user ID)
- * Response: JSON response containing nurse profile data or a message if the nurse or user is not found.
+ *   - worker_id: Worker ID (if different from user ID)
+ * Response: JSON response containing worker profile data or a message if the worker or user is not found.
  */
-//Route::post('get-nurse-profile', 'UserProfileController@NurseProfileInfo');
-Route::post('get-nurse-profile', [UserProfileController::class, 'NurseProfileInfo']);
+//Route::post('get-worker-profile', 'UserProfileController@WorkerProfileInfo');
+Route::post('get-worker-profile', [UserProfileController::class, 'WorkerProfileInfo']);
 
-// Get nurse information // edited
+// Get worker information // edited
 // Route::post('register', 'WorkerController@register');
 
 
@@ -1462,11 +1462,11 @@ Route::post('get-nurse-profile', [UserProfileController::class, 'NurseProfileInf
 // Route::post('get-worker-bonus', 'WorkerController@workerBonus');
 // Route::post('get-worker-feelshour', 'WorkerController@workerFeelsLikeHour');
 
-// Route::post('get-nurse-profile-by-mobile', 'WorkerController@NurseProfileInfoBymobile');
+// Route::post('get-worker-profile-by-mobile', 'WorkerController@WorkerProfileInfoBymobile');
 // Route::post('get-emedical-records', 'WorkerController@getEMedicalRecordsOptions');
 // Route::post('update-profile-picture', 'WorkerController@profilePictureUpload');
 // Route::post('update-role-interest', 'WorkerController@updateRoleInterest');
-// Route::post('nurse-resume', 'WorkerController@resume');
+// Route::post('worker-resume', 'WorkerController@resume');
 
 
 
@@ -1501,11 +1501,11 @@ Route::post('get-patient-ratio', [WorkerController::class, 'patientRatio']);
 Route::post('get-worker-dates', [WorkerController::class, 'interviewDate']);
 Route::post('get-worker-bonus', [WorkerController::class, 'workerBonus']);
 Route::post('get-worker-feelshour', [WorkerController::class, 'workerFeelsLikeHour']);
-Route::post('get-nurse-profile-by-mobile', [WorkerController::class, 'NurseProfileInfoBymobile']);
+Route::post('get-worker-profile-by-mobile', [WorkerController::class, 'WorkerProfileInfoBymobile']);
 Route::post('get-emedical-records', [WorkerController::class, 'getEMedicalRecordsOptions']);
 Route::post('update-profile-picture', [WorkerController::class, 'profilePictureUpload']);
 Route::post('update-role-interest', [WorkerController::class, 'updateRoleInterest']);
-Route::post('nurse-resume', [WorkerController::class, 'resume']);
+Route::post('worker-resume', [WorkerController::class, 'resume']);
 Route::post('change-password', [WorkerController::class, 'changePassword']);
 Route::post('view-job-detail', [WorkerController::class, 'viewJobOffered']);
 Route::post('facility-rating', [WorkerController::class, 'facilityRatings']);
@@ -1522,18 +1522,18 @@ Route::post('update-worker-information', [WorkerController::class, 'updateWorker
 // Route::post('facility-dropdown-{type}', 'FacilityController@facilityDropdown');
 // Route::post('facility-profile', 'FacilityController@facilityDetail');
 // Route::post('change-facility-logo', 'FacilityController@changeFacilityLogo');
-// Route::post('browse-nurses', 'FacilityController@browseNurses');
+// Route::post('browse-workers', 'FacilityController@browseWorkers');
 // Route::post('get-seniority-level', 'FacilityController@getSeniorityLevelOptions');
-// Route::post('job-offered-{type}', 'FacilityController@offeredNurses');
+// Route::post('job-offered-{type}', 'FacilityController@offeredWorkers');
 // Route::post('job-{type}', 'FacilityController@createJob');
 // Route::post('get-job-function', 'FacilityController@getJobFunctionOptions');
 // Route::post('apply', 'FacilityController@apiJobApply');
 // Route::post('send-offer', 'FacilityController@apiJobInvite');
 // Route::post('my-jobs-{type}', 'FacilityController@facilityPostedJobs');
-// Route::post('offer-job-to-nurse-dropdown', 'FacilityController@apiJobsList');
+// Route::post('offer-job-to-worker-dropdown', 'FacilityController@apiJobsList');
 // Route::post('job-info-short', 'FacilityController@apiJobFacility');
-// Route::post('nurses-applied-jobs', 'FacilityController@appliedNurses');
-// Route::post('nurse-rating', 'FacilityController@nurseRating');
+// Route::post('workers-applied-jobs', 'FacilityController@appliedWorkers');
+// Route::post('worker-rating', 'FacilityController@workerRating');
 // Route::post('remove-job-asset', 'FacilityController@removeJobDocument');
 // Route::post('facility-settings', 'FacilityController@settingsFacility');
 // Route::post('facility-notifications', 'FacilityController@notificationFacility');
@@ -1543,22 +1543,22 @@ Route::post('update-worker-information', [WorkerController::class, 'updateWorker
 // Route::post('get-search-status', 'FacilityController@getSearchStatusOptions')->name('search-status');
 // Route::post('get-license-types', 'FacilityController@getLicenseTypeOptions')->name('license-types');
 // Route::post('get-license-status', 'FacilityController@getLicenseStatusOptions')->name('license-status');
-// Route::post('nurse-license-detail', 'FacilityController@nurseLicenseDetail');
+// Route::post('worker-license-detail', 'FacilityController@workerLicenseDetail');
 // Route::post('addUserActivity', 'FacilityController@addUserActivity');
 // Route::post('explore', 'FacilityController@explore');
 // Route::post('save-job', 'FacilityController@saveJob');
 // Route::post('remove-saved-job', 'FacilityController@removesavedJob');
 // Route::post('my-saved-jobs', 'FacilityController@jobSaved');
-// Route::post('nurse-saved-jobs', 'FacilityController@nurseJobSaved');
+// Route::post('worker-saved-jobs', 'FacilityController@workerJobSaved');
 // Route::post('my-applied-jobs', 'FacilityController@myjobApplied');
 // Route::post('my-offered-jobs', 'FacilityController@myjobOffered');
 // Route::post('my-hired-jobs', 'FacilityController@myjobHired');
 // Route::post('my-past-jobs', 'FacilityController@myjobPast');
-// Route::post('nurse-personal-detail', 'FacilityController@nursepersonalDetail');
-// Route::delete('delete-nurse', 'FacilityController@deleteNurse');
-// Route::post('nurse-education-detail', 'FacilityController@nurseEducationDetail');
-// Route::post('add-experience-detail', 'FacilityController@addnurseExperienceDetail');
-// Route::post('edit-experience-detail', 'FacilityController@editnurseExperienceDetail');
+// Route::post('worker-personal-detail', 'FacilityController@workerpersonalDetail');
+// Route::delete('delete-worker', 'FacilityController@deleteWorker');
+// Route::post('worker-education-detail', 'FacilityController@workerEducationDetail');
+// Route::post('add-experience-detail', 'FacilityController@addworkerExperienceDetail');
+// Route::post('edit-experience-detail', 'FacilityController@editworkerExperienceDetail');
 // Route::post('experience-type-list', 'FacilityController@experienceTpesOptions');
 // Route::post('get-employer-list', 'FacilityController@getfacilities');
 // Route::post('explore-browse-jobs', 'FacilityController@exploreJobList');
@@ -1566,18 +1566,18 @@ Route::post('update-worker-information', [WorkerController::class, 'updateWorker
 Route::post('facility-dropdown-{type}', [FacilityController::class, 'facilityDropdown']);
 Route::post('facility-profile', [FacilityController::class, 'facilityDetail']);
 Route::post('change-facility-logo', [FacilityController::class, 'changeFacilityLogo']);
-Route::post('browse-nurses', [FacilityController::class, 'browseNurses']);
+Route::post('browse-workers', [FacilityController::class, 'browseWorkers']);
 Route::post('get-seniority-level', [FacilityController::class, 'getSeniorityLevelOptions']);
-Route::post('job-offered-{type}', [FacilityController::class, 'offeredNurses']);
+Route::post('job-offered-{type}', [FacilityController::class, 'offeredWorkers']);
 Route::post('job-{type}', [FacilityController::class, 'createJob']);
 Route::post('get-job-function', [FacilityController::class, 'getJobFunctionOptions']);
 Route::post('apply', [FacilityController::class, 'apiJobApply']);
 Route::post('send-offer', [FacilityController::class, 'apiJobInvite']);
 Route::post('my-jobs-{type}', [FacilityController::class, 'facilityPostedJobs']);
-Route::post('offer-job-to-nurse-dropdown', [FacilityController::class, 'apiJobsList']);
+Route::post('offer-job-to-worker-dropdown', [FacilityController::class, 'apiJobsList']);
 Route::post('job-info-short', [FacilityController::class, 'apiJobFacility']);
-Route::post('nurses-applied-jobs', [FacilityController::class, 'appliedNurses']);
-Route::post('nurse-rating', [FacilityController::class, 'nurseRating']);
+Route::post('workers-applied-jobs', [FacilityController::class, 'appliedWorkers']);
+Route::post('worker-rating', [FacilityController::class, 'workerRating']);
 Route::post('remove-job-asset', [FacilityController::class, 'removeJobDocument']);
 Route::post('facility-settings', [FacilityController::class, 'settingsFacility']);
 Route::post('facility-notifications', [FacilityController::class, 'notificationFacility']);
@@ -1587,22 +1587,22 @@ Route::post('testing', [FacilityController::class, 'test']);
 Route::post('get-search-status', [FacilityController::class, 'getSearchStatusOptions'])->name('search-status');
 Route::post('get-license-types', [FacilityController::class, 'getLicenseTypeOptions'])->name('license-types');
 Route::post('get-license-status', [FacilityController::class, 'getLicenseStatusOptions'])->name('license-status');
-Route::post('nurse-license-detail', [FacilityController::class, 'nurseLicenseDetail']);
+Route::post('worker-license-detail', [FacilityController::class, 'workerLicenseDetail']);
 Route::post('addUserActivity', [FacilityController::class, 'addUserActivity']);
 Route::post('explore', [FacilityController::class, 'explore']);
 Route::post('save-job', [FacilityController::class, 'saveJob']);
 Route::post('remove-saved-job', [FacilityController::class, 'removesavedJob']);
 Route::post('my-saved-jobs', [FacilityController::class, 'jobSaved']);
-Route::post('nurse-saved-jobs', [FacilityController::class, 'nurseJobSaved']);
+Route::post('worker-saved-jobs', [FacilityController::class, 'workerJobSaved']);
 Route::post('my-applied-jobs', [FacilityController::class, 'myjobApplied']);
 Route::post('my-offered-jobs', [FacilityController::class, 'myjobOffered']);
 Route::post('my-hired-jobs', [FacilityController::class, 'myjobHired']);
 Route::post('my-past-jobs', [FacilityController::class, 'myjobPast']);
-Route::post('nurse-personal-detail', [FacilityController::class, 'nursepersonalDetail']);
-Route::delete('delete-nurse', [FacilityController::class, 'deleteNurse']);
-Route::post('nurse-education-detail', [FacilityController::class, 'nurseEducationDetail']);
-Route::post('add-experience-detail', [FacilityController::class, 'addnurseExperienceDetail']);
-Route::post('edit-experience-detail', [FacilityController::class, 'editnurseExperienceDetail']);
+Route::post('worker-personal-detail', [FacilityController::class, 'workerpersonalDetail']);
+Route::delete('delete-worker', [FacilityController::class, 'deleteWorker']);
+Route::post('worker-education-detail', [FacilityController::class, 'workerEducationDetail']);
+Route::post('add-experience-detail', [FacilityController::class, 'addworkerExperienceDetail']);
+Route::post('edit-experience-detail', [FacilityController::class, 'editworkerExperienceDetail']);
 Route::post('experience-type-list', [FacilityController::class, 'experienceTpesOptions']);
 Route::post('get-employer-list', [FacilityController::class, 'getfacilities']);
 

@@ -9,7 +9,7 @@ final class KeywordEnum extends Enum
     const AssignmentDuration =   0;
     const FacilityType =   1;
     const LeadershipRoles = 2;
-    const NursingDegree =   3;
+    const WorkingDegree =   3;
     const Speciality =   4;
     const Education = 5;
     const Certification = 6;
@@ -30,7 +30,7 @@ final class KeywordEnum extends Enum
     const SeniorityLevel = 21;
     const JobFunction = 22;
     const SearchStatus = 23;
-    const NurseLicenseType = 24;
+    const WorkerLicenseType = 24;
     const jobType = 25;
     const subjectType = 26;
 }

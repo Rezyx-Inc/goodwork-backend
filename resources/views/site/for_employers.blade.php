@@ -11,7 +11,7 @@
       <div class="col-lg-6">
         <div class="ss-hm-banner-txt-bx">
           <h2>Empower Your Nursing Team with Our Platform</h2>
-          <p>Discover Seamless Talent Acquisition: Our platform streamlines the process of finding qualified nurses for your facility. With intuitive search tools and comprehensive profiles, you can easily identify candidates whose skills and experience align with your staffing needs. Say goodbye to sifting through countless resumes – our platform connects you with top nursing talent effortlessly.</p>
+          <p>Discover Seamless Talent Acquisition: Our platform streamlines the process of finding qualified workers for your facility. With intuitive search tools and comprehensive profiles, you can easily identify candidates whose skills and experience align with your staffing needs. Say goodbye to sifting through countless resumes – our platform connects you with top nursing talent effortlessly.</p>
           <ul>
             <li><a href="{{route('employer.login')}}">Schedule a demo now</a></li>
 
@@ -36,8 +36,8 @@
         <!---mobile -show---->
 
         <div class="ss-mobile-show ss-ban-mob-txt">
-          <h2>Empowering nurses to find their dream path</h2>
-          <p>Register with us as our skilled nurse to unleash your passion for nursing.</p>
+          <h2>Empowering workers to find their dream path</h2>
+          <p>Register with us as our skilled worker to unleash your passion for nursing.</p>
         </div>
 
       </div>

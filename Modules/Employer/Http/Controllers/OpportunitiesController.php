@@ -12,7 +12,7 @@ use App\Models\States;
 use App\Models\Cities;
 use App\Models\Offer;
 use App\Models\Profession;
-use App\Models\Nurse;
+use App\Models\Worker;
 use App\Models\Keyword;
 use App\Models\Facility;
 use App\Models\JobAsset;
@@ -367,21 +367,21 @@ class OpportunitiesController extends Controller
         $jobapplieddetails = $jobdetails ? Offer::where('job_id', $jobdetails->id)->get() : "";
 
 
-        // $jobapplieddetails = $nursedetails ? Offer::where(['status' => $activestatus, 'nurse_id' => $offerdetails->nurse_id])->get() : "";
-        // $jobappliedcount = $nursedetails ? Offer::where(['status' => $activestatus, 'nurse_id' => $offerdetails->nurse_id])->count() : "";
+        // $jobapplieddetails = $workerdetails ? Offer::where(['status' => $activestatus, 'worker_id' => $offerdetails->worker_id])->get() : "";
+        // $jobappliedcount = $workerdetails ? Offer::where(['status' => $activestatus, 'worker_id' => $offerdetails->worker_id])->count() : "";
 
         if ($request->formtype == 'useralldetails') {
             $offerdetails = Offer::where('id', $request->id)->first();
-            $nursedetails = Nurse::where('id', $offerdetails['nurse_id'])->first();
-            $userdetails = User::where('id', $nursedetails->user_id)->first();
+            $workerdetails = Worker::where('id', $offerdetails['worker_id'])->first();
+            $userdetails = User::where('id', $workerdetails->user_id)->first();
             $jobdetails = Job::where('id', $offerdetails['job_id'])->first();
 
             $data2 .= '
                 <ul class="ss-cng-appli-hedpfl-ul">
                     <li>
-                        <span>' . $offerdetails['nurse_id'] . '</span>
+                        <span>' . $offerdetails['worker_id'] . '</span>
                         <h6>
-                            <img src="' . asset('public/images/nurses/profile/' . $userdetails['image']) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                            <img src="' . asset('public/images/workers/profile/' . $userdetails['image']) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                             ' . $userdetails['first_name'] . ' ' . $userdetails['last_name'] . '
                         </h6>
                     </li>
@@ -428,7 +428,7 @@ class OpportunitiesController extends Controller
                         <h6>College Diploma</h6>
                     </li>
                     <li class="col-md-6">
-                        <p>' . ($nursedetails['diploma'] ?? '<u onclick="askWorker(this, \'diploma\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <p>' . ($workerdetails['diploma'] ?? '<u onclick="askWorker(this, \'diploma\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                     </li>
                     <li class="col-md-12">
                         <span class="mt-3">Drivers license</span>
@@ -437,7 +437,7 @@ class OpportunitiesController extends Controller
                         <h6>Required</h6>
                     </li>
                     <li class="col-md-6">
-                        <p>' . ($nursedetails['driving_license'] ?? '<u onclick="askWorker(this, \'driving_license\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <p>' . ($workerdetails['driving_license'] ?? '<u onclick="askWorker(this, \'driving_license\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                     </li>
                     <li class="col-md-12">
                         <span class="mt-3">Worked at Facility Before</span>
@@ -446,7 +446,7 @@ class OpportunitiesController extends Controller
                         <h6>Have you worked here in the last 18 months?</h6>
                     </li>
                     <li class="col-md-6">
-                        <p>' . ($nursedetails['worked_at_facility_before'] ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <p>' . ($workerdetails['worked_at_facility_before'] ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                     </li>
                     <li class="col-md-12">
                         <span class="mt-3">SS# or SS Card</span>
@@ -455,7 +455,7 @@ class OpportunitiesController extends Controller
                         <h6>Last 4 digits of SS#</h6>
                     </li>
                     <li class="col-md-6">
-                        <p>' . ($nursedetails['worker_ss_number'] ?? '----' ) . '</p>
+                        <p>' . ($workerdetails['worker_ss_number'] ?? '----' ) . '</p>
                     </li>
                     <li class="col-md-12">
                         <span class="mt-3">Profession</span>
@@ -464,13 +464,13 @@ class OpportunitiesController extends Controller
                         <h6>' . ($jobdetails->profession ?? '----') . '</h6>
                     </li>
                     <li class="col-md-6">
-                        <p>' . ($nursedetails['highest_nursing_degree'] ?? '<u onclick="askWorker(this, \'highest_nursing_degree\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
+                        <p>' . ($workerdetails['highest_nursing_degree'] ?? '<u onclick="askWorker(this, \'highest_nursing_degree\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                     </li>
                     <li class="col-md-12">
                         <span class="mt-3">Specialty</span>
                     </li>';
                     if(isset($jobdetails->specialty)){
-                        foreach (explode(",", $nursedetails['specialty']) as $key => $value) {
+                        foreach (explode(",", $workerdetails['specialty']) as $key => $value) {
                             if(isset($value)){
 
                                 $data2 .= '
@@ -478,7 +478,7 @@ class OpportunitiesController extends Controller
                                     <h6>' . $value . ' Required</h6>
                                 </div>
                                 <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'specialty\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                    <p><u onclick="askWorker(this, \'specialty\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
                                 </div>
                                 ';
                             }
@@ -492,7 +492,7 @@ class OpportunitiesController extends Controller
                         <h6>' . ($jobdetails['job_state'] ?? '----') . '</h6>
                     </div>
                     <div class="col-md-6 ' . ($jobdetails['job_state'] ? '' : 'd-none' ) . '">
-                        <p>' . ($nursedetails['nursing_license_state'] ?? '<u onclick="askWorker(this, \'nursing_license_state\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <p>' . ($workerdetails['nursing_license_state'] ?? '<u onclick="askWorker(this, \'nursing_license_state\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                     </div>
                     <div class="col-md-12">
                         <span class="mt-3">Experience</span>
@@ -501,7 +501,7 @@ class OpportunitiesController extends Controller
                         <h6>' . ($jobdetails['preferred_experience'] ?? '----') . ' Years </h6>
                     </div>
                     <div class="col-md-6 ' . ($jobdetails['preferred_experience'] ? '' : 'd-none' ) . '">
-                        <p>' . (array_sum(explode(",", $nursedetails['experience'])) ? (array_sum(explode(",", $nursedetails['experience'])) . ' years') : '<u onclick="askWorker(this, \'experience\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
+                        <p>' . (array_sum(explode(",", $workerdetails['experience'])) ? (array_sum(explode(",", $workerdetails['experience'])) . ' years') : '<u onclick="askWorker(this, \'experience\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                     </div>
                     <div class="col-md-12">
                         <span class="mt-3">Vaccinations & Immunizations</span>
@@ -514,7 +514,7 @@ class OpportunitiesController extends Controller
                                     <h6>' . $value . ' Required</h6>
                                 </div>
                                 <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'vaccinations\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                    <p><u onclick="askWorker(this, \'vaccinations\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
                                 </div>
                                 ';
                             }
@@ -532,7 +532,7 @@ class OpportunitiesController extends Controller
                                     <h6>' . $value . ' references</h6>
                                 </div>
                                 <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'number_of_references\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                    <p><u onclick="askWorker(this, \'number_of_references\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
                                 </div>
                                 ';
                             }
@@ -543,14 +543,14 @@ class OpportunitiesController extends Controller
                         <span class="mt-3">Certifications</span>
                     </div>';
                     if(isset($jobdetails['certificate'])){
-                        foreach (explode(",", $nursedetails['certificate']) as $key => $value) {
+                        foreach (explode(",", $workerdetails['certificate']) as $key => $value) {
                             if(isset($value)){
                                 $data2 .= '
                                 <div class="col-md-6 ">
                                     <h6>' . $value . ' Required</h6>
                                 </div>
                                 <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'certificate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                    <p><u onclick="askWorker(this, \'certificate\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
                                 </div>
                                 ';
                             }
@@ -564,7 +564,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['skills'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['skill'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['skills'] ?? '<u onclick="askWorker(this, \'skills\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['skills'] ?? '<u onclick="askWorker(this, \'skills\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Eligible to work in the US</span>
@@ -573,7 +573,7 @@ class OpportunitiesController extends Controller
                             <h6>Required</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['profession'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['eligible_work_in_us'] ?? '<u onclick="askWorker(this, \'eligible_work_in_us\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['eligible_work_in_us'] ?? '<u onclick="askWorker(this, \'eligible_work_in_us\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Urgency</span>
@@ -582,7 +582,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['urgency'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['urgency'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_urgency'] ?? '<u onclick="askWorker(this, \'worker_urgency\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_urgency'] ?? '<u onclick="askWorker(this, \'worker_urgency\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3"># of Positions Available</span>
@@ -591,7 +591,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['position_available'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['position_available'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['available_position'] ?? '<u onclick="askWorker(this, \'available_position\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['available_position'] ?? '<u onclick="askWorker(this, \'available_position\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">MSP</span>
@@ -600,7 +600,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['msp'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['msp'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['MSP'] ?? '<u onclick="askWorker(this, \'MSP\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['MSP'] ?? '<u onclick="askWorker(this, \'MSP\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">VMS</span>
@@ -609,7 +609,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['vms'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['vms'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['VMS'] ?? '<u onclick="askWorker(this, \'VMS\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['VMS'] ?? '<u onclick="askWorker(this, \'VMS\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Block scheduling</span>
@@ -618,7 +618,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['block_scheduling'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['block_scheduling'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['block_scheduling'] ?? '<u onclick="askWorker(this, \'block_scheduling\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['block_scheduling'] ?? '<u onclick="askWorker(this, \'block_scheduling\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Float requirements</span>
@@ -627,7 +627,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['float_requirement'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['float_requirement'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['float_requirement'] ?? '<u onclick="askWorker(this, \'float_requirement\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['float_requirement'] ?? '<u onclick="askWorker(this, \'float_requirement\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility Shift Cancellation Policy</span>
@@ -636,7 +636,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['facility_shift_cancelation_policy'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['facility_shift_cancelation_policy'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['facility_shift_cancelation_policy'] ?? '<u onclick="askWorker(this, \'facility_shift_cancelation_policy\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['facility_shift_cancelation_policy'] ?? '<u onclick="askWorker(this, \'facility_shift_cancelation_policy\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Contract Termination Policy</span>
@@ -645,7 +645,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['contract_termination_policy'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['contract_termination_policy'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['contract_termination_policy'] ?? '<u onclick="askWorker(this, \'contract_termination_policy\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['contract_termination_policy'] ?? '<u onclick="askWorker(this, \'contract_termination_policy\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Traveler Distance From Facility</span>
@@ -654,7 +654,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['traveler_distance_from_facility'] ?? '----') . ' miles Maximum</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['traveler_distance_from_facility'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['distance_from_your_home'] ?? '<u onclick="askWorker(this, \'distance_from_your_home\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['distance_from_your_home'] ?? '<u onclick="askWorker(this, \'distance_from_your_home\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility</span>
@@ -663,7 +663,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['facility'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['facility'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worked_at_facility_before'] ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worked_at_facility_before'] ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility`s Parent System</span>
@@ -672,7 +672,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['facilitys_parent_system'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['facilitys_parent_system'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_facility_parent_system'] ?? '<u onclick="askWorker(this, \'worker_facility_parent_system\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_facility_parent_system'] ?? '<u onclick="askWorker(this, \'worker_facility_parent_system\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility Average Rating</span>
@@ -681,7 +681,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['facility_average_rating'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['facility_average_rating'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['avg_rating_by_facilities'] ?? '<u onclick="askWorker(this, \'avg_rating_by_facilities\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['avg_rating_by_facilities'] ?? '<u onclick="askWorker(this, \'avg_rating_by_facilities\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">employer Average Rating</span>
@@ -690,7 +690,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['employer_average_rating'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['employer_average_rating'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_avg_rating_by_employers'] ?? '<u onclick="askWorker(this, \'worker_avg_rating_by_employers\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_avg_rating_by_employers'] ?? '<u onclick="askWorker(this, \'worker_avg_rating_by_employers\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Employer Average Rating</span>
@@ -699,7 +699,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['employer_average_rating'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['employer_average_rating'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_avg_rating_by_employers'] ?? '<u onclick="askWorker(this, \'worker_avg_rating_by_employers\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_avg_rating_by_employers'] ?? '<u onclick="askWorker(this, \'worker_avg_rating_by_employers\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Clinical Setting</span>
@@ -708,7 +708,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['clinical_setting'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['clinical_setting'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['clinical_setting_you_prefer'] ?? '<u onclick="askWorker(this, \'clinical_setting_you_prefer\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['clinical_setting_you_prefer'] ?? '<u onclick="askWorker(this, \'clinical_setting_you_prefer\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Patient ratio</span>
@@ -717,7 +717,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['Patient_ratio'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['Patient_ratio'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_patient_ratio'] ?? '<u onclick="askWorker(this, \'worker_patient_ratio\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_patient_ratio'] ?? '<u onclick="askWorker(this, \'worker_patient_ratio\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">EMR</span>
@@ -726,7 +726,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['emr'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['emr'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_emr'] ?? '<u onclick="askWorker(this, \'worker_emr\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_emr'] ?? '<u onclick="askWorker(this, \'worker_emr\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Unit</span>
@@ -735,7 +735,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['Unit'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['Unit'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_unit'] ?? '<u onclick="askWorker(this, \'worker_unit\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_unit'] ?? '<u onclick="askWorker(this, \'worker_unit\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Department</span>
@@ -744,7 +744,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['Department'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['Department'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_department'] ?? '<u onclick="askWorker(this, \'worker_department\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_department'] ?? '<u onclick="askWorker(this, \'worker_department\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Bed Size</span>
@@ -753,7 +753,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['Bed_Size'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['Bed_Size'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_bed_size'] ?? '<u onclick="askWorker(this, \'worker_bed_size\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_bed_size'] ?? '<u onclick="askWorker(this, \'worker_bed_size\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Trauma Level</span>
@@ -762,7 +762,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['Trauma_Level'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['Trauma_Level'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_trauma_level'] ?? '<u onclick="askWorker(this, \'worker_trauma_level\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_trauma_level'] ?? '<u onclick="askWorker(this, \'worker_trauma_level\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Scrub Color</span>
@@ -771,7 +771,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['scrub_color'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['scrub_color'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_scrub_color'] ?? '<u onclick="askWorker(this, \'worker_scrub_color\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_scrub_color'] ?? '<u onclick="askWorker(this, \'worker_scrub_color\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility City</span>
@@ -780,7 +780,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['job_city'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['job_city'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_facility_city'] ?? '<u onclick="askWorker(this, \'worker_facility_city\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_facility_city'] ?? '<u onclick="askWorker(this, \'worker_facility_city\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility State Code</span>
@@ -789,16 +789,16 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['job_state'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['job_state'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_facility_state_code'] ?? '<u onclick="askWorker(this, \'worker_facility_state_code\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_facility_state_code'] ?? '<u onclick="askWorker(this, \'worker_facility_state_code\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Interview Dates</span>
                         </div>
                         <div class="col-md-6">
-                            <h6>' . $nursedetails['worker_interview_dates'] . '</h6>
+                            <h6>' . $workerdetails['worker_interview_dates'] . '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($nursedetails['worker_interview_dates'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_interview_dates'] ?? '<u onclick="askWorker(this, \'worker_interview_dates\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' . ($workerdetails['worker_interview_dates'] ? '' : 'd-none' ) . '">
+                            <p>' . ($workerdetails['worker_interview_dates'] ?? '<u onclick="askWorker(this, \'worker_interview_dates\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Start Date</span>
@@ -807,7 +807,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['start_date'] ? $jobdetails['start_date'] : 'As Soon As Possible') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['start_date'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_start_date'] ?? '<u onclick="askWorker(this, \'worker_start_date\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_start_date'] ?? '<u onclick="askWorker(this, \'worker_start_date\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">RTO</span>
@@ -816,7 +816,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['rto'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['rto'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_as_soon_as_posible'] ?? '<u onclick="askWorker(this, \'worker_as_soon_as_posible\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_as_soon_as_posible'] ?? '<u onclick="askWorker(this, \'worker_as_soon_as_posible\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Shift Time of Day</span>
@@ -825,7 +825,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['preferred_shift'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['worker_shift_time_of_day'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_shift_time_of_day'] ?? '<u onclick="askWorker(this, \'worker_shift_time_of_day\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_shift_time_of_day'] ?? '<u onclick="askWorker(this, \'worker_shift_time_of_day\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Hours/Week</span>
@@ -834,7 +834,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['hours_per_week'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['hours_per_week'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_hours_per_week'] ?? '<u onclick="askWorker(this, \'worker_hours_per_week\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_hours_per_week'] ?? '<u onclick="askWorker(this, \'worker_hours_per_week\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Guaranteed Hours</span>
@@ -843,7 +843,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['guaranteed_hours'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['guaranteed_hours'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_guaranteed_hours'] ?? '<u onclick="askWorker(this, \'worker_guaranteed_hours\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_guaranteed_hours'] ?? '<u onclick="askWorker(this, \'worker_guaranteed_hours\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Hours/Shift</span>
@@ -852,7 +852,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['preferred_assignment_duration'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['preferred_assignment_duration'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weeks_assignment'] ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_weeks_assignment'] ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Weeks/Assignment</span>
@@ -861,7 +861,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['preferred_assignment_duration'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['preferred_assignment_duration'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weeks_assignment'] ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_weeks_assignment'] ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Shifts/Week</span>
@@ -870,7 +870,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['weeks_shift'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['weeks_shift'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_shifts_week'] ?? '<u onclick="askWorker(this, \'worker_shifts_week\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_shifts_week'] ?? '<u onclick="askWorker(this, \'worker_shifts_week\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Referral Bonus</span>
@@ -879,7 +879,7 @@ class OpportunitiesController extends Controller
                             <h6>$' . ($jobdetails['referral_bonus'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['referral_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_referral_bonus'] ?? '<u onclick="askWorker(this, \'worker_referral_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_referral_bonus'] ?? '<u onclick="askWorker(this, \'worker_referral_bonus\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Sign-On Bonus</span>
@@ -888,7 +888,7 @@ class OpportunitiesController extends Controller
                             <h6>$' . ($jobdetails['sign_on_bonus'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['sign_on_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_sign_on_bonus'] ?? '<u onclick="askWorker(this, \'worker_sign_on_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_sign_on_bonus'] ?? '<u onclick="askWorker(this, \'worker_sign_on_bonus\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Completion Bonus</span>
@@ -897,7 +897,7 @@ class OpportunitiesController extends Controller
                             <h6>$' . ($jobdetails['completion_bonus'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['completion_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_completion_bonus'] ?? '<u onclick="askWorker(this, \'worker_completion_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_completion_bonus'] ?? '<u onclick="askWorker(this, \'worker_completion_bonus\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Extension Bonus</span>
@@ -906,7 +906,7 @@ class OpportunitiesController extends Controller
                             <h6>$' . ($jobdetails['extension_bonus'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['extension_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_extension_bonus'] ?? '<u onclick="askWorker(this, \'worker_extension_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_extension_bonus'] ?? '<u onclick="askWorker(this, \'worker_extension_bonus\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Other Bonus</span>
@@ -915,7 +915,7 @@ class OpportunitiesController extends Controller
                             <h6>$' . ($jobdetails['other_bonus'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['other_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_other_bonus'] ?? '<u onclick="askWorker(this, \'worker_other_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_other_bonus'] ?? '<u onclick="askWorker(this, \'worker_other_bonus\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">401K</span>
@@ -924,7 +924,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['four_zero_one_k'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['four_zero_one_k'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['how_much_k'] ?? '<u onclick="askWorker(this, \'how_much_k\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['how_much_k'] ?? '<u onclick="askWorker(this, \'how_much_k\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Health Insurance</span>
@@ -933,7 +933,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['health_insaurance'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['health_insaurance'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_health_insurance'] ?? '<u onclick="askWorker(this, \'worker_health_insurance\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_health_insurance'] ?? '<u onclick="askWorker(this, \'worker_health_insurance\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Dental</span>
@@ -942,7 +942,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['dental'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['dental'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_dental'] ?? '<u onclick="askWorker(this, \'worker_dental\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_dental'] ?? '<u onclick="askWorker(this, \'worker_dental\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Vision</span>
@@ -951,7 +951,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['vision'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['vision'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_vision'] ?? '<u onclick="askWorker(this, \'worker_vision\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_vision'] ?? '<u onclick="askWorker(this, \'worker_vision\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Actual Hourly rate</span>
@@ -960,7 +960,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['actual_hourly_rate'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['actual_hourly_rate'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_actual_hourly_rate'] ?? '<u onclick="askWorker(this, \'worker_actual_hourly_rate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_actual_hourly_rate'] ?? '<u onclick="askWorker(this, \'worker_actual_hourly_rate\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Feels Like $/hr</span>
@@ -969,7 +969,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['feels_like_per_hour'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['feels_like_per_hour'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_feels_like_hour'] ?? '<u onclick="askWorker(this, \'worker_feels_like_hour\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_feels_like_hour'] ?? '<u onclick="askWorker(this, \'worker_feels_like_hour\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Overtime</span>
@@ -978,7 +978,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['overtime'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['overtime'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_overtime'] ?? '<u onclick="askWorker(this, \'worker_overtime\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_overtime'] ?? '<u onclick="askWorker(this, \'worker_overtime\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Holiday</span>
@@ -987,7 +987,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['holiday'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['holiday'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_holiday'] ?? '<u onclick="askWorker(this, \'worker_holiday\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_holiday'] ?? '<u onclick="askWorker(this, \'worker_holiday\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">On Call</span>
@@ -996,7 +996,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['on_call'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['on_call'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_on_call'] ?? '<u onclick="askWorker(this, \'worker_on_call\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_on_call'] ?? '<u onclick="askWorker(this, \'worker_on_call\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Call Back</span>
@@ -1005,7 +1005,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['call_back'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['call_back'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_call_back'] ?? '<u onclick="askWorker(this, \'worker_call_back\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_call_back'] ?? '<u onclick="askWorker(this, \'worker_call_back\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Orientation Rate</span>
@@ -1014,7 +1014,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['orientation_rate'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['orientation_rate'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_orientation_rate'] ?? '<u onclick="askWorker(this, \'worker_orientation_rate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_orientation_rate'] ?? '<u onclick="askWorker(this, \'worker_orientation_rate\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Weekly Taxable amount</span>
@@ -1023,7 +1023,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['weekly_taxable_amount'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['weekly_taxable_amount'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weekly_taxable_amount'] ?? '<u onclick="askWorker(this, \'worker_weekly_taxable_amount\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_weekly_taxable_amount'] ?? '<u onclick="askWorker(this, \'worker_weekly_taxable_amount\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Employer Weekly Amount</span>
@@ -1032,7 +1032,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['employer_weekly_amount'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['employer_weekly_amount'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_employer_weekly_amount'] ?? '<u onclick="askWorker(this, \'worker_employer_weekly_amount\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_employer_weekly_amount'] ?? '<u onclick="askWorker(this, \'worker_employer_weekly_amount\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Weekly non-taxable amount</span>
@@ -1041,7 +1041,7 @@ class OpportunitiesController extends Controller
                             <h6>' . ($jobdetails['weekly_non_taxable_amount'] ?? '----') . '</h6>
                         </div>
                         <div class="col-md-6 ' . ($jobdetails['weekly_non_taxable_amount'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weekly_non_taxable_amount'] ?? '<u onclick="askWorker(this, \'worker_weekly_non_taxable_amount\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <p>' . ($workerdetails['worker_weekly_non_taxable_amount'] ?? '<u onclick="askWorker(this, \'worker_weekly_non_taxable_amount\', \''. $workerdetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Goodwork Weekly Amount</span>
@@ -1075,7 +1075,7 @@ class OpportunitiesController extends Controller
                         </div>
                         <div class="col-md-12">
 
-                            <button class="ss-counter-button w-100" onclick="offerSend(\'' . $request->id . '\', \''. $jobdetails['id'] .'\', \'offersend\', \'' . $nursedetails->user_id .'\', \'' . $jobdetails['employer_id'] .'\')">Send Offer</button>
+                            <button class="ss-counter-button w-100" onclick="offerSend(\'' . $request->id . '\', \''. $jobdetails['id'] .'\', \'offersend\', \'' . $workerdetails->user_id .'\', \'' . $jobdetails['employer_id'] .'\')">Send Offer</button>
                         </div>
                     </ul>
                 </div>
@@ -1688,7 +1688,7 @@ class OpportunitiesController extends Controller
                                 <p>employer</p>
                             </li>
                             <li>
-                                <img src="' . asset('public/images/nurses/profile/' . $userdetails->image) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                <img src="' . asset('public/images/workers/profile/' . $userdetails->image) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                                 ' . $userdetails->first_name . ' ' . $userdetails->last_name . '
                             </li>
                         </ul>
@@ -1727,12 +1727,12 @@ class OpportunitiesController extends Controller
                                 <div class="' . ($jobappliedcount > 1 ? 'owl-carousel application-job-slider-owl' : '') . ' application-job-slider">
                                     ';
                                 foreach ($jobapplieddetails as $key => $value) {
-                                    $nursedetails = Nurse::join('users', 'nurses.user_id', '=', 'users.id')
-                                        ->where('nurses.id', $value->nurse_id)
-                                        ->select('nurses.*', 'users.*')
+                                    $workerdetails = Worker::join('users', 'workers.user_id', '=', 'users.id')
+                                        ->where('workers.id', $value->worker_id)
+                                        ->select('workers.*', 'users.*')
                                         ->first();
                                     $totalexp = 0;
-                                    $allexp = explode(",", $nursedetails->experience);
+                                    $allexp = explode(",", $workerdetails->experience);
                                     $totalexp = 0;
                                     foreach ($allexp as $valuee) {
                                         $totalexp += (int)$valuee;
@@ -1742,7 +1742,7 @@ class OpportunitiesController extends Controller
                                     <div class="ss-chng-appli-slider-sml-dv ss-expl-applicion-div-box" onclick="opportunitiesType(\'' . $type . '\', \'' . $value->id . '\', \'useralldetails\')"">
                                         <div class="ss-job-id-no-name">
                                             <ul>
-                                                <li class="w-50"><span>' . $value->nurse_id . '</span></li>
+                                                <li class="w-50"><span>' . $value->worker_id . '</span></li>
                                                 <li class="w-50">
                                                     <p>Recently Added</p>
                                                 </li>
@@ -1750,16 +1750,16 @@ class OpportunitiesController extends Controller
                                         </div>
                                         <ul class="ss-expl-applicion-ul1">
                                             <li class="w-auto">
-                                                <img src="' . asset('public/images/nurses/profile/' . $nursedetails->image) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                                <img src="' . asset('public/images/workers/profile/' . $workerdetails->image) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                                             </li>
                                             <li class="w-auto">
-                                                <h6>' . $nursedetails->first_name . ' ' . $nursedetails->last_name . '</h6>
+                                                <h6>' . $workerdetails->first_name . ' ' . $workerdetails->last_name . '</h6>
                                             </li>
                                         </ul>
                                         <ul class="ss-expl-applicion-ul2 d-block">
-                                            <li class="w-auto"><a href="#">' . $nursedetails->highest_nursing_degree . '</a></li>
-                                            <li class="w-auto"><a href="#">' . $nursedetails->specialty . '</a></li>
-                                            <li class="w-auto"><a href="#">' . $nursedetails->worker_shift_time_of_day . '</a></li>
+                                            <li class="w-auto"><a href="#">' . $workerdetails->highest_nursing_degree . '</a></li>
+                                            <li class="w-auto"><a href="#">' . $workerdetails->specialty . '</a></li>
+                                            <li class="w-auto"><a href="#">' . $workerdetails->worker_shift_time_of_day . '</a></li>
                                             <li class="w-auto"><a href="#">' . $totalexp . ' Years of Experience</a></li>
                                         </ul>
                                     </div>

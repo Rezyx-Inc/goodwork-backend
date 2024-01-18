@@ -11,7 +11,7 @@ use App\Enums\Role;
 use File;
 use Illuminate\Database\Eloquent\Builder;
 /** Models */
-use App\Models\{User, Nurse,Follows, NurseReference,Job,Offer, NurseAsset,
+use App\Models\{User, Worker,Follows, WorkerReference,Job,Offer, WorkerAsset,
     Keyword, Facility, Availability, Countries, States, Cities, JobSaved};
 
 class JobController extends Controller
@@ -54,10 +54,10 @@ class JobController extends Controller
 
         $user = auth()->guard('frontend')->user();
 
-        $nurse = NURSE::where('user_id', $user->id)->first();
-        $jobs_id = Offer::where('nurse_id', $nurse->id)->select('job_id')->get();
+        $worker = WORKER::where('user_id', $user->id)->first();
+        $jobs_id = Offer::where('worker_id', $worker->id)->select('job_id')->get();
 
-        // $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
+        // $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
 
         $whereCond = [
             'facilities.active' => true,
@@ -65,7 +65,7 @@ class JobController extends Controller
             'jobs.is_hidden' => "0",
             'jobs.is_closed' => "0",
             // 'job_saved.is_delete'=>'0',
-            // 'job_saved.nurse_id'=>$user->id,
+            // 'job_saved.worker_id'=>$user->id,
         ];
 
         $ret = Job::select('jobs.id as job_id', 'jobs.auto_offers as auto_offers', 'jobs.*')
@@ -76,7 +76,7 @@ class JobController extends Controller
                 $join->on('job_saved.job_id', '=', 'jobs.id')
                 ->where(function ($query) use ($user) {
                     $query->where('job_saved.is_delete', '=', 0)
-                    ->where('job_saved.nurse_id', '=', $user->id);
+                    ->where('job_saved.worker_id', '=', $user->id);
                 });
             })
             ->where($whereCond)
@@ -330,10 +330,10 @@ class JobController extends Controller
                 $j_data["f_emr_other"] = isset($job->facility->f_emr_other) ? $job->facility->f_emr_other : "";
                 $j_data["f_bcheck_provider"] = isset($job->facility->f_bcheck_provider) ? $job->facility->f_bcheck_provider : "";
                 $j_data["f_bcheck_provider_other"] = isset($job->facility->f_bcheck_provider_other) ? $job->facility->f_bcheck_provider_other : "";
-                $j_data["nurse_cred_soft"] = isset($job->facility->nurse_cred_soft) ? $job->facility->nurse_cred_soft : "";
-                $j_data["nurse_cred_soft_other"] = isset($job->facility->nurse_cred_soft_other) ? $job->facility->nurse_cred_soft_other : "";
-                $j_data["nurse_scheduling_sys"] = isset($job->facility->nurse_scheduling_sys) ? $job->facility->nurse_scheduling_sys : "";
-                $j_data["nurse_scheduling_sys_other"] = isset($job->facility->nurse_scheduling_sys_other) ? $job->facility->nurse_scheduling_sys_other : "";
+                $j_data["worker_cred_soft"] = isset($job->facility->worker_cred_soft) ? $job->facility->worker_cred_soft : "";
+                $j_data["worker_cred_soft_other"] = isset($job->facility->worker_cred_soft_other) ? $job->facility->worker_cred_soft_other : "";
+                $j_data["worker_scheduling_sys"] = isset($job->facility->worker_scheduling_sys) ? $job->facility->worker_scheduling_sys : "";
+                $j_data["worker_scheduling_sys_other"] = isset($job->facility->worker_scheduling_sys_other) ? $job->facility->worker_scheduling_sys_other : "";
                 $j_data["time_attend_sys"] = isset($job->facility->time_attend_sys) ? $job->facility->time_attend_sys : "";
                 $j_data["time_attend_sys_other"] = isset($job->facility->time_attend_sys_other) ? $job->facility->time_attend_sys_other : "";
                 $j_data["licensed_beds"] = isset($job->facility->licensed_beds) ? $job->facility->licensed_beds : "";
@@ -369,17 +369,17 @@ class JobController extends Controller
                 // $j_data["shift"] = "Days";
                 $j_data["start_date"] = date('d F Y', strtotime($job->start_date));
 
-                $j_data['applied_nurses'] = '0';
-                $applied_nurses = Offer::where(['job_id' => $job->job_id, 'status'=>'Apply'])->count();
-                $j_data['applied_nurses'] = strval($applied_nurses);
+                $j_data['applied_workers'] = '0';
+                $applied_workers = Offer::where(['job_id' => $job->job_id, 'status'=>'Apply'])->count();
+                $j_data['applied_workers'] = strval($applied_workers);
 
                 $is_saved = '0';
                 if ($user_id != ""){
-                    $nurse_info = NURSE::where('user_id', $user_id);
-                    if ($nurse_info->count() > 0) {
-                        $nurse = $nurse_info->first();
+                    $worker_info = WORKER::where('user_id', $user_id);
+                    if ($worker_info->count() > 0) {
+                        $worker = $worker_info->first();
                         $whereCond = [
-                            'job_saved.nurse_id' => $user_id,
+                            'job_saved.worker_id' => $user_id,
                             'job_saved.job_id' => $job->job_id,
                         ];
                         $limit = 10;
@@ -395,7 +395,7 @@ class JobController extends Controller
                         //     'facilities.active' => true,
                         //     // 'jobs.is_open' => "1",
                         //     'offers.status' => 'Offered',
-                        //     'offers.nurse_id' => $nurse->id
+                        //     'offers.worker_id' => $worker->id
                         // ];
                         // $ret = Job::select('jobs.id as job_id','jobs.job_type as job_type', 'jobs.*')
                         //     ->leftJoin('facilities', function ($join) {
@@ -405,7 +405,7 @@ class JobController extends Controller
                         //     ->where($whereCond1)
                         //     ->orderBy('offers.created_at', 'desc');
                         // $job_data = $ret->paginate(10);
-                        // $j_data['nurses_applied'] = $this->jobData($job_data, $user_id);
+                        // $j_data['workers_applied'] = $this->jobData($job_data, $user_id);
 
                     }
                 }
@@ -497,11 +497,11 @@ class JobController extends Controller
                 'jid'=>'required'
             ]);
             $user = auth()->guard('frontend')->user();
-            $rec = JobSaved::where(['nurse_id'=>$user->id, 'job_id'=>$request->jid,'is_delete'=>'0'])->first();
+            $rec = JobSaved::where(['worker_id'=>$user->id, 'job_id'=>$request->jid,'is_delete'=>'0'])->first();
             $input = [
                 'job_id'=>$request->jid,
                 'is_save'=>'1',
-                'nurse_id'=>$user->id,
+                'worker_id'=>$user->id,
             ];
             if (empty($rec)) {
                 JobSaved::create($input);
@@ -530,7 +530,7 @@ class JobController extends Controller
         $data = [];
         $data['model'] = Job::findOrFail($id);
         // $user = auth()->guard('frontend')->user();
-        // dd($user->nurse->id);
+        // dd($user->worker->id);
         $data['jobSaved'] = new JobSaved();
         return view('jobs.details', $data);
     }
@@ -542,16 +542,16 @@ class JobController extends Controller
         ]);
         $response = [];
         $user = auth()->guard('frontend')->user();
-        $rec = Offer::where(['nurse_id'=>$user->nurse->id, 'job_id'=>$request->jid])->whereNull('deleted_at')->first();
+        $rec = Offer::where(['worker_id'=>$user->worker->id, 'job_id'=>$request->jid])->whereNull('deleted_at')->first();
         $input = [
             'job_id'=>$request->jid,
-            'created_by'=>$user->nurse->id,
-            'nurse_id'=>$user->nurse->id,
+            'created_by'=>$user->worker->id,
+            'worker_id'=>$user->worker->id,
         ];
         if (empty($rec)) {
             offer::create($input);
             $message = 'Job saved successfully.';
-            $saved = JobSaved::where(['nurse_id'=>$user->id, 'job_id'=>$request->jid,'is_delete'=>'0','is_save'=>'1'])->first();
+            $saved = JobSaved::where(['worker_id'=>$user->id, 'job_id'=>$request->jid,'is_delete'=>'0','is_save'=>'1'])->first();
             if (empty($rec)) {
                 $saved->delete();
             }
@@ -575,7 +575,7 @@ class JobController extends Controller
             'jobs.is_open' => "1",
             'jobs.is_closed' => "0",
             // 'job_saved.is_delete'=>'0',
-            // 'job_saved.nurse_id'=>$user->id,
+            // 'job_saved.worker_id'=>$user->id,
         ];
 
         $data = [];
@@ -590,7 +590,7 @@ class JobController extends Controller
                     ->where(function ($query) use ($user) {
                         $query->where('job_saved.is_delete', '=', '0')
                         ->where('job_saved.is_save', '=', '1')
-                        ->where('job_saved.nurse_id', '=', $user->id);
+                        ->where('job_saved.worker_id', '=', $user->id);
                     });
                 })
                 ->where($whereCond)
@@ -606,7 +606,7 @@ class JobController extends Controller
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Apply', 'Screening', 'Submitted'])
                         ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id)
+                        ->where('offers.worker_id', '=', $user->worker->id)
                         ->where(function($q){
                             $q->whereNull('offers.expiration')
                             ->orWhere('offers.expiration', '>', date('Y-m-d'));
@@ -627,7 +627,7 @@ class JobController extends Controller
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Onboarding', 'Working'])
                         ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id);
+                        ->where('offers.worker_id', '=', $user->worker->id);
 
                     });
                 })
@@ -644,7 +644,7 @@ class JobController extends Controller
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Offered', 'Rejected', 'Hold'])
                         ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id)
+                        ->where('offers.worker_id', '=', $user->worker->id)
                         ->where(function($q){
                             $q->whereNull('offers.expiration')
                             ->orWhere('offers.expiration', '>', date('Y-m-d'));
@@ -665,7 +665,7 @@ class JobController extends Controller
                     ->where(function ($query) use ($user) {
                         $query->where('offers.status', '=', 'Done')
                         ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id)
+                        ->where('offers.worker_id', '=', $user->worker->id)
                         ->where(function($q){
                             $q->whereNull('offers.expiration')
                             ->orWhere('offers.expiration', '>', date('Y-m-d'));
@@ -757,7 +757,7 @@ class JobController extends Controller
     public function store_counter_offer(Request $request)
     {
         // $offerLists = Offer::where('id', $request->id)->first();
-        // $nurse = Nurse::where('id', $offerLists->nurse_id)->first();
+        // $worker = Worker::where('id', $offerLists->worker_id)->first();
         $user = auth()->guard('frontend')->user();
         $job_data = Job::where('id', $request->jobid)->first();
         $update_array["job_name"] = ($job_data->job_name != $request->job_name)?$request->job_name:'';
@@ -912,12 +912,12 @@ class JobController extends Controller
         $data['job_title'] = 'Last 4 digits of SS# to submit';
         $worker_info[] = $data;
 
-        if($job['profession'] == $job_data['highest_nursing_degree']){ $val = true; }else{ $val = false; }
+        if($job['profession'] == $job_data['highest_working_degree']){ $val = true; }else{ $val = false; }
         $data['job'] = isset($job['profession'])?$job['profession']:"";
         $data['match'] = $val;
-        $data['worker'] = !empty($job_data['highest_nursing_degree'])?$job_data['highest_nursing_degree']:"";
+        $data['worker'] = !empty($job_data['highest_working_degree'])?$job_data['highest_working_degree']:"";
         $data['name'] = 'Preofession';
-        $data['update_key'] = 'highest_nursing_degree';
+        $data['update_key'] = 'highest_working_degree';
         $data['type'] = 'dropdown';
         $data['worker_title'] = 'What kind of Professional are you?';
         $data['job_title'] = !empty($data['job'])?$data['job']:'Profession';
@@ -933,12 +933,12 @@ class JobController extends Controller
         $data['job_title'] = !empty($data['job'])?$data['job']:'Specialty';
         $worker_info[] = $data;
 
-        if($job_data['nursing_license_state'] == $job_data['job_location']){ $val = true; }else{ $val = false; }
+        if($job_data['working_license_state'] == $job_data['job_location']){ $val = true; }else{ $val = false; }
         $data['job'] = isset($job['job_location'])?$job['job_location']:"";
         $data['match'] = $val;
-        $data['worker'] = !empty($job_data['nursing_license_state'])?$job_data['nursing_license_state']:"";
+        $data['worker'] = !empty($job_data['working_license_state'])?$job_data['working_license_state']:"";
         $data['name'] = 'License State';
-        $data['update_key'] = 'nursing_license_state';
+        $data['update_key'] = 'working_license_state';
         $data['type'] = 'dropdown';
         $data['worker_title'] = 'Where are you licensed?';
         $data['job_title'] = !empty($data['job'])?$data['job']:'Professional Licensure';

@@ -65,7 +65,7 @@
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="{{URL::asset('images/nurses/profile/'.$model->user->profile_image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_ADMIN}}';" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="{{URL::asset('images/workers/profile/'.$model->user->profile_image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_ADMIN}}';" alt="Avatar" title="Change the avatar">
                         </div>
                       </div>
                       <h3>{{$model->user->first_name}} {{$model->user->last_name}}</h3>
@@ -311,7 +311,7 @@
                         </div>
                         <div class="x_content"  style="display: none;">
                             <br />
-                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left nurse-edit-profile">
+                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left worker-edit-profile">
                                 @method('PATCH')
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align"> Title
@@ -412,7 +412,7 @@
                         </div>
                         <div class="x_content"  style="display: none;">
                             <br />
-                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left nurse-edit-profile">
+                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left worker-edit-profile">
                                 @method('PATCH')
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align"> Urgency
@@ -498,7 +498,7 @@
                         </div>
                         <div class="x_content"  style="display: none;">
                             <br />
-                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left nurse-edit-profile">
+                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left worker-edit-profile">
                                 @method('PATCH')
 
 
@@ -615,7 +615,7 @@
                         </div>
                         <div class="x_content"  style="display: none;">
                             <br />
-                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left nurse-edit-profile">
+                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left worker-edit-profile">
                                 @method('PATCH')
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align">Sign On Bonus($)</label>
@@ -771,7 +771,7 @@
                                             <input type="file" name="diploma" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/diploma/'.$diplomaCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/diploma/'.$diplomaCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -814,7 +814,7 @@
                                             <input type="file" name="driving_license" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/driving_license/'.$driving_license->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/driving_license/'.$driving_license->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -899,7 +899,7 @@
                                         <input type="file" name="old_skill[]" class="form-control" />
                                     </div>
                                     <div class="col-md-4 col-sm-4">
-                                        <a href="{{URL::asset('images/nurses/skill/'.$s->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                        <a href="{{URL::asset('images/workers/skill/'.$s->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                     </div>
                                     @else
                                     <div class="col-md-6 col-sm-6">
@@ -956,7 +956,7 @@
                         </div>
                         <div class="x_content"  style="display: none;">
                             <br />
-                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left nurse-edit-profile">
+                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left worker-edit-profile">
                                 @method('PATCH')
 
                                 <div class="item form-group">
@@ -1088,7 +1088,7 @@
                         </div>
                         <div class="x_content"  style="display: none;">
                             <br />
-                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left nurse-edit-profile">
+                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left worker-edit-profile">
                                 @method('PATCH')
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align"> Interview Dates
@@ -1184,7 +1184,7 @@
                         </div>
                         <div class="x_content"  style="display: none;">
                             <br />
-                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left nurse-edit-profile">
+                            <form method="POST" action="{{route('workers.update',['id'=>$model->id])}}" data-parsley-validate class="form-horizontal form-label-left worker-edit-profile">
                                 @method('PATCH')
 
                                 <div class="item form-group">
@@ -1328,7 +1328,7 @@
                                             <input type="file" name="covid" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/vaccination/'.$covidVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/vaccination/'.$covidVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1378,7 +1378,7 @@
                                             <input type="file" name="flu" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/vaccination/'.$fluVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/vaccination/'.$fluVac->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1514,7 +1514,7 @@
                                                 <input type="file" name="old_image[]" class="form-control" />
                                             </div>
                                             <div class="col-md-4 col-sm-4">
-                                                <a href="{{URL::asset('images/nurses/reference/'.$ref->image)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                                <a href="{{URL::asset('images/workers/reference/'.$ref->image)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                             </div>
                                             @else
                                             <div class="col-md-6 col-sm-6">
@@ -1581,7 +1581,7 @@
                                             <input type="file" name="bls" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/vaccination/'.$blsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/vaccination/'.$blsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1624,7 +1624,7 @@
                                             <input type="file" name="acls" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/vaccination/'.$aclsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/vaccination/'.$aclsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1667,7 +1667,7 @@
                                             <input type="file" name="pals" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/vaccination/'.$palsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/vaccination/'.$palsCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -1706,7 +1706,7 @@
                                             <input type="file" name="other" class="form-control" />
                                         </div>
                                         <div class="col-md-4 col-sm-4">
-                                            <a href="{{URL::asset('images/nurses/vaccination/'.$otherCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
+                                            <a href="{{URL::asset('images/workers/vaccination/'.$otherCer->name)}}" target="_blank" class="btn brn-success" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-download"></i>{{$file_name}} </a>
                                         </div>
                                         @else
                                         <div class="col-md-6 col-sm-6">
@@ -2031,7 +2031,7 @@ $(document).ready(function () {
     // list_elements('vac');
     // list_elements('cer');
 
-    $('.nurse-edit-profile').on('submit', function (event) {
+    $('.worker-edit-profile').on('submit', function (event) {
         var form = $(this);
         event.preventDefault();
         form.find('.parsley-error').removeClass('parsley-error');

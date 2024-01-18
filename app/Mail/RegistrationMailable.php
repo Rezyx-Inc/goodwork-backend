@@ -16,9 +16,9 @@ class RegistrationMailable extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param $first_name - first_name of nurse
-     * @param $last_name - last_name of nurse
-     * @param $email - email id of nurse
+     * @param $first_name - first_name of worker
+     * @param $last_name - last_name of worker
+     * @param $email - email id of worker
      *
      * @return void
      */

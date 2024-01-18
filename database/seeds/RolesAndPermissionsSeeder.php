@@ -5,7 +5,7 @@ use Illuminate\Support\Str;
 use App\Models\NuRole;
 use App\Models\NuPermission;
 use App\Models\User;
-use App\Models\Nurse;
+use App\Models\Worker;
 use Illuminate\Support\Facades\Hash;
 
 class RolesAndPermissionsSeeder extends Seeder
@@ -38,16 +38,16 @@ class RolesAndPermissionsSeeder extends Seeder
         // create specific user NuPermissions
         NuPermission::create([
             'id'=>Str::uuid(),
-            'name' => 'nurse-edit']);
+            'name' => 'worker-edit']);
         NuPermission::create([
             'id'=>Str::uuid(),
-            'name' => 'nurse-delete']);
+            'name' => 'worker-delete']);
         NuPermission::create([
             'id'=>Str::uuid(),
-            'name' => 'nurse-show']);
+            'name' => 'worker-show']);
         NuPermission::create([
             'id'=>Str::uuid(),
-            'name' => 'nurse-create']);
+            'name' => 'worker-create']);
         
         // create specific user NuPermissions
         NuPermission::create([
@@ -75,11 +75,11 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = NuRole::create([
             'id'=>Str::uuid(),
-            'name' => 'Nurse']);
-        $role->givePermissionTo('nurse-show');
-        $role->givePermissionTo('nurse-create');
-        $role->givePermissionTo('nurse-delete');
-        $role->givePermissionTo('nurse-edit');
+            'name' => 'Worker']);
+        $role->givePermissionTo('worker-show');
+        $role->givePermissionTo('worker-create');
+        $role->givePermissionTo('worker-delete');
+        $role->givePermissionTo('worker-edit');
 
         $role = NuRole::create([
             'id'=>Str::uuid(),

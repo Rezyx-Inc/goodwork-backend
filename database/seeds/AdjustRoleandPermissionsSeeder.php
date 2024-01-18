@@ -16,10 +16,10 @@ class AdjustRoleandPermissionsSeeder extends Seeder
     {
         $role = NuRole::findByName('Administrator');
         $role->givePermissionTo('admin-delete');
-        $role->givePermissionTo('nurse-show');
-        $role->givePermissionTo('nurse-create');
-        $role->givePermissionTo('nurse-delete');
-        $role->givePermissionTo('nurse-edit');
+        $role->givePermissionTo('worker-show');
+        $role->givePermissionTo('worker-create');
+        $role->givePermissionTo('worker-delete');
+        $role->givePermissionTo('worker-edit');
 
         $facility = NuRole::findByName('Facility');
         $facility->revokePermissionTo('admin-create');
@@ -32,10 +32,10 @@ class AdjustRoleandPermissionsSeeder extends Seeder
         $admin = NuRole::findByName('Admin');
         $admin->revokePermissionTo('admin-delete');
         $admin->revokePermissionTo('delete');
-        $admin->givePermissionTo('nurse-show');
-        $admin->givePermissionTo('nurse-create');
-        $admin->givePermissionTo('nurse-delete');
-        $admin->givePermissionTo('nurse-edit');
+        $admin->givePermissionTo('worker-show');
+        $admin->givePermissionTo('worker-create');
+        $admin->givePermissionTo('worker-delete');
+        $admin->givePermissionTo('worker-edit');
 
         $supervisor = NuRole::findByName('Supervisor');
         $supervisor->revokePermissionTo('admin-create');
@@ -44,9 +44,9 @@ class AdjustRoleandPermissionsSeeder extends Seeder
         $supervisor->revokePermissionTo('create');
         $supervisor->revokePermissionTo('delete');
         $supervisor->revokePermissionTo('edit');
-        $supervisor->givePermissionTo('nurse-show');
-        $supervisor->givePermissionTo('nurse-create');
-        $supervisor->givePermissionTo('nurse-delete');
-        $supervisor->givePermissionTo('nurse-edit');
+        $supervisor->givePermissionTo('worker-show');
+        $supervisor->givePermissionTo('worker-create');
+        $supervisor->givePermissionTo('worker-delete');
+        $supervisor->givePermissionTo('worker-edit');
     }
 }

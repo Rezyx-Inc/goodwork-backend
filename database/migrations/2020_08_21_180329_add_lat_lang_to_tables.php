@@ -17,7 +17,7 @@ class AddLatLangToTables extends Migration
             $table->string('f_lat',100)->nullable();
             $table->string('f_lang',100)->nullable();
         });
-        Schema::table('nurses', function (Blueprint $table) {
+        Schema::table('workers', function (Blueprint $table) {
             $table->string('n_lat',100)->nullable();
             $table->string('n_lang',100)->nullable();
         });
@@ -34,7 +34,7 @@ class AddLatLangToTables extends Migration
             $table->dropColumn('f_lat');
             $table->dropColumn('f_lang');
         });
-        Schema::table('nurses', function (Blueprint $table) {
+        Schema::table('workers', function (Blueprint $table) {
             $table->dropColumn('n_lat');
             $table->dropColumn('n_lang');
         });

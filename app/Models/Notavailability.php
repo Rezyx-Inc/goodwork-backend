@@ -12,7 +12,7 @@ class Notavailability extends UuidModel
      *
      * @var string
      */
-    private $nurse_id;
+    private $worker_id;
 
     /**
      *
@@ -26,7 +26,7 @@ class Notavailability extends UuidModel
      * @var array
      */
     public $fillable = [
-        'nurse_id',
+        'worker_id',
         'specific_dates'
     ];
 
@@ -46,8 +46,8 @@ class Notavailability extends UuidModel
      */
     protected $dates = ['deleted_at'];
 
-    public function nurse()
+    public function worker()
 	{
-		return $this->belongsTo(Nurse::class);
+		return $this->belongsTo(Worker::class);
 	}
 }

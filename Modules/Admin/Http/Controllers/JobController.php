@@ -12,7 +12,7 @@ use DB;
 use File;
 use Str;
 /** Models */
-use App\Models\{Job,JobReference,Offer, User, Nurse, Countries, States, Cities, Keyword};
+use App\Models\{Job,JobReference,Offer, User, Worker, Countries, States, Cities, Keyword};
 
 use App\Traits\HelperTrait;
 

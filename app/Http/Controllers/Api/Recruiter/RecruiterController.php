@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api\Recruiter;
 
 // Models
 use Illuminate\Http\Request;
-use App\Models\Nurse;
+use App\Models\Worker;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Keyword;
 use App\Models\Facility;
 use App\Models\Notification;
 use App\Models\Certification;
-use App\Models\NurseAsset;
+use App\Models\WorkerAsset;
 use App\Models\Offer;
 use App\Models\JobAsset;
 
@@ -37,11 +37,11 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse_info = NURSE::where('user_id', $request->user_id);
+            $worker_info = WORKER::where('user_id', $request->user_id);
             $user_info = USER::where('id', $request->user_id);
-            if($nurse_info->count() > 0){
-                $nurse = $nurse_info->first();
-                $nurse_id = $nurse['id'];
+            if($worker_info->count() > 0){
+                $worker = $worker_info->first();
+                $worker_id = $worker['id'];
             }
             if ($user_info->count() > 0) {
                 $whereCond = [
@@ -62,11 +62,11 @@ class RecruiterController extends Controller
                     $facilitys[] = $facility_list['name'];
 
                 }
-                    if(isset($nurse_id)){
-                        $data['nurse_id']  = $nurse_id;
+                    if(isset($worker_id)){
+                        $data['worker_id']  = $worker_id;
                     }
                     $return_data['about_me'] = (isset($data->about_me) && $data->about_me != "") ? strip_tags($data->about_me) : "";
-                    $return_data['image'] = (isset($data->image) && $data->image != "") ? url("public/images/nurses/profile/" . $data->image) : "";
+                    $return_data['image'] = (isset($data->image) && $data->image != "") ? url("public/images/workers/profile/" . $data->image) : "";
                     $return_data['qualities'] = (isset($data->qualities) && $data->qualities != "") ? json_decode($data->qualities) : [];
                     // $return_data['Agency_name'] = (isset($data->Agency_name) && $data->Agency_name != "") ? $data->Agency_name : "";
                     $return_data['Agency_name'] = (isset($facilitys) && $facilitys != "") ? $facilitys : "";
@@ -150,7 +150,7 @@ class RecruiterController extends Controller
                     $profile_image_ext = $request->file('profile_image')->getClientOriginalExtension();
                     $profile_image = $profile_image_name.'_'.time().'.'.$profile_image_ext;
 
-                    $destinationPath = 'images/nurses/profile';
+                    $destinationPath = 'images/workers/profile';
                     $request->file('profile_image')->move(public_path($destinationPath), $profile_image);
 
                     $update_array['image'] = $profile_image;
@@ -651,16 +651,16 @@ class RecruiterController extends Controller
                     'offers.status' => 'Apply'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.nurse_id', 'desc');
+                ->orderBy('offers.worker_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -670,7 +670,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -718,10 +718,10 @@ class RecruiterController extends Controller
                     'offers.status' => 'Screening'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -737,7 +737,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $screening['id'];
                     $result['worker_user_id'] = $screening['user_id'];
                     $result['job_id'] = $screening['job_id'];
-                    $result['worker_image'] = isset($screening['worker_image'])? url("public/images/nurses/profile/" . $screening['worker_image']):"";
+                    $result['worker_image'] = isset($screening['worker_image'])? url("public/images/workers/profile/" . $screening['worker_image']):"";
                     $result['worker_name'] = isset($screening['first_name'])?$screening['first_name'].' '.$screening['last_name']:"";
                     $result['job_name'] = isset($screening['job_name'])?$screening['job_name']:"";
                     $result['preferred_assignment_duration'] = isset($screening['worker_weeks_assignment'])?$screening['worker_weeks_assignment']:"";
@@ -784,10 +784,10 @@ class RecruiterController extends Controller
                     'offers.status' => 'Submitted'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -803,7 +803,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $submitted['id'];
                     $result['worker_user_id'] = $submitted['user_id'];
                     $result['job_id'] = $submitted['job_id'];
-                    $result['worker_image'] = isset($submitted['worker_image'])? url("public/images/nurses/profile/" . $submitted['worker_image']):"";
+                    $result['worker_image'] = isset($submitted['worker_image'])? url("public/images/workers/profile/" . $submitted['worker_image']):"";
                     $result['worker_name'] = isset($submitted['first_name'])?$submitted['first_name'].' '.$submitted['last_name']:"";
                     $result['job_name'] = isset($submitted['job_name'])?$submitted['job_name']:"";
                     $result['preferred_assignment_duration'] = isset($submitted['worker_weeks_assignment'])?$submitted['worker_weeks_assignment']:"";
@@ -850,10 +850,10 @@ class RecruiterController extends Controller
                     'offers.status' => 'Offered'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -869,7 +869,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $offered['id'];
                     $result['worker_user_id'] = $offered['user_id'];
                     $result['job_id'] = $offered['job_id'];
-                    $result['worker_image'] = isset($offered['worker_image'])? url("public/images/nurses/profile/" . $offered['worker_image']):"";
+                    $result['worker_image'] = isset($offered['worker_image'])? url("public/images/workers/profile/" . $offered['worker_image']):"";
                     $result['worker_name'] = isset($offered['first_name'])?$offered['first_name'].' '.$offered['last_name']:"";
                     $result['job_name'] = isset($offered['job_name'])?$offered['job_name']:"";
                     $result['preferred_assignment_duration'] = isset($offered['worker_weeks_assignment'])?$offered['worker_weeks_assignment']:"";
@@ -937,7 +937,7 @@ class RecruiterController extends Controller
                 {
                     $result['recruiter_id'] = $draft['user_id'];
                     $result['job_id'] = $draft['job_id'];
-                    $result['recruiter_image'] = isset($draft['worker_image'])? url("public/images/nurses/profile/" . $draft['worker_image']):"";
+                    $result['recruiter_image'] = isset($draft['worker_image'])? url("public/images/workers/profile/" . $draft['worker_image']):"";
                     $result['recruiter_name'] = isset($draft['first_name'])?$draft['first_name'].' '.$draft['last_name']:"";
                     $result['job_type'] = isset($draft['job_type'])?$draft['job_type']:"";
                     $result['type'] = isset($draft['type'])?$draft['type']:"";
@@ -990,7 +990,7 @@ class RecruiterController extends Controller
                     'jobs.active' => '1'
                 ];
 
-                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'offers.nurse_id', 'users.id as user_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'facilities.name as facility_name')
+                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'offers.worker_id', 'users.id as user_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'facilities.name as facility_name')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
                     })
@@ -1008,7 +1008,7 @@ class RecruiterController extends Controller
                     $result['recruiter_id'] = $published['user_id'];
                     $result['job_id'] = $published['job_id'];
                     $result['total_applied'] = $published['workers_applied'];
-                    $result['recruiter_image'] = isset($published['worker_image'])? url("public/images/nurses/profile/" . $published['worker_image']):"";
+                    $result['recruiter_image'] = isset($published['worker_image'])? url("public/images/workers/profile/" . $published['worker_image']):"";
                     $result['recruiter_name'] = isset($published['first_name'])?$published['first_name'].' '.$published['last_name']:"";
                     $result['job_type'] = isset($published['job_type'])?$published['job_type']:"";
                     $result['type'] = isset($published['type'])?$published['type']:"";
@@ -1063,7 +1063,7 @@ class RecruiterController extends Controller
                     'jobs.active' => '1'
                 ];
 
-                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'offers.nurse_id', 'users.id as user_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'facilities.name as facility_name')
+                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'offers.worker_id', 'users.id as user_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'facilities.name as facility_name')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
                     })
@@ -1081,7 +1081,7 @@ class RecruiterController extends Controller
                     $result['recruiter_id'] = $published['user_id'];
                     $result['job_id'] = $published['job_id'];
                     $result['total_applied'] = $published['workers_applied'];
-                    $result['recruiter_image'] = isset($published['worker_image'])? url("public/images/nurses/profile/" . $published['worker_image']):"";
+                    $result['recruiter_image'] = isset($published['worker_image'])? url("public/images/workers/profile/" . $published['worker_image']):"";
                     $result['recruiter_name'] = isset($published['first_name'])?$published['first_name'].' '.$published['last_name']:"";
                     $result['job_type'] = isset($published['job_type'])?$published['job_type']:"";
                     $result['type'] = isset($published['type'])?$published['type']:"";
@@ -1134,7 +1134,7 @@ class RecruiterController extends Controller
                     'jobs.active' => '1'
                 ];
 
-                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'offers.nurse_id', 'users.id as user_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'facilities.name as facility_name')
+                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'offers.worker_id', 'users.id as user_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'facilities.name as facility_name')
                     ->leftJoin('facilities', function ($join) {
                         $join->on('facilities.id', '=', 'jobs.facility_id');
                     })
@@ -1152,7 +1152,7 @@ class RecruiterController extends Controller
                     $result['recruiter_id'] = $published['user_id'];
                     $result['job_id'] = $published['job_id'];
                     $result['total_applied'] = $published['workers_applied'];
-                    $result['recruiter_image'] = isset($published['worker_image'])? url("public/images/nurses/profile/" . $published['worker_image']):"";
+                    $result['recruiter_image'] = isset($published['worker_image'])? url("public/images/workers/profile/" . $published['worker_image']):"";
                     $result['recruiter_name'] = isset($published['first_name'])?$published['first_name'].' '.$published['last_name']:"";
                     $result['job_type'] = isset($published['job_type'])?$published['job_type']:"";
                     $result['type'] = isset($published['type'])?$published['type']:"";
@@ -1204,10 +1204,10 @@ class RecruiterController extends Controller
                     'offers.status' => 'Onboarding'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -1223,7 +1223,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $onboarding['id'];
                     $result['worker_user_id'] = $onboarding['user_id'];
                     $result['job_id'] = $onboarding['job_id'];
-                    $result['worker_image'] = isset($onboarding['worker_image'])? url("public/images/nurses/profile/" . $onboarding['worker_image']):"";
+                    $result['worker_image'] = isset($onboarding['worker_image'])? url("public/images/workers/profile/" . $onboarding['worker_image']):"";
                     $result['worker_name'] = isset($onboarding['first_name'])?$onboarding['first_name'].' '.$onboarding['last_name']:"";
                     $result['job_name'] = isset($onboarding['job_name'])?$onboarding['job_name']:"";
                     $result['preferred_assignment_duration'] = isset($onboarding['worker_weeks_assignment'])?$onboarding['worker_weeks_assignment']:"";
@@ -1269,10 +1269,10 @@ class RecruiterController extends Controller
                     'offers.status' => 'Working'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -1288,7 +1288,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $working['id'];
                     $result['worker_user_id'] = $working['user_id'];
                     $result['job_id'] = $working['job_id'];
-                    $result['worker_image'] = isset($working['worker_image'])? url("public/images/nurses/profile/" . $working['worker_image']):"";
+                    $result['worker_image'] = isset($working['worker_image'])? url("public/images/workers/profile/" . $working['worker_image']):"";
                     $result['worker_name'] = isset($working['first_name'])?$working['first_name'].' '.$working['last_name']:"";
                     $result['job_name'] = isset($working['job_name'])?$working['job_name']:"";
                     $result['preferred_assignment_duration'] = isset($working['worker_weeks_assignment'])?$working['worker_weeks_assignment']:"";
@@ -1334,10 +1334,10 @@ class RecruiterController extends Controller
                     'offers.status' => 'Done'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -1353,7 +1353,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $done['id'];
                     $result['worker_user_id'] = $done['user_id'];
                     $result['job_id'] = $done['job_id'];
-                    $result['worker_image'] = isset($done['worker_image'])? url("public/images/nurses/profile/" . $done['worker_image']):"";
+                    $result['worker_image'] = isset($done['worker_image'])? url("public/images/workers/profile/" . $done['worker_image']):"";
                     $result['worker_name'] = isset($done['first_name'])?$done['first_name'].' '.$done['last_name']:"";
                     $result['job_name'] = isset($done['job_name'])?$done['job_name']:"";
                     $result['preferred_assignment_duration'] = isset($done['worker_weeks_assignment'])?$done['worker_weeks_assignment']:"";
@@ -1399,10 +1399,10 @@ class RecruiterController extends Controller
                     'offers.status' => 'Rejected'
                 ];
 
-                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name')
+                $ret = Job::select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
@@ -1418,7 +1418,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $done['id'];
                     $result['worker_user_id'] = $done['user_id'];
                     $result['job_id'] = $done['job_id'];
-                    $result['worker_image'] = isset($done['worker_image'])? url("public/images/nurses/profile/" . $done['worker_image']):"";
+                    $result['worker_image'] = isset($done['worker_image'])? url("public/images/workers/profile/" . $done['worker_image']):"";
                     $result['worker_name'] = isset($done['first_name'])?$done['first_name'].' '.$done['last_name']:"";
                     $result['job_name'] = isset($done['job_name'])?$done['job_name']:"";
                     $result['preferred_assignment_duration'] = isset($done['worker_weeks_assignment'])?$done['worker_weeks_assignment']:"";
@@ -1466,16 +1466,16 @@ class RecruiterController extends Controller
                 ];
 
                 $ret = DB::table('blocked_users')
-                    ->leftJoin('offers', 'blocked_users.worker_id', '=', 'offers.nurse_id')
-                    ->leftJoin('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->leftJoin('users', 'nurses.user_id', '=', 'users.id')
+                    ->leftJoin('offers', 'blocked_users.worker_id', '=', 'offers.worker_id')
+                    ->leftJoin('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->leftJoin('users', 'workers.user_id', '=', 'users.id')
                     ->leftJoin('jobs', 'offers.job_id', '=', 'jobs.id')
                     ->leftJoin('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
                     ->where($whereCond)
                     ->orderBy('offers.created_at', 'desc')
-                    ->select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.id as offer_id', 'facilities.name as facility_name');
+                    ->select('jobs.id as job_id', 'jobs.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.id as offer_id', 'facilities.name as facility_name');
                 $job_data = $ret->get();
                 $result = [];
                 $record = [];
@@ -1484,7 +1484,7 @@ class RecruiterController extends Controller
                     $result['worker_id'] = $blocked->id;
                     $result['worker_user_id'] = $blocked->user_id;
                     $result['job_id'] = $blocked->job_id;
-                    $result['worker_image'] = isset($blocked->worker_image)? url("public/images/nurses/profile/" . $blocked->worker_image):"";
+                    $result['worker_image'] = isset($blocked->worker_image)? url("public/images/workers/profile/" . $blocked->worker_image):"";
                     $result['worker_name'] = isset($blocked->first_name)?$blocked->first_name.' '.$blocked->last_name:"";
                     $result['job_name'] = isset($blocked->job_name)?$blocked->job_name:"";
                     $result['preferred_assignment_duration'] = isset($blocked->worker_weeks_assignment)?$blocked->worker_weeks_assignment:"";
@@ -1557,20 +1557,20 @@ class RecruiterController extends Controller
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                $worker_info  = Nurse::where('id', $request->worker_id);
+                $worker_info  = Worker::where('id', $request->worker_id);
 
                 if($worker_info->count() > 0){
                     $worker = $worker_info->get()->first();
 
                     $whereCond = [
                             'facilities.active' => true,
-                            'offers.nurse_id' => $worker->id,
+                            'offers.worker_id' => $worker->id,
                             // 'users.id' => $worker->user_id,
                         ];
 
-                    $respond = Nurse::select('keywords.filter as job_filter', 'keywords.title as job_title', 'nurses.*', 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'user_id as worker_user_id', 'offers.nurse_id as worker_id', 'users.first_name', 'users.last_name', 'users.image', 'facilities.name as employer_name', 'offers.status as offer_status', 'offers.start_date as status_date', 'offers.expiration as status_enddate')
-                    ->join('offers','offers.nurse_id', '=', 'nurses.id')
-                    ->leftJoin('users','users.id', '=', 'nurses.user_id')
+                    $respond = Worker::select('keywords.filter as job_filter', 'keywords.title as job_title', 'workers.*', 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'user_id as worker_user_id', 'offers.worker_id as worker_id', 'users.first_name', 'users.last_name', 'users.image', 'facilities.name as employer_name', 'offers.status as offer_status', 'offers.start_date as status_date', 'offers.expiration as status_enddate')
+                    ->join('offers','offers.worker_id', '=', 'workers.id')
+                    ->leftJoin('users','users.id', '=', 'workers.user_id')
                     ->join('jobs', 'offers.job_id', '=', 'jobs.id')
                     ->leftJoin('keywords','jobs.job_type', '=', 'keywords.id')
                     ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
@@ -1591,20 +1591,20 @@ class RecruiterController extends Controller
                         // $job->total_experience = isset($job->experience_as_acute_care_facility)?$job->experience_as_acute_care_facility:0+isset($job->experience_as_ambulatory_care_facility)?$job->experience_as_ambulatory_care_facility:0;
                         $job->total_experience = isset($job->experience)?$job->experience:0;
                         $job->total_experience = (int)$job->total_experience;
-                        $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/nurses/resumes/' . $worker->id . '/' . $job->resume) : "";
+                        $job->resume_definition = (isset($job->resume) && $job->resume != "") ? url('storage/assets/workers/resumes/' . $worker->id . '/' . $job->resume) : "";
                         $job->highest_nursing_degree_definition = (isset($worker->highest_nursing_degree) && $worker->highest_nursing_degree != "") ? \App\Providers\AppServiceProvider::keywordTitle($worker->highest_nursing_degree) : "";
-                        $job->image = (isset($job->image) && $job->image != "") ? url("public/images/nurses/profile/" . $job->image) : "";
+                        $job->image = (isset($job->image) && $job->image != "") ? url("public/images/workers/profile/" . $job->image) : "";
 
-                        $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+                        $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                         if ($job->image) {
-                            $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $job->image);
+                            $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $job->image);
                             if ($t) {
-                                $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $job->image);
+                                $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $job->image);
                             }
                         }
                         // Certificate
                         $certitficate = [];
-                        $cert = Certification::where(['nurse_id' => $worker->id])->whereNull('deleted_at')->get();
+                        $cert = Certification::where(['worker_id' => $worker->id])->whereNull('deleted_at')->get();
                         if ($cert->count() > 0) {
                             $c = $cert;
                             foreach ($c as $key => $v) {
@@ -1617,13 +1617,13 @@ class RecruiterController extends Controller
                                 $crt_data['expiration_date'] = (isset($v->expiration_date) && $v->expiration_date != "") ? date('m/d/Y', strtotime($v->expiration_date)) : "";
                                 $crt_data['renewal_date'] = (isset($v->renewal_date) && $v->renewal_date != "") ? date('m/d/Y', strtotime($v->renewal_date)) : "";
 
-                                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/nurses/certifications/' . $nurse->id . '/' . $v->certificate_image) : "";
+                                $crt_data['certificate_image'] = (isset($v->certificate_image) && $v->certificate_image != "") ? url('storage/assets/workers/certifications/' . $worker->id . '/' . $v->certificate_image) : "";
 
                                 $certificate_image_base = "";
                                 if ($v->certificate_image) {
-                                    $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/certifications/' . $v->certificate_image);
+                                    $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/certifications/' . $v->certificate_image);
                                     if ($t) {
-                                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/nurses/certifications/' . $v->certificate_image);
+                                        $facility_logo = \Illuminate\Support\Facades\Storage::get('assets/workers/certifications/' . $v->certificate_image);
                                     }
                                 }
                                 $crt_data['created_at'] = (isset($v->created_at) && $v->created_at != "") ? $v->created_at : "";
@@ -1684,7 +1684,7 @@ class RecruiterController extends Controller
                 $current_date = now()->format('Y-m-d');
                 $records = Offer::where('id', $request->offer_id)->first();
                 $fields = new Notification();
-                $fields->created_by = $records['nurse_id'];
+                $fields->created_by = $records['worker_id'];
                 $fields->job_id = $records['job_id'];
                 $fields->updated_at = NULL;
                 $fields->deleted_at = NULL;
@@ -1696,7 +1696,7 @@ class RecruiterController extends Controller
                         $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status, 'expiration' => $request->offer_date));
                         $fields->title = 'Submitted to Offered';
                         $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved from Submitted to Offered by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
                         if($status != 0){
                             if(empty($check)){
                                 $notification = $fields->save();
@@ -1734,7 +1734,7 @@ class RecruiterController extends Controller
                             $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status, 'start_date' => $request->on_board_date));
                             $fields->title = 'Offered to Onboarding';
                             $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved from Offered to Onboarding by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                            $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                            $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
                             if($status != 0){
                                 if(empty($check)){
                                     $notification = $fields->save();
@@ -1774,7 +1774,7 @@ class RecruiterController extends Controller
                         $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status, 'start_date' => $request->working_date));
                         $fields->title = 'Working to Done';
                         $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved from Working to Done by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
 
                         if($status != 0){
                             if(empty($check)){
@@ -1802,7 +1802,7 @@ class RecruiterController extends Controller
                         $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status, 'start_date' => $request->start_date, 'expiration' => $request->end_date));
                         $fields->title = 'Done';
                         $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was Done by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
                         if($status != 0){
                             if(empty($check)){
                                 $notification = $fields->save();
@@ -1828,7 +1828,7 @@ class RecruiterController extends Controller
                         $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status, 'start_date' => $request->submitted_date));
                         $fields->title = 'Screening to Submitted';
                         $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved from Screening to Submitted by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
                         if($status != 0){
                             if(empty($check)){
                                 $notification = $fields->save();
@@ -1852,7 +1852,7 @@ class RecruiterController extends Controller
                     if(isset($records)){
                         $offer = Offer::where('id', $request->offer_id)->first();
                         $whereCond = [
-                            'nurse_id' => $offer['nurse_id'],
+                            'worker_id' => $offer['worker_id'],
                             'job_id' => $offer['job_id']
                         ];
                         $checkoffer = DB::table('job_saved')->where($whereCond)->first();
@@ -1861,7 +1861,7 @@ class RecruiterController extends Controller
                             DB::table('job_saved')->where('id', $checkoffer->id)->update(['is_delete' => '1']);
                         }else{
                             $insert = array(
-                                "nurse_id" => $offer['nurse_id'],
+                                "worker_id" => $offer['worker_id'],
                                 'job_id' => $offer['job_id'],
                                 'is_save' => '0',
                                 'is_delete' => '1',
@@ -1873,7 +1873,7 @@ class RecruiterController extends Controller
                         $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status, 'start_date' => $request->rejected_date));
                         $fields->title = 'Rejected';
                         $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved to Rejected by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
                         if($status != 0){
                             if(empty($check)){
                                 $notification = $fields->save();
@@ -1899,7 +1899,7 @@ class RecruiterController extends Controller
                         if(isset($request->recruiter_id)){
                             $offer = Offer::where('id', $request->offer_id)->first();
                             $whereCond = [
-                                'worker_id' => $offer['nurse_id'],
+                                'worker_id' => $offer['worker_id'],
                                 'recruiter_id' => $request->recruiter_id
                             ];
                             $checkoffer = DB::table('blocked_users')->where($whereCond)->first();
@@ -1908,7 +1908,7 @@ class RecruiterController extends Controller
                                 DB::table('blocked_users')->where('id', $checkoffer->id)->update(['status' => '1']);
                             }else{
                                 $insert = array(
-                                    "worker_id" => $offer['nurse_id'],
+                                    "worker_id" => $offer['worker_id'],
                                     'recruiter_id' => $request->recruiter_id,
                                     'status' => '1'
                                 );
@@ -1920,7 +1920,7 @@ class RecruiterController extends Controller
                             // $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status, 'start_date' => $request->blocked_date));
                             $fields->title = 'Blocked';
                             $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved to Blocked by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                            $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                            $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
                             if($status != 0){
                                 if(empty($check)){
                                     $notification = $fields->save();
@@ -1949,7 +1949,7 @@ class RecruiterController extends Controller
                         $status = DB::table('offers')->where('id', $request->offer_id)->update(array('status' => $request->status));
                         $fields->title = 'New to Screening';
                         $fields->text = 'Your Application for job '. $records['job_id'] .' at Medical Solutions Recruiter was moved from New to Screening by '. $user->first_name.' '.$user->last_name .' from Employer name';
-                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['nurse_id']])->first();
+                        $check = Notification::where(['job_id' => $records['job_id'], 'created_by' => $records['worker_id']])->first();
                         if($status != 0){
                             if(empty($check)){
                                 $notification = $fields->save();
@@ -2001,7 +2001,7 @@ class RecruiterController extends Controller
                     'jobs.is_closed' => "0"
                 ];
 
-                $respond = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'offers.nurse_id as worker_id', 'users.first_name', 'users.last_name', 'users.image', 'facilities.name as facility_name', 'jobs.*', 'jobs.created_at as posted_on')
+                $respond = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'offers.worker_id as worker_id', 'users.first_name', 'users.last_name', 'users.image', 'facilities.name as facility_name', 'jobs.*', 'jobs.created_at as posted_on')
                                 ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
                                 ->join('users','users.id', '=', 'jobs.recruiter_id')
                                 ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
@@ -2024,13 +2024,13 @@ class RecruiterController extends Controller
                     }else{
                         $job->posted_on = '';
                     }
-                    $job->image = (isset($job->image) && $job->image != "") ? url("public/images/nurses/profile/" . $job->image) : "";
+                    $job->image = (isset($job->image) && $job->image != "") ? url("public/images/workers/profile/" . $job->image) : "";
 
-                    $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+                    $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                     if ($job->image) {
-                        $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $job->image);
+                        $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $job->image);
                         if ($t) {
-                            $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $job->image);
+                            $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $job->image);
                         }
                     }
 
@@ -2065,7 +2065,7 @@ class RecruiterController extends Controller
         } else {
             $check_job = Job::where('id', $request->job_id)->first();
             if(isset($check_job) && $check_job['is_hidden'] != 1){
-                $worker_info  = Nurse::where('id', $request->worker_id);
+                $worker_info  = Worker::where('id', $request->worker_id);
                 if ($worker_info->count() > 0) {
                     $worker = $worker_info->get()->first();
                     $user_info = USER::where('id', $worker->user_id);
@@ -2077,13 +2077,13 @@ class RecruiterController extends Controller
                         $whereCond = [
                                 'facilities.active' => true,
                                 'users.id' => $worker->user_id,
-                                'nurses.id' => $worker->id,
+                                'workers.id' => $worker->id,
                                 'jobs.id' => $request->job_id,
                             ];
 
-                        $respond = Nurse::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'nurses.*', 'jobs.*', 'offers.job_id as job_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'nurses.block_scheduling as worker_block_scheduling', 'nurses.float_requirement as worker_float_requirement', 'nurses.facility_shift_cancelation_policy as worker_facility_shift_cancelation_policy', 'nurses.contract_termination_policy as worker_contract_termination_policy', 'offers.id as offer_id', 'offers.start_date as posted_on', 'offers.status as job_status', 'jobs.created_at as created_at')
-                                        ->join('users','users.id', '=', 'nurses.user_id')
-                                        ->leftJoin('offers','offers.nurse_id', '=', 'nurses.id')
+                        $respond = Worker::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'workers.*', 'jobs.*', 'offers.job_id as job_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'workers.block_scheduling as worker_block_scheduling', 'workers.float_requirement as worker_float_requirement', 'workers.facility_shift_cancelation_policy as worker_facility_shift_cancelation_policy', 'workers.contract_termination_policy as worker_contract_termination_policy', 'offers.id as offer_id', 'offers.start_date as posted_on', 'offers.status as job_status', 'jobs.created_at as created_at')
+                                        ->join('users','users.id', '=', 'workers.user_id')
+                                        ->leftJoin('offers','offers.worker_id', '=', 'workers.id')
                                         ->leftJoin('jobs', 'offers.job_id', '=', 'jobs.id')
                                         ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                                         ->where($whereCond);
@@ -2123,9 +2123,9 @@ class RecruiterController extends Controller
                             $recruiter_name = '';
                             $recruiter_id = '';
                         }
-                        $worker_reference = NURSE::select('nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
-                        ->leftJoin('nurse_references','nurse_references.nurse_id', '=', 'nurses.id')
-                        ->where('nurses.id', $worker->id)->get();
+                        $worker_reference = WORKER::select('worker_references.name','worker_references.min_title_of_reference','worker_references.recency_of_reference')
+                        ->leftJoin('worker_references','worker_references.worker_id', '=', 'workers.id')
+                        ->where('workers.id', $worker->id)->get();
 
                         $job = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*')->where('id', $request->job_id)->first();
                         $worker_reference_name = '';
@@ -2202,13 +2202,13 @@ class RecruiterController extends Controller
                         foreach($skills_checklists as $rec)
                         {
                             if(isset($rec) && !empty($rec)){
-                                $skills_checklists[$i] = url('public/images/nurses/skill/'.$rec);
+                                $skills_checklists[$i] = url('public/images/workers/skill/'.$rec);
                                 $i++;
                             }
 
                         }
-                        $vacc_image = NurseAsset::where(['filter' => 'vaccination', 'nurse_id' => $worker->id])->get();
-                        $cert_image = NurseAsset::where(['filter' => 'certificate', 'nurse_id' => $worker->id])->get();
+                        $vacc_image = WorkerAsset::where(['filter' => 'vaccination', 'worker_id' => $worker->id])->get();
+                        $cert_image = WorkerAsset::where(['filter' => 'certificate', 'worker_id' => $worker->id])->get();
                         $certificate = explode(',',$job['certificate']);
 
                         $result = [];
@@ -2266,7 +2266,7 @@ class RecruiterController extends Controller
                         // $data =  [];
                         $data['job'] = 'College Diploma Required';
                         $data['match'] = !empty($job_data['diploma'])?true:false;
-                        $data['worker'] = !empty($job_data['diploma'])?url('public/images/nurses/diploma/'.$job_data['diploma']):"";
+                        $data['worker'] = !empty($job_data['diploma'])?url('public/images/workers/diploma/'.$job_data['diploma']):"";
                         $data['name'] = 'Diploma';
                         $data['match_title'] = 'Diploma';
                         $data['update_key'] = 'diploma';
@@ -2275,13 +2275,13 @@ class RecruiterController extends Controller
                         $data['job_title'] = 'College Diploma Required';
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
-                        $data['worker_image'] = !empty($job_data['diploma'])?url('public/images/nurses/diploma/'.$job_data['diploma']):"";
+                        $data['worker_image'] = !empty($job_data['diploma'])?url('public/images/workers/diploma/'.$job_data['diploma']):"";
                         $worker_info[] = $data;
                         $data['worker_image'] = '';
 
                         $data['job'] = 'Drivers License';
                         $data['match'] = !empty($job_data['driving_license'])?true:false;
-                        $data['worker'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
+                        $data['worker'] = !empty($job_data['driving_license'])?url('public/images/workers/driving_license/'.$job_data['driving_license']):"";
                         $data['name'] = 'driving_license';
                         $data['match_title'] = 'Driving License';
                         $data['update_key'] = 'driving_license';
@@ -2290,7 +2290,7 @@ class RecruiterController extends Controller
                         $data['job_title'] = 'Picture of Front and Back DL';
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
-                        $data['worker_image'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
+                        $data['worker_image'] = !empty($job_data['driving_license'])?url('public/images/workers/driving_license/'.$job_data['driving_license']):"";
                         $worker_info[] = $data;
                         $data['worker_image'] = '';
 
@@ -2380,7 +2380,7 @@ class RecruiterController extends Controller
                             $data['job'] = isset($vaccinations[$i])?$vaccinations[$i]:"Vaccinations & Immunizations";
                             $data['match'] = !empty($worker_vaccination[$i])?true:false;
                             $data['worker'] = isset($worker_vaccination[$i])?$worker_vaccination[$i]:"";
-                            $data['worker_image'] = isset($vacc_image[$i]['name'])?url('public/images/nurses/vaccination/'.$vacc_image[$i]['name']):"";
+                            $data['worker_image'] = isset($vacc_image[$i]['name'])?url('public/images/workers/vaccination/'.$vacc_image[$i]['name']):"";
                             $data['name'] = $data['worker'].' vaccination';
                             $data['match_title'] = 'Vaccinations & Immunizations';
                             $data['update_key'] = 'worker_vaccination';
@@ -2441,7 +2441,7 @@ class RecruiterController extends Controller
                             $data['match'] = !empty($worker_certificate_name[$i])?true:false;
                             $data['worker'] = isset($worker_certificate_name[$i])?$worker_certificate_name[$i]:"";
                             if(isset($worker_certificate_name[$i])){
-                                $data['worker_image'] = isset($cert_image[$i]['name'])?url('public/images/nurses/certificate/'.$cert_image[$i]['name']):"";
+                                $data['worker_image'] = isset($cert_image[$i]['name'])?url('public/images/workers/certificate/'.$cert_image[$i]['name']):"";
                             }
                             $data['name'] = $data['worker'];
                             $data['match_title'] = 'Certifications';
@@ -3338,7 +3338,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $worker_info  = Nurse::where('id', $request->worker_id);
+            $worker_info  = Worker::where('id', $request->worker_id);
             $vaccination = [];
             if ($worker_info->count() > 0) {
                 $worker = $worker_info->get()->first();
@@ -3374,12 +3374,12 @@ class RecruiterController extends Controller
                     // upload covid
                     if ($request->hasFile('covid') && $request->file('covid') != null)
                     {
-                        $dele = NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'covid')->forceDelete();
+                        $dele = WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'covid')->forceDelete();
 
                         if(!empty($vaccination[0])){
-                            if(\File::exists(public_path('images/nurses/vaccination/').$vaccination[0]))
+                            if(\File::exists(public_path('images/workers/vaccination/').$vaccination[0]))
                             {
-                                \File::delete(public_path('images/nurses/vaccination/').$vaccination[0]);
+                                \File::delete(public_path('images/workers/vaccination/').$vaccination[0]);
                             }
                         }
 
@@ -3387,26 +3387,26 @@ class RecruiterController extends Controller
                         $covid_name = pathinfo($covid_name_full, PATHINFO_FILENAME);
                         $covid_ext = $request->file('covid')->getClientOriginalExtension();
                         $covid = $covid_name.'_'.time().'.'.$covid_ext;
-                        $destinationPath = 'images/nurses/vaccination';
+                        $destinationPath = 'images/workers/vaccination';
                         $request->file('covid')->move(public_path($destinationPath), $covid);
 
                         // write image name in worker table
                         // $worker->covid = $covid;
                         $covid_date = isset($request->covid_date)?$request->covid_date:'';
-                        $covid_asset = NurseAsset::create([
-                            'nurse_id' => $request->worker_id,
+                        $covid_asset = WorkerAsset::create([
+                            'worker_id' => $request->worker_id,
                             'using_date' => $covid_date,
                             'name' => $covid,
                             'filter' => 'covid'
                         ]);
                         $vaccination[0] = $covid;
                         if(isset($covid_asset)){
-                            $update = NurseAsset::where(['id' => $covid_asset['id']])->update([
+                            $update = WorkerAsset::where(['id' => $covid_asset['id']])->update([
                                 'using_date' => $covid_date
                             ]);
                         }
                     }else if(isset($request->covid_date) && !isset($request->covid)){
-                        NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'covid')->update([
+                        WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'covid')->update([
                             'using_date' => $request->covid_date,
                         ]);
                     }
@@ -3414,12 +3414,12 @@ class RecruiterController extends Controller
                     // Upload flu
                     if ($request->hasFile('flu') && $request->file('flu') != null)
                     {
-                        NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'flu')->forceDelete();
+                        WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'flu')->forceDelete();
                         if(!empty($vaccination[1])){
-                            // unlink(public_path('images/nurses/vaccination/').$vaccination[1]);
-                            if(\File::exists(public_path('images/nurses/vaccination/').$vaccination[1]))
+                            // unlink(public_path('images/workers/vaccination/').$vaccination[1]);
+                            if(\File::exists(public_path('images/workers/vaccination/').$vaccination[1]))
                             {
-                                \File::delete(public_path('images/nurses/vaccination/').$vaccination[1]);
+                                \File::delete(public_path('images/workers/vaccination/').$vaccination[1]);
                             }
                         }
 
@@ -3427,26 +3427,26 @@ class RecruiterController extends Controller
                         $flu_name = pathinfo($flu_name_full, PATHINFO_FILENAME);
                         $flu_ext = $request->file('flu')->getClientOriginalExtension();
                         $flu = $flu_name.'_'.time().'.'.$flu_ext;
-                        $destinationPath = 'images/nurses/vaccination';
+                        $destinationPath = 'images/workers/vaccination';
                         $request->file('flu')->move(public_path($destinationPath), $flu);
 
                         // write image name in worker table
                         // $worker->flu = $flu;
                         $flu_date = isset($request->flu_date)?$request->flu_date:'';
-                        $flu_asset = NurseAsset::create([
-                            'nurse_id' => $request->worker_id,
+                        $flu_asset = WorkerAsset::create([
+                            'worker_id' => $request->worker_id,
                             'name' => $flu,
                             'filter' => 'flu',
                             'using_date' => $flu_date,
                         ]);
                         $vaccination[1] = $flu;
                         if(isset($flu_asset)){
-                            $update = NurseAsset::where(['id' => $flu_asset['id']])->update([
+                            $update = WorkerAsset::where(['id' => $flu_asset['id']])->update([
                                 'using_date' => $flu_date
                             ]);
                         }
                     }else if(isset($request->flu_date)){
-                        NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'flu')->update([
+                        WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'flu')->update([
                             'using_date' => $request->flu_date,
                         ]);
                     }
@@ -3456,11 +3456,11 @@ class RecruiterController extends Controller
                 // Diploma
                 if ($request->hasFile('diploma') && $request->file('diploma') != null)
                 {
-                    NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'diploma')->forceDelete();
+                    WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'diploma')->forceDelete();
                     if(!empty($worker->diploma)){
-                        if(\File::exists(public_path('images/nurses/diploma/').$worker->diploma))
+                        if(\File::exists(public_path('images/workers/diploma/').$worker->diploma))
                         {
-                            \File::delete(public_path('images/nurses/diploma/').$worker->diploma);
+                            \File::delete(public_path('images/workers/diploma/').$worker->diploma);
                         }
                     }
 
@@ -3468,13 +3468,13 @@ class RecruiterController extends Controller
                     $diploma_name = pathinfo($diploma_name_full, PATHINFO_FILENAME);
                     $diploma_ext = $request->file('diploma')->getClientOriginalExtension();
                     $diploma = $diploma_name.'_'.time().'.'.$diploma_ext;
-                    $destinationPath = 'images/nurses/diploma';
+                    $destinationPath = 'images/workers/diploma';
                     $request->file('diploma')->move(public_path($destinationPath), $diploma);
 
                     // write image name in worker table
                     $worker->diploma = $diploma;
-                    $diploma_asset = NurseAsset::create([
-                        'nurse_id' => $request->worker_id,
+                    $diploma_asset = WorkerAsset::create([
+                        'worker_id' => $request->worker_id,
                         'name' => $diploma,
                         'filter' => 'diploma'
                     ]);
@@ -3483,11 +3483,11 @@ class RecruiterController extends Controller
                 // Driving License
                 if ($request->hasFile('driving_license') && $request->file('driving_license') != null)
                 {
-                    NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'driving_license')->forceDelete();
+                    WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'driving_license')->forceDelete();
                     if(!empty($worker->driving_license)){
-                        if(\File::exists(public_path('images/nurses/driving_license/').$worker->driving_license))
+                        if(\File::exists(public_path('images/workers/driving_license/').$worker->driving_license))
                         {
-                            \File::delete(public_path('images/nurses/driving_license/').$worker->driving_license);
+                            \File::delete(public_path('images/workers/driving_license/').$worker->driving_license);
                         }
                     }
 
@@ -3495,21 +3495,21 @@ class RecruiterController extends Controller
                     $driving_license_name = pathinfo($driving_license_name_full, PATHINFO_FILENAME);
                     $driving_license_ext = $request->file('driving_license')->getClientOriginalExtension();
                     $driving_license = $driving_license_name.'_'.time().'.'.$driving_license_ext;
-                    $destinationPath = 'images/nurses/driving_license';
+                    $destinationPath = 'images/workers/driving_license';
                     $request->file('driving_license')->move(public_path($destinationPath), $driving_license);
 
                     // write image name in worker table
                     $worker->driving_license = $driving_license;
                     $license_expiration_date = isset($request->license_expiration_date)?$request->license_expiration_date:'';
-                    $driving_license_asset = NurseAsset::create([
-                                                'nurse_id' => $request->worker_id,
+                    $driving_license_asset = WorkerAsset::create([
+                                                'worker_id' => $request->worker_id,
                                                 'using_date' => $license_expiration_date,
                                                 'name' => $driving_license,
                                                 'filter' => 'driving_license',
                                             ]);
 
                     if(isset($driving_license_asset)){
-                        $update = NurseAsset::where(['id' => $driving_license_asset['id']])->update([
+                        $update = WorkerAsset::where(['id' => $driving_license_asset['id']])->update([
                             'using_date' => $license_expiration_date
                         ]);
                     }
@@ -3524,25 +3524,25 @@ class RecruiterController extends Controller
                 // BLS
                 if ($request->hasFile('BLS') && $request->file('BLS') != null)
                 {
-                    NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'BLS')->forceDelete();
+                    WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'BLS')->forceDelete();
 
                     $bls_name_full = $request->file('BLS')->getClientOriginalName();
                     $bls_name = pathinfo($bls_name_full, PATHINFO_FILENAME);
                     $bls_ext = $request->file('BLS')->getClientOriginalExtension();
                     if(!empty($worker->BLS)){
-                        if(\File::exists(public_path('images/nurses/certificate/').$worker->BLS))
+                        if(\File::exists(public_path('images/workers/certificate/').$worker->BLS))
                         {
-                            \File::delete(public_path('images/nurses/certificate/').$worker->BLS);
+                            \File::delete(public_path('images/workers/certificate/').$worker->BLS);
                         }
                     }
                     $bls = $bls_name.'_'.time().'.'.$bls_ext;
-                    $destinationPath = 'images/nurses/certificate';
+                    $destinationPath = 'images/workers/certificate';
                     $request->file('BLS')->move(public_path($destinationPath), $bls);
 
                     // write image name in worker table
                     $worker->BLS = $bls;
-                    $diploma_asset = NurseAsset::create([
-                        'nurse_id' => $request->worker_id,
+                    $diploma_asset = WorkerAsset::create([
+                        'worker_id' => $request->worker_id,
                         'name' => $bls,
                         'filter' => 'BLS'
                     ]);
@@ -3551,26 +3551,26 @@ class RecruiterController extends Controller
                 // ACLS
                 if ($request->hasFile('ACLS') && $request->file('ACLS') != null)
                 {
-                    NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'ACLS')->forceDelete();
-                    // unlink(public_path('images/nurses/certificate/').$worker->ACLS);
+                    WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'ACLS')->forceDelete();
+                    // unlink(public_path('images/workers/certificate/').$worker->ACLS);
 
                     $acls_name_full = $request->file('ACLS')->getClientOriginalName();
                     $acls_name = pathinfo($acls_name_full, PATHINFO_FILENAME);
                     $acls_ext = $request->file('ACLS')->getClientOriginalExtension();
                     if(!empty($worker->ACLS)){
-                        if(\File::exists(public_path('images/nurses/certificate/').$worker->ACLS))
+                        if(\File::exists(public_path('images/workers/certificate/').$worker->ACLS))
                         {
-                            \File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
+                            \File::delete(public_path('images/workers/certificate/').$worker->ACLS);
                         }
                     }
                     $acls = $acls_name.'_'.time().'.'.$acls_ext;
-                    $destinationPath = 'images/nurses/certificate';
+                    $destinationPath = 'images/workers/certificate';
                     $request->file('ACLS')->move(public_path($destinationPath), $acls);
 
                     // write image name in worker table
                     $worker->ACLS = $acls;
-                    $diploma_asset = NurseAsset::create([
-                        'nurse_id' => $request->worker_id,
+                    $diploma_asset = WorkerAsset::create([
+                        'worker_id' => $request->worker_id,
                         'name' => $acls,
                         'filter' => 'ACLS'
                     ]);
@@ -3579,27 +3579,27 @@ class RecruiterController extends Controller
                 // PALS
                 if ($request->hasFile('PALS') && $request->file('PALS') != null)
                 {
-                    NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'PALS')->forceDelete();
-                    // unlink(public_path('images/nurses/certificate/').$worker->PALS);
+                    WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'PALS')->forceDelete();
+                    // unlink(public_path('images/workers/certificate/').$worker->PALS);
 
                     $pals_name_full = $request->file('PALS')->getClientOriginalName();
                     $pals_name = pathinfo($pals_name_full, PATHINFO_FILENAME);
                     $pals_ext = $request->file('PALS')->getClientOriginalExtension();
                     if(!empty($worker->PALS)){
-                        // unlink(public_path('images/nurses/certificate/').$worker->PALS);
-                        if(\File::exists(public_path('images/nurses/certificate/').$worker->PALS))
+                        // unlink(public_path('images/workers/certificate/').$worker->PALS);
+                        if(\File::exists(public_path('images/workers/certificate/').$worker->PALS))
                         {
-                            \File::delete(public_path('images/nurses/certificate/').$worker->PALS);
+                            \File::delete(public_path('images/workers/certificate/').$worker->PALS);
                         }
                     }
                     $pals = $pals_name.'_'.time().'.'.$pals_ext;
-                    $destinationPath = 'images/nurses/certificate';
+                    $destinationPath = 'images/workers/certificate';
                     $request->file('PALS')->move(public_path($destinationPath), $pals);
 
                     // write image name in worker table
                     $worker->PALS = $pals;
-                    $diploma_asset = NurseAsset::create([
-                        'nurse_id' => $request->worker_id,
+                    $diploma_asset = WorkerAsset::create([
+                        'worker_id' => $request->worker_id,
                         'name' => $pals,
                         'filter' => 'PALS'
                     ]);
@@ -3608,28 +3608,28 @@ class RecruiterController extends Controller
                 // OTHER
                 if ($request->hasFile('other') && $request->file('other') != null)
                 {
-                    NurseAsset::where('nurse_id', $request->worker_id)->where('filter', 'other')->forceDelete();
-                    // unlink(public_path('images/nurses/certificate/').$worker->other);
+                    WorkerAsset::where('worker_id', $request->worker_id)->where('filter', 'other')->forceDelete();
+                    // unlink(public_path('images/workers/certificate/').$worker->other);
 
                     $other_name_full = $request->file('other')->getClientOriginalName();
                     $other_name = pathinfo($other_name_full, PATHINFO_FILENAME);
                     $other_ext = $request->file('other')->getClientOriginalExtension();
                     if(($other_ext != 'pdf')  && (isset($worker->other))){
-                        // unlink(public_path('images/nurses/certificate/').$worker->other);
-                        if(\File::exists(public_path('images/nurses/certificate/').$worker->other))
+                        // unlink(public_path('images/workers/certificate/').$worker->other);
+                        if(\File::exists(public_path('images/workers/certificate/').$worker->other))
                         {
-                            \File::delete(public_path('images/nurses/certificate/').$worker->other);
+                            \File::delete(public_path('images/workers/certificate/').$worker->other);
                         }
                     }
                     $other = $other_name.'_'.time().'.'.$other_ext;
-                    $destinationPath = 'images/nurses/certificate';
+                    $destinationPath = 'images/workers/certificate';
                     $request->file('other')->move(public_path($destinationPath), $other);
 
                     // write image name in worker table
                     $worker->other = $other;
                     $worker->other_certificate_name = isset($request->other_certificate_name)?$request->other_certificate_name:$worker->other_certificate_name;
-                    $diploma_asset = NurseAsset::create([
-                        'nurse_id' => $request->worker_id,
+                    $diploma_asset = WorkerAsset::create([
+                        'worker_id' => $request->worker_id,
                         'name' => $other,
                         'filter' => 'Other'
                     ]);
@@ -3799,12 +3799,12 @@ class RecruiterController extends Controller
         } else {
             $check_job = Job::where('id', $request->job_id)->first();
             if(isset($check_job) && $check_job['is_hidden'] != 1){
-                $worker_info  = Nurse::where('id', $request->worker_id);
+                $worker_info  = Worker::where('id', $request->worker_id);
 
                 if ($worker_info->count() > 0) {
                     $worker = $worker_info->get()->first();
                     $user_info = USER::where('id', $worker->user_id);
-                    $offer_check = Offer::where(['nurse_id' => $request->worker_id, 'job_id' => $request->job_id])->first();
+                    $offer_check = Offer::where(['worker_id' => $request->worker_id, 'job_id' => $request->job_id])->first();
                     if(isset($offer_check)){
                         if($user_info->count() > 0){
                             $user = $user_info->get()->first();
@@ -3814,13 +3814,13 @@ class RecruiterController extends Controller
                             $whereCond = [
                                     'facilities.active' => true,
                                     'users.id' => $worker->user_id,
-                                    'nurses.id' => $worker->id,
+                                    'workers.id' => $worker->id,
                                     'jobs.id' => $request->job_id
                                 ];
 
-                            $respond = Nurse::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.nurse_id=nurses.id) as workers_applied"), 'nurses.*', 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'nurses.block_scheduling as worker_block_scheduling', 'nurses.float_requirement as worker_float_requirement', 'nurses.facility_shift_cancelation_policy as worker_facility_shift_cancelation_policy', 'nurses.contract_termination_policy as worker_contract_termination_policy', 'offers.start_date as posted_on', 'jobs.created_at as created_at', 'jobs.recruiter_id as recruiter_id')
-                                            ->join('users','users.id', '=', 'nurses.user_id')
-                                            ->leftJoin('offers','offers.nurse_id', '=', 'nurses.id')
+                            $respond = Worker::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.worker_id=workers.id) as workers_applied"), 'workers.*', 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'workers.block_scheduling as worker_block_scheduling', 'workers.float_requirement as worker_float_requirement', 'workers.facility_shift_cancelation_policy as worker_facility_shift_cancelation_policy', 'workers.contract_termination_policy as worker_contract_termination_policy', 'offers.start_date as posted_on', 'jobs.created_at as created_at', 'jobs.recruiter_id as recruiter_id')
+                                            ->join('users','users.id', '=', 'workers.user_id')
+                                            ->leftJoin('offers','offers.worker_id', '=', 'workers.id')
                                             ->leftJoin('jobs', 'offers.job_id', '=', 'jobs.id')
                                             ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                                             ->where($whereCond);
@@ -3839,7 +3839,7 @@ class RecruiterController extends Controller
                                     'jobs.id' => $request->job_id,
                                 ];
                                 // $job_data = $worker;
-                                $worker_jobs = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.nurse_id=nurses.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'offers.start_date as posted_on', 'jobs.created_at as created_at', 'jobs.recruiter_id as recruiter_id')
+                                $worker_jobs = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.worker_id=workers.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'offers.start_date as posted_on', 'jobs.created_at as created_at', 'jobs.recruiter_id as recruiter_id')
                                 // ->leftJoin('jobs', 'offers.job_id', '=', 'jobs.id')
                                 ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
                                 ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
@@ -3862,9 +3862,9 @@ class RecruiterController extends Controller
                                 $recruiter_name = '';
                                 $recruiter_id = '';
                             }
-                            $worker_reference = NURSE::select('nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
-                            ->leftJoin('nurse_references','nurse_references.nurse_id', '=', 'nurses.id')
-                            ->where('nurses.id', $worker->id)->get();
+                            $worker_reference = WORKER::select('worker_references.name','worker_references.min_title_of_reference','worker_references.recency_of_reference')
+                            ->leftJoin('worker_references','worker_references.worker_id', '=', 'workers.id')
+                            ->where('workers.id', $worker->id)->get();
 
                             $job = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*')->where('id', $request->job_id)->first();
                             $job_data['posted_on'] = $job_data['created_at'];
@@ -3933,13 +3933,13 @@ class RecruiterController extends Controller
                             foreach($skills_checklists as $rec)
                             {
                                 if(isset($rec) && !empty($rec)){
-                                    $skills_checklists[$i] = url('public/images/nurses/skill/'.$rec);
+                                    $skills_checklists[$i] = url('public/images/workers/skill/'.$rec);
                                     $i++;
                                 }
 
                             }
-                            $vacc_image = NurseAsset::where(['filter' => 'vaccination', 'nurse_id' => $worker->id])->get();
-                            $cert_image = NurseAsset::where(['filter' => 'certificate', 'nurse_id' => $worker->id])->get();
+                            $vacc_image = WorkerAsset::where(['filter' => 'vaccination', 'worker_id' => $worker->id])->get();
+                            $cert_image = WorkerAsset::where(['filter' => 'certificate', 'worker_id' => $worker->id])->get();
                             $result = [];
 
                             $result['jobs_applied'] = isset($job_data['workers_applied'])?$job_data['workers_applied']:"";
@@ -4157,7 +4157,7 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse_info = NURSE::where('id', $request->worker_id)->first();
+            $worker_info = WORKER::where('id', $request->worker_id)->first();
 
             $user_info = USER::where('id', $request->recruiter_id);
             if ($user_info->count() > 0) {
@@ -4166,18 +4166,18 @@ class RecruiterController extends Controller
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.recruiter_id' => $user->id,
-                    'offers.nurse_id' => $request->worker_id
+                    'offers.worker_id' => $request->worker_id
                 ];
 
-                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*', 'jobs.created_at as posted_on', 'offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'facilities.name as facility_name')
+                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*', 'jobs.created_at as posted_on', 'offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
                     ->where($whereCond)
-                ->orderBy('offers.nurse_id', 'desc');
+                ->orderBy('offers.worker_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -4201,7 +4201,7 @@ class RecruiterController extends Controller
                     $result['job_location'] = $result['job_city'].' '.$result['job_state'];
                     $result['preferred_shift'] = isset($rec['preferred_shift'])?$rec['preferred_shift']:"";
                     $result['preferred_assignment_duration'] = isset($rec['preferred_assignment_duration'])?$rec['preferred_assignment_duration']:"";
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
                     $result['employer_weekly_amount'] = isset($rec['employer_weekly_amount'])?$rec['employer_weekly_amount']:"";
@@ -4243,8 +4243,8 @@ class RecruiterController extends Controller
             $respond = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'offers.id as offer_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'jobs.created_at as posted_on')
                         ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
                         ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
-                        ->leftJoin('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                        ->leftJoin('users','nurses.user_id', '=', 'users.id')
+                        ->leftJoin('workers', 'offers.worker_id', '=', 'workers.id')
+                        ->leftJoin('users','workers.user_id', '=', 'users.id')
                         ->where($whereCond);
             $job_data = $respond->groupBy('jobs.id')->first();
             $recruiter_info = User::where('id', $request->recruiter_id)->first();
@@ -4531,15 +4531,15 @@ class RecruiterController extends Controller
                     'jobs.id' => $request->job_id
                 ];
 
-                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*', 'jobs.created_at as posted_on', 'offers.id as offer_id', 'offers.created_at as offer_created_at', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'facilities.name as facility_name')
+                $ret = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.id as job_id', 'jobs.*', 'jobs.created_at as posted_on', 'offers.id as offer_id', 'offers.created_at as offer_created_at', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'facilities.name as facility_name')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
-                    ->join('users', 'nurses.user_id', '=', 'users.id')
+                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
                     ->Join('facilities', function ($join) {
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
                     ->where($whereCond)
-                ->orderBy('offers.nurse_id', 'desc');
+                ->orderBy('offers.worker_id', 'desc');
                 $job_data = $ret->get();
                 // print_r($job_data);
                 // die();
@@ -4554,7 +4554,7 @@ class RecruiterController extends Controller
                             $join->on('facilities.id', '=', 'jobs.facility_id');
                         })
                     ->where($whereCond1)
-                ->orderBy('offers.nurse_id', 'desc');
+                ->orderBy('offers.worker_id', 'desc');
                 $job = $jobs->first();
 
                 $recruiter = User::where('id', $request->recruiter_id)->first();
@@ -4592,7 +4592,7 @@ class RecruiterController extends Controller
                     $result['job_location'] = isset($rec['job_location'])?$rec['job_location']:"";
                     $result['preferred_shift'] = isset($rec['preferred_shift'])?$rec['preferred_shift']:"";
                     $result['preferred_assignment_duration'] = isset($rec['preferred_assignment_duration'])?$rec['preferred_assignment_duration']:"";
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
                     $result['employer_weekly_amount'] = isset($rec['employer_weekly_amount'])?$rec['employer_weekly_amount']:"";
@@ -4623,12 +4623,12 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse = Nurse::where('id', $request->worker_id)->first();
-            if ($nurse) {
+            $worker = Worker::where('id', $request->worker_id)->first();
+            if ($worker) {
                 $this->check = "1";
-                $nurse_deleted = DB::table('blocked_users')->where('worker_id', '=', $request->worker_id)->delete();
+                $worker_deleted = DB::table('blocked_users')->where('worker_id', '=', $request->worker_id)->delete();
 
-                if($nurse_deleted){
+                if($worker_deleted){
                     $this->message = "Worker unblocked successfully";
                     $this->return_data = 1;
                 }else{
@@ -4739,8 +4739,8 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse = Nurse::where('id', $request->worker_id)->first();
-            $user = User::where('id', $nurse['user_id'])->first();
+            $worker = Worker::where('id', $request->worker_id)->first();
+            $user = User::where('id', $worker['user_id'])->first();
             $check = DB::table('ask_worker')->where(['text_field' => $request->update, 'worker_id' => $request->worker_id])->first();
             if(empty($check)){
 
@@ -5079,13 +5079,13 @@ class RecruiterController extends Controller
                 }
             }
             if($update_array["is_draft"] == '0'){
-                $worker = Nurse::where('user_id', $request->worker_user_id)->first();
+                $worker = Worker::where('user_id', $request->worker_user_id)->first();
                 $recruiter_info = User::where('id', $request->recruiter_id)->first();
-                $checkOffer = Offer::where(['nurse_id' => $worker->id, 'job_id' => $request->job_id])->first();
+                $checkOffer = Offer::where(['worker_id' => $worker->id, 'job_id' => $request->job_id])->first();
                 if (isset($checkOffer)) {
-                    $offer = Offer::where(['nurse_id' => $worker->id, 'job_id' => $request->job_id])->update(['status' => 'Offered', 'start_date' => date('Y-m-d')]);
+                    $offer = Offer::where(['worker_id' => $worker->id, 'job_id' => $request->job_id])->update(['status' => 'Offered', 'start_date' => date('Y-m-d')]);
                 } else {
-                    $offer = Offer::create(['nurse_id' => $worker->id, 'created_by' => $worker->id, 'job_id' => $request->job_id,'status' => 'Offered', 'start_date' => date('Y-m-d') ]);
+                    $offer = Offer::create(['worker_id' => $worker->id, 'created_by' => $worker->id, 'job_id' => $request->job_id,'status' => 'Offered', 'start_date' => date('Y-m-d') ]);
                 }
                 $offer_status = 'Offered';
                 $check_notification = Notification::where(['job_id' => $request->job_id, 'recruiter_id' => $request->recruiter_id, 'isAskWorker' => '0'])->first();
@@ -5151,16 +5151,16 @@ class RecruiterController extends Controller
             if ($validator->fails()) {
                 $this->message = $validator->errors()->first();
             } else {
-                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'offer_jobs.is_draft as is_draft', 'offer_jobs.recruiter_id as recruiter_id', 'offer_jobs.is_counter as is_counter', 'nurses.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.job_name as job_name', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience', 'jobs.type as type', 'jobs.job_city as city', 'jobs.job_state as state', 'jobs.preferred_assignment_duration as preferred_assignment_duration', 'jobs.employer_weekly_amount as employer_weekly_amount', 'jobs.created_at as created_at')
+                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'offer_jobs.is_draft as is_draft', 'offer_jobs.recruiter_id as recruiter_id', 'offer_jobs.is_counter as is_counter', 'workers.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.job_name as job_name', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience', 'jobs.type as type', 'jobs.job_city as city', 'jobs.job_state as state', 'jobs.preferred_assignment_duration as preferred_assignment_duration', 'jobs.employer_weekly_amount as employer_weekly_amount', 'jobs.created_at as created_at')
                     ->leftJoin('jobs', 'offer_jobs.job_id', 'jobs.id')
                     ->leftJoin('users', 'offer_jobs.worker_user_id', 'users.id')
-                    ->leftJoin('nurses', 'users.id', 'nurses.user_id')
-                    ->leftJoin('offers', 'offers.nurse_id', 'nurses.id')
+                    ->leftJoin('workers', 'users.id', 'workers.user_id')
+                    ->leftJoin('offers', 'offers.worker_id', 'workers.id')
                     // ->where(['offer_jobs.is_draft' => '0', 'offer_jobs.is_counter' => '0',  'offer_jobs.worker_user_id' => $request->worker_user_id])
                     ->where(['offers.status' => 'Offered', 'offer_jobs.worker_user_id' => $request->worker_user_id])
                     ->get();
                 foreach($job as $rec){
-                    $rec->worker_image = isset($rec->worker_image)?url("public/images/nurses/profile/" . $rec->worker_image):'';
+                    $rec->worker_image = isset($rec->worker_image)?url("public/images/workers/profile/" . $rec->worker_image):'';
                     $rec->preferred_experience = isset($rec->preferred_experience)?$rec->preferred_experience.' Years of Experience':'';
                     $rec->specialty = $rec->preferred_specialty;
                     $rec->experience = $rec->preferred_experience;
@@ -5224,8 +5224,8 @@ class RecruiterController extends Controller
                 $job_data = Job::where(['id' => $request->job_id, 'active' => '1', 'is_closed' => '0', 'is_hidden' => '0'])->first();
                 $recruiter = USER::where('id', $request->recruiter_id)->first();
                 $worker = USER::where('id', $request->worker_user_id)->first();
-                $nurse = Nurse::where('user_id', $request->worker_user_id)->first();
-                $offer = Offer::where(['nurse_id' => $nurse->id, 'job_id' => $request->job_id])->first();
+                $worker = Worker::where('user_id', $request->worker_user_id)->first();
+                $offer = Offer::where(['worker_id' => $worker->id, 'job_id' => $request->job_id])->first();
                 if(isset($job_data['facility_id'])){
                     $facility = Facility::where('id', $job_data['facility_id'])->first();
                 }
@@ -6222,8 +6222,8 @@ class RecruiterController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse = Nurse::where('user_id', $request->worker_user_id)->first();
-            $offer_job = Offer::where(['nurse_id' => $nurse->id, 'job_id' => $request->job_id, 'status' => 'Offered'])->forceDelete();
+            $worker = Worker::where('user_id', $request->worker_user_id)->first();
+            $offer_job = Offer::where(['worker_id' => $worker->id, 'job_id' => $request->job_id, 'status' => 'Offered'])->forceDelete();
             $job = DB::table('offer_jobs')->where(['recruiter_id' => $request->recruiter_id, 'job_id' => $request->job_id, 'worker_user_id' => $request->worker_user_id])->delete();
 
             if ($job) {
@@ -6352,13 +6352,13 @@ class RecruiterController extends Controller
             }
 
             if($update_array["is_draft"] == '0'){
-                $worker = Nurse::where('user_id', $request->worker_user_id)->first();
+                $worker = Worker::where('user_id', $request->worker_user_id)->first();
                 $recruiter_info = User::where('id', $request->recruiter_id)->first();
-                $checkOffer = Offer::where(['nurse_id' => $worker->id, 'job_id' => $request->job_id])->first();
+                $checkOffer = Offer::where(['worker_id' => $worker->id, 'job_id' => $request->job_id])->first();
                 // if (isset($checkOffer)) {
-                //     $offer = Offer::where(['nurse_id' => $worker->id, 'job_id' => $request->job_id])->update(['status' => 'Offered', 'start_date' => date('Y-m-d')]);
+                //     $offer = Offer::where(['worker_id' => $worker->id, 'job_id' => $request->job_id])->update(['status' => 'Offered', 'start_date' => date('Y-m-d')]);
                 // } else {
-                //     $offer = Offer::create(['nurse_id' => $worker->id, 'created_by' => $worker->id, 'job_id' => $request->job_id,'status' => 'Offered', 'start_date' => date('Y-m-d') ]);
+                //     $offer = Offer::create(['worker_id' => $worker->id, 'created_by' => $worker->id, 'job_id' => $request->job_id,'status' => 'Offered', 'start_date' => date('Y-m-d') ]);
                 // }
                 $offer_status = 'Offered';
                 $isAskWorker = '0';
@@ -6386,14 +6386,14 @@ class RecruiterController extends Controller
             if ($validator->fails()) {
                 $this->message = $validator->errors()->first();
             } else {
-                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'nurses.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience')
+                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'workers.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience')
                     ->leftJoin('jobs', 'offer_jobs.job_id', 'jobs.id')
                     ->leftJoin('users', 'offer_jobs.worker_user_id', 'users.id')
-                    ->leftJoin('nurses', 'users.id', 'nurses.user_id')
+                    ->leftJoin('workers', 'users.id', 'workers.user_id')
                     ->where(['offer_jobs.is_draft' => '0', 'offer_jobs.is_counter' => '1',  'offer_jobs.recruiter_id' => $request->recruiter_id])
                     ->get();
                 foreach($job as $rec){
-                    $rec->worker_image = isset($rec->worker_image)?url("public/images/nurses/profile/" . $rec->worker_image):'';
+                    $rec->worker_image = isset($rec->worker_image)?url("public/images/workers/profile/" . $rec->worker_image):'';
                     $rec->preferred_experience = isset($rec->preferred_experience)?$rec->preferred_experience.' Years of Experience':'';
                     $rec->specialty = $rec->preferred_specialty;
                     $rec->experience = $rec->preferred_experience;
@@ -6428,8 +6428,8 @@ class RecruiterController extends Controller
             $job_data = Job::where(['id' => $request->job_id, 'active' => '1', 'is_closed' => '0', 'is_hidden' => '0'])->first();
             $recruiter = USER::where('id', $request->recruiter_id)->first();
             $worker = USER::where('id', $request->worker_user_id)->first();
-            $nurse = Nurse::where('user_id', $request->worker_user_id)->first();
-            $offer = Offer::where(['nurse_id' => $nurse->id, 'job_id' => $request->job_id])->first();
+            $worker = Worker::where('user_id', $request->worker_user_id)->first();
+            $offer = Offer::where(['worker_id' => $worker->id, 'job_id' => $request->job_id])->first();
             if(isset($offer)){
                 if(isset($job_data['facility_id'])){
                     $facility = Facility::where('id', $job_data['facility_id'])->first();
@@ -7433,15 +7433,15 @@ class RecruiterController extends Controller
             if ($validator->fails()) {
                 $this->message = $validator->errors()->first();
             } else {
-                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'nurses.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience')
+                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'workers.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience')
                     ->leftJoin('jobs', 'offer_jobs.job_id', 'jobs.id')
                     ->leftJoin('users', 'offer_jobs.worker_user_id', 'users.id')
-                    ->leftJoin('nurses', 'users.id', 'nurses.user_id')
+                    ->leftJoin('workers', 'users.id', 'workers.user_id')
                     ->where(['offer_jobs.is_draft' => '1', 'offer_jobs.recruiter_id' => $request->recruiter_id])
                     ->get();
                     $recrod = [];
                 foreach($job as $rec){
-                    $rec->worker_image = isset($rec->worker_image)?url("public/images/nurses/profile/" . $rec->worker_image):'';
+                    $rec->worker_image = isset($rec->worker_image)?url("public/images/workers/profile/" . $rec->worker_image):'';
                     $rec->preferred_experience = isset($rec->preferred_experience)?$rec->preferred_experience.' Years of Experience':'';
                     $rec->specialty = $rec->preferred_specialty;
                     $rec->experience = $rec->preferred_experience;
@@ -7472,14 +7472,14 @@ class RecruiterController extends Controller
             if ($validator->fails()) {
                 $this->message = $validator->errors()->first();
             } else {
-                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'nurses.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience')
+                $job = DB::table('offer_jobs')->select('offer_jobs.worker_user_id as worker_user_id', 'workers.id as worker_id', 'users.first_name as worker_first_name', 'users.last_name as worker_last_name', 'users.image as worker_image', 'jobs.id as job_id', 'jobs.profession as profession', 'jobs.preferred_shift as preferred_shift', 'jobs.preferred_specialty as preferred_specialty', 'jobs.preferred_experience as preferred_experience')
                     ->leftJoin('jobs', 'offer_jobs.job_id', 'jobs.id')
                     ->leftJoin('users', 'offer_jobs.worker_user_id', 'users.id')
-                    ->leftJoin('nurses', 'users.id', 'nurses.user_id')
+                    ->leftJoin('workers', 'users.id', 'workers.user_id')
                     ->where(['offer_jobs.is_draft' => '1', 'offer_jobs.worker_user_id' => $request->worker_user_id])
                     ->get();
                 foreach($job as $rec){
-                    $rec->worker_image = isset($rec->worker_image)?url("public/images/nurses/profile/" . $rec->worker_image):'';
+                    $rec->worker_image = isset($rec->worker_image)?url("public/images/workers/profile/" . $rec->worker_image):'';
                     $rec->preferred_experience = isset($rec->preferred_experience)?$rec->preferred_experience.' Years of Experience':'';
                     $rec->specialty = $rec->preferred_specialty;
                     $rec->experience = $rec->preferred_experience;
@@ -7582,7 +7582,7 @@ class RecruiterController extends Controller
             }
 
             if (isset($job)) {
-                $insert_offer["nurse_id"] = $request->user_id;
+                $insert_offer["worker_id"] = $request->user_id;
                 $insert_offer["created_by"] = $request->user_id;
                 $insert_offer["job_id"] = $job['id'];
                 $insert_offer["status"] = 'Screening';

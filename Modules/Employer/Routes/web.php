@@ -62,7 +62,7 @@ Route::prefix('employer')->group(function() {
 
         Route::post('ask-employer-notification', ['uses' => 'EmployerDashboardController@askEmployerNotification', 'as' => 'ask-employer-notification']);
 
-        Route::get('get-single-nurse-details/{id}', ['uses' => 'EmployerDashboardController@getSingleNurseDetails', 'as' => 'employer-get-single-nurse-details']);
+        Route::get('get-single-worker-details/{id}', ['uses' => 'EmployerDashboardController@getSingleWorkerDetails', 'as' => 'employer-get-single-worker-details']);
 
         Route::post('send-job-offer-employer', ['uses' => 'ApplicationController@sendJobOfferEmployer', 'as' => 'send-job-offer-employer']);
 

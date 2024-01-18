@@ -21,8 +21,8 @@ class UserSeeder extends Seeder
 			'id' => Str::uuid(),
             'first_name' => 'Super',
             'last_name' => 'Admin',
-            'email' => 'fulladmin@nurseify.io',
-            'user_name' => 'fulladmin@nurseify.io',
+            'email' => 'fulladmin@goodwork.io',
+            'user_name' => 'fulladmin@goodwork.io',
 			'password' => Hash::make('IMC_2020_Ankur'),
             'mobile' => '1234657890'
         ]);

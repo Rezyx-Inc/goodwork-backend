@@ -72,7 +72,7 @@
                     <option value="mercedes">Allied Health Professional</option>
                     <option value="audi">Therapy</option>
                     <option value="audi">LPN/LVN</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 
@@ -84,7 +84,7 @@
                     <option value="mercedes">Allied Health Professional</option>
                     <option value="audi">Therapy</option>
                     <option value="audi">LPN/LVN</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 
@@ -96,7 +96,7 @@
                     <option value="mercedes">Allied Health Professional</option>
                     <option value="audi">Therapy</option>
                     <option value="audi">LPN/LVN</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 
@@ -112,7 +112,7 @@
                     <option value="mercedes">Allied Health Professional</option>
                     <option value="audi">Therapy</option>
                     <option value="audi">LPN/LVN</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
                     </li>
@@ -126,7 +126,7 @@
                     <option value="mercedes">Allied Health Professional</option>
                     <option value="audi">Therapy</option>
                     <option value="audi">LPN/LVN</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
                     </li>
@@ -145,7 +145,7 @@
                   <select name="cars" id="cars">
                     <option value="volvo">TX</option>
                     <option value="saab">TX</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 
@@ -381,7 +381,7 @@
                   <select name="cars" id="cars">
                     <option value="volvo">Select Shift of Day</option>
                     <option value="saab">TX</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 
@@ -440,7 +440,7 @@
                   <select name="cars" id="cars">
                     <option value="volvo">Select</option>
                     <option value="saab">TX</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 
@@ -449,7 +449,7 @@
                   <select name="cars" id="cars">
                     <option value="volvo">Select</option>
                     <option value="saab">TX</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 
@@ -458,7 +458,7 @@
                   <select name="cars" id="cars">
                     <option value="volvo">Select</option>
                     <option value="saab">TX</option>
-                    <option value="audi">Nurse Practitioner</option>
+                    <option value="audi">Worker Practitioner</option>
                   </select>
                 </div>
 

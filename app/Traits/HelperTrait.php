@@ -12,7 +12,7 @@ trait HelperTrait
 
     public function sendInvite(User $user)
     {
-        $roles = ['NURSE', 'FACILITY', 'FACILITYADMIN'];
+        $roles = ['WORKER', 'FACILITY', 'FACILITYADMIN'];
         if( in_array($user->role, $roles) ){
             $invite = Invite::updateOrCreate(
                 [

@@ -176,7 +176,7 @@
 
   <div class="ss-jb-apply-on-disc-txt">
     <h5>Description</h5>
-    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
+    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Worker (Worker Manager, Charge Worker, and/or Staff Worker). Worker interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
   </div>
 
 
@@ -392,7 +392,7 @@
   </div>
   <div class="ss-jb-apply-on-disc-txt">
     <h5>Description</h5>
-    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
+    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Worker (Worker Manager, Charge Worker, and/or Staff Worker). Worker interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
   </div>
 
 
@@ -679,7 +679,7 @@
 
   <div class="ss-jb-apply-on-disc-txt">
     <h5>Description</h5>
-    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
+    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Worker (Worker Manager, Charge Worker, and/or Staff Worker). Worker interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
   </div>
 
 
@@ -905,7 +905,7 @@
 
             <div class="ss-jb-dtl-disc-sec">
               <h6>Description</h6>
-              <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
+              <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Worker (Worker Manager, Charge Worker, and/or Staff Worker). Worker interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
             </div>
 
 

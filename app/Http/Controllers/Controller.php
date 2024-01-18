@@ -14,14 +14,14 @@ use App\Models\Keyword;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Experience;
 use App\Models\Facility;
-use App\Models\Nurse;
+use App\Models\Worker;
 use App\Models\Department;
 use App\Models\Countries;
 use App\Models\States;
 use App\Models\Cities;
 use App\Models\EmailTemplate;
 use App\Models\FacilityRating;
-use App\Models\NurseRating;
+use App\Models\WorkerRating;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Geocoder\Geocoder;
 use App\Models\Offer;
@@ -93,9 +93,9 @@ class Controller extends BaseController
         $ret = Keyword::where('active', true)->where('filter', 'LeadershipRoles')->orderBy('title', 'ASC');
         return $ret;
     }
-    public function getNursingDegrees()
+    public function getWorkingDegrees()
     {
-        $ret = Keyword::where('active', true)->where('filter', 'NursingDegree')->orderBy('title', 'ASC');
+        $ret = Keyword::where('active', true)->where('filter', 'WorkingDegree')->orderBy('title', 'ASC');
         return $ret;
     }
     public function getSpecialities()
@@ -226,9 +226,9 @@ class Controller extends BaseController
     {
         return 'required|string|confirmed|min:6|max:255|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\[\]\{\}\';:\.,#?!@$%^&*-]).{6,}$/';
     }
-    public function nurseExperienceSelection($nurse)
+    public function workerExperienceSelection($worker)
     {
-        $ret = Experience::where('nurse_id', $nurse->id)
+        $ret = Experience::where('worker_id', $worker->id)
             ->orderBy('created_at', 'DESC')
             ->get();
         return $ret;
@@ -258,12 +258,12 @@ class Controller extends BaseController
             ->orderBy('created_at', 'desc');
         return $ret;
     }
-    public function nurseSelection($search_text = null)
+    public function workerSelection($search_text = null)
     {
         $whereCond = [
             'active' => true
         ];
-        $ret = Nurse::where($whereCond)
+        $ret = Worker::where($whereCond)
             ->orderBy('created_at', 'desc');
         if ($search_text) {
             $tmpNames = explode(" ", $search_text);
@@ -370,9 +370,9 @@ class Controller extends BaseController
         $whereCond = [
             'active' => true
         ];
-        if (Auth::user() && $user->hasRole(['Nurse'])) {
+        if (Auth::user() && $user->hasRole(['Worker'])) {
             $ret = Offer::where($whereCond)
-                ->where('nurse_id', $user->nurse->id)
+                ->where('worker_id', $user->worker->id)
                 ->whereNotNull('job_id')
                 ->where('is_view', false)
                 ->where('expiration', '>=', date('Y-m-d H:i:s'))
@@ -380,7 +380,7 @@ class Controller extends BaseController
             return $ret;
         }
         return Offer::where($whereCond)
-            ->where('nurse_id', null)
+            ->where('worker_id', null)
             ->orderBy('created_at', 'desc');
     }
 
@@ -429,7 +429,7 @@ class Controller extends BaseController
         if ($temp->count() > 0) {
             $t = $temp->first();
             $arr['subject'] = $t->label;
-         //   if ($t->slug == "new_registration") { $arr['cc'] = "rama@nurseify.app"; }
+         //   if ($t->slug == "new_registration") { $arr['cc'] = "rama@goodwork.app"; }
             $body_content = strtr($t->content, $replace_array);
         }
 
@@ -443,49 +443,49 @@ class Controller extends BaseController
         //       $message->to($arr['to_email'], $arr['to_name'])->subject($arr['subject']);
         //   }
             $message->to($arr['to_email'], $arr['to_name'])->subject($arr['subject']);
-            $message->from('noreply@nurseify.app', 'Team Nurseify');
+            $message->from('noreply@goodwork.app', 'Team Goodwork');
         });
         // echo "Basic Email Sent. Check your inbox.";
     }
 
-    public function adminFacilityRating($facility_id = "", $nurse_id = "")
+    public function adminFacilityRating($facility_id = "", $worker_id = "")
     {
         $facility_rating_where_overall = ['facility_id' => $facility_id, 'is_deleted' => '0'];
         $rating_info_over_all = FacilityRating::where($facility_rating_where_overall);
-        $overall_rating = $on_board = $nurse_team_work = $leadership_support = $tools_todo_my_job = [];
+        $overall_rating = $on_board = $worker_team_work = $leadership_support = $tools_todo_my_job = [];
         if ($rating_info_over_all->count() > 0) {
             foreach ($rating_info_over_all->get() as $key => $r) {
                 $overall_rating[] = $r->overall;
                 $on_board[] = $r->on_board;
-                $nurse_team_work[] = $r->nurse_team_work;
+                $worker_team_work[] = $r->worker_team_work;
                 $leadership_support[] = $r->leadership_support;
                 $tools_todo_my_job[] = $r->tools_todo_my_job;
             }
         }
         $rating['over_all'] = $this->ratingCalculationOverall(count($overall_rating), $overall_rating);
         $ratings['on_board'] = $this->ratingCalculationOverall(count($on_board), $on_board);
-        $ratings['nurse_team_work'] = $this->ratingCalculationOverall(count($nurse_team_work), $nurse_team_work);
+        $ratings['worker_team_work'] = $this->ratingCalculationOverall(count($worker_team_work), $worker_team_work);
         $ratings['leadership_support'] = $this->ratingCalculationOverall(count($leadership_support), $leadership_support);
         $ratings['tools_todo_my_job'] = $this->ratingCalculationOverall(count($tools_todo_my_job), $tools_todo_my_job);
 
         return $rating;
     }
 
-    public function adminNurseRating($job_id = "", $nurse_id = "")
+    public function adminWorkerRating($job_id = "", $worker_id = "")
     {
         /* rating */
         if ($job_id != "")
-            $nurse_rating_where = ['job_id' => $job_id, 'nurse_id' => $nurse_id, 'is_deleted' => '0'];
+            $worker_rating_where = ['job_id' => $job_id, 'worker_id' => $worker_id, 'is_deleted' => '0'];
         else
-            $nurse_rating_where = ['nurse_id' => $nurse_id, 'is_deleted' => '0'];
+            $worker_rating_where = ['worker_id' => $worker_id, 'is_deleted' => '0'];
 
-        $rating_info = NurseRating::where($nurse_rating_where);
-        $overall = $clinical_skills = $nurse_teamwork = $interpersonal_skills = $work_ethic = $experience = [];
+        $rating_info = WorkerRating::where($worker_rating_where);
+        $overall = $clinical_skills = $worker_teamwork = $interpersonal_skills = $work_ethic = $experience = [];
         if ($rating_info->count() > 0) {
             foreach ($rating_info->get() as $key => $r) {
                 $overall[] = $r->overall;
                 $clinical_skills[] = $r->clinical_skills;
-                $nurse_teamwork[] = $r->nurse_teamwork;
+                $worker_teamwork[] = $r->worker_teamwork;
                 $interpersonal_skills[] = $r->interpersonal_skills;
                 $work_ethic[] = $r->work_ethic;
                 $experience[] = $r->experience;
@@ -493,7 +493,7 @@ class Controller extends BaseController
         }
         $ratings['over_all'] = $this->ratingCalculationOverall(count($overall), $overall);
         $ratings['clinical_skills'] = $this->ratingCalculationOverall(count($clinical_skills), $clinical_skills);
-        $ratings['nurse_team_work'] = $this->ratingCalculationOverall(count($nurse_teamwork), $nurse_teamwork);
+        $ratings['worker_team_work'] = $this->ratingCalculationOverall(count($worker_teamwork), $worker_teamwork);
         $ratings['interpersonal_skills'] = $this->ratingCalculationOverall(count($interpersonal_skills), $interpersonal_skills);
         $ratings['work_ethic'] = $this->ratingCalculationOverall(count($work_ethic), $work_ethic);
         $ratings['experience'] = $experience;
@@ -517,14 +517,14 @@ class Controller extends BaseController
 
     public function getLicenseType()
     {
-        $ret = Keyword::where('active', true)->where('filter', 'NurseLicenseType')->orderBy('title', 'ASC');
+        $ret = Keyword::where('active', true)->where('filter', 'WorkerLicenseType')->orderBy('title', 'ASC');
 
         return $ret;
     }
 
     public function getLicenseStatus()
     {
-        $ret = Keyword::where('active', true)->where('filter', 'NurseLicenseStatus')->orderBy('title', 'ASC');
+        $ret = Keyword::where('active', true)->where('filter', 'WorkerLicenseStatus')->orderBy('title', 'ASC');
 
         return $ret;
     }
@@ -571,7 +571,7 @@ class Controller extends BaseController
 
     public function getAvailabilityCalendar(Request $request){
 
-        $availability = Availability::where('nurse_id', '=', $request->nurse_id)->get()->first();
+        $availability = Availability::where('worker_id', '=', $request->worker_id)->get()->first();
         if (isset($request->unavailable_dates)) {
             $request->unavailable_dates = explode(',', $request->unavailable_dates);
         }else{
@@ -675,10 +675,10 @@ class Controller extends BaseController
         $html .= '<div class="submit-field" style="margin-left: 45%;float:right">
                 <ul class="pagination" >
                 <li class="page-item">
-                    <a class="page-link" href="javascript:next(`'.$active_year.'`,`'.($back_month).'`,`'.$availability->nurse_id.'`);" rel="prev" aria-label="« Previous">‹</a>
+                    <a class="page-link" href="javascript:next(`'.$active_year.'`,`'.($back_month).'`,`'.$availability->worker_id.'`);" rel="prev" aria-label="« Previous">‹</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="javascript:next(`'.$active_year.'`,`'.$active_month.'`,`'.$availability->nurse_id.'`);" rel="next" aria-label="Next »">›</a>
+                    <a class="page-link" href="javascript:next(`'.$active_year.'`,`'.$active_month.'`,`'.$availability->worker_id.'`);" rel="next" aria-label="Next »">›</a>
                 </li>
                 </ul>
                 </div>';
@@ -689,7 +689,7 @@ class Controller extends BaseController
     }
 
     public function getAvailabilityCalendarByDate(Request $request){
-        $availability = Availability::where('nurse_id', '=', $request->nurse_id)->get()->first();
+        $availability = Availability::where('worker_id', '=', $request->worker_id)->get()->first();
 
 
         if (isset($request->unavailable_dates)) {
@@ -798,7 +798,7 @@ class Controller extends BaseController
                     <a class="page-link" href="javascript:void(0)" rel="prev" aria-label="« Previous">‹</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="javascript:next(`'.$active_year.'`,`'.$active_month.'`,`'.$availability->nurse_id.'`);" rel="next" aria-label="Next »">›</a>
+                    <a class="page-link" href="javascript:next(`'.$active_year.'`,`'.$active_month.'`,`'.$availability->worker_id.'`);" rel="next" aria-label="Next »">›</a>
                 </li>
                 </ul>
                 </div>';

@@ -12,7 +12,7 @@ class Experience extends UuidModel
      *
      * @var string
      */
-    private $nurse_id;
+    private $worker_id;
 
     /**
      *
@@ -92,7 +92,7 @@ class Experience extends UuidModel
      * @var array
      */
     public $fillable = [
-        'nurse_id',
+        'worker_id',
         'organization_name',
         'organization_department_name',
         'position_title',
@@ -124,8 +124,8 @@ class Experience extends UuidModel
      */
     protected $dates = ['deleted_at'];
 
-    public function nurse()
+    public function worker()
 	{
-		return $this->belongsTo(Nurse::class);
+		return $this->belongsTo(Worker::class);
 	}
 }

@@ -14,7 +14,7 @@
                         <form method="post" action="" id="edit-profile-form" class="ss-rec-profl-img-dv">
                             <input type="file" name="profile_picture" id="imgInp" accept=".jpg,.jpeg,.png" hidden>
                             <div class="ss-acount-prof">
-                                <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_RECRUITER}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
+                                <img src="{{URL::asset('images/workers/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_RECRUITER}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
                                 <div class="ss-profil-camer-img">
                                     <a href="javascript:void(0)" onclick="click_on_file()"><img src="{{URL::asset('frontend/img/profile-camera.png')}}" /></a>
                                 </div>
@@ -126,7 +126,7 @@
                                         <a href="javascript:void(0)" class="ss-rec-abt-me-edit-icn" onclick="editprofile()">
                                             <img src="{{URL::asset('recruiter/assets/images/rec-profile-edit-icon.png')}}" />
                                         </a>
-                                        <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_RECRUITER}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
+                                        <img src="{{URL::asset('images/workers/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG_RECRUITER}}';" id="preview" width="112px" height="112px" style="object-fit: cover;" />
                                     </li>
                                 </ul>
                                 <div id="personal-info">

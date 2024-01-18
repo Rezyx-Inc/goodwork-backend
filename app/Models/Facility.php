@@ -224,25 +224,25 @@ class Facility extends Model implements HasMedia
      *
      * @var integer
      */
-    private $nurse_cred_soft;
+    private $worker_cred_soft;
 
     /**
      *
      * @var string
      */
-    private $nurse_cred_soft_other;
+    private $worker_cred_soft_other;
 
     /**
      *
      * @var integer
      */
-    private $nurse_scheduling_sys;
+    private $worker_scheduling_sys;
 
     /**
      *
      * @var string
      */
-    private $nurse_scheduling_sys_other;
+    private $worker_scheduling_sys_other;
 
     /**
      *
@@ -344,10 +344,10 @@ class Facility extends Model implements HasMedia
         'f_emr_other',
         'f_bcheck_provider',
         'f_bcheck_provider_other',
-        'nurse_cred_soft',
-        'nurse_cred_soft_other',
-        'nurse_scheduling_sys',
-        'nurse_scheduling_sys_other',
+        'worker_cred_soft',
+        'worker_cred_soft_other',
+        'worker_scheduling_sys',
+        'worker_scheduling_sys_other',
         'time_attend_sys',
         'time_attend_sys_other',
         'licensed_beds',

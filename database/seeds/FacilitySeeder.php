@@ -19,7 +19,7 @@ class FacilitySeeder extends Seeder
     public function run()
     {
         $mainSuperUserId = User::where([
-			'email' => 'fulladmin@nurseify.io'
+			'email' => 'fulladmin@goodwork.io'
         ])->get()->first()->id;
         
         $facility = factory(Facility::class)->create([
@@ -30,8 +30,8 @@ class FacilitySeeder extends Seeder
         $user = factory(User::class)->create([
 			'first_name' => 'Facility',
             'last_name' => 'User',
-            'email' => 'facility@nursify.net',
-            'user_name' => 'facility@nursify.net',
+            'email' => 'facility@goodwork.net',
+            'user_name' => 'facility@goodwork.net',
 			'password' => Hash::make('password'),
 			'role' => Role::getKey(Role::FACILITYADMIN),
 			'mobile' => '7510452010'

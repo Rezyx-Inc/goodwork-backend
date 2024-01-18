@@ -17,10 +17,10 @@ class JobControllerApi extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse = NURSE::where('user_id', $request->user_id)->first();
-            $jobs_id = Offer::where('nurse_id', $nurse['id'])->select('job_id')->get();
+            $worker = WORKER::where('user_id', $request->user_id)->first();
+            $jobs_id = Offer::where('worker_id', $worker['id'])->select('job_id')->get();
 
-            $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
+            $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
             if(isset($checkoffer))
             {
                 $this->check = "1";
@@ -116,7 +116,7 @@ class JobControllerApi extends Controller
                     $is_vacancy = DB::select("SELECT COUNT(id) as hired_jobs, job_id FROM `offers` WHERE status = 'Onboarding' AND job_id = ".'"'.$check_rec['job_id'].'"');
                     if($check_rec['position_available'] > $is_vacancy[0]->hired_jobs)
                     {
-                        $is_delete = DB::table('job_saved')->where(['job_id' => $check_rec['job_id'], 'nurse_id' => $request->user_id, 'is_delete' => '1'])->first();
+                        $is_delete = DB::table('job_saved')->where(['job_id' => $check_rec['job_id'], 'worker_id' => $request->user_id, 'is_delete' => '1'])->first();
                         if(!isset($check_rec['start_date']) && $check_rec['start_date'] == ''){
                             $check_rec['start_date'] = NULL;
                         }
@@ -288,7 +288,7 @@ class JobControllerApi extends Controller
             $this->message = $validator->errors()->first();
         } else {
             if(!empty($request->role)){
-                $record = NURSE::where(['id' => $request->user_id])->get()->first();
+                $record = WORKER::where(['id' => $request->user_id])->get()->first();
                 $user_id = $record->user_id;
             }else{
                 $user_id = $request->user_id;
@@ -388,13 +388,13 @@ class JobControllerApi extends Controller
                             $is_applied = Follows::where(['job_id' => $val->job_id, "applied_status" => "1", 'status' => "1", "user_id" => $request->user_id])->distinct('user_id')->count();
                         $val->is_applied = strval($is_applied);
 
-                        $val->applied_nurses = 0;
-                        $applied_nurses = Offer::where(['job_id' => $val->job_id, 'status'=>'Apply'])->count();
-                        $val->applied_nurses = strval($applied_nurses);
+                        $val->applied_workers = 0;
+                        $applied_workers = Offer::where(['job_id' => $val->job_id, 'status'=>'Apply'])->count();
+                        $val->applied_workers = strval($applied_workers);
 
                         $is_saved = '0';
                         $whereCond = [
-                            'job_saved.nurse_id' => $request->user_id,
+                            'job_saved.worker_id' => $request->user_id,
                             'job_saved.job_id' => $val->job_id,
                         ];
 
@@ -450,15 +450,15 @@ class JobControllerApi extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $nurse = Nurse::where('user_id', '=', $request->user_id)->get();
-            if ($nurse->count() > 0) {
-                $nurse = $nurse->first();
+            $worker = Worker::where('user_id', '=', $request->user_id)->get();
+            if ($worker->count() > 0) {
+                $worker = $worker->first();
                 $whereCond = [
                     'active' => true,
                     'status' => 'Offered'
                 ];
                 $offers = Offer::where($whereCond)
-                    ->where('nurse_id', $nurse->id)
+                    ->where('worker_id', $worker->id)
                     ->where('expiration', '>=', date('Y-m-d H:i:s'))
                     ->whereNotNull('job_id')
                     ->orderBy('created_at', 'desc');
@@ -541,7 +541,7 @@ class JobControllerApi extends Controller
                 }
                 $this->return_data = $o_data;
             } else {
-                $this->message = "Nurse not found";
+                $this->message = "Worker not found";
             }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -567,12 +567,12 @@ class JobControllerApi extends Controller
                     $offer = $check_offer->first();
                     $facility_email = $offer->creator->email;
 
-                    $nurse_info = Nurse::where(['id' => $offer->nurse_id]);
-                    if ($nurse_info->count() > 0) {
-                        $nurse = $nurse_info->first();
-                        $user_info = User::where(['id' => $nurse->user_id]);
+                    $worker_info = Worker::where(['id' => $offer->worker_id]);
+                    if ($worker_info->count() > 0) {
+                        $worker = $worker_info->first();
+                        $user_info = User::where(['id' => $worker->user_id]);
                         if ($user_info->count() > 0) {
-                            $user = $user_info->first(); // nurse user info
+                            $user = $user_info->first(); // worker user info
                             $facility_user_info = User::where(['id' => $offer->created_by]);
                             if ($facility_user_info->count() > 0) {
                                 $facility_user = $facility_user_info->first(); // facility user info
@@ -581,7 +581,7 @@ class JobControllerApi extends Controller
                                     'to_name' => $user->first_name . ' ' . $user->last_name
                                 ];
                                 $replace_array = [
-                                    '###NURSENAME###' => $user->first_name . ' ' . $user->last_name,
+                                    '###WORKERNAME###' => $user->first_name . ' ' . $user->last_name,
                                     '###FACILITYNAME###' => $facility_user->facilities[0]->name,
                                     '###FACILITYLOCATION###' => $facility_user->facilities[0]->city . ',' . $facility_user->facilities[0]->state,
                                     '###SPECIALITY###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_specialty),
@@ -590,7 +590,7 @@ class JobControllerApi extends Controller
                                     '###SHIFTDURATION###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_shift_duration),
                                     '###PREFERREDSHIFT###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_shift),
                                 ];
-                                $this->basic_email($template = "accept_offer_nurse", $data, $replace_array);
+                                $this->basic_email($template = "accept_offer_worker", $data, $replace_array);
 
                                 $facility_data = [
                                     'to_email' => $facility_user->email,
@@ -599,9 +599,9 @@ class JobControllerApi extends Controller
 
                                 $facility_replace_array = [
                                     '###USERNAME###' => $facility_user->first_name . ' ' . $facility_user->last_name,
-                                    '###NURSENAME###' => $user->first_name . ' ' . $user->last_name,
+                                    '###WORKERNAME###' => $user->first_name . ' ' . $user->last_name,
                                     '###PREFERREDSPECIALITY###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_specialty),
-                                    '###NURSEPROFILELINK###' => url('browse-nurses/' . $nurse->slug),
+                                    '###WORKERPROFILELINK###' => url('browse-workers/' . $worker->slug),
                                     '###FACILITYNAME###' => $facility_user->facilities[0]->name,
                                     '###SPECIALITY###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_specialty),
                                     '###STARTDATE###' => date('d F Y', strtotime($offer->job->start_date)),
@@ -645,26 +645,26 @@ class JobControllerApi extends Controller
                 $offer = $check_offer->first();
                 $update = Offer::where(['id' => $request->offer_id])->update(['status' => 'Rejected']);
                 if ($update) {
-                    $nurse_info = Nurse::where(['id' => $offer->nurse_id]);
-                    if ($nurse_info->count() > 0) {
-                        $nurse = $nurse_info->first();
-                        $user_info = User::where(['id' => $nurse->user_id]);
+                    $worker_info = Worker::where(['id' => $offer->worker_id]);
+                    if ($worker_info->count() > 0) {
+                        $worker = $worker_info->first();
+                        $user_info = User::where(['id' => $worker->user_id]);
                         if ($user_info->count() > 0) {
-                            $user = $user_info->first(); // nurse user info
+                            $user = $user_info->first(); // worker user info
                             $facility_user_info = User::where(['id' => $offer->created_by]);
                             if ($facility_user_info->count() > 0) {
                                 $facility_user = $facility_user_info->first(); // facility user info
-                                /* nurse email */
+                                /* worker email */
                                 $data = [
                                     'to_email' => $user->email,
                                     'to_name' => $user->first_name . ' ' . $user->last_name
                                 ];
                                 $replace_array = [
-                                    '###NURSENAME###' => $user->first_name . ' ' . $user->last_name,
+                                    '###WORKERNAME###' => $user->first_name . ' ' . $user->last_name,
                                     '###FACILITYNAME###' => $facility_user->facilities[0]->name
                                 ];
-                                $this->basic_email($template = "reject_offer_nurse", $data, $replace_array);
-                                /* nurse email */
+                                $this->basic_email($template = "reject_offer_worker", $data, $replace_array);
+                                /* worker email */
 
                                 /* facility user */
                                 $facility_data = [
@@ -673,7 +673,7 @@ class JobControllerApi extends Controller
                                 ];
                                 $facility_replace_array = [
                                     '###USERNAME###' => $facility_user->first_name . ' ' . $facility_user->last_name,
-                                    '###NURSENAME###' => $user->first_name . ' ' . $user->last_name,
+                                    '###WORKERNAME###' => $user->first_name . ' ' . $user->last_name,
                                     '###PREFERREDSPECIALITY###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_specialty),
                                     '###FACILITYNAME###' => $facility_user->facilities[0]->name,
                                 ];
@@ -700,14 +700,14 @@ class JobControllerApi extends Controller
     {
         if(isset($request->role) && !empty($request->role) && !empty($request->user_id))
         {
-            $nurse_info = NURSE::where('user_id', $request->user_id);
-            // for worker or nurse
-            if ($nurse_info->count() > 0) {
-                $nurse = $nurse_info->first();
+            $worker_info = WORKER::where('user_id', $request->user_id);
+            // for worker or worker
+            if ($worker_info->count() > 0) {
+                $worker = $worker_info->first();
                 $whereCond = [
                     'notifications.created_by' => $request->user_id,
                     'active' => true,
-                    'offers.nurse_id' => $nurse->id
+                    'offers.worker_id' => $worker->id
                 ];
                 $result = [];
                 $this->return_data = [];
@@ -807,7 +807,7 @@ class JobControllerApi extends Controller
                     $this->return_data = [];
                 }
             } else {
-                $this->message = "Nurse not found";
+                $this->message = "Worker not found";
             }
         }else{
 
@@ -866,10 +866,10 @@ class JobControllerApi extends Controller
              if ($validator->fails()) {
                  $this->message = $validator->errors()->first();
              } else {
-                 $nurse_info = NURSE::where('user_id', $request->worker_user_id);
-                 // for worker or nurse
-                 if ($nurse_info->count() > 0) {
-                     $nurse = $nurse_info->first();
+                 $worker_info = WORKER::where('user_id', $request->worker_user_id);
+                 // for worker or worker
+                 if ($worker_info->count() > 0) {
+                     $worker = $worker_info->first();
                      $whereCond = [
                          'notifications.created_by' => $request->worker_user_id
                      ];
@@ -938,7 +938,7 @@ class JobControllerApi extends Controller
                          $this->return_data = [];
                      }
                  } else {
-                     $this->message = "Nurse not found";
+                     $this->message = "Worker not found";
                  }
              }
 
@@ -958,13 +958,13 @@ class JobControllerApi extends Controller
                          'notifications.recruiter_id' => $request->recruiter_id
                      ];
 
-                     $ret = Notification::select('offers.status as status', 'offers.nurse_id as nurse_id', 'notifications.*', 'nurses.id as worker_id')
+                     $ret = Notification::select('offers.status as status', 'offers.worker_id as worker_id', 'notifications.*', 'workers.id as worker_id')
                                              ->leftJoin('offers', 'notifications.job_id', 'offers.job_id')
-                                             ->leftJoin('nurses', 'notifications.created_by', 'nurses.user_id')
+                                             ->leftJoin('workers', 'notifications.created_by', 'workers.user_id')
                                              ->where($whereCond)
                                              ->whereNotNull('offers.job_id')
                                              ->where('offers.is_view', false)
-                                             // ->where('offers.nurse_id', '=', 'nurses.id')
+                                             // ->where('offers.worker_id', '=', 'workers.id')
                                              ->where('offers.expiration', '>=', date('Y-m-d H:i:s'))
                                              ->orderBy('notifications.created_at', 'desc')
                                              ->get();
@@ -974,7 +974,7 @@ class JobControllerApi extends Controller
                          $result = [];
                          foreach ($notifications as $notification)
                          {
-                             if($notification['worker_id'] == $notification['nurse_id']){
+                             if($notification['worker_id'] == $notification['worker_id']){
                                  $notification->created_at = Carbon::parse($notification['created_at']);
                                  $notification->date = $notification->created_at->diffForHumans();
                                  $notification->recruiter_id = isset($notification['recruiter_id'])?$notification['recruiter_id']:'';
@@ -993,9 +993,9 @@ class JobControllerApi extends Controller
                                      }else{
                                          $worker_name = '';
                                      }
-                                     $nurse = Nurse::where('user_id', $notification['worker_user_id'])->first();
-                                     if(isset($nurse['id'])){
-                                         $worker_id = $nurse['id'];
+                                     $worker = Worker::where('user_id', $notification['worker_user_id'])->first();
+                                     if(isset($worker['id'])){
+                                         $worker_id = $worker['id'];
                                      }else{
                                          $worker_id = '';
                                      }
@@ -1059,17 +1059,17 @@ class JobControllerApi extends Controller
             $this->message = $validator->errors()->first();
         } else {
             if(isset($request->role) && !empty($request->user_id)){
-                $nurse_info = NURSE::where('id', $request->user_id)->get();
+                $worker_info = WORKER::where('id', $request->user_id)->get();
             }else{
-                $nurse_info = NURSE::where('user_id', $request->user_id)->get();
+                $worker_info = WORKER::where('user_id', $request->user_id)->get();
             }
 
-            if ($nurse_info->count() > 0) {
-                $nurse = $nurse_info->first();
+            if ($worker_info->count() > 0) {
+                $worker = $worker_info->first();
 
                 $whereCond = ['active' => true, 'id' => $request->notification_id];
                 $ret = Offer::where($whereCond)
-                    ->where('nurse_id', $nurse->id)
+                    ->where('worker_id', $worker->id)
                     ->whereNotNull('job_id')
                     ->where('is_view', false)
                     // ->where('expiration', '>=', date('Y-m-d H:i:s'))
@@ -1091,7 +1091,7 @@ class JobControllerApi extends Controller
                     $this->message = "Notification already viewed/cleared";
                 }
             } else {
-                $this->message = "Nurse not found";
+                $this->message = "Worker not found";
             }
         }
 
@@ -1112,12 +1112,12 @@ class JobControllerApi extends Controller
             $assignmentDurations = $this->getAssignmentDurations()->pluck('title', 'id');
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             /*  dropdown data's */
-            $nurse_info = Nurse::where(['user_id' => $request->user_id]);
-            if ($nurse_info->count() > 0) {
-                $nurse = $nurse_info->first();
+            $worker_info = Worker::where(['user_id' => $request->user_id]);
+            if ($worker_info->count() > 0) {
+                $worker = $worker_info->first();
 
                 $limit = 25;
-                $ret = Offer::where(['active' => "1", 'nurse_id' => $nurse->id])
+                $ret = Offer::where(['active' => "1", 'worker_id' => $worker->id])
                     ->orderBy('created_at', 'desc');
                 // ->skip(0)->take($limit);
                 // $offer_info = $ret->paginate($limit);
@@ -1196,7 +1196,7 @@ class JobControllerApi extends Controller
                 $this->message = "Completed jobs listed successfully";
                 $this->return_data = $my_jobs;
             } else {
-                $this->message = "Nurse not found";
+                $this->message = "Worker not found";
             }
         }
 

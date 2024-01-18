@@ -24,7 +24,7 @@
                     </svg>
 
                     <p>Permanent</p>
-                    <span>{{ $statusCounts['Apply'] }} Nurses Available</span>
+                    <span>{{ $statusCounts['Apply'] }} Workers Available</span>
                 </div>
             </div>
             <!-- </div>
@@ -45,7 +45,7 @@
                     </svg>
 
                     <p>Travel</p>
-                    <span>{{ $statusCounts['Screening'] }} Nurses Available</span>
+                    <span>{{ $statusCounts['Screening'] }} Workers Available</span>
                 </div>
             </div>
             <!-- </div>
@@ -66,7 +66,7 @@
                     </svg>
                     <div class="proffInfo">
                         <p>Per Diem</p>
-                        <span>{{ $statusCounts['Submitted'] }} Nurses Available</span>
+                        <span>{{ $statusCounts['Submitted'] }} Workers Available</span>
                     </div>
 
                 </div>
@@ -89,7 +89,7 @@
                     </svg>
 
                     <p>Local</p>
-                    <span>{{ $statusCounts['Offered'] }} Nurses Available</span>
+                    <span>{{ $statusCounts['Offered'] }} Workers Available</span>
                 </div>
             </div>
             <!-- </div> -->
@@ -339,7 +339,7 @@
                                     <div class="col-11 d-flex text-start">
                                         <div class="row">
                                             <div class="col-12 home_notification_message_messages">
-                                                New nurse registered ...</div>
+                                                New worker registered ...</div>
                                             <div class="col-12" style="color:#1C1C1C66; font-size: 12px;">59 minutes
                                                 ago</div>
                                         </div>
@@ -1066,7 +1066,7 @@
     }
 
     function chatNow(id) {
-        localStorage.setItem('nurse_id', id);
+        localStorage.setItem('worker_id', id);
     }
     const numberOfReferencesField = document.getElementById('number_of_references');
     numberOfReferencesField.addEventListener('input', function () {

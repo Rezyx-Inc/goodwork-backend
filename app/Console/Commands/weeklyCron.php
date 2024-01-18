@@ -18,7 +18,7 @@ class weeklyCron extends Command
      *
      * @var string
      */
-    protected $description = 'This command is for sending emails to nurses on newly nurses registered for the last 7 days, And this run on every monday 08:00 AM';
+    protected $description = 'This command is for sending emails to workers on newly workers registered for the last 7 days, And this run on every monday 08:00 AM';
 
     /**
      * Create a new command instance.

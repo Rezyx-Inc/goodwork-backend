@@ -17,8 +17,8 @@ class CheckOfferAccess
     public function handle($request, Closure $next)
     {
         if (
-            isset(request()->route()->nurse->id)
-            && request()->route()->nurse->id === Auth::user()->nurse->id
+            isset(request()->route()->worker->id)
+            && request()->route()->worker->id === Auth::user()->worker->id
         ) {
             return $next($request);            
         } else {

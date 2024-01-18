@@ -3,7 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Experience;
-use App\Models\Nurse;
+use App\Models\Worker;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use App\Enums\State;
@@ -14,8 +14,8 @@ $factory->define(Experience::class, function (Faker $faker) {
     $endingDate   = $faker->dateTimeBetween($startingDate, strtotime('+359 days'));
     return [
         'id' => Str::uuid(),
-        'nurse_id' => function () {
-            factory(Nurse::class)->create()->id;
+        'worker_id' => function () {
+            factory(Worker::class)->create()->id;
         },
         'organization_name' => $faker->company,
         'exp_city' => $faker->city,

@@ -10,7 +10,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Keyword extends Model
 {
     // km-2020-04-41: developer note: this model was not added to the uuid as the keyword id needs to remain an integer as it is
-    // referenced by other models.  This effectively replaces the ENUM - hard coded definitions and is primarily accessible by the nursify team only
+    // referenced by other models.  This effectively replaces the ENUM - hard coded definitions and is primarily accessible by the goodwork team only
 
     use LogsActivity;
     use SoftDeletes;

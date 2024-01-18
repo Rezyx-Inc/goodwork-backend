@@ -300,7 +300,7 @@
                                 </div>
 
                                 <div class="ss-jb-dtl-abt-txt">
-                                    <h6> About Nurse:</h6>
+                                    <h6> About Worker:</h6>
 
                                     <ul style="gap: 33px;">
 
@@ -423,7 +423,7 @@
                                 </div>
 
                                 <div class="ss-jb-dtl-abt-txt">
-                                    <h6> About Nurse:</h6>
+                                    <h6> About Worker:</h6>
 
                                     <ul style="gap: 33px;">
 
