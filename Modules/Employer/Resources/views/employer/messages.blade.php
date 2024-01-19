@@ -4,6 +4,7 @@
 @php
        $faker = app('Faker\Generator');
 @endphp
+<script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="{{ asset('js/app.js') }}"></script>
@@ -12,10 +13,12 @@
 var idWorker_Global = '';
 var PrivateChannel = '';
 var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
-function getPrivateMessages(idWorker) {
-    page=1;
-    
+function getPrivateMessages(idWorker,fullName) {
 
+    document.getElementById('fullName').innerHTML = fullName;
+
+
+    page=1;
     document.getElementById('empty_room').classList.add("d-none");
     document.getElementById('body_room').classList.remove("d-none");
     idWorker_Global = idWorker;
@@ -93,6 +96,8 @@ function getPrivateMessages(idWorker) {
         if($(this).scrollTop() == 0) { // If the scrollbar is at the top
             page++; // Increment the page number
 
+            $('#loading').removeClass('d-none');
+    $('#login').addClass('d-none');
             // Make an AJAX request to the API
             $.get('/employer/getMessages?page=' + page + '&workerId='+idWorker_Global , function(data) {
                 // Parse the returned data
@@ -117,6 +122,9 @@ function getPrivateMessages(idWorker) {
                     var messageHTML = createMessageHTML(message);
                     $('.private-messages').prepend(messageHTML);
                 });
+
+                $('#login').removeClass('d-none');
+    $('#loading').addClass('d-none');
             });
         }
     });
@@ -189,7 +197,7 @@ if(message != ""){
                     @if($data)
                     @foreach($data as $room)
                    
-                    <div onclick="getPrivateMessages('{{$room['workerId']}}')" class="ss-mesg-sml-div">
+                    <div onclick="getPrivateMessages('{{$room['workerId']}}','{{$room['fullName']}}')" class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
                                 <li>
@@ -229,7 +237,12 @@ if(message != ""){
                             </ul>
                         </div>
                         <div class="ss-msgrply-tody">
-                            <p>Today</p>
+                            
+                            <span id="loading" class="d-none" >
+                          <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                    </span>
+                    <span id="login"> <p>Today</p>  </span>
                         </div>
                         <div class="private-messages">
                         </div>
@@ -282,7 +295,9 @@ if(message != ""){
     height: 100vh;
 }
 
-
+#loading,#login,#loadSpan{
+        color:black;
+    }
 
 </style>
 @endsection
