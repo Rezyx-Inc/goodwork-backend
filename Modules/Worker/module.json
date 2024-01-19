@@ -1,0 +1,13 @@
+{
+    "name": "Worker",
+    "alias": "worker",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\worker\\Providers\\WorkerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

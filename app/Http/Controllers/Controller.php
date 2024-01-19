@@ -429,7 +429,7 @@ class Controller extends BaseController
         if ($temp->count() > 0) {
             $t = $temp->first();
             $arr['subject'] = $t->label;
-         //   if ($t->slug == "new_registration") { $arr['cc'] = "rama@nurseify.app"; }
+         //   if ($t->slug == "new_registration") { $arr['cc'] = "rama@goodwork.app"; }
             $body_content = strtr($t->content, $replace_array);
         }
 
@@ -443,7 +443,7 @@ class Controller extends BaseController
         //       $message->to($arr['to_email'], $arr['to_name'])->subject($arr['subject']);
         //   }
             $message->to($arr['to_email'], $arr['to_name'])->subject($arr['subject']);
-            $message->from('noreply@nurseify.app', 'Team Nurseify');
+            $message->from('noreply@goodwork.app', 'Team Goodwork');
         });
         // echo "Basic Email Sent. Check your inbox.";
     }

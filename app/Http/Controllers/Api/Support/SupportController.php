@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * This file contains the implementation of the SupportController class, which is responsible for handling API requests related to Support.
+ */
+
 namespace App\Http\Controllers\Api\Support;
 
 
@@ -11,11 +15,30 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+
+/**
+ * The SupportController class handles the retrieval and submission of support-related data, such as comments and help.
+ */
 class SupportController extends Controller
 {
-    public function helpSupport(Request $request)
+    protected $request;
+
+    /**
+     * Constructor method for the DetailsController class.
+     * @param Request $request The HTTP request object.
+     */
+    public function __construct(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
+        $this->request = $request;
+    }
+
+    /**
+     * Handles the submission of help and support requests.
+     * @return \Illuminate\Http\JsonResponse The JSON response indicating the success or failure of the comment submission.
+     */
+    public function helpSupport()
+    {
+        $validator = \Validator::make($this->request->all(), [
             'user_id' => 'required',
             'api_key' => 'required',
             'subject' => 'required',
@@ -25,14 +48,13 @@ class SupportController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $user_info = USER::where('id', $request->user_id);
-            if ($user_info->count() > 0)
-            {
+            $user_info = USER::where('id', $this->request->user_id);
+            if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
                 $insert = array(
-                    "user_id" => $request->user_id,
-                    'subject' => $request->subject,
-                    'issue' => $request->issue,
+                    "user_id" => $this->request->user_id,
+                    'subject' => $this->request->subject,
+                    'issue' => $this->request->issue,
                     'comment_status' => "Pending for review",
                     'isPending' => "1",
                 );
@@ -41,7 +63,7 @@ class SupportController extends Controller
                 $this->check = "1";
                 $this->message = "Comment submitted successfully";
                 $this->return_data = "1";
-            }else{
+            } else {
                 $this->check = "1";
                 $this->message = "User not found";
                 $this->return_data = "0";
@@ -50,9 +72,13 @@ class SupportController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function getHelpComment(Request $request)
+    /**
+     * Handles the retrieval of help and support comments for a specific user.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the list of comments or an error message.
+     */
+    public function getHelpComment()
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($this->request->all(), [
             'user_id' => 'required',
             'api_key' => 'required'
         ]);
@@ -60,16 +86,15 @@ class SupportController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $user_info = USER::where('id', $request->user_id);
-            if ($user_info->count() > 0)
-            {
+            $user_info = USER::where('id', $this->request->user_id);
+            if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
                 $insert = array(
-                    "user_id" => $request->user_id
+                    "user_id" => $this->request->user_id
                 );
 
                 $data = DB::table('help_support')->where($insert)->get();
-                foreach($data as $val){
+                foreach ($data as $val) {
                     $val->created_at = isset($val->created_at) ? date('M d', strtotime($val->created_at)) : "";
                     $val->subject = isset($val->subject) ? $val->subject : "";
                     $val->issue = isset($val->issue) ? $val->issue : "";
@@ -78,12 +103,12 @@ class SupportController extends Controller
                     $val->admin_comment = isset($val->admin_comment) ? $val->admin_comment : "";
                     $val->admin_reply_at = isset($val->admin_reply_at) ? $val->admin_reply_at : "";
                     $rec = USER::where('id', $val->user_id)->first();
-                    $val->name = $rec['first_name'].' '.$rec['last_name'];
+                    $val->name = $rec['first_name'] . ' ' . $rec['last_name'];
                 }
                 $this->check = "1";
                 $this->message = "Comment listed successfully";
                 $this->return_data = $data;
-            }else{
+            } else {
                 $this->check = "1";
                 $this->message = "User not found";
                 $this->return_data = [];
@@ -92,9 +117,13 @@ class SupportController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function getHelpReplyComment(Request $request)
+    /**
+     * Handles the submission of admin replies to help and support comments.
+     * @return \Illuminate\Http\JsonResponse The JSON response indicating the success or failure of the admin reply submission.
+     */
+    public function getHelpReplyComment()
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($this->request->all(), [
             'id' => 'required',
             'api_key' => 'required',
             'admin_comment' => 'required',
@@ -103,22 +132,21 @@ class SupportController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $comment_info = DB::table('help_support')->where('id', $request->id)->get();
-            if ($comment_info->count() > 0)
-            {
+            $comment_info = DB::table('help_support')->where('id', $this->request->id)->get();
+            if ($comment_info->count() > 0) {
                 $update = array(
                     // 'comment_status' => isset($request->comment_status)?$request->comment_status:"",
                     'comment_status' => "Review Completed",
-                    'admin_comment' => $request->admin_comment,
+                    'admin_comment' => $this->request->admin_comment,
                     'isPending' => "0",
                     'admin_reply_at' => date('Y-m-d H:i:s')
                 );
 
-                \DB::table('help_support')->where('id', $request->id)->update($update);
+                \DB::table('help_support')->where('id', $this->request->id)->update($update);
                 $this->check = "1";
                 $this->message = "Admin reply submitted successfully";
                 $this->return_data = "1";
-            }else{
+            } else {
                 $this->check = "1";
                 $this->message = "Comment not found";
                 $this->return_data = "0";
@@ -126,9 +154,14 @@ class SupportController extends Controller
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
-    public function getCommentByAdmin(Request $request)
+
+    /**
+     * Handles the retrieval of a specific help and support comment along with admin replies.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the comment details or an error message.
+     */
+    public function getCommentByAdmin()
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = \Validator::make($this->request->all(), [
             'user_id' => 'required',
             'api_key' => 'required',
             'id' => 'required'
@@ -137,16 +170,15 @@ class SupportController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $user_info = USER::where('id', $request->user_id);
-            if ($user_info->count() > 0)
-            {
+            $user_info = USER::where('id', $this->request->user_id);
+            if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
                 $insert = array(
-                    "id" => $request->id
+                    "id" => $this->request->id
                 );
 
                 $val = DB::table('help_support')->where($insert)->first();
-                if(isset($val)){
+                if (isset($val)) {
                     $val->created_at = isset($val->created_at) ? date('M d', strtotime($val->created_at)) : "";
                     $val->subject = isset($val->subject) ? $val->subject : "";
                     $val->issue = isset($val->issue) ? $val->issue : "";
@@ -155,7 +187,7 @@ class SupportController extends Controller
                     $val->admin_comment = isset($val->admin_comment) ? $val->admin_comment : "";
                     $val->admin_reply_at = isset($val->admin_reply_at) ? date('M d', strtotime($val->admin_reply_at)) : "";
                     $rec = USER::where('id', $val->user_id)->first();
-                    $val->name = $rec['first_name'].' '.$rec['last_name'];
+                    $val->name = $rec['first_name'] . ' ' . $rec['last_name'];
                     $this->check = "1";
                     $this->message = "Admin reply Comment listed successfully";
                     $this->return_data = $val;
@@ -165,7 +197,7 @@ class SupportController extends Controller
                     $this->return_data = [];
                 }
 
-            }else{
+            } else {
                 $this->check = "1";
                 $this->message = "User not found";
                 $this->return_data = [];
