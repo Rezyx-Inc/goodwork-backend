@@ -1,5 +1,5 @@
 # Nursify
-Rebuild of the original Nursify repo 
+Rebuild of the original Goodwork repo 
 # Getting Started:
 
 Create .env file - There is an example.env file you can copy paste. This file holds all environment variables

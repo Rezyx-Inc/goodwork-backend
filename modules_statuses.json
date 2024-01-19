@@ -1,5 +1,6 @@
 {
     "Admin": true,
     "Recruiter": true,
-    "Employer": true
+    "Employer": true,
+    "Worker": true
 }
