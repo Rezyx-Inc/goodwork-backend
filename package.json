@@ -21,12 +21,14 @@
         "sass": "^1.27.0",
         "sass-loader": "^8.0.0",
         "vue": "^2.6.12",
+        "vue-loader": "^15.0.0",
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
         "@vue/compiler-sfc": "^3.3.9",
+        "laravel-echo": "^1.15.3",
+        "socket.io-client": "^2.5.0",
         "update": "^0.7.4",
-        "vue-loader": "^17.3.1",
         "vuelidate": "^0.7.5",
         "webpack": "^4.47.0"
     }

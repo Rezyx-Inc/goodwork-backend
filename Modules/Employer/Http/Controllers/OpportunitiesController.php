@@ -8,7 +8,7 @@ use DateTime;
 use App\Models\Job;
 use App\Models\Speciality;
 use App\Models\User;
-use App\Models\States;
+use App\Models\State;
 use App\Models\Cities;
 use App\Models\Offer;
 use App\Models\Profession;
@@ -36,9 +36,19 @@ class OpportunitiesController extends Controller
         $onholdJobs = Job::where('created_by', $created_by)->where('active',1)->where('is_open','0')->select('is_open','id','job_name','job_type','preferred_specialty','proffesion','job_city','job_state','preferred_work_location','preferred_assignment_duration','weekly_pay','description','preferred_work_area','preferred_experience','preferred_shift_duration','preferred_days_of_the_week','preferred_hourly_pay_rate','preferred_shift','job_function','job_cerner_exp','job_meditech_exp','seniority_level','job_epic_exp','job_other_exp','start_date','end_date','hours_shift','hours_per_week','responsibilities','qualifications')->get();
         $specialities = Speciality::select('full_name')->get();
         $proffesions = Profession::select('full_name')->get();
+        // send the states
+        $states = State::select('id','name')->get();
 
-        return view('employer::employer/opportunitiesmanager',compact('darftJobs','specialities','proffesions','publishedJobs','onholdJobs'));
-      // return response()->json(['success' => false, 'message' =>  $publishedJobs]);
+        return view('employer::employer/opportunitiesmanager',compact('darftJobs','specialities','proffesions','publishedJobs','onholdJobs','states'));
+      //return response()->json(['success' => false, 'message' =>  $states]);
+    }
+
+    public function get_cities(Request $request){
+        $id = $request->id;
+
+        $cities = Cities::select('id','name')->where('state_id',$id)->get();
+
+        return response()->json($cities);
     }
 
     /**

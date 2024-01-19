@@ -25,6 +25,8 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\LogLockout',
         ],'App\Events\UserCreated' => [
             'App\Listeners\GenerateJwtToken',
+        ] ,'App\Events\NewPrivateMessage' => [
+            'App\Listeners\NewPrivateMessageListener',
         ],
     ];
 

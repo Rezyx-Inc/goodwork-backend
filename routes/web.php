@@ -104,5 +104,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('logout', ['uses' => 'SiteController@logout', 'as' => 'logout']);
 
     });
+
+    Route::post('/custom/broadcasting/auth', function (Request $request) { // $channelName = $request->input('channel_name'); // $socketId = $request->input('socket_id'); // Replace this with your actual authentication logic
+         $isAuthenticated = true; if ($isAuthenticated) { return response()->json('OK', 200); } else { return response()->json('Forbidden', 403); } });
+
 });
 

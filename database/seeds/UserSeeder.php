@@ -17,6 +17,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
+        // Admin is the first User created in the system, and it has all permissions, its id is "GWU000001"
+
         $admin = User::create([
 			'id' => Str::uuid(),
             'first_name' => 'Super',
@@ -26,6 +29,8 @@ class UserSeeder extends Seeder
 			'password' => Hash::make('IMC_2020_Ankur'),
             'mobile' => '1234657890'
         ]);
+
+        // we seed this employer with the id "GWU000002" just for testing jobs, this record related to default seeding jobs
 
         $employer = User::create([
 			'id' => Str::uuid(),
@@ -38,6 +43,31 @@ class UserSeeder extends Seeder
             'facility_id' => '1'
         ]);
 
-       // $admin->assignRole('Administrator');
+        // we seed this workers with the id "GWU000003" & "GWU000004" just for testing messages, this record related to default seeding messages
+
+
+        $worker1 = User::create([
+            'id' => Str::uuid(),
+            'first_name' => 'worker',
+            'last_name' => 'one',
+            'email' => 'worker1@gmail.com',
+            'ROLE'=>'WORKER',
+            'user_name' => 'worker1',
+            'mobile' => '+1 (555) 555-55',
+            'facility_id' => '1'
+        ]);
+
+        $worker2 = User::create([
+            'id' => Str::uuid(),
+            'first_name' => 'worker',
+            'last_name' => 'two',
+            'email' => 'worker2@gmail.com',
+            'ROLE'=>'WORKER',
+            'user_name' => 'worker2',
+            'mobile' => '+1 (555) 555-55',
+            'facility_id' => '1'
+        ]);
+
+    
     }
 }

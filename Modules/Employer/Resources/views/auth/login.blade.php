@@ -68,13 +68,10 @@ if (!regexEmail.test(email)) {
 }else{
     $('.help-block-email').text('');
 }
-
     $('#loading').removeClass('d-none');
     $('#login').addClass('d-none');
     $('#login-form').submit();
   });
-
-
 
 </script>
 

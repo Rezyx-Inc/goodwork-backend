@@ -54,14 +54,14 @@
                             <div class=" col-3 step">
                                 <p>Preferences and Requirements</p>
                                 <div class="bullet">
-                                    <span>1</span>
+                                    <span>2</span>
                                 </div>
                                 <div class="check fas fa-check"></div>
                             </div>
                             <div class="col-3 step">
                                 <p>Job Details</p>
                                 <div class="bullet">
-                                    <span>1</span>
+                                    <span>3</span>
                                 </div>
                                 <div class="check fas fa-check"></div>
                             </div>
@@ -120,19 +120,35 @@
                                             <span class="help-block-perferred_profession"></span>
                                         </div>
 
+
+
                                         <div class="ss-form-group col-md-4">
 
-                                            <input type="text" name="job_city" id="job_city"
-                                                placeholder="Enter Job Location (City)">
-                                            <span class="help-block-job_city"></span>
+                                        <select name="job_state" id="job_state">
+                                                <option value="">States</option>
+                                                @foreach($states as $state)
+                                                <option id="{{$state->id}}" value="{{$state->name}}">{{$state->name}}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <span class="help-block-job_state"></span>
+
+
+                                            <!-- <input type="text" name="job_state" id="job_state"
+                                                placeholder="Enter Job Location (State)">
+                                            <span class="help-block-job_state"></span> -->
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
 
+                                            <!-- <input type="text" name="job_city" id="job_city"
+                                                placeholder="Enter Job Location (City)"> -->
 
-                                            <input type="text" name="job_state" id="job_state"
-                                                placeholder="Enter Job Location (State)">
-                                            <span class="help-block-job_state"></span>
+                                                <select name="job_city" id="job_city">
+                                                <option value="">Select a state first</option>
+                                            </select>
+
+                                            <span class="help-block-job_city"></span>
                                         </div>
 
 
@@ -487,7 +503,7 @@
                                                     <span class="help-block-perferred_profession"></span>
                                                 </div>
 
-                                                <div class="ss-form-group col-md-4">
+                                                <!-- <div class="ss-form-group col-md-4">
 
                                                     <input type="text" name="job_city" id="job_cityDraft"
                                                         placeholder="Enter Job Location (City)">
@@ -500,7 +516,32 @@
                                                     <input type="text" name="job_state" id="job_stateDraft"
                                                         placeholder="Enter Job Location (State)">
                                                     <span class="help-block-job_state"></span>
-                                                </div>
+                                                </div> -->
+
+                                                <div class="ss-form-group col-md-4">
+
+                                        <select name="job_state" id="job_stateDraft">
+                                                <option value="">States</option>
+                                                @foreach($states as $state)
+                                                <option id="{{$state->id}}" value="{{$state->name}}">{{$state->name}}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <span class="help-block-job_state"></span>
+
+
+                                        </div>
+
+                                        <div class="ss-form-group col-md-4">
+
+
+
+                                                <select name="job_city" id="job_cityDraft">
+                                                <option value="">Select a state first</option>
+                                            </select>
+
+                                            <span class="help-block-job_city"></span>
+                                        </div>
 
 
                                                 <div class="ss-form-group col-md-4">
@@ -817,6 +858,37 @@
 
 </main>
 <script>
+
+    $(document).ready(function () {
+        $('#job_state').change(function () {
+            const selectedState = $(this).find(':selected').attr('id');
+            const CitySelect = $('#job_city');
+
+            $.get(`/api/cities/${selectedState}`, function (data) {
+                CitySelect.empty();
+                CitySelect.append('<option value="">Select City</option>');
+                $.each(data, function (index, city) {
+                    CitySelect.append(new Option(city.name, city.name));
+                });
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#job_stateDraft').change(function () {
+            const selectedState = $(this).find(':selected').attr('id');
+            const CitySelect = $('#job_cityDraft');
+
+            $.get(`/api/cities/${selectedState}`, function (data) {
+                CitySelect.empty();
+                CitySelect.append('<option value="">Select City</option>');
+                $.each(data, function (index, city) {
+                    CitySelect.append(new Option(city.name, city.name));
+                });
+            });
+        });
+    });
 
     function request_job_form_appear() {
         document.getElementById('no-job-posted').classList.add('d-none');
@@ -1637,6 +1709,8 @@ function open_modal(obj) {
         // console.log(darftJobs[0].description);
         // console.log(darftJobs[0].proffesion);
 
+
+        if(darftJobs.length !== 0) {
         let job_name = darftJobs[0].job_name;
         let job_type = darftJobs[0].job_type;
         let preferred_specialty = darftJobs[0].preferred_specialty;
@@ -1696,6 +1770,7 @@ function open_modal(obj) {
         document.getElementById("preferred_work_areaDraft").value = preferred_work_area;
         document.getElementById("preferred_experienceDraft").value = preferred_experience;
         document.getElementById("preferred_shift_durationDraft").value = preferred_shift_duration;
+    }
 
 
         function editDataJob(element) {
@@ -2281,6 +2356,12 @@ function open_modal(obj) {
     .container .progress-bar-item .step {
         text-align: center;
         position: relative;
+        display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: space-between;
     }
 
     .container .progress-bar-item .step p {
