@@ -14,6 +14,6 @@ class Chat extends Model
 
     protected $casts = [
         'isActive' => 'boolean',
-        'messages' => 'array'
+        
     ];
 }

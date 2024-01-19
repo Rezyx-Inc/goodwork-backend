@@ -606,7 +606,7 @@ function getChat(id) {
     //     console.error('CSRF token not found.');
     // }
    
-    window.location.href = "{{ route('employer-messages', ['idWorker' => "+$id + "]) }}";
+    window.location.href = "{{ route('employer-messages', ['idWorker' => "+id + "]) }}";
 
 }
 

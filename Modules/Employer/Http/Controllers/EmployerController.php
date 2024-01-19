@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\NewPrivateMessage;
 
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 
@@ -376,29 +377,130 @@ class EmployerController extends Controller
     // Calculate the number of messages to skip
     $skip = ($page - 1) * 10;
 
-    // Get the messages string
+
     $chat = DB::connection('mongodb')->collection('chat')
-    ->raw(function($collection) use ($idEmployer, $idWorker) {
-        return $collection->findOne(
-            ['employerId' => $idEmployer, 'workerId' => $idWorker],
-            ['projection' => ['messages' => 1]]
-        );
+    ->raw(function($collection) use ($idEmployer, $idWorker, $skip) {
+        return $collection->aggregate([
+            [
+                '$match' => [
+                    'employerId' => $idEmployer,
+                    'workerId' => $idWorker
+                ]
+            ],
+            [
+                '$project' => [
+                    'messages' => [
+                        '$slice' => [
+                            '$messages',
+                            $skip,
+                            10
+                        ]
+                    ]
+                ]
+            ]
+        ])->toArray();
     });
 
-    // Convert the messages string to an array
-    $messages = json_decode($chat['messages'], true);
+    return $chat[0];
 
-    // Get the messages for the specified page
-    $messages = array_slice($messages, $skip, 10);
+}
 
-    return response()->json(['messages' => $messages]);
+public function get_rooms(Request $request){
+    $idEmployer = Auth::guard('employer')->user()->id;
+
+    $rooms = DB::connection('mongodb')->collection('chat')
+    ->raw(function($collection) use ($idEmployer) {
+        return $collection->aggregate([
+            [
+                '$match' => [
+                    
+                    'employerId' => $idEmployer,
+                    
+                ]
+            ],
+            [
+                '$project' => [
+                    'employerId' => 1,
+                    'workerId' => 1,
+                    'lastMessage' => 1,
+                    'isActive' => 1,
+                    'messages' => [
+                        '$slice' => [
+                            '$messages',
+                            -1
+                        ]
+                    ]
+                ]
+            ]
+        ])->toArray();
+    });
+
+   
+    $users = [];
+    $data = [];
+    foreach($rooms as $room){
+    $user = User::where('id', $room->workerId)->where('role','NURSE')->select("first_name",
+    "last_name")->get();
+
+    $data_User['fullName'] = $user[0]->fullName;
+    $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+    $data_User['workerId'] = $room->workerId;
+    $data_User['isActive'] = $room->isActive;
+    $data_User['messages'] = $room->messages;
+
+    array_push($data,$data_User);
+    }
+
+    
+     return response()->json($data);
 }
 
     public function get_messages(){
-        $user = Auth::guard('employer')->user();
-        $id = $user->id;
+        
+        $id = Auth::guard('employer')->user()->id;
 
-        return  view('employer::employer/messages',compact('id'));
+    $rooms = DB::connection('mongodb')->collection('chat')
+    ->raw(function($collection) use ($id) {
+        return $collection->aggregate([
+            [
+                '$match' => [
+                    
+                    'employerId' => $id,
+                    
+                ]
+            ],
+            [
+                '$project' => [
+                    'employerId' => 1,
+                    'workerId' => 1,
+                    'lastMessage' => 1,
+                    'isActive' => 1,
+                    'messages' => [
+                        '$slice' => [
+                            '$messages',
+                            -1
+                        ]
+                    ]
+                ]
+            ]
+        ])->toArray();
+    });
+
+    $data = [];
+    foreach($rooms as $room){
+    $user = User::where('id', $room->workerId)->where('role','NURSE')->select("first_name",
+    "last_name")->get();
+
+    $data_User['fullName'] = $user[0]->fullName;
+    $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+    $data_User['workerId'] = $room->workerId;
+    $data_User['isActive'] = $room->isActive;
+    $data_User['messages'] = $room->messages;
+
+    array_push($data,$data_User);
+    }
+
+        return  view('employer::employer/messages',compact('id','data'));
     }
 
     public function timeAgo($time = NULL)
@@ -569,30 +671,26 @@ class EmployerController extends Controller
 
     public function deleteapikey(Request $request){
 
-
-
-
                 $valuekeyid =  $request->input('delete_key');
-
                 DB::table('api_keys')
                     ->where('id', $valuekeyid)
                     ->delete();
-
                 return redirect()->route('employer-keys')->with('success', 'Deleted successfully');
-
 
     }
 
-    public function sendMessages()
+    public function sendMessages(Request $request)
     {
+
+        $message = $request->message_data;
         $user = Auth::guard('employer')->user();
         $id = $user->id;
         $role = $user->role;
-        // event(new MyEvent('hello world', $user ));
-        // event(new NewMessage('hello', 'GWU000002'));
+        $idWorker = $request->idWorker;
+       
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage('hello', $id,'GWU000005',$role,$time));
-        //    event(new NewMessage('hello'));
+        event(new NewPrivateMessage($message , $id,  $idWorker,$role,$time));
+        
     return true;
     }
 

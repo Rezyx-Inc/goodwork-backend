@@ -27,62 +27,83 @@ class NewPrivateMessageListener
      */
     public function handle($event)
     {
-    //     $emplyerId = $event->EmployerId;
-    //     $workerId = $event->WorkerId;
-    //     $message = $event->message;
-    //     $senderRole = $event->senderRole;
 
-    //     $chat = new Chat;
-    // $chat->lastMessage = now();
-    // $chat->isActive = true;
-    // $chat->employerId = $emplyerId;
-    // $chat->workerId = $workerId;
-    // $chat->messages = [
-    //     [
-    //         'id' => uniqid(),
-    //         'sender' => $senderRole,
-    //         'type' => 'text',
-    //         'time' => now(),
-    //         'content' => $message
-    //     ]
-    // ];
-    // $chat->save();
+        $employerId = $event->EmployerId;
+        $workerId = $event->WorkerId;
+        $message = $event->message;
+        $senderRole = $event->senderRole;
+        $messageTime = $event->messageTime;
+        
+        // Find existing chat between the employer and worker
+        $chat = Chat::where('employerId', $employerId)
+                     ->where('workerId', $workerId)
+                     ->first();
+        
+        if ($chat) {
+            // If chat exists, add new message to the start of the messages array
+            $newMessage = [
+                'id' => uniqid(),
+                'sender' => $senderRole,
+                'type' => 'text',
+                'time' => $messageTime,
+                'content' => $message
+            ];
+            $chat->messages = collect($chat->messages)->prepend($newMessage)->all();
+        } else {
+            // If chat doesn't exist, create a new one
+            $chat = new Chat;
+            $chat->employerId = $employerId;
+            $chat->workerId = $workerId;
+            $chat->messages = [
+                [
+                    'id' => uniqid(),
+                    'sender' => $senderRole,
+                    'type' => 'text',
+                    'time' => $messageTime,
+                    'content' => $message
+                ]
+            ];
+        }
+        
+        $chat->lastMessage = now()->toDateTimeString();
+        $chat->isActive = true;
+        $chat->save();
 
 // store uncomming messages in the db
 
-$employerId = $event->EmployerId;
-$workerId = $event->WorkerId;
-$message = $event->message;
-$senderRole = $event->senderRole;
-$messageTime = $event->messageTime;
+// $employerId = $event->EmployerId;
+// $workerId = $event->WorkerId;
+// $message = $event->message;
+// $senderRole = $event->senderRole;
+// $messageTime = $event->messageTime;
 
-$chat = Chat::firstOrCreate(
-    ['employerId' => $employerId, 'workerId' => $workerId],
-    ['lastMessage' => now()->toDateTimeString(), 'isActive' => true],
-    ['messages' => []],
-);
+// $chat = Chat::firstOrCreate(
+//     ['employerId' => $employerId, 'workerId' => $workerId],
+//     ['lastMessage' => now()->toDateTimeString(), 'isActive' => true],
+//     ['messages' => []],
+// );
 
-$newMessage = [
-    'id' => uniqid(),
-    'sender' => $senderRole,
-    'type' => 'text',
-    // 'time' => now()->format('h:i A'),
-    'time' => $messageTime,
-    'content' => $message
-];
+// $newMessage = [
+//     'id' => uniqid(),
+//     'sender' => $senderRole,
+//     'type' => 'text',
+//     // 'time' => now()->format('h:i A'),
+//     'time' => $messageTime,
+//     'content' => $message
+// ];
 
 
-// Get the current messages, or initialize as an empty array if null
-$messages = $chat->messages ?? [];
+// // Get the current messages, or initialize as an empty array if null
+// $messages = $chat->messages ?? [];
 
-// Prepend the new message
-array_unshift($messages, $newMessage);
+// // Prepend the new message
+// array_unshift($messages, $newMessage);
 
-// Set the messages attribute to the new array
-$chat->messages = $messages;
+// // Set the messages attribute to the new array
+// $chat->messages = $messages;
 
-$chat->lastMessage = now()->toDateTimeString();
-$chat->save();
+// $chat->lastMessage = now()->toDateTimeString();
+// $chat->save();
 
         //broadcast(new NewPrivatePrivateMessage($message, $receiverId))->toOthers();
     }
