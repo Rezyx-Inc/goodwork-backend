@@ -289,7 +289,7 @@ class SiteController extends Controller {
             // issue if the id is a phone numbe
         if ($request->ajax()) {
             $validator = Validator::make($request->all(), [
-                'id' => 'email:rfc,dns',
+                'id' => 'email',
             ]);
             if ($validator->fails()) {
                 $data = [];
@@ -301,7 +301,14 @@ class SiteController extends Controller {
             }
             $data_msg = [];
             $input = $request->only('id');
-            $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'NURSE')->where("active","1")->first();
+            // $model = User::where('email', '=', $input['id'])->orWhere('mobile',$input['id'])->where('ROLE', 'NURSE')->where("active","1")->first();
+            $model = User::where(function ($query) use ($input) {
+                $query->where('email', $input['id'])
+                    ->orWhere('mobile', $input['id']);
+            })
+            ->where('ROLE', 'NURSE')
+            ->where('active', '1')
+            ->first();
             if (isset($model)) {
             session()->put('otp_user_id', $model->id);
             $otp = $this->rand_number(4);

@@ -296,7 +296,7 @@
 
                                 <div class="col-lg-3 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-start"
                                     style="padding-right:0px;  margin-top: 10px; ">
-                                    <button type="text" style="    width: auto; font-size: 15px;">Chat Now</button>
+                                    <button onclick="getChat('GWU000005')" type="text" style="    width: auto; font-size: 15px;">Chat Now</button>
                                 </div>
 
                                 <div class="ss-jb-dtl-abt-txt">
@@ -581,6 +581,35 @@
 
 </main>
 <script>
+
+function getChat(id) {
+    // var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    // if (csrfToken) {
+    //     console.log(id);
+    //     $.ajax({
+    //         headers: {
+    //             'X-CSRF-TOKEN': csrfToken
+    //         },
+    //         url: "{{ route('employer-messages') }}",
+    //         data: {
+    //             'idWorker': id,
+    //         },
+    //         type: 'POST',
+    //         success: function (result) {
+    //             $('html').html(result);
+    //         },
+    //         error: function (error) {
+    //             console.error('Error:', error);
+    //         }
+    //     });
+    // } else {
+    //     console.error('CSRF token not found.');
+    // }
+   
+    window.location.href = "{{ route('employer-messages', ['idWorker' => "+id + "]) }}";
+
+}
+
     function applicationType(type, id = "", formtype, jobid = "") {
         window.scrollTo({
             top: 0,
