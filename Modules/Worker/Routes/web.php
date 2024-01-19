@@ -31,7 +31,7 @@ Route::prefix('worker')->group(function() {
         Route::get('worker-dashboard', ['uses' => 'WorkerController@index', 'as' => 'worker-dashboard']);
       
         Route::get('home', ['uses' => 'WorkerController@home', 'as' => 'worker-home']);
-        Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
+       // Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
         Route::get('worker-profile', ['uses' => 'WorkerController@get_profile', 'as' => 'worker-profile']);
 
 
@@ -39,6 +39,10 @@ Route::prefix('worker')->group(function() {
         Route::post('worker-update-profile', ['uses' => 'WorkerDashboardController@updateProfile', 'as' => 'worker-update-profile']);
 
         Route::post('worker-send-job-offer', ['uses' => 'ApplicationController@sendJobOffer', 'as' => 'worker-send-job-offer']);
+
+    //    Route::get('worker-messages/{idEmployer}', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
+      //  Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
+        Route::get('/getMessages', ['uses'=>'WorkerController@get_private_messages', 'as'=>'getPrivateMessages']);
 
 
 

@@ -151,7 +151,7 @@ class WorkerAuthController extends Controller
                     'email' => $request->email,
                     'user_name' => $request->email,
                     // we should add facility id
-                    //'facility_id'=>'1',
+                    'facility_id'=>'1',
                     'active' => '1',
                     'role' => 'WORKER',
                 ]);
