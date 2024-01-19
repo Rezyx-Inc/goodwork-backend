@@ -182,8 +182,8 @@ class EmployerAuthController extends Controller
         }
     }catch(\Exception $e){
         $data = [];
-       // $data['msg'] = $e->getMessage();
-        $data['msg'] ='We encountered an error. Please try again later.';
+        $data['msg'] = $e->getMessage();
+        //$data['msg'] ='We encountered an error. Please try again later.';
         $data['success'] = false;
         return response()->json($data);
     }

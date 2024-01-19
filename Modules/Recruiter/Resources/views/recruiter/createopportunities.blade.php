@@ -18,10 +18,12 @@
                             </div>
                             <div class="ss-form-group col-md-4">
                                 <label>Type</label>
-                                <select name="type" id="type">
+                                <select name="job_type" id="type">
                                     <option value="">Select Type</option>
+                                    <option value="ll">jj</option>
                                     @if(isset($allKeywords['Type']))
                                     @foreach ($allKeywords['Type'] as $value)
+
                                     <option value="{{$value->id}}">{{$value->title}}</option>
                                     @endforeach
                                     @endif
@@ -706,13 +708,17 @@
     });
 
     function createJob() {
+        console.log("i am clicked");
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        console.log("csrfToken");
         if (csrfToken) {
             event.preventDefault();
-            let check_type = "published";
-            if (document.getElementById('job_id').value) {
+            let check_type = "create";
+
                 let formData = {
-                    'job_id': document.getElementById('job_id').value
+                    'job_id': document.getElementById('job_id').value,
+                    'job_name':document.getElementById('job_name').value,
+                    'job_type':document.getElementById('type').value
                 }
                 $.ajax({
                     headers: {
@@ -724,6 +730,7 @@
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
+                        console.log(data);
                         notie.alert({
                             type: 'success',
                             text: '<i class="fa fa-check"></i> ' + data.message,
@@ -734,7 +741,7 @@
                         console.log(error);
                     }
                 });
-            }
+
         } else {
             console.error('CSRF token not found.');
         }
@@ -890,9 +897,9 @@
         for (const key in speciality) {
             let specialityname = "";
             @php
-            $allKeywordsJSON = json_encode($allKeywords['Speciality_old']);
+            // $allKeywordsJSON = json_encode($allKeywords['Speciality_old']);
             @endphp
-            let allspcldata = '{!! $allKeywordsJSON !!}';
+            let allspcldata = '';
             if (speciality.hasOwnProperty(key)) {
                 var data = JSON.parse(allspcldata);
                 data.forEach(function(item) {
@@ -1072,7 +1079,7 @@
 
             let vaccinationsname = "";
             @php
-                $allKeywordsJSON = json_encode($allKeywords['Vaccinations']);
+                $allKeywordsJSON = json_encode("");
             @endphp
             let allspcldata = '{!! $allKeywordsJSON !!}';
             if (vaccinations.hasOwnProperty(key)) {
@@ -1146,29 +1153,29 @@
             'country_id': '233',
             'api_key': '123',
         }
-        $.ajax({
-            type: 'POST',
-            url: "{{ url('api/get-states') }}",
-            data: formData,
-            dataType: 'json',
-            success: function(data) {
-                var stateSelect = $('#facility-state-code');
-                stateSelect.empty();
-                stateSelect.append($('<option>', {
-                    value: "",
-                    text: "Select Facility State Code"
-                }));
-                $.each(data.data, function(index, state) {
-                    stateSelect.append($('<option>', {
-                        value: state.state_id,
-                        text: state.name
-                    }));
-                });
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+        // $.ajax({
+        //     type: 'POST',
+        //     url: "{{ url('api/get-states') }}",
+        //     data: formData,
+        //     dataType: 'json',
+        //     success: function(data) {
+        //         var stateSelect = $('#facility-state-code');
+        //         stateSelect.empty();
+        //         stateSelect.append($('<option>', {
+        //             value: "",
+        //             text: "Select Facility State Code"
+        //         }));
+        //         $.each(data.data, function(index, state) {
+        //             stateSelect.append($('<option>', {
+        //                 value: state.state_id,
+        //                 text: state.name
+        //             }));
+        //         });
+        //     },
+        //     error: function(error) {
+        //         console.log(error);
+        //     }
+        // });
     });
 
     function searchCity(e){

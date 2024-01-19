@@ -20,5 +20,10 @@ class DatabaseSeeder extends Seeder
        // $this->call(FacilitySeeder::class);
         $this->call(CountriesTableSeeder::class);
         $this->call(StateTableSeeder::class);
+        $this->call(SpecialitiesTableSeeder::class);
+        $this->call(ProfessionsTableSeeder::class);
+        $this->call(JobsTableSeeder::class);
+
+
     }
  }

@@ -14,15 +14,18 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
+            // only job name is required since in the job saving process no required fields are required
+
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('preferred_specialty');
+            // type of speciallity changed from unsignedBigInteger to string since we have no relation between specialities and jobs table and we need the name of speciality in jobs table
+            $table->string('preferred_specialty')->nullable();
             $table->unsignedBigInteger('preferred_assignment_duration')->nullable();
             $table->unsignedBigInteger('preferred_shift_duration')->nullable();
-            $table->unsignedBigInteger('preferred_work_location')->nullable();
+            $table->string('preferred_work_location')->nullable();
             $table->unsignedBigInteger('preferred_work_area')->nullable();
             $table->string("preferred_days_of_the_week")->nullable();
             $table->string('preferred_hourly_pay_rate',4)->nullable();
-            $table->string('preferred_experience',10)->nullable();
+            $table->integer('preferred_experience')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->uuid('created_by')->nullable();
@@ -58,7 +61,7 @@ class CreateJobsTable extends Migration
             $table->string('job_type')->nullable(); // Column for job type
 
             // Adding nullable float column
-            $table->float('weekly_pay', 8, 6)->nullable(); // Column for weekly pay
+            $table->float('weekly_pay', 8, 2)->nullable(); // Column for weekly pay
 
             // Adding nullable date columns
             $table->date('start_date')->nullable(); // Column for start date

@@ -104,8 +104,10 @@
             </div>
 
             <div class="ss-rply-msg-input">
+              <form action="{{route('')}}" method="POST">
               <input type="text" id="fname" name="fname" placeholder="Express yourself here!">
-              <button type="text"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
+              <button type="submit"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
+              </form>
             </div>
           </div>
         </div>

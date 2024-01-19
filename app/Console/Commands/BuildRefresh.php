@@ -32,11 +32,9 @@ class BuildRefresh extends Command
         // Create symbolic link for storage
         Artisan::call('storage:link');
 
-         // Paasport key
-         Artisan::call('passport:install');
+        // Paasport key
+        Artisan::call('passport:install');
 
-         // generate the api key
-         Artisan::call('apikey:generate goodworkapikey');
 
         $this->info('Application refreshed successfully.');
     }

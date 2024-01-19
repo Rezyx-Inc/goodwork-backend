@@ -19,9 +19,8 @@ class controllHeaders
 
         $response = $next($request);
         header_remove('x-powered-by');
-        $response->header('X-CSRF-Token', csrf_token());
         $response->header('Accept','application/json');
-        
+
         return $response;
     }
 }

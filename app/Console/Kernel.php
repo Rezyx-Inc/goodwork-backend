@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\BuildLocal;
+use App\Console\Commands\BuildRefresh;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,8 +18,8 @@ class Kernel extends ConsoleKernel
         //
         Commands\weeklyCron::class,
         Commands\monthlyCron::class,
-        Commands\BuildLocal::class,
-        Commands\BuildRefresh::class,
+        BuildLocal::class,
+       BuildRefresh::class,
     ];
 
     /**

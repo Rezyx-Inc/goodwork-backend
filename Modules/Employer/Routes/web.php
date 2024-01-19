@@ -34,11 +34,13 @@ Route::prefix('employer')->group(function() {
         Route::get('explore-employees', ['uses' => 'EmployerController@explore_employees', 'as' => 'explore-employees']);
         Route::get('employer-opportunities-manager', ['uses' => 'EmployerController@opportunities_manager', 'as' => 'employer-opportunities-manager']);
         Route::get('employer-create-job-request', ['uses' => 'EmployerController@create_job_request', 'as' => 'employer-create-job-request']);
+        Route::get('employer-messages/{idWorker}', ['uses' => 'EmployerController@get_messages', 'as' => 'employer-messages']);
         Route::get('employer-messages', ['uses' => 'EmployerController@get_messages', 'as' => 'employer-messages']);
+        Route::get('/getMessages', ['uses'=>'EmployerController@get_private_messages', 'as'=>'getPrivateMessages']);
         Route::get('employer-profile', ['uses' => 'EmployerController@get_profile', 'as' => 'employer-profile']);
 
         // added apis from recruiter module
-        
+
         // Route::get('employer-messages', ['uses' => 'EmployerDashboardController@communication', 'as' => 'employer-messages']);
         // Route::get('employer-profile', ['uses' => 'EmployerDashboardController@profile', 'as' => 'employer-profile']);
         Route::post('help-and-support', ['uses' => 'EmployerDashboardController@helpAndSupport', 'as' => 'employer-help-and-support']);
@@ -65,6 +67,17 @@ Route::prefix('employer')->group(function() {
         Route::get('get-single-nurse-details/{id}', ['uses' => 'EmployerDashboardController@getSingleNurseDetails', 'as' => 'employer-get-single-nurse-details']);
 
         Route::post('send-job-offer-employer', ['uses' => 'ApplicationController@sendJobOfferEmployer', 'as' => 'send-job-offer-employer']);
+
+        //api keys
+        Route::get('keys', ['uses' => 'EmployerController@keys', 'as' => 'employer-keys']);
+
+        Route::post('/get-api-key',['uses'=>'EmployerController@getapikey','as'=>'getApiKey']);
+        Route::post('/delete_apikey',['uses'=>'EmployerController@deleteapikey','as'=>'deleteApiKey']);
+
+        // test messaging
+        Route::post('/send-message', ['uses' => 'EmployerController@sendMessages', 'as' => 'SendMessage']);
+        Route::get('/get-messages', ['uses' => 'EmployerController@getMessages', 'as' => 'GetMessages']);
+        Route::get('/get-rooms', ['uses' => 'EmployerController@get_rooms', 'as' => 'GetRooms']);
     }
 
     );

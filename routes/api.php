@@ -1480,6 +1480,8 @@ Route::post('get-nurse-profile', [UserProfileController::class, 'NurseProfileInf
 // Route::post('worker-information', 'WorkerController@workerInformation');
 // Route::post('skip-worker-information', 'WorkerController@workerInformationSkip');
 // Route::post('update-worker-information', 'WorkerController@updateWorkerInformation');
+
+
 Route::post('register', [WorkerController::class, 'register']);
 Route::post('set-banking-details', [WorkerController::class, 'setBankingDetails']);
 Route::post('get-banking-details', [WorkerController::class, 'getBankingDetails']);
@@ -1797,9 +1799,9 @@ Route::middleware(['auth:api','scopes:all_Permession'])->get('/allPermession',[A
 
 Route::middleware(['auth:api','scopes:some_Permession'])->get('/somePermession',[ApiController::class,'some_permession_test'])->name('somePermession');
 
-// test api key and rate limit 60 hits per minute
+// test api key and rate limit 60 hits per minute // controllHeaders to secure response headers
 
-Route::middleware(['auth:api','ThrottleMiddleware:60,1','controllHeaders'])->get('/getData',[ApiController::class,'get_cities']);
+Route::middleware(['auth:api','ThrottleMiddleware:60,1','controllHeaders','auth.apikey'])->get('/getData',[ApiController::class,'get_cities']);
 
 
 

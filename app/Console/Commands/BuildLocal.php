@@ -27,6 +27,9 @@ class BuildLocal extends Command
 
         // Paasport key
         Artisan::call('passport:install');
+        
+         // generate the api key
+         Artisan::call('apikey:generate goodworkapikey');
 
         $this->info('Local environment built successfully.');
     }

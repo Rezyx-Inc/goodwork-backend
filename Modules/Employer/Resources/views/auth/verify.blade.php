@@ -45,7 +45,11 @@
                     <li><input type="text" name="otp3" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 ></li>
                     <li><input type="text" name="otp4" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1></li>
                 </ul>
-                <button type="submit">Continue</button>
+                <button type="submit"> <span id="loadingVerify" class="d-none" >
+                <span id="loadSpanVerify" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+            </span>
+        <span id="verify">Continue </span></button>
             </form>
             <ul class="ss-otp-re-send">
                 <li><a href="javascript:void(0)" id="resendotp" disabled>Resend OTP in</a></li>
@@ -71,7 +75,11 @@
             <li><input type="text" name="otp3" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 ></li>
             <li><input type="text" name="otp4" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1></li>
         </ul>
-        <button type="submit">Continue</button>
+
+        <button type="submit">
+            Continue
+        </button>
+
     </form>
     <ul class="ss-otp-re-send">
         <li><a href="#">Resend OTP in</a></li>
@@ -81,6 +89,7 @@
 
 @section('js')
 <script>
+
     let digitValidate = function (ele) {
         // console.log(ele.value);
         ele.value = ele.value.replace(/[^0-9]/g, '');
@@ -102,12 +111,16 @@
     };
 
     let auto_submit = function  () {
+
+
         if (
             $("input").filter(function () {
                 return $.trim($(this).val()).length == 0
             }).length == 0
         ) {
             submit_form('otp-form');
+            $('#loadingVerify').removeClass('d-none');
+    $('#verify').addClass('d-none');
         }
     }
 
@@ -183,4 +196,12 @@
         });
     }
 </script>
+
+@section('css')
+<style>
+    #loadingVerify,#verify,#loadSpanVerify{
+        color:#fff;
+    }
+</style>
+@stop
 @endsection
