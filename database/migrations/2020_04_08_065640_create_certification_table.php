@@ -15,9 +15,9 @@ class CreateCertificationTable extends Migration
     {
         Schema::create('certifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('worker_id');
-            $table->foreign('worker_id')
-                ->references('id')->on('workers');
+            $table->uuid('nurse_id');
+            $table->foreign('nurse_id')
+                ->references('id')->on('nurses');
             $table->unsignedBigInteger('type');
             $table->string('license_number')->nullable();
             $table->date('effective_date')->nullable();

@@ -9,7 +9,7 @@
         <div class="col-md-4 col-sm-4">
             <div class="ss-dash-small-cntdvs">
             <ul>
-            <li><img src="{{URL::asset('backend/assets/images/dash-user-worker.png')}}"/></li>
+            <li><img src="{{URL::asset('backend/assets/images/dash-user-nurse.png')}}"/></li>
              <li>   
             <span class="count_top"> Total Workers</span>
             <div class="count">{{$total_workers_active}}</div>
@@ -45,7 +45,7 @@
         <div class="col-md-4 col-sm-4">
         <div class="ss-dash-small-cntdvs">
             <ul>
-                <li><img src="{{URL::asset('backend/assets/images/dash-user-worker.png')}}"/></li>
+                <li><img src="{{URL::asset('backend/assets/images/dash-user-nurse.png')}}"/></li>
             <li><span class="count_top"> Total Females</span>
             <div class="count">4,567</div>
             <span class="count_bottom"><i class="red"><img src="{{URL::asset('backend/assets/images/direct-down.png')}}"/>12% </i> From last Week</span>

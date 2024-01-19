@@ -10,6 +10,6 @@ final class FacilityType extends Enum
     const BehavioralHealthHospital =   1;
     const AmbulatoryCareFacility = 2;
     const AssistedLiving = 3;
-    const SkilledWorking = 4;
+    const SkilledNursing = 4;
     const Other = 5;
 }

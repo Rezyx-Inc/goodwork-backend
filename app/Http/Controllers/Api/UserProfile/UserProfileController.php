@@ -8,7 +8,7 @@ use App\Enums\State;
 
 //MODELS :
 use App\Models\User;
-use App\Models\Worker;
+use App\Models\Nurse;
 use App\Models\Availability;
 use App\Models\Experience;
 use App\Models\EmailTemplate;
@@ -21,7 +21,7 @@ class UserProfileController extends Controller
     public function personalDetail(Request $request)
     {
         $user = User::where('id', $request->id)->first();
-        $worker = Worker::where('user_id', $request->id)->first();
+        $nurse = Nurse::where('user_id', $request->id)->first();
         $validator = \Validator::make($request->all(), [
             'id' => 'required',
             /* 'image' => 'nullable|max:1024|image|mimes:jpeg,png,jpg', */
@@ -51,13 +51,13 @@ class UserProfileController extends Controller
                 if (isset($request->email) && $request->email != "") $user->email = $request->email;
                 if (isset($request->mobile) && $request->mobile != "") $user->mobile = $request->mobile;
                 if ($request->hasFile('profile_image') && $request->file('profile_image') != null) {
-                    // $request->file('profile_image')->storeAs('assets/workers/profile', $worker->id);
+                    // $request->file('profile_image')->storeAs('assets/nurses/profile', $nurse->id);
                     $profile_image_name_full = $request->file('image')->getClientOriginalName();
                     $profile_image_name = pathinfo($profile_image_name_full, PATHINFO_FILENAME);
                     $profile_image_ext = $request->file('image')->getClientOriginalExtension();
                     $profile_image = $profile_image_name.'_'.time().'.'.$profile_image_ext;
 
-                    $destinationPath = 'images/workers/profile';
+                    $destinationPath = 'images/nurses/profile';
                     $request->file('image')->move(public_path($destinationPath), $profile_image);
 
                     $user->image = $profile_image;
@@ -65,18 +65,18 @@ class UserProfileController extends Controller
                 $u = $user->update();
                 /* User */
 
-                /*  Worker */
-                if (isset($request->specialty) && $request->specialty != "") $worker->specialty = $request->specialty;
-                if (isset($request->address) && $request->address != "") $worker->address = $request->address;
-                if (isset($request->city) && $request->city != "") $worker->city = $request->city;
-                if (isset($request->state) && $request->state != "") $worker->state = $request->state;
-                if (isset($request->postcode) && $request->postcode != "") $worker->postcode = $request->postcode;
-                if (isset($request->country) && $request->country != "") $worker->country = $request->country;
-                if (isset($request->nursing_license_number) && $request->nursing_license_number != "") $worker->nursing_license_number = $request->nursing_license_number;
-                if (isset($request->search_status) && $request->search_status != "") $worker->search_status = $request->search_status;
-                if (isset($request->license_type) && $request->license_type != "") $worker->license_type = $request->license_type;
-                $n = $worker->update();
-                /*  Worker */
+                /*  Nurse */
+                if (isset($request->specialty) && $request->specialty != "") $nurse->specialty = $request->specialty;
+                if (isset($request->address) && $request->address != "") $nurse->address = $request->address;
+                if (isset($request->city) && $request->city != "") $nurse->city = $request->city;
+                if (isset($request->state) && $request->state != "") $nurse->state = $request->state;
+                if (isset($request->postcode) && $request->postcode != "") $nurse->postcode = $request->postcode;
+                if (isset($request->country) && $request->country != "") $nurse->country = $request->country;
+                if (isset($request->nursing_license_number) && $request->nursing_license_number != "") $nurse->nursing_license_number = $request->nursing_license_number;
+                if (isset($request->search_status) && $request->search_status != "") $nurse->search_status = $request->search_status;
+                if (isset($request->license_type) && $request->license_type != "") $nurse->license_type = $request->license_type;
+                $n = $nurse->update();
+                /*  Nurse */
 
                 if ($u || $n) {
                     $this->check = "1";
@@ -123,19 +123,19 @@ class UserProfileController extends Controller
             if ($validator->fails()) {
                 $this->message = $validator->errors()->first();
             } else {
-                /* worker */
-                $worker = Worker::where('user_id', '=', $request->id)->get()->first();
+                /* nurse */
+                $nurse = Nurse::where('user_id', '=', $request->id)->get()->first();
                 if (isset($request->hourly_pay_rate) && $request->hourly_pay_rate != "") {
                     $tmpRate =  $request->hourly_pay_rate * 25 / 100;
                     $facility_hourly_pay_rate = $request->hourly_pay_rate + $tmpRate;
-                    $worker->__set('facility_hourly_pay_rate', $facility_hourly_pay_rate);
+                    $nurse->__set('facility_hourly_pay_rate', $facility_hourly_pay_rate);
                 }
-                $worker->hourly_pay_rate = $request->hourly_pay_rate;
-                $n = $worker->update();
-                /* worker */
+                $nurse->hourly_pay_rate = $request->hourly_pay_rate;
+                $n = $nurse->update();
+                /* nurse */
 
                 /* availability */
-                $availability = Availability::where('worker_id', '=', $worker->id)->get()->first();
+                $availability = Availability::where('nurse_id', '=', $nurse->id)->get()->first();
                 if (isset($request->shift_duration) && $request->shift_duration != "") $availability->shift_duration = $request->shift_duration;
                 if (isset($request->preferred_shift) && $request->preferred_shift != "") $availability->preferred_shift = $request->preferred_shift;
                 if (isset($request->days_of_the_week) && $request->days_of_the_week != "") $availability->days_of_the_week = $request->days_of_the_week;
@@ -171,7 +171,7 @@ class UserProfileController extends Controller
     public function getAvailability(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'worker_id' => 'required',
+            'nurse_id' => 'required',
             'month' => 'required',
             'year' => 'required',
             'api_key' => 'required',
@@ -181,7 +181,7 @@ class UserProfileController extends Controller
             $this->message = $validator->errors()->first();
         } else {
 
-            $availability = Availability::where('worker_id', '=', $request->worker_id)->get()->first();
+            $availability = Availability::where('nurse_id', '=', $request->nurse_id)->get()->first();
 
             $unavailable_dates = explode(',',$availability->unavailable_dates);
 
@@ -332,9 +332,9 @@ class UserProfileController extends Controller
             $user_info = USER::where('id', '=', $request->id);
             if ($user_info->count() > 0) {
                 $user = $user_info->first();
-                $worker_info = Worker::where('user_id', '=', $request->id);
-                if ($worker_info->count() > 0) {
-                    $worker = $worker_info->first();
+                $nurse_info = Nurse::where('user_id', '=', $request->id);
+                if ($nurse_info->count() > 0) {
+                    $nurse = $nurse_info->first();
 
                     $update_data = [
                         'highest_nursing_degree' => $request->highest_nursing_degree,
@@ -349,7 +349,7 @@ class UserProfileController extends Controller
                         'ehr_proficiency_epic' => $request->ehr_proficiency_epic,
                         'ehr_proficiency_other' =>  $request->ehr_proficiency_other,
                     ];
-                    $update = WORKER::where(['id' => $worker->id])->update($update_data);
+                    $update = NURSE::where(['id' => $nurse->id])->update($update_data);
                     if ($update) {
                         $this->check = "1";
                         $this->message = "Experience updated successfully";
@@ -359,7 +359,7 @@ class UserProfileController extends Controller
                         $this->message = "Failed to update the experience, Please try again later";
                     }
                 } else {
-                    $this->message = "Worker not found";
+                    $this->message = "Nurse not found";
                 }
             } else {
                 $this->message = "User not found";
@@ -380,12 +380,12 @@ class UserProfileController extends Controller
             $this->message = $validator->errors()->first();
         } else {
 
-            $worker = WORKER::where('id', $request->worker_id)->get()->first();
+            $worker = NURSE::where('id', $request->worker_id)->get()->first();
             $user = USER::where('id', $worker->user_id)->get()->first();
             if(isset($worker))
             {
                 $experience = [];
-                $exp = Experience::where(['worker_id' => $request->worker_id])->whereNull('deleted_at')->get();
+                $exp = Experience::where(['nurse_id' => $request->worker_id])->whereNull('deleted_at')->get();
                 if ($exp->count() > 0) {
                     $e = $exp;
                     foreach ($e as $key => $v) {
@@ -437,7 +437,7 @@ class UserProfileController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function workerExperienceSelectionOptions(Request $request)
+    public function nurseExperienceSelectionOptions(Request $request)
     {
         $messages = [
             "id.required" => "Id is required"
@@ -452,9 +452,9 @@ class UserProfileController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $worker = Worker::where('user_id', '=', $request->id)->first();
-            if ($worker != null) {
-                $nuexperience = $this->workerExperienceSelection($worker);
+            $nurse = Nurse::where('user_id', '=', $request->id)->first();
+            if ($nurse != null) {
+                $nuexperience = $this->nurseExperienceSelection($nurse);
                 $data = [];
                 foreach ($nuexperience as $key => $value) {
                     $data[] = ['id' => $key, "name" => $value];
@@ -463,7 +463,7 @@ class UserProfileController extends Controller
                 $this->message = "facility type's has been listed successfully";
                 $this->return_data = $nuexperience;
             } else {
-                $this->message = "Worker not found";
+                $this->message = "Nurse not found";
             }
         }
 
@@ -488,7 +488,7 @@ class UserProfileController extends Controller
              if ($check_user->count() > 0) {
                  $user = $check_user->first();
 
-                 $temp = EmailTemplate::where(['slug' => 'worker_reset_password']);
+                 $temp = EmailTemplate::where(['slug' => 'nurse_reset_password']);
                  if ($temp->count() > 0) {
                      $t = $temp->first();
                      $data = [
@@ -497,7 +497,7 @@ class UserProfileController extends Controller
                      ];
                      $token = $this->generate_token();
                      $replace_array = ['###RESETLINK###' => url('password/reset', $token)];
-                     $this->basic_email($template = "worker_reset_password", $data, $replace_array);
+                     $this->basic_email($template = "nurse_reset_password", $data, $replace_array);
                  }
                  $this->check = "1";
                  $this->message = "Reset password link sent successfully";
@@ -555,36 +555,36 @@ class UserProfileController extends Controller
              $response = [];
              if ($user_info->count() > 0) {
                  $user = $user_info->get()->first();
-                 $worker_info = WORKER::where('user_id', $user->id);
-                 if ($worker_info->count() > 0) {
-                     $worker = $worker_info->get()->first();
+                 $nurse_info = NURSE::where('user_id', $user->id);
+                 if ($nurse_info->count() > 0) {
+                     $nurse = $nurse_info->get()->first();
                      $response["first_name"] = (isset($user->first_name) && $user->first_name != "") ? $user->first_name : "";
                      $response["last_name"] = (isset($user->last_name) && $user->last_name != "") ? $user->last_name : "";
                      $response["full_name"] = $user->first_name . " " . $user->last_name;
-                     // $response["profile_picture"] = url('storage/assets/workers/profile/' . $worker->user->image);
-                     $response['profile_picture'] = url('public/images/workers/profile/'.$user->image);
+                     // $response["profile_picture"] = url('storage/assets/nurses/profile/' . $nurse->user->image);
+                     $response['profile_picture'] = url('public/images/nurses/profile/'.$user->image);
 
-                     // $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
-                     // if ($worker->user->image) {
-                     //     $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $worker->user->image);
+                     // $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+                     // if ($nurse->user->image) {
+                     //     $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $nurse->user->image);
                      //     if ($t) {
-                     //         $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $worker->user->image);
+                     //         $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $nurse->user->image);
                      //     }
                      // }
-                     // $response["profile_picture_base"] = 'data:image/jpeg;base64,' . base64_encode($profileWorker);
+                     // $response["profile_picture_base"] = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
 
-                     $response["address"] = (isset($worker->address) && $worker->address != "") ? $worker->address : "";
-                     $response["city"] = (isset($worker->city) && $worker->city != "") ? $worker->city : "";
-                     $response["state"] = (isset($worker->state) && $worker->state != "") ? $worker->state : "";
-                     $response["postcode"] = (isset($worker->postcode) && $worker->postcode != "") ? $worker->postcode : "";
-                     $response["country"] = (isset($worker->country) && $worker->country != "") ? $worker->country : "";
-                     $response["nursing_license_number"] = (isset($worker->nursing_license_number) && $worker->nursing_license_number != "") ? $worker->nursing_license_number : "";
-                     $response["bil_rate"] = (isset($worker->hourly_pay_rate) && $worker->hourly_pay_rate != "") ? $worker->hourly_pay_rate : "5";
-                     $exp = (isset($worker->experience_as_acute_care_facility) && $worker->experience_as_acute_care_facility != "") ? $worker->experience_as_acute_care_facility : "0";
-                     $non_exp = (isset($worker->experience_as_ambulatory_care_facility) && $worker->experience_as_ambulatory_care_facility != "") ? $worker->experience_as_ambulatory_care_facility : "0";
+                     $response["address"] = (isset($nurse->address) && $nurse->address != "") ? $nurse->address : "";
+                     $response["city"] = (isset($nurse->city) && $nurse->city != "") ? $nurse->city : "";
+                     $response["state"] = (isset($nurse->state) && $nurse->state != "") ? $nurse->state : "";
+                     $response["postcode"] = (isset($nurse->postcode) && $nurse->postcode != "") ? $nurse->postcode : "";
+                     $response["country"] = (isset($nurse->country) && $nurse->country != "") ? $nurse->country : "";
+                     $response["nursing_license_number"] = (isset($nurse->nursing_license_number) && $nurse->nursing_license_number != "") ? $nurse->nursing_license_number : "";
+                     $response["bil_rate"] = (isset($nurse->hourly_pay_rate) && $nurse->hourly_pay_rate != "") ? $nurse->hourly_pay_rate : "5";
+                     $exp = (isset($nurse->experience_as_acute_care_facility) && $nurse->experience_as_acute_care_facility != "") ? $nurse->experience_as_acute_care_facility : "0";
+                     $non_exp = (isset($nurse->experience_as_ambulatory_care_facility) && $nurse->experience_as_ambulatory_care_facility != "") ? $nurse->experience_as_ambulatory_care_facility : "0";
                      $response["experience"] = strval($exp + $non_exp);
                      /* availability */
-                     $availability = Availability::where('worker_id', $worker->id);
+                     $availability = Availability::where('nurse_id', $nurse->id);
                      $response["shift"] = $response["shift_definition"] = "";
                      if ($availability->count() > 0) {
                          $preferredShifts = $this->getPreferredShift()->pluck('title', 'id');
@@ -594,9 +594,9 @@ class UserProfileController extends Controller
                      }
                      /* availability */
                      $this->check = "1";
-                     $this->message = "Worker info listed successfully";
+                     $this->message = "Nurse info listed successfully";
                  } else {
-                     $this->message = "Worker not found";
+                     $this->message = "Nurse not found";
                  }
                  $this->return_data =  $response;
              } else {
@@ -607,13 +607,13 @@ class UserProfileController extends Controller
          return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
      }
 
-     public function WorkerProfileInfo(Request $request)
+     public function NurseProfileInfo(Request $request)
      {
-         if(isset($request->role) && $request->role == 'worker'){
+         if(isset($request->role) && $request->role == 'nurse'){
              $validator = \Validator::make($request->all(), [
                  'user_id' => 'required',
                  'api_key' => 'required',
-                 'worker_id' => 'required',
+                 'nurse_id' => 'required',
              ]);
          }else{
              $validator = \Validator::make($request->all(), [
@@ -627,21 +627,21 @@ class UserProfileController extends Controller
          } else {
              if(!empty($request->role) && isset($request->user_id))
              {
-                 $worker = WORKER::where('id', $request->worker_id)->get()->first();
+                 $nurse = NURSE::where('id', $request->nurse_id)->get()->first();
                  $user_info = USER::where('id', $request->user_id);
              }else{
                  $user_info = USER::where('id', $request->user_id);
-                 $worker = WORKER::where('user_id', $request->user_id)->get()->first();
+                 $nurse = NURSE::where('user_id', $request->user_id)->get()->first();
              }
 
              if ($user_info->count() > 0) {
                  $user = $user_info->get()->first();
                  $this->check = "1";
                  $this->message = "User profile details listed successfully";
-                 $type = $worker->id;
-                 $this->return_data = $this->workerProfileCompletionFlagStatus($type, $user);
+                 $type = $nurse->id;
+                 $this->return_data = $this->nurseProfileCompletionFlagStatus($type, $user);
              } else {
-                 $this->message = "Worker not found";
+                 $this->message = "Nurse not found";
              }
          }
 

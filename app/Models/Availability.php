@@ -14,7 +14,7 @@ class Availability extends UuidModel
      *
      * @var string
      */
-    private $worker_id;
+    private $nurse_id;
 
     /**
      *
@@ -70,7 +70,7 @@ class Availability extends UuidModel
      * @var array
      */
     protected $fillable = [
-        'worker_id',
+        'nurse_id',
         'assignment_duration',
         'shift_duration',
         'days_of_the_week',
@@ -100,8 +100,8 @@ class Availability extends UuidModel
      */
     protected $dates = ['deleted_at'];
 
-    public function worker()
+    public function nurse()
 	{
-		return $this->belongsTo(Worker::class);
+		return $this->belongsTo(Nurse::class);
 	}
 }

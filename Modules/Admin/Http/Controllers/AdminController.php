@@ -68,7 +68,7 @@ class AdminController extends Controller {
         if ($temp->count() > 0) {
             $t = $temp->first();
             $arr['subject'] = $t->label;
-         //   if ($t->slug == "new_registration") { $arr['cc'] = "rama@goodwork.app"; }
+         //   if ($t->slug == "new_registration") { $arr['cc'] = "rama@nurseify.app"; }
             $body_content = strtr($t->content, $replace_array);
         }
 
@@ -82,7 +82,7 @@ class AdminController extends Controller {
         //       $message->to($arr['to_email'], $arr['to_name'])->subject($arr['subject']);
         //   }
             $message->to($arr['to_email'], $arr['to_name'])->subject($arr['subject']);
-            $message->from('noreply@goodwork.app', 'Team Goodwork');
+            $message->from('noreply@nurseify.app', 'Team Nurseify');
         });
         // echo "Basic Email Sent. Check your inbox.";
     }

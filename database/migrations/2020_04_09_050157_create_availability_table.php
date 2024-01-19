@@ -15,9 +15,9 @@ class CreateAvailabilityTable extends Migration
     {
         Schema::create('availability', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('worker_id');
-            $table->foreign('worker_id')
-                ->references('id')->on('workers');
+            $table->uuid('nurse_id');
+            $table->foreign('nurse_id')
+                ->references('id')->on('nurses');
             $table->unsignedBigInteger('assignment_duration')->nullable();
             $table->unsignedBigInteger('shift_duration')->nullable();
             $table->string("days_of_the_week")->nullable();

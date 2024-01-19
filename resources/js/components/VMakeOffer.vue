@@ -57,7 +57,7 @@
               <p>
                 <strong>TERMS ACKNOWLEDGMENT</strong>
               </p>
-              <p>By clicking on the “Make an Offer” your facility agrees to pay the hourly bill rate reflected on the worker’s profile page per the terms established in the Goodwork vendor agreement</p>
+              <p>By clicking on the “Make an Offer” your facility agrees to pay the hourly bill rate reflected on the nurse’s profile page per the terms established in the Nurseify vendor agreement</p>
             </div>
             <div class="job-next margin-bottom-25">
               <p>
@@ -67,12 +67,12 @@
                 <li>
                   <strong>{{ userName }}</strong> will have 48 hours to accept your booking request
                 </li>
-                <li>You will receive an email notice after the worker accepts or rejects the request</li>
-                <li>Assuming the worker accepts, a Goodwork Consultant will contact you to coordinate onboarding logistics</li>
-                <li>If the worker rejects, we will provide additional workers that may meet your need</li>
+                <li>You will receive an email notice after the nurse accepts or rejects the request</li>
+                <li>Assuming the nurse accepts, a Nurseify Consultant will contact you to coordinate onboarding logistics</li>
+                <li>If the nurse rejects, we will provide additional nurses that may meet your need</li>
                 <li>
                   Contact us anytime at
-                  <a href="mailto:info@goodwork.app">info@goodwork.app</a>
+                  <a href="mailto:info@nurseify.app">info@nurseify.app</a>
                 </li>
               </ul>
             </div>
@@ -128,7 +128,7 @@ export default {
       type: String,
       requried: true,
     },
-    worker: {
+    nurse: {
       type: String,
       requried: true,
     }
@@ -140,7 +140,7 @@ export default {
     async fetchData() {
       this.loading++;
       try {
-        const { data } = await axios.get('/api/'+ this.worker +'/jobs');
+        const { data } = await axios.get('/api/'+ this.nurse +'/jobs');
         this.jobs = data;
         return data;
       } catch (err) {
@@ -194,7 +194,7 @@ export default {
       if (this.jobId) {
         try {
           this.loading++;
-          const { data } = await axios.get('/api/job/'+ this.jobId +'/invite/'+this.worker);
+          const { data } = await axios.get('/api/job/'+ this.jobId +'/invite/'+this.nurse);
           this.mode = "hide";
           this.jobId = "";
           this.facilityName = "";

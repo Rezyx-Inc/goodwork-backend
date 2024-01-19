@@ -14,7 +14,7 @@ $factory->define(Keyword::class, function (Faker $faker) {
             factory(User::class)->create()->id;
         },
         'filter' => KeywordEnum::getKey(KeywordEnum::Certification),
-        'title' => 'Advanced HIV/AIDS Certified Registered Worker'.Str::random(4),
+        'title' => 'Advanced HIV/AIDS Certified Registered Nurse'.Str::random(4),
         'description' => null,
         'dateTime' => null,
         'amount' => null,

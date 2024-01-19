@@ -45,7 +45,7 @@ class Offer extends Model
      *
      * @var string
      */
-    private $worker_id;
+    private $nurse_id;
 
     /**
      *
@@ -101,7 +101,7 @@ class Offer extends Model
      * @var array
      */
     protected $fillable = [
-        'worker_id',
+        'nurse_id',
         'created_by',
         'job_id',
         'status',
@@ -134,15 +134,15 @@ class Offer extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function worker()
+    public function nurse()
     {
-        return $this->belongsTo(Worker::class);
+        return $this->belongsTo(Nurse::class);
     }
 
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'worker_id');
+        return $this->belongsTo(User::class, 'nurse_id');
     }
 
     public function job()

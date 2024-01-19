@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
-use App\Notifications\GoodworkRestPassword as ResetPasswordNotification;
+use App\Notifications\NurseifyRestPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Laravel\Passport\HasApiTokens;
@@ -257,9 +257,9 @@ class User extends Authenticatable implements HasMedia
         // }
     }
 
-    public function worker()
+    public function nurse()
     {
-        return $this->hasOne(Worker::class);
+        return $this->hasOne(Nurse::class);
     }
 
     public function departments()

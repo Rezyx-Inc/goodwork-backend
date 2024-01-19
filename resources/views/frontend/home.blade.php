@@ -45,7 +45,7 @@
                     </div>
                     <div class="d-flex align-items-center">
                         <button class="btn btn-dark px-4">Create a profile</button>
-                        <p class="fs-14 ms-2"><span class="fw-700">128+</span>  Workers successfully registered across the world</p>
+                        <p class="fs-14 ms-2"><span class="fw-700">128+</span>  Nurses successfully registered across the world</p>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -60,10 +60,10 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
-                        <h3>Empowering workers to find their dream path</h3>
+                        <h3>Empowering nurses to find their dream path</h3>
                     </div>
                     <div class="col-lg-6">
-                        <p class="fs-24 fw-400 m-0">Register with us as our skilled worker to unleash your passion for nursing.</p>
+                        <p class="fs-24 fw-400 m-0">Register with us as our skilled nurse to unleash your passion for nursing.</p>
                     </div>
                 </div>
             </div>
@@ -356,7 +356,7 @@
             <div class="hdng_left text_blue">
                 <span class="span_hr"><span class="fw-400">Our Popular Jobs</span></span>
                 <h3>What Our
-                    <span class="text_detail_color">Workers</span> <br/> Say About Us
+                    <span class="text_detail_color">Nurses</span> <br/> Say About Us
                 </h3>
             </div>
             <div class="row">

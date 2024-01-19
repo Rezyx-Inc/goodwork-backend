@@ -146,7 +146,7 @@
     // message:"Hi"
     // receiver:"GWW000015"
     // sender:"GWU000032"
-    // senderfind:"Worker"
+    // senderfind:"Nurse"
     // time:1698736561602
     // type:"text"
 
@@ -173,15 +173,15 @@
         var currentDate = new Date();
         var timestamp = currentDate.getTime();
         var messagesRef = firebase.database().ref('Message');
-        // if (localStorage.getItem("worker_id")) {
-        //     worker_id = localStorage.getItem("worker_id");
+        // if (localStorage.getItem("nurse_id")) {
+        //     nurse_id = localStorage.getItem("nurse_id");
         // }
-        var chatcolumn = "m_" + senderid + "_" + localStorage.getItem("worker_id");
+        var chatcolumn = "m_" + senderid + "_" + localStorage.getItem("nurse_id");
         var newMessageKey = messagesRef.child(chatcolumn).push().key;
         var newMessageRef = messagesRef.child(chatcolumn).child(newMessageKey);
         newMessageRef.set({
             message: message,
-            receiver: localStorage.getItem("worker_id"),
+            receiver: localStorage.getItem("nurse_id"),
             sender: senderid,
             senderfind: "RECRUITER",
             time: timestamp,
@@ -189,19 +189,19 @@
         });
 
         var username = document.getElementById('username');
-        let workername = "";
-        let workerprofile = "";
-        let workermobile = "";
+        let nursename = "";
+        let nurseprofile = "";
+        let nursemobile = "";
         if (username) {
-            workername = username.textContent;
+            nursename = username.textContent;
         }
         var userprofile = document.getElementById('userprofile');
         if (userprofile) {
-            workerprofile = userprofile.src;
+            nurseprofile = userprofile.src;
         }
         var usermobile = document.getElementById('usermobile');
         if (usermobile) {
-            workermobile = usermobile.textContent;
+            nursemobile = usermobile.textContent;
         }
 
         var userRef = firebase.database().ref('Users');
@@ -212,7 +212,7 @@
         // //     snapshot.forEach(function(childSnapshot) {
         // //         var messageData = childSnapshot.val();
         // //         var messageKey = childSnapshot.key;
-        // //         if(messageData.Nu_id == localStorage.getItem("worker_id") && messageData.Sm_id == senderid){
+        // //         if(messageData.Nu_id == localStorage.getItem("nurse_id") && messageData.Sm_id == senderid){
         // //             userfirebaseid = messageKey;
         // //             console.log(messageKey);
         // //             console.log(userfirebaseid);
@@ -229,7 +229,7 @@
         //         var messageData = childSnapshot.val();
         //         var messageKey = childSnapshot.key;
 
-        //         if (messageData.Nu_id == localStorage.getItem("worker_id") && messageData.Sm_id == senderid) {
+        //         if (messageData.Nu_id == localStorage.getItem("nurse_id") && messageData.Sm_id == senderid) {
         //             userfirebaseid = messageKey;
         //             console.log('Found user with ID: ' + userfirebaseid);
         //         }
@@ -242,10 +242,10 @@
 
         // var userRef = firebase.database().ref('Users');
         // var userData = {
-        //     Nu_id: localStorage.getItem("worker_id"),
-        //     Nu_image: workerprofile,
-        //     Nu_mobile: workermobile,
-        //     Nu_name: workername,
+        //     Nu_id: localStorage.getItem("nurse_id"),
+        //     Nu_image: nurseprofile,
+        //     Nu_mobile: nursemobile,
+        //     Nu_name: nursename,
         //     Sm_id: senderid,
         //     Sm_image: '<?php echo auth()->guard('recruiter')->user()->image ?>',
         //     Sm_mobile: '<?php echo auth()->guard('recruiter')->user()->mobile ?>',
@@ -281,7 +281,7 @@
                 var messageData = childSnapshot.val();
                 var messageKey = childSnapshot.key;
 
-                if (messageData.Nu_id == localStorage.getItem("worker_id") && messageData.Sm_id == senderid) {
+                if (messageData.Nu_id == localStorage.getItem("nurse_id") && messageData.Sm_id == senderid) {
                     userfirebaseid = messageKey;
                 }
             });
@@ -292,10 +292,10 @@
         });
 
         var userData = {
-            Nu_id: localStorage.getItem("worker_id"),
-            Nu_image: workerprofile,
-            Nu_mobile: workermobile,
-            Nu_name: workername,
+            Nu_id: localStorage.getItem("nurse_id"),
+            Nu_image: nurseprofile,
+            Nu_mobile: nursemobile,
+            Nu_name: nursename,
             Sm_id: senderid,
             Sm_image: '<?php echo auth()->guard('recruiter')->user()->image ?>',
             Sm_mobile: '<?php echo auth()->guard('recruiter')->user()->mobile ?>',
@@ -328,7 +328,7 @@
 
     function fetchMessages() {
         var senderid = '<?php echo auth()->guard('recruiter')->user()->id ?>';
-        var chatcolumn = "m_" + senderid + "_" + localStorage.getItem("worker_id");
+        var chatcolumn = "m_" + senderid + "_" + localStorage.getItem("nurse_id");
         var messagesRef = firebase.database().ref('Message/'+ chatcolumn);
         console.log(messagesRef, 'messageref');
         var messageContainer = document.getElementById('message-container');
@@ -375,15 +375,15 @@
     }
 
     function fetchSingleUserChat() {
-        var worker_id = "";
-        if (localStorage.getItem("worker_id")) {
-            worker_id = localStorage.getItem("worker_id");
+        var nurse_id = "";
+        if (localStorage.getItem("nurse_id")) {
+            nurse_id = localStorage.getItem("nurse_id");
         } else {
 
         }
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         if (csrfToken) {
-            var url = `{{ url('recruiter/get-single-worker-details') }}/${worker_id}`;
+            var url = `{{ url('recruiter/get-single-nurse-details') }}/${nurse_id}`;
             $.get(url, { '_token': csrfToken }, function(result) {
                 console.log(result.data);
                 let fullname = result.data.first_name + " " + result.data.last_name;
@@ -398,9 +398,9 @@
                 }
                 console.log(result.data.image);
                 if(result.data.image){
-                    console.log('{{ asset("images/workers/profile/") }}' + '/' + result.data.image);
-                    // document.getElementById("userprofile").src = "URL::asset('images/workers/profile/)" + result.data.image;
-                    document.getElementById("userprofile").src = '{{ asset("images/workers/profile/") }}' + '/' + result.data.image;
+                    console.log('{{ asset("images/nurses/profile/") }}' + '/' + result.data.image);
+                    // document.getElementById("userprofile").src = "URL::asset('images/nurses/profile/)" + result.data.image;
+                    document.getElementById("userprofile").src = '{{ asset("images/nurses/profile/") }}' + '/' + result.data.image;
                 }
             })
             .fail(function(error) {

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 //MODELS :
 use App\Models\User;
 use App\Models\Certification;
-use App\Models\Worker;
+use App\Models\Nurse;
 use App\Http\Controllers\Controller;
 class CertificationController extends Controller
 {
@@ -46,17 +46,17 @@ class CertificationController extends Controller
         } else {
 
             if(isset($request->role)){
-                $worker_info = Worker::where('id', '=', $request->worker_id);
+                $nurse_info = Nurse::where('id', '=', $request->nurse_id);
             }else{
-                $worker_info = Worker::where('user_id', '=', $request->user_id);
+                $nurse_info = Nurse::where('user_id', '=', $request->user_id);
             }
 
-            if ($worker_info->count() > 0) {
-                $worker = $worker_info->first();
+            if ($nurse_info->count() > 0) {
+                $nurse = $nurse_info->first();
 
                 /* certification */
                 $add_array = [
-                    'worker_id' => $worker->id,
+                    'nurse_id' => $nurse->id,
                     'type' => $request->type,
                     'effective_date' => $request->effective_date,
                     'expiration_date' => $request->expiration_date,
@@ -64,9 +64,9 @@ class CertificationController extends Controller
                     "renewal_date" => $request->renewal_date,
                     'license_number' => $request->license_number
                 ];
-                $check = Certification::where('worker_id', '=', $worker->id)->get()->first();
+                $check = Certification::where('nurse_id', '=', $nurse->id)->get()->first();
                 if(isset($check)){
-                    $certification = Certification::where('worker_id', '=', $worker->id)->update($add_array);
+                    $certification = Certification::where('nurse_id', '=', $nurse->id)->update($add_array);
                     // DB::table('user')->where('email', $userEmail)->update(array('member_type' => $plan));
                 }else{
                     $certification = Certification::create($add_array);
@@ -80,7 +80,7 @@ class CertificationController extends Controller
                     $certification_array["certificate_image"] = $certificate_image;
                     $certification_img_update = Certification::where(['id' => $certification->id])->update($certification_array);
                     //Upload Image
-                    $request->file('certificate_image')->storeAs('assets/workers/certifications/' . $worker->id, $certificate_image);
+                    $request->file('certificate_image')->storeAs('assets/nurses/certifications/' . $nurse->id, $certificate_image);
                 }
                 /* certification */
 
@@ -90,24 +90,24 @@ class CertificationController extends Controller
                     /* certificate data */
                     $certifications = $this->getCertifications()->pluck('title', 'id');
                     $cert_data["id"] = (isset($cert_ret->id) && $cert_ret->id != "") ? $cert_ret->id : "";
-                    $cert_data["worker_id"] = (isset($cert_ret->worker_id) && $cert_ret->worker_id != "") ? $cert_ret->worker_id : "";
+                    $cert_data["nurse_id"] = (isset($cert_ret->nurse_id) && $cert_ret->nurse_id != "") ? $cert_ret->nurse_id : "";
                     $cert_data["type"] = (isset($cert_ret->type) && $cert_ret->type != "") ? $cert_ret->type : "";
                     $cert_data["type_definition"] = (isset($certifications[$cert_ret->type]) && $certifications[$cert_ret->type] != "") ? $certifications[$cert_ret->type] : "";
                     $cert_data["license_number"] = (isset($cert_ret->license_number) && $cert_ret->license_number != "") ? $cert_ret->license_number : "";
                     $cert_data["effective_date"] = (isset($cert_ret->effective_date) && $cert_ret->effective_date != "") ?  date('m/d/Y', strtotime($cert_ret->effective_date)) : "";
                     $cert_data["expiration_date"] = (isset($cert_ret->expiration_date) && $cert_ret->expiration_date != "") ?  date('m/d/Y', strtotime($cert_ret->expiration_date)) : "";
                     $cert_data["renewal_date"] = (isset($cert_ret->renewal_date) && $cert_ret->renewal_date != "") ?  date('m/d/Y', strtotime($cert_ret->renewal_date)) : "";
-                    $cert_data["certificate_image"] = (isset($cert_ret->certificate_image) && $cert_ret->certificate_image != "") ? url('storage/assets/workers/certifications/' . $worker->id . '/' . $cert_ret->certificate_image) : "";
+                    $cert_data["certificate_image"] = (isset($cert_ret->certificate_image) && $cert_ret->certificate_image != "") ? url('storage/assets/nurses/certifications/' . $nurse->id . '/' . $cert_ret->certificate_image) : "";
                     $cert_data["organization"] = (isset($cert_ret->organization) && $cert_ret->organization != "") ? $cert_ret->organization : "";
                     // $cert_data["deleted_at"] = (isset($cert_ret->deleted_at) && $cert_ret->deleted_at != "") ? date('m/d/Y H:i:s', strtotime($cert_ret->deleted_at)) : "";
                     $cert_data["created_at"] = (isset($cert_ret->created_at) && $cert_ret->created_at != "") ?  date('m/d/Y H:i:s', strtotime($cert_ret->created_at)) : "";
                     // $cert_data["updated_at"] = (isset($cert_ret->updated_at) && $cert_ret->updated_at != "") ?  date('m/d/Y H:i:s', strtotime($cert_ret->updated_at)) : "";
                     /* certificate data */
 
-                    /* worker data */
-                    $worker_return = Worker::select('resume')->where('user_id', '=', $request->id)->first();
-                    $cert_data["resume"] = (isset($worker_return->resume) && $worker_return->resume != "") ? url('storage/assets/workers/resumes/' . $worker->id . '/' . $worker_return->resume) : "";
-                    /* worker data */
+                    /* nurse data */
+                    $nurse_return = Nurse::select('resume')->where('user_id', '=', $request->id)->first();
+                    $cert_data["resume"] = (isset($nurse_return->resume) && $nurse_return->resume != "") ? url('storage/assets/nurses/resumes/' . $nurse->id . '/' . $nurse_return->resume) : "";
+                    /* nurse data */
 
                     $this->check = "1";
                     $this->message = "Certification added successfully";
@@ -116,7 +116,7 @@ class CertificationController extends Controller
                     $this->message = "Problem occurred while updating certification, Please try again later";
                 }
             } else {
-                $this->message = "Worker not found";
+                $this->message = "Nurse not found";
             }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -140,9 +140,9 @@ class CertificationController extends Controller
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->first();
-                $worker_info = WORKER::where('user_id', $request->user_id);
-                if ($worker_info->count() > 0) {
-                    $worker = $worker_info->first();
+                $nurse_info = NURSE::where('user_id', $request->user_id);
+                if ($nurse_info->count() > 0) {
+                    $nurse = $nurse_info->first();
                     $certificate_array = [
                         "type" => $request->type,
                         "effective_date" => $request->effective_date,
@@ -158,7 +158,7 @@ class CertificationController extends Controller
                         $certificate_image = $certificate_image_name . '_' . time() . '.' . $certificate_image_ext;
                         $certificate_array["certificate_image"] = $certificate_image;
                         //Upload Image
-                        $request->file('certificate_image')->storeAs('assets/workers/certifications/' . $worker->id, $certificate_image);
+                        $request->file('certificate_image')->storeAs('assets/nurses/certifications/' . $nurse->id, $certificate_image);
                     }
                     $certification = Certification::where(['id' => $request->certificate_id])->update($certificate_array);
                     if ($certification == true) {
@@ -169,7 +169,7 @@ class CertificationController extends Controller
                         $this->message = "Failed to update the certificate. Please try again later";
                     }
                 } else {
-                    $this->message = "Worker not found";
+                    $this->message = "Nurse not found";
                 }
             } else {
                 $this->message = "User not found";
@@ -194,15 +194,15 @@ class CertificationController extends Controller
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->first();
-                $worker_info = WORKER::where('user_id', $request->user_id);
-                if ($worker_info->count() > 0) {
-                    $worker = $worker_info->first();
+                $nurse_info = NURSE::where('user_id', $request->user_id);
+                if ($nurse_info->count() > 0) {
+                    $nurse = $nurse_info->first();
 
                     $certificate = Certification::where(['id' => $request->certificate_id])->whereNull('deleted_at')->get();
                     if ($certificate->count() > 0) {
                         $cert = $certificate->first();
 
-                        $del = Storage::delete('assets/workers/certifications/' . $worker->id . '/' . $cert->certificate_image);
+                        $del = Storage::delete('assets/nurses/certifications/' . $nurse->id . '/' . $cert->certificate_image);
                         $remove = Certification::where(['id' => $request->certificate_id])->update(['deleted_at' => date('m/d/Y H:i:s')]);
                         if ($del && $remove) {
                             $this->check = "1";
@@ -216,7 +216,7 @@ class CertificationController extends Controller
 
                     /* $file = explode("/", $request->certificate_image); //file_exists();
                     if (isset($file) && is_array($file) && !empty($file)) {
-                        $t = Storage::exists('assets/workers/certifications/' . $worker->id . '/' . end($file));
+                        $t = Storage::exists('assets/nurses/certifications/' . $nurse->id . '/' . end($file));
                         if ($t) {
                         } else {
                             $this->message = "Certificate already removed";
@@ -224,7 +224,7 @@ class CertificationController extends Controller
                     } */
                 }else{
                     $this->check = "1";
-                    $this->message = "Worker not exist";
+                    $this->message = "Nurse not exist";
                 }
             }else{
                 $this->check = "1";

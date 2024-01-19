@@ -33,7 +33,7 @@ class LoginRequest extends FormRequest
 
     public function withValidator($validator) {
         $validator->after(function ($validator) {
-            $model = User::where('active','1')->whereNull("deleted_at")->where('ROLE', 'WORKER')->where('email', $this->id)->orWhere('mobile', $this->id)->first();
+            $model = User::where('active','1')->whereNull("deleted_at")->where('ROLE', 'NURSE')->where('email', $this->id)->orWhere('mobile', $this->id)->first();
             // dd($model);
             if (empty($model)) {
                 $validator->errors()->add('id', "User not found.");

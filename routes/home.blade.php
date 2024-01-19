@@ -88,7 +88,7 @@
                             <div class="mbr-section-btn"><a class="btn btn-primary" style="padding: 15px !important;color:white !important;" href="#">Create A Profile</a></div>
                         </div>
                         <div class="col-8">
-                            <p>128+ Workers successfully registered across the world</p>
+                            <p>128+ Nurses successfully registered across the world</p>
                         </div>
 
                     </div>
@@ -112,10 +112,10 @@
         <div class="container">
             <div class="row row-main">
                 <div class="col-6">
-                    <h3><b>Empowering workers to find their dream path</b></h3>
+                    <h3><b>Empowering nurses to find their dream path</b></h3>
                 </div>
                 <div class="col-6">
-                    <p>Register with us as our skilled worker to unleash your passion for nursing.</p>
+                    <p>Register with us as our skilled nurse to unleash your passion for nursing.</p>
                 </div>
             </div>
         </div>
@@ -130,8 +130,8 @@
         <div class="row justify-content-between">
             <div class="col-12 col-lg-6 b">
                 <div class="gray">
-                    <img src="{{ asset('frontend/assets/landing/worker1.png')}}" alt="" class="align first">
-                    <img src="{{ asset('frontend/assets/landing/worker2.png')}}" alt="" class="align second">
+                    <img src="{{ asset('frontend/assets/landing/nurse1.png')}}" alt="" class="align first">
+                    <img src="{{ asset('frontend/assets/landing/nurse2.png')}}" alt="" class="align second">
                 </div>
             </div>
             <div class="col-12 col-lg-6 t">

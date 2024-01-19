@@ -76,7 +76,7 @@ $user = auth()->guard('frontend')->user();
              aria-expanded="false"
              >
             <img
-                src="{{URL::asset('images/workers/profile/'.$user->image)}}"
+                src="{{URL::asset('images/nurses/profile/'.$user->image)}}"
                 onerror="this.onerror=null;this.src='{{USER_IMG}}';"
                  class="rounded-circle"
                  height="40"

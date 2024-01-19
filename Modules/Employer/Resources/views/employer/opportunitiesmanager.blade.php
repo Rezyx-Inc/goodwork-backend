@@ -707,13 +707,13 @@
                                     <div class="ss-jb-dtl-disc-sec">
                                         <h6>Description</h6>
                                         <p id="publishedJobDescription">This position is accountable and responsible for nursing care administered
-                                            under the direction of a Registered Worker (Worker Manager, Charge Worker,
-                                            and/or Staff Worker). Worker interns must utilize personal protective
+                                            under the direction of a Registered Nurse (Nurse Manager, Charge Nurse,
+                                            and/or Staff Nurse). Nurse interns must utilize personal protective
                                             equipment such as gloves, gown, mask.</p>
                                     </div>
 
                                     <div class="ss-jb-dtl-abt-txt">
-                                        <h6> About Worker:</h6>
+                                        <h6> About Nurse:</h6>
 
                                         <ul style="gap: 33px;">
 
@@ -765,12 +765,12 @@
                                     <div class="ss-jb-dtl-disc-sec">
                                         <h6>Description</h6>
                                         <p id="onholdJobDescription">This position is accountable and responsible for nursing care administered
-                                            under the direction of a Registered Worker (Worker Manager, Charge Worker,
-                                            and/or Staff Worker). Worker interns must utilize personal protective
+                                            under the direction of a Registered Nurse (Nurse Manager, Charge Nurse,
+                                            and/or Staff Nurse). Nurse interns must utilize personal protective
                                             equipment such as gloves, gown, mask.</p>
                                     </div>
                                     <div class="ss-jb-dtl-abt-txt">
-                                        <h6> About Worker:</h6>
+                                        <h6> About Nurse:</h6>
                                         <ul style="gap: 33px;">
                                             <li>
                                                 <h5>Preferred shift:</h5>

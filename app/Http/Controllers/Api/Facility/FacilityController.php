@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 // Models
 
-use App\Models\Worker;
+use App\Models\Nurse;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Follows;
@@ -26,7 +26,7 @@ use App\Models\States;
 use App\Models\Cities;
 use App\Models\JobAsset;
 use App\Models\JobOffer;
-use App\Models\WorkerRating;
+use App\Models\NurseRating;
 use App\Models\EmailTemplate;
 
 
@@ -121,10 +121,10 @@ class FacilityController extends Controller
             'f_emr_other' => 'nullable|required_if:f_emr,0|regex:/^[a-zA-Z 0-9,\-\/]+$/|min:1|max:150',
             'f_bcheck_provider' => 'required',
             'f_bcheck_provider_other' => 'nullable|required_if:f_bcheck_provider,0|regex:/^[a-zA-Z 0-9,\-\/]+$/|min:1|max:150',
-            'worker_cred_soft' => 'required',
-            'worker_cred_soft_other' => 'nullable|required_if:worker_cred_soft,0|regex:/^[a-zA-Z 0-9,\-\/]+$/|min:1|max:150',
-            'worker_scheduling_sys' => 'required',
-            'worker_scheduling_sys_other' => 'nullable|required_if:worker_scheduling_sys,0|regex:/^[a-zA-Z 0-9,\-\/]+$/|min:1|max:150',
+            'nurse_cred_soft' => 'required',
+            'nurse_cred_soft_other' => 'nullable|required_if:nurse_cred_soft,0|regex:/^[a-zA-Z 0-9,\-\/]+$/|min:1|max:150',
+            'nurse_scheduling_sys' => 'required',
+            'nurse_scheduling_sys_other' => 'nullable|required_if:nurse_scheduling_sys,0|regex:/^[a-zA-Z 0-9,\-\/]+$/|min:1|max:150',
             'time_attend_sys' => 'required',
             'time_attend_sys_other' => 'nullable|required_if:time_attend_sys,0|regex:/^[a-zA-Z 0-9,\-\/]+$/|min:1|max:150',
             'licensed_beds' => 'nullable|regex:/^[0-9]+$/|min:1|max:20',
@@ -156,8 +156,8 @@ class FacilityController extends Controller
             $update_array['postcode'] = $request->postcode;
             $update_array['f_emr'] = $request->f_emr;
             $update_array['f_bcheck_provider'] = $request->f_bcheck_provider;
-            $update_array['worker_cred_soft'] = $request->worker_cred_soft;
-            $update_array['worker_scheduling_sys'] = $request->worker_scheduling_sys;
+            $update_array['nurse_cred_soft'] = $request->nurse_cred_soft;
+            $update_array['nurse_scheduling_sys'] = $request->nurse_scheduling_sys;
             $update_array['time_attend_sys'] = $request->time_attend_sys;
             /* required */
 
@@ -186,13 +186,13 @@ class FacilityController extends Controller
                 if (isset($request->f_bcheck_provider_other) && $request->f_bcheck_provider_other != "") $update_array["f_bcheck_provider_other"] = $request->f_bcheck_provider_other;
             } else $update_array["f_bcheck_provider_other"] = "";
 
-            if (isset($update_array["worker_cred_soft"]) && ($update_array["worker_cred_soft"] == "other" || $update_array["worker_cred_soft"] == "0")) {
-                if (isset($request->worker_cred_soft_other) && $request->worker_cred_soft_other != "") $update_array["worker_cred_soft_other"] = $request->worker_cred_soft_other;
-            } else $update_array["worker_cred_soft_other"] = "";
+            if (isset($update_array["nurse_cred_soft"]) && ($update_array["nurse_cred_soft"] == "other" || $update_array["nurse_cred_soft"] == "0")) {
+                if (isset($request->nurse_cred_soft_other) && $request->nurse_cred_soft_other != "") $update_array["nurse_cred_soft_other"] = $request->nurse_cred_soft_other;
+            } else $update_array["nurse_cred_soft_other"] = "";
 
-            if (isset($update_array["worker_scheduling_sys"]) && ($update_array["worker_scheduling_sys"] == "other" || $update_array["worker_scheduling_sys"] == "0")) {
-                if (isset($request->worker_scheduling_sys_other) && $request->worker_scheduling_sys_other != "") $update_array["worker_scheduling_sys_other"] = $request->worker_scheduling_sys_other;
-            } else $update_array["worker_scheduling_sys_other"] = "";
+            if (isset($update_array["nurse_scheduling_sys"]) && ($update_array["nurse_scheduling_sys"] == "other" || $update_array["nurse_scheduling_sys"] == "0")) {
+                if (isset($request->nurse_scheduling_sys_other) && $request->nurse_scheduling_sys_other != "") $update_array["nurse_scheduling_sys_other"] = $request->nurse_scheduling_sys_other;
+            } else $update_array["nurse_scheduling_sys_other"] = "";
 
             if (isset($update_array["time_attend_sys"]) && ($update_array["time_attend_sys"] == "other" || $update_array["time_attend_sys"] == "0")) {
                 if (isset($request->time_attend_sys_other) && $request->time_attend_sys_other != "") $update_array["time_attend_sys_other"] = $request->time_attend_sys_other;
@@ -284,14 +284,14 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function browseWorkers(Request $request)
+    public function browseNurses(Request $request)
     {
         $whereCond = ['active' => true];
-        if (isset($request->worker_id) && $request->worker_id != "") {
-            $whereCond = array_merge($whereCond, ['id' => $request->worker_id]);
+        if (isset($request->nurse_id) && $request->nurse_id != "") {
+            $whereCond = array_merge($whereCond, ['id' => $request->nurse_id]);
         }
         $ret = [];
-        Worker::where($whereCond)
+        Nurse::where($whereCond)
             ->orderBy('created_at', 'desc');
         /* new */
 
@@ -299,7 +299,7 @@ class FacilityController extends Controller
         $whereCond = [
             'active' => true
         ];
-        $ret = Worker::where($whereCond)
+        $ret = Nurse::where($whereCond)
             ->orderBy('created_at', 'desc');
 
         $certification = $request->certification;
@@ -429,22 +429,22 @@ class FacilityController extends Controller
         /* keywords filter */
 
         /* new */
-        $workers_list = $ret->count();
+        $nurses_list = $ret->count();
         if ($ret->count() > 0) {
             $limit = 25;
             $total_pages = ceil($ret->count() / $limit);
-            $worker_data = $ret->get();
-            // $worker_data = $ret->paginate($limit);
-            $worker_info['data'] = $this->workerInfo($worker_data);
-            $worker_info['total_pages_available'] =  strval($total_pages);
-            $worker_info["current_page"] = (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) ? $_REQUEST['page'] : "1";
-            $worker_info['results_per_page'] = strval($limit);
+            $nurse_data = $ret->get();
+            // $nurse_data = $ret->paginate($limit);
+            $nurse_info['data'] = $this->nurseInfo($nurse_data);
+            $nurse_info['total_pages_available'] =  strval($total_pages);
+            $nurse_info["current_page"] = (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) ? $_REQUEST['page'] : "1";
+            $nurse_info['results_per_page'] = strval($limit);
 
             $this->check = "1";
-            $this->message = "Workers listed successfully";
-            $this->return_data = $worker_info;
+            $this->message = "Nurses listed successfully";
+            $this->return_data = $nurse_info;
         } else {
-            $this->message = "No workers found";
+            $this->message = "No nurses found";
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -463,7 +463,7 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function offeredWorkers($type, Request $request)
+    public function offeredNurses($type, Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
@@ -504,30 +504,30 @@ class FacilityController extends Controller
                 if ($offers_info->count() > 0) {
                     foreach ($offers_info as $key => $off) {
                         /* $o['creator'] = $off->creator;
-                        $o['worker'] = $off->worker;
+                        $o['nurse'] = $off->nurse;
                         $o['job'] = $off->job; */
 
-                        $worker_info = USER::where(['id' => $off->worker->user_id])->get();
+                        $nurse_info = USER::where(['id' => $off->nurse->user_id])->get();
                         $first_name = $last_name = $image = "";
                         if ($user_info->count() > 0) {
-                            $worker = $worker_info->first();
-                            $first_name = (isset($worker->first_name) && $worker->first_name != "") ? $worker->first_name : "";
-                            $last_name = (isset($worker->last_name) && $worker->last_name != "") ? $worker->last_name : "";
-                            $image = (isset($worker->image) && $worker->image != "") ? url('public/images/workers/profile/' . $worker->image) : "";
+                            $nurse = $nurse_info->first();
+                            $first_name = (isset($nurse->first_name) && $nurse->first_name != "") ? $nurse->first_name : "";
+                            $last_name = (isset($nurse->last_name) && $nurse->last_name != "") ? $nurse->last_name : "";
+                            $image = (isset($nurse->image) && $nurse->image != "") ? url('public/images/nurses/profile/' . $nurse->image) : "";
 
-                            $image_base = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
-                            if ($worker->image) {
-                                $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $worker->image);
+                            $image_base = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+                            if ($nurse->image) {
+                                $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $nurse->image);
                                 if ($t) {
-                                    $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $worker->image);
+                                    $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $nurse->image);
                                 }
                             }
-                            $image_base = 'data:image/jpeg;base64,' . base64_encode($profileWorker);
+                            $image_base = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
                         }
-                        $o['worker_first_name'] = $first_name;
-                        $o['worker_last_name'] = $last_name;
-                        $o['worker_image'] = $image;
-                        // $o['worker_image_base'] = $image_base;
+                        $o['nurse_first_name'] = $first_name;
+                        $o['nurse_last_name'] = $last_name;
+                        $o['nurse_image'] = $image;
+                        // $o['nurse_image_base'] = $image_base;
 
                         if($off->job){
 
@@ -543,9 +543,9 @@ class FacilityController extends Controller
                                 $assignment = explode(" ", $assignmentDurations[$off->job->preferred_assignment_duration]);
                                 $o['preferred_assignment_duration_definition'] = $assignment[0]; // 12 Week
                             }
-                            /* worker_info */
-                            $worker_info = USER::where(['id' => $request->user_id])->get();
-                            /* worker_info */
+                            /* nurse_info */
+                            $nurse_info = USER::where(['id' => $request->user_id])->get();
+                            /* nurse_info */
                             $o['preferred_hourly_pay_rate'] = (isset($off->job->preferred_hourly_pay_rate) && $off->job->preferred_hourly_pay_rate != "") ? strval($off->job->preferred_hourly_pay_rate) : "0";
                             $o['preferred_days_of_the_week'] = (isset($off->job->preferred_days_of_the_week) && $off->job->preferred_days_of_the_week != "") ? $off->job->preferred_days_of_the_week : "";
                             $days = [];
@@ -568,12 +568,12 @@ class FacilityController extends Controller
                             $o['offered_at'] = (isset($off->created_at) && $off->created_at != "") ? date('D h:i A', strtotime($off->created_at)) : date('D h:i A');
 
                             /* rating */
-                            $worker_rating_info = WorkerRating::where(['worker_id' => $off->worker_id, 'status' => '1', 'is_deleted' => '0']);
+                            $nurse_rating_info = NurseRating::where(['nurse_id' => $off->nurse_id, 'status' => '1', 'is_deleted' => '0']);
                             $overall = [];
                             $rating_flag = "0";
-                            if ($worker_rating_info->count() > 0) {
+                            if ($nurse_rating_info->count() > 0) {
                                 $rating_flag = "1";
-                                foreach ($worker_rating_info->get() as $key => $r) {
+                                foreach ($nurse_rating_info->get() as $key => $r) {
                                     $overall[] = $r->overall;
                                 }
                             }
@@ -631,7 +631,7 @@ class FacilityController extends Controller
     public function apiJobApply(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'worker_id' => 'required',
+            'nurse_id' => 'required',
             'api_key' => 'required',
             'job_id' => 'required',
             // 'start_date' => 'required',
@@ -641,8 +641,8 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $insert_offer["worker_id"] = $request->worker_id;
-            $insert_offer["created_by"] = $request->worker_id;
+            $insert_offer["nurse_id"] = $request->nurse_id;
+            $insert_offer["created_by"] = $request->nurse_id;
             $insert_offer["job_id"] = $request->job_id;
             $now = date("Y-m-d");
             // $now = isset($request->start_date)?$request->start_date:date("Y-m-d", strtotime('+48 hours', strtotime($now)));
@@ -656,31 +656,31 @@ class FacilityController extends Controller
             $insert_follow["like_status"] = '0';
             $insert_follow["status"] = '1';
             // end follow data
-            $check_offer = Offer::where(['worker_id' => $request->worker_id, 'job_id' => $request->job_id])->get()->first();
+            $check_offer = Offer::where(['nurse_id' => $request->nurse_id, 'job_id' => $request->job_id])->get()->first();
             $today = date('Y-m-d H:i:s');
 
             if(isset($check_offer) && $check_offer['expiration'] > $today){
                 $this->check = "0";
                 $this->message = "You are already apply for this job";
             }else{
-                DB::table('offers')->where('worker_id', $request->worker_id)->where('job_id', $request->job_id)->delete();
+                DB::table('offers')->where('nurse_id', $request->nurse_id)->where('job_id', $request->job_id)->delete();
                 $offer = Offer::create($insert_offer);
                 Follows::create($insert_follow);
                 if ($offer) {
 
                     $off_data["id"] = (isset($offer->id) && $offer->id != "") ? $offer->id : "";
-                    $off_data["worker_id"] = (isset($offer->worker_id) && $offer->worker_id != "") ? $offer->worker_id : "";
+                    $off_data["nurse_id"] = (isset($offer->nurse_id) && $offer->nurse_id != "") ? $offer->nurse_id : "";
                     $off_data["start_date"] = (isset($offer->start_date) && $offer->start_date != "") ? $offer->start_date : "";
                     $off_data["job_id"] = (isset($offer->job_id) && $offer->job_id != "") ? $offer->job_id : "";
                     $off_data["expiration"] = (isset($offer->expiration) && $offer->expiration != "") ? $offer->expiration : "";
 
                     /* mail */
-                    $worker_info = Worker::where(['id' => $request->worker_id]);
-                    if ($worker_info->count() > 0) {
-                        $worker = $worker_info->first();
-                        $user_info = User::where(['id' => $worker->user_id]);
+                    $nurse_info = Nurse::where(['id' => $request->nurse_id]);
+                    if ($nurse_info->count() > 0) {
+                        $nurse = $nurse_info->first();
+                        $user_info = User::where(['id' => $nurse->user_id]);
                         if ($user_info->count() > 0) {
-                            $user = $user_info->first(); // worker user info
+                            $user = $user_info->first(); // nurse user info
                             $facility_user_info = User::where(['id' => $offer->created_by]);
                             if ($facility_user_info->count() > 0) {
                                 $facility_user = $facility_user_info->first(); // facility user info
@@ -689,7 +689,7 @@ class FacilityController extends Controller
                                     'to_name' => $user->first_name . ' ' . $user->last_name
                                 ];
                                 $replace_array = [
-                                    '###WORKERNAME###' => $user->first_name . ' ' . $user->last_name,
+                                    '###NURSENAME###' => $user->first_name . ' ' . $user->last_name,
                                     '###FACILITYNAME###' => $facility_user->facilities[0]->name,
                                     '###LOCATION###' => $facility_user->facilities[0]->city . ',' . $facility_user->facilities[0]->state,
                                     '###SPECIALITY###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_specialty),
@@ -723,7 +723,7 @@ class FacilityController extends Controller
     public function apiJobInvite(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'worker_id' => 'required',
+            'nurse_id' => 'required',
             'facility_id' => 'required',
             'api_key' => 'required',
             'job_id' => 'required',
@@ -732,7 +732,7 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $insert_offer["worker_id"] = $request->worker_id;
+            $insert_offer["nurse_id"] = $request->nurse_id;
             $insert_offer["created_by"] = $request->facility_id;
             $insert_offer["job_id"] = $request->job_id;
             $insert_offer["expiration"] = date("Y-m-d H:i:s", strtotime('+48 hours'));
@@ -741,18 +741,18 @@ class FacilityController extends Controller
             if ($offer) {
 
                 $off_data["id"] = (isset($offer->id) && $offer->id != "") ? $offer->id : "";
-                $off_data["worker_id"] = (isset($offer->worker_id) && $offer->worker_id != "") ? $offer->worker_id : "";
+                $off_data["nurse_id"] = (isset($offer->nurse_id) && $offer->nurse_id != "") ? $offer->nurse_id : "";
                 $off_data["facility"] = (isset($offer->created_by) && $offer->created_by != "") ? $offer->created_by : "";
                 $off_data["job_id"] = (isset($offer->job_id) && $offer->job_id != "") ? $offer->job_id : "";
                 $off_data["expiration"] = (isset($offer->expiration) && $offer->expiration != "") ? date('d-m-Y', strtotime($offer->expiration)) : "";
 
                 /* mail */
-                $worker_info = Worker::where(['id' => $request->worker_id]);
-                if ($worker_info->count() > 0) {
-                    $worker = $worker_info->first();
-                    $user_info = User::where(['id' => $worker->user_id]);
+                $nurse_info = Nurse::where(['id' => $request->nurse_id]);
+                if ($nurse_info->count() > 0) {
+                    $nurse = $nurse_info->first();
+                    $user_info = User::where(['id' => $nurse->user_id]);
                     if ($user_info->count() > 0) {
-                        $user = $user_info->first(); // worker user info
+                        $user = $user_info->first(); // nurse user info
                         $facility_user_info = User::where(['id' => $offer->created_by]);
                         if ($facility_user_info->count() > 0) {
                             $facility_user = $facility_user_info->first(); // facility user info
@@ -761,7 +761,7 @@ class FacilityController extends Controller
                                 'to_name' => $user->first_name . ' ' . $user->last_name
                             ];
                             $replace_array = [
-                                '###WORKERNAME###' => $user->first_name . ' ' . $user->last_name,
+                                '###NURSENAME###' => $user->first_name . ' ' . $user->last_name,
                                 '###FACILITYNAME###' => $facility_user->facilities[0]->name,
                                 '###LOCATION###' => $facility_user->facilities[0]->city . ',' . $facility_user->facilities[0]->state,
                                 '###SPECIALITY###' => \App\Providers\AppServiceProvider::keywordTitle($offer->job->preferred_specialty),
@@ -825,7 +825,7 @@ class FacilityController extends Controller
                 if ($jobs_info->count() > 0) {
                     foreach ($jobs_info as $key => $job) {
                         /* $o['creator'] = $job->creator;
-                        $o['worker'] = $job->worker;
+                        $o['nurse'] = $job->nurse;
                         $o['job'] = $job->job; */
 
                         $o['job_id'] = (isset($job->id) && $job->id != "") ? $job->id : "";
@@ -897,46 +897,46 @@ class FacilityController extends Controller
                         $o['job_video'] = (isset($job->job_video) && $job->job_video != "") ? $job->job_video : "";
                         $o['active'] = (isset($job->active) && $job->active != "") ? $job->active : "";
 
-                        /* offered worker id */
-                        $o['offered_worker_id'] = "";
+                        /* offered nurse id */
+                        $o['offered_nurse_id'] = "";
                         if (isset($job->offers) && !empty($job->offers)) {
                             foreach ($job->offers as $key => $val) {
                                 if (isset($val->status) && $val->status == "Active") {
-                                    $o['offered_worker_id'] = (isset($val->worker_id) && $val->worker_id != "") ? $val->worker_id : "";
+                                    $o['offered_nurse_id'] = (isset($val->nurse_id) && $val->nurse_id != "") ? $val->nurse_id : "";
                                 }
                             }
                         }
 
                         $comment = [];
-                        if ($o['offered_worker_id'] != "") {
-                            $worker_rating_info = WorkerRating::where(['worker_id' => $o['offered_worker_id'], 'job_id' => $job->id]);
-                            if ($worker_rating_info->count() > 0) {
-                                $facility_commented = $worker_rating_info->first();
+                        if ($o['offered_nurse_id'] != "") {
+                            $nurse_rating_info = NurseRating::where(['nurse_id' => $o['offered_nurse_id'], 'job_id' => $job->id]);
+                            if ($nurse_rating_info->count() > 0) {
+                                $facility_commented = $nurse_rating_info->first();
                                 $comment['rating'] = (isset($facility_commented->overall) && $facility_commented->overall != "") ? $facility_commented->overall : "0";
                                 $comment['experience'] = (isset($facility_commented->experience) && $facility_commented->experience != "") ? $facility_commented->experience : "";
-                                $worker_user_id = (isset($facility_commented->worker->user_id) && $facility_commented->worker->user_id != "") ? $facility_commented->worker->user_id : "";
-                                if ($worker_user_id != "") {
-                                    $worker_user_info = User::where(['id' => $worker_user_id]);
-                                    if ($worker_user_info->count() > 0) {
-                                        $nui = $worker_user_info->first();
-                                        $comment['worker_name'] = $nui->first_name . ' ' . $nui->last_name;
-                                        $comment['worker_image'] = (isset($nui->image) && $nui->image != "") ? url('public/images/workers/profile/' . $nui->image) : "";
+                                $nurse_user_id = (isset($facility_commented->nurse->user_id) && $facility_commented->nurse->user_id != "") ? $facility_commented->nurse->user_id : "";
+                                if ($nurse_user_id != "") {
+                                    $nurse_user_info = User::where(['id' => $nurse_user_id]);
+                                    if ($nurse_user_info->count() > 0) {
+                                        $nui = $nurse_user_info->first();
+                                        $comment['nurse_name'] = $nui->first_name . ' ' . $nui->last_name;
+                                        $comment['nurse_image'] = (isset($nui->image) && $nui->image != "") ? url('public/images/nurses/profile/' . $nui->image) : "";
 
-                                        $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+                                        $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                                         if ($nui->image) {
-                                            $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $nui->image);
+                                            $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $nui->image);
                                             if ($t) {
-                                                $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $nui->image);
+                                                $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $nui->image);
                                             }
                                         }
-                                        $comment["worker_image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileWorker);
+                                        $comment["nurse_image_base"] = 'data:image/jpeg;base64,' . base64_encode($profileNurse);
                                     }
                                 }
                             }
                         }
                         $o['rating_comment'] = (!empty($comment)) ? $comment : (object)array();
 
-                        /* offered worker id */
+                        /* offered nurse id */
 
                         /* job assets */
                         $job_uploads = [];
@@ -969,7 +969,7 @@ class FacilityController extends Controller
                         } elseif ($type == "completed" && (isset($job->offers[0]->status) && $job->offers[0]->status == "Active" && ($job->end_date < date('Y-m-d')))) {
                             if ($tot_res == 0) $tot_res += 1; //initialized first page`
                             $tot_res += 1;
-                            $rating_info = WorkerRating::where(['job_id' => $job->id]);
+                            $rating_info = NurseRating::where(['job_id' => $job->id]);
                             $o['rating_flag'] = ($rating_info->count() > 0) ? "1" : "0";
                             $my_jobs['data'][] = $o;
                         }
@@ -1012,10 +1012,10 @@ class FacilityController extends Controller
             $ret->where('facility_id', $request->facility_id);
 
             $ids = [];
-            $worker = Worker::where(['user_id' => $request->user_id])->first();
-            if ($worker->count() > 0) {
-                if (isset($worker->offers) && count($worker->offers) > 0) {
-                    $ids = $worker->offers->whereNotNull('job_id')->pluck('id');
+            $nurse = Nurse::where(['user_id' => $request->user_id])->first();
+            if ($nurse->count() > 0) {
+                if (isset($nurse->offers) && count($nurse->offers) > 0) {
+                    $ids = $nurse->offers->whereNotNull('job_id')->pluck('id');
                 }
             }
             $ret->whereDoesntHave('offers', function (Builder $query) use ($ids) {
@@ -1036,7 +1036,7 @@ class FacilityController extends Controller
                             'duration' => $job->preferred_assignment_duration ? \App\Providers\AppServiceProvider::keywordTitle($job->preferred_assignment_duration) : 'N/A',
                             'shift' => $job->preferred_shift_duration ? \App\Providers\AppServiceProvider::keywordTitle($job->preferred_shift_duration) : 'N/A',
                             'workdays' => $job->preferred_days_of_the_week ?: 'N/A',
-                        ], 'terms' => '<p><strong>TERMS ACKNOWLEDGMENT</strong></p> <p>By clicking on the &ldquo;Make an Offer&rdquo; your facility agrees to pay the hourly bill rate reflected on the worker&rsquo;s profile page per the terms established in the Goodwork vendor agreement</p> <p><strong>NEXT STEPS</strong></p> <ul> <li><strong>Webo User</strong>&nbsp;will have 48 hours to accept your booking request</li> <li>You will receive an email notice after the worker accepts or rejects the request</li> <li>Assuming the worker accepts, a Goodwork Consultant will contact you to coordinate onboarding logistics</li> <li>If the worker rejects, we will provide additional workers that may meet your need</li> <li>Contact us anytime at&nbsp;<a href="mailto:info@goodwork.app">info@goodwork.app</a></li> </ul>'
+                        ], 'terms' => '<p><strong>TERMS ACKNOWLEDGMENT</strong></p> <p>By clicking on the &ldquo;Make an Offer&rdquo; your facility agrees to pay the hourly bill rate reflected on the nurse&rsquo;s profile page per the terms established in the Nurseify vendor agreement</p> <p><strong>NEXT STEPS</strong></p> <ul> <li><strong>Webo User</strong>&nbsp;will have 48 hours to accept your booking request</li> <li>You will receive an email notice after the nurse accepts or rejects the request</li> <li>Assuming the nurse accepts, a Nurseify Consultant will contact you to coordinate onboarding logistics</li> <li>If the nurse rejects, we will provide additional nurses that may meet your need</li> <li>Contact us anytime at&nbsp;<a href="mailto:info@nurseify.app">info@nurseify.app</a></li> </ul>'
                     ];
                 }
 
@@ -1045,10 +1045,10 @@ class FacilityController extends Controller
 
             if (!empty($jobs)) {
                 $this->check = "1";
-                $this->message = "Invite worker for the jobs. Listed successfully";
+                $this->message = "Invite nurse for the jobs. Listed successfully";
                 $this->return_data = $jobs;
             } else {
-                $this->message = "No jobs available for this worker";
+                $this->message = "No jobs available for this nurse";
             }
         }
 
@@ -1087,7 +1087,7 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function appliedWorkers(Request $request)
+    public function appliedNurses(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'job_id' => 'required',
@@ -1103,37 +1103,37 @@ class FacilityController extends Controller
             ]);
 
             if ($check_exists->count() > 0) {
-                $workers_applied = $check_exists->get();
+                $nurses_applied = $check_exists->get();
                 $response = [];
-                foreach ($workers_applied as $key => $applied) {
-                    $data['worker_user_id']  = (isset($applied->creator->id) && $applied->creator->id != "") ? $applied->creator->id : "";
-                    $worker_info = WORKER::where(['user_id' => $data['worker_user_id']]);
+                foreach ($nurses_applied as $key => $applied) {
+                    $data['nurse_user_id']  = (isset($applied->creator->id) && $applied->creator->id != "") ? $applied->creator->id : "";
+                    $nurse_info = NURSE::where(['user_id' => $data['nurse_user_id']]);
 
-                    $data['worker_id'] = "";
-                    if ($worker_info->count() > 0) {
-                        $worker = $worker_info->first();
-                        $data['worker_id'] = $worker->id;
+                    $data['nurse_id'] = "";
+                    if ($nurse_info->count() > 0) {
+                        $nurse = $nurse_info->first();
+                        $data['nurse_id'] = $nurse->id;
                     }
                     $fname = (isset($applied->creator->first_name) && $applied->creator->first_name != "") ? $applied->creator->first_name : "";
                     $lname = (isset($applied->creator->last_name) && $applied->creator->last_name != "") ? $applied->creator->last_name : "";
                     $data['name'] = $fname . ' ' . $lname;
-                    $data['profile'] = (isset($applied->creator->image) && $applied->creator->image != "") ? url('public/images/workers/profile/' . $applied->creator->image) : "";
+                    $data['profile'] = (isset($applied->creator->image) && $applied->creator->image != "") ? url('public/images/nurses/profile/' . $applied->creator->image) : "";
 
-                    $profileWorker = "";
+                    $profileNurse = "";
                     if ($applied->creator->image) {
-                        $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $applied->creator->image);
+                        $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $applied->creator->image);
                         if ($t) {
-                            $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $applied->creator->image);
+                            $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $applied->creator->image);
                         }
                     }
-                    $data["profile_base"] = ($profileWorker != "") ? 'data:image/jpeg;base64,' . base64_encode($profileWorker) : "";
+                    $data["profile_base"] = ($profileNurse != "") ? 'data:image/jpeg;base64,' . base64_encode($profileNurse) : "";
                     /* rating */
                     $data['rating'] = "0";
                     $overall = [];
-                    if ($data['worker_id'] != "") {
-                        $worker_rating_info = WorkerRating::where(['worker_id' => $data['worker_id'], 'status' => '1', 'is_deleted' => '0']);
-                        if ($worker_rating_info->count() > 0) {
-                            foreach ($worker_rating_info->get() as $key => $r) {
+                    if ($data['nurse_id'] != "") {
+                        $nurse_rating_info = NurseRating::where(['nurse_id' => $data['nurse_id'], 'status' => '1', 'is_deleted' => '0']);
+                        if ($nurse_rating_info->count() > 0) {
+                            foreach ($nurse_rating_info->get() as $key => $r) {
                                 $overall[] = $r->overall;
                             }
                         }
@@ -1145,24 +1145,24 @@ class FacilityController extends Controller
                 }
                 if (!empty($response)) {
                     $this->check = "1";
-                    $this->message = "Applied workers listed successfully";
+                    $this->message = "Applied nurses listed successfully";
                     $this->return_data = $response;
                 } else {
-                    $this->message = "Worker applied jobs looks empty";
+                    $this->message = "Nurse applied jobs looks empty";
                 }
             } else {
-                $this->message = "Worker applied jobs looks empty";
+                $this->message = "Nurse applied jobs looks empty";
             }
         }
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function workerRating(Request $request)
+    public function nurseRating(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
-            'worker_id' => 'required',
+            'nurse_id' => 'required',
             'job_id' => 'required',
             'api_key' => 'required',
         ]);
@@ -1173,18 +1173,18 @@ class FacilityController extends Controller
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                $worker_info = WORKER::where('id', $request->worker_id);
-                if ($worker_info->count() > 0) {
-                    $worker = $worker_info->get()->first();
-                    $insert_array['worker_id'] = $worker->id;
+                $nurse_info = NURSE::where('id', $request->nurse_id);
+                if ($nurse_info->count() > 0) {
+                    $nurse = $nurse_info->get()->first();
+                    $insert_array['nurse_id'] = $nurse->id;
                     if (isset($request->job_id) && $request->job_id != "")
                         $insert_array['job_id'] = $request->job_id;
                     if (isset($request->overall) && $request->overall != "")
                         $update_array['overall'] = $insert_array['overall'] = $request->overall;
                     if (isset($request->clinical_skills) && $request->clinical_skills != "")
                         $update_array['clinical_skills'] = $insert_array['clinical_skills'] = $request->clinical_skills;
-                    if (isset($request->worker_teamwork) && $request->worker_teamwork != "")
-                        $update_array['worker_teamwork'] = $insert_array['worker_teamwork'] = $request->worker_teamwork;
+                    if (isset($request->nurse_teamwork) && $request->nurse_teamwork != "")
+                        $update_array['nurse_teamwork'] = $insert_array['nurse_teamwork'] = $request->nurse_teamwork;
                     if (isset($request->interpersonal_skills) && $request->interpersonal_skills != "")
                         $update_array['interpersonal_skills'] = $insert_array['interpersonal_skills'] = $request->interpersonal_skills;
                     if (isset($request->work_ethic) && $request->work_ethic != "")
@@ -1192,12 +1192,12 @@ class FacilityController extends Controller
                     if (isset($request->experience) && $request->experience != "")
                         $update_array['experience'] = $insert_array['experience'] = $request->experience;
 
-                    $check_exists = WorkerRating::where(['worker_id' => $worker->id, 'job_id' => $request->job_id]);
+                    $check_exists = NurseRating::where(['nurse_id' => $nurse->id, 'job_id' => $request->job_id]);
                     if ($check_exists->count() > 0) {
                         $rating_row = $check_exists->first();
-                        $data = WorkerRating::where(['id' => $rating_row->id])->update($update_array);
+                        $data = NurseRating::where(['id' => $rating_row->id])->update($update_array);
                     } else {
-                        $data = WorkerRating::create($insert_array);
+                        $data = NurseRating::create($insert_array);
                     }
 
                     if (isset($data) && $data == true) {
@@ -1207,7 +1207,7 @@ class FacilityController extends Controller
                         $this->message = "Failed to update ratings, Please try again later";
                     }
                 } else {
-                    $this->message = "Worker not found";
+                    $this->message = "Nurse not found";
                 }
             } else {
                 $this->message = "User not found";
@@ -1273,19 +1273,19 @@ class FacilityController extends Controller
 
                 /* rating */
                 $rating_info = FacilityRating::where(['facility_id' => $facility->id]);
-                $overall = $on_board = $worker_team_work = $leadership_support = $tools_todo_my_job = $a = [];
+                $overall = $on_board = $nurse_team_work = $leadership_support = $tools_todo_my_job = $a = [];
                 if ($rating_info->count() > 0) {
                     foreach ($rating_info->get() as $key => $r) {
                         $overall[] = $r->overall;
                         $on_board[] = $r->on_board;
-                        $worker_team_work[] = $r->worker_team_work;
+                        $nurse_team_work[] = $r->nurse_team_work;
                         $leadership_support[] = $r->leadership_support;
                         $tools_todo_my_job[] = $r->tools_todo_my_job;
                     }
                 }
                 $rating['over_all'] = $this->ratingCalculation(count($overall), $overall);
                 $rating['on_board'] = $this->ratingCalculation(count($on_board), $on_board);
-                $rating['worker_team_work'] = $this->ratingCalculation(count($worker_team_work), $worker_team_work);
+                $rating['nurse_team_work'] = $this->ratingCalculation(count($nurse_team_work), $nurse_team_work);
                 $rating['leadership_support'] = $this->ratingCalculation(count($leadership_support), $leadership_support);
                 $rating['tools_todo_my_job'] = $this->ratingCalculation(count($tools_todo_my_job), $tools_todo_my_job);
                 $return_data["rating"] = $rating;
@@ -1324,7 +1324,7 @@ class FacilityController extends Controller
             $n = [];
             $notifications = $ret->get();
             foreach ($notifications as $notification) {
-                $user = USER::where(['id' => $notification->worker->user_id])->first();
+                $user = USER::where(['id' => $notification->nurse->user_id])->first();
                 $n[] = [
                     "notification_id" => $notification->id, "message" => "You have sent a new offer to " . $user->first_name . ' ' . $user->last_name . " that matches your <b style='color:#2BE3BD'> " . \App\Providers\AppServiceProvider::keywordTitle($notification->job->preferred_specialty) . " </b> job assignment preference and or profile."
                 ];
@@ -1435,12 +1435,12 @@ class FacilityController extends Controller
             {
                 if(isset($rec) && !empty($rec)){
                     $i++;
-                    $skills_checklists[$i] = url('public/images/workers/skill/'.$rec);
+                    $skills_checklists[$i] = url('public/images/nurses/skill/'.$rec);
                 }
 
             }
-            // $vacc_image = WorkerAsset::where(['filter' => 'vaccination', 'worker_id' => $worker->id])->get();
-            // $cert_image = WorkerAsset::where(['filter' => 'certificate', 'worker_id' => $worker->id])->get();
+            // $vacc_image = NurseAsset::where(['filter' => 'vaccination', 'nurse_id' => $worker->id])->get();
+            // $cert_image = NurseAsset::where(['filter' => 'certificate', 'nurse_id' => $worker->id])->get();
             $vacc_image = '';
             $cert_image = '';
             $certificate = explode(',',$job['certificate']);
@@ -1501,25 +1501,25 @@ class FacilityController extends Controller
             // $data =  [];
             $data['job'] = 'College Diploma';
             $data['match'] = !empty($job_data['diploma'])?true:false;
-            $data['worker'] = !empty($job_data['diploma'])?url('public/images/workers/diploma/'.$job_data['diploma']):"";
+            $data['worker'] = !empty($job_data['diploma'])?url('public/images/nurses/diploma/'.$job_data['diploma']):"";
             $data['name'] = 'Diploma';
             $data['update_key'] = 'diploma';
             $data['type'] = 'files';
             $data['worker_title'] = 'Did you really graduate?';
             $data['job_title'] = 'College Diploma Required';
-            $data['worker_image'] = !empty($job_data['diploma'])?url('public/images/workers/diploma/'.$job_data['diploma']):"";
+            $data['worker_image'] = !empty($job_data['diploma'])?url('public/images/nurses/diploma/'.$job_data['diploma']):"";
             $worker_info[] = $data;
             $data['worker_image'] = '';
 
             $data['job'] = 'Drivers License';
             $data['match'] = !empty($job_data['driving_license'])?true:false;
-            $data['worker'] = !empty($job_data['driving_license'])?url('public/images/workers/driving_license/'.$job_data['driving_license']):"";
+            $data['worker'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
             $data['name'] = 'driving_license';
             $data['update_key'] = 'driving_license';
             $data['type'] = 'files';
             $data['worker_title'] = 'Are you really allowed to drive?';
             $data['job_title'] = 'Drivers License';
-            $data['worker_image'] = !empty($job_data['driving_license'])?url('public/images/workers/driving_license/'.$job_data['driving_license']):"";
+            $data['worker_image'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
             $worker_info[] = $data;
             $data['worker_image'] = '';
 
@@ -1591,7 +1591,7 @@ class FacilityController extends Controller
                 $data['job'] = isset($vaccinations[$i])?$vaccinations[$i]:"Vaccinations & Immunizations";
                 $data['match'] = !empty($worker_vaccination[$i])?true:false;
                 $data['worker'] = isset($worker_vaccination[$i])?$worker_vaccination[$i]:"";
-                $data['worker_image'] = isset($vacc_image[$i]['name'])?url('public/images/workers/vaccination/'.$vacc_image[$i]['name']):"";
+                $data['worker_image'] = isset($vacc_image[$i]['name'])?url('public/images/nurses/vaccination/'.$vacc_image[$i]['name']):"";
                 $data['name'] = $data['worker'].' vaccination';
                 $data['match_title'] = 'Vaccinations & Immunizations';
                 $data['update_key'] = 'worker_vaccination';
@@ -1661,7 +1661,7 @@ class FacilityController extends Controller
                 $data['match'] = !empty($worker_certificate_name[$i])?true:false;
                 $data['worker'] = isset($worker_certificate_name[$i])?$worker_certificate_name[$i]:"";
                 if(isset($worker_certificate_name[$i])){
-                    $data['worker_image'] = isset($cert_image[$i]['name'])?url('public/images/workers/certificate/'.$cert_image[$i]['name']):"";
+                    $data['worker_image'] = isset($cert_image[$i]['name'])?url('public/images/nurses/certificate/'.$cert_image[$i]['name']):"";
                 }
                 $data['name'] = $data['worker'];
                 $data['match_title'] = 'Certifications';
@@ -2407,16 +2407,16 @@ class FacilityController extends Controller
                         $users = $user_info->get();
                         $a = [];
                         foreach ($users as $key => $u) {
-                            if ($u->role == "WORKER") {
-                                $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
+                            if ($u->role == "NURSE") {
+                                $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/8810d9fb-c8f4-458c-85ef-d3674e2c540a');
                                 if ($u->image) {
-                                    $t = \Illuminate\Support\Facades\Storage::exists('assets/workers/profile/' . $u->image);
+                                    $t = \Illuminate\Support\Facades\Storage::exists('assets/nurses/profile/' . $u->image);
                                     if ($t) {
-                                        $profileWorker = \Illuminate\Support\Facades\Storage::get('assets/workers/profile/' . $u->image);
+                                        $profileNurse = \Illuminate\Support\Facades\Storage::get('assets/nurses/profile/' . $u->image);
                                     }
                                 }
 
-                                $a[] = ['id' => $u->id, 'image' => 'data:image/jpeg;base64,' . base64_encode($profileWorker)];
+                                $a[] = ['id' => $u->id, 'image' => 'data:image/jpeg;base64,' . base64_encode($profileNurse)];
                             } elseif ($u->role == "FACILITYADMIN") {
                                 $facility_logo = "";
                                 if ($u->facilities[0]->facility_logo) {
@@ -2453,13 +2453,13 @@ class FacilityController extends Controller
         /* $follows = new Follows();
         $user_data = Follows::where('email', '=', $request->email)->get()->first(); */
 
-        /* $worker = JobOffer::create([
+        /* $nurse = JobOffer::create([
             'job_id' => "8245d08d-732c-45bc-bbaf-e3f19bcdadfb",
             'offer_id' => "1d779d61-5be9-47e7-a6be-d1c757a7c7c1",
         ]); */
-        // $worker->save();
+        // $nurse->save();
 
-        /* $facility_rating = FacilityRating::create(['worker_id' => '1d779d61-5be9-47e7-a6be-d1c757a7c7c1', 'facility_id' => '1d779d61-5be9-47e7-a6be-d1c757a7c7c1']);
+        /* $facility_rating = FacilityRating::create(['nurse_id' => '1d779d61-5be9-47e7-a6be-d1c757a7c7c1', 'facility_id' => '1d779d61-5be9-47e7-a6be-d1c757a7c7c1']);
         $facility_rating->save(); */
 
         /*  $test = (object) [];
@@ -2482,7 +2482,7 @@ class FacilityController extends Controller
             'label' => "choosepassword",
             'content' => "choose password content",
         ]);*/
-        // $template = WorkerRating::create([
+        // $template = NurseRating::create([
         //     'label' => "choosepassword",
         //     'content' => "choose password content",
         // ]);
@@ -2527,7 +2527,7 @@ class FacilityController extends Controller
             }
         }
         $this->check = "1";
-        $this->message = "Worker license type has been listed successfully";
+        $this->message = "Nurse license type has been listed successfully";
         $this->return_data = $spl;
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -2541,13 +2541,13 @@ class FacilityController extends Controller
             $data[] = ['id' => strval($key), "name" => $value];
         }
         $this->check = "1";
-        $this->message = "Worker license type has been listed successfully";
+        $this->message = "Nurse license type has been listed successfully";
         $this->return_data = $data;
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function workerLicenseDetail(Request $request)
+    public function nurseLicenseDetail(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
@@ -2558,27 +2558,27 @@ class FacilityController extends Controller
         } else {
             if(isset($request->role)){
                 $user = User::where('id', $request->user_id)->first();
-                $worker = Worker::where('id', $request->worker_id)->first();
+                $nurse = Nurse::where('id', $request->nurse_id)->first();
             }else{
                 $user = User::where('id', $request->user_id)->first();
-                $worker = Worker::where('user_id', $request->user_id)->first();
+                $nurse = Nurse::where('user_id', $request->user_id)->first();
             }
 
             $return_data = [];
             if ($user) {
 
 
-                /*  Worker */
-                if (isset($request->nursing_license_number) && $request->nursing_license_number != "") $worker->nursing_license_number = $request->nursing_license_number;
-                if (isset($request->nursing_license_state) && $request->nursing_license_state != "") $worker->nursing_license_state = $request->nursing_license_state;
-                if (isset($request->license_expiry_date) && $request->license_expiry_date != "") $worker->license_expiry_date = $request->license_expiry_date;
-                if (isset($request->license_issue_date) && $request->license_issue_date != "") $worker->license_issue_date = $request->license_issue_date;
-                if (isset($request->license_renewal_date) && $request->license_renewal_date != "") $worker->license_renewal_date = $request->license_renewal_date;
-                if (isset($request->license_status) && $request->license_status != "") $worker->license_status = $request->license_status;
-                if (isset($request->license_type) && $request->license_type != "") $worker->license_type = $request->license_type;
-                if (isset($request->authority_Issue) && $request->authority_Issue != "") $worker->authority_Issue = $request->authority_Issue;
-                $n = $worker->update();
-                /*  Worker */
+                /*  Nurse */
+                if (isset($request->nursing_license_number) && $request->nursing_license_number != "") $nurse->nursing_license_number = $request->nursing_license_number;
+                if (isset($request->nursing_license_state) && $request->nursing_license_state != "") $nurse->nursing_license_state = $request->nursing_license_state;
+                if (isset($request->license_expiry_date) && $request->license_expiry_date != "") $nurse->license_expiry_date = $request->license_expiry_date;
+                if (isset($request->license_issue_date) && $request->license_issue_date != "") $nurse->license_issue_date = $request->license_issue_date;
+                if (isset($request->license_renewal_date) && $request->license_renewal_date != "") $nurse->license_renewal_date = $request->license_renewal_date;
+                if (isset($request->license_status) && $request->license_status != "") $nurse->license_status = $request->license_status;
+                if (isset($request->license_type) && $request->license_type != "") $nurse->license_type = $request->license_type;
+                if (isset($request->authority_Issue) && $request->authority_Issue != "") $nurse->authority_Issue = $request->authority_Issue;
+                $n = $nurse->update();
+                /*  Nurse */
 
 
                 if ($n) {
@@ -2782,21 +2782,21 @@ class FacilityController extends Controller
     public function saveJob(Request $request)
     {
         if (
-            isset($request->worker_id) && $request->worker_id != "" &&
+            isset($request->nurse_id) && $request->nurse_id != "" &&
             isset($request->job_id) && $request->job_id != "" &&
             isset($request->api_key) && $request->api_key != ""
         ) {
             if(!empty($request->role)){
-                $record = WORKER::where(['id' => $request->worker_id])->get()->first();
-                $worker_id = $record->user_id;
+                $record = NURSE::where(['id' => $request->nurse_id])->get()->first();
+                $nurse_id = $record->user_id;
                 $user_id = $record->user_id;
             }else{
-                $worker_id = $request->worker_id;
-                $user_id = $request->worker_id;
+                $nurse_id = $request->nurse_id;
+                $user_id = $request->nurse_id;
             }
 
             $whereCond = [
-                'worker_id' => $worker_id,
+                'nurse_id' => $nurse_id,
                 'job_id' => $request->job_id
             ];
 
@@ -2811,7 +2811,7 @@ class FacilityController extends Controller
                 $this->message = "Remove saved job successfully";
             }else{
                 $insert = array(
-                    "worker_id" => $worker_id,
+                    "nurse_id" => $nurse_id,
                     'job_id' => $request->job_id,
                     'is_save' => '1',
                     'is_delete' => '0',
@@ -2832,26 +2832,26 @@ class FacilityController extends Controller
     public function removesavedJob(Request $request)
     {
         if (
-            isset($request->worker_id) && $request->worker_id != "" &&
+            isset($request->nurse_id) && $request->nurse_id != "" &&
             isset($request->job_id) && $request->job_id != "" &&
             isset($request->api_key) && $request->api_key != ""
         ) {
-            $worker = Worker::where('id', '=', $request->worker_id)->first();
+            $nurse = Nurse::where('id', '=', $request->nurse_id)->first();
 
-            $product = \DB::table('job_saved')->where('worker_id', $worker->user_id)->where('job_id', $request->job_id)->first();
+            $product = \DB::table('job_saved')->where('nurse_id', $nurse->user_id)->where('job_id', $request->job_id)->first();
 
             if (!is_null($product)) {
-                \DB::table('job_saved')->where('worker_id', $worker->user_id)->where('job_id', $request->job_id)->update(['is_delete' => '1']);
+                \DB::table('job_saved')->where('nurse_id', $nurse->user_id)->where('job_id', $request->job_id)->update(['is_delete' => '1']);
             }else{
                 $insert = array(
-                    "worker_id" => $worker->user_id,
+                    "nurse_id" => $nurse->user_id,
                     'job_id' => $request->job_id,
                     'is_save' => '0',
                     'is_delete' => '1'
                 );
                 DB::table('job_saved')->insert($insert);
             }
-            $check = \DB::table('job_saved')->where('worker_id', $worker->user_id)->where('job_id', $request->job_id)->first();
+            $check = \DB::table('job_saved')->where('nurse_id', $nurse->user_id)->where('job_id', $request->job_id)->first();
             if($check){
                 $this->check = "1";
                 $this->message = "Data removed successfully";
@@ -2881,12 +2881,12 @@ class FacilityController extends Controller
             $assignmentDurations = $this->getAssignmentDurations()->pluck('title', 'id');
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             /*  dropdown data's */
-            $worker_info = Worker::where(['user_id' => $request->user_id]);
+            $nurse_info = Nurse::where(['user_id' => $request->user_id]);
 
-            if ($worker_info->count() > 0) {
+            if ($nurse_info->count() > 0) {
                 $result = array();
-                $worker = $worker_info->first();
-                $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
+                $nurse = $nurse_info->first();
+                $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
                 if(isset($checkoffer))
                 {
                     $this->check = "1";
@@ -2894,7 +2894,7 @@ class FacilityController extends Controller
                     $this->return_data = [];
                 }else{
                     $whereCond = [
-                        'job_saved.worker_id' => $request->user_id,
+                        'job_saved.nurse_id' => $request->user_id,
                         'jobs.is_closed' => "0"
                     ];
 
@@ -2921,7 +2921,7 @@ class FacilityController extends Controller
                     $this->return_data = $data;
                 }
             } else {
-                $this->message = "Worker not found";
+                $this->message = "Nurse not found";
             }
         }
 
@@ -2929,10 +2929,10 @@ class FacilityController extends Controller
 
     }
 
-    public function workerJobSaved(Request $request)
+    public function nurseJobSaved(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'worker_id' => 'required',
+            'nurse_id' => 'required',
             'api_key' => 'required',
             'user_id' => 'required'
         ]);
@@ -2945,18 +2945,18 @@ class FacilityController extends Controller
             $assignmentDurations = $this->getAssignmentDurations()->pluck('title', 'id');
             $specialties = $controller->getSpecialities()->pluck('title', 'id');
             /*  dropdown data's */
-            $worker_info = Worker::where(['id' => $request->worker_id]);
+            $nurse_info = Nurse::where(['id' => $request->nurse_id]);
 
-            if ($worker_info->count() > 0) {
+            if ($nurse_info->count() > 0) {
                 $result = array();
-                $worker = $worker_info->get()->first();
-                // $user_id = $worker->user_id;
+                $nurse = $nurse_info->get()->first();
+                // $user_id = $nurse->user_id;
 
                 $whereCond = [
                     'facilities.active' => true,
                     'jobs.is_open' => "1",
                     'jobs.is_closed' => "0",
-                    'job_saved.worker_id' => $request->user_id,
+                    'job_saved.nurse_id' => $request->user_id,
                     'job_saved.is_delete' => '0'
                 ];
 
@@ -2999,7 +2999,7 @@ class FacilityController extends Controller
                 $this->message = "Saved jobs listed successfully";
                 $this->return_data = $data;
             } else {
-                $this->message = "Worker not found";
+                $this->message = "Nurse not found";
             }
         }
 
@@ -3022,12 +3022,12 @@ class FacilityController extends Controller
             if ($user_info->count() > 0) {
 
                 $user = $user_info->get()->first();
-                $worker_info = WORKER::where('user_id', $request->user_id);
-                if ($worker_info->count() > 0) {
+                $nurse_info = NURSE::where('user_id', $request->user_id);
+                if ($nurse_info->count() > 0) {
                     $result = array();
 
-                    $worker = $worker_info->get()->first();
-                    $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
+                    $nurse = $nurse_info->get()->first();
+                    $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
                     if(isset($checkoffer))
                     {
                         $this->check = "1";
@@ -3039,7 +3039,7 @@ class FacilityController extends Controller
                             // 'jobs.is_open' => "1",
                             'jobs.is_closed' => "0",
                             'offers.status' => 'Apply',
-                            'offers.worker_id' => $worker->id
+                            'offers.nurse_id' => $nurse->id
                         ];
 
                         $ret = Job::select('jobs.id as job_id', 'jobs.*', 'offers.created_at as created_at')
@@ -3072,7 +3072,7 @@ class FacilityController extends Controller
 
                 }else{
                     $this->check = "1";
-                    $this->message = "Worker not exist";
+                    $this->message = "Nurse not exist";
                 }
 
             }
@@ -3095,11 +3095,11 @@ class FacilityController extends Controller
             if ($user_info->count() > 0) {
 
                 $user = $user_info->get()->first();
-                $worker_info = WORKER::where('user_id', $request->user_id);
-                if ($worker_info->count() > 0) {
+                $nurse_info = NURSE::where('user_id', $request->user_id);
+                if ($nurse_info->count() > 0) {
                     $result = array();
-                    $worker = $worker_info->get()->first();
-                    $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
+                    $nurse = $nurse_info->get()->first();
+                    $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
                     if(isset($checkoffer))
                     {
                         $this->check = "1";
@@ -3111,7 +3111,7 @@ class FacilityController extends Controller
                             'jobs.active' => "1",
                             'jobs.is_closed' => "0",
                             'offers.status' => 'Offered',
-                            'offers.worker_id' => $worker->id
+                            'offers.nurse_id' => $nurse->id
                         ];
 
                         $ret = Job::select('jobs.id as job_id', 'jobs.*', 'offers.updated_ as created_at')
@@ -3141,7 +3141,7 @@ class FacilityController extends Controller
                     }
                 }else{
                     $this->check = "1";
-                    $this->message = "Worker not exist";
+                    $this->message = "Nurse not exist";
                 }
 
             }
@@ -3166,12 +3166,12 @@ class FacilityController extends Controller
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->first();
-                $worker_info = WORKER::where('user_id', $request->user_id);
-                if ($worker_info->count() > 0) {
+                $nurse_info = NURSE::where('user_id', $request->user_id);
+                if ($nurse_info->count() > 0) {
                     $result = array();
 
-                    $worker = $worker_info->get()->first();
-                    $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
+                    $nurse = $nurse_info->get()->first();
+                    $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
                     if(isset($checkoffer))
                     {
                         $this->check = "1";
@@ -3184,7 +3184,7 @@ class FacilityController extends Controller
                             'jobs.active' => "1",
                             'jobs.is_closed' => "0",
                             'offers.status' => 'Onboarding',
-                            'offers.worker_id' => $worker->id
+                            'offers.nurse_id' => $nurse->id
                         ];
 
                         // new code
@@ -3201,10 +3201,10 @@ class FacilityController extends Controller
                         foreach($jobdata as $rec){
                             $res['type'] = $rec['type'];
                             $res['job_id'] = $rec['job_id'];
-                            $res['worker_id'] = $worker->id;
-                            $res['worker_user_id'] = $worker->user_id;
+                            $res['worker_id'] = $nurse->id;
+                            $res['worker_user_id'] = $nurse->user_id;
                             $res['job_name'] = $rec['job_name'];
-                            $res['Worker_name'] = $worker->first_name.' '.$worker->last_name;
+                            $res['Worker_name'] = $nurse->first_name.' '.$nurse->last_name;
                             $res['profession'] = $rec['profession'];
                             $res['specialty'] = $rec['preferred_specialty'];
                             $res['experience'] = $rec['preferred_experience'];
@@ -3225,7 +3225,7 @@ class FacilityController extends Controller
                     }
                 }else{
                     $this->check = "1";
-                    $this->message = "Worker not exist";
+                    $this->message = "Nurse not exist";
                 }
 
             }
@@ -3248,11 +3248,11 @@ class FacilityController extends Controller
             $user_info = USER::where('id', $request->user_id);
             if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                $worker_info = WORKER::where('user_id', $request->user_id);
-                if ($worker_info->count() > 0) {
+                $nurse_info = NURSE::where('user_id', $request->user_id);
+                if ($nurse_info->count() > 0) {
                     $result = array();
-                    $worker = $worker_info->get()->first();
-                    $checkoffer = DB::table('blocked_users')->where('worker_id', $worker['id'])->first();
+                    $nurse = $nurse_info->get()->first();
+                    $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
                     if(isset($checkoffer))
                     {
                         $this->check = "1";
@@ -3263,7 +3263,7 @@ class FacilityController extends Controller
                             'facilities.active' => true,
                             'offers.status' => 'Done',
                             'jobs.is_closed' => "0",
-                            'offers.worker_id' => $worker->id
+                            'offers.nurse_id' => $nurse->id
                         ];
                         $ret = Job::select('offers.id AS offer_id','jobs.id as job_id', 'jobs.*', 'offers.start_date as start_date', 'offers.expiration as end_date', 'jobs.created_at as created_at')
                             ->leftJoin('facilities', function ($join) {
@@ -3281,10 +3281,10 @@ class FacilityController extends Controller
                         foreach($job_data as $rec){
                             $res['type'] = $rec['type'];
                             $res['job_id'] = $rec['job_id'];
-                            $res['worker_id'] = $worker->id;
-                            $res['worker_user_id'] = $worker->user_id;
+                            $res['worker_id'] = $nurse->id;
+                            $res['worker_user_id'] = $nurse->user_id;
                             $res['job_name'] = $rec['job_name'];
-                            $res['Worker_name'] = $worker->first_name.' '.$worker->last_name;
+                            $res['Worker_name'] = $nurse->first_name.' '.$nurse->last_name;
                             $res['profession'] = $rec['profession'];
                             $res['specialty'] = $rec['preferred_specialty'];
                             $res['experience'] = $rec['preferred_experience'];
@@ -3315,7 +3315,7 @@ class FacilityController extends Controller
                     }
                 }else{
                     $this->check = "1";
-                    $this->message = "Worker not exist";
+                    $this->message = "Nurse not exist";
                 }
             }
         }
@@ -3323,10 +3323,10 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function workerpersonalDetail(Request $request)
+    public function nursepersonalDetail(Request $request)
     {
         $user = User::where('id', $request->user_id)->first();
-        $worker = Worker::where('user_id', $request->user_id)->first();
+        $nurse = Nurse::where('user_id', $request->user_id)->first();
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
             'api_key' => 'required',
@@ -3363,10 +3363,10 @@ class FacilityController extends Controller
     }
 
 
-    // delete Worker
-    public function deleteWorker(Request $request)
+    // delete Nurse
+    public function deleteNurse(Request $request)
     {
-        $worker = Worker::where('user_id', $request->user_id)->first();
+        $nurse = Nurse::where('user_id', $request->user_id)->first();
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
             'api_key' => 'required',
@@ -3377,26 +3377,26 @@ class FacilityController extends Controller
         } else {
             $return_data = [];
 
-            if ($worker) {
+            if ($nurse) {
                 $this->check = "1";
-                $worker_id = $worker->id;
-                $worker_deleted = DB::table('workers')->where('id', '=', $worker_id)->delete();
+                $nurse_id = $nurse->id;
+                $nurse_deleted = DB::table('nurses')->where('id', '=', $nurse_id)->delete();
                 $user_deleted = DB::table('users')->where('id', '=', $request->user_id)->delete();
-                // In job saved table worker_id is user_id
-                DB::table('job_saved')->where('worker_id', '=', $request->user_id)->delete();
-                DB::table('worker_assets')->where('worker_id', '=', $worker_id)->delete();
-                DB::table('worker_references')->where('worker_id', '=', $worker_id)->delete();
-                DB::table('offers')->where('worker_id', '=', $worker_id)->delete();
-                DB::table('worker_ratings')->where('worker_id', '=', $worker_id)->delete();
-                DB::table('notifications')->where('created_by', '=', $worker_id)->delete();
-                if($worker_deleted && $user_deleted){
-                    $this->message = "Worker record deleted successfully";
+                // In job saved table nurse_id is user_id
+                DB::table('job_saved')->where('nurse_id', '=', $request->user_id)->delete();
+                DB::table('nurse_assets')->where('nurse_id', '=', $nurse_id)->delete();
+                DB::table('nurse_references')->where('nurse_id', '=', $nurse_id)->delete();
+                DB::table('offers')->where('nurse_id', '=', $nurse_id)->delete();
+                DB::table('nurse_ratings')->where('nurse_id', '=', $nurse_id)->delete();
+                DB::table('notifications')->where('created_by', '=', $nurse_id)->delete();
+                if($nurse_deleted && $user_deleted){
+                    $this->message = "Nurse record deleted successfully";
                 }else{
-                    $this->message = "Worker record not deleted";
+                    $this->message = "Nurse record not deleted";
                 }
 
             } else {
-                $this->message = "Worker not exists";
+                $this->message = "Nurse not exists";
             }
             $this->return_data = $return_data;
         }
@@ -3404,7 +3404,7 @@ class FacilityController extends Controller
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
     }
 
-    public function workerEducationDetail(Request $request)
+    public function nurseEducationDetail(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'user_id' => 'required',
@@ -3416,38 +3416,38 @@ class FacilityController extends Controller
 
             if(isset($request->role)){
                 $user = User::where('id', $request->user_id)->first();
-                $worker = Worker::where('id', $request->worker_id)->first();
+                $nurse = Nurse::where('id', $request->nurse_id)->first();
             }else{
                 $user = User::where('id', $request->user_id)->first();
-                $worker = Worker::where('user_id', $request->user_id)->first();
+                $nurse = Nurse::where('user_id', $request->user_id)->first();
             }
 
             $return_data = [];
             $is_completion = 0;
             if ($user) {
 
-                /*  Worker */
-                if (isset($request->college_uni_name) && $request->college_uni_name != "") $worker->college_uni_name = $request->college_uni_name;
-                if (isset($request->study_area) && $request->study_area != "") $worker->study_area = $request->study_area;
-                if (isset($request->graduation_date) && $request->graduation_date != "") $worker->graduation_date = $request->graduation_date;
-                // if (isset($request->highest_nursing_degree ) && $request->highest_nursing_degree  != "") $worker->highest_nursing_degree  = $request->highest_nursing_degree ;
+                /*  Nurse */
+                if (isset($request->college_uni_name) && $request->college_uni_name != "") $nurse->college_uni_name = $request->college_uni_name;
+                if (isset($request->study_area) && $request->study_area != "") $nurse->study_area = $request->study_area;
+                if (isset($request->graduation_date) && $request->graduation_date != "") $nurse->graduation_date = $request->graduation_date;
+                // if (isset($request->highest_nursing_degree ) && $request->highest_nursing_degree  != "") $nurse->highest_nursing_degree  = $request->highest_nursing_degree ;
                 if (isset($request->highest_nursing_degree ) && $request->highest_nursing_degree  != ""){
 
-                    // worker degree changed into id
+                    // nurse degree changed into id
                     if($request->highest_nursing_degree == 'Master of Science in Nursing (MSN)'){
-                        $worker->highest_nursing_degree  = '23';
+                        $nurse->highest_nursing_degree  = '23';
                     }else if($request->highest_nursing_degree == 'Associate Degree in Nursing (ADN)'){
-                        $worker->highest_nursing_degree  = '21';
+                        $nurse->highest_nursing_degree  = '21';
                     }else if($request->highest_nursing_degree == 'Bachelor of Science in Nursing (BSN)'){
-                        $worker->highest_nursing_degree  = '22';
+                        $nurse->highest_nursing_degree  = '22';
                     }else{
-                        $worker->highest_nursing_degree  = '24';
+                        $nurse->highest_nursing_degree  = '24';
                     }
-                // end worker degree convert into id
+                // end nurse degree convert into id
                 }
 
-                $n = $worker->update();
-                /*  Worker */
+                $n = $nurse->update();
+                /*  Nurse */
 
                 if ($n) {
                     $this->check = "1";
@@ -3467,7 +3467,7 @@ class FacilityController extends Controller
 
     }
 
-    public function addworkerExperienceDetail(Request $request)
+    public function addnurseExperienceDetail(Request $request)
     {
         $messages = [
             "user_id.required" => "user_id is required",
@@ -3491,23 +3491,23 @@ class FacilityController extends Controller
             $this->message = $validator->errors()->first();
         } else {
             if(isset($request->role)){
-                $worker = Worker::where('id', '=', $request->worker_id)->first();
+                $nurse = Nurse::where('id', '=', $request->nurse_id)->first();
             }else{
-                $worker = Worker::where('user_id', '=', $request->user_id)->first();
+                $nurse = Nurse::where('user_id', '=', $request->user_id)->first();
             }
 
-            $check = Experience::where('worker_id', '=', $worker->id)->get()->first();
+            $check = Experience::where('nurse_id', '=', $nurse->id)->get()->first();
             if(isset($check)){
                 $this->check = "1";
-                $this->message = "Worker record already exist";
+                $this->message = "Nurse record already exist";
                 $this->return_data = $check;
             }else{
 
-                if (isset($worker)) {
+                if (isset($nurse)) {
 
                     /* experience */
                     $add_array = [
-                        'worker_id' => $worker->id,
+                        'nurse_id' => $nurse->id,
                         'type' => $request->type,
                         'start_date' => $request->start_date,
                         'end_date' => $request->end_date,
@@ -3526,7 +3526,7 @@ class FacilityController extends Controller
                         /* experience data */
                         $experiences = $this->getExperienceTypes()->pluck('title', 'id');
                         $cert_data["experience_id"] = (isset($cert_ret->id) && $cert_ret->id != "") ? $cert_ret->id : "";
-                        $cert_data["worker_id"] = (isset($cert_ret->worker_id) && $cert_ret->worker_id != "") ? $cert_ret->worker_id : "";
+                        $cert_data["nurse_id"] = (isset($cert_ret->nurse_id) && $cert_ret->nurse_id != "") ? $cert_ret->nurse_id : "";
                         $cert_data["type"] = (isset($cert_ret->type) && $cert_ret->type != "") ? $cert_ret->type : "";
                         $cert_data["type_definition"] = (isset($experiences[$cert_ret->type]) && $experiences[$cert_ret->type] != "") ? $experiences[$cert_ret->type] : "";
                         $cert_data["position_title"] = (isset($cert_ret->position_title) && $cert_ret->position_title != "") ? $cert_ret->position_title : "";
@@ -3544,7 +3544,7 @@ class FacilityController extends Controller
                         $this->message = "Problem occurred while updating experience, Please try again later";
                     }
                 } else {
-                    $this->message = "Worker not found";
+                    $this->message = "Nurse not found";
                 }
             }
 
@@ -3555,7 +3555,7 @@ class FacilityController extends Controller
 
     }
 
-    public function editworkerExperienceDetail(Request $request)
+    public function editnurseExperienceDetail(Request $request)
     {
         $messages = [
             "user_id.required" => "user_id is required",
@@ -3579,14 +3579,14 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $worker_info = Worker::where('user_id', '=', $request->user_id);
+            $nurse_info = Nurse::where('user_id', '=', $request->user_id);
 
-            if ($worker_info->count() > 0) {
-                $worker = $worker_info->first();
+            if ($nurse_info->count() > 0) {
+                $nurse = $nurse_info->first();
 
                 /* experience */
                 $experience_array = [
-                    'worker_id' => $worker->id,
+                    'nurse_id' => $nurse->id,
                     'type' => $request->type,
                     'start_date' => $request->start_date,
                     'end_date' => $request->end_date,
@@ -3605,7 +3605,7 @@ class FacilityController extends Controller
                     /* experience data */
                     $experiences = $this->getExperienceTypes()->pluck('title', 'id');
                     $cert_data["experience_id"] = (isset($cert_ret->id) && $cert_ret->id != "") ? $cert_ret->id : "";
-                    $cert_data["worker_id"] = (isset($cert_ret->worker_id) && $cert_ret->worker_id != "") ? $cert_ret->worker_id : "";
+                    $cert_data["nurse_id"] = (isset($cert_ret->nurse_id) && $cert_ret->nurse_id != "") ? $cert_ret->nurse_id : "";
                     $cert_data["type"] = (isset($cert_ret->type) && $cert_ret->type != "") ? $cert_ret->type : "";
                     $cert_data["type_definition"] = (isset($experiences[$cert_ret->type]) && $experiences[$cert_ret->type] != "") ? $experiences[$cert_ret->type] : "";
                     $cert_data["position_title"] = (isset($cert_ret->position_title) && $cert_ret->position_title != "") ? $cert_ret->position_title : "";
@@ -3623,7 +3623,7 @@ class FacilityController extends Controller
                     $this->message = "Problem occurred while updating experience, Please try again later";
                 }
             } else {
-                $this->message = "Worker not found";
+                $this->message = "Nurse not found";
             }
         }
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);

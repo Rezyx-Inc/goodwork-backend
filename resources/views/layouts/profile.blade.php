@@ -11,7 +11,7 @@
             <div class="ss-my-profil-div">
                 <h2>My <span class="ss-pink-color">Profile</span></h2>
                 <div class="ss-my-profil-img-div">
-                    <img src="{{URL::asset('images/workers/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/>
+                    <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/>
                     <h4>{{$user->first_name}}</h4>
                     <p>{{$model->id}} </p>
                 </div>

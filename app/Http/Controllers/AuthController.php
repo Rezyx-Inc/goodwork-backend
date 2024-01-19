@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{User, Worker, Availability,API_KEY};
+use App\Models\{User, Nurse, Availability,API_KEY};
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Validator;

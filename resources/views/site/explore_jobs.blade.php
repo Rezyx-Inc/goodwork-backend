@@ -32,7 +32,7 @@
         <div class="ss-expl-pg-bn-ul-sc">
           <ul>
             <li><h6>76+</h6></li>
-            <li><p>Worker <br>Registered</p></li>
+            <li><p>Nurse <br>Registered</p></li>
           </ul>
 
           <ul>

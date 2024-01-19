@@ -15,9 +15,9 @@ class CreateExperienceTable extends Migration
     {
         Schema::create('experiences', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('worker_id');
-            $table->foreign('worker_id')
-                ->references('id')->on('workers');
+            $table->uuid('nurse_id');
+            $table->foreign('nurse_id')
+                ->references('id')->on('nurses');
             $table->string('organization_name');
             $table->string('organization_department_name');
             $table->string('position_title', 100);

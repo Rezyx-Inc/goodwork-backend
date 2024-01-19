@@ -6,7 +6,7 @@ use BenSampo\Enum\Enum;
 
 final class LeadershipRoles extends Enum
 {
-    const ClinicalWorkerCoordinator =   0;
+    const ClinicalNurseCoordinator =   0;
     const Supervisor =   1;
     const Manager = 2;
     const Director = 3;

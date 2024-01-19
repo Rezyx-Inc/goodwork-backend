@@ -16,12 +16,12 @@ class JobSaved extends Migration
         Schema::create('job_saved', function (Blueprint $table) {
         $table->id();
         $table->string('job_id', 36);
-        $table->string('worker_id', 36);
+        $table->string('nurse_id', 36);
         $table->boolean('is_delete')->default(false);
         $table->boolean('is_save')->default(true);
         $table->timestamps();
         $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
-        $table->foreign('worker_id')->references('id')->on('workers')->onDelete('cascade');
+        $table->foreign('nurse_id')->references('id')->on('nurses')->onDelete('cascade');
 
         });
         

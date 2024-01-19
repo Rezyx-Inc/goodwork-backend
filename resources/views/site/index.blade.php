@@ -14,7 +14,7 @@
                 @guest('frontend')
                 <li><a href="{{route('signup')}}">Create a profile</a></li>
                 @endguest
-              <li><p>128+ Workers successfully registered across the world</p></li>
+              <li><p>128+ Nurses successfully registered across the world</p></li>
             </ul>
           </div>
         </div>
@@ -36,8 +36,8 @@
           <!---mobile -show---->
 
           <div class="ss-mobile-show ss-ban-mob-txt">
-            <h2>Empowering workers to find their dream path</h2>
-            <p>Register with us as our skilled worker to unleash your passion for nursing.</p>
+            <h2>Empowering nurses to find their dream path</h2>
+            <p>Register with us as our skilled nurse to unleash your passion for nursing.</p>
           </div>
 
         </div>
@@ -163,13 +163,13 @@
           <div class="ss-hm-join-hed-tx-sec">
             <h6>Join Us</h6>
             <h2><span class="ss-clr-pink">Join</span> Our Nursing Community and Find Your Ideal Shift!</h2>
-            <h5>Connecting Workers with Opportunities, One Shift at a Time</h5>
+            <h5>Connecting Nurses with Opportunities, One Shift at a Time</h5>
           </div>
         </div>
 
         <div class="col-lg-6">
           <div class="ss-hm-join-rit-p-sc">
-            <p>Are you a skilled and dedicated worker seeking the perfect shift? Look no further. Our platform is designed to make your job hunt simpler, smarter, and more rewarding. Whether you're a seasoned pro or just starting your nursing journey, we have opportunities that match your skills and preferences.</p>
+            <p>Are you a skilled and dedicated nurse seeking the perfect shift? Look no further. Our platform is designed to make your job hunt simpler, smarter, and more rewarding. Whether you're a seasoned pro or just starting your nursing journey, we have opportunities that match your skills and preferences.</p>
           </div>
         </div>
       </div>

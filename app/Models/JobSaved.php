@@ -9,7 +9,7 @@ class JobSaved extends Model
     protected $table = 'job_saved';
     protected $fillable = [
         'job_id',
-        'worker_id',
+        'nurse_id',
         'created_at',
         'is_delete',
         'is_save'
@@ -23,7 +23,7 @@ class JobSaved extends Model
         {
             $user_id = auth()->guard('frontend')->user()->id;
         }
-        $check = $this->where(['worker_id'=>$user_id, 'job_id'=>$jid, 'is_delete'=>'0','is_save'=>'1'])->first();
+        $check = $this->where(['nurse_id'=>$user_id, 'job_id'=>$jid, 'is_delete'=>'0','is_save'=>'1'])->first();
         if (empty($check)) {
             return false;
         }else{

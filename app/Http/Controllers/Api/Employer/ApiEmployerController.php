@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Employer;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Worker;
+use App\Models\Nurse;
 use App\Models\Availability;
 use App\Models\Certification;
 use App\Models\Experience;
@@ -13,7 +13,7 @@ use App\Models\Notification;
 use App\Enums\Role;
 use App\Enums\State;
 use App\Models\Offer;
-use App\Models\WorkerAsset;
+use App\Models\NurseAsset;
 use App\Models\Follows;
 use App\Models\FacilityFollows;
 use App\Models\Facility;
@@ -22,7 +22,7 @@ use App\Models\States;
 use App\Models\Cities;
 use App\Models\JobAsset;
 use App\Models\JobOffer;
-use App\Models\WorkerRating;
+use App\Models\NurseRating;
 use App\Models\EmailTemplate;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Hash;
@@ -278,7 +278,7 @@ class ApiEmployerController extends Controller
                     $user_data->fcm_token = $request->fcm_token;
                     if ($user_data->update()) {
                         $user = User::where('id', '=', $user_data->id)->get()->first();
-                        if (isset($user->role) && $user->role == "WORKER") {
+                        if (isset($user->role) && $user->role == "NURSE") {
                             $return_data = $this->profileCompletionFlagStatus($type = "login", $user);
                         } else {
                             $return_data = $this->facilityProfileCompletionFlagStatus($type = "login", $user);
@@ -879,15 +879,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Apply'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -897,7 +897,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -949,15 +949,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Screening'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -967,7 +967,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1019,15 +1019,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Submitted'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -1037,7 +1037,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1089,15 +1089,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Offered'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -1107,7 +1107,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1159,15 +1159,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Done'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -1177,7 +1177,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1229,15 +1229,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Onboarding'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -1247,7 +1247,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1299,15 +1299,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Working'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -1317,7 +1317,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1369,15 +1369,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Rejected'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.created_at as created_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -1387,7 +1387,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1439,15 +1439,15 @@ class ApiEmployerController extends Controller
                     'offers.status' => 'Blocked'
                 ];
 
-                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'workers.*', 'offers.updated_at as updated_at', 'facilities.name as facility_name')
+                $ret = Facility::select('jobs.id as job_id', 'jobs.*','offers.id as offer_id', 'users.first_name as first_name', 'users.last_name as last_name', 'users.image as worker_image', 'nurses.*', 'offers.updated_at as updated_at', 'facilities.name as facility_name')
                     ->join('jobs', 'facilities.id', '=', 'jobs.facility_id')
                     ->join('offers', 'jobs.id', '=', 'offers.job_id')
-                    ->join('workers', 'offers.worker_id', '=', 'workers.id')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->join('nurses', 'offers.nurse_id', '=', 'nurses.id')
+                    ->join('users', 'nurses.user_id', '=', 'users.id')
 
                     ->where($whereCond)
                     // ->orderBy('offers.created_at', 'desc')
-                ->orderBy('offers.worker_id', 'desc');
+                ->orderBy('offers.nurse_id', 'desc');
                 $job_data = $ret->get();
 
                 $result = [];
@@ -1457,7 +1457,7 @@ class ApiEmployerController extends Controller
                     $result['worker_id'] = $rec['id'];
                     $result['worker_user_id'] = $rec['user_id'];
                     $result['job_id'] = $rec['job_id'];
-                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/workers/profile/" . $rec['worker_image']):"";
+                    $result['worker_image'] = isset($rec['worker_image'])? url("public/images/nurses/profile/" . $rec['worker_image']):"";
                     $result['worker_name'] = isset($rec['first_name'])?$rec['first_name'].' '.$rec['last_name']:"";
                     $result['job_name'] = isset($rec['job_name'])?$rec['job_name']:"";
                     $result['facility_name'] = isset($rec['facility_name'])?$rec['facility_name']:"";
@@ -1516,7 +1516,7 @@ class ApiEmployerController extends Controller
                 $record['twitter'] = (isset($result->twitter) && $result->twitter != "") ? strip_tags($result->twitter) : "";
                 $record['linkedin'] = (isset($result->linkedin) && $result->linkedin != "") ? strip_tags($result->linkedin) : "";
                 $record['facility_id'] = (isset($result->id) && $result->id != "") ? strip_tags($result->id) : "";
-                $record['image'] = (isset($result->cno_image) && $result->cno_image != "") ? url("public/images/workers/profile/" . $result->cno_image) : "";
+                $record['image'] = (isset($result->cno_image) && $result->cno_image != "") ? url("public/images/nurses/profile/" . $result->cno_image) : "";
 
 
             $return_data = $record;
@@ -1537,13 +1537,13 @@ class ApiEmployerController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            $worker = Worker::where('workers.id', $request->worker_id)
-                    ->leftJoin('offers','offers.worker_id', '=', 'workers.id')
-                    ->select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.worker_id=workers.id) as workers_applied"),'workers.*')
+            $worker = Nurse::where('nurses.id', $request->worker_id)
+                    ->leftJoin('offers','offers.nurse_id', '=', 'nurses.id')
+                    ->select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.nurse_id=nurses.id) as workers_applied"),'nurses.*')
                     ->first();
-            $worker_reference = WORKER::select('worker_references.name','worker_references.min_title_of_reference','worker_references.recency_of_reference')
-                            ->leftJoin('worker_references','worker_references.worker_id', '=', 'workers.id')
-                            ->where('workers.id', $worker['id'])->get();
+            $worker_reference = NURSE::select('nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
+                            ->leftJoin('nurse_references','nurse_references.nurse_id', '=', 'nurses.id')
+                            ->where('nurses.id', $worker['id'])->get();
             $worker_reference_name = '';
             $worker_reference_title ='';
             $worker_reference_recency_reference ='';
@@ -1564,7 +1564,7 @@ class ApiEmployerController extends Controller
                 $Worker_user = User::where(['id' => $worker['user_id']])->first();
                 $result = [];
                 $result['worker_name'] = $Worker_user['first_name'].' '.$Worker_user['last_name'];
-                $result['worker_image'] = isset($Worker_user['image'])?url("public/images/workers/profile/".$Worker_user['image']):'';
+                $result['worker_image'] = isset($Worker_user['image'])?url("public/images/nurses/profile/".$Worker_user['image']):'';
                 $result['worker_id'] = $worker['id'];
                 $result['worker_user_id'] = $Worker_user['id'];
                 $result['employer_id'] = $request->employer_id;
@@ -1593,7 +1593,7 @@ class ApiEmployerController extends Controller
 
                 $data['worker'] = isset($worker_reference_recency_reference)?$worker_reference_recency_reference:"";
                 $data['name'] = 'Recency Of Reference';
-                $data['worker1'] = isset($worker['skills_checklists'])?url("public/images/workers/skill/".$worker['skills_checklists']):"";
+                $data['worker1'] = isset($worker['skills_checklists'])?url("public/images/nurses/skill/".$worker['skills_checklists']):"";
                 $data['name1'] = 'Skills Checklist';
                 $worker_info[] = $data;
 

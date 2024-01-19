@@ -52,7 +52,7 @@ Route::prefix('recruiter')->group(function () {
 
         Route::post('ask-recruiter-notification', ['uses' => 'RecruiterDashboardController@askRecruiterNotification', 'as' => 'ask-recruiter-notification']);
 
-        Route::get('get-single-worker-details/{id}', ['uses' => 'RecruiterDashboardController@getSingleWorkerDetails', 'as' => 'get-single-worker-details']);
+        Route::get('get-single-nurse-details/{id}', ['uses' => 'RecruiterDashboardController@getSingleNurseDetails', 'as' => 'get-single-nurse-details']);
 
         Route::post('send-job-offer-recruiter', ['uses' => 'ApplicationController@sendJobOfferRecruiter', 'as' => 'send-job-offer-recruiter']);
 

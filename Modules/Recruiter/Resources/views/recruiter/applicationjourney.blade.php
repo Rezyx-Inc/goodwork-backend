@@ -794,7 +794,7 @@
       }
     }
     function chatNow(id){
-        localStorage.setItem('worker_id', id);
+        localStorage.setItem('nurse_id', id);
     }
     const numberOfReferencesField = document.getElementById('number_of_references');
     numberOfReferencesField.addEventListener('input', function() {

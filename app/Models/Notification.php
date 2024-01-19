@@ -102,9 +102,9 @@ class Notification extends UuidModel
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function worker()
+    public function nurse()
     {
-        return $this->belongsTo(Worker::class);
+        return $this->belongsTo(Nurse::class);
     }
 
     public function job()

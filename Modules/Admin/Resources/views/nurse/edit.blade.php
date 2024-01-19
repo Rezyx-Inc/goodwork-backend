@@ -285,7 +285,7 @@
                   <option value="mercedes">Allied Health Professional</option>
                   <option value="audi">Therapy</option>
                   <option value="audi">LPN/LVN</option>
-                  <option value="audi">Worker Practitioner</option>
+                  <option value="audi">Nurse Practitioner</option>
                 </select>
               </div>
 
@@ -311,7 +311,7 @@
                   <option value="mercedes">Allied Health Professional</option>
                   <option value="audi">Therapy</option>
                   <option value="audi">LPN/LVN</option>
-                  <option value="audi">Worker Practitioner</option>
+                  <option value="audi">Nurse Practitioner</option>
                 </select>
                   <input type="text" name="text" placeholder="Enter Experience in years">
                 </li>
@@ -1670,7 +1670,7 @@ $(document).ready(function () {
     // list_elements('vac');
     // list_elements('cer');
 
-    $('.worker-edit-profile').on('submit', function (event) {
+    $('.nurse-edit-profile').on('submit', function (event) {
         var form = $(this);
         event.preventDefault();
         form.find('.parsley-error').removeClass('parsley-error');

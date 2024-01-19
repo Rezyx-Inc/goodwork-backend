@@ -13,7 +13,7 @@ class AddKeywordTableForigenRefToOtherTables extends Migration
      */
     public function up()
     {
-        Schema::table('workers', function (Blueprint $table) {
+        Schema::table('nurses', function (Blueprint $table) {
             $table->foreign('ehr_proficiency_cerner')
                 ->references('id')->on('keywords');
             $table->foreign('ehr_proficiency_meditech')
@@ -52,7 +52,7 @@ class AddKeywordTableForigenRefToOtherTables extends Migration
      */
     public function down()
     {
-        Schema::table('workers', function (Blueprint $table) {
+        Schema::table('nurses', function (Blueprint $table) {
             $table->dropForeign(['ehr_proficiency']);
             $table->dropForeign(['ehr_proficiency_experience']);
         });

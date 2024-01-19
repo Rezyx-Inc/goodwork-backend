@@ -11,7 +11,7 @@ class Certification extends UuidModel
 	 *
 	 * @var string
 	 */
-    private $worker_id;
+    private $nurse_id;
 
     /**
 	 *
@@ -55,7 +55,7 @@ class Certification extends UuidModel
      * @var array
      */
     public $fillable = [
-        'worker_id',
+        'nurse_id',
         'type',
         'license_number',
         'effective_date',
@@ -81,8 +81,8 @@ class Certification extends UuidModel
      */
     protected $dates = ['deleted_at'];
 
-    public function worker()
+    public function nurse()
 	{
-		return $this->belongsTo(Worker::class);
+		return $this->belongsTo(Nurse::class);
 	}
 }

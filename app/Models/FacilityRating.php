@@ -14,11 +14,11 @@ class FacilityRating extends UuidModel
     // protected $table = 'follows';
 
     protected $fillable = [
-        'worker_id',
+        'nurse_id',
         'facility_id',
         'overall',
         'on_board',
-        'worker_team_work',
+        'nurse_team_work',
         'leadership_support',
         'tools_todo_my_job',
         'experience',

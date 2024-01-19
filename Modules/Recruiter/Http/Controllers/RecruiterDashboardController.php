@@ -3,7 +3,7 @@
 namespace Modules\Recruiter\Http\Controllers;
 
 use DateTime;
-use App\Models\Worker;
+use App\Models\Nurse;
 use App\Models\User;
 use App\Models\Offer;
 use App\Models\Job;
@@ -256,8 +256,8 @@ class RecruiterDashboardController extends Controller
                 'message' => $validator->errors()->first(),
             ];
         } else {
-            $worker = Worker::where('id', $request->worker_id)->first();
-            $user = User::where('id', $worker['user_id'])->first();
+            $nurse = Nurse::where('id', $request->worker_id)->first();
+            $user = User::where('id', $nurse['user_id'])->first();
             $check = DB::table('ask_worker')->where(['text_field' => $request->update_key, 'worker_id' => $request->worker_id])->first();
             if(empty($check)){
                 $record = DB::table('ask_worker')->insert(['text_field' => $request->update_key, 'worker_id' => $request->worker_id]);
@@ -282,10 +282,10 @@ class RecruiterDashboardController extends Controller
         }
         return response()->json($responseData);
     }
-    public function getSingleWorkerDetails(Request $request, $id){
-        $worker = Worker::where('id', $id)->first();
-        $data = User::select('first_name', 'last_name', 'image', 'mobile')->where('id', $worker['user_id'])->first();
-        $data->profession = $worker->highest_nursing_degree;
+    public function getSingleNurseDetails(Request $request, $id){
+        $nurse = Nurse::where('id', $id)->first();
+        $data = User::select('first_name', 'last_name', 'image', 'mobile')->where('id', $nurse['user_id'])->first();
+        $data->profession = $nurse->highest_nursing_degree;
         $responseData = [
             'data' => $data,
         ];

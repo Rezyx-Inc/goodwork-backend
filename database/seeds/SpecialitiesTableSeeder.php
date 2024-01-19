@@ -9,26 +9,26 @@ class SpecialitiesTableSeeder extends Seeder
     public function run()
     {
         $specialties = [
-            'Registered Worker',
-            'Licensed Practical Worker',
+            'Registered Nurse',
+            'Licensed Practical Nurse',
             'Certified Nursing Assistant',
-            'Worker Practitioner',
-            'Clinical Worker Specialist',
-            'Worker Anesthetist',
-            'Worker Midwife',
-            'Psychiatric Worker',
-            'Geriatric Worker',
-            'Pediatric Worker',
-            'Orthopedic Worker',
-            'Oncology Worker',
-            'Intensive Care Unit Worker',
-            'Emergency Room Worker',
-            'Surgical Worker',
-            'Labor and Delivery Worker',
-            'Home Health Worker',
-            'Hospice Worker',
-            'Ambulatory Care Worker',
-            'Public Health Worker'
+            'Nurse Practitioner',
+            'Clinical Nurse Specialist',
+            'Nurse Anesthetist',
+            'Nurse Midwife',
+            'Psychiatric Nurse',
+            'Geriatric Nurse',
+            'Pediatric Nurse',
+            'Orthopedic Nurse',
+            'Oncology Nurse',
+            'Intensive Care Unit Nurse',
+            'Emergency Room Nurse',
+            'Surgical Nurse',
+            'Labor and Delivery Nurse',
+            'Home Health Nurse',
+            'Hospice Nurse',
+            'Ambulatory Care Nurse',
+            'Public Health Nurse'
         ];
 
         foreach ($specialties as $specialty) {

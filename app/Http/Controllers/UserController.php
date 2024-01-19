@@ -10,7 +10,7 @@ use Hash;
 use App\Enums\Role;
 use File;
 /** Models */
-use App\Models\{User, Worker, WorkerReference, WorkerAsset,Keyword, Facility, Availability, Countries, States, Cities};
+use App\Models\{User, Nurse, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities};
 
 class UserController extends Controller
 {
@@ -18,7 +18,7 @@ class UserController extends Controller
     {
 
         $data = [];
-        $data['model'] = Worker::findOrFail($id);
+        $data['model'] = Nurse::findOrFail($id);
         return view('user.show', $data);
     }
 
@@ -26,9 +26,9 @@ class UserController extends Controller
     {
         $data = [];
         $user = auth()->guard('frontend')->user();
-        $id = $user->worker->id;
+        $id = $user->nurse->id;
         $data['user'] = $user;
-        $data['model'] = $user->worker;
+        $data['model'] = $user->nurse;
         // dd($data['model']);
         // $data['countries'] = $country = Countries::select('id','name')->where('flag','1')->orderBy('name','ASC')->get();
         // $data['states'] = $state = States::select('id','name')->where(['flag'=>'1', 'country_id'=>$model->country])->orderBy('name','ASC')->get();
@@ -59,17 +59,17 @@ class UserController extends Controller
         $data['four_zero_1k'] = Keyword::where(['filter'=>'401k','active'=>'1'])->get();
         $data['dentals'] = Keyword::where(['filter'=>'Dental','active'=>'1'])->get();
 
-        $data['references'] = WorkerReference::where(['worker_id'=>$id])->get();
-        $data['covidVac'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'covid'])->whereNull('deleted_at')->first();
-        $data['fluVac'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'flu'])->whereNull('deleted_at')->first();
+        $data['references'] = NurseReference::where(['nurse_id'=>$id])->get();
+        $data['covidVac'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'covid'])->whereNull('deleted_at')->first();
+        $data['fluVac'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'flu'])->whereNull('deleted_at')->first();
         // dd($data['covidVac']);
-        $data['palsCer'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'PALS'])->whereNull('deleted_at')->first();
-        $data['blsCer'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'BLS'])->whereNull('deleted_at')->first();
-        $data['aclsCer'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'ACLS'])->whereNull('deleted_at')->first();
-        $data['otherCer'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'Other'])->whereNull('deleted_at')->first();
-        $data['diplomaCer'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'diploma'])->whereNull('deleted_at')->first();
-        $data['driving_license'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'driving_license'])->whereNull('deleted_at')->first();
-        $data['skillsCer'] = WorkerAsset::where(['worker_id'=> $id,'filter'=> 'skill'])->whereNull('deleted_at')->get();
+        $data['palsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'PALS'])->whereNull('deleted_at')->first();
+        $data['blsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'BLS'])->whereNull('deleted_at')->first();
+        $data['aclsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'ACLS'])->whereNull('deleted_at')->first();
+        $data['otherCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'Other'])->whereNull('deleted_at')->first();
+        $data['diplomaCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'diploma'])->whereNull('deleted_at')->first();
+        $data['driving_license'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'driving_license'])->whereNull('deleted_at')->first();
+        $data['skillsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'skill'])->whereNull('deleted_at')->get();
         $data['facilities'] = Facility::whereNull('deleted_at')->where(['active'=>'1'])->orderBy('name','DESC')->get();
         $view = '';
         switch (request()->route()->getName()) {
@@ -120,8 +120,8 @@ class UserController extends Controller
     {
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
-        $id = $user->worker->id;
-        $model = Worker::findOrFail($id);
+        $id = $user->nurse->id;
+        $model = Nurse::findOrFail($id);
         $inputFields = collect($request->all())->filter(function ($value) {
             return $value !== null;
         });
@@ -139,13 +139,13 @@ class UserController extends Controller
         if ($request->ajax()) {
             if ($request->has('ids')) {
                 for($i=0; $i<count($request->ids); $i++){
-                    $worker = Worker::findOrFail($request->ids[$i]);
-                    $user = $worker->user;
+                    $nurse = Nurse::findOrFail($request->ids[$i]);
+                    $user = $nurse->user;
                     $delete_date = Carbon::now();
-                    $worker->deleted_at = $delete_date;
-                    $worker->active = '0';
-                    $worker->updated_at = $delete_date;
-                    $worker->save();
+                    $nurse->deleted_at = $delete_date;
+                    $nurse->active = '0';
+                    $nurse->updated_at = $delete_date;
+                    $nurse->save();
                     $user->deleted_at = $delete_date;
                     $user->active = '0';
                     $user->updated_at = $delete_date;
@@ -164,8 +164,8 @@ class UserController extends Controller
         if ($request->ajax()) {
             if ($request->has('ids')) {
                 for($i=0; $i<count($request->ids); $i++){
-                    $worker = Worker::findOrFail($request->ids[$i]);
-                    $resp = $this->sendInvite($worker->user);
+                    $nurse = Nurse::findOrFail($request->ids[$i]);
+                    $resp = $this->sendInvite($nurse->user);
                 }
                 $response = array('success'=>$resp['success'],'msg'=>$resp['msg']);
                 return $response;
@@ -218,22 +218,22 @@ class UserController extends Controller
 
         if ($request->ajax()) {
             $user = auth()->guard('frontend')->user();
-            $id = $user->worker->id;
+            $id = $user->nurse->id;
             if ($request->has('old_ids')) {
-                $to_be_deleted = WorkerReference::where(['worker_id'=>$id])->whereNotIn('id',$request->old_ids)->get();
+                $to_be_deleted = NurseReference::where(['nurse_id'=>$id])->whereNotIn('id',$request->old_ids)->get();
                 foreach ($to_be_deleted as $key => $m) {
                     if (!empty($m->image)) {
-                        if(file_exists(public_path('images/workers/reference/' . $m->image)))
+                        if(file_exists(public_path('images/nurses/reference/' . $m->image)))
                         {
-                            File::delete(public_path('images/workers/reference/' . $m->image));
+                            File::delete(public_path('images/nurses/reference/' . $m->image));
                         }
                     }
                     $m->delete();
-                    // WorkerReference::find($m->id)->forceDelete();
+                    // NurseReference::find($m->id)->forceDelete();
                 }
                 // dd($request->input());
                 foreach ($request->old_ids as $k => $v) {
-                    $model = WorkerReference::findOrFail($v);
+                    $model = NurseReference::findOrFail($v);
                     $input = [];
                     $input['name'] = $request->old_name[$k];
                     $input['email'] = $request->old_email[$k];
@@ -246,16 +246,16 @@ class UserController extends Controller
                         if (array_key_exists($k,$old_images)) {
                             if ($old_images[$k]->isValid()) {
                                 if (!empty($model->image)) {
-                                    if(file_exists(public_path('images/workers/reference/' . $model->image)))
+                                    if(file_exists(public_path('images/nurses/reference/' . $model->image)))
                                     {
-                                        File::delete(public_path('images/workers/reference/' . $model->image));
+                                        File::delete(public_path('images/nurses/reference/' . $model->image));
                                     }
                                 }
                                 $reference_name = $old_images[$k]->getClientOriginalName();
                                 $reference_ext = $old_images[$k]->getClientOriginalExtension();
                                 $img_name = $reference_name.'_'.time().'.'.$reference_ext;
 
-                                $old_images[$k]->move(public_path('images/workers/reference/'), $img_name);
+                                $old_images[$k]->move(public_path('images/nurses/reference/'), $img_name);
                                 $input['image'] = $img_name;
                             }
                         }
@@ -267,7 +267,7 @@ class UserController extends Controller
             if ($request->has('name')) {
                 foreach ($request->name as $k => $value) {
                     $input = [];
-                    $input['worker_id'] = $id;
+                    $input['nurse_id'] = $id;
                     $input['name'] = $value;
                     $input['email'] = $request->email[$k];
                     $input['phone'] = $request->phone[$k];
@@ -280,15 +280,15 @@ class UserController extends Controller
                             $reference_name = $images[$k]->getClientOriginalName();
                                 $reference_ext = $images[$k]->getClientOriginalExtension();
                                 $img_name = $reference_name.'_'.time().'.'.$reference_ext;
-                            $images[$k]->move(public_path('images/workers/reference/'), $img_name);
+                            $images[$k]->move(public_path('images/nurses/reference/'), $img_name);
                             $input['image'] = $img_name;
                         }
                     }
-                    WorkerReference::create($input);
+                    NurseReference::create($input);
                 }
             }
             // dd($request->worker_number_of_references);
-            // Worker::findOrFail($id)->update(['worker_number_of_references'=>$request->worker_number_of_references]);
+            // Nurse::findOrFail($id)->update(['worker_number_of_references'=>$request->worker_number_of_references]);
             $response = array('success'=>true,'msg'=>'Updated Successfully!');
             return $response;
         }
@@ -298,8 +298,8 @@ class UserController extends Controller
     {
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
-        $id = $user->worker->id;
-        $worker = WORKER::findOrFail($id);
+        $id = $user->nurse->id;
+        $worker = NURSE::findOrFail($id);
         $vaccination = [];
         if(isset($worker->worker_vaccination) && !empty($worker->worker_vaccination)){
             $resu = json_decode($worker->worker_vaccination);
@@ -312,10 +312,10 @@ class UserController extends Controller
         }
         // upload covid
         if ($request->covid_vac == 'Yes') {
-            $asset = WorkerAsset::where('worker_id', $id)->where('filter', 'covid')->first();
+            $asset = NurseAsset::where('nurse_id', $id)->where('filter', 'covid')->first();
             $input = [];
             $input['using_date'] = isset($request->covid_date)?$request->covid_date:'';
-            $input['worker_id'] = $id;
+            $input['nurse_id'] = $id;
             $input['filter'] = 'covid';
             if ($request->hasFile('covid'))
             {
@@ -323,7 +323,7 @@ class UserController extends Controller
                 $name = $file->getClientOriginalName();
                 $ext = $file->getClientOriginalExtension();
                 $covid_name = $name.'_'.time().'.'.$ext;
-                $destinationPath = 'images/workers/vaccination';
+                $destinationPath = 'images/nurses/vaccination';
                 $file->move(public_path($destinationPath), $covid_name);
                 $input['name'] = $covid_name;
 
@@ -333,39 +333,39 @@ class UserController extends Controller
 
                 if (isset($input['name'])) {
                     if(!empty($asset->name)){
-                        if(file_exists(public_path('images/workers/vaccination/' . $asset->name)))
+                        if(file_exists(public_path('images/nurses/vaccination/' . $asset->name)))
                         {
-                            File::delete(public_path('images/workers/vaccination/' . $asset->name));
+                            File::delete(public_path('images/nurses/vaccination/' . $asset->name));
                         }
                     }
                 }
                 $asset->update($input);
             }else{
-                $asset = WorkerAsset::create($input);
+                $asset = NurseAsset::create($input);
             }
-            $worker_covid_name = !empty($asset->name) ? $asset->name : "";
+            $nurse_covid_name = !empty($asset->name) ? $asset->name : "";
 
         }else{
-            $covid = WorkerAsset::where('worker_id', $id)->where('filter', 'covid')->first();
+            $covid = NurseAsset::where('nurse_id', $id)->where('filter', 'covid')->first();
             if ($covid) {
                 if(!empty($covid->name)){
-                    if(file_exists(public_path('images/workers/vaccination/' . $covid->name)))
+                    if(file_exists(public_path('images/nurses/vaccination/' . $covid->name)))
                     {
-                        File::delete(public_path('images/workers/vaccination/' . $covid->name));
+                        File::delete(public_path('images/nurses/vaccination/' . $covid->name));
                     }
                 }
                 $covid->delete();
             }
-            $worker_covid_name = "";
+            $nurse_covid_name = "";
         }
 
         // Upload flu
         if ($request->flu_vac == 'Yes') {
-            $asset = WorkerAsset::where('worker_id', $id)->where('filter', 'flu')->first();
+            $asset = NurseAsset::where('nurse_id', $id)->where('filter', 'flu')->first();
 
             $input['using_date'] = isset($request->flu_date)?$request->flu_date:'';
             $input['filter'] = 'flu';
-            $input['worker_id'] = $id;
+            $input['nurse_id'] = $id;
 
             if ($request->hasFile('flu'))
             {
@@ -373,7 +373,7 @@ class UserController extends Controller
                 $name = $file->getClientOriginalName();
                 $ext = $file->getClientOriginalExtension();
                 $flu_name = $name.'_'.time().'.'.$ext;
-                $destinationPath = 'images/workers/vaccination';
+                $destinationPath = 'images/nurses/vaccination';
                 $file->move(public_path($destinationPath), $flu_name);
                 $input['name'] = $flu_name;
 
@@ -381,36 +381,36 @@ class UserController extends Controller
             if (!empty($asset)) {
                 if (isset($input['name'])) {
                     if(!empty($asset->name)){
-                        if(file_exists(public_path('images/workers/vaccination/' . $asset->name)))
+                        if(file_exists(public_path('images/nurses/vaccination/' . $asset->name)))
                         {
-                            File::delete(public_path('images/workers/vaccination/' . $asset->name));
+                            File::delete(public_path('images/nurses/vaccination/' . $asset->name));
                         }
                     }
                 }
                 $asset->update($input);
             }else{
-                $asset = WorkerAsset::create($input);
+                $asset = NurseAsset::create($input);
             }
-            $worker_flu_name =  !empty($asset->name) ? $asset->name : "";
+            $nurse_flu_name =  !empty($asset->name) ? $asset->name : "";
         }else{
-            $flu = WorkerAsset::where('worker_id', $id)->where('filter', 'flu')->first();
+            $flu = NurseAsset::where('nurse_id', $id)->where('filter', 'flu')->first();
             if ($flu) {
                 if(!empty($flu->name)){
-                    if(file_exists(public_path('images/workers/vaccination/' . $flu->name)))
+                    if(file_exists(public_path('images/nurses/vaccination/' . $flu->name)))
                     {
-                        File::delete(public_path('images/workers/vaccination/' . $flu->name));
+                        File::delete(public_path('images/nurses/vaccination/' . $flu->name));
                     }
                 }
                 $flu->delete();
             }
-            $worker_flu_name = "";
+            $nurse_flu_name = "";
         }
 
-        $vaccination[0] = $worker_covid_name;
-        $vaccination[1] = $worker_flu_name;
+        $vaccination[0] = $nurse_covid_name;
+        $vaccination[1] = $nurse_flu_name;
         $vaccination = json_encode($vaccination);
 
-        WORKER::where(['id' => $worker->id])->update([
+        NURSE::where(['id' => $worker->id])->update([
             'worker_vaccination' => $vaccination,
         ]);
 
@@ -422,40 +422,40 @@ class UserController extends Controller
     public function certification_submit(Request $request)
     {
         $user = auth()->guard('frontend')->user();
-        $id = $user->worker->id;
-        $worker = WORKER::findOrFail($id);
+        $id = $user->nurse->id;
+        $worker = NURSE::findOrFail($id);
         // BLS
         if ($request->bls_cer == 'Yes') {
             if ($request->hasFile('bls'))
             {
-                WorkerAsset::where('worker_id', $id)->where('filter', 'BLS')->forceDelete();
+                NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
                 if (!empty($worker->BLS)) {
-                    if(file_exists(public_path('images/workers/certificate/').$worker->BLS))
+                    if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
                     {
-                        File::delete(public_path('images/workers/certificate/').$worker->BLS);
+                        File::delete(public_path('images/nurses/certificate/').$worker->BLS);
                     }
                 }
                 $file = $request->file('bls');
                 $bls_name = $file->getClientOriginalName();
                 $bls_ext = $file->getClientOriginalExtension();
                 $bls = $bls_name.'_'.time().'.'.$bls_ext;
-                $destinationPath = 'images/workers/certificate';
+                $destinationPath = 'images/nurses/certificate';
                 $file->move(public_path($destinationPath), $bls);
 
                 // write image name in worker table
                 $worker->BLS = $bls;
-                WorkerAsset::create([
-                    'worker_id' => $id,
+                NurseAsset::create([
+                    'nurse_id' => $id,
                     'name' => $bls,
                     'filter' => 'BLS'
                 ]);
             }
         }else{
-            WorkerAsset::where('worker_id', $id)->where('filter', 'BLS')->forceDelete();
+            NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
             if (!empty($worker->BLS)) {
-                if(file_exists(public_path('images/workers/certificate/').$worker->BLS))
+                if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
                 {
-                    File::delete(public_path('images/workers/certificate/').$worker->BLS);
+                    File::delete(public_path('images/nurses/certificate/').$worker->BLS);
                 }
             }
             $worker->BLS = '';
@@ -465,11 +465,11 @@ class UserController extends Controller
         if ($request->acls_cer == 'Yes') {
             if ($request->hasFile('acls'))
             {
-                WorkerAsset::where('worker_id', $id)->where('filter', 'ACLS')->forceDelete();
+                NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
                 if (!empty($worker->ACLS)) {
-                    if(file_exists(public_path('images/workers/certificate/').$worker->ACLS))
+                    if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
                     {
-                        File::delete(public_path('images/workers/certificate/').$worker->ACLS);
+                        File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
                     }
                 }
 
@@ -477,23 +477,23 @@ class UserController extends Controller
                 $acls_name = pathinfo($acls_name_full, PATHINFO_FILENAME);
                 $acls_ext = $request->file('acls')->getClientOriginalExtension();
                 $acls = $acls_name.'_'.time().'.'.$acls_ext;
-                $destinationPath = 'images/workers/certificate';
+                $destinationPath = 'images/nurses/certificate';
                 $request->file('acls')->move(public_path($destinationPath), $acls);
 
                 // write image name in worker table
                 $worker->ACLS = $acls;
-                WorkerAsset::create([
-                    'worker_id' => $id,
+                NurseAsset::create([
+                    'nurse_id' => $id,
                     'name' => $acls,
                     'filter' => 'ACLS'
                 ]);
             }
         }else{
-            WorkerAsset::where('worker_id', $id)->where('filter', 'ACLS')->forceDelete();
+            NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
             if (!empty($worker->ACLS)) {
-                if(file_exists(public_path('images/workers/certificate/').$worker->ACLS))
+                if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
                 {
-                    File::delete(public_path('images/workers/certificate/').$worker->ACLS);
+                    File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
                 }
             }
             $worker->ACLS = '';
@@ -503,11 +503,11 @@ class UserController extends Controller
         if ($request->pals_cer == 'Yes') {
             if ($request->hasFile('pals'))
             {
-                WorkerAsset::where('worker_id', $id)->where('filter', 'PALS')->forceDelete();
+                NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
                 if (!empty($worker->PALS)) {
-                    if(file_exists(public_path('images/workers/certificate/').$worker->PALS))
+                    if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
                     {
-                        File::delete(public_path('images/workers/certificate/').$worker->PALS);
+                        File::delete(public_path('images/nurses/certificate/').$worker->PALS);
                     }
                 }
 
@@ -515,23 +515,23 @@ class UserController extends Controller
                 $pals_name = pathinfo($pals_name_full, PATHINFO_FILENAME);
                 $pals_ext = $request->file('pals')->getClientOriginalExtension();
                 $pals = $pals_name.'_'.time().'.'.$pals_ext;
-                $destinationPath = 'images/workers/certificate';
+                $destinationPath = 'images/nurses/certificate';
                 $request->file('pals')->move(public_path($destinationPath), $pals);
 
                 // write image name in worker table
                 $worker->PALS = $pals;
-                WorkerAsset::create([
-                    'worker_id' => $id,
+                NurseAsset::create([
+                    'nurse_id' => $id,
                     'name' => $pals,
                     'filter' => 'PALS'
                 ]);
             }
         }else{
-            WorkerAsset::where('worker_id', $id)->where('filter', 'PALS')->forceDelete();
+            NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
             if (!empty($worker->PALS)) {
-                if(file_exists(public_path('images/workers/certificate/').$worker->PALS))
+                if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
                 {
-                    File::delete(public_path('images/workers/certificate/').$worker->PALS);
+                    File::delete(public_path('images/nurses/certificate/').$worker->PALS);
                 }
             }
             $worker->PALS = '';
@@ -542,11 +542,11 @@ class UserController extends Controller
             if ($request->hasFile('other'))
             {
 
-                WorkerAsset::where('worker_id', $id)->where('filter', 'Other')->forceDelete();
+                NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
                 if (!empty($worker->other)) {
-                    if(file_exists(public_path('images/workers/certificate/').$worker->other))
+                    if(file_exists(public_path('images/nurses/certificate/').$worker->other))
                     {
-                        File::delete(public_path('images/workers/certificate/').$worker->other);
+                        File::delete(public_path('images/nurses/certificate/').$worker->other);
                     }
                 }
 
@@ -554,31 +554,31 @@ class UserController extends Controller
                 $other_name = pathinfo($other_name_full, PATHINFO_FILENAME);
                 $other_ext = $request->file('other')->getClientOriginalExtension();
                 $other = $other_name.'_'.time().'.'.$other_ext;
-                $destinationPath = 'images/workers/certificate';
+                $destinationPath = 'images/nurses/certificate';
                 $request->file('other')->move(public_path($destinationPath), $other);
 
                 // write image name in worker table
                 $worker->other = $other;
                 $worker->other_certificate_name = isset($request->other_certificate_name)?$request->other_certificate_name:$worker->other_certificate_name;
-                WorkerAsset::create([
-                    'worker_id' => $id,
+                NurseAsset::create([
+                    'nurse_id' => $id,
                     'name' => $other,
                     'filter' => 'Other'
                 ]);
             }
         }else{
-            WorkerAsset::where('worker_id', $id)->where('filter', 'Other')->forceDelete();
+            NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
             if (!empty($worker->other)) {
-                if(file_exists(public_path('images/workers/certificate/').$worker->other))
+                if(file_exists(public_path('images/nurses/certificate/').$worker->other))
                 {
-                    File::delete(public_path('images/workers/certificate/').$worker->other);
+                    File::delete(public_path('images/nurses/certificate/').$worker->other);
                 }
             }
             $worker->other = '';
         }
 
 
-        // WORKER::where(['id' => $worker->id])
+        // NURSE::where(['id' => $worker->id])
         //     ->update([
         //         'BLS' => $worker->BLS,
         //         'ACLS' => $worker->ACLS,
@@ -594,19 +594,19 @@ class UserController extends Controller
     {
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
-        $id = $user->worker->id;
-        $worker = WORKER::findOrFail($id);
+        $id = $user->nurse->id;
+        $worker = NURSE::findOrFail($id);
         // Upload driving license
         if ($request->has('dl_cer')) {
             if ($request->dl_cer == 'Yes') {
                 if ($request->hasFile('driving_license'))
                 {
 
-                    WorkerAsset::where('worker_id', $id)->where('filter', 'driving_license')->forceDelete();
+                    NurseAsset::where('nurse_id', $id)->where('filter', 'driving_license')->forceDelete();
                     if (!empty($worker->driving_license)) {
-                        if(file_exists(public_path('images/workers/driving_license/').$worker->driving_license))
+                        if(file_exists(public_path('images/nurses/driving_license/').$worker->driving_license))
                         {
-                            File::delete(public_path('images/workers/driving_license/').$worker->driving_license);
+                            File::delete(public_path('images/nurses/driving_license/').$worker->driving_license);
                         }
                     }
 
@@ -614,14 +614,14 @@ class UserController extends Controller
                     $driving_license_name = pathinfo($driving_license_name_full, PATHINFO_FILENAME);
                     $driving_license_ext = $request->file('driving_license')->getClientOriginalExtension();
                     $driving_license = $driving_license_name.'_'.time().'.'.$driving_license_ext;
-                    $destinationPath = 'images/workers/driving_license';
+                    $destinationPath = 'images/nurses/driving_license';
                     $request->file('driving_license')->move(public_path($destinationPath), $driving_license);
 
                     // write image name in worker table
                     $worker->driving_license = $driving_license;
                     $license_expiration_date = isset($request->license_expiration_date)?$request->license_expiration_date:'';
-                    $driving_license_asset = WorkerAsset::create([
-                        'worker_id' => $id,
+                    $driving_license_asset = NurseAsset::create([
+                        'nurse_id' => $id,
                         'name' => $driving_license,
                         'filter' => 'driving_license',
                         'using_date' => $license_expiration_date,
@@ -629,11 +629,11 @@ class UserController extends Controller
                 }
             }
             else {
-                WorkerAsset::where('worker_id', $id)->where('filter', 'driving_license')->forceDelete();
+                NurseAsset::where('nurse_id', $id)->where('filter', 'driving_license')->forceDelete();
                 if (!empty($worker->driving_license)) {
-                    if(file_exists(public_path('images/workers/driving_license/').$worker->driving_license))
+                    if(file_exists(public_path('images/nurses/driving_license/').$worker->driving_license))
                     {
-                        File::delete(public_path('images/workers/driving_license/').$worker->driving_license);
+                        File::delete(public_path('images/nurses/driving_license/').$worker->driving_license);
                     }
                 }
                 $worker->driving_license = '';
@@ -646,11 +646,11 @@ class UserController extends Controller
                 if ($request->hasFile('diploma'))
                 {
 
-                    WorkerAsset::where('worker_id', $id)->where('filter', 'diploma')->forceDelete();
+                    NurseAsset::where('nurse_id', $id)->where('filter', 'diploma')->forceDelete();
                     if (!empty($worker->diploma)) {
-                        if(file_exists(public_path('images/workers/diploma/').$worker->diploma))
+                        if(file_exists(public_path('images/nurses/diploma/').$worker->diploma))
                         {
-                            File::delete(public_path('images/workers/diploma/').$worker->diploma);
+                            File::delete(public_path('images/nurses/diploma/').$worker->diploma);
                         }
                     }
 
@@ -658,23 +658,23 @@ class UserController extends Controller
                     $diploma_name = pathinfo($diploma_name_full, PATHINFO_FILENAME);
                     $diploma_ext = $request->file('diploma')->getClientOriginalExtension();
                     $diploma = $diploma_name.'_'.time().'.'.$diploma_ext;
-                    $destinationPath = 'images/workers/diploma';
+                    $destinationPath = 'images/nurses/diploma';
                     $request->file('diploma')->move(public_path($destinationPath), $diploma);
 
                     // write image name in worker table
                     $worker->diploma = $diploma;
-                    $diploma_asset = WorkerAsset::create([
-                        'worker_id' => $id,
+                    $diploma_asset = NurseAsset::create([
+                        'nurse_id' => $id,
                         'name' => $diploma,
                         'filter' => 'diploma'
                     ]);
                 }
             } else {
-                WorkerAsset::where('worker_id', $id)->where('filter', 'diploma')->forceDelete();
+                NurseAsset::where('nurse_id', $id)->where('filter', 'diploma')->forceDelete();
                 if (!empty($worker->diploma)) {
-                    if(file_exists(public_path('images/workers/diploma/').$worker->diploma))
+                    if(file_exists(public_path('images/nurses/diploma/').$worker->diploma))
                     {
-                        File::delete(public_path('images/workers/diploma/').$worker->diploma);
+                        File::delete(public_path('images/nurses/diploma/').$worker->diploma);
                     }
                 }
                 $worker->diploma = '';
@@ -684,12 +684,12 @@ class UserController extends Controller
         // Upload skills
         $skills_img = explode(',', $worker->skills_checklists);
         if ($request->has('old_skills_ids')) {
-            $skills = WorkerAsset::where('worker_id', $id)->where('filter', 'skill')->whereNotIn('id', $request->old_skills_ids)->get();
+            $skills = NurseAsset::where('nurse_id', $id)->where('filter', 'skill')->whereNotIn('id', $request->old_skills_ids)->get();
             foreach($skills as $img){
                 if (!empty($img->name)) {
-                    if(file_exists(public_path('images/workers/skill/').$img->name))
+                    if(file_exists(public_path('images/nurses/skill/').$img->name))
                     {
-                        File::delete(public_path('images/workers/skill/').$img->name);
+                        File::delete(public_path('images/nurses/skill/').$img->name);
                     }
                     $keyToDelete = array_search($img->name, $skills_img);
                     if ($keyToDelete !== false) {
@@ -701,15 +701,15 @@ class UserController extends Controller
             // $worker->skills_checklists = implode(',',$skills_img);
             foreach ($request->old_skills_ids as $k => $value) {
                 $input = [];
-                $skill = WorkerAsset::findOrFail($value);
+                $skill = NurseAsset::findOrFail($value);
                 if ($request->hasFile('old_skill')) {
                     $old_skills = $request->file('old_skill');
                     if (array_key_exists($k,$old_skills)) {
                         if ($old_skills[$k]->isValid()) {
                             if (!empty($skill->name)) {
-                                if(file_exists(public_path('images/workers/skill/' . $skill->name)))
+                                if(file_exists(public_path('images/nurses/skill/' . $skill->name)))
                                 {
-                                    File::delete(public_path('images/workers/skill/' . $skill->name));
+                                    File::delete(public_path('images/nurses/skill/' . $skill->name));
                                 }
                             }
                             $name = $old_skills[$k]->getClientOriginalName();
@@ -719,7 +719,7 @@ class UserController extends Controller
                             if ($keyToDelete !== false) {
                                 $skills_img[$keyToDelete] = $img_name;
                             }
-                            $old_skills[$k]->move(public_path('images/workers/skill/'), $img_name);
+                            $old_skills[$k]->move(public_path('images/nurses/skill/'), $img_name);
                             $input['name'] = $img_name;
                         }
                     }
@@ -737,14 +737,14 @@ class UserController extends Controller
                 $skill_name = $image->getClientOriginalName();
                 $skill_ext = $image->getClientOriginalExtension();
                 $skill = $skill_name.'_'.time().'.'.$skill_ext;
-                $destinationPath = 'images/workers/skill';
+                $destinationPath = 'images/nurses/skill';
                 $image->move(public_path($destinationPath), $skill);
                 $skills_img[]=$skill;
 
                 // write image name in worker table
                 $completion_date = isset($request->completion_date[$k])?$request->completion_date[$k]:'';
-                $skill_asset = WorkerAsset::create([
-                    'worker_id' => $id,
+                $skill_asset = NurseAsset::create([
+                    'nurse_id' => $id,
                     'name' => $skill,
                     'filter' => 'skill',
                     'using_date' => $completion_date
@@ -759,7 +759,7 @@ class UserController extends Controller
         $worker->worked_at_facility_before = !empty($request->worked_at_facility_before) ? $request->worked_at_facility_before : '';
         $worker->worker_ss_number = !empty($request->worker_ss_number) ? $request->worker_ss_number : '';
         $worker->eligible_work_in_us = !empty($request->eligible_work_in_us) ? $request->eligible_work_in_us : '';
-        WORKER::where(['id' => $worker->id])->update([
+        NURSE::where(['id' => $worker->id])->update([
             'worker_ss_number' => $worker->worker_ss_number,
             'driving_license' => $worker->driving_license,
             'recent_experience' => $worker->recent_experience,
@@ -775,7 +775,7 @@ class UserController extends Controller
 
     public function urgency_submit(Request $request, $id)
     {
-        $model = WORKER::findOrFail($id);
+        $model = NURSE::findOrFail($id);
         $model->update([
             'worker_urgency' => $request->worker_urgency,
             'available_position' => $request->available_position,
@@ -788,7 +788,7 @@ class UserController extends Controller
 
     public function float_requirement_submit(Request $request, $id)
     {
-        $model = WORKER::findOrFail($id);
+        $model = NURSE::findOrFail($id);
         $model->update([
             'float_requirement' => $request->float_requirement,
             'facility_shift_cancelation_policy' => $request->facility_shift_cancelation_policy,
@@ -804,7 +804,7 @@ class UserController extends Controller
     }
 
     public function patient_ratio_submit(Request $request, $id){
-        $model = WORKER::findOrFail($id);
+        $model = NURSE::findOrFail($id);
         $model->update([
             'worker_patient_ratio' => $request->worker_patient_ratio,
             'worker_emr' => $request->worker_emr,
@@ -820,7 +820,7 @@ class UserController extends Controller
 
     public function interview_dates_post(Request $request, $id)
     {
-        $model = WORKER::findOrFail($id);
+        $model = NURSE::findOrFail($id);
         $model->update([
             'worker_interview_dates' => $request->worker_interview_dates,
             'worker_start_date' => $request->worker_start_date,
@@ -837,7 +837,7 @@ class UserController extends Controller
 
     public function worker_bonuses_submit(Request $request, $id)
     {
-        $model = WORKER::findOrFail($id);
+        $model = NURSE::findOrFail($id);
         $model->update([
             'worker_sign_on_bonus' => $request->worker_sign_on_bonus,
             'worker_completion_bonus' => $request->worker_completion_bonus,
@@ -853,7 +853,7 @@ class UserController extends Controller
 
     public function worker_overtime_submit(Request $request, $id)
     {
-        $model = WORKER::findOrFail($id);
+        $model = NURSE::findOrFail($id);
         $model->update([
             'worker_overtime' => $request->worker_overtime,
             'worker_holiday' => $request->worker_holiday,

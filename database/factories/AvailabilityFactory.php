@@ -3,7 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Availability;
-use App\Models\Worker;
+use App\Models\Nurse;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use App\Enums\AssignmentDuration;
@@ -12,8 +12,8 @@ use App\Enums\WeekDays;
 $factory->define(Availability::class, function (Faker $faker) {
     return [
         'id' => Str::uuid(),
-        'worker_id' => function () {
-            factory(Worker::class)->create()->id;
+        'nurse_id' => function () {
+            factory(Nurse::class)->create()->id;
         },
         'assignment_duration' => 30,
         'shift_duration' => 50,

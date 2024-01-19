@@ -67,13 +67,13 @@ class DashboardController extends Controller
                 $input = $request->except(['email']);
                 if ($request->hasFile('profile_picture')) {
                     if (!empty($user->image)) {
-                        if (file_exists(public_path('images/workers/profile/'.$user->image))) {
-                            File::delete(public_path('images/workers/profile/'.$user->image));
+                        if (file_exists(public_path('images/nurses/profile/'.$user->image))) {
+                            File::delete(public_path('images/nurses/profile/'.$user->image));
                         }
                     }
                     $file = $request->file('profile_picture');
                     $img_name = $file->getClientOriginalName() .'_'.time(). '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('images/workers/profile/'), $img_name);
+                    $file->move(public_path('images/nurses/profile/'), $img_name);
 
                     $input['image'] = $img_name;
                 }

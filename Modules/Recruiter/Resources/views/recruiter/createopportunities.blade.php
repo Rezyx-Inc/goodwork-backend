@@ -62,7 +62,7 @@
                                     <option value="allied-health-professional">Allied Health Professional</option>
                                     <option value="therapy">Therapy</option>
                                     <option value="lpn-lvn">LPN/LVN</option>
-                                    <option value="worker-practitioner">Worker Practitioner</option> -->
+                                    <option value="nurse-practitioner">Nurse Practitioner</option> -->
                                 </select>
                             </div>
                             <!-- job_state -->

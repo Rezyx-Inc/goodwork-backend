@@ -25,7 +25,7 @@ class ResetPasswordMailable extends Mailable
         $this->content = "";
         $this->resetLink = $resetLink;
         $this->user = $user;
-        $temp = EmailTemplate::where(['slug' => "worker_reset_password"]);
+        $temp = EmailTemplate::where(['slug' => "nurse_reset_password"]);
         if ($temp->count() > 0) {
             $t = $temp->first();
             $replace_array = ['###RESETLINK###' => $this->resetLink];

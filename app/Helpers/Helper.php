@@ -36,7 +36,7 @@ class Helper
             case 'admin': $valid = $userRole === Role::getKey(Role::ADMIN); break;
             case 'facilityadmin': $valid = $userRole === Role::getKey(Role::FACILITYADMIN); break;
             case 'facilityuser': $valid = $userRole === Role::getKey(Role::FACILITY); break;
-            case 'worker': $valid = $userRole === Role::getKey(Role::WORKER); break;
+            case 'nurse': $valid = $userRole === Role::getKey(Role::NURSE); break;
         }
         if($valid){
             return true;

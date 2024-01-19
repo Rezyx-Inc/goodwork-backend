@@ -37,7 +37,7 @@
       <div class="col-lg-3">
         <div class="ss-count-div">
           <h2>200+</h2>
-<p>Workers</p>
+<p>Nurses</p>
         </div>
       </div>
 
@@ -85,13 +85,13 @@
         <div class="col-lg-7">
           <div class="ss-abut-stry-hed">
           <h6>Mission</h6>
-          <p>Goodwork is all about connecting travel workers and healthcare workers effortlessly.</p>
+          <p>Goodwork is all about connecting travel nurses and healthcare workers effortlessly.</p>
 
 <p>Our app simplifies the recruitment process, allowing you to find your ideal match quickly. </p>
 
 <p>We believe in building lasting relationships, and we’re committed to creating a platform that’s transparent, supportive, and easy to use.</p>
 
-<p>Our mission is to empower travel workers to find rewarding work, and to help employers find the best talent for their needs.</p>
+<p>Our mission is to empower travel nurses to find rewarding work, and to help employers find the best talent for their needs.</p>
 
 <p>Say goodbye to the headaches of job hunting and say hello to Goodwork.</p>
         </div>

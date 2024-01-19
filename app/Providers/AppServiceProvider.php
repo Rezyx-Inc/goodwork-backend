@@ -112,7 +112,7 @@ class AppServiceProvider extends ServiceProvider
         });
         view()->composer(['inc.admin.header', 'inc.header'], function ($view) {
             $logo = Storage::get('assets/logo/goodworklogo.png');
-            $profilePlaceholder = Storage::get('assets/workers/' . $this->defaultId());
+            $profilePlaceholder = Storage::get('assets/nurses/' . $this->defaultId());
             $specialty = '';
             $user = Auth::user();
             if (Auth::user() && $user->hasRole('Facility', 'FacilityAdmin')) {
@@ -123,14 +123,14 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
             }
-            if (Auth::user() && $user->hasRole('Worker') && $user->worker) {
-                if ($user->worker->specialty != '') {
-                    $specialty = $user->worker->specialty;
+            if (Auth::user() && $user->hasRole('Nurse') && $user->nurse) {
+                if ($user->nurse->specialty != '') {
+                    $specialty = $user->nurse->specialty;
                 }
                 if ($user->image) {
-                    $t = Storage::exists('assets/workers/profile/' . $user->image);
+                    $t = Storage::exists('assets/nurses/profile/' . $user->image);
                     if ($t) {
-                        $profilePlaceholder = Storage::get('assets/workers/profile/' . $user->image);
+                        $profilePlaceholder = Storage::get('assets/nurses/profile/' . $user->image);
                     }
                 }
             }
@@ -157,8 +157,8 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer(['emails.header', 'emails.footer', 'emails.registration'], function ($view) {
 
-            $email_logo_image = Storage::get('assets/email/GoodworkEmailLogo');
-            $email_header_image = Storage::get('assets/email/GoodworkEmailHeader1-9900000000079e3c');
+            $email_logo_image = Storage::get('assets/email/NurseifyEmailLogo');
+            $email_header_image = Storage::get('assets/email/NurseifyEmailHeader1-9900000000079e3c');
             $email_middle_image = Storage::get('assets/email/middle-990000079e028a3c');
             $email_bottom_image = Storage::get('assets/email/bottom-9900000000079e3c');
 
@@ -166,7 +166,7 @@ class AppServiceProvider extends ServiceProvider
                 compact(['email_logo_image', 'email_header_image', 'email_middle_image', 'email_bottom_image'])
             );
         });
-        view()->composer(['workers.filter', 'jobs.filter', 'facilities.filter'], function ($view) {
+        view()->composer(['nurses.filter', 'jobs.filter', 'facilities.filter'], function ($view) {
             $controller = new Controller();
             $specialities = $controller->getSpecialities()->pluck('title', 'id');
             $certifications = $controller->getCertifications()->pluck('title', 'id');

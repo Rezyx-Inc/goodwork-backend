@@ -18,13 +18,13 @@ class CheckProfileLoginAccess
     public function handle($request, Closure $next)
     {
         $users = [
-            Role::getKey(Role::WORKER),
+            Role::getKey(Role::NURSE),
 			Role::getKey(Role::FACILITY),
             Role::getKey(Role::FACILITYADMIN)
         ];
         if (
-            isset(request()->route()->worker->id)
-            && request()->route()->worker->id === Auth::user()->worker->id
+            isset(request()->route()->nurse->id)
+            && request()->route()->nurse->id === Auth::user()->nurse->id
         ) {
             return $next($request);            
         } elseif (

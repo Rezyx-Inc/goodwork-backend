@@ -13,11 +13,11 @@ class CreateAssetsTables extends Migration
      */
     public function up()
     {
-        Schema::create('worker_assets', function (Blueprint $table) {
+        Schema::create('nurse_assets', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('worker_id');
-            $table->foreign('worker_id')
-                ->references('id')->on('workers');
+            $table->uuid('nurse_id');
+            $table->foreign('nurse_id')
+                ->references('id')->on('nurses');
             $table->string('name')->nullable();
             $table->string('filter',100)->nullable();
             $table->boolean('active')->default(true);
@@ -55,7 +55,7 @@ class CreateAssetsTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('worker_assets');
+        Schema::dropIfExists('nurse_assets');
         Schema::dropIfExists('facility_assets');
         Schema::dropIfExists('job_assets');
     }

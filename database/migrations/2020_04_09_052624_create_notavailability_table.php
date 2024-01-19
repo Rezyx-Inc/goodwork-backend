@@ -15,9 +15,9 @@ class CreateNotavailabilityTable extends Migration
     {
         Schema::create('notavailability', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('worker_id');
-            $table->foreign('worker_id')
-                ->references('id')->on('workers');
+            $table->uuid('nurse_id');
+            $table->foreign('nurse_id')
+                ->references('id')->on('nurses');
             $table->date('specific_dates');
             $table->softDeletes();
             $table->timestamps();
