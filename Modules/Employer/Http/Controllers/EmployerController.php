@@ -427,7 +427,7 @@ public function get_rooms(Request $request){
                     'messages' => [
                         '$slice' => [
                             '$messages',
-                            -1
+                            1
                         ]
                     ]
                 ]
@@ -478,7 +478,7 @@ public function get_rooms(Request $request){
                     'messages' => [
                         '$slice' => [
                             '$messages',
-                            -1
+                            1
                         ]
                     ]
                 ]

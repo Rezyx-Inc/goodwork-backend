@@ -17,7 +17,6 @@ function getPrivateMessages(idWorker,fullName) {
 
     document.getElementById('fullName').innerHTML = fullName;
 
-
     page=1;
     document.getElementById('empty_room').classList.add("d-none");
     document.getElementById('body_room').classList.remove("d-none");
@@ -25,7 +24,7 @@ function getPrivateMessages(idWorker,fullName) {
 
     let id = @json($id);
     
-     PrivateChannel = 'private-chat.'+id + '.' + idWorker_Global;
+     PrivateChannel = 'private-chat.' + id + '.' + idWorker_Global;
         
     let messageText = document.getElementById('message');
     console.log(messageText);
@@ -36,7 +35,7 @@ function getPrivateMessages(idWorker,fullName) {
 
                     return `
                         <div class="${senderClass}">
-                            <h6>${message.senderRole}</h6>
+                            
                             <p>${message.message}</p>
                             <span>${message.messageTime}</span>
                         </div>
@@ -70,7 +69,6 @@ function getPrivateMessages(idWorker,fullName) {
                     var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
                     return `
                         <div class="${senderClass}">
-                            <h6>${message.sender}</h6>
                             <p>${message.content}</p>
                             <span>${time}</span>
                         </div>
@@ -111,7 +109,6 @@ function getPrivateMessages(idWorker,fullName) {
 
                     return `
                         <div class="${senderClass}">
-                            <h6>${message.sender}</h6>
                             <p>${message.content}</p>
                             <span>${time}</span>
                         </div>
@@ -124,7 +121,7 @@ function getPrivateMessages(idWorker,fullName) {
                 });
 
                 $('#login').removeClass('d-none');
-    $('#loading').addClass('d-none');
+                $('#loading').addClass('d-none');
             });
         }
     });
