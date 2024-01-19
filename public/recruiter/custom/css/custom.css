@@ -1613,6 +1613,31 @@ ul.ss-msg-notifi-sec li {
     width: 22%;
 }
 
+/* or the new recruiter */
+
+.ss-msg-rply-black-dv h6 {
+    font-weight: 400;
+    padding-bottom: 5px;
+}
+
+.ss-msg-rply-black-dv {
+    text-align: right;
+}
+
+
+.ss-msg-rply-black-dv p {
+    background: black;
+    display: inline-block;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 15px 0px 15px 15px;
+}
+
+.ss-msg-rply-black-dv span {
+    display: block;
+    font-size: 12px;
+}
+
 .ss-msg-rply-mn-div {
     border-radius: 30px;
     border: 1px solid #3d2c39;
