@@ -1,4 +1,4 @@
-@extends('employer::layouts.main')
+@extends('recruiter::layouts.main')
 
 @section('content')
 @php
@@ -11,9 +11,12 @@
 <script>
 
 var idWorker_Global = '';
+var idEmployer_Global = '';
+
+
 var PrivateChannel = '';
 var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
-function getPrivateMessages(idWorker,fullName,idRecruiter) {
+function getPrivateMessages(idWorker,fullName,idEmployer) {
 
     document.getElementById('fullName').innerHTML = fullName;
 
@@ -21,11 +24,11 @@ function getPrivateMessages(idWorker,fullName,idRecruiter) {
     document.getElementById('empty_room').classList.add("d-none");
     document.getElementById('body_room').classList.remove("d-none");
     idWorker_Global = idWorker;
+    idEmployer_Global = idEmployer;
 
     let id = @json($id);
     
-    // we should us the idRecruiter if we do the offers functionality
-     PrivateChannel = 'private-chat.' + id + '.' + 'GWU000005.' + idWorker_Global;
+     PrivateChannel = 'private-chat.' + idEmployer + '.' + 'GWU000005.' + idWorker_Global;
         
     let messageText = document.getElementById('message');
     console.log(messageText);
@@ -34,13 +37,14 @@ function getPrivateMessages(idWorker,fullName,idRecruiter) {
                     //var senderClass = message.senderRole == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
 
                     var senderClass;
-if (message.senderRole == 'EMPLOYER') {
+if (message.senderRole == 'RECRUITER') {
     senderClass = 'ss-msg-rply-blue-dv';
-} else if (message.senderRole == 'RECRUITER') {
+} else if (message.senderRole == 'EMPLOYER') {
     senderClass = 'ss-msg-rply-black-dv';
 } else {
     senderClass = 'ss-msg-rply-recrut-dv';
 }
+
 
                     var time = Array.isArray(message.time) ? message.messageTime.join(', ') : message.messageTime;
 
@@ -68,7 +72,7 @@ if (message.senderRole == 'EMPLOYER') {
         });
 
     $('.private-messages').html('');
-    $.get('/employer/getMessages?page=1&workerId='+idWorker+'&recruiterId=GWU000005', function(data) {
+    $.get('/recruiter/getMessages?page=1&workerId='+idWorker +'&employerId='+ idEmployer , function(data) {
                 // Parse the returned data
                 var messages = data.messages;
             
@@ -76,19 +80,18 @@ if (message.senderRole == 'EMPLOYER') {
 
                 // Function to create the HTML for a message
                 function createMessageHTML(message) {
-                   
                     //var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
-                   
+                    
+
                     var senderClass;
-if (message.sender == 'EMPLOYER') {
+if (message.sender == 'RECRUITER') {
     senderClass = 'ss-msg-rply-blue-dv';
-} else if (message.sender == 'RECRUITER') {
+} else if (message.sender == 'EMPLOYER') {
     senderClass = 'ss-msg-rply-black-dv';
 } else {
     senderClass = 'ss-msg-rply-recrut-dv';
 }
-                   
-                   
+                    
                     var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
                     return `
                         <div class="${senderClass}">
@@ -120,25 +123,27 @@ if (message.sender == 'EMPLOYER') {
             $('#loading').removeClass('d-none');
     $('#login').addClass('d-none');
             // Make an AJAX request to the API
-            
-            $.get('/employer/getMessages?page=' + page + '&workerId='+idWorker_Global+'&recruiterId=GWU000005' , function(data) {
+            $.get('/recruiter/getMessages?page=' + page + '&workerId='+idWorker_Global +'&employerId='+ idEmployer_Global, function(data) {
                 // Parse the returned data
                 var messages = data.messages;
 
                 console.log(idWorker_Global);
                 // Function to create the HTML for a message
                 function createMessageHTML(message) {
-                    //var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
-                   
-                    var senderClass;
-if (message.sender == 'EMPLOYER') {
+                  //  var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+                  
+
+                  var senderClass;
+if (message.sender == 'RECRUITER') {
     senderClass = 'ss-msg-rply-blue-dv';
-} else if (message.sender == 'RECRUITER') {
+} else if (message.sender == 'EMPLOYER') {
     senderClass = 'ss-msg-rply-black-dv';
 } else {
     senderClass = 'ss-msg-rply-recrut-dv';
 }
-                   
+                  
+                  
+                  
                     var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
 
                     return `
@@ -182,8 +187,8 @@ if(message != ""){
                 url: 'send-message',
                 type: 'POST',
                 data: {
+                    idEmployer : idEmployer_Global,
                     idWorker : idWorker_Global,
-                    
                     message_data : message,
                     _token: '{{ csrf_token() }}'
                 },
@@ -229,7 +234,7 @@ if(message != ""){
                     @if($data)
                     @foreach($data as $room)
                    
-                    <div onclick="getPrivateMessages('{{$room['workerId']}}','{{$room['fullName']}}','{{$room['recruiterId']}}')" class="ss-mesg-sml-div">
+                    <div onclick="getPrivateMessages('{{$room['workerId']}}','{{$room['fullName']}}','{{$room['employerId']}}')" class="ss-mesg-sml-div">
                             <ul class="ss-msg-user-ul-dv">
                                 <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
                                 <li>

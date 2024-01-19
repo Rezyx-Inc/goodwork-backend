@@ -57,6 +57,7 @@ Route::prefix('recruiter')->group(function () {
         Route::post('send-job-offer-recruiter', ['uses' => 'ApplicationController@sendJobOfferRecruiter', 'as' => 'send-job-offer-recruiter']);
 
         Route::get('/getMessages', ['uses'=>'RecruiterController@get_private_messages', 'as'=>'getPrivateMessages']);
+
         Route::get('recruiter-messages', ['uses' => 'RecruiterController@get_messages', 'as' => 'recruiter-messages']);
 
         Route::post('/send-message', ['uses' => 'RecruiterController@sendMessages', 'as' => 'SendMessage']);
