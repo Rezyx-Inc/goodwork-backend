@@ -19,7 +19,7 @@
           <!--------login form------->
           <div class="ss-login-work-dv">
             <h4><span>Worker </span> Sign Up</h4>
-            <form class="" method="post" action="{{route('employer.signup')}}" id="signup-form-submit">
+            <form class="" method="post" action="{{route('worker.signup')}}" id="signup-form-submit">
                  <div class="ss-form-group">
                     <input type="text" name="first_name" placeholder="First Name" required><br/>
                     <span class="help-block-first-name"></span>
@@ -48,7 +48,7 @@
                     </span>
                     <span id="sign"> Sign Up  </span> </button>
                 </div>
-                <p>Already have an account? <a href="{{route('employer.login')}}">Login</a></p>
+                <p>Already have an account? <a href="{{route('worker.login')}}">Login</a></p>
 
             </form>
 
