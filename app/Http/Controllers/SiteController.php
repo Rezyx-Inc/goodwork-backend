@@ -306,7 +306,7 @@ class SiteController extends Controller {
                 $query->where('email', $input['id'])
                     ->orWhere('mobile', $input['id']);
             })
-            ->where('ROLE', 'NURSE')
+            ->where('ROLE', 'WORKER')
             ->where('active', '1')
             ->first();
             if (isset($model)) {
@@ -395,7 +395,7 @@ class SiteController extends Controller {
                     Auth::guard('frontend')->login($user, true);
                     session()->forget('otp_user_id');
 
-                    $response['link'] = route('dashboard');
+                    $response['link'] = route('home');
                     if (session()->has('intended_url')) {
                         $response['link'] = session()->get('intended_url');
                         session()->forget('intended_url');

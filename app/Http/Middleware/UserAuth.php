@@ -23,7 +23,7 @@ class UserAuth {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('signup');
+                return redirect()->guest('worker/login');
             }
         }
         return $next($request);

@@ -204,8 +204,8 @@ class WorkerAuthController extends Controller
                     $input = [];
                     $input['otp'] = null;
                     $user->update($input);
-                    // Auth::guard('frontend')->login($user, true);
-                     Auth::guard('worker')->login($user, true);
+                     Auth::guard('frontend')->login($user, true);
+                    // Auth::guard('worker')->login($user, true);
                     session()->forget('otp_user_id');
 
                     // generate accesstoken
@@ -213,7 +213,7 @@ class WorkerAuthController extends Controller
                 //    $token = $user->createToken('authToken')->accessToken;
                 $token = $user->createToken('authToken',['all_Permession'])->accessToken;
 
-                    $response['link'] = route('home');
+                    $response['link'] = route('worker-dashboard');
                     if (session()->has('intended_url')) {
                         $response['link'] = session()->get('intended_url');
                         session()->forget('intended_url');
@@ -224,7 +224,7 @@ class WorkerAuthController extends Controller
         }
     }
     public function logout(Request $request) {
-        $guard = "worker";
+        $guard = "frontend";
         Auth::guard($guard)->logout();
         $request->session()->invalidate();
         // $request->session()->regenerateToken();

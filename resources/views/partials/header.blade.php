@@ -33,7 +33,7 @@
                                     @if (request()->routeIs('/'))
                                          @if(!auth()->guard('frontend')->check())
                                         <li>
-                                            <a href="{{route('login')}}">Login</a>
+                                            <a href="{{route('worker.login')}}">Login</a>
                                         </li>
                                         <li>
                                             <a href="{{route('signup')}}">Join Goodwork</a>

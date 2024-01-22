@@ -85,4 +85,9 @@ class WorkerController extends Controller
     {
         //
     }
+
+    public function get_profile()
+    {
+        return view('worker::worker/Profile');
+    }
 }

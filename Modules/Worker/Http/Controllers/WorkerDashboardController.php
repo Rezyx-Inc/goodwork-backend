@@ -53,7 +53,7 @@ class WorkerDashboardController extends Controller
     {
         $data = [];
         $data['model'] = auth()->guard('frontend')->user();
-        return view('user.profile', $data);
+        return view('worker.profile', $data);
     }
     /** account settings page */
     public function account_setting()
@@ -61,7 +61,7 @@ class WorkerDashboardController extends Controller
         $data = [];
         $data['model'] = auth()->guard('frontend')->user();
         $data['countries'] = Country::where('flag', 1)->get();
-        return view('user.account_setting', $data);
+        return view('worker.account_setting', $data);
     }
 
     /** update personal info */
@@ -124,28 +124,28 @@ class WorkerDashboardController extends Controller
     public function my_profile()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
+        $data['worker'] = auth()->guard('frontend')->user();
         return view('dashboard.my_profile', $data);
     }
 
     public function messages()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
+        $data['worker'] = auth()->guard('frontend')->user();
         return view('dashboard.messages', $data);
     }
 
     public function my_work_journey()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
+        $data['worker'] = auth()->guard('frontend')->user();
         return view('dashboard.my_work_journey', $data);
     }
 
     public function explore()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
+        $data['worker'] = auth()->guard('frontend')->user();
         return view('dashboard.explore', $data);
     }
 

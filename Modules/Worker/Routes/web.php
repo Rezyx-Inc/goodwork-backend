@@ -30,8 +30,8 @@ Route::prefix('worker')->group(function() {
         Route::get('worker-logout', ['uses' => 'WorkerAuthController@logout', 'as' => 'worker-logout']);
         Route::get('worker-dashboard', ['uses' => 'WorkerController@index', 'as' => 'worker-dashboard']);
       
-        Route::get('home', ['uses' => 'WorkerController@home', 'as' => 'worker-home']);
-       // Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
+        Route::get(' home', ['uses' => 'WorkerController@home', 'as' => 'home']);
+        Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
         Route::get('worker-profile', ['uses' => 'WorkerController@get_profile', 'as' => 'worker-profile']);
 
 

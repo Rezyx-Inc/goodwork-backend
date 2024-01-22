@@ -18,7 +18,7 @@ class UserController extends Controller
     {
 
         $data = [];
-        $data['model'] = Nurse::findOrFail($id);
+        $data['model'] = User::findOrFail($id);
         return view('user.show', $data);
     }
 
