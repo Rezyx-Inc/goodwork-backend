@@ -17,14 +17,14 @@
                     <div class="bullet">
                         <span>1</span>
                     </div>
-                    <div class="check fas fa-check"></div>
+                    <div class="check fa fa-check"></div>
                 </div>
                 <div class=" col-3 step">
                     <p>Preferences and Requirements</p>
                     <div class="bullet">
                         <span>1</span>
                     </div>
-                    <div class="check fas fa-check"></div>
+                    <div class="check fa fa-check"></div>
                 </div>
                 <div class="col-3 step">
                     <p>Job Details</p>

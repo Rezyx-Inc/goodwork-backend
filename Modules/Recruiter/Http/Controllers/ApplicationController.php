@@ -189,13 +189,23 @@ class ApplicationController extends Controller
         if($request->formtype == 'jobdetails'){
             $jobdetails = Job::where('id', $request->jobid)->first();
         }else{
-            $jobdetails = Job::select('jobs.*','job_references.name','job_references.min_title_of_reference','job_references.recency_of_reference')
-            ->leftJoin('job_references','job_references.job_id', '=', 'jobs.id')
+            // there is no job referneces table 
+
+            // $jobdetails = Job::select('jobs.*','job_references.name','job_references.min_title_of_reference','job_references.recency_of_reference')
+            // ->leftJoin('job_references','job_references.job_id', '=', 'jobs.id')
+            // ->where('jobs.id', $offerdetails->job_id)->first();
+
+            $jobdetails = Job::select('jobs.*')
             ->where('jobs.id', $offerdetails->job_id)->first();
         }
         if(isset($offerdetails)){
-            $nursedetails = NURSE::select('nurses.*','nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
-            ->leftJoin('nurse_references','nurse_references.nurse_id', '=', 'nurses.id')
+            // there is no nurse references 
+
+            // $nursedetails = NURSE::select('nurses.*','nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
+            // ->leftJoin('nurse_references','nurse_references.nurse_id', '=', 'nurses.id')
+            // ->where('nurses.id', $offerdetails['nurse_id'])->first();
+
+            $nursedetails = NURSE::select('nurses.*')
             ->where('nurses.id', $offerdetails['nurse_id'])->first();
 
             $userdetails = $nursedetails ? User::where('id', $nursedetails->user_id)->first() : "";

@@ -38,7 +38,6 @@
                                         <li>
                                             <a href="{{route('signup')}}">Join Goodwork</a>
                                         </li>
-
                                         @else
                                         <li></li>
                                         <li>
