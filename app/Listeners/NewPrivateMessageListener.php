@@ -29,7 +29,6 @@ class NewPrivateMessageListener
     {
 
         $employerId = $event->EmployerId;
-        $recruiterId = $event->RecruiterId;
         $workerId = $event->WorkerId;
         $message = $event->message;
         $senderRole = $event->senderRole;
@@ -38,7 +37,6 @@ class NewPrivateMessageListener
         // Find existing chat between the employer and worker
         $chat = Chat::where('employerId', $employerId)
                      ->where('workerId', $workerId)
-                     ->where('recruiterId', $recruiterId)
                      ->first();
         
         if ($chat) {
@@ -56,7 +54,6 @@ class NewPrivateMessageListener
             $chat = new Chat;
             $chat->employerId = $employerId;
             $chat->workerId = $workerId;
-            $chat->recruiterId = $recruiterId;
             $chat->messages = [
                 [
                     'id' => uniqid(),

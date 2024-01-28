@@ -68,17 +68,6 @@ class UserSeeder extends Seeder
             'facility_id' => '1'
         ]);
 
-        $recruiter = User::create([
-            'id' => Str::uuid(),
-            'first_name' => 'recruiter',
-            'last_name' => 'rec',
-            'email' => 'recruiter@gmail.com',
-            'ROLE'=>'RECRUITER',
-            'user_name' => 'recruiter',
-            'mobile' => '+1 (555) 555-55',
-            'facility_id' => '1'
-        ]);
-
     
     }
 }
