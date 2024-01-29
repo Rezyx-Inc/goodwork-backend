@@ -10,7 +10,7 @@ use Hash;
 use App\Enums\Role;
 use File;
 /** Models */
-use App\Models\{User, Nurse, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities};
+use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities};
 
 class UserController extends Controller
 {
@@ -120,8 +120,8 @@ class UserController extends Controller
     {
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
-        $id = $user->nurse->id;
-        $model = Nurse::findOrFail($id);
+        $id = $user->worker->id;
+        $model = Worker::findOrFail($id);
         $inputFields = collect($request->all())->filter(function ($value) {
             return $value !== null;
         });
@@ -139,13 +139,13 @@ class UserController extends Controller
         if ($request->ajax()) {
             if ($request->has('ids')) {
                 for($i=0; $i<count($request->ids); $i++){
-                    $nurse = Nurse::findOrFail($request->ids[$i]);
-                    $user = $nurse->user;
+                    $worker = Worker::findOrFail($request->ids[$i]);
+                    $user = $worker->user;
                     $delete_date = Carbon::now();
-                    $nurse->deleted_at = $delete_date;
-                    $nurse->active = '0';
-                    $nurse->updated_at = $delete_date;
-                    $nurse->save();
+                    $worker->deleted_at = $delete_date;
+                    $worker->active = '0';
+                    $worker->updated_at = $delete_date;
+                    $worker->save();
                     $user->deleted_at = $delete_date;
                     $user->active = '0';
                     $user->updated_at = $delete_date;
@@ -164,8 +164,8 @@ class UserController extends Controller
         if ($request->ajax()) {
             if ($request->has('ids')) {
                 for($i=0; $i<count($request->ids); $i++){
-                    $nurse = Nurse::findOrFail($request->ids[$i]);
-                    $resp = $this->sendInvite($nurse->user);
+                    $worker = Worker::findOrFail($request->ids[$i]);
+                    $resp = $this->sendInvite($worker->user);
                 }
                 $response = array('success'=>$resp['success'],'msg'=>$resp['msg']);
                 return $response;

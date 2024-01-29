@@ -14,7 +14,7 @@ $user = auth()->guard('frontend')->user();
     </div>
     <div class="position-sticky ss-das-side-menu-sec">
     <div class="list-group list-group-flush">
-        <a href="{{route('worker-dashboard')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker-dashboard') ? 'active':''}}" aria-current="true">
+        <a href="{{route('worker.dashboard')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.dashboard') ? 'active':''}}" aria-current="true">
             <img src="{{URL::asset('frontend/img/home-icon.png')}}" /><span>Home</span>
         </a>
 
@@ -23,7 +23,7 @@ $user = auth()->guard('frontend')->user();
         </a>
 
 
-        <a href="{{route('my-work-journey')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'my-work-journey') ? 'active':''}}">
+        <a href="{{route('dash_my-work-journey')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'dash_my-work-journey') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>My Work Journey</span>
         </a>
 
@@ -31,7 +31,7 @@ $user = auth()->guard('frontend')->user();
             <img src="{{URL::asset('frontend/img/message-icon.png')}}" /><span>Messages</span>
         </a>
 
-        <a href="{{route('worker-profile')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker-profile') ? 'active':''}}">
+        <a href="{{route('dash-profile')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'dash-profile') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>My Profile</span>
         </a>
 
@@ -42,7 +42,7 @@ $user = auth()->guard('frontend')->user();
     </div>
 
     <div class="ss-dash-logout-sec">
-        <a href="{{route('worker-logout')}}"> Logout <img src="{{URL::asset('frontend/img/logout.png')}}" /></a>
+        <a href="{{route('worker.logout')}}"> Logout <img src="{{URL::asset('frontend/img/logout.png')}}" /></a>
     </div>
 
 

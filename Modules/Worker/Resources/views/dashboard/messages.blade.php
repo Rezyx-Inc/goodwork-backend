@@ -1,4 +1,4 @@
-@extends('worker::layouts.dashboard')
+@extends('layouts.dashboard')
 @section('mytitle', 'My Profile')
 @section('content')
 <!--Main layout-->
@@ -82,7 +82,7 @@
                 <li><img src="{{URL::asset('frontend/img/msg-rply-box-img.png')}}" /></li>
                 <li>
                   <h6>Recruiter #01</h6>
-                  <p>Travel Worker CRNA/.....</p>
+                  <p>Travel Nurse CRNA/.....</p>
                 </li>
               </ul>
             </div>
@@ -104,8 +104,10 @@
             </div>
 
             <div class="ss-rply-msg-input">
+              <form action="{{route('')}}" method="POST">
               <input type="text" id="fname" name="fname" placeholder="Express yourself here!">
-              <button type="text"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
+              <button type="submit"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
+              </form>
             </div>
           </div>
         </div>
