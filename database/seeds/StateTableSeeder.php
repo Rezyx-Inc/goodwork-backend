@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+
 class StateTableSeeder extends Seeder
 {
     /**

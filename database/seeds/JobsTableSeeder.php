@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
+use App\Models\Job;
 
 class JobsTableSeeder extends Seeder
 {
@@ -88,7 +89,7 @@ class JobsTableSeeder extends Seeder
         $numberOfJobs = 10;
 
         for ($i = 0; $i < $numberOfJobs; $i++) {
-            DB::table('jobs')->insert([
+            JOB::create([
                 'id' => Str::uuid(),
                 'preferred_specialty' => $nursingSpecialties[array_rand($nursingSpecialties)],
                 'preferred_assignment_duration' => $faker->numberBetween(1, 10),

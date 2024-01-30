@@ -2438,7 +2438,7 @@ function open_modal(obj) {
     .progress-bar-item .step .check {
         position: absolute;
         left: 50%;
-        top: 70%;
+        top: 87%;
         font-size: 15px;
         transform: translate(-50%, -50%);
         display: none;

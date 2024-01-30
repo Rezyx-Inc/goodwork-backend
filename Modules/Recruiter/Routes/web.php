@@ -44,7 +44,7 @@ Route::prefix('recruiter')->group(function () {
         Route::get('recruiter-opportunities-manager', ['uses' => 'OpportunitiesController@index', 'as' => 'recruiter-opportunities-manager']);
         Route::get('recruiter-create-opportunity', ['uses' => 'OpportunitiesController@create', 'as' => 'recruiter-create-opportunity']);
         Route::post('recruiter-create-opportunity/{check_type}', ['uses' => 'OpportunitiesController@store', 'as' => 'recruiter-create-opportunity-store']);
-        Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'get-job-listing']);
+        Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'recruiter-get-job-listing']);
 
         Route::get('recruiter-logout', ['uses' => 'RecruiterAuthController@logout', 'as' => 'recruiter-logout']);
 
@@ -56,6 +56,18 @@ Route::prefix('recruiter')->group(function () {
 
         Route::post('send-job-offer-recruiter', ['uses' => 'ApplicationController@sendJobOfferRecruiter', 'as' => 'send-job-offer-recruiter']);
 
+<<<<<<< Updated upstream
+=======
+        Route::get('/getMessages', ['uses'=>'RecruiterController@get_private_messages', 'as'=>'getPrivateMessages']);
+
+        Route::get('recruiter-messages', ['uses' => 'RecruiterController@get_messages', 'as' => 'recruiter-messages']);
+
+        Route::post('/send-message', ['uses' => 'RecruiterController@sendMessages', 'as' => 'SendMessage']);
+
+        Route::get('add-job', ['uses' => 'RecruiterController@addJob', 'as' => 'add-job']);
+        Route::post('add-job', ['uses' => 'RecruiterController@addJobStore', 'as' => 'addJob.store']);
+
+>>>>>>> Stashed changes
 
 
     });

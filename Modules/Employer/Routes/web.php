@@ -12,7 +12,7 @@
 */
 
 Route::prefix('employer')->group(function() {
-    Route::get('/', 'EmployerController@index');
+    
 
 
 
@@ -26,6 +26,7 @@ Route::prefix('employer')->group(function() {
     });
 
     Route::middleware(['employer_logged_in'])->group(function () {
+        Route::get('/', 'EmployerController@index');
         Route::get('employer-logout', ['uses' => 'EmployerAuthController@logout', 'as' => 'employer-logout']);
         Route::get('employer-dashboard', ['uses' => 'EmployerController@index', 'as' => 'employer-dashboard']);
         Route::get('add-job', ['uses' => 'EmployerController@addJob', 'as' => 'add-job']);
