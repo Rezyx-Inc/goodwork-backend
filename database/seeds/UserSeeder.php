@@ -70,8 +70,6 @@ class UserSeeder extends Seeder
             'facility_id' => '1'
         ]);
 
-<<<<<<< Updated upstream
-=======
         // we seed this recruiter with the id "GWU000005" just for testing messages, this record related to default seeding messages
 
         $recruiter = User::create([
@@ -163,11 +161,6 @@ class UserSeeder extends Seeder
         $availability = Availability::create([
             'nurse_id' => 'GWU000006',
         ]);
-
-
-
-
->>>>>>> Stashed changes
     
     }
 }

@@ -56,19 +56,13 @@ Route::prefix('recruiter')->group(function () {
 
         Route::post('send-job-offer-recruiter', ['uses' => 'ApplicationController@sendJobOfferRecruiter', 'as' => 'send-job-offer-recruiter']);
 
-<<<<<<< Updated upstream
-=======
         Route::get('/getMessages', ['uses'=>'RecruiterController@get_private_messages', 'as'=>'getPrivateMessages']);
-
         Route::get('recruiter-messages', ['uses' => 'RecruiterController@get_messages', 'as' => 'recruiter-messages']);
 
         Route::post('/send-message', ['uses' => 'RecruiterController@sendMessages', 'as' => 'SendMessage']);
 
         Route::get('add-job', ['uses' => 'RecruiterController@addJob', 'as' => 'add-job']);
         Route::post('add-job', ['uses' => 'RecruiterController@addJobStore', 'as' => 'addJob.store']);
-
->>>>>>> Stashed changes
-
 
     });
 });

@@ -76,9 +76,6 @@ class RecruiterController extends Controller
     {
         //
     }
-<<<<<<< Updated upstream
-=======
-
 
     public function get_private_messages(Request $request)
 {
@@ -578,6 +575,4 @@ public function get_rooms(Request $request){
            // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
         }
     }
-
->>>>>>> Stashed changes
 }
