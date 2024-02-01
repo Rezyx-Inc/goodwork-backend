@@ -35,9 +35,9 @@
     <!--Main Navigation-->
 <header>
   <!-- Sidebar -->
-  @include('partials.sidebar')
+  @include('worker::partials.worker_sidebar')
   <!-- Sidebar -->
-  @include('partials.dashboard_header')
+  @include('worker::partials.worker_dashboard_header')
   <!-- Navbar -->
 </header>
 <!--Main Navigation-->

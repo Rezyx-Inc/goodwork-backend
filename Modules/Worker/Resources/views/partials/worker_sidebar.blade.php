@@ -18,20 +18,20 @@ $user = auth()->guard('frontend')->user();
             <img src="{{URL::asset('frontend/img/home-icon.png')}}" /><span>Home</span>
         </a>
 
-        <a href="{{route('explore')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'explore') ? 'active':''}}">
+        <a href="{{route('worker.explore')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.explore') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>Explore Jobs</span>
         </a>
 
 
-        <a href="{{route('dash_my-work-journey')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'dash_my-work-journey') ? 'active':''}}">
+        <a href="{{route('my-work-journey')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'my-work-journey') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>My Work Journey</span>
         </a>
 
-        <a href="{{ route('worker-messages') }}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker-messages') ? 'active':''}}">
+        <a href="{{ route('worker.messages') }}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.messages') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/message-icon.png')}}" /><span>Messages</span>
         </a>
 
-        <a href="{{route('dash-profile')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'dash-profile') ? 'active':''}}">
+        <a href="{{route('profile')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'profile') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>My Profile</span>
         </a>
 

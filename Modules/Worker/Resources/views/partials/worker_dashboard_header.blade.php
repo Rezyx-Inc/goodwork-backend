@@ -88,9 +88,9 @@ $user = auth()->guard('frontend')->user();
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdownMenuLink"
               >
-            <li><a class="dropdown-item" href="{{route('worker-profile')}}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{route('profile')}}">My profile</a></li>
             <li><a class="dropdown-item" href="{{route('profile-setting')}}">Settings</a></li>
-            <li><a class="dropdown-item" href="{{route('worker-logout')}}">Logout</a></li>
+            <li><a class="dropdown-item" href="{{route('worker.logout')}}">Logout</a></li>
           </ul>
         </li>
       </ul>
