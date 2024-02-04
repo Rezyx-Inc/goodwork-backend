@@ -145,7 +145,7 @@ class RecruiterAuthController extends Controller
 
                  // sending email verification otp after registring
                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
-                 Mail::to($model->email)->send(new login($email_data));
+                 //Mail::to($model->email)->send(new login($email_data));
 
                 $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
                 $data_msg['success'] = true;
@@ -222,7 +222,7 @@ class RecruiterAuthController extends Controller
 
                  // sending mail infromation
                  $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
-                 Mail::to($model->email)->send(new register($email_data));
+                 //Mail::to($model->email)->send(new register($email_data));
 
                 session()->put('otp_user_id', $model->id);
                 session()->save();
