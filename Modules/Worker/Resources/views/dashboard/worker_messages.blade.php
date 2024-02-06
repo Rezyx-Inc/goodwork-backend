@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('worker::layouts.dashboard')
 @section('mytitle', 'My Profile')
 @section('content')
 <!--Main layout-->
@@ -104,7 +104,7 @@
             </div>
 
             <div class="ss-rply-msg-input">
-              <form action="{{route('')}}" method="POST">
+              <form action="{{route('send.message')}}" method="POST">
               <input type="text" id="fname" name="fname" placeholder="Express yourself here!">
               <button type="submit"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
               </form>

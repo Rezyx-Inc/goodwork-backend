@@ -31,21 +31,21 @@ Route::prefix('worker')->group(function() {
         Route::get('/dashboard', ['uses' => 'WorkerDashboardController@dashboard', 'as' => 'worker.dashboard']);
       
         //Route::get(' home', ['uses' => 'WorkerController@home', 'as' => 'home']);
-        Route::get('my-messages', ['uses' => 'WorkerDashboardController@get_messages', 'as' => 'worker.messages']);
-        Route::get('dash-profile', ['uses' => 'WorkerDashboardController@get_profile', 'as' => 'dash-profile']);
-        Route::get('/explore', ['uses' => 'WorkerController@explore', 'as' => 'worker.explore']);
+        Route::get('messages', ['uses' => 'WorkerDashboardController@get_messages', 'as' => 'worker.messages']);
+        Route::get('profile', ['uses' => 'WorkerDashboardController@my_profile', 'as' => 'profile']);
+        Route::get('explore', ['uses' => 'WorkerDashboardController@explore', 'as' => 'worker.explore']);
         Route::post('help-and-support', ['uses' => 'WorkerDashboardController@helpAndSupport', 'as' => 'worker-help-and-support']);
         Route::post('worker-update-profile', ['uses' => 'WorkerDashboardController@updateProfile', 'as' => 'worker-update-profile']);
 
         Route::post('worker-send-job-offer', ['uses' => 'ApplicationController@sendJobOffer', 'as' => 'worker-send-job-offer']);
 
-        Route::get('worker-messages/{idEmployer}', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
-        Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
+      //  Route::get('worker-messages/{idEmployer}', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
+       // Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
         Route::get('/getMessages', ['uses'=>'WorkerController@get_private_messages', 'as'=>'getPrivateMessages']);
-        Route::get('my-work-journey', ['uses' => 'WorkerDashboardController@get_my_work_journey', 'as' => 'dash_my-work-journey']);
+        Route::get('my-work-journey', ['uses' => 'WorkerDashboardController@get_my_work_journey', 'as' => 'my-work-journey']);
 
 
-        Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'my-work-journey']);
+        //Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'my-work-journey']);
         Route::post('fetch-job-content', ['uses' => 'WorkerController@fetch_job_content', 'as' => 'fetch-job-content']);
 
         Route::get('jobs/applied', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'applied-jobs']);
@@ -53,7 +53,7 @@ Route::prefix('worker')->group(function() {
         Route::get('jobs/hired', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'hired-jobs']);
         Route::get('jobs/past', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'past-jobs']);
 
-        Route::post('/send-message', ['uses' => 'WorkerController@sendMessages', 'as' => 'SendMessage']);
+        Route::post('/send-message', ['uses' => 'WorkerController@sendMessages', 'as' => 'send.message']);
         Route::get('/get-messages', ['uses' => 'WorkerController@getMessages', 'as' => 'GetMessages']);
         Route::get('/get-rooms', ['uses' => 'WorkerController@get_rooms', 'as' => 'GetRooms']);
     }

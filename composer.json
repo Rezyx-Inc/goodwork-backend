@@ -22,6 +22,7 @@
         "graham-campbell/throttle": "*",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.7",
+        "jenssegers/mongodb": "^3.7",
         "laravel/framework": "^7.0",
         "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",

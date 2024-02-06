@@ -45,7 +45,7 @@ class WorkerDashboardController extends Controller
         $data = [];
         $data['user'] = $user = auth()->guard('frontend')->user();
 
-        return view('worker::worker.dashboard', $data);
+        return view('worker::layouts.dashboard', $data);
 
     }
     /** verified users page */
@@ -53,7 +53,7 @@ class WorkerDashboardController extends Controller
     {
         $data = [];
         $data['model'] = auth()->guard('frontend')->user();
-        return view('worker.dashboard.profile', $data);
+        return view('worker::dashboard.profile', $data);
     }
     /** account settings page */
     public function account_setting()
@@ -125,14 +125,14 @@ class WorkerDashboardController extends Controller
     {
         $data = [];
         $data['worker'] = auth()->guard('frontend')->user();
-        return view('worker::dashboard.my_profile', $data);
+        return view('worker::dashboard.worker_profile', $data);
     }
 
     public function get_messages()
     {
         $data = [];
         $data['worker'] = auth()->guard('frontend')->user();
-        return view('dashboard.messages', $data);
+        return view('worker::dashboard.worker_messages', $data);
     }
 
     public function get_my_work_journey()

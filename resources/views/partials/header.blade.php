@@ -41,7 +41,7 @@
                                         @else
                                         <li></li>
                                         <li>
-                                            <a href="{{route('dashboard')}}">Dashboard</a>
+                                            <a href="{{route('worker.dashboard')}}">Dashboard</a>
                                         </li>
                                         @endif
                                     @elseif (request()->routeIs('for-recruiters'))

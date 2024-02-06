@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('worker::layouts.dashboard')
 @section('mytitle', 'My Profile')
 @section('content')
 <!--Main layout-->

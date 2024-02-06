@@ -25,8 +25,8 @@
 <body>
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
     <header>
-        @include('worker::partials.sidebar')
-        @include('worker::partials.header')
+        @include('worker::partials.worker_sidebar')
+        @include('worker::partials.worker_dashboard_header')
     </header>
     @yield('content')
     <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
