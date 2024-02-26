@@ -19,7 +19,7 @@ Route::prefix('employer')->group(function() {
     Route::middleware(['employer_not_logged_in'])->group(function () {
         Route::get('/login', ['uses' => 'EmployerAuthController@get_login', 'as' => 'employer.login']);
         Route::post('employer-login', ['uses' => 'EmployerAuthController@post_login', 'as' => 'employer-login']);
-        Route::get('/employer-verify', ['uses' => 'EmployerAuthController@verify', 'as' => 'employer.verify']);
+        Route::get('/verify', ['uses' => 'EmployerAuthController@verify', 'as' => 'employer.verify']);
         Route::post('employer-otp', ['uses' => 'EmployerAuthController@submit_otp', 'as' => 'employer.otp']);
         Route::get('/signup', ['uses' => 'EmployerAuthController@get_signup', 'as' => 'employer-signup']);
         Route::post('signup', ['uses' => 'EmployerAuthController@post_signup', 'as' => 'employer.signup']);
