@@ -45,7 +45,7 @@ class WorkerDashboardController extends Controller
         $data = [];
         $data['user'] = $user = auth()->guard('frontend')->user();
 
-        return view('worker::layouts.dashboard', $data);
+        return view('worker::dashboard.dashboard', $data);
 
     }
     /** verified users page */

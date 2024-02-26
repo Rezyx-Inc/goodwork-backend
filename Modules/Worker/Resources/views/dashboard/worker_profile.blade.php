@@ -1,4 +1,4 @@
-@extends('worker::layouts.dashboard')
+@extends('worker::layouts.main')
 @section('mytitle', 'My Profile')
 @section('content')
 @php
