@@ -45,7 +45,7 @@ class WorkerDashboardController extends Controller
         $data = [];
         $data['user'] = $user = auth()->guard('frontend')->user();
 
-        return view('worker.dashboard', $data);
+        return view('worker::layouts.dashboard', $data);
 
     }
     /** verified users page */
@@ -53,7 +53,7 @@ class WorkerDashboardController extends Controller
     {
         $data = [];
         $data['model'] = auth()->guard('frontend')->user();
-        return view('user.profile', $data);
+        return view('worker::dashboard.profile', $data);
     }
     /** account settings page */
     public function account_setting()
@@ -61,7 +61,7 @@ class WorkerDashboardController extends Controller
         $data = [];
         $data['model'] = auth()->guard('frontend')->user();
         $data['countries'] = Country::where('flag', 1)->get();
-        return view('user.account_setting', $data);
+        return view('worker.account_setting', $data);
     }
 
     /** update personal info */
@@ -124,29 +124,29 @@ class WorkerDashboardController extends Controller
     public function my_profile()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
-        return view('dashboard.my_profile', $data);
+        $data['worker'] = auth()->guard('frontend')->user();
+        return view('worker::dashboard.worker_profile', $data);
     }
 
-    public function messages()
+    public function get_messages()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
-        return view('dashboard.messages', $data);
+        $data['worker'] = auth()->guard('frontend')->user();
+        return view('worker::dashboard.worker_messages', $data);
     }
 
-    public function my_work_journey()
+    public function get_my_work_journey()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
-        return view('dashboard.my_work_journey', $data);
+        $data['worker'] = auth()->guard('frontend')->user();
+        return view('worker::dashboard.my_work_journey', $data);
     }
 
     public function explore()
     {
         $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
-        return view('dashboard.explore', $data);
+        $data['worker'] = auth()->guard('frontend')->user();
+        return view('worker::dashboard.explore', $data);
     }
 
 }

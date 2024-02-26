@@ -1,5 +1,5 @@
 @php
-$user = auth()->guard('employer')->user();
+$user = auth()->guard('frontend')->user();
 @endphp
 <!-- Navbar -->
 <nav id="main-navbar" class="ss-hed-top-fixd navbar navbar-expand-lg navbar-light fixed-top">
@@ -61,7 +61,7 @@ $user = auth()->guard('employer')->user();
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">My profile</a></li>
               <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="{{route('employer-logout')}}">Logout</a></li>
+              <li><a class="dropdown-item" href="{{route('worker-logout')}}">Logout</a></li>
             </ul>
           </li>
         </ul>

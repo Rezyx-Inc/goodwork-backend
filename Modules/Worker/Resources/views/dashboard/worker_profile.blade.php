@@ -1,6 +1,9 @@
 @extends('worker::layouts.dashboard')
 @section('mytitle', 'My Profile')
 @section('content')
+@php
+$user = auth()->guard('frontend')->user();
+@endphp
 <!--Main layout-->
 <main style="padding-top: 130px" class="ss-main-body-sec">
     <div class="container">
@@ -11,7 +14,7 @@
           <div class="ss-my-profil-div">
             <h2>My <span class="ss-pink-color">Profile</span></h2>
             <div class="ss-my-profil-img-div">
-              <img src="{{URL::asset('images/workers/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/>
+              <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/> 
               <h4>James Bond</h4>
               <p>GWW234065 </p>
             </div>
@@ -107,7 +110,7 @@
                     <option value="mercedes">Allied Health Professional</option>
                     <option value="audi">Therapy</option>
                     <option value="audi">LPN/LVN</option>
-                    <option value="audi">Worker Practitioner</option>
+                    <option value="audi">Nurse Practitioner</option>
                   </select>
                 </div>
 
@@ -121,7 +124,7 @@
                     <option value="mercedes">Allied Health Professional</option>
                     <option value="audi">Therapy</option>
                     <option value="audi">LPN/LVN</option>
-                    <option value="audi">Worker Practitioner</option>
+                    <option value="audi">Nurse Practitioner</option>
                   </select>
                     <input type="text" name="text" placeholder="Enter Experience in years">
                   </li>

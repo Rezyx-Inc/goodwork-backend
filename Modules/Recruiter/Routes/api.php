@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\AuthApi\AuthApiController;
+use Modules\Recruiter\Http\Controllers\OpportunitiesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,3 +17,6 @@ use App\Http\Controllers\Api\AuthApi\AuthApiController;
 // Route::middleware('auth:api')->get('/recruiter', 'AuthApiController@getUser');
 
 Route::middleware('auth:api')->get('/recruiter', [AuthApiController::class, 'getUser']);
+
+
+Route::get('/cities/{id}', [OpportunitiesController::class, 'get_cities']);

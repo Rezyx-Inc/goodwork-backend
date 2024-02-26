@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(SpecialitiesTableSeeder::class);
         $this->call(ProfessionsTableSeeder::class);
         $this->call(JobsTableSeeder::class);
-
+        $this->call(CityTableSeeder::class);
+        $this->call(ChatTableSeeder::class);
+        $this->call(OffersTableSeeder::class);
 
     }
  }

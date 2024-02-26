@@ -33,16 +33,15 @@
                                     @if (request()->routeIs('/'))
                                          @if(!auth()->guard('frontend')->check())
                                         <li>
-                                            <a href="{{route('login')}}">Login</a>
+                                            <a href="{{route('worker.login')}}">Login</a>
                                         </li>
                                         <li>
-                                            <a href="{{route('signup')}}">Join Goodwork</a>
+                                            <a href="{{route('worker.signup')}}">Join Goodwork</a>
                                         </li>
-
                                         @else
                                         <li></li>
                                         <li>
-                                            <a href="{{route('dashboard')}}">Dashboard</a>
+                                            <a href="{{route('worker.dashboard')}}">Dashboard</a>
                                         </li>
                                         @endif
                                     @elseif (request()->routeIs('for-recruiters'))

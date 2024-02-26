@@ -16,7 +16,7 @@ class UserNotAuth {
      */
     public function handle($request, Closure $next, $guard = 'frontend') {
         if (!Auth::guard($guard)->guest()) {
-            return redirect()->route('/');
+            return redirect()->route('worker.dashboard');
         }
         return $next($request);
     }

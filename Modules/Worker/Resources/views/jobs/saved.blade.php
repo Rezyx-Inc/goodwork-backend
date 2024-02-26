@@ -1,4 +1,4 @@
-@extends('worker::layouts.dashboard')
+@extends('layouts.dashboard')
 @section('mytitle', 'My Profile')
 @section('content')
 <!--Main layout-->
@@ -14,11 +14,11 @@
       <div class="col-lg-6">
         <div class="ss-my-work-tab-div">
           <ul onclick="myFunction(event)" id='navList'>
-            <li><a href="#" class="ss-saved-btn active">Saved</a></li>
-            <li><a href="#" class="ss-applied-btn">Applied</a></li>
-            <li><a href="#" class="ss-offered-btn">Offered</a></li>
-            <li><a href="#" class="ss-hired-btn">Hired</a></li>
-            <li><a href="#" class="ss-past-btn">Past</a></li>
+            <li><a href="#" class="ss-saved-btn {{ ( request()->route()->getName() == 'saved-jobs' ) ? 'active' :'' }}">Saved</a></li>
+            <li><a href="#" class="ss-applied-btn {{ ( request()->route()->getName() == 'applied-jobs' ) ? 'active' :'' }}">Applied</a></li>
+            <li><a href="#" class="ss-offered-btn {{ ( request()->route()->getName() == 'offered-jobs' ) ? 'active' :'' }}">Offered</a></li>
+            <li><a href="#" class="ss-hired-btn {{ ( request()->route()->getName() == 'hired-jobs' ) ? 'active' :'' }}">Hired</a></li>
+            <li><a href="#" class="ss-past-btn {{ ( request()->route()->getName() == 'past-jobs' ) ? 'active' :'' }}">Past</a></li>
           </ul>
         </div>
       </div>
@@ -29,281 +29,52 @@
   <!--------------my work journey saved---------------->
 
     <div class="ss-my-work-jorny-sved-div">
-      <div class="row">
-        <div class="col-lg-5 ss-displ-flex">
-          <div class="ss-mywrk-jrny-left-dv">
-            <div class="ss-jb-dtl-icon-ul">
-          <h5>Saved</h5>
+        <div class="row">
+            <div class="col-lg-5 ss-displ-flex">
+                <div class="ss-mywrk-jrny-left-dv">
+                    <div class="ss-jb-dtl-icon-ul">
+                        <h5>Saved</h5>
+                    </div>
+
+
+                    <!-------->
+                    @forelse($jobs as $j)
+                    <div class="ss-job-prfle-sec job-list" data-id="{{$j->id}}" data-type="saved">
+                        <p>{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
+                        <h4>{{$j->job_name}}</h4>
+                        <h6>Medical Solutions Recruiter</h6>
+                        <ul>
+                        <li><a href="#"><img src="{{URL::asset('forntend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
+                        <li><a href="#"><img src="{{URL::asset('forntend/img/calendar.png')}}"> 10 wks</a></li>
+                        <li><a href="#"><img src="{{URL::asset('forntend/img/dollarcircle.png')}}"> 2500/wk</a></li>
+                        </ul>
+                        <h5>Recently Added</h5>
+                        <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('forntend/img/bookmark.png')}}" /></a>
+                    </div>
+                    @endforelse
+
+                    {{-- <div class="ss-job-prfle-sec my-work-sved-job-div2">
+                        <p>Travel <span>+50 Applied</span></p>
+                        <h4>Manager CRNA - Anesthesia</h4>
+                        <h6>Medical Solutions Recruiter</h6>
+                        <ul>
+                        <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
+                        <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
+                        <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                        </ul>
+                        <h5>Recently Added</h5>
+                        <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
+                    </div> --}}
+
+                </div>
             </div>
 
+            <!-----JOB CONTENT---->
+            <div class="col-lg-7">
 
-            <!-------->
-            <div class="ss-job-prfle-sec my-work-sved-job-div1">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-              <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-            <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
-          </div>
+                <div class="ss-journy-svd-jbdtl-dv ss-saved-jb-dtls-dv1"></div>
 
-
-          <div class="ss-job-prfle-sec my-work-sved-job-div2">
-            <p>Travel <span>+50 Applied</span></p>
-            <h4>Manager CRNA - Anesthesia</h4>
-            <h6>Medical Solutions Recruiter</h6>
-            <ul>
-              <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-              <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-              <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-            <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
-          </div>
-
-          </div>
-        </div>
-
-        <div class="col-lg-7">
-          <!--------saved rit div-1--------->
-
-   <div class="ss-journy-svd-jbdtl-dv ss-saved-jb-dtls-dv1">
-
-  <!----------------jobs applay view details--------------->
-
-  <div class="ss-job-apply-on-view-detls-mn-dv">
-    <div class="ss-job-apply-on-tx-bx-hed-dv">
-      <ul>
-      <li><p>Recruiter</p></li>
-      <li><img src="img/recruiteri-img.png" />Emma Watson</li>
-    </ul>
-
-    <ul>
-      <li>
-        <span>GWJ234065</span>
-        <h6>17 Applied</h6>
-      </li>
-    </ul>
-    </div>
-
-  <div class="ss-jb-aap-on-txt-abt-dv">
-    <h5>About job</h5>
-    <ul>
-      <li>
-        <h6>Employer Name</h6>
-        <p>Hogwarts</p>
-      </li>
-       <li>
-        <h6>Date Posted</h6>
-        <p>May 18</p>
-      </li>
-       <li>
-        <h6>Type</h6>
-        <p>Clinical</p>
-      </li>
-       <li>
-        <h6>Terms</h6>
-        <p>Contact</p>
-      </li>
-
-    </ul>
-  </div>
-
-
-  <div class="ss-jb-apply-on-disc-txt">
-    <h5>Description</h5>
-    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
-  </div>
-
-
-  <!-------Work Information------->
-  <div class="ss-jb-apl-oninfrm-mn-dv">
-    <ul class="ss-jb-apply-on-inf-hed">
-      <li><h5>Work Information</h5></li>
-      <li><h5>Your Information</h5></li>
-    </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Diploma</span>
-      <h6>College Diploma</h6>
-    </li>
-    <li><p>Did you really graduate?</p></li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>drivers license</span>
-      <h6>Required</h6>
-    </li>
-    <li><p>Are you really allowed to drive?</p></li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Worked at Facility Before</span>
-      <h6>In the last 18 months</h6>
-    </li>
-    <li><p>Are you sure you never worked here as staff?</p></li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>SS# or SS Card</span>
-      <h6>Last 4 digits of SS#</h6>
-    </li>
-    <li><p>Yes we need your SS# to submit you</p></li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-blue">
-    <li>
-      <span>Profession</span>
-      <h6>RN</h6>
-    </li>
-    <li><p>RN</p></li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
-    <li>
-      <span>Specialty</span>
-      <h6>Peds CVICU</h6>
-    </li>
-    <li><p>ICU</p></li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Professional Licensure</span>
-      <h6>TX, Compact</h6>
-    </li>
-    <li><p>Where are you licensed?</p></li>
-  </ul>
-
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Experience</span>
-      <h6>3 Years </h6>
-    </li>
-    <li><p>How long have you done this?</p></li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Vaccinations & Immunizations</span>
-      <h6>COVID Required</h6>
-      <h6>Flu 2022 Preferred</h6>
-    </li>
-    <li><p>Did you get the COVID Vaccines?</p>
-  <p>Did you get the  Flu Vaccines?</p>
-    </li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>References</span>
-      <h6>2  references </h6>
-      <h6>12 months Recency</h6>
-    </li>
-    <li><p>Who are your References?</p>
-  <p>Is this from your last assignment?</p>
-    </li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Certifications</span>
-      <h6>BLS Required</h6>
-      <h6>ACLS Required</h6>
-      <h6>PALS Preferred</h6>
-      <h6>CCRN Preferred</h6>
-    </li>
-    <li><p>You don't have a BLS?</p>
-  <p>No ACLS?</p>
-  <p>No PALS?</p>
-  <p>No CCRN?</p>
-    </li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Skills checklist</span>
-      <h6>Peds CVICU RN </h6>
-
-    </li>
-    <li><p>Upload your latest skills checklist</p>
-
-    </li>
-  </ul>
-
-  <ul class="ss-s-jb-apl-on-inf-txt-ul">
-    <li>
-      <span>Eligible to work in the US</span>
-      <h6>Required</h6>
-      <h6>Flu 2022 Preferred</h6>
-    </li>
-    <li><p>Does Congress allow you to work here?</p>
-
-    </li>
-  </ul>
-
-  <div class="ss-job-apl-on-app-btn">
-    <button>Apply Now</button>
-  </div>
-
-  </div>
-
-  </div>
-          </div>
-
-          <!--------saved rit div-2--------->
-
-          <div class="ss-journy-svd-jbdtl-dv ss-saved-jb-dtls-dv2">
-            <div class="ss-job-dtls-view-bx">
-            <h6>Recruiter</h6>
-            <ul>
-              <li><img src="img/recruiteri-img.png"></li>
-              <li><p>Emma Watson2</p></li>
-            </ul>
-            <div class="ss-jb-dtl-abt-txt">
-              <h6>About job</h6>
-              <h5>Preferred shift:</h5>
-              <p>Day Shift</p>
-              <ul>
-                <li><h5>Relevant experience: </h5>
-                <p>3 Years</p></li>
-                <li>
-                  <h5>EMR:</h5>
-                  <p>MedTech (&lt; 2 experience)</p>
-                </li>
-              </ul>
             </div>
-
-            <div class="ss-meditch-text-bx">
-              <ul>
-              <li><h5>Meditech: </h5>
-  <p>Beginner(1 years  experience)</p></li>
-  <li><h5>Epic: </h5>
-  <p>Advanced (5+ year's experience)</p></li>
-  </ul>
-            </div>
-
-            <div class="ss-jb-dtl-disc-sec">
-              <h6>Description</h6>
-              <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
-            </div>
-
-            <div class="ss-jb-dtl-apply-btn">
-              <button type="text">Already Applied</button>
-            </div>
-
-          </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -313,7 +84,8 @@
 
   <!--------------my work journey Applied---------------->
 
-  <div class="ss-my-wrk-apply-mn-sec">
+
+  {{-- <div class="ss-my-wrk-apply-mn-sec">
 
   <div class="row">
         <div class="col-lg-5 ss-displ-flex">
@@ -1142,7 +914,7 @@
         </div>
       </div>
 
-  </div>
+  </div> --}}
 
 
   <!--------------my work journey Past---------------->

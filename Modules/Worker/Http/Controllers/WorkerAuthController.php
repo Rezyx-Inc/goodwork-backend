@@ -20,9 +20,6 @@ use App\Events\UserCreated;
 
 class WorkerAuthController extends Controller
 {
-
-
-
     public function __construct()
     {
 
@@ -50,62 +47,56 @@ class WorkerAuthController extends Controller
 
     public function post_login(Request $request) {
         try{
-        if ($request->ajax()) {
-            $validator = Validator::make($request->all(), [
-                'id' => 'email:rfc,dns',
-            ]);
-            if ($validator->fails()) {
-                $data = [];
-                // $data['msg'] = $e->getMessage();
-                $data['msg'] =$validator->errors()->first();
-                $data['success'] = false;
-
-                 return response()->json($data);
-            }
-            $data_msg = [];
-            $input = $request->only('id');
-               $model = User::where(function ($query) use ($input) {
+        
+            if ($request->ajax()) {
+                $validator = Validator::make($request->all(), ['id' => 'email',]);            
+                if ($validator->fails()) {                
+                    $data = [];
+                    $data['msg'] ='it must be a valid email address';
+                    $data['success'] = false;
+                    return response()->json($data);            
+                }           
+                $data_msg = [];            
+                $input = $request->only('id');    
+                $model = User::where(function ($query) use ($input) {
                 $query->where('email', $input['id'])
-                    ->orWhere('mobile', $input['id']);
-            })
-            ->where('ROLE', 'WORKER')
-            ->where('active', '1')
-            ->first();
-            if (isset($model)) {
-                session()->put('otp_user_id', $model->id);
-                session()->save();
-                // Check if the value has been stored in the session
-                // Checked
-
-                $otp = $this->rand_number(4);
-                $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
-
-                 // sending email verification otp after registring
-                 $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
-                 Mail::to($model->email)->send(new login($email_data));
-
-                $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
-                $data_msg['success'] = true;
-                $data_msg['link'] = Route('worker.verify');
-
-                return response()->json($data_msg);
-            }else{
-                $data = [];
-                // $data['msg'] = $e->getMessage();
-                $data['msg'] ='Wrong login information.';
-                 $data['success'] = false;
-                 return response()->json($data);
-            }
+                    ->orWhere('mobile', $input['id']);            
+                })
+            
+                ->where('ROLE', 'WORKER')           
+                ->where('active', '1')            
+                ->first();            
+                if (isset($model)) {            
+                    session()->put('otp_user_id', $model->id);            
+                    $otp = $this->rand_number(4);            
+                    $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);         
+                    $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];           
+                 //   Mail::to($model->email)->send(new login($email_data));            
+                    $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';           
+                    $data_msg['success'] = true;            
+                    $data_msg['link'] = Route('worker.verify');           
+                    return response()->json($data_msg);
+            
+                } else {                
+                    $data = [];              
+                    $data['msg'] ='Wrong login information.';                
+                    $data['success'] = false;                
+                    return response()->json($data);            
+                }        
+        
+            }  
+        } catch(\Exception $e) {        
+            $data = [];    
+            $data['msg'] ='We encountered an error. Please try again later.';        
+            $data['success'] = false;        
+            return response()->json($data);
+    
         }
+    
     }
-    catch(\Exception $e){
-        $data = [];
-       // $data['msg'] = $e->getMessage();
-       $data['msg'] ='We encountered an error. Please try again later.';
-        $data['success'] = false;
-        return response()->json($data);
-    }
-    }
+
+
+   
 
     public function verify() {
        if (session()->has('otp_user_id')) {
@@ -117,7 +108,7 @@ class WorkerAuthController extends Controller
                 return view('worker::auth.verify', $data);
             }
         }
-        return redirect()->route('worker::layouts.main');
+        return redirect()->route('worker::layout.main');
     }
 
     public function post_signup(Request $request) {
@@ -180,7 +171,7 @@ class WorkerAuthController extends Controller
                 return response()->json($response);
             }
         }
-    }catch(\Exception $e){
+    } catch(\Exception $e) {
         $data = [];
         $data['msg'] = $e->getMessage();
         //$data['msg'] ='We encountered an error. Please try again later.';
@@ -204,8 +195,8 @@ class WorkerAuthController extends Controller
                     $input = [];
                     $input['otp'] = null;
                     $user->update($input);
-                    // Auth::guard('frontend')->login($user, true);
-                     Auth::guard('worker')->login($user, true);
+                     Auth::guard('frontend')->login($user, true);
+                    // Auth::guard('worker')->login($user, true);
                     session()->forget('otp_user_id');
 
                     // generate accesstoken
@@ -213,7 +204,7 @@ class WorkerAuthController extends Controller
                 //    $token = $user->createToken('authToken')->accessToken;
                 $token = $user->createToken('authToken',['all_Permession'])->accessToken;
 
-                    $response['link'] = route('home');
+                    $response['link'] = route('worker.dashboard');
                     if (session()->has('intended_url')) {
                         $response['link'] = session()->get('intended_url');
                         session()->forget('intended_url');
@@ -224,7 +215,7 @@ class WorkerAuthController extends Controller
         }
     }
     public function logout(Request $request) {
-        $guard = "worker";
+        $guard = "frontend";
         Auth::guard($guard)->logout();
         $request->session()->invalidate();
         // $request->session()->regenerateToken();

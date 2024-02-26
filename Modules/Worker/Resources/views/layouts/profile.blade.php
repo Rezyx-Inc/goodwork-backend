@@ -28,8 +28,8 @@
                 <div class="ss-my-presnl-btn-mn">
 
                     <div class="ss-my-prsnl-wrapper">
-                        <div class="ss-my-prosnl-rdio-btn" data-href="{{route('my-profile')}}" onclick="redirect_to(this)">
-                            <input type="radio" name="select" id="option-1" {{ ( in_array(request()->route()->getName(), ['my-profile','info-required', 'urgency', 'float-requirement','patient-ratio', 'interview-dates', 'bonuses', 'work-hours'])) ? 'checked': ''}}>
+                        <div class="ss-my-prosnl-rdio-btn" data-href="{{route('worker-profile')}}" onclick="redirect_to(this)">
+                            <input type="radio" name="select" id="option-1" {{ ( in_array(request()->route()->getName(), ['worker-profile','info-required', 'urgency', 'float-requirement','patient-ratio', 'interview-dates', 'bonuses', 'work-hours'])) ? 'checked': ''}}>
                             <label for="option-1" class="option option-1">
                                 <div class="dot"></div>
                                 <ul>
