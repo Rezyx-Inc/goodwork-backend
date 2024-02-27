@@ -33,71 +33,69 @@
 </head>
 <body>
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+    
     <!--Main Navigation-->
-<header>
-  <!-- Sidebar -->
-  @include('worker::partials.worker_sidebar')
-  <!-- Sidebar -->
-  @include('worker::partials.worker_dashboard_header')
-  <!-- Navbar -->
-</header>
-<!--Main Navigation-->
+    <header>
+      <!-- Sidebar -->
+      @include('worker::partials.worker_sidebar')
+      <!-- Sidebar Header-->
+      @include('worker::partials.worker_dashboard_header')
+    </header>
+    <!--Main Navigation-->
 
-<!--Main layout-->
-@yield('content')
-
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<!-- <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
-<script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
-
-<!--Main layout-->
+    <!--Main layout-->
+    @yield('content')
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+    <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
+    <!--Main layout-->
+    
     <!-- MDB -->
-
     <main style="padding-top: 170px" class="ss-main-body-sec">
-    <div class="container">
-
-      <!--------Ghraph area------->
-        <div class="ss-home-graph-main-sec">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ss-home-graph-div1">
-                        <img src="{{URL::asset('frontend/img/home-graph-1.png')}}" />
+        <div class="container">
+        <!--------Ghraph area------->
+            <div class="ss-home-graph-main-sec">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ss-home-graph-div1">
+                            <img src="{{URL::asset('frontend/img/home-graph-1.png')}}" />
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="ss-home-graph-div2">
+                            <img src="{{URL::asset('frontend/img/home-graph-2.png')}}" />
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="ss-home-graph-div3">
+                            <img src="{{URL::asset('frontend/img/home-graph-3.png')}}" />
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-lg-7">
-                    <div class="ss-home-graph-div2">
-                        <img src="{{URL::asset('frontend/img/home-graph-2.png')}}" />
-                    </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="ss-home-graph-div3">
-                        <img src="{{URL::asset('frontend/img/home-graph-3.png')}}" />
-                    </div>
-                </div>
-
             </div>
         </div>
+    </main>
 
-    </div>
-
-</main>
     <script type="text/javascript" src="{{URL::asset('frontend/js/mdb.min.js')}}"></script>
     <script type="text/javascript" src="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.js') }}" type="text/javascript"></script>
+    
     {{-- <script type="text/javascript" src="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script> --}}
+    
     <script type="text/javascript" src="{{URL::asset('backend/vendors/notie/dist/notie.min.js') }}"></script>
+    
     {{-- CK editor --}}
     <script src="{{URL::asset('backend/vendors/ckeditor/ckeditor.js')}}"></script>
+    
     {{-- Jquery Mask --}}
     <script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script>
+    
     <!-- Custom scripts -->
     <script type="text/javascript" src="{{URL::asset('frontend/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
+    
     @yield('js')
     @include('partials.flashMsg')
-
 
 </body>
 </html>
