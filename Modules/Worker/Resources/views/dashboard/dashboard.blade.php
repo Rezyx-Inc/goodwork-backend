@@ -11,9 +11,9 @@
     <title>Dashboard</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Font Awesome -->
-     <!-- Bootstrap CSS -->
-     <!-- <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-     <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <!-- <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
 
     {{-- <link rel="stylesheet" href="{{URL::asset('frontend/css/fontawesome_all.css')}}" /> --}}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
@@ -36,10 +36,10 @@
     
     <!--Main Navigation-->
     <header>
-      <!-- Sidebar -->
-      @include('worker::partials.worker_sidebar')
-      <!-- Sidebar Header-->
-      @include('worker::partials.worker_dashboard_header')
+        <!-- Sidebar -->
+        @include('worker::partials.worker_sidebar')
+        <!-- Sidebar Header-->
+        @include('worker::partials.worker_dashboard_header')
     </header>
     <!--Main Navigation-->
 
