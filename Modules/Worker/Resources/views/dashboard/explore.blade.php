@@ -1,5 +1,5 @@
-@extends('worker::layouts.dashboard')
-@section('mytitle', 'My Profile')
+@extends('worker::layouts.main')
+@section('mytitle', 'Explore Jobs')
 @section('content')
 <!--Main layout-->
 <main style="padding-top: 130px" class="ss-main-body-sec">

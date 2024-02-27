@@ -112,3 +112,11 @@ Procedure to go live or staging.
 10) To link the storage to public
 
 ``php artisan storage:link``
+
+
+
+
+
+SideNotes
+
+Install mongodb and redis

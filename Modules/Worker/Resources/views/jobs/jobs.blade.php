@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.main')
 @section('mytitle', 'My Profile')
 @section('content')
 <!--Main layout-->
