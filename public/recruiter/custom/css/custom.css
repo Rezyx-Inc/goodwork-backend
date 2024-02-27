@@ -261,9 +261,9 @@ h1,h2,h3,h4,h5,h6{
   width: 210px;
 }
 .sidebar .list-group-flush a.active{
-    color: #52DEC1!important;
-
+    color: #52DEC1 !important;
 }
+
 .ss-side-user-ul ul {
     display: inline-flex;
     list-style: none;

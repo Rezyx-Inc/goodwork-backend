@@ -18,7 +18,7 @@
     <link rel='stylesheet' href='{{URL::asset("employer/custom/css/mdb.min.css")}}'>
 
     <link rel="stylesheet" href="{{URL::asset('frontend/css/style.css')}}" />
-    <link rel="stylesheet" href="{{URL::asset('employer/custom/css/custom.css')}}" />
+    <link rel="stylesheet" href="{{URL::asset('frontend/custom/css/custom.css')}}" />
 
 </head>
 

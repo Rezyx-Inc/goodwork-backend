@@ -1,0 +1,18 @@
+.list-group-flush>.list-group-item{
+  background: transparent;
+  color: #ffffff;
+  font-size: 15px;
+  border: 0;
+  padding: 10px 15px !important;
+}
+
+
+.sidebar{
+  padding: 0px 0 0;
+}
+.sidebar{
+  width: 210px;
+}
+.sidebar .list-group-flush a.active{
+    color: #52DEC1 !important;
+}

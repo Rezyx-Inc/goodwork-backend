@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
     <!-- Custom styles -->
     <link rel="stylesheet" href="{{URL::asset('frontend/css/style.css')}}" />
+    <link rel="stylesheet" href="{{URL::asset('frontend/custom/css/custom.css')}}" />
     @yield('css')
 </head>
 <body>
