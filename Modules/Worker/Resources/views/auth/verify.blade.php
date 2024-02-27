@@ -1,60 +1,59 @@
 @extends('worker::layouts.auth')
 @section('css')
 <style>
-/* OTP page css  */
-.inputOtp input {
-    display: inline-block !important;
-    width: 50px !important;
-    height: 50px !important;
-    text-align: center !important;
-    border: 1px solid #DADADA !important;
-    border-radius: 4px !important;
-    font-size: 28px !important;
-    margin: 15px 7px !important;
-}
-.inputOtp input:focus {
-    outline: none;
-}
+    /* OTP page css  */
+    .inputOtp input {
+        display: inline-block !important;
+        width: 50px !important;
+        height: 50px !important;
+        text-align: center !important;
+        border: 1px solid #DADADA !important;
+        border-radius: 4px !important;
+        font-size: 28px !important;
+        margin: 15px 7px !important;
+    }
+    .inputOtp input:focus {
+        outline: none;
+    }
 </style>
+
 @stop
 @section('content')
+
 <section class="ss-login-work-sec ss-admin-login-sed">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="ss-login-work-logo-div">
-            <div class="ss-login-logo-dv">
-              <img src="{{URL::asset('landing/img/admin-login-logo.png')}}" />
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ss-login-work-logo-div">
+                    <div class="ss-login-logo-dv">
+                        <img src="{{URL::asset('landing/img/admin-login-logo.png')}}" />
+                    </div>
+                    <p>Building a better way for healthcare workers & employers to find each other</p>
+                    <a href="{{route('/')}}"><img src="{{URL::asset('landing/img/logo.png')}}" /></a>
+                </div>
             </div>
-            <p>Building a better way for healthcare workers & employers to find each other</p>
-
-            <a href="{{route('/')}}"><img src="{{URL::asset('landing/img/logo.png')}}" /></a>
-          </div>
+            <div class="col-lg-6">
+                <!--------login form------->
+                <div class="ss-verification-mn-div">
+                    <h4>Verification</h4>
+                    <p>We sent a verification code to<br />
+                    your registered email address and mobile number</p>
+                    <form method="post" action="{{route('worker.otp')}}" id="otp-form" class="">
+                        <ul class="ss-otp-v-ul">
+                            <li><input type="text" name="otp1" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1></li>
+                            <li><input type="text" name="otp2" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1></li>
+                            <li><input type="text" name="otp3" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 ></li>
+                            <li><input type="text" name="otp4" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1></li>
+                        </ul>
+                        <button type="submit">Continue</button>
+                    </form>
+                    <ul class="ss-otp-re-send">
+                        <li><a href="javascript:void(0)" id="resendotp" disabled>Resend OTP in</a></li>
+                        <li><p class="countdown">01:26</p></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-       <div class="col-lg-6">
-          <!--------login form------->
-          <div class="ss-verification-mn-div">
-            <h4>Verification</h4>
-            <p>We sent a verification code to<br>
-            your registered email address and mobile number</p>
-            <form method="post" action="{{route('worker.otp')}}" id="otp-form" class="">
-                <ul class="ss-otp-v-ul">
-                    <li><input type="text" name="otp1" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1></li>
-                    <li><input type="text" name="otp2" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1></li>
-                    <li><input type="text" name="otp3" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 ></li>
-                    <li><input type="text" name="otp4" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1></li>
-                </ul>
-                <button type="submit">Continue</button>
-            </form>
-            <ul class="ss-otp-re-send">
-                <li><a href="javascript:void(0)" id="resendotp" disabled>Resend OTP in</a></li>
-                <li><p class="countdown">01:26</p></li>
-            </ul>
-        </div>
-
-        </div>
-      </div>F
     </div>
 </section>
 <input type="hidden" name="otp" id="otp-timer" value="{{$expiry}}">
@@ -115,13 +114,13 @@
     var timer2 = $('#otp-timer').val();
     var interval = setInterval(function() {
 
-        console.log(timer2, 'timer2');
+        //console.log(timer2, 'timer2');
         var timer = timer2.split(':');
         //by parsing integer, I avoid all extra string processing
         var minutes = parseInt(timer[0], 10);
-        console.log(minutes, 'minutes');
+        //console.log(minutes, 'minutes');
         var seconds = parseInt(timer[1], 10);
-        console.log(seconds, 'seconds');
+        //console.log(seconds, 'seconds');
         --seconds;
         minutes = (seconds < 0) ? --minutes : minutes;
         if (minutes < 0) clearInterval(interval);
@@ -150,6 +149,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        
         $.ajax({
             url: full_path+"resend-otp",
             type: 'GET',

@@ -421,163 +421,160 @@ class WorkerController extends Controller
         try {
            // commenting this for now we need to return only jobs data
 
-        $data = [];
-        $data['user'] = auth()->guard('frontend')->user();
-        $data['jobSaved'] = new JobSaved();
-        $data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
-        $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
-        $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
-        $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
-        $data['us_states'] = States::where('country_id', $usa->id)->get();
-        // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+            $data = [];
+            $data['user'] = auth()->guard('frontend')->user();
+            $data['jobSaved'] = new JobSaved();
+            $data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
+            $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
+            $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
+            $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
+            $data['us_states'] = States::where('country_id', $usa->id)->get();
+            // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
 
-        $data['profession'] = isset($request->profession) ? $request->profession : '';
-        $data['speciality'] = isset($request->speciality) ? $request->speciality : '';
-        $data['experience'] = isset($request->experience) ? $request->experience : '';
-        $data['city'] = isset($request->city) ? $request->city : '';
-        $data['state'] = isset($request->state) ? $request->state : '';
-        $data['job_type'] = isset($request->job_type) ? explode('-', $request->job_type) : [];
-        $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
-        $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
-        $data['shifts'] = isset($request->shifts) ? explode('-',$request->shifts) : [];
-        $data['auto_offers'] = isset($request->auto_offers) ? $request->auto_offers : 0;
+            $data['profession'] = isset($request->profession) ? $request->profession : '';
+            $data['speciality'] = isset($request->speciality) ? $request->speciality : '';
+            $data['experience'] = isset($request->experience) ? $request->experience : '';
+            $data['city'] = isset($request->city) ? $request->city : '';
+            $data['state'] = isset($request->state) ? $request->state : '';
+            $data['job_type'] = isset($request->job_type) ? explode('-', $request->job_type) : [];
+            $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
+            $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
+            $data['shifts'] = isset($request->shifts) ? explode('-',$request->shifts) : [];
+            $data['auto_offers'] = isset($request->auto_offers) ? $request->auto_offers : 0;
 
-        $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
-        $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
-        $data['hourly_pay_from'] = isset($request->hourly_pay_from) ? $request->hourly_pay_from : 2;
-        $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
-        $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
-        $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
-        $data['assignment_from'] = isset($request->assignment_from) ? $request->assignment_from : 10;
-        $data['assignment_to'] = isset($request->assignment_to) ? $request->assignment_to : 150;
+            $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
+            $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
+            $data['hourly_pay_from'] = isset($request->hourly_pay_from) ? $request->hourly_pay_from : 2;
+            $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
+            $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
+            $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
+            $data['assignment_from'] = isset($request->assignment_from) ? $request->assignment_from : 10;
+            $data['assignment_to'] = isset($request->assignment_to) ? $request->assignment_to : 150;
 
-        $user = auth()->guard('frontend')->user();
+            $user = auth()->guard('frontend')->user();
 
-        $worker = WORKER::where('user_id', $user->id)->first();
-        $jobs_id = Offer::where('nurse_id', $worker->id)->select('job_id')->get();
+            $worker = WORKER::where('user_id', $user->id)->first();
+            $jobs_id = Offer::where('nurse_id', $worker->id)->select('job_id')->get();
 
-        // $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
+            // $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
 
-        $whereCond = [
-            'facilities.active' => true,
-            'jobs.is_open' => "1",
-            'jobs.is_hidden' => "0",
-            'jobs.is_closed' => "0",
-            // 'job_saved.is_delete'=>'0',
-            // 'job_saved.nurse_id'=>$user->id,
-        ];
+            $whereCond = [
+                'facilities.active' => true,
+                'jobs.is_open' => "1",
+                'jobs.is_hidden' => "0",
+                'jobs.is_closed' => "0",
+                // 'job_saved.is_delete'=>'0',
+                // 'job_saved.nurse_id'=>$user->id,
+            ];
 
-        $ret = Job::select('jobs.id as job_id', 'jobs.auto_offers as auto_offers', 'jobs.*')
-            ->leftJoin('facilities', function ($join) {
-                $join->on('facilities.id', '=', 'jobs.facility_id');
-            })
-            ->leftJoin('job_saved', function ($join) use ($user){
-                $join->on('job_saved.job_id', '=', 'jobs.id')
-                ->where(function ($query) use ($user) {
-                    $query->where('job_saved.is_delete', '=', 0)
-                    ->where('job_saved.nurse_id', '=', $user->id);
+            $ret = Job::select('jobs.id as job_id', 'jobs.auto_offers as auto_offers', 'jobs.*')
+                ->leftJoin('facilities', function ($join) {
+                    $join->on('facilities.id', '=', 'jobs.facility_id');
+                })
+                ->leftJoin('job_saved', function ($join) use ($user){
+                    $join->on('job_saved.job_id', '=', 'jobs.id')
+                    ->where(function ($query) use ($user) {
+                        $query->where('job_saved.is_delete', '=', 0)
+                        ->where('job_saved.nurse_id', '=', $user->id);
+                    });
+                })
+                ->where($whereCond)
+                ->whereNotIN('jobs.id', $jobs_id)
+                ->orderBy('jobs.created_at', 'desc');
+
+            if ($data['profession']) {
+                $ret->where('jobs.profession', '=', $data['profession']);
+            }
+
+            if ($data['speciality']) {
+                $ret->where('jobs.preferred_specialty', '=', $data['speciality']);
+            }
+
+            if ($data['experience']) {
+                $ret->where('jobs.preferred_experience', '=', $data['experience']);
+            }
+            if($data['city'])
+            {
+                $ret->where('jobs.job_city', '=', $data['city']);
+            }
+
+            if($data['state'])
+            {
+                $ret->where('jobs.job_state', '=', $data['state']);
+            }
+
+            if(count($data['job_type'])){
+                $ret->whereIn('jobs.job_type', $data['job_type']);
+            }
+
+            if ($data['start_date']) {
+                $ret->where('jobs.start_date', '<=', $data['start_date']);
+                $ret->where('jobs.end_date', '>=', $data['start_date']);
+            }
+
+            if ($data['end_date']) {
+                $ret->where('jobs.start_date', '<=', $data['end_date']);
+                $ret->where('jobs.end_date', '>=', $data['end_date']);
+            }
+
+            if ($data['shifts']) {
+                $ret->whereIn('jobs.preferred_shift', $data['shifts']);
+            }
+
+            if ($data['auto_offers']) {
+                $ret->where('jobs.auto_offers', '=', $data['auto_offers']);
+            }
+
+            if ($data['weekly_pay_from']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('weekly_pay', '>=', $data['weekly_pay_from']);
                 });
-            })
-            ->where($whereCond)
-            ->whereNotIN('jobs.id', $jobs_id)
-            ->orderBy('jobs.created_at', 'desc');
+            }
 
-        if ($data['profession']) {
-            $ret->where('jobs.profession', '=', $data['profession']);
-        }
+            if ($data['weekly_pay_to']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('weekly_pay', '<=', $data['weekly_pay_to']);
+                });
+            }
 
-        if ($data['speciality']) {
-            $ret->where('jobs.preferred_specialty', '=', $data['speciality']);
-        }
+            if ($data['hourly_pay_from']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('hours_shift', '>=', $data['hourly_pay_from']);
+                });
+            }
 
-        if ($data['experience']) {
-            $ret->where('jobs.preferred_experience', '=', $data['experience']);
-        }
-        if($data['city'])
-        {
-            $ret->where('jobs.job_city', '=', $data['city']);
-        }
+            if ($data['hourly_pay_to']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('hours_shift', '<=', $data['hourly_pay_to']);
+                });
+            }
 
-        if($data['state'])
-        {
-            $ret->where('jobs.job_state', '=', $data['state']);
-        }
+            if ($data['hours_per_week_from']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('hours_per_week', '>=', $data['hours_per_week_from']);
+                });
+            }
 
-        if(count($data['job_type'])){
-            $ret->whereIn('jobs.job_type', $data['job_type']);
-        }
+            if ($data['hours_per_week_to']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('hours_per_week', '<=', $data['hours_per_week_to']);
+                });
+            }
 
-        if ($data['start_date']) {
-            $ret->where('jobs.start_date', '<=', $data['start_date']);
-            $ret->where('jobs.end_date', '>=', $data['start_date']);
-        }
-
-        if ($data['end_date']) {
-            $ret->where('jobs.start_date', '<=', $data['end_date']);
-            $ret->where('jobs.end_date', '>=', $data['end_date']);
-        }
-
-        if ($data['shifts']) {
-            $ret->whereIn('jobs.preferred_shift', $data['shifts']);
-        }
-
-        if ($data['auto_offers']) {
-            $ret->where('jobs.auto_offers', '=', $data['auto_offers']);
-        }
-
-        if ($data['weekly_pay_from']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('weekly_pay', '>=', $data['weekly_pay_from']);
-            });
-        }
-
-        if ($data['weekly_pay_to']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('weekly_pay', '<=', $data['weekly_pay_to']);
-            });
-        }
-
-        if ($data['hourly_pay_from']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('hours_shift', '>=', $data['hourly_pay_from']);
-            });
-        }
-
-        if ($data['hourly_pay_to']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('hours_shift', '<=', $data['hourly_pay_to']);
-            });
-        }
-
-        if ($data['hours_per_week_from']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('hours_per_week', '>=', $data['hours_per_week_from']);
-            });
-        }
-
-        if ($data['hours_per_week_to']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('hours_per_week', '<=', $data['hours_per_week_to']);
-            });
-        }
-
-        if ($data['assignment_from']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('preferred_assignment_duration', '>=', $data['assignment_from']);
-            });
-        }
+            if ($data['assignment_from']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('preferred_assignment_duration', '>=', $data['assignment_from']);
+                });
+            }
 
 
-        if ($data['assignment_to']) {
-            $ret->where(function (Builder $query) use ($data) {
-                $query->where('preferred_assignment_duration', '<=', $data['assignment_to']);
-            });
-        }
+            if ($data['assignment_to']) {
+                $ret->where(function (Builder $query) use ($data) {
+                    $query->where('preferred_assignment_duration', '<=', $data['assignment_to']);
+                });
+            }
 
-        $result = $ret->get();
-
-
-
+            $result = $ret->get();
 
             $resl = Job::select('jobs.*','name')
             ->leftJoin('facilities', function ($join) {
@@ -594,32 +591,37 @@ class WorkerController extends Controller
             // $data['professions'] = ['title'=>'','id'=>''];
             // $data['profession'] = "";
 
-        //$data['jobs'] = $result;
+            //$data['jobs'] = $result;
 
 
-        return view('jobs.explore', $data);
-        //return response()->json(['message' =>  $data['jobs']]);
-    } catch (\Exception $e) {
-        // Handle other exceptions
+            return view('jobs.explore', $data);
+            //return response()->json(['message' =>  $data['jobs']]);
+        
+        } catch (\Exception $e) {
+            // Handle other exceptions
 
 
-        // Display a generic error message or redirect with an error status
-         return redirect()->route('jobs.explore')->with('error', 'An unexpected error occurred. Please try again later.');
-        //return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
-    }
+            // Display a generic error message or redirect with an error status
+             return redirect()->route('jobs.explore')->with('error', 'An unexpected error occurred. Please try again later.');
+            //return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+        }
     }
 
     public function my_profile() {
+        
         $data = [];
         $id = Auth::guard('frontend')->user()->id;
         $data['model'] = User::findOrFail($id);
+        
         if ($data['model']->type_id === '2') {
             $data['managers'] = User::select('id', 'first_name', 'last_name')->where(['type_id' => '3', 'status' => '1'])->get();
         }
+        
         if (!Cache::has('statetbl')) {
             $states = States::select('id', 'name', 'abbrev', 'is_restrict')->where('is_restrict', '=', '0')->get();
             Cache::put('statetbl', $states);
         }
+        
         $data['states'] = Cache::get('statetbl');
         return view('user.edit-profile', $data);
     }
