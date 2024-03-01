@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use DB;
 
-class Worker extends Model implements HasMedia
+class Nurse extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasMediaTrait;

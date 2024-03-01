@@ -102,10 +102,10 @@ class UserSeeder extends Seeder
             'specialty' => 'Pediatric Nursing',
             'nursing_license_state' => 'CA',
             'nursing_license_number' => 'RN12345678',
-            'highest_nursing_degree' => 4,
+            'highest_nursing_degree' => NULL,
             'serving_preceptor' => 1,
             'serving_interim_nurse_leader' => 0,
-            'leadership_roles' => 2,
+            'leadership_roles' => NULL,
             'address' => '123 Main St',
             'city' => 'Los Angeles',
             'state' => 'CA',
@@ -159,7 +159,7 @@ class UserSeeder extends Seeder
             'gig_account_invite_date' => now()
         ]);
         $availability = Availability::create([
-            'nurse_id' => 'GWU000006',
+            'nurse_id' => 'GWW000001',
         ]);
     
     }
