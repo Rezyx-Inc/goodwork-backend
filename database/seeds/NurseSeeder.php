@@ -30,12 +30,11 @@ class NurseSeeder extends Seeder
         
         $nurse = factory(Nurse::class)->create([
             'user_id' => $user->id,
-            'slug' => Str::slug($user->first_name.' '.$user->last_name.' '.Str::uuid())        
+            
         ]);
 
         $availability = Availability::create([
             'nurse_id' => $nurse->id,
-            'work_location' => 38,
         ]);
     }
 }

@@ -16,6 +16,7 @@ class KeywordSeeder extends Seeder
         $mainSuperUserId = User::where([
             'email' => 'fulladmin@nurseify.io'
         ])->get()->first()->id;
+        
         $this->insertKeywords($mainSuperUserId);
     }
 
