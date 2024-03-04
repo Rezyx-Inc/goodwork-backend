@@ -2,7 +2,7 @@
 @section('mytitle', 'Work Journey')
 @section('content')
 <!--Main layout-->
-<main style="padding-top: 130px" class="ss-main-body-sec">
+<main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
   <div class="container">
     <div class="ss-my-work-jorny-btn-dv">
       <div class="row">
@@ -38,9 +38,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
@@ -51,9 +51,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
@@ -310,9 +310,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
@@ -324,9 +324,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
@@ -537,9 +537,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jb-prfl-countrsave-ico">Counter Saved</a>
@@ -550,9 +550,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
@@ -766,9 +766,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
              <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
@@ -779,9 +779,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
@@ -995,9 +995,9 @@
               <h4>Manager CRNA - Anesthesia</h4>
               <h6>Medical Solutions Recruiter</h6>
               <ul>
-                <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
+                <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
               <a href="#" class="ss-jnry-app-btn">Applied</a>

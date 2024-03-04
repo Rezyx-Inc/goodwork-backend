@@ -5,7 +5,7 @@
 $user = auth()->guard('frontend')->user();
 @endphp
 <!--Main layout-->
-<main style="padding-top: 130px" class="ss-main-body-sec">
+<main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
   <div class="container">
     <div class="ss-my-profile--basic-mn-sec">
       <div class="row">
@@ -13,7 +13,7 @@ $user = auth()->guard('frontend')->user();
           <div class="ss-my-profil-div">
             <h2>My <span class="ss-pink-color">Profile</span></h2>
             <div class="ss-my-profil-img-div">
-              <img src="{{URL::asset('images/nurses/profile/'.$user->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/> 
+              <img src="{{URL::asset('frontend/img/account-img.png')}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';" id="preview" width="112px" height="112px" style="object-fit: cover;"/> 
               <h4>James Bond</h4>
               <p>GWW234065 </p>
             </div>
