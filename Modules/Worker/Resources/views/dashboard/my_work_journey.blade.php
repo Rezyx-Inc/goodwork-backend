@@ -43,7 +43,7 @@
                 <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
-              <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
+              <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/bookmark.png')}}" /></a>
             </div>
 
             <div class="ss-job-prfle-sec my-work-sved-job-div2">
@@ -56,7 +56,7 @@
                 <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
-              <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
+              <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/bookmark.png')}}" /></a>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
               <div class="ss-job-apply-on-tx-bx-hed-dv">
                 <ul>
                   <li><p>Recruiter</p></li>
-                  <li><img src="img/recruiteri-img.png" />Emma Watson</li>
+                  <li><img src="{{URL::asset('frontend/img/recruiteri-img.png')}}" />Emma Watson</li>
                 </ul>
 
                 <ul>
@@ -250,7 +250,7 @@
             <div class="ss-job-dtls-view-bx">
               <h6>Recruiter</h6>
               <ul>
-                <li><img src="img/recruiteri-img.png"></li>
+                <li><img src="{{URL::asset('frontend/img/recruiteri-img.png')}}"></li>
                 <li><p>Emma Watson2</p></li>
               </ul>
               <div class="ss-jb-dtl-abt-txt">
@@ -315,7 +315,7 @@
                 <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
-              <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
+              <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}"></a>
             </div>
 
             <!-------->
@@ -329,7 +329,7 @@
                 <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
-              <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
+              <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}"></a>
             </div>
           </div>
         </div>
@@ -341,7 +341,7 @@
               <div class="ss-job-apply-on-tx-bx-hed-dv">
                 <ul>
                   <li><p>Recruiter</p></li>
-                  <li><img src="img/recruiteri-img.png" />Emma Watson</li>
+                  <li><img src="{{URL::asset('frontend/img/recruiteri-img.png')}}" />Emma Watson</li>
                 </ul>
 
                 <ul>
@@ -555,7 +555,7 @@
                 <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
-              <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
+              <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}"></a>
             </div>
           </div>
         </div>
@@ -771,7 +771,7 @@
                 <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
-             <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
+             <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}"></a>
             </div>
             <!-------->
             <div class="ss-job-prfle-sec ss-my-wrk-aply-jb-dv2">
@@ -784,7 +784,7 @@
                 <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
               </ul>
               <h5>Recently Added</h5>
-              <a href="#" class="ss-jb-prfl-save-ico"><img src="img/job-icon-bx-Vector.png"></a>
+              <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}"></a>
             </div>
           </div>
         </div>
@@ -795,7 +795,7 @@
               <div class="ss-job-apply-on-tx-bx-hed-dv">
                 <ul>
                   <li><p>Recruiter</p></li>
-                  <li><img src="img/recruiteri-img.png" />Emma Watson</li>
+                  <li><img src="{{URL::asset('frontend/img/recruiteri-img.png')}}" />Emma Watson</li>
                 </ul>
                 <ul>
                   <li>
@@ -1010,7 +1010,7 @@
             <div class="ss-job-dtls-view-bx">
               <h6>Recruiter</h6>
               <ul>
-                <li><img src="img/recruiteri-img.png"></li>
+                <li><img src="{{URL::asset('frontend/img/recruiteri-img.png')}}"></li>
                 <li><p>Emma Watson</p></li>
               </ul>
               <div class="ss-jb-dtl-abt-txt">

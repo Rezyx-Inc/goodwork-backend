@@ -39,7 +39,7 @@
         <!-- Sidebar -->
         @include('worker::partials.worker_sidebar')
         <!-- Sidebar Header-->
-        @include('worker::partials.worker_dashboard_header')
+        @include('worker::partials.worker_header')
     </header>
     <!--Main Navigation-->
 

@@ -59,9 +59,9 @@ $user = auth()->guard('frontend')->user();
               <img src="{{URL::asset('frontend/img/profile-icon-img.png')}}" class="rounded-circle" height="40" alt="" loading="lazy" /> <span class="color-dark">
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">My profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="{{route('worker-logout')}}">Logout</a></li>
+              <li><a class="dropdown-item" href="{{route('profile')}}">My profile</a></li>
+              <li><a class="dropdown-item" href="{{route('profile-setting')}}">Settings</a></li>
+              <li><a class="dropdown-item" href="{{route('worker.logout')}}">Logout</a></li>
             </ul>
           </li>
         </ul>
