@@ -109,27 +109,56 @@ class WorkerController extends Controller
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message , $id,  $idEmployer,$role,$time));
         
-    return true;
+        return true;
     }
 
-    public function getMessages()
+    public function get_private_messages(Request $request)
     {
+        $idEmployer = $request->query('employerId');
+        $page = $request->query('page', 1);
+        
+        $idWorker = Auth::guard('frontend')->user()->id;
+       
+        // Calculate the number of messages to skip
+        $skip = ($page - 1) * 10;
 
-        $user = Auth::guard('frontend')->user();
-        $id = $user->id;
-        return view('employer::layouts.test',compact('id'));
+
+        $chat = DB::connection('mongodb')->collection('chat')
+        ->raw(function($collection) use ($idEmployer, $idWorker, $skip) {
+            return $collection->aggregate([
+                [
+                    '$match' => [
+                        'employerId' => $idEmployer,
+                        'workerId' => $idWorker
+                    ]
+                ],
+                [
+                    '$project' => [
+                        'messages' => [
+                            '$slice' => [
+                                '$messages',
+                                $skip,
+                                10
+                            ]
+                        ]
+                    ]
+                ]
+            ])->toArray();
+        });
+        return $chat[0];
+
     }
 
     public function get_rooms(Request $request){
-        $idEmployer = Auth::guard('frontend')->user()->id;
+        $idWorker = Auth::guard('frontend')->user()->id;
     
         $rooms = DB::connection('mongodb')->collection('chat')
-        ->raw(function($collection) use ($idEmployer) {
+        ->raw(function($collection) use ($idWorker) {
             return $collection->aggregate([
                 [
                     '$match' => [
                         
-                        'employerId' => $idEmployer,
+                        'workerId' => $idWorker,
                         
                     ]
                 ],
@@ -154,16 +183,16 @@ class WorkerController extends Controller
         $users = [];
         $data = [];
         foreach($rooms as $room){
-        $user = User::where('id', $room->workerId)->where('role','NURSE')->select("first_name",
-        "last_name")->get();
-    
-        $data_User['fullName'] = $user[0]->fullName;
-        $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-        $data_User['workerId'] = $room->workerId;
-        $data_User['isActive'] = $room->isActive;
-        $data_User['messages'] = $room->messages;
-    
-        array_push($data,$data_User);
+            $user = User::where('id', $room->employerId)->where('role','EMPLOYER')->select("first_name",
+            "last_name")->get();
+        
+            $data_User['fullName'] = $user[0]->fullName;
+            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['employerId'] = $room->employerId;
+            $data_User['isActive'] = $room->isActive;
+            $data_User['messages'] = $room->messages;
+        
+            array_push($data,$data_User);
         }
     
         
@@ -204,8 +233,10 @@ class WorkerController extends Controller
 
     $data = [];
     foreach($rooms as $room){
-    $user = User::where('id', $room->workerId)->where('role','EMPLOYER')->select("first_name",
+    $user = User::where('id', $room->workerId)->where('role','WORKER')->select("first_name",
     "last_name")->get();
+
+    //echo json_encode($data_User);
 
     $data_User['fullName'] = $user[0]->fullName;
     $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
@@ -216,7 +247,7 @@ class WorkerController extends Controller
     array_push($data,$data_User);
     }
 
-        return  view('employer::employer/messages',compact('id','data'));
+        return  view('worker::worker/messages',compact('id','data'));
     }
 
     public function timeAgo($time = NULL)

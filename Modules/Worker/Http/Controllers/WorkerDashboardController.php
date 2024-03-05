@@ -132,7 +132,7 @@ class WorkerDashboardController extends Controller
     {
         $data = [];
         $data['worker'] = auth()->guard('frontend')->user();
-        return view('worker::dashboard.worker_messages', $data);
+        return view('worker::worker.messages', $data);
     }
 
     public function get_my_work_journey()

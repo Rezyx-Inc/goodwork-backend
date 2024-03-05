@@ -31,7 +31,7 @@ Route::prefix('worker')->group(function() {
         Route::get('/dashboard', ['uses' => 'WorkerDashboardController@dashboard', 'as' => 'worker.dashboard']);
       
         //Route::get(' home', ['uses' => 'WorkerController@home', 'as' => 'home']);
-        Route::get('messages', ['uses' => 'WorkerDashboardController@get_messages', 'as' => 'worker.messages']);
+        Route::get('messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker.messages']);
         Route::get('profile', ['uses' => 'WorkerDashboardController@my_profile', 'as' => 'profile']);
         Route::get('explore', ['uses' => 'WorkerDashboardController@explore', 'as' => 'worker.explore']);
         Route::post('help-and-support', ['uses' => 'WorkerDashboardController@helpAndSupport', 'as' => 'worker-help-and-support']);
