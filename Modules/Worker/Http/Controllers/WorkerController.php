@@ -107,13 +107,15 @@ class WorkerController extends Controller
         $idEmployer = $request->idEmployer;
        
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message , $id,  $idEmployer,$role,$time));
+        event(new NewPrivateMessage($message , $idEmployer,'GWU000005', $id, $role,$time));
         
-        return true;
+        
+        return [$id, $idEmployer];
     }
 
     public function get_private_messages(Request $request)
     {
+        $idRecruiter = $request->query('recruiterId');
         $idEmployer = $request->query('employerId');
         $page = $request->query('page', 1);
         
@@ -124,10 +126,11 @@ class WorkerController extends Controller
 
 
         $chat = DB::connection('mongodb')->collection('chat')
-        ->raw(function($collection) use ($idEmployer, $idWorker, $skip) {
+        ->raw(function($collection) use ($idEmployer, $idWorker, $idRecruiter, $skip) {
             return $collection->aggregate([
                 [
                     '$match' => [
+                        'recruiterId'=> $idRecruiter,
                         'employerId' => $idEmployer,
                         'workerId' => $idWorker
                     ]
@@ -149,7 +152,9 @@ class WorkerController extends Controller
 
     }
 
+    // Why is it still here ??????????????????
     public function get_rooms(Request $request){
+
         $idWorker = Auth::guard('frontend')->user()->id;
     
         $rooms = DB::connection('mongodb')->collection('chat')
@@ -166,6 +171,7 @@ class WorkerController extends Controller
                     '$project' => [
                         'employerId' => 1,
                         'workerId' => 1,
+                        'recruiterId'=>1,
                         'lastMessage' => 1,
                         'isActive' => 1,
                         'messages' => [
@@ -183,16 +189,17 @@ class WorkerController extends Controller
         $users = [];
         $data = [];
         foreach($rooms as $room){
-            $user = User::where('id', $room->employerId)->where('role','EMPLOYER')->select("first_name",
-            "last_name")->get();
-        
+            $user = User::where('id', $room->employerId)->select("first_name", "last_name")->get();
+            
             $data_User['fullName'] = $user[0]->fullName;
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['employerId'] = $room->employerId;
+            $data_User['recruiterId'] = $room->recruiterId;
             $data_User['isActive'] = $room->isActive;
             $data_User['messages'] = $room->messages;
         
-            array_push($data,$data_User);
+            array_push($data, $data_User);
+            
         }
     
         
@@ -204,48 +211,66 @@ class WorkerController extends Controller
         
         $id = Auth::guard('frontend')->user()->id;
 
-    $rooms = DB::connection('mongodb')->collection('chat')
-    ->raw(function($collection) use ($id) {
-        return $collection->aggregate([
-            [
-                '$match' => [
-                    
-                    'workerId' => $id,
-                    
-                ]
-            ],
-            [
-                '$project' => [
-                    'employerId' => 1,
-                    'workerId' => 1,
-                    'lastMessage' => 1,
-                    'isActive' => 1,
-                    'messages' => [
-                        '$slice' => [
-                            '$messages',
-                            1
+        $rooms = DB::connection('mongodb')->collection('chat')
+        ->raw(function($collection) use ($id) {
+            return $collection->aggregate([
+                [
+                    '$match' => [
+                        
+                        'workerId' => $id,
+                        
+                    ]
+                ],
+                [
+                    '$project' => [
+                        'employerId' => 1,
+                        'workerId' => 1,
+                        'recruiterId'=>1,
+                        'lastMessage' => 1,
+                        'isActive' => 1,
+                        'messages' => [
+                            '$slice' => [
+                                '$messages',
+                                1
+                            ]
+                        ],
+                        'messagesLength'=> [
+                            '$cond' =>
+                            [
+                                'if' => 
+                                    [ 
+                                        '$isArray' => '$messages' 
+                                    ], 
+                                'then' => 
+                                    [ 
+                                        '$size' => '$messages' 
+                                    ], 
+                                'else' => 'NA'
+                            ]
                         ]
+                        
                     ]
                 ]
-            ]
-        ])->toArray();
-    });
+            ])->toArray();
+        });
 
-    $data = [];
-    foreach($rooms as $room){
-    $user = User::where('id', $room->workerId)->where('role','WORKER')->select("first_name",
-    "last_name")->get();
+        $data = [];
+        foreach($rooms as $room){
+            $user = User::where('id', $room->employerId)->select("first_name","last_name")->get();
 
-    //echo json_encode($data_User);
+            $data_User['fullName'] = $user[0]->fullName;
+            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['employerId'] = $room->employerId;
+            $data_User['isActive'] = $room->isActive;
+            $data_User['messages'] = $room->messages;
+            $data_User['messagesLength'] = $room->messagesLength;
 
-    $data_User['fullName'] = $user[0]->fullName;
-    $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-    $data_User['employerId'] = $room->employerId;
-    $data_User['isActive'] = $room->isActive;
-    $data_User['messages'] = $room->messages;
+            if(isset($room->recruiterId)) {
+                $data_User['recruiterId'] = $room->recruiterId;
+            }
 
-    array_push($data,$data_User);
-    }
+            array_push($data,$data_User);
+        }
 
         return  view('worker::worker/messages',compact('id','data'));
     }

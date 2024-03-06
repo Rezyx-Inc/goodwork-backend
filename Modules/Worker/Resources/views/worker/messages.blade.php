@@ -11,25 +11,61 @@
   <script src="{{ asset('js/app.js') }}"></script>
 <script>
 
-var idEmployer_Global = '';
-var PrivateChannel = '';
-var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
-function getPrivateMessages(idEmployer,fullName) {
-
-    document.getElementById('fullName').innerHTML = fullName;
-
-    page=1;
-
-    document.getElementById('empty_room').classList.add("d-none");
-    document.getElementById('body_room').classList.remove("d-none");
-    idEmployer_Global = idEmployer;
-
-    let id = @json($id);
+    var idEmployer_Global = '';
+    var PrivateChannel = '';
+    var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
     
-     PrivateChannel = 'private-chat.' + id + '.' + idEmployer_Global;
+    function getPrivateMessages(idEmployer,fullName) {
+
+        // Get Full Name and set some DOM
+        document.getElementById('fullName').innerHTML = fullName;
+        document.getElementById('empty_room').classList.add("d-none");
+        document.getElementById('body_room').classList.remove("d-none");
         
-    let messageText = document.getElementById('message');
-    console.log(messageText, "TEXT");
+        // Set the global employer id
+        idEmployer_Global = idEmployer;
+
+        // Set the user Id
+        let id = @json($id);
+        
+        // Set Private Channel
+        PrivateChannel = 'private-chat.' + id + '.' + idEmployer_Global;
+        
+        let messageText = document.getElementById('message');
+
+        // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
+        window.Echo.channel('goodwork_database_messages')
+        .listen('NewMessage', (event) => {
+                console.log('New message:', event.message);
+        });
+
+        // Listen for NewPrivateMessage event on the goodwork_database_private-private-chat.UserId channel
+        window.Echo.private(PrivateChannel)
+        .listen('NewPrivateMessage', (event) => {
+            var messageHTML = createRealMessageHTML(event);
+            $('.private-messages').append(messageHTML);
+        });
+
+        $('.private-messages').html('');
+
+        // Get the private messages
+        $.get('/worker/getMessages?page=1&employerId='+idEmployer+'&recruiterId=GWU000005', function(data) {
+
+            console.log("Receiving data", data)
+            // Parse the returned data
+            var messages = data.messages;
+
+            // Create the HTML for each message and prepend it to the messages area
+            messages.forEach(function(message) {
+                var messageHTML = createMessageHTML(message);
+                $('.private-messages').prepend(messageHTML);
+            });
+
+            let messagesArea = $('.messages-area');
+            messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+                
+        });
+    }
 
     function createRealMessageHTML(message) {
         var senderClass = message.senderRole == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
@@ -44,109 +80,76 @@ function getPrivateMessages(idEmployer,fullName) {
         `;
     }
 
-    // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
-    window.Echo.channel('goodwork_database_messages')
-        .listen('NewMessage', (event) => {
-            console.log('New message:', event.message);
-        });
+    // Function to create the HTML for a message
+    function createMessageHTML(message) {
+        var senderClass = message.sender == 'WORKER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+        var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
+        return `
+            <div class="${senderClass}">
+                <p>${message.content}</p>
+                <span>${time}</span>
+            </div>
+        `;
+    }
 
-    // Listen for NewPrivateMessage event on the goodwork_database_private-private-chat.UserId channel
-
-    window.Echo.private(PrivateChannel)
-        .listen('NewPrivateMessage', (event) => {
-            var messageHTML = createRealMessageHTML(event);
-                    $('.private-messages').append(messageHTML);
-        });
-
-    $('.private-messages').html('');
-    $.get('/worker/getMessages?page=1&employerId='+idEmployer, function(data) {
-                // Parse the returned data
-                var messages = data.messages;
-            
-                console.log(data.messages);
-
-                // Function to create the HTML for a message
-                function createMessageHTML(message) {
-                    var senderClass = message.sender == 'WORKER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
-                    var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
-                    return `
-                        <div class="${senderClass}">
-                            <p>${message.content}</p>
-                            <span>${time}</span>
-                        </div>
-                    `;
-                }
-                // Create the HTML for each message and prepend it to the messages area
-                messages.forEach(function(message) {
-                    var messageHTML = createMessageHTML(message);
-                    $('.private-messages').prepend(messageHTML);
-                });
-                var messagesArea = $('.messages-area');
-    messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
-                
-            });
-}
     $(document).ready(function () {
+
+        $('#messageEnvoye').keypress(function(e){
+            if(e.which == 13){ // 13 is the key code for the enter key
+                e.preventDefault(); // Prevent the default action (form submission)
+                sendMessage(); // Call your function
+            }
+        });
 
         var messagesArea = $('.messages-area');
         messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
-       
 
-    $('.messages-area').scroll(function() {
-        if($(this).scrollTop() == 0) { // If the scrollbar is at the top
-            page++; // Increment the page number
+        $('.messages-area').scroll(function() {
+            
+            if($(this).scrollTop() == 0) { // If the scrollbar is at the top
+                
+                page++; // Increment the page number
+                $('#loading').removeClass('d-none');
+                $('#login').addClass('d-none');
+                
+                // Make an AJAX request to the API
+                $.get('/worker/getMessages?page=' + page + '&employerId='+idEmployer_Global+'&recruiterId=GWU000005' , function(data) {
+                    
+                    // Parse the returned data
+                    var messages = data.messages;
 
-            $('#loading').removeClass('d-none');
-    $('#login').addClass('d-none');
-            // Make an AJAX request to the API
-            $.get('/worker/getMessages?page=' + page + '&employerId='+idEmployer_Global , function(data) {
-                // Parse the returned data
-                var messages = data.messages;
+                    // Create the HTML for each message and prepend it to the messages area
+                    messages.forEach(function(message) {
+                        var messageHTML = createMessageHTML(message);
+                        $('.private-messages').prepend(messageHTML);
+                    });
 
-                console.log(idEmployer_Global);
-                // Function to create the HTML for a message
-                function createMessageHTML(message) {
-                    var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
-                    var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
-
-                    return `
-                        <div class="${senderClass}">
-                            <p>${message.content}</p>
-                            <span>${time}</span>
-                        </div>
-                    `;
-                }
-                // Create the HTML for each message and prepend it to the messages area
-                messages.forEach(function(message) {
-                    var messageHTML = createMessageHTML(message);
-                    $('.private-messages').prepend(messageHTML);
+                    $('#login').removeClass('d-none');
+                    $('#loading').addClass('d-none');
                 });
-
-                $('#login').removeClass('d-none');
-                $('#loading').addClass('d-none');
-            });
-        }
-    });
+            }
+        });
     });
 
     window.onload = function() {
-    // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
-    window.Echo.channel('goodwork_database_messages')
+        // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
+        window.Echo.channel('goodwork_database_messages')
         .listen('NewMessage', (event) => {
             console.log('New message:', event.message);
         });
-  }
+    }
 
-  function sendMessage(){
+    function sendMessage(){
 
-    let id = @json($id);
-    PrivateChannel = 'private-chat.'+id + '.' + idEmployer_Global;
-    console.log(PrivateChannel);
-    let messageInput = document.getElementById('messageEnvoye');
-    let message = messageInput.value;
-if(message != ""){
+        let id = @json($id);
+        PrivateChannel = 'private-chat.'+id + '.' + idEmployer_Global;
 
-    $.ajax({
+        let messageInput = document.getElementById('messageEnvoye');
+        let message = messageInput.value;
+        
+        if(message != ""){
+
+            $.ajax({
                 url: 'send-message',
                 type: 'POST',
                 data: {
@@ -154,30 +157,22 @@ if(message != ""){
                     message_data : message,
                     _token: '{{ csrf_token() }}'
                 },
+
                 success: function () {
+
+                    let messageHTML = createMessageHTML({content:message, sender: 'WORKER', time: 'Now'});
+                    $('.private-messages').append(messageHTML);
                     messageInput.value = "";
-        console.log('message envoyé');
                 }
             });
         }
-  }
-
-  $(document).ready(function(){
-    $('#messageEnvoye').keypress(function(e){
-        if(e.which == 13){ // 13 is the key code for the enter key
-            e.preventDefault(); // Prevent the default action (form submission)
-            sendMessage(); // Call your function
-        }
-    });
-});
+    }
     
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
 <main style="padding-top: 130px" class="ss-main-body-sec">
     
-
     <div class="container" id="recruiters_messages">
         <div class="ss-message-pg-mn-div">
             <div class="row">
@@ -186,37 +181,39 @@ if(message != ""){
                         <h2>Messages</h2>
                         <div class="ss-opport-mngr-hedr">
                             <ul style="float:left;">
-                               
-                                <li style="margin-left:0px;"><button id="published" 
-                                        class="ss-darfts-sec-publsh-btn active">Recruiters</button></li>
+                                <li style="margin-left:0px;"><button id="published" class="ss-darfts-sec-publsh-btn active">Recruiters</button></li>
                             </ul>
                         </div>
                         
-                    <!-- rooms  -->
-                    @if($data)
-                    @foreach($data as $room)
-                   
-                    <div onclick="getPrivateMessages('{{$room['employerId']}}','{{$room['fullName']}}')" class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
-                                <li>
-                                    <h5>{{$room['fullName']}}</h5>
-                                    <p>{{$room['messages'][0]['content']}}</p>
-                                </li>
-                            </ul>
+                        <!-- rooms  -->
+                        @if($data)
+                        @foreach($data as $room)
 
-                            <ul style="width:100%"  class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>{{$room['lastMessage']}}</p>
-                                </li><br>
-                                <li><span>3</span></li>
-                            </ul>
-                        </div>
+                            <div onclick="getPrivateMessages('{{$room['employerId']}}','{{$room['fullName']}}')" class="ss-mesg-sml-div">
+                                
+                                <ul class="ss-msg-user-ul-dv">
+                                    <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
+                                    <li>
+                                        <h5>{{$room['fullName']}}</h5>
+                                        <p>{{$room['messages'][0]['content']}}</p>
+                                    </li>
+                                </ul>
+
+                                <ul style="width:100%"  class="ss-msg-notifi-sec">
+                                    <li>
+                                        <p>{{$room['lastMessage']}}</p>
+                                    </li>
+                                    <br />
+                                    <li>
+                                        <span>{{$room['messagesLength']}}</span>
+                                    </li>
+                                </ul>
+                            </div>
                         @endforeach
                         @else
-                        <div class="ss-mesg-sml-div">
-                        <h5>No chats founded</h5>
-                        </div>
+                            <div class="ss-mesg-sml-div">
+                                <h5>No chats for now ...</h5>
+                            </div>
                         @endif
 
                     </div>
@@ -255,7 +252,6 @@ if(message != ""){
         </div>
 
     </div>
-    <<?php print_r($room); ?>
 
 </main>
 
