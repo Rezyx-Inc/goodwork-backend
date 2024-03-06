@@ -649,7 +649,6 @@ class WorkerController extends Controller
 
             //$data['jobs'] = $result;
 
-
             return view('jobs.explore', $data);
             //return response()->json(['message' =>  $data['jobs']]);
         

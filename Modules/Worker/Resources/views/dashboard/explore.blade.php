@@ -16,54 +16,52 @@
           <div class="ss-dash-explr-job-dv">
             <h4>Filters</h4>
             <form>
-              <div class="ss-input-slct-grp">
-                <label for="cars">Travel</label>
-                <select name="cars" id="cars">
-                  <option value="volvo">Travel</option>
-                  <option value="saab">Travel</option>
-                  <option value="mercedes">Travel</option>
-                  <option value="audi">Travel</option>
-                </select>
-              </div>
 
               <div class="ss-input-slct-grp">
                 <label for="cars">Profession</label>
-                <select name="cars" id="cars">
-                  <option value="volvo">CRNA</option>
-                  <option value="saab">CRNA</option>
-                  <option value="mercedes">CRNA</option>
-                  <option value="audi">CRNA</option>
+                <select name="profession">
+                  <option value="">Select</option>
+                  @foreach($professions as $v)
+                    <option value="{{$v->full_name}}" data-id="{{$v->getAttributes()['id']}}" {{ ($profession == $v->full_name) ? 'selected': ''}}>{{$v->full_name}}</option>
+                  @endforeach
                 </select>
               </div>
 
               <div class="ss-input-slct-grp">
                 <label for="cars">Specialty</label>
-                <select name="cars" id="cars">
-                  <option value="volvo">Anesthesia</option>
-                  <option value="saab">Anesthesia</option>
-                  <option value="mercedes">Anesthesia</option>
-                  <option value="audi">Anesthesia</option>
+                  <select name="speciality" id="speciality">
+                    <option value="">Select</option>
+                    @foreach($specialty as $t)
+                      <option value="{{$t->full_name}}" data-id="{{$t->getAttributes()['id']}}" {{ ($specialty == $t->full_name) ? 'selected': ''}}>{{$t->full_name}}</option>
+                    @endforeach
+                  </select>
+              </div>
+
+              <div class="ss-input-slct-grp">
+                <label for="type">Type</label>
+                <select name="type" id="type">
+                  <option value="clinical" default>Clinical</option>
+                  <option value="nonClinicial">Non-Clinical</option>
                 </select>
               </div>
 
               <div class="ss-input-slct-grp">
-                <label for="cars">Location</label>
-                <select name="cars" id="cars">
-                  <option value="volvo">City, State</option>
-                  <option value="saab">City, State</option>
-                  <option value="mercedes">City, State</option>
-                  <option value="audi">City, State</option>
+                <label for="location">Location</label>
+                <select name="location" id="location">
+                  <option value="">Select</option>
+                  @foreach($jobs as $t)
+                  <option value="{{$t->id}}">{{$t->getAttributes()['job_city']}}, {{$t->getAttributes()['job_state']}}</option>
+                  @endforeach
                 </select>
               </div>
 
               <div class="ss-jobtype-dv">
-                <label>Job type</label>
+                <label>Type</label>
                 <ul class="ks-cboxtags">
-                  <li><input type="checkbox" id="checkboxOne" value="Rainbow Dash"><label for="checkboxOne">Permanent</label></li>
-                  <li><input type="checkbox" id="checkboxTwo" value="Cotton Candy"><label for="checkboxTwo">Travel</label></li>
-                  <li><input type="checkbox" id="checkboxThree" value="Rarity"><label for="checkboxThree">Per Diem</label></li>
-                  <li><input type="checkbox" id="checkboxfour" value="Cotton Candy1"><label for="checkboxfour">Local</label></li>
-                  <li><input type="checkbox" id="checkboxfive" value="Rarity1"><label for="checkboxfive">Non Clinical</label></li>
+                  <li><input type="checkbox" id="checkboxOne" value="contract"><label for="checkboxOne">Contract</label></li>
+                  <li><input type="checkbox" id="checkboxTwo" value="perm"><label for="checkboxTwo">Perm</label></li>
+                  <li><input type="checkbox" id="checkboxThree" value="shift"><label for="checkboxThree">Shift</label></li>
+                  <li><input type="checkbox" id="checkboxfour" value="contractPerm"><label for="checkboxfour">Contract to Perm</label></li>
                 </ul>
               </div>
 
@@ -151,20 +149,20 @@
               <!-----price range------->
               <!-- partial:index.partial.html -->
               <div class="ss-price-week-sec">
-                <label>Shift type</label>
+                <label>TBD</label>
                 <div id="slider"></div>
               </div>
               
               <!-- partial -->
               <!-- partial:index.partial.html -->
               <div class="ss-price-week-sec">
-                <label>Shift type</label>
+                <label>TBD</label>
                 <div id="slider2"></div>
               </div>
               
               <!-- partial -->
               <div class="ss-jobtype-dv ss-shift-type-inpy">
-                <label>Shift type</label>
+                <label>TBD</label>
                   <ul class="ks-cboxtags">
                     <li><input type="checkbox1" id="checkbox1" value="Rainbow Dash"><label for="checkbox1">Permanent</label></li>
                     <li><input type="checkbox1" id="checkbox2" value="Cotton Candy"><label for="checkbox2">Travel</label></li>
