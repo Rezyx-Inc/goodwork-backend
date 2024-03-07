@@ -1,5 +1,5 @@
 @extends('worker::layouts.main')
-@section('mytitle', 'Work Journey')
+@section('mytitle', 'My Work Journey')
 @section('content')
 <!--Main layout-->
 <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
