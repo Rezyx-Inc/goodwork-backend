@@ -831,7 +831,6 @@
             }
         });
     });
-
     function searchCity(e){
         var selectedValue = e.value;
         console.log("Selected Value: " + selectedValue);
