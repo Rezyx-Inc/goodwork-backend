@@ -23,6 +23,7 @@
 </head>
 
 <body>
+
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
     <header>
         @include('recruiter::partials.sidebar')
@@ -30,7 +31,8 @@
     </header>
     @yield('content')
     <script src="{{URL::asset('landing/js/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{{URL::asset('frontend/js/mdb.min.js')}}"></script>
+    <!-- this line causes notification popup problem in header -->
+    <!-- <script type="text/javascript" src="{{URL::asset('frontend/js/mdb.min.js')}}"></script> -->
     <script type="text/javascript" src="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{URL::asset('backend/vendors/notie/dist/notie.min.js') }}"></script>
     <script src="{{URL::asset('backend/vendors/ckeditor/ckeditor.js')}}"></script>
@@ -42,6 +44,8 @@
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
     <script type="text/javascript">
 </script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     @yield('js')
 </body>
 

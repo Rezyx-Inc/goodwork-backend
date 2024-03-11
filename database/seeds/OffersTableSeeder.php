@@ -69,7 +69,7 @@ class OffersTableSeeder extends Seeder
             'id' => Str::uuid(),
             'job_name' => 'Physician Assistant',
             'type' => 'Non clinical',
-            'status' => 'Apply',
+            'status' => 'Screening',
             'terms' => 'Contract',
             'profession' => 'Medical',
             'block_scheduling' => false,
@@ -120,6 +120,71 @@ class OffersTableSeeder extends Seeder
             'is_counter' => true,
             'created_by' => 'GWU000005'
         ]);
+
+        $jobNames = ['Nurse Practitioner', 'Medical Assistant', 'Radiologist', 'Dentist', 'Pharmacist', 'Surgeon', 'Pediatrician', 'Anesthesiologist'];
+$statuses = ['Submitted', 'Offered', 'Onboarding', 'Working', 'Done', 'Rejected', 'Blocked', 'Hold'];
+$types = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship'];
+$terms = ['Permanent', 'Contract', 'Temporary', 'Internship'];
+$professions = ['Nursing', 'Medical', 'Radiology', 'Dentistry', 'Pharmacy', 'Surgery', 'Pediatrics', 'Anesthesiology'];
+$settings = ['Hospital', 'Clinic', 'Private Practice', 'Urgent Care', 'Emergency Room', 'Operating Room', 'Pharmacy', 'Laboratory'];
+
+for ($i = 0; $i < 8; $i++) {
+    Offer::create([
+        'id' => Str::uuid(),
+        'job_name' => $jobNames[$i],
+        'type' => $types[array_rand($types)],
+        'status' => $statuses[$i],
+        'terms' => $terms[array_rand($terms)],
+        'profession' => $professions[$i],
+        'block_scheduling' => (bool)random_int(0, 1),
+        'float_requirement' => (bool)random_int(0, 1),
+        'facility_shift_cancelation_policy' => random_int(24, 48) . ' hours notice',
+        'contract_termination_policy' => random_int(30, 60) . ' days notice',
+        'traveler_distance_from_facility' => random_int(5, 20) . ' miles',
+        'job_id' => 'GWJ000001',
+        'recruiter_id' => 'GWU000006',
+        'worker_user_id' => 'GWW000001',
+        'clinical_setting' => $settings[array_rand($settings)],
+        'Patient_ratio' => random_int(4, 10),
+        'emr' => 'Cerner',
+        'Unit' => 'ER',
+        'scrub_color' => 'Green',
+        'start_date' => '2022-02-01',
+        'as_soon_as' => (bool)random_int(0, 1),
+        'rto' => 'RTO 2',
+        'hours_per_week' => random_int(20, 40),
+        'guaranteed_hours' => random_int(20, 40),
+        'hours_shift' => random_int(4, 8),
+        'weeks_shift' => random_int(4, 8),
+        'preferred_assignment_duration' => random_int(3, 6),
+        'referral_bonus' => random_int(100, 200),
+        'sign_on_bonus' => random_int(500, 600),
+        'completion_bonus' => random_int(500, 600),
+        'extension_bonus' => random_int(100, 200),
+        'other_bonus' => random_int(50, 100),
+        'four_zero_one_k' => (bool)random_int(0, 1),
+        'health_insaurance' => (bool)random_int(0, 1),
+        'dental' => (bool)random_int(0, 1),
+        'vision' => (bool)random_int(0, 1),
+        'actual_hourly_rate' => random_int(20, 30),
+        'overtime' => random_int(30, 40),
+        'holiday' => random_int(40, 50),
+        'on_call' => random_int(10, 20),
+        'orientation_rate' => random_int(20, 30),
+        'weekly_non_taxable_amount' => random_int(100, 200),
+        'description' => $jobNames[$i] . ' for ER',
+        'weekly_taxable_amount' => random_int(500, 600),
+        'employer_weekly_amount' => random_int(1000, 1200),
+        'goodwork_weekly_amount' => random_int(1500, 1800),
+        'total_employer_amount' => random_int(2000, 2400),
+        'total_goodwork_amount' => random_int(2500, 3000),
+        'total_contract_amount' => random_int(3000, 3600),
+        'weekly_pay' => random_int(3500, 4200),
+        'is_draft' => (bool)random_int(0, 1),
+        'is_counter' => (bool)random_int(0, 1),
+        'created_by' => 'GWU000005'
+    ]);
+}
 
 
 

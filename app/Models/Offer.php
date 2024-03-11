@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 class Offer extends Model
 {
+    protected $table = 'offers';
     use SoftDeletes;
 
     protected static function boot()
