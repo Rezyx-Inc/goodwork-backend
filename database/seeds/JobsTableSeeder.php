@@ -117,7 +117,7 @@ class JobsTableSeeder extends Seeder
                 'job_photos' => $faker->imageUrl(),
                 'video_embed_url' => $faker->url,
                 'is_open' => $faker->boolean,
-                'recruiter_id' => Str::uuid(),
+                'recruiter_id' => 'GWU000005',
                 'job_name' => $faker->word,
                 'proffesion' => $nursingProfessions[array_rand($nursingProfessions)],
                 'preferred_shift' => $faker->word,

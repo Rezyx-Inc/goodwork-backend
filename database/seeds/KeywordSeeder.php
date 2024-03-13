@@ -375,6 +375,42 @@ class KeywordSeeder extends Seeder
                 'Taylor Hardin Secure Medical Facility',
                 'University of South Alabama Medical Center',
                 'Other'
+            ],
+            'Profession' => [
+                'Nurse Manager',
+                'Nurse Educator',
+                'Geriatric Care Manager',
+                'Clinical Nurse Leader',
+                'Nurse Researcher',
+                'Public Health Nurse',
+                'Travel Nurse',
+                'Forensic Nurse',
+                'Legal Nurse Consultant',
+                'Nurse Entrepreneur',
+                'Pediatric Nurse Practitioner',
+                'Neonatal Nurse',
+                'Critical Care Nurse',
+                'Orthopedic Nurse',
+                'Hospice Nurse',
+                'Dialysis Nurse',
+                'Occupational Health Nurse',
+                'Ambulatory Care Nurse',
+                'Community Health Nurse',
+                'Cardiac Nurse',
+            ],
+            'Type'=>[
+                'Clinical',
+                'Non-Clinical',
+            ],
+            'Terms'=>[
+                'Contract',
+                'Perm',
+                'Shift', 
+                'Contract to Perm '
+            ],
+            'EMR'=>[
+                'Epic',
+                'Cerner'
             ]
         ];
     }

@@ -71,6 +71,7 @@ class UserSeeder extends Seeder
         ]);
 
         // we seed this recruiter with the id "GWU000005" just for testing messages, this record related to default seeding messages
+
         $recruiter = User::create([
             'id' => Str::uuid(),
             'first_name' => 'recruiter',
@@ -81,21 +82,13 @@ class UserSeeder extends Seeder
             'mobile' => '+1 (555) 555-55',
             'facility_id' => '1'
         ]);
-        
-        $nurse = User::create([
-            'id' => Str::uuid(),
-            'first_name' => 'nurse',
-            'last_name' => 'nur',
-            'email' => 'nurse@gmail.com',
-            'ROLE'=>'NURSE',
-            'user_name' => 'nurse',
-            'mobile' => '+1 (555) 555-55',
-            'facility_id' => '1'
-        ]);
+
+        // we seed this nurse with the id "GWU000004" just for testing messages, this record related to loading offers
+
 
         $nurse = Nurse::create([
             'id' => Str::uuid(),
-            'user_id' => 'GWU000006',
+            'user_id' => 'GWU000004',
             'specialty' => 'Pediatric Nursing',
             'nursing_license_state' => 'CA',
             'nursing_license_number' => 'RN12345678',
