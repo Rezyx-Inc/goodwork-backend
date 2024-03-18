@@ -15,115 +15,57 @@ use DB;
 use App\Http\Controllers\Controller;
 class StaticContentController extends Controller
 {
-    // public function getCountries()
-    // {
-
-    //     $controller = new controller();
-    //     $countries = $controller->getCountries()->pluck('name', 'id');
-    //     $data = [];
-    //     foreach ($countries as $key => $value) {
-    //         $data[] = ['country_id' => strval($key), "name" => $value];
-    //     }
-    //     // moved usa and canada to top of the row
-    //     $this->moveElement($data, 235, 0);
-    //     $this->moveElement($data, 40, 1);
-    //     // moved usa and canada to top of the row
-    //     $this->check = "1";
-    //     $this->message = "Countries listed successfully";
-    //     $this->return_data = $data;
-
-    //     return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    // }
     public function getCountries()
     {
-        $countries = Country::all()->pluck('name', 'id')->toArray();
 
+        $controller = new controller();
+        $countries = $controller->getCountries()->pluck('name', 'id');
         $data = [];
         foreach ($countries as $key => $value) {
             $data[] = ['country_id' => strval($key), "name" => $value];
         }
-
-        // Move USA and Canada to top of the row
+        // moved usa and canada to top of the row
         $this->moveElement($data, 235, 0);
         $this->moveElement($data, 40, 1);
-
-        $api_status = "1";
+        // moved usa and canada to top of the row
+        $check = "1";
         $message = "Countries listed successfully";
+        $return_data = $data;
 
-        return response()->json(["api_status" => $api_status, "message" => $message, "data" => $data], 200);
+        return response()->json(["api_status" => $check, "message" => $message, "data" => $return_data], 200);
     }
-
     private function moveElement(&$array, $a, $b) {
         $out = array_splice($array, $a, 1);
         array_splice($array, $b, 0, $out);
     }
-    
-    // public function getStates(Request $request)
-    // {
-    //     $validator = \Validator::make($request->all(), [
-    //         'country_id' => 'required',
-    //         'api_key' => 'required',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         $this->message = $validator->errors()->first();
-    //     } else {
-    //         $get_states = States::where(['country_id' => $request->country_id])->get();
-    //         if ($get_states->count() > 0) {
-    //             $states = $get_states;
-    //             $data = [];
-    //             foreach ($states as $key => $value) {
-    //                 $data[] = ['state_id' => strval($value->id), "name" => $value->name, 'iso_name' => $value->iso2];
-    //             }
-    //             $this->check = "1";
-    //             $this->message = "States listed successfully";
-    //             $this->return_data = $data;
-    //         } else {
-    //             $this->return_data = [];
-    //         }
-    //     }
-
-    //     return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
-    // }
     public function getStates(Request $request)
-{
-    $validator = \Validator::make($request->all(), [
-        'country_id' => 'required',
-        'api_key' => 'required',
-    ]);
+    {
+        $validator = \Validator::make($request->all(), [
+            'country_id' => 'required',
+            'api_key' => 'required',
+        ]);
+        $check = "0";
+        $message = "States not listed";
+        if ($validator->fails()) {
+            $message = $validator->errors()->first();
+        } else {
+            $get_states = States::where(['country_id' => $request->country_id])->get();
+            if ($get_states->count() > 0) {
+                $states = $get_states;
+                $data = [];
+                foreach ($states as $key => $value) {
+                    $data[] = ['state_id' => strval($value->id), "name" => $value->name, 'iso_name' => $value->iso2];
+                }
+                $check = "1";
+                $message = "States listed successfully";
+                $return_data = $data;
+            } else {
+                $return_data = [];
+            }
+        }
 
-    if ($validator->fails()) {
-        return response()->json([
-            'api_status' => 0,
-            'message' => $validator->errors()->first(),
-            'data' => []
-        ], 400);
+        return response()->json(["api_status" => $check, "message" => $message, "data" => $return_data], 200);
     }
-
-    $states = States::where('country_id', $request->country_id)->get();
-
-    if ($states->isEmpty()) {
-        return response()->json([
-            'api_status' => 0,
-            'message' => 'No states found for this country',
-            'data' => []
-        ], 204);
-    }
-
-    $data = $states->map(function ($state) {
-        return [
-            'state_id' => strval($state->id),
-            'name' => $state->name,
-            'iso_name' => $state->iso2,
-        ];
-    });
-
-    return response()->json([
-        'api_status' => 1,
-        'message' => 'States listed successfully',
-        'data' => $data
-    ], 200);
-}
     public function getCities(Request $request)
     {
         $validator = \Validator::make($request->all(), [

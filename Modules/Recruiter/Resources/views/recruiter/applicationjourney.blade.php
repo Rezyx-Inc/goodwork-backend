@@ -24,6 +24,12 @@
                     </div>
                 </div>
                 <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="applicationType('Draft')" id="Draft">
+                        <p>Draft Offer</p>
+                        <span>{{ $status_count_draft }} Applicants</span>
+                    </div>
+                </div>
+                <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Offered')" id="Offered">
                         <p>Offered</p>
                         <span>{{ $statusCounts['Offered'] }} Applicants</span>
@@ -55,9 +61,9 @@
                     </div>
                     <div class="col-lg-6">
                         <ul>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Done')" class="active">Done</a></li>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Rejected')">Rejected</a></li>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Blocked')">Blocked</a></li>
+                            <li><a href="javascript:void(0)" onclick="applicationType('Done')" id="child_done" >Done m</a></li>
+                            <li><a href="javascript:void(0)" onclick="applicationType('Rejected')" id="Rejected" >Rejected</a></li>
+                            <li><a href="javascript:void(0)" onclick="applicationType('Blocked')" id="Blocked" >Blocked</a></li>
                         </ul>
                     </div>
                 </div>
@@ -126,7 +132,15 @@
                     console.error('CSRF token not found.');
                     return;
                 }
-                var formData = $form.serialize();
+                
+                // Create a FormData object from the form
+                var formData = new FormData($form[0]);
+
+                // Append the new attribute
+                formData.append('funcionalityType', formtype);
+                
+
+                console.log(formData);
 
                 $.ajax({
                     headers: {
@@ -136,6 +150,8 @@
                     url: "{{ route('recruiter-send-job-offer') }}",
                     data: formData,
                     dataType: 'json',
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
                     success: function(data) {
                         if (type == "createdraft") {
                             notie.alert({
@@ -167,6 +183,15 @@
             var onboardingElement = document.getElementById('Onboarding');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
+            var draftElement = document.getElementById('Draft');
+            var rejectedElement = document.getElementById('Rejected');
+            var blockedElement = document.getElementById('Blocked');
+            var holdElement = document.getElementById('child_done');
+
+
+            if (draftElement.classList.contains("active")) {
+                draftElement.classList.remove("active");
+            }
 
             if (applyElement.classList.contains("active")) {
                 applyElement.classList.remove("active");
@@ -189,9 +214,23 @@
             if (doneElement.classList.contains("active")) {
                 doneElement.classList.remove("active");
             }
+            
+            if (rejectedElement.classList.contains("active")) {
+                rejectedElement.classList.remove("active");
+            }
+            if (blockedElement.classList.contains("active")) {
+                blockedElement.classList.remove("active");
+            }
+            if (holdElement.classList.contains("active")) {
+                holdElement.classList.remove("active");
+            }
+            var activeElement = document.getElementById(type);
 
-            document.getElementById(type).classList.add("active")
+            if(activeElement){
+            activeElement.classList.add("active");
 
+            }
+            
             document.getElementById('listingname').innerHTML = type + ' Application';
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked') {
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
@@ -306,9 +345,27 @@
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
-
+                    notie.alert({
+                            type: 'success',
+                            text: 'Updated Successfully',
+                            time: 5
+                        });
+                        
+                         $("#Apply span").text(result.statusCounts['Apply'] + " Applicants");
+                          $("#Screening span").text(result.statusCounts['Screening'] + " Applicants");
+                           $("#Submitted span").text(result.statusCounts['Submitted'] + " Applicants");
+                           $("#Offered span").text(result.statusCounts['Offered'] + " Applicants");
+                            $("#Onboarding span").text(result.statusCounts['Onboarding'] + " Applicants");
+                                $("#Working span").text(result.statusCounts['Working'] + " Applicants");
+                                $("#Rejected span").text(result.statusCounts['Rejected'] + " Applicants");
+                                $("#Blocked span").text(result.statusCounts['Blocked'] + " Applicants");
+                                $("#Hold span").text(result.statusCounts['Hold'] + " Applicants");
                         $("#application-list").html(result.applicationlisting);
                         $("#application-details").html(result.applicationdetails);
+                        setTimeout(() => {
+                                console.log(result.type);
+                                applicationType(result.type);
+                            }, 3000);
                     },
                     error: function(error) {
                         // Handle errors
@@ -421,6 +478,9 @@
                             text: '<i class="fa fa-check"></i> ' + result.message,
                             time: 5
                         });
+                        setTimeout(() => {
+                                location.reload();
+                            }, 3000);
                     },
                     error: function(error) {
                         // Handle errors

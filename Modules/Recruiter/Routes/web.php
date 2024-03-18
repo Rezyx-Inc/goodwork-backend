@@ -98,9 +98,12 @@ Route::prefix('recruiter')->group(function () {
         * If jobid is set in the request, it updates the status of the job offer where the job_id matches jobid and id matches id.
         * Returns success message on successful update, otherwise returns appropriate error messages.
         */
-
+        // to send an offer to a worker
         Route::post('recruiter-send-job-offer', ['uses' => 'ApplicationController@sendJobOffer', 'as' => 'recruiter-send-job-offer']);
 
+        // to save an offer as a draft
+
+        //Route::post('recruiter-send-job-offer', ['uses' => 'ApplicationController@saveAsDraft', 'as' => 'recruiter-save-job-offer']);
         /**
         * Route: POST /recruiter-send-job-offer
         *

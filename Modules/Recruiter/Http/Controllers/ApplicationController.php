@@ -108,7 +108,8 @@ class ApplicationController extends Controller
                 $statusCounts[$statusCount->status] = 0;
             }
         }
-        return view('recruiter::recruiter/applicationjourney', compact('statusCounts'));
+        $status_count_draft = Offer::where('is_draft',true)->count(); 
+        return view('recruiter::recruiter/applicationjourney', compact('statusCounts','status_count_draft'));
     }
 
     public function getApplicationListing(Request $request)
@@ -259,51 +260,30 @@ class ApplicationController extends Controller
                         </li>
                         <li>';
 
-                if ($request->type == 'Apply' || $request->type == 'Screening' || $request->type == 'Submitted') {
-                    // send offer button on the comparison details
-                    $data2 .=
-                        '
-                                    <button class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="applicationType(\'' .
-                        $type .
-                        '\', \'' .
-                        $request->id .
-                        '\', \'jobdetails\', \'' .
-                        $request->jobid .
-                        '\')">Send Offer</button>
-                                    <p>data to sent : type :' .
-                        $type .
-                        ' ,offer id :' .
-                        $request->id .
-                        ' ,form type : ' .
-                        $request->formtype .
-                        ' ,jobId: ' .
-                        $request->jobid .
-                        '</p>
-                                ';
-                }
+                // if ($request->type == 'Apply' || $request->type == 'Screening' || $request->type == 'Submitted') {
+                //     // send offer button on the comparison details
+                //     $data2 .=
+                //         '
+                //                     <button class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="applicationType(\'' .
+                //         $type .
+                //         '\', \'' .
+                //         $request->id .
+                //         '\', \'jobdetails\', \'' .
+                //         $request->jobid .
+                //         '\')">Send Offer from comparison</button>
+                //                 ';
+                // }
                 $data2 .= '
                         </li>
                     </ul>';
                 $data2 .=
                     '
                     <div class="ss-chng-apcon-st-ssele">
-                    <p>data to sent (from offered area) : type :' .
-                    $type .
-                    ' ,offer id :' .
-                    $request->id .
-                    ' ,form type : ' .
-                    $request->formtype .
-                    ' ,jobId: ' .
-                    $request->jobid .
-                    '</p>
+                    
                         <label class="mb-2">Change Application Status</label>
-                        <select name="status" id="status application-status" onchange="applicationStatus(this.value, \'' .
-                    $type .
-                    '\', \'' .
-                    $request->id .
-                    '\', \'' .
-                    $request->jobid .
-                    '\')">
+                        <div class="row d-flex justify-content-center align-items-center">
+                        <div class="col-9">
+                        <select name="status" id="status application-status">
                             <option value="">Select Status</option>
                             <option value="Apply" ' .
                     ($offerdetails['status'] === 'Apply' ? 'selected' : '') .
@@ -336,6 +316,12 @@ class ApplicationController extends Controller
                     ($offerdetails['status'] === 'Hold' ? 'selected' : '') .
                     '>Hold</option>
                         </select>
+                        </div>
+                        <div class="col-3">
+                        <button class="counter-save-for-button" style="margin-top:0px;" onclick="applicationStatus(document.getElementById(\'status application-status\').value, \'' . $type . '\', \'' . $request->id . '\', \'' . $request->jobid . '\')
+                        ">Change Status</button>
+                        </div>
+                        </div>
                     </div>
                     <div class="ss-jb-apl-oninfrm-mn-dv">
                         <ul class="ss-jb-apply-on-inf-hed-rec row">
@@ -348,6 +334,7 @@ class ApplicationController extends Controller
                         <li class="col-md-12">
                             <span class="mt-3">Diploma</span>
                         </li>
+                        
                         <li class="col-md-6">
                             <h6>College Diploma</h6>
                         </li>
@@ -394,7 +381,7 @@ class ApplicationController extends Controller
                         </li>
                         <li class="col-md-6">
                             <h6>' .
-                    ($jobdetails->profession ?? '----') .
+                    ($jobdetails->proffesion ?? '----') .
                     '</h6>
                         </li>
                         <li class="col-md-6">
@@ -428,6 +415,9 @@ class ApplicationController extends Controller
                 }
                 $data2 .=
                     '
+                    <div class="row ' .
+                    (($jobdetails->job_state == $nursedetails->nursing_license_state ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;"> 
                         <div class="col-md-6">
                             <h6>' .
                     ($jobdetails->job_state ?? '----') .
@@ -440,47 +430,56 @@ class ApplicationController extends Controller
                     ($nursedetails->nursing_license_state ?? '<u onclick="askWorker(this, \'nursing_license_state\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                         </div>
+                        </div>
                         ';
 
-                $data2 .= '
-                        <div class="col-md-12">
-                            <span class="mt-3">References</span>
-                        </div>';
                 $data2 .=
                     '
                             <div class="col-md-12">
                                 <span class="mt-3">Block scheduling</span>
                             </div>
+                            <div class="row ' .
+                    (($jobdetails->block_scheduling === $nursedetails->block_scheduling ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;"> 
                             <div class="col-md-6">
                                 <h6>' .
-                    ($jobdetails->block_scheduling ?? '----') .
+                    ($jobdetails->block_scheduling == '1' ? 'Yes' : ($jobdetails->block_scheduling == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($jobdetails->block_scheduling ? '' : 'd-none') .
+                    (isset($jobdetails->block_scheduling) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                    ($nursedetails->block_scheduling ?? '<u onclick="askWorker(this, \'block_scheduling\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                                ($nursedetails->block_scheduling  == '1' ? 'Yes' : ($nursedetails->block_scheduling  == '0' ? 'No' : '<u onclick="askWorker(this, \'block_scheduling\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
+                    
                     '</p>
+                    </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Float requirements</span>
                             </div>
+                            <div class="row ' .
+                    (($jobdetails->float_requirement === $nursedetails->float_requirement ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;"> 
                             <div class="col-md-6">
                                 <h6>' .
-                    ($jobdetails->float_requirement ?? '----') .
+                                ($jobdetails->float_requirement  == '1' ? 'Yes' : ($jobdetails->float_requirement  == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($jobdetails->float_requirement ? '' : 'd-none') .
+                    (isset($jobdetails->float_requirement) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                    ($nursedetails->float_requirement ?? '<u onclick="askWorker(this, \'float_requirement\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                                ($nursedetails->float_requirement  == '1' ? 'Yes' : ($nursedetails->float_requirement  == '0' ? 'No' : '<u onclick="askWorker(this, \'float_requirement\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Facility Shift Cancellation Policy</span>
                             </div>
+                            <div class="row ' .
+                            (($jobdetails->facility_shift_cancelation_policy === $nursedetails->facility_shift_cancelation_policy ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                            ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->facility_shift_cancelation_policy ?? '----') .
@@ -492,6 +491,7 @@ class ApplicationController extends Controller
                                 <p>' .
                     ($nursedetails->facility_shift_cancelation_policy ?? '<u onclick="askWorker(this, \'facility_shift_cancelation_policy\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Contract Termination Policy</span>
@@ -826,62 +826,79 @@ class ApplicationController extends Controller
                             <div class="col-md-12">
                                 <span class="mt-3">401K</span>
                             </div>
+                            <div class="row  d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                    ($jobdetails->four_zero_one_k ?? '----') .
+                                ($jobdetails->four_zero_one_k  == '1' ? 'Yes' : ($jobdetails->four_zero_one_k  == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($jobdetails->four_zero_one_k ? '' : 'd-none') .
+                    (isset($jobdetails->four_zero_one_k) ? '' : 'd-none') .
                     '">
                                 <p>' .
                     ($nursedetails->how_much_k ?? '<u onclick="askWorker(this, \'how_much_k\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Health Insurance</span>
                             </div>
+                            <div class="row ' .
+                    (($jobdetails->health_insaurance === $nursedetails->worker_health_insurance ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;"> 
                             <div class="col-md-6">
                                 <h6>' .
-                    ($jobdetails->health_insaurance ?? '----') .
+                                ($jobdetails->health_insaurance  == '1' ? 'Yes' : ($jobdetails->health_insaurance  == '0' ? 'No' : '----')) .
+                    
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($jobdetails->health_insaurance ? '' : 'd-none') .
+                    (isset($jobdetails->health_insaurance) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                    ($nursedetails->worker_health_insurance ?? '<u onclick="askWorker(this, \'worker_health_insurance\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                                ($nursedetails->worker_health_insurance  == '1' ? 'Yes' : ($nursedetails->worker_health_insurance  == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_health_insurance\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Dental</span>
                             </div>
+                            <div class="row ' .
+                    (($jobdetails->dental === $nursedetails->worker_dental ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                    ($jobdetails->dental ?? '----') .
+                                ($jobdetails->dental  == '1' ? 'Yes' : ($jobdetails->dental  == '0' ? 'No' : '----')) .
+                    
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($jobdetails->dental ? '' : 'd-none') .
+                    (isset($jobdetails->dental) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                    ($nursedetails->worker_dental ?? '<u onclick="askWorker(this, \'worker_dental\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                                ($nursedetails->worker_dental  == '1' ? 'Yes' : ($nursedetails->worker_dental  == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_dental\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Vision</span>
                             </div>
+                            <div class="row ' .
+                            (($jobdetails->vision === $nursedetails->worker_vision ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                            ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                    ($jobdetails->vision ?? '----') .
+                                ($jobdetails->vision  == '1' ? 'Yes' : ($jobdetails->vision  == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($jobdetails->vision ? '' : 'd-none') .
+                    (isset($jobdetails->vision) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                    ($nursedetails->worker_vision ?? '<u onclick="askWorker(this, \'worker_vision\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                    ($nursedetails->worker_vision  == '1' ? 'Yes' : ($nursedetails->worker_vision  == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_vision\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
+                   
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Actual Hourly rate</span>
@@ -1052,6 +1069,26 @@ class ApplicationController extends Controller
                             </div>
                         </ul>
                     </div>
+                    <div class="ss-counter-buttons-div">
+                    
+                    <button class="counter-save-for-button" onclick="offerSend(\'' .
+                    $offerdetails->id .
+                    '\', \'' .
+                    $jobdetails->id .
+                    '\', \'rejectcounter\')">Reject Offer</button>
+                    <button class="counter-save-for-button" onclick="applicationType(\'' .
+                    $type .
+                    '\', \'' .
+                    $request->id .
+                    '\', \'jobdetails\', \'' .
+                    $request->jobid .
+                    '\')">Counter Offer</button>
+                    <button class="ss-counter-button" onclick="offerSend(\'' .
+                    $offerdetails->id .
+                    '\', \'' .
+                    $jobdetails->id .
+                    '\', \'offersend\')">Accept Offer</button>
+                    </div>
                     ';
             } elseif ($request->formtype == 'jobdetails') {
                 $distinctFilters = Keyword::distinct()->pluck('filter');
@@ -1095,15 +1132,7 @@ class ApplicationController extends Controller
                     '</a> with the following terms. This offer is only available for the next <a
                                 hre="#">6 weeks:</a>
                             </p>
-                            <p>data to sent : type :' .
-                    $type .
-                    ' ,offer id :' .
-                    $request->id .
-                    ' ,form type : ' .
-                    $request->formtype .
-                    ' ,jobId: ' .
-                    $request->jobid .
-                    '</p>
+                            
                         </div>
                     </div>
                     <form class="ss-emplor-form-sec" id="send-job-offer">
@@ -1159,7 +1188,7 @@ class ApplicationController extends Controller
                             <option value="">Select Profession</option>';
                 if (isset($allKeywords['Profession'])) {
                     foreach ($allKeywords['Profession'] as $value) {
-                        $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['profession'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
+                        $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['proffesion'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
                     }
                 }
                 $data2 .= '
@@ -1586,7 +1615,7 @@ class ApplicationController extends Controller
                     '</p>
         </li>
         <li class="col-md-6 mb-3 ' .
-                    ($jobdetails->profession != $offerdetails->profession ? 'ss-job-view-off-text-fst-dv' : '') .
+                    ($jobdetails->proffesion != $offerdetails->profession ? 'ss-job-view-off-text-fst-dv' : '') .
                     '">
             <span class="mt-3">Profession</span>
             <h6>' .
@@ -1981,15 +2010,7 @@ class ApplicationController extends Controller
                     '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
                     $offerdetails['worker_user_id'] .
                     '\')">Chat Now</a>
-            <p>data to sent : type :' .
-                    $type .
-                    ' ,offer id :' .
-                    $request->id .
-                    ' ,form type : ' .
-                    $request->formtype .
-                    ' ,jobId: ' .
-                    $request->jobid .
-                    '</p>
+           
         </li>
     </ul>
     <div class="ss-appli-cng-abt-inf-dv">
@@ -2178,16 +2199,33 @@ class ApplicationController extends Controller
             $jobid = $request->jobid;
             $job = Offer::where(['job_id' => $jobid, 'id' => $id])->update(['status' => $formtype]);
             if ($job) {
-                return response()->json(['message' => 'Update Successfully']);
+
+                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+        $statusCounts = [];
+        $offerLists = [];
+        foreach ($statusList as $status) {
+            $statusCounts[$status] = 0;
+        }
+        $statusCountsQuery = Offer::whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+        foreach ($statusCountsQuery as $statusCount) {
+            if ($statusCount) {
+                $statusCounts[$statusCount->status] = $statusCount->count;
+            } else {
+                $statusCounts[$statusCount->status] = 0;
+            }
+        }
+                
+                return response()->json(['message' => 'Update Successfully',"type"=>$formtype,"statusCounts"=>$statusCounts]);
             } else {
                 return response()->json(['message' => 'Something went wrong! Please check']);
-            }
-        } else {
-            return response()->json(['message' => 'Something went wrong! Please check']);
-        }
+            }   
+            } else {
+                return response()->json(['message' => 'Something went wrong! Please check']);
+            }   
     }
     public function sendJobOffer(Request $request)
     {
+        //return response()->json($request->all());
         $validator = Validator::make($request->all(), [
             // 'id' => 'required',
             // 'worker_user_id' => 'required',
@@ -2202,10 +2240,6 @@ class ApplicationController extends Controller
             ];
         } else {
             try{
-
-            
-
-
             $offerLists = Offer::where('id', $request->id)->first();
             $nurse = Nurse::where('user_id', $request->worker_user_id)->first();
             $user = user::where('id', $request->worker_user_id)->first();
@@ -2213,7 +2247,7 @@ class ApplicationController extends Controller
             $update_array['job_name'] = isset($request->job_name) ? $request->job_name : $job_data->job_name;
             $update_array['type'] = isset($request->type) ? $request->type : $job_data->type;
             $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
-            $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->profession;
+            $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->proffesion;
             // not needed
             //$update_array["preferred_specialty"] = isset($request->preferred_specialty) ? $request->preferred_specialty : $job_data->preferred_specialty;
             // not needed
@@ -2274,8 +2308,13 @@ class ApplicationController extends Controller
             $update_array['tax_status'] = isset($request->tax_status) ? $request->tax_status : null;
             //$update_array["job_city"] = isset($job_data->job_city)?$job_data->job_city:'';
             //$update_array["job_state"] = isset($job_data->job_state)?$job_data->job_state:'';
-            $update_array['is_draft'] = isset($request->is_draft) ? $request->is_draft : '1';
-            $update_array['is_counter'] = isset($request->counterstatus) ? $request->counterstatus : '0';
+            if($request->funcionalityType == 'createdraft'){
+                $update_array['is_draft'] = '1';
+                $update_array['is_counter'] = '0';
+            }else{
+                $update_array['is_draft'] = '0';
+                $update_array['is_counter'] = '1';
+            }
             /* create job */
             $update_array['created_by'] = isset($job_data->recruiter_id) && $job_data->recruiter_id != '' ? $job_data->recruiter_id : '';
             $update_array['status'] = 'Offered';
@@ -2294,12 +2333,12 @@ class ApplicationController extends Controller
                 
                 $responseData = [
                     'status' => 'success',
-                    'message' => 'Send Offer Job created successfully',
+                    'message' => $request->all(),
                 ];
             } else {
                 $responseData = [
                     'status' => 'error',
-                    'message' => 'Job Offer Already Send',
+                    'message' => $job,
                 ];
             }
         }catch (\Exception $e){
@@ -2311,6 +2350,7 @@ class ApplicationController extends Controller
     }
         return response()->json($responseData);
     }
+
     public function sendJobOfferRecruiter(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -2326,33 +2366,60 @@ class ApplicationController extends Controller
         } else {
             if ($request->type == 'rejectcounter') {
                 $update_array['is_counter'] = '0';
-            }
-            $update_array['is_draft'] = '0';
-            $job = DB::table('offers')
-                ->where(['id' => $request->id])
-                ->first();
-            if ($job->is_draft == '0') {
-                $responseData = [
-                    'status' => 'Error',
-                    'message' => 'Job Offer Already Send',
-                ];
-            } else {
+                $update_array['is_draft'] = '0';
+                $update_array['status'] = 'Rejected';
                 $job = DB::table('offers')
                     ->where(['id' => $request->id])
                     ->update($update_array);
-                if ($job) {
-                    $responseData = [
-                        'status' => 'success',
-                        'message' => 'Job Offer Send successfully',
-                    ];
-                } else {
-                    $responseData = [
-                        'status' => 'error',
-                        'message' => 'Somthing went wrong!',
-                    ];
-                }
+                    if($job) {
+                        $responseData = [
+                            'status' => 'success',
+                            'message' => 'Job Rejected successfully',
+                        ];
+                    }
+            }else if ($request->type == 'offersend'){
+                $update_array['is_counter'] = '0';
+                $update_array['is_draft'] = '0';
+                $update_array['status'] = 'Done';
+                $job = DB::table('offers')
+                    ->where(['id' => $request->id])
+                    ->update($update_array);
+                    if($job) {
+                        $responseData = [
+                            'status' => 'success',
+                            'message' => 'Job Accepted successfully',
+                        ];
+                    }
             }
+            // $update_array['is_draft'] = '0';
+            // $job = DB::table('offers')
+            //     ->where(['id' => $request->id])
+            //     ->first();
+            // if ($job->is_draft == '0') {
+            //     $responseData = [
+            //         'status' => 'Error',
+            //         'message' => 'Job Offer Already Send',
+            //     ];
+            // } else {
+            //     $job = DB::table('offers')
+            //         ->where(['id' => $request->id])
+            //         ->update($update_array);
+            //     if ($job) {
+            //         $responseData = [
+            //             'status' => 'success',
+            //             'message' => 'Job Offer Send successfully',
+            //         ];
+            //     } else {
+            //         $responseData = [
+            //             'status' => 'error',
+            //             'message' => 'Somthing went wrong!',
+            //         ];
+            //     }
+            // }
             return response()->json($responseData);
         }
     }
+
+
+   
 }

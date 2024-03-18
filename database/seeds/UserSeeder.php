@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
     public function run()
     {
 
+        $faker = Faker\Factory::create();
+        
         // Admin is the first User created in the system, and it has all permissions, its id is "GWU000001"
 
         $admin = User::create([
@@ -92,7 +94,7 @@ class UserSeeder extends Seeder
             'specialty' => 'Pediatric Nursing',
             'nursing_license_state' => 'CA',
             'nursing_license_number' => 'RN12345678',
-            'highest_nursing_degree' => NULL,
+            'highest_nursing_degree' => 'nursing degree',
             'serving_preceptor' => 1,
             'serving_interim_nurse_leader' => 0,
             'leadership_roles' => NULL,
@@ -146,7 +148,47 @@ class UserSeeder extends Seeder
             'gig_account_id' => 'GIG12345',
             'is_gig_invite' => 0,
             'gig_account_create_date' => now(),
-            'gig_account_invite_date' => now()
+            'gig_account_invite_date' => now(),
+            'diploma' => $faker->word,
+            'driving_license' => $faker->bothify('??######'),
+            'worked_at_facility_before' => $faker->word,
+            'worker_ss_number' => $faker->bothify('###-##-####'),
+            'block_scheduling' => $faker->word,
+            'float_requirement' => $faker->boolean,
+            'facility_shift_cancelation_policy' => $faker->sentence,
+            'contract_termination_policy' => $faker->sentence,
+            'distance_from_your_home' => $faker->randomDigitNotNull,
+            'clinical_setting_you_prefer' => $faker->word,
+            'worker_patient_ratio' => $faker->randomDigitNotNull,
+            'worker_emr' => $faker->word,
+            'worker_unit' => $faker->word,
+            'worker_scrub_color' => $faker->safeColorName,
+            'worker_interview_dates' => $faker->date,
+            'worker_start_date' => $faker->date,
+            'worker_as_soon_as_posible' => $faker->date,
+            'worker_shift_time_of_day' => $faker->time,
+            'worker_hours_per_week' => $faker->randomDigitNotNull,
+            'worker_guaranteed_hours' => $faker->randomDigitNotNull,
+            'worker_weeks_assignment' => $faker->randomDigitNotNull,
+            'worker_shifts_week' => $faker->randomDigitNotNull,
+            'worker_referral_bonus' => $faker->randomDigitNotNull,
+            'worker_sign_on_bonus' => $faker->randomDigitNotNull,
+            'worker_completion_bonus' => $faker->randomDigitNotNull,
+            'worker_extension_bonus' => $faker->randomDigitNotNull,
+            'worker_other_bonus' => $faker->randomDigitNotNull,
+            'how_much_k' => $faker->randomDigitNotNull,
+            'worker_health_insurance' => $faker->boolean,
+            'worker_dental' => $faker->boolean,
+            'worker_vision' => $faker->boolean,
+            'worker_actual_hourly_rate' => $faker->randomFloat(2, 10, 50),
+            'worker_overtime' => $faker->randomFloat(2, 10, 50),
+            'worker_holiday' => $faker->randomFloat(2, 10, 50),
+            'worker_on_call' => $faker->randomFloat(2, 10, 50),
+            'worker_call_back' => $faker->randomFloat(2, 10, 50),
+            'worker_orientation_rate' => $faker->randomFloat(2, 10, 50),
+            'worker_weekly_taxable_amount' => $faker->randomFloat(2, 100, 1000),
+            'worker_employer_weekly_amount' => $faker->randomFloat(2, 100, 1000),
+            'worker_weekly_non_taxable_amount' => $faker->randomFloat(2, 100, 1000),
         ]);
         $availability = Availability::create([
             'nurse_id' => 'GWW000001',

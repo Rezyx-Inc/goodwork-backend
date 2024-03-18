@@ -77,6 +77,50 @@ class CreateJobsTable extends Migration
             // Adding boolean columns with default values
             $table->boolean('is_hidden')->default(false); // Column to indicate if job is hidden, default value is false
             $table->boolean('is_closed')->default(false); // Column to indicate if job is closed, default value is false
+
+
+             // new fields
+             $table->string('highest_nursing_degree')->nullable();
+             $table->string('specialty')->nullable();
+             $table->boolean('block_scheduling')->nullable();
+             $table->boolean('float_requirement')->default(false);
+             $table->string('facility_shift_cancelation_policy')->nullable();
+             $table->string('contract_termination_policy')->nullable();
+             $table->string('traveler_distance_from_facility')->nullable();
+             $table->string('facility')->nullable();
+             $table->string('clinical_setting')->nullable();
+             $table->string('clinical_setting_you_prefer')->nullable();
+             $table->decimal('Patient_ratio', 8, 2)->nullable();
+             $table->string('Emr')->nullable();
+             $table->string('Unit')->nullable();
+             $table->string('scrub_color')->nullable();
+             $table->string('rto')->nullable();
+             $table->decimal('guaranteed_hours', 8, 2)->nullable();
+             $table->decimal('weeks_shift', 8, 2)->nullable();
+             $table->decimal('referral_bonus', 8, 2)->nullable();
+             $table->decimal('sign_on_bonus', 8, 2)->nullable();
+             $table->decimal('completion_bonus', 8, 2)->nullable();
+             $table->decimal('extension_bonus', 8, 2)->nullable();
+             $table->decimal('other_bonus', 8, 2)->nullable();
+             $table->boolean('four_zero_one_k')->default(false);
+             $table->boolean('health_insaurance')->default(false);
+             $table->boolean('dental')->default(false);
+             $table->boolean('vision')->default(false);
+             $table->decimal('actual_hourly_rate', 8, 2)->nullable();
+             $table->decimal('overtime', 8, 2)->nullable();
+             $table->decimal('holiday', 8, 2)->nullable();
+             $table->decimal('on_call', 8, 2)->nullable();
+             $table->decimal('call_back', 8, 2)->nullable();
+             $table->decimal('orientation_rate', 8, 2)->nullable();
+             $table->decimal('weekly_taxable_amount', 8, 2)->nullable();
+             $table->decimal('employer_weekly_amount', 8, 2)->nullable();
+             $table->decimal('weekly_non_taxable_amount', 8, 2)->nullable();
+             $table->decimal('total_employer_amount', 8, 2)->nullable();
+             $table->decimal('total_goodwork_amount', 8, 2)->nullable();
+             $table->decimal('total_contract_amount', 8, 2)->nullable();
+             
+             $table->string('type')->nullable();
+
         });
     }
 
