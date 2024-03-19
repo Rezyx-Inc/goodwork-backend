@@ -61,29 +61,32 @@
                     </div>
                     <div class="col-lg-6">
                         <ul>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Done')" id="child_done" >Done m</a></li>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Rejected')" id="Rejected" >Rejected</a></li>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Blocked')" id="Blocked" >Blocked</a></li>
+                            <li ><a href="javascript:void(0)" onclick="applicationType('Done')" id="child_done" >Done</a>
+                            </li>
+                            <li><a href="javascript:void(0)" onclick="applicationType('Rejected')"
+                                    id="Rejected">Rejected</a></li>
+                            <li><a href="javascript:void(0)" onclick="applicationType('Blocked')" id="Blocked">Blocked</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-                    </div> -->
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                        </div> -->
             <div class="ss-acount-profile">
                 <div class="row">
                     <div class="col-lg-5">
@@ -91,18 +94,18 @@
                             <h5 class="mb-4" id="listingname">New application</h5>
                             <div id="application-list">
                                 <!-- <div class="d-flex justify-content-between">
-                                            <a href="" class="p-0 bg-transparent">1112323</a>
-                                            <i>Recently Added</i>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img src="" alt="" class="mr-2">
-                                            <h4>James Bond</h4>
-                                        </div>
-                                        <ul>
-                                            <li><a href="#">Los Angeles, CA</a></li>
-                                            <li><a href="#">10 wks</a></li>
-                                            <li><a href="#">2500/wk</a></li>
-                                        </ul> -->
+                                                <a href="" class="p-0 bg-transparent">1112323</a>
+                                                <i>Recently Added</i>
+                                            </div>
+                                            <div class="d-flex">
+                                                <img src="" alt="" class="mr-2">
+                                                <h4>James Bond</h4>
+                                            </div>
+                                            <ul>
+                                                <li><a href="#">Los Angeles, CA</a></li>
+                                                <li><a href="#">10 wks</a></li>
+                                                <li><a href="#">2500/wk</a></li>
+                                            </ul> -->
                             </div>
                         </div>
                     </div>
@@ -132,13 +135,13 @@
                     console.error('CSRF token not found.');
                     return;
                 }
-                
+
                 // Create a FormData object from the form
                 var formData = new FormData($form[0]);
 
                 // Append the new attribute
                 formData.append('funcionalityType', formtype);
-                
+
 
                 console.log(formData);
 
@@ -150,8 +153,8 @@
                     url: "{{ route('recruiter-send-job-offer') }}",
                     data: formData,
                     dataType: 'json',
-                    processData: false,  // tell jQuery not to process the data
-                    contentType: false,  // tell jQuery not to set contentType
+                    processData: false, // tell jQuery not to process the data
+                    contentType: false, // tell jQuery not to set contentType
                     success: function(data) {
                         if (type == "createdraft") {
                             notie.alert({
@@ -162,7 +165,7 @@
                             setTimeout(() => {
                                 location.reload();
                             }, 3000);
-                        }else if (type == "Apply") {
+                        } else if (type == "Apply") {
                             notie.alert({
                                 type: data.status,
                                 text: '<i class="fa fa-check"></i>' + data.message,
@@ -214,7 +217,7 @@
             if (doneElement.classList.contains("active")) {
                 doneElement.classList.remove("active");
             }
-            
+
             if (rejectedElement.classList.contains("active")) {
                 rejectedElement.classList.remove("active");
             }
@@ -226,13 +229,17 @@
             }
             var activeElement = document.getElementById(type);
 
-            if(activeElement){
-            activeElement.classList.add("active");
-
+            if (activeElement) {
+                activeElement.classList.add("active");
+                 holdElement.classList.add("active");
+                if (type == 'Rejected' || type == 'Blocked') {
+                     holdElement.classList.remove("active");
+                }
             }
-            
+
             document.getElementById('listingname').innerHTML = type + ' Application';
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked') {
+
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
             } else {
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.add("d-none");
@@ -287,14 +294,14 @@
 
         var addmoreexperience = document.querySelector('.add-more-experience');
 
-    if(addmoreexperience){
-        addmoreexperience.onclick = function() {
-            var allExperienceDiv = document.getElementById('all-experience');
-            var newExperienceDiv = document.querySelector('.experience-inputs').cloneNode(true);
-            newExperienceDiv.querySelector('select.specialty').selectedIndex = 0;
-            newExperienceDiv.querySelector('input[type="text"]').value = '';
-            allExperienceDiv.appendChild(newExperienceDiv);
-        }
+        if (addmoreexperience) {
+            addmoreexperience.onclick = function() {
+                var allExperienceDiv = document.getElementById('all-experience');
+                var newExperienceDiv = document.querySelector('.experience-inputs').cloneNode(true);
+                newExperienceDiv.querySelector('select.specialty').selectedIndex = 0;
+                newExperienceDiv.querySelector('input[type="text"]').value = '';
+                allExperienceDiv.appendChild(newExperienceDiv);
+            }
         }
 
         function addmoreexperience() {
@@ -345,27 +352,27 @@
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
-                    notie.alert({
+                        notie.alert({
                             type: 'success',
                             text: 'Updated Successfully',
                             time: 5
                         });
-                        
-                         $("#Apply span").text(result.statusCounts['Apply'] + " Applicants");
-                          $("#Screening span").text(result.statusCounts['Screening'] + " Applicants");
-                           $("#Submitted span").text(result.statusCounts['Submitted'] + " Applicants");
-                           $("#Offered span").text(result.statusCounts['Offered'] + " Applicants");
-                            $("#Onboarding span").text(result.statusCounts['Onboarding'] + " Applicants");
-                                $("#Working span").text(result.statusCounts['Working'] + " Applicants");
-                                $("#Rejected span").text(result.statusCounts['Rejected'] + " Applicants");
-                                $("#Blocked span").text(result.statusCounts['Blocked'] + " Applicants");
-                                $("#Hold span").text(result.statusCounts['Hold'] + " Applicants");
+
+                        $("#Apply span").text(result.statusCounts['Apply'] + " Applicants");
+                        $("#Screening span").text(result.statusCounts['Screening'] + " Applicants");
+                        $("#Submitted span").text(result.statusCounts['Submitted'] + " Applicants");
+                        $("#Offered span").text(result.statusCounts['Offered'] + " Applicants");
+                        $("#Onboarding span").text(result.statusCounts['Onboarding'] + " Applicants");
+                        $("#Working span").text(result.statusCounts['Working'] + " Applicants");
+                        $("#Rejected span").text(result.statusCounts['Rejected'] + " Applicants");
+                        $("#Blocked span").text(result.statusCounts['Blocked'] + " Applicants");
+                        $("#Hold span").text(result.statusCounts['Hold'] + " Applicants");
                         $("#application-list").html(result.applicationlisting);
                         $("#application-details").html(result.applicationdetails);
                         setTimeout(() => {
-                                console.log(result.type);
-                                applicationType(result.type);
-                            }, 3000);
+                            console.log(result.type);
+                            applicationType(result.type);
+                        }, 3000);
                     },
                     error: function(error) {
                         // Handle errors
@@ -479,8 +486,8 @@
                             time: 5
                         });
                         setTimeout(() => {
-                                location.reload();
-                            }, 3000);
+                            location.reload();
+                        }, 3000);
                     },
                     error: function(error) {
                         // Handle errors
@@ -880,11 +887,12 @@
         }
         const numberOfReferencesField = document.getElementById('number_of_references');
         if (numberOfReferencesField) {
-        numberOfReferencesField.addEventListener('input', function() {
-            if (numberOfReferencesField.value.length > 9) {
-                numberOfReferencesField.value = numberOfReferencesField.value.substring(0, 9);
-            }
-        });}
+            numberOfReferencesField.addEventListener('input', function() {
+                if (numberOfReferencesField.value.length > 9) {
+                    numberOfReferencesField.value = numberOfReferencesField.value.substring(0, 9);
+                }
+            });
+        }
         $(document).ready(function() {
             let formData = {
                 'country_id': '233',
