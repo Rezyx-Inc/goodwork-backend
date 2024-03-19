@@ -108,8 +108,8 @@ class ApplicationController extends Controller
                 $statusCounts[$statusCount->status] = 0;
             }
         }
-        $status_count_draft = Offer::where('is_draft',true)->count(); 
-        return view('recruiter::recruiter/applicationjourney', compact('statusCounts','status_count_draft'));
+        $status_count_draft = Offer::where('is_draft', true)->count();
+        return view('recruiter::recruiter/applicationjourney', compact('statusCounts', 'status_count_draft'));
     }
 
     public function getApplicationListing(Request $request)
@@ -157,7 +157,7 @@ class ApplicationController extends Controller
                         <ul>
                             <li>
                                 <img src="' .
-                                URL::asset('public/images/nurses/profile/' . $user['image']) .
+                    URL::asset('public/images/nurses/profile/' . $user['image']) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
                     URL::asset('frontend/img/profile-pic-big.png') .
@@ -245,7 +245,7 @@ class ApplicationController extends Controller
                     '</span>
                             <h6>
                                 <img src="' .
-                                URL::asset('public/images/nurses/profile/' . $userdetails->image) .
+                    URL::asset('public/images/nurses/profile/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
                     URL::asset('public/frontend/img/profile-pic-big.png') .
@@ -318,7 +318,13 @@ class ApplicationController extends Controller
                         </select>
                         </div>
                         <div class="col-3">
-                        <button class="counter-save-for-button" style="margin-top:0px;" onclick="applicationStatus(document.getElementById(\'status application-status\').value, \'' . $type . '\', \'' . $request->id . '\', \'' . $request->jobid . '\')
+                        <button class="counter-save-for-button" style="margin-top:0px;" onclick="applicationStatus(document.getElementById(\'status application-status\').value, \'' .
+                    $type .
+                    '\', \'' .
+                    $request->id .
+                    '\', \'' .
+                    $request->jobid .
+                    '\')
                         ">Change Status</button>
                         </div>
                         </div>
@@ -375,63 +381,68 @@ class ApplicationController extends Controller
                             <p>' .
                     ($nursedetails->worker_ss_number ?? '----') .
                     '</p>
-                        </li>
-                        <li class="col-md-12">
-                            <span class="mt-3">Profession</span>
-                        </li>
-                        <li class="col-md-6">
-                            <h6>' .
+                        </li>';
+                $data2 .=
+                    ' <div class="col-md-12">
+                <span class="mt-3">Profession</span>
+            </div>
+                <div class="row ' .
+                    ($jobdetails->proffesion == $nursedetails->proffesion ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
+                    <div class="col-md-6">
+                        <h6>' .
                     ($jobdetails->proffesion ?? '----') .
                     '</h6>
-                        </li>
-                        <li class="col-md-6">
-                            <p>' .
-                    ($nursedetails->highest_nursing_degree ?? '<u onclick="askWorker(this, \'highest_nursing_degree\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
-                    '</p>
-                        </li>
-                        <li class="col-md-12">
-                            <span class="mt-3">Specialty</span>
-                        </li>';
-                if (isset($jobdetails->specialty)) {
-                    foreach (explode(',', $nursedetails->specialty) as $key => $value) {
-                        if (isset($value)) {
-                            $data2 .=
-                                '
-                                    <div class="col-md-6 ">
-                                        <h6>' .
-                                $value .
-                                ' Required</h6>
-                                    </div>
-                                    <div class="col-md-6 ">
-                                        <p><u onclick="askWorker(this, \'specialty\', \'' .
-                                $nursedetails['id'] .
-                                '\', \'' .
-                                $jobdetails['id'] .
-                                '\')">Ask Worker</u></p>
-                                    </div>
-                                    ';
-                        }
-                    }
-                }
-                $data2 .=
-                    '
-                    <div class="row ' .
-                    (($jobdetails->job_state == $nursedetails->nursing_license_state ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;"> 
-                        <div class="col-md-6">
-                            <h6>' .
-                    ($jobdetails->job_state ?? '----') .
-                    '</h6>
-                        </div>
-                        <div class="col-md-6 ' .
-                    ($jobdetails->job_state ? '' : 'd-none') .
+                    </div>
+                    <div class="col-md-6 ' .
+                    ($jobdetails->proffesion ? '' : 'd-none') .
                     '">
-                            <p>' .
-                    ($nursedetails->nursing_license_state ?? '<u onclick="askWorker(this, \'nursing_license_state\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                        <p>' .
+                    ($nursedetails->proffesion ?? '<u onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
-                        </div>
-                        </div>
-                        ';
+                    </div>
+                    </div>';
+
+                $data2 .=
+                    ' <div class="col-md-12">
+                <span class="mt-3">Specialty</span>
+            </div>
+                <div class="row ' .
+                    ($jobdetails->specialty == $nursedetails->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
+                    <div class="col-md-6">
+                        <h6>' .
+                    ($jobdetails->specialty ?? '----') .
+                    '</h6>
+                    </div>
+                    <div class="col-md-6 ' .
+                    ($jobdetails->specialty ? '' : 'd-none') .
+                    '">
+                        <p>' .
+                    ($nursedetails->specialty ?? '<u onclick="askWorker(this, \'nursing_specialty\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                    '</p>
+                    </div>
+                    </div>';
+
+                // $data2 .=
+                //     '
+                //     <div class="row ' .
+                //     (($jobdetails->job_state == $nursedetails->nursing_license_state ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                //     ' d-flex align-items-center" style="margin:auto;">
+                //         <div class="col-md-6">
+                //             <h6>' .
+                //     ($jobdetails->job_state ?? '----') .
+                //     '</h6>
+                //         </div>
+                //         <div class="col-md-6 ' .
+                //     ($jobdetails->job_state ? '' : 'd-none') .
+                //     '">
+                //             <p>' .
+                //     ($nursedetails->nursing_license_state ?? '<u onclick="askWorker(this, \'nursing_license_state\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                //     '</p>
+                //         </div>
+                //         </div>
+                //         ';
 
                 $data2 .=
                     '
@@ -439,8 +450,8 @@ class ApplicationController extends Controller
                                 <span class="mt-3">Block scheduling</span>
                             </div>
                             <div class="row ' .
-                    (($jobdetails->block_scheduling === $nursedetails->block_scheduling ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;"> 
+                    ($jobdetails->block_scheduling === $nursedetails->block_scheduling ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->block_scheduling == '1' ? 'Yes' : ($jobdetails->block_scheduling == '0' ? 'No' : '----')) .
@@ -450,8 +461,7 @@ class ApplicationController extends Controller
                     (isset($jobdetails->block_scheduling) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                                ($nursedetails->block_scheduling  == '1' ? 'Yes' : ($nursedetails->block_scheduling  == '0' ? 'No' : '<u onclick="askWorker(this, \'block_scheduling\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
-                    
+                    ($nursedetails->block_scheduling == '1' ? 'Yes' : ($nursedetails->block_scheduling == '0' ? 'No' : '<u onclick="askWorker(this, \'block_scheduling\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
                     </div>
                             </div>
@@ -459,18 +469,18 @@ class ApplicationController extends Controller
                                 <span class="mt-3">Float requirements</span>
                             </div>
                             <div class="row ' .
-                    (($jobdetails->float_requirement === $nursedetails->float_requirement ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;"> 
+                    ($jobdetails->float_requirement === $nursedetails->float_requirement ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                                ($jobdetails->float_requirement  == '1' ? 'Yes' : ($jobdetails->float_requirement  == '0' ? 'No' : '----')) .
+                    ($jobdetails->float_requirement == '1' ? 'Yes' : ($jobdetails->float_requirement == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
                     (isset($jobdetails->float_requirement) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                                ($nursedetails->float_requirement  == '1' ? 'Yes' : ($nursedetails->float_requirement  == '0' ? 'No' : '<u onclick="askWorker(this, \'float_requirement\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
+                    ($nursedetails->float_requirement == '1' ? 'Yes' : ($nursedetails->float_requirement == '0' ? 'No' : '<u onclick="askWorker(this, \'float_requirement\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
                             </div>
                             </div>
@@ -478,8 +488,8 @@ class ApplicationController extends Controller
                                 <span class="mt-3">Facility Shift Cancellation Policy</span>
                             </div>
                             <div class="row ' .
-                            (($jobdetails->facility_shift_cancelation_policy === $nursedetails->facility_shift_cancelation_policy ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
-                            ' d-flex align-items-center" style="margin:auto;">
+                    ($jobdetails->facility_shift_cancelation_policy === $nursedetails->facility_shift_cancelation_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->facility_shift_cancelation_policy ?? '----') .
@@ -496,6 +506,9 @@ class ApplicationController extends Controller
                             <div class="col-md-12">
                                 <span class="mt-3">Contract Termination Policy</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->contract_termination_policy === $nursedetails->contract_termination_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->contract_termination_policy ?? '----') .
@@ -508,9 +521,13 @@ class ApplicationController extends Controller
                     ($nursedetails->contract_termination_policy ?? '<u onclick="askWorker(this, \'contract_termination_policy\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Traveler Distance From Facility</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->traveler_distance_from_facility === $nursedetails->distance_from_your_home ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->traveler_distance_from_facility ?? '----') .
@@ -523,9 +540,13 @@ class ApplicationController extends Controller
                     ($nursedetails->distance_from_your_home ?? '<u onclick="askWorker(this, \'distance_from_your_home\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Facility</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->facility === $nursedetails->worked_at_facility_before ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->facility ?? '----') .
@@ -538,9 +559,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worked_at_facility_before ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Clinical Setting</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->clinical_setting === $nursedetails->clinical_setting_you_prefer ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->clinical_setting ?? '----') .
@@ -553,9 +578,13 @@ class ApplicationController extends Controller
                     ($nursedetails->clinical_setting_you_prefer ?? '<u onclick="askWorker(this, \'clinical_setting_you_prefer\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Patient ratio</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->patient_ratio === $nursedetails->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->Patient_ratio ?? '----') .
@@ -568,24 +597,32 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_patient_ratio ?? '<u onclick="askWorker(this, \'worker_patient_ratio\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">EMR</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->emr === $nursedetails->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                    ($jobdetails->emr ?? '----') .
+                    ($jobdetails->Emr ?? '----') .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($jobdetails->emr ? '' : 'd-none') .
+                    ($jobdetails->Emr ? '' : 'd-none') .
                     '">
                                 <p>' .
                     ($nursedetails->worker_emr ?? '<u onclick="askWorker(this, \'worker_emr\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Unit</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->unit === $nursedetails->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->Unit ?? '----') .
@@ -598,9 +635,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_unit ?? '<u onclick="askWorker(this, \'worker_unit\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Scrub Color</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->scrub_color === $nursedetails->worker_scrub_color ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->scrub_color ?? '----') .
@@ -613,16 +654,18 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_scrub_color ?? '<u onclick="askWorker(this, \'worker_scrub_color\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Interview Dates</span>
                             </div>
+
                             <div class="col-md-6">
                                 <h6>' .
                     $nursedetails->worker_interview_dates .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
-                    ($nursedetails->worker_interview_dates ? '' : 'd-none') .
+                    ($jobdetails->worker_interview_dates ? '' : 'd-none') .
                     '">
                                 <p>' .
                     ($nursedetails->worker_interview_dates ?? '<u onclick="askWorker(this, \'worker_interview_dates\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
@@ -631,6 +674,9 @@ class ApplicationController extends Controller
                             <div class="col-md-12">
                                 <span class="mt-3">Start Date</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->start_date == $nursedetails->worker_start_date ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->start_date ? $jobdetails->start_date : 'As Soon As Possible') .
@@ -643,9 +689,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_start_date ?? '<u onclick="askWorker(this, \'worker_start_date\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">RTO</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->rto === $nursedetails->rto ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->rto ?? '----') .
@@ -655,12 +705,16 @@ class ApplicationController extends Controller
                     ($jobdetails->rto ? '' : 'd-none') .
                     '">
                                 <p>' .
-                    ($nursedetails->worker_as_soon_as_posible ?? '<u onclick="askWorker(this, \'worker_as_soon_as_posible\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
+                    ($nursedetails->rto ?? '<u onclick="askWorker(this, \'rto\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Shift Time of Day</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->preferred_shift == $nursedetails->worker_shift_time_of_day ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->preferred_shift ?? '----') .
@@ -673,9 +727,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_shift_time_of_day ?? '<u onclick="askWorker(this, \'worker_shift_time_of_day\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Hours/Week</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->hours_per_week == $nursedetails->worker_hours_per_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->hours_per_week ?? '----') .
@@ -688,9 +746,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_hours_per_week ?? '<u onclick="askWorker(this, \'worker_hours_per_week\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Guaranteed Hours</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->guaranteed_hours == $nursedetails->worker_guaranteed_hours ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->guaranteed_hours ?? '----') .
@@ -703,9 +765,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_guaranteed_hours ?? '<u onclick="askWorker(this, \'worker_guaranteed_hours\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Hours/Shift</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->preferred_assignment_duration == $nursedetails->worker_weeks_assignment ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->preferred_assignment_duration ?? '----') .
@@ -717,10 +783,14 @@ class ApplicationController extends Controller
                                 <p>' .
                     ($nursedetails->worker_weeks_assignment ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Weeks/Assignment</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->weeks_shift == $nursedetails->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->preferred_assignment_duration ?? '----') .
@@ -733,9 +803,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_weeks_assignment ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Shifts/Week</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->weeks_shift == $nursedetails->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->weeks_shift ?? '----') .
@@ -748,9 +822,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_shifts_week ?? '<u onclick="askWorker(this, \'worker_shifts_week\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Referral Bonus</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->referral_bonus === $nursedetails->worker_referral_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>$' .
                     ($jobdetails->referral_bonus ?? '----') .
@@ -763,9 +841,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_referral_bonus ?? '<u onclick="askWorker(this, \'worker_referral_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Sign-On Bonus</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->sign_on_bonus === $nursedetails->worker_sign_on_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>$' .
                     ($jobdetails->sign_on_bonus ?? '----') .
@@ -778,9 +860,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_sign_on_bonus ?? '<u onclick="askWorker(this, \'worker_sign_on_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Completion Bonus</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->completion_bonus === $nursedetails->worker_completion_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>$' .
                     ($jobdetails->completion_bonus ?? '----') .
@@ -793,9 +879,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_completion_bonus ?? '<u onclick="askWorker(this, \'worker_completion_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Extension Bonus</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->extension_bonus === $nursedetails->worker_extension_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>$' .
                     ($jobdetails->extension_bonus ?? '----') .
@@ -808,9 +898,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_extension_bonus ?? '<u onclick="askWorker(this, \'worker_extension_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Other Bonus</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->other_bonus === $nursedetails->worker_other_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>$' .
                     ($jobdetails->other_bonus ?? '----') .
@@ -823,13 +917,16 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_other_bonus ?? '<u onclick="askWorker(this, \'worker_other_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">401K</span>
                             </div>
-                            <div class="row  d-flex align-items-center" style="margin:auto;">
+                            <div class="row ' .
+                    ($jobdetails->four_zero_one_k === $nursedetails->how_much_k ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                                ($jobdetails->four_zero_one_k  == '1' ? 'Yes' : ($jobdetails->four_zero_one_k  == '0' ? 'No' : '----')) .
+                    ($jobdetails->four_zero_one_k == '1' ? 'Yes' : ($jobdetails->four_zero_one_k == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
@@ -844,19 +941,18 @@ class ApplicationController extends Controller
                                 <span class="mt-3">Health Insurance</span>
                             </div>
                             <div class="row ' .
-                    (($jobdetails->health_insaurance === $nursedetails->worker_health_insurance ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;"> 
+                    ($jobdetails->health_insaurance === $nursedetails->worker_health_insurance ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                                ($jobdetails->health_insaurance  == '1' ? 'Yes' : ($jobdetails->health_insaurance  == '0' ? 'No' : '----')) .
-                    
+                    ($jobdetails->health_insaurance == '1' ? 'Yes' : ($jobdetails->health_insaurance == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
                     (isset($jobdetails->health_insaurance) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                                ($nursedetails->worker_health_insurance  == '1' ? 'Yes' : ($nursedetails->worker_health_insurance  == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_health_insurance\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
+                    ($nursedetails->worker_health_insurance == '1' ? 'Yes' : ($nursedetails->worker_health_insurance == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_health_insurance\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
                             </div>
                             </div>
@@ -864,19 +960,18 @@ class ApplicationController extends Controller
                                 <span class="mt-3">Dental</span>
                             </div>
                             <div class="row ' .
-                    (($jobdetails->dental === $nursedetails->worker_dental ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
+                    ($jobdetails->dental === $nursedetails->worker_dental ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                     ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                                ($jobdetails->dental  == '1' ? 'Yes' : ($jobdetails->dental  == '0' ? 'No' : '----')) .
-                    
+                    ($jobdetails->dental == '1' ? 'Yes' : ($jobdetails->dental == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
                     (isset($jobdetails->dental) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                                ($nursedetails->worker_dental  == '1' ? 'Yes' : ($nursedetails->worker_dental  == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_dental\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
+                    ($nursedetails->worker_dental == '1' ? 'Yes' : ($nursedetails->worker_dental == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_dental\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
                             </div>
                             </div>
@@ -884,25 +979,27 @@ class ApplicationController extends Controller
                                 <span class="mt-3">Vision</span>
                             </div>
                             <div class="row ' .
-                            (($jobdetails->vision === $nursedetails->worker_vision ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
-                            ' d-flex align-items-center" style="margin:auto;">
+                    ($jobdetails->vision === $nursedetails->worker_vision ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
-                                ($jobdetails->vision  == '1' ? 'Yes' : ($jobdetails->vision  == '0' ? 'No' : '----')) .
+                    ($jobdetails->vision == '1' ? 'Yes' : ($jobdetails->vision == '0' ? 'No' : '----')) .
                     '</h6>
                             </div>
                             <div class="col-md-6 ' .
                     (isset($jobdetails->vision) ? '' : 'd-none') .
                     '">
                                 <p>' .
-                    ($nursedetails->worker_vision  == '1' ? 'Yes' : ($nursedetails->worker_vision  == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_vision\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
-                   
+                    ($nursedetails->worker_vision == '1' ? 'Yes' : ($nursedetails->worker_vision == '0' ? 'No' : '<u onclick="askWorker(this, \'worker_vision\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) .
                     '</p>
                             </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Actual Hourly rate</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->actual_hourly_rate === $nursedetails->worker_actual_hourly_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->actual_hourly_rate ?? '----') .
@@ -915,9 +1012,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_actual_hourly_rate ?? '<u onclick="askWorker(this, \'worker_actual_hourly_rate\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Overtime</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->overtime === $nursedetails->worker_overtime ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->overtime ?? '----') .
@@ -930,9 +1031,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_overtime ?? '<u onclick="askWorker(this, \'worker_overtime\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Holiday</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->holiday === $nursedetails->worker_holiday ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->holiday ?? '----') .
@@ -945,9 +1050,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_holiday ?? '<u onclick="askWorker(this, \'worker_holiday\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">On Call</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->on_call === $nursedetails->worker_on_call ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->on_call ?? '----') .
@@ -960,9 +1069,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_on_call ?? '<u onclick="askWorker(this, \'worker_on_call\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Call Back</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->call_back === $nursedetails->worker_call_back ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->call_back ?? '----') .
@@ -975,9 +1088,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_call_back ?? '<u onclick="askWorker(this, \'worker_call_back\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Orientation Rate</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->orientation_rate === $nursedetails->worker_orientation_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->orientation_rate ?? '----') .
@@ -990,9 +1107,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_orientation_rate ?? '<u onclick="askWorker(this, \'worker_orientation_rate\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Weekly Taxable amount</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->weekly_taxable_amount === $nursedetails->worker_weekly_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->weekly_taxable_amount ?? '----') .
@@ -1005,9 +1126,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_weekly_taxable_amount ?? '<u onclick="askWorker(this, \'worker_weekly_taxable_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Employer Weekly Amount</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->employer_weekly_amount === $nursedetails->worker_employer_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->employer_weekly_amount ?? '----') .
@@ -1020,9 +1145,13 @@ class ApplicationController extends Controller
                     ($nursedetails->worker_employer_weekly_amount ?? '<u onclick="askWorker(this, \'worker_employer_weekly_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
                             </div>
+                            </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Weekly non-taxable amount</span>
                             </div>
+                            <div class="row ' .
+                    ($jobdetails->weekly_non_taxable_amount === $nursedetails->worker_weekly_non_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
                             <div class="col-md-6">
                                 <h6>' .
                     ($jobdetails->weekly_non_taxable_amount ?? '----') .
@@ -1034,6 +1163,7 @@ class ApplicationController extends Controller
                                 <p>' .
                     ($nursedetails->worker_weekly_non_taxable_amount ?? '<u onclick="askWorker(this, \'worker_weekly_non_taxable_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</p>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <span class="mt-3">Goodwork Weekly Amount</span>
@@ -1991,7 +2121,7 @@ class ApplicationController extends Controller
                     '</span>
             <h6>
                 <img src="' .
-                URL::asset('public/images/nurses/profile/' . $userdetails->image) .
+                    URL::asset('public/images/nurses/profile/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
                     URL::asset('frontend/img/profile-pic-big.png') .
@@ -2199,29 +2329,28 @@ class ApplicationController extends Controller
             $jobid = $request->jobid;
             $job = Offer::where(['job_id' => $jobid, 'id' => $id])->update(['status' => $formtype]);
             if ($job) {
-
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
-        $statusCounts = [];
-        $offerLists = [];
-        foreach ($statusList as $status) {
-            $statusCounts[$status] = 0;
-        }
-        $statusCountsQuery = Offer::whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
-        foreach ($statusCountsQuery as $statusCount) {
-            if ($statusCount) {
-                $statusCounts[$statusCount->status] = $statusCount->count;
+                $statusCounts = [];
+                $offerLists = [];
+                foreach ($statusList as $status) {
+                    $statusCounts[$status] = 0;
+                }
+                $statusCountsQuery = Offer::whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+                foreach ($statusCountsQuery as $statusCount) {
+                    if ($statusCount) {
+                        $statusCounts[$statusCount->status] = $statusCount->count;
+                    } else {
+                        $statusCounts[$statusCount->status] = 0;
+                    }
+                }
+
+                return response()->json(['message' => 'Update Successfully', 'type' => $formtype, 'statusCounts' => $statusCounts]);
             } else {
-                $statusCounts[$statusCount->status] = 0;
+                return response()->json(['message' => 'Something went wrong! Please check']);
             }
+        } else {
+            return response()->json(['message' => 'Something went wrong! Please check']);
         }
-                
-                return response()->json(['message' => 'Update Successfully',"type"=>$formtype,"statusCounts"=>$statusCounts]);
-            } else {
-                return response()->json(['message' => 'Something went wrong! Please check']);
-            }   
-            } else {
-                return response()->json(['message' => 'Something went wrong! Please check']);
-            }   
     }
     public function sendJobOffer(Request $request)
     {
@@ -2239,115 +2368,114 @@ class ApplicationController extends Controller
                 'message' => $validator->errors()->first(),
             ];
         } else {
-            try{
-            $offerLists = Offer::where('id', $request->id)->first();
-            $nurse = Nurse::where('user_id', $request->worker_user_id)->first();
-            $user = user::where('id', $request->worker_user_id)->first();
-            $job_data = Job::where('id', $request->job_id)->first();
-            $update_array['job_name'] = isset($request->job_name) ? $request->job_name : $job_data->job_name;
-            $update_array['type'] = isset($request->type) ? $request->type : $job_data->type;
-            $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
-            $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->proffesion;
-            // not needed
-            //$update_array["preferred_specialty"] = isset($request->preferred_specialty) ? $request->preferred_specialty : $job_data->preferred_specialty;
-            // not needed
-            //$update_array["facility"] = isset($request->facility) ? $request->facility : $job_data->facility;
-            // not needed
-            // $update_array["job_location"] = isset($request->job_location) ? $request->job_location : $job_data->job_location;
-            $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
-            $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;
-            $update_array['facility_shift_cancelation_policy'] = isset($request->facility_shift_cancelation_policy) ? $request->facility_shift_cancelation_policy : $job_data->facility_shift_cancelation_policy;
-            $update_array['contract_termination_policy'] = isset($request->contract_termination_policy) ? $request->contract_termination_policy : $job_data->contract_termination_policy;
-            $update_array['traveler_distance_from_facility'] = isset($request->traveler_distance_from_facility) ? $request->traveler_distance_from_facility : $job_data->traveler_distance_from_facility;
-            $update_array['job_id'] = isset($request->job_id) ? $request->job_id : $job_data->job_id;
-            $update_array['recruiter_id'] = isset($request->recruiter_id) ? $request->recruiter_id : $job_data->recruiter_id;
-            $update_array['worker_user_id'] = isset($nurse->id) ? $nurse->id : '';
-            // not needed
-            // $update_array["compact"] = isset($request->compact) ? $request->compact : $job_data->compact;
-            // not needed
-            //$update_array["facility_id"] = isset($request->facility_id) ? $request->facility_id : $job_data->facility_id;
-            $update_array['clinical_setting'] = isset($request->clinical_setting) ? $request->clinical_setting : $job_data->clinical_setting;
-            $update_array['Patient_ratio'] = isset($request->Patient_ratio) ? $request->Patient_ratio : $job_data->Patient_ratio;
-            $update_array['emr'] = isset($request->emr) ? $request->emr : $job_data->emr;
-            $update_array['Unit'] = isset($request->Unit) ? $request->Unit : $job_data->Unit;
-            $update_array['scrub_color'] = isset($request->scrub_color) ? $request->scrub_color : $job_data->scrub_color;
-            $update_array['start_date'] = isset($request->start_date) ? $request->start_date : $job_data->start_date;
-            // alternative start date
-            $update_array['as_soon_as'] = isset($request->as_soon_as) ? $request->as_soon_as : $job_data->as_soon_as;
-            $update_array['rto'] = isset($request->rto) ? $request->rto : $job_data->rto;
-            // not needed
-            // $update_array["preferred_shift"] = isset($request->preferred_shift) ? $request->preferred_shift : $job_data->preferred_shift;
-            $update_array['hours_per_week'] = isset($request->hours_per_week) ? $request->hours_per_week : $job_data->hours_per_week;
-            $update_array['guaranteed_hours'] = isset($request->guaranteed_hours) ? $request->guaranteed_hours : $job_data->guaranteed_hours;
-            $update_array['hours_shift'] = isset($request->hours_shift) ? $request->hours_shift : $job_data->hours_shift;
-            $update_array['weeks_shift'] = isset($request->weeks_shift) ? $request->weeks_shift : $job_data->weeks_shift;
-            $update_array['preferred_assignment_duration'] = isset($request->preferred_assignment_duration) ? $request->preferred_assignment_duration : $job_data->preferred_assignment_duration;
-            $update_array['referral_bonus'] = isset($request->referral_bonus) ? $request->referral_bonus : $job_data->referral_bonus;
-            $update_array['sign_on_bonus'] = isset($request->sign_on_bonus) ? $request->sign_on_bonus : $job_data->sign_on_bonus;
-            $update_array['completion_bonus'] = isset($request->completion_bonus) ? $request->completion_bonus : $job_data->completion_bonus;
-            $update_array['extension_bonus'] = isset($request->extension_bonus) ? $request->extension_bonus : $job_data->extension_bonus;
-            $update_array['other_bonus'] = isset($request->other_bonus) ? $request->other_bonus : $job_data->other_bonus;
-            $update_array['four_zero_one_k'] = isset($request->four_zero_one_k) ? $request->four_zero_one_k : $job_data->four_zero_one_k;
-            $update_array['health_insaurance'] = isset($request->health_insaurance) ? $request->health_insaurance : $job_data->health_insaurance;
-            $update_array['dental'] = isset($request->dental) ? $request->dental : $job_data->dental;
-            $update_array['vision'] = isset($request->vision) ? $request->vision : $job_data->vision;
-            $update_array['actual_hourly_rate'] = isset($request->actual_hourly_rate) ? $request->actual_hourly_rate : $job_data->actual_hourly_rate;
-            $update_array['overtime'] = isset($request->overtime) ? $request->overtime : $job_data->overtime;
-            $update_array['holiday'] = isset($request->holiday) ? $request->holiday : $job_data->holiday;
-            $update_array['on_call'] = isset($request->on_call) ? $request->on_call : $job_data->on_call;
-            $update_array['orientation_rate'] = isset($request->orientation_rate) ? $request->orientation_rate : $job_data->orientation_rate;
-            $update_array['weekly_non_taxable_amount'] = isset($request->weekly_non_taxable_amount) ? $request->weekly_non_taxable_amount : $job_data->weekly_non_taxable_amount;
-            $update_array['description'] = isset($request->description) ? $request->description : $job_data->description;
-            $update_array['weekly_taxable_amount'] = isset($request->hours_shift) && isset($request->actual_hourly_rate) ? $request->hours_shift * $request->actual_hourly_rate : null;
-            $update_array['employer_weekly_amount'] = isset($request->weekly_non_taxable_amount) && isset($update_array['weekly_taxable_amount']) ? $request->weekly_non_taxable_amount + $update_array['weekly_taxable_amount'] : null;
-            $update_array['goodwork_weekly_amount'] = isset($update_array['weekly_taxable_amount']) ? $update_array['weekly_taxable_amount'] * 0.05 : 0;
-            $update_array['total_employer_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['employer_weekly_amount']) && isset($request->sign_on_bonus) && isset($request->completion_bonus) ? $request->preferred_assignment_duration + $update_array['employer_weekly_amount'] + $request->sign_on_bonus + $request->completion_bonus : null;
-            $update_array['total_goodwork_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['goodwork_weekly_amount']) ? $request->preferred_assignment_duration + $update_array['goodwork_weekly_amount'] : null;
-            $update_array['total_contract_amount'] = isset($update_array['total_goodwork_amount']) && isset($update_array['total_employer_amount']) ? $update_array['total_goodwork_amount'] + isset($update_array['total_employer_amount']) : null;
-            $update_array['weekly_pay'] = isset($job_data->weekly_pay) ? $job_data->weekly_pay : null;
-            $update_array['tax_status'] = isset($request->tax_status) ? $request->tax_status : null;
-            //$update_array["job_city"] = isset($job_data->job_city)?$job_data->job_city:'';
-            //$update_array["job_state"] = isset($job_data->job_state)?$job_data->job_state:'';
-            if($request->funcionalityType == 'createdraft'){
-                $update_array['is_draft'] = '1';
-                $update_array['is_counter'] = '0';
-            }else{
-                $update_array['is_draft'] = '0';
-                $update_array['is_counter'] = '1';
-            }
-            /* create job */
-            $update_array['created_by'] = isset($job_data->recruiter_id) && $job_data->recruiter_id != '' ? $job_data->recruiter_id : '';
-            $update_array['status'] = 'Offered';
-            $offerexist = DB::table('offers')
-                ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
-                ->first();
-            if ($offerexist) {
-                $job = DB::table('offers')
+            try {
+                $offerLists = Offer::where('id', $request->id)->first();
+                $nurse = Nurse::where('user_id', $request->worker_user_id)->first();
+                $user = user::where('id', $request->worker_user_id)->first();
+                $job_data = Job::where('id', $request->job_id)->first();
+                $update_array['job_name'] = isset($request->job_name) ? $request->job_name : $job_data->job_name;
+                $update_array['type'] = isset($request->type) ? $request->type : $job_data->type;
+                $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
+                $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->proffesion;
+                // not needed
+                //$update_array["preferred_specialty"] = isset($request->preferred_specialty) ? $request->preferred_specialty : $job_data->preferred_specialty;
+                // not needed
+                //$update_array["facility"] = isset($request->facility) ? $request->facility : $job_data->facility;
+                // not needed
+                // $update_array["job_location"] = isset($request->job_location) ? $request->job_location : $job_data->job_location;
+                $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
+                $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;
+                $update_array['facility_shift_cancelation_policy'] = isset($request->facility_shift_cancelation_policy) ? $request->facility_shift_cancelation_policy : $job_data->facility_shift_cancelation_policy;
+                $update_array['contract_termination_policy'] = isset($request->contract_termination_policy) ? $request->contract_termination_policy : $job_data->contract_termination_policy;
+                $update_array['traveler_distance_from_facility'] = isset($request->traveler_distance_from_facility) ? $request->traveler_distance_from_facility : $job_data->traveler_distance_from_facility;
+                $update_array['job_id'] = isset($request->job_id) ? $request->job_id : $job_data->job_id;
+                $update_array['recruiter_id'] = isset($request->recruiter_id) ? $request->recruiter_id : $job_data->recruiter_id;
+                $update_array['worker_user_id'] = isset($nurse->id) ? $nurse->id : '';
+                // not needed
+                // $update_array["compact"] = isset($request->compact) ? $request->compact : $job_data->compact;
+                // not needed
+                //$update_array["facility_id"] = isset($request->facility_id) ? $request->facility_id : $job_data->facility_id;
+                $update_array['clinical_setting'] = isset($request->clinical_setting) ? $request->clinical_setting : $job_data->clinical_setting;
+                $update_array['Patient_ratio'] = isset($request->Patient_ratio) ? $request->Patient_ratio : $job_data->Patient_ratio;
+                $update_array['emr'] = isset($request->emr) ? $request->emr : $job_data->emr;
+                $update_array['Unit'] = isset($request->Unit) ? $request->Unit : $job_data->Unit;
+                $update_array['scrub_color'] = isset($request->scrub_color) ? $request->scrub_color : $job_data->scrub_color;
+                $update_array['start_date'] = isset($request->start_date) ? $request->start_date : $job_data->start_date;
+                // alternative start date
+                $update_array['as_soon_as'] = isset($request->as_soon_as) ? $request->as_soon_as : $job_data->as_soon_as;
+                $update_array['rto'] = isset($request->rto) ? $request->rto : $job_data->rto;
+                // not needed
+                // $update_array["preferred_shift"] = isset($request->preferred_shift) ? $request->preferred_shift : $job_data->preferred_shift;
+                $update_array['hours_per_week'] = isset($request->hours_per_week) ? $request->hours_per_week : $job_data->hours_per_week;
+                $update_array['guaranteed_hours'] = isset($request->guaranteed_hours) ? $request->guaranteed_hours : $job_data->guaranteed_hours;
+                $update_array['hours_shift'] = isset($request->hours_shift) ? $request->hours_shift : $job_data->hours_shift;
+                $update_array['weeks_shift'] = isset($request->weeks_shift) ? $request->weeks_shift : $job_data->weeks_shift;
+                $update_array['preferred_assignment_duration'] = isset($request->preferred_assignment_duration) ? $request->preferred_assignment_duration : $job_data->preferred_assignment_duration;
+                $update_array['referral_bonus'] = isset($request->referral_bonus) ? $request->referral_bonus : $job_data->referral_bonus;
+                $update_array['sign_on_bonus'] = isset($request->sign_on_bonus) ? $request->sign_on_bonus : $job_data->sign_on_bonus;
+                $update_array['completion_bonus'] = isset($request->completion_bonus) ? $request->completion_bonus : $job_data->completion_bonus;
+                $update_array['extension_bonus'] = isset($request->extension_bonus) ? $request->extension_bonus : $job_data->extension_bonus;
+                $update_array['other_bonus'] = isset($request->other_bonus) ? $request->other_bonus : $job_data->other_bonus;
+                $update_array['four_zero_one_k'] = isset($request->four_zero_one_k) ? $request->four_zero_one_k : $job_data->four_zero_one_k;
+                $update_array['health_insaurance'] = isset($request->health_insaurance) ? $request->health_insaurance : $job_data->health_insaurance;
+                $update_array['dental'] = isset($request->dental) ? $request->dental : $job_data->dental;
+                $update_array['vision'] = isset($request->vision) ? $request->vision : $job_data->vision;
+                $update_array['actual_hourly_rate'] = isset($request->actual_hourly_rate) ? $request->actual_hourly_rate : $job_data->actual_hourly_rate;
+                $update_array['overtime'] = isset($request->overtime) ? $request->overtime : $job_data->overtime;
+                $update_array['holiday'] = isset($request->holiday) ? $request->holiday : $job_data->holiday;
+                $update_array['on_call'] = isset($request->on_call) ? $request->on_call : $job_data->on_call;
+                $update_array['orientation_rate'] = isset($request->orientation_rate) ? $request->orientation_rate : $job_data->orientation_rate;
+                $update_array['weekly_non_taxable_amount'] = isset($request->weekly_non_taxable_amount) ? $request->weekly_non_taxable_amount : $job_data->weekly_non_taxable_amount;
+                $update_array['description'] = isset($request->description) ? $request->description : $job_data->description;
+                $update_array['weekly_taxable_amount'] = isset($request->hours_shift) && isset($request->actual_hourly_rate) ? $request->hours_shift * $request->actual_hourly_rate : null;
+                $update_array['employer_weekly_amount'] = isset($request->weekly_non_taxable_amount) && isset($update_array['weekly_taxable_amount']) ? $request->weekly_non_taxable_amount + $update_array['weekly_taxable_amount'] : null;
+                $update_array['goodwork_weekly_amount'] = isset($update_array['weekly_taxable_amount']) ? $update_array['weekly_taxable_amount'] * 0.05 : 0;
+                $update_array['total_employer_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['employer_weekly_amount']) && isset($request->sign_on_bonus) && isset($request->completion_bonus) ? $request->preferred_assignment_duration + $update_array['employer_weekly_amount'] + $request->sign_on_bonus + $request->completion_bonus : null;
+                $update_array['total_goodwork_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['goodwork_weekly_amount']) ? $request->preferred_assignment_duration + $update_array['goodwork_weekly_amount'] : null;
+                $update_array['total_contract_amount'] = isset($update_array['total_goodwork_amount']) && isset($update_array['total_employer_amount']) ? $update_array['total_goodwork_amount'] + isset($update_array['total_employer_amount']) : null;
+                $update_array['weekly_pay'] = isset($job_data->weekly_pay) ? $job_data->weekly_pay : null;
+                $update_array['tax_status'] = isset($request->tax_status) ? $request->tax_status : null;
+                //$update_array["job_city"] = isset($job_data->job_city)?$job_data->job_city:'';
+                //$update_array["job_state"] = isset($job_data->job_state)?$job_data->job_state:'';
+                if ($request->funcionalityType == 'createdraft') {
+                    $update_array['is_draft'] = '1';
+                    $update_array['is_counter'] = '0';
+                } else {
+                    $update_array['is_draft'] = '0';
+                    $update_array['is_counter'] = '1';
+                }
+                /* create job */
+                $update_array['created_by'] = isset($job_data->recruiter_id) && $job_data->recruiter_id != '' ? $job_data->recruiter_id : '';
+                $update_array['status'] = 'Offered';
+                $offerexist = DB::table('offers')
                     ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
-                    ->update($update_array);
-            } else {
-                $job = Offer::create($update_array);
-            }
-            /* create job */
-            if ($job) {
-                
-                $responseData = [
-                    'status' => 'success',
-                    'message' => $request->all(),
-                ];
-            } else {
+                    ->first();
+                if ($offerexist) {
+                    $job = DB::table('offers')
+                        ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
+                        ->update($update_array);
+                } else {
+                    $job = Offer::create($update_array);
+                }
+                /* create job */
+                if ($job) {
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => $request->all(),
+                    ];
+                } else {
+                    $responseData = [
+                        'status' => 'error',
+                        'message' => $job,
+                    ];
+                }
+            } catch (\Exception $e) {
                 $responseData = [
                     'status' => 'error',
-                    'message' => $job,
+                    'message' => $e->getMessage(),
                 ];
             }
-        }catch (\Exception $e){
-            $responseData = [
-                'status' => 'error',
-                'message' => $e->getMessage(),
-            ];
         }
-    }
         return response()->json($responseData);
     }
 
@@ -2371,25 +2499,25 @@ class ApplicationController extends Controller
                 $job = DB::table('offers')
                     ->where(['id' => $request->id])
                     ->update($update_array);
-                    if($job) {
-                        $responseData = [
-                            'status' => 'success',
-                            'message' => 'Job Rejected successfully',
-                        ];
-                    }
-            }else if ($request->type == 'offersend'){
+                if ($job) {
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => 'Job Rejected successfully',
+                    ];
+                }
+            } elseif ($request->type == 'offersend') {
                 $update_array['is_counter'] = '0';
                 $update_array['is_draft'] = '0';
                 $update_array['status'] = 'Done';
                 $job = DB::table('offers')
                     ->where(['id' => $request->id])
                     ->update($update_array);
-                    if($job) {
-                        $responseData = [
-                            'status' => 'success',
-                            'message' => 'Job Accepted successfully',
-                        ];
-                    }
+                if ($job) {
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => 'Job Accepted successfully',
+                    ];
+                }
             }
             // $update_array['is_draft'] = '0';
             // $job = DB::table('offers')
@@ -2419,7 +2547,4 @@ class ApplicationController extends Controller
             return response()->json($responseData);
         }
     }
-
-
-   
 }
