@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 class Offer extends Model
 {
+    protected $table = 'offers';
     use SoftDeletes;
 
     protected static function boot()
@@ -100,16 +101,72 @@ class Offer extends Model
      *
      * @var array
      */
+
+    // protected $fillable = [
+    //     'nurse_id',
+    //     'created_by',
+    //     'job_id',
+    //     'status',
+    //     'active',
+    //     'expiration',
+    //     'is_view',
+    //     'is_view_date',
+    //     'start_date'
+    // ];
+
     protected $fillable = [
-        'nurse_id',
-        'created_by',
-        'job_id',
+        'job_name',
+        'type',
         'status',
-        'active',
-        'expiration',
-        'is_view',
-        'is_view_date',
-        'start_date'
+        'terms',
+        'profession',
+        'block_scheduling',
+        'float_requirement',
+        'facility_shift_cancelation_policy',
+        'contract_terminat_policy',
+        'traveler_distance_from_facility',
+        'job_id',
+        'recruiter_id',
+        'worker_user_id',
+        'clinical_setting',
+        'Patient_ratio',
+        'emr',
+        'Unit',
+        'scrub_color',
+        'start_date',
+        'as_soon_as',
+        'rto',
+        'hours_per_week',
+        'guaranteed_hours',
+        'hours_shift',
+        'weeks_shift',
+        'preferred_assignment_duration',
+        'referral_bonus',
+        'sign_on_bonus',
+        'completion_bonus',
+        'extension_bonus',
+        'other_bonus',
+        'four_zero_one_k',
+        'health_insaurance',
+        'dental',
+        'vision',
+        'actual_hourly_rate',
+        'overtime',
+        'holiday',
+        'on_call',
+        'orientation_rate',
+        'weekly_non_taxable_amount',
+        'description',
+        'weekly_taxable_amount',
+        'employer_weekly_amount',
+        'goodwork_weekly_amount',
+        'total_employer_amount',
+        'total_goodwork_amount',
+        'total_contract_amount',
+        'weekly_pay',
+        'is_draft',
+        'is_counter',
+        'created_by'
     ];
 
     /**

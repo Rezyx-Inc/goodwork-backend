@@ -317,7 +317,7 @@ class SiteController extends Controller {
 
            // sending mail verification
            $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
-           Mail::to($model->email)->send(new login($email_data));
+           //Mail::to($model->email)->send(new login($email_data));
 
             $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';
             $data_msg['success'] = true;
@@ -334,8 +334,8 @@ class SiteController extends Controller {
         }
     }catch(\Exception $e){
         $data = [];
-       // $data['msg'] = $e->getMessage();
-       $data['msg'] ='We encountered an error. Please try again later.';
+        $data['msg'] = $e->getMessage();
+       //$data['msg'] ='We encountered an error. Please try again later.';
         $data['success'] = false;
         return response()->json($data);
     }

@@ -28,11 +28,15 @@ class StaticContentController extends Controller
         $this->moveElement($data, 235, 0);
         $this->moveElement($data, 40, 1);
         // moved usa and canada to top of the row
-        $this->check = "1";
-        $this->message = "Countries listed successfully";
-        $this->return_data = $data;
+        $check = "1";
+        $message = "Countries listed successfully";
+        $return_data = $data;
 
-        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
+        return response()->json(["api_status" => $check, "message" => $message, "data" => $return_data], 200);
+    }
+    private function moveElement(&$array, $a, $b) {
+        $out = array_splice($array, $a, 1);
+        array_splice($array, $b, 0, $out);
     }
     public function getStates(Request $request)
     {
@@ -40,9 +44,10 @@ class StaticContentController extends Controller
             'country_id' => 'required',
             'api_key' => 'required',
         ]);
-
+        $check = "0";
+        $message = "States not listed";
         if ($validator->fails()) {
-            $this->message = $validator->errors()->first();
+            $message = $validator->errors()->first();
         } else {
             $get_states = States::where(['country_id' => $request->country_id])->get();
             if ($get_states->count() > 0) {
@@ -51,15 +56,15 @@ class StaticContentController extends Controller
                 foreach ($states as $key => $value) {
                     $data[] = ['state_id' => strval($value->id), "name" => $value->name, 'iso_name' => $value->iso2];
                 }
-                $this->check = "1";
-                $this->message = "States listed successfully";
-                $this->return_data = $data;
+                $check = "1";
+                $message = "States listed successfully";
+                $return_data = $data;
             } else {
-                $this->return_data = [];
+                $return_data = [];
             }
         }
 
-        return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
+        return response()->json(["api_status" => $check, "message" => $message, "data" => $return_data], 200);
     }
     public function getCities(Request $request)
     {
