@@ -136,7 +136,10 @@ class CreateNurseTable extends Migration
             $table->string('worker_weekly_taxable_amount')->nullable();
             $table->string('worker_employer_weekly_amount')->nullable();
             $table->string('worker_weekly_non_taxable_amount')->nullable();
-            
+
+            // add new fields
+            $table->string('rto', 255)->nullable();
+            $table->string('proffesion', 255)->nullable();
 
         });
     }

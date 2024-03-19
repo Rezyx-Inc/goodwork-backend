@@ -189,6 +189,8 @@ class UserSeeder extends Seeder
             'worker_weekly_taxable_amount' => $faker->randomFloat(2, 100, 1000),
             'worker_employer_weekly_amount' => $faker->randomFloat(2, 100, 1000),
             'worker_weekly_non_taxable_amount' => $faker->randomFloat(2, 100, 1000),
+            'proffesion' => $faker->word,
+            'rto' => $faker->word,
         ]);
         $availability = Availability::create([
             'nurse_id' => 'GWW000001',
