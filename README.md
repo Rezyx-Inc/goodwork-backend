@@ -120,3 +120,5 @@ Procedure to go live or staging.
 SideNotes
 
 Install mongodb and redis
+install laravel-echo-server or use npx and start it
+use php artisan serve

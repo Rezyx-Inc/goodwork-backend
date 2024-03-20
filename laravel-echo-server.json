@@ -1,5 +1,5 @@
 {
-	"authHost": "http://127.0.0.1:8000",
+	"authHost": "http://localhost:8000",
 	"authEndpoint": "/custom/broadcasting/auth",
 	"clients": [],
 	"database": "redis",
@@ -23,10 +23,10 @@
 		"http": true,
 		"redis": true
 	},
-	"apiOriginAllow": {
-		"allowCors": false,
-		"allowOrigin": "",
-		"allowMethods": "",
-		"allowHeaders": ""
-	}
+	"apiOriginAllow":{
+	    "allowCors" : true,
+	    "allowOrigin" : "http://localhost",
+	    "allowMethods" : "GET, POST",
+	    "allowHeaders" : "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
+  }
 }

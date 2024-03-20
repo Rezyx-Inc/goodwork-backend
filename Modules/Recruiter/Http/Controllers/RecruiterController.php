@@ -5,6 +5,14 @@ namespace Modules\Recruiter\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Events\NewPrivateMessage;
+use DB;
+use Auth;
+
+use App\Models\Offer;
+use Exception;
+use App\Models\Job;
+use App\Models\User;
 
 class RecruiterController extends Controller
 {
@@ -325,12 +333,7 @@ public function get_rooms(Request $request){
     return true;
     }
 
-
-
     // adding jobs : 
-
-
-    
     public function addJob()
     {
         return view('recruiter::layouts.addJob');

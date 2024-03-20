@@ -12,9 +12,10 @@ $user = auth()->guard('frontend')->user();
             </li>
         </ul>
     </div>
+
     <div class="position-sticky ss-das-side-menu-sec">
     <div class="list-group list-group-flush">
-        <a href="{{route('worker.dashboard')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.dashboard') ? 'active':''}}" aria-current="true">
+        <a href="{{route('worker.dashboard')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.dashboard') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/home-icon.png')}}" /><span>Home</span>
         </a>
 

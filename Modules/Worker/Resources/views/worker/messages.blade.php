@@ -4,139 +4,176 @@
 @php
        $faker = app('Faker\Generator');
 @endphp
-<main style="padding-top: 130px" class="ss-main-body-sec">
-    <div class="container" id="workers_messages">
 
-        <div class="ss-message-pg-mn-div">
-            <div class="row">
-                <div class="col-lg-5 ss-displ-flex">
-                    <div class="ss-messg-left-box">
-                        <h2>Messages</h2>
-                        <div class="ss-opport-mngr-hedr">
-                            <ul style="float:left;">
-                                <li style="margin-left:0px;"><button id="employer_btn" onclick="messageType('employer')"
-                                        class="ss-darfts-sec-draft-btn">Employer</button></li>
-                                <li style="margin-left:0px;"><button id="recruiters_btn"
-                                        onclick="messageType('recruiters')"
-                                        class="ss-darfts-sec-publsh-btn">Recruiters</button></li>
+<script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="{{ asset('js/app.js') }}"></script>
+<script>
 
+    var idEmployer_Global = '';
+    var PrivateChannel = '';
+    var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
+    
+    function getPrivateMessages(idEmployer,fullName) {
 
+        // Get Full Name and set some DOM
+        document.getElementById('fullName').innerHTML = fullName;
+        document.getElementById('empty_room').classList.add("d-none");
+        document.getElementById('body_room').classList.remove("d-none");
+        
+        // Set the global employer id
+        idEmployer_Global = idEmployer;
 
-                            </ul>
-                        </div>
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('employer/assets/images/message-img1.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
+        // Set the user Id
+        let id = @json($id);
+        
+        // Set Private Channel
+        PrivateChannel = 'private-chat.' + id + '.' + idEmployer_Global;
+        
+        let messageText = document.getElementById('message');
 
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>2 min ago</p>
-                                </li>
-                                <li><span>3</span></li>
-                            </ul>
-                        </div>
+        // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
+        window.Echo.channel('goodwork_database_messages')
+        .listen('NewMessage', (event) => {
+                console.log('New message:', event.message);
+        });
 
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('employer/assets/images/message-img2.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
+        // Listen for NewPrivateMessage event on the goodwork_database_private-private-chat.UserId channel
+        window.Echo.private(PrivateChannel)
+        .listen('NewPrivateMessage', (event) => {
+            var messageHTML = createRealMessageHTML(event);
+            $('.private-messages').append(messageHTML);
+        });
 
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>2 min ago</p>
-                                </li>
-                                <li><span>3</span></li>
-                            </ul>
-                        </div>
+        $('.private-messages').html('');
 
+        // Get the private messages
+        $.get('/worker/getMessages?page=1&employerId='+idEmployer+'&recruiterId=GWU000005', function(data) {
 
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('employer/assets/images/message-img3.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
+            console.log("Receiving data", data)
+            // Parse the returned data
+            var messages = data.messages;
 
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>2d ago</p>
-                                </li>
+            // Create the HTML for each message and prepend it to the messages area
+            messages.forEach(function(message) {
+                var messageHTML = createMessageHTML(message);
+                $('.private-messages').prepend(messageHTML);
+            });
 
-                            </ul>
-                        </div>
+            let messagesArea = $('.messages-area');
+            messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+                
+        });
+    }
 
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('employer/assets/images/message-img4.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
+    function createRealMessageHTML(message) {
+        var senderClass = message.senderRole == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+        var time = Array.isArray(message.time) ? message.messageTime.join(', ') : message.messageTime;
 
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>3d ago</p>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-lg-7">
-                    <div class="ss-msg-rply-mn-div">
-                        <div class="ss-msg-rply-profile-sec">
-                            <ul>
-                                <li><img src="{{URL::asset('employer/assets/images/msg-rply-box-img.png')}}" /></li>
-                                <li>
-                                    <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                                    <p>Associate Degree in Nursing</p>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="ss-msgrply-tody">
-                            <p>Today</p>
-                        </div>
-                        <div class="ss-msg-rply-blue-dv">
-                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                            <p>Hello! Jhon abraham</p>
-                            <span>09:25 AM</span>
-                        </div>
-
-                        <div class="ss-msg-rply-recrut-dv">
-                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                            <p>Have a great working week!!</p>
-                            <p>Hope you like it</p>
-                            <span>09:25 AM</span>
-                        </div>
-
-                        <div class="ss-rply-msg-input">
-                            <input type="text" id="fname" name="fname" placeholder="Express yourself here!">
-                            <button type="text"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
-                        </div>
-                    </div>
-                </div>
+        return `
+            <div class="${senderClass}">
+                
+                <p>${message.message}</p>
+                <span>${message.messageTime}</span>
             </div>
-        </div>
+        `;
+    }
 
-    </div>
+    // Function to create the HTML for a message
+    function createMessageHTML(message) {
+        var senderClass = message.sender == 'WORKER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+        var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
+        return `
+            <div class="${senderClass}">
+                <p>${message.content}</p>
+                <span>${time}</span>
+            </div>
+        `;
+    }
 
-    <div class="container d-none" id="recruiters_messages">
+    $(document).ready(function () {
 
+        $('#messageEnvoye').keypress(function(e){
+            if(e.which == 13){ // 13 is the key code for the enter key
+                e.preventDefault(); // Prevent the default action (form submission)
+                sendMessage(); // Call your function
+            }
+        });
+
+        var messagesArea = $('.messages-area');
+        messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+
+        $('.messages-area').scroll(function() {
+            
+            if($(this).scrollTop() == 0) { // If the scrollbar is at the top
+                
+                page++; // Increment the page number
+                $('#loading').removeClass('d-none');
+                $('#login').addClass('d-none');
+                
+                // Make an AJAX request to the API
+                $.get('/worker/getMessages?page=' + page + '&employerId='+idEmployer_Global+'&recruiterId=GWU000005' , function(data) {
+                    
+                    // Parse the returned data
+                    var messages = data.messages;
+
+                    // Create the HTML for each message and prepend it to the messages area
+                    messages.forEach(function(message) {
+                        var messageHTML = createMessageHTML(message);
+                        $('.private-messages').prepend(messageHTML);
+                    });
+
+                    $('#login').removeClass('d-none');
+                    $('#loading').addClass('d-none');
+                });
+            }
+        });
+    });
+
+    window.onload = function() {
+        // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
+        window.Echo.channel('goodwork_database_messages')
+        .listen('NewMessage', (event) => {
+            console.log('New message:', event.message);
+        });
+    }
+
+    function sendMessage(){
+
+        let id = @json($id);
+        PrivateChannel = 'private-chat.'+id + '.' + idEmployer_Global;
+
+        let messageInput = document.getElementById('messageEnvoye');
+        let message = messageInput.value;
+        
+        if(message != ""){
+
+            $.ajax({
+                url: 'send-message',
+                type: 'POST',
+                data: {
+                    idEmployer : idEmployer_Global,
+                    message_data : message,
+                    _token: '{{ csrf_token() }}'
+                },
+
+                success: function () {
+
+                    let messageHTML = createMessageHTML({content:message, sender: 'WORKER', time: 'Now'});
+                    $('.private-messages').append(messageHTML);
+                    messageInput.value = "";
+                }
+            });
+        }
+    }
+    
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<main style="padding-top: 130px" class="ss-main-body-sec">
+    
+    <div class="container" id="recruiters_messages">
         <div class="ss-message-pg-mn-div">
             <div class="row">
                 <div class="col-lg-5 ss-displ-flex">
@@ -144,118 +181,70 @@
                         <h2>Messages</h2>
                         <div class="ss-opport-mngr-hedr">
                             <ul style="float:left;">
-                                <li style="margin-left:0px;"><button id="drafts" onclick="messageType('employer')"
-                                        class="ss-darfts-sec-draft-btn">Employer</button></li>
-                                <li style="margin-left:0px;"><button id="published" onclick="messageType('recruiters')"
-                                        class="ss-darfts-sec-publsh-btn active">Recruiters</button></li>
-
-
-
+                                <li style="margin-left:0px;"><button id="published" class="ss-darfts-sec-publsh-btn active">Recruiters</button></li>
                             </ul>
                         </div>
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
+                        
+                        <!-- rooms  -->
+                        @if($data)
+                        @foreach($data as $room)
 
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>2 min ago</p>
-                                </li>
-                                <li><span>3</span></li>
-                            </ul>
-                        </div>
+                            <div onclick="getPrivateMessages('{{$room['employerId']}}','{{$room['fullName']}}')" class="ss-mesg-sml-div">
+                                
+                                <ul class="ss-msg-user-ul-dv">
+                                    <li><img src="{{URL::asset('frontend/img/message-img1.png')}}" /></li>
+                                    <li>
+                                        <h5>{{$room['fullName']}}</h5>
+                                        <p>{{$room['messages'][0]['content']}}</p>
+                                    </li>
+                                </ul>
 
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('frontend/img/message-img2.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
-
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>2 min ago</p>
-                                </li>
-                                <li><span>3</span></li>
-                            </ul>
-                        </div>
-
-
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('frontend/img/message-img3.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
-
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>2d ago</p>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                        <div class="ss-mesg-sml-div">
-                            <ul class="ss-msg-user-ul-dv">
-                                <li><img src="{{URL::asset('frontend/img/message-img4.png')}}" /></li>
-                                <li>
-                                    <h5>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h5>
-                                    <p>Check the prescription</p>
-                                </li>
-                            </ul>
-
-                            <ul class="ss-msg-notifi-sec">
-                                <li>
-                                    <p>3d ago</p>
-                                </li>
-
-                            </ul>
-                        </div>
+                                <ul style="width:100%"  class="ss-msg-notifi-sec">
+                                    <li>
+                                        <p>{{$room['lastMessage']}}</p>
+                                    </li>
+                                    <br />
+                                    <li>
+                                        <span>{{$room['messagesLength']}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endforeach
+                        @else
+                            <div class="ss-mesg-sml-div">
+                                <h5>No chats for now ...</h5>
+                            </div>
+                        @endif
 
                     </div>
                 </div>
 
-                <div class="col-lg-7">
-                    <div class="ss-msg-rply-mn-div">
+                <div class="col-lg-7 ">
+                <div id="empty_room" class="ss-msg-rply-mn-div ">
+                        <h5 class="empty_room">no chat was choosen</h5>
+                    </div>
+                    <div id="body_room" class="d-none ss-msg-rply-mn-div messages-area parentMessages">
                         <div class="ss-msg-rply-profile-sec">
                             <ul>
                                 <li><img src="{{URL::asset('frontend/img/msg-rply-box-img.png')}}" /></li>
-                                <li>
-                                    <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                                    <p>Travel Worker CRNA/.....</p>
+                                <li>   
+                                    <p id="fullName"></p>
                                 </li>
                             </ul>
                         </div>
-
                         <div class="ss-msgrply-tody">
-                            <p>Today</p>
+                            
+                            <span id="loading" class="d-none" >
+                          <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                    </span>
+                    <span id="login"> <p>Today</p>  </span>
                         </div>
-                        <div class="ss-msg-rply-blue-dv">
-                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                            <p>Hello! {{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</p>
-                            <span>09:25 AM</span>
+                        <div class="private-messages">
                         </div>
-
-                        <div class="ss-msg-rply-recrut-dv">
-                            <h6>{{ $faker->fantasyName('first_name')}} {{ $faker->fantasyName('last_name')}}</h6>
-                            <p>Have a great working week!!</p>
-                            <p>Hope you like it</p>
-                            <span>09:25 AM</span>
-                        </div>
-
                         <div class="ss-rply-msg-input">
-                            <input type="text" id="fname" name="fname" placeholder="Express yourself here!">
-                            <button type="text"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
+                         <input type="text" id="messageEnvoye" name="fname" placeholder="Express yourself here!">
+                            <button onclick="sendMessage()" type="text"><img src="{{URL::asset('frontend/img/msg-rply-btn.png')}}" /></button>
                         </div>
                     </div>
                 </div>
@@ -265,24 +254,46 @@
     </div>
 
 </main>
-<script>
 
-    function messageType(type) {
-        if (type == "workers") {
-            document.getElementById('recruiters_messages').classList.add('d-none');
-            document.getElementById('workers_messages').classList.remove('d-none');
-            document.getElementById('workers_btn').classList.add("active");
-        } else {
-            document.getElementById('recruiters_messages').classList.remove('d-none');
-            document.getElementById('workers_messages').classList.add('d-none');
-            document.getElementById('recruiters_btn').classList.add("active");
-        }
+<style>
+    .messages-area {
+    height: 80vh; 
+    overflow-y: auto;
+}
+
+.parentMessages {
+    position: relative; 
+}
+
+
+.ss-msg-rply-mn-div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.ss-rply-msg-input {
+    margin-top: auto;
+}
+
+.ss-rply-msg-input {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* other styles */
+}
+.empty_room{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#loading,#login,#loadSpan{
+        color:black;
     }
 
-    $(document).ready(function () {
-        messageType('workers');
-        document.getElementById('workers_btn').classList.add("active");
-
-    });
-</script>
+</style>
 @endsection

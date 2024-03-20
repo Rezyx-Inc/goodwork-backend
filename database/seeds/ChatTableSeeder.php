@@ -13,6 +13,7 @@ class ChatTableSeeder extends Seeder
     public function run()
     {
         $employerId = 'GWU000002';
+        $recruiterId = 'GWU000005';
         $workerIds = ['GWU000003', 'GWU000004'];
 
         $possibleMessages = [
@@ -40,10 +41,11 @@ class ChatTableSeeder extends Seeder
 
         $generateRandomConversation = function($numMessages) use ($possibleMessages) {
             $messages = [];
-            $possibleSenders = ['EMPLOYER', 'WORKER'];
+            $possibleSenders = ['EMPLOYER', 'WORKER','RECRUITER'];
             
             for ($i = 0; $i < $numMessages; $i++) {
-                $randomSender = $i % 2 == 0 ? 'EMPLOYER' : 'WORKER';
+               // $randomSender = $i % 2 == 0 ? 'EMPLOYER' : 'WORKER';
+                $randomSender = $possibleSenders[array_rand($possibleSenders)];
                 $randomMessage = $possibleMessages[array_rand($possibleMessages)];
                 $randomTime =  now()->toDateTimeString();
 
@@ -66,6 +68,7 @@ class ChatTableSeeder extends Seeder
                 'lastMessage' => now()->toDateTimeString(),
                 'isActive' => true,
                 'employerId' => $employerId,
+                'recruiterId' => $recruiterId, // 'GWU000005
                 'workerId' => $workerId,
                 'messages' => $messages,
             ]);

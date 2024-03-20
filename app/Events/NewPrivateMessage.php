@@ -19,15 +19,17 @@ class NewPrivateMessage implements ShouldBroadcast
     public $message;
     public $EmployerId;
     public $WorkerId;
+    public $RecruiterId;
 
     public $senderRole;
     public $messageTime;
 
-    public function __construct($message, $EmployerId,$WorkerId,$senderRole,$messageTime)
+    public function __construct($message, $EmployerId , $RecruiterId ,  $WorkerId , $senderRole , $messageTime)
     {
         $this->message = $message;
         $this->EmployerId = $EmployerId;
-        $this->WorkerId = $WorkerId;
+        $this->RecruiterId = $RecruiterId;
+        $this->WorkerId = $WorkerId;        
         $this->senderRole = $senderRole;
         $this->messageTime = $messageTime;
 
@@ -37,8 +39,9 @@ class NewPrivateMessage implements ShouldBroadcast
     {
         $idEmployer = $this->EmployerId;
         $idWorker = $this->WorkerId;
+        $idRecruiter = $this->RecruiterId;
 
-        $privateChannel = 'private-chat.'.$idEmployer.'.'.$idWorker;
+        $privateChannel = 'private-chat.'.$idEmployer.'.'. $idRecruiter . '.'.$idWorker;
         return new PrivateChannel($privateChannel);
     }
 }
