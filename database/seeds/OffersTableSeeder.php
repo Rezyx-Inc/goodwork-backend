@@ -116,9 +116,10 @@ class OffersTableSeeder extends Seeder
             'total_goodwork_amount' => 3000.0,
             'total_contract_amount' => 3600.0,
             'weekly_pay' => 4200.0,
-            'is_draft' => true,
+            'is_draft' => false,
             'is_counter' => true,
-            'created_by' => 'GWU000005'
+            'created_by' => 'GWU000005',
+            'specialty' => 'Cardiology'
         ]);
 
         $jobNames = ['Nurse Practitioner', 'Medical Assistant', 'Radiologist', 'Dentist', 'Pharmacist', 'Surgeon', 'Pediatrician', 'Anesthesiologist'];
@@ -127,6 +128,29 @@ $types = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship'];
 $terms = ['Permanent', 'Contract', 'Temporary', 'Internship'];
 $professions = ['Nursing', 'Medical', 'Radiology', 'Dentistry', 'Pharmacy', 'Surgery', 'Pediatrics', 'Anesthesiology'];
 $settings = ['Hospital', 'Clinic', 'Private Practice', 'Urgent Care', 'Emergency Room', 'Operating Room', 'Pharmacy', 'Laboratory'];
+$Specialties = [
+    'Registered Nurse',
+    'Licensed Practical Nurse',
+    'Certified Nursing Assistant',
+    'Nurse Practitioner',
+    'Clinical Nurse Specialist',
+    'Nurse Anesthetist',
+    'Nurse Midwife',
+    'Psychiatric Nurse',
+    'Geriatric Nurse',
+    'Pediatric Nurse',
+    'Orthopedic Nurse',
+    'Oncology Nurse',
+    'Intensive Care Unit Nurse',
+    'Emergency Room Nurse',
+    'Surgical Nurse',
+    'Labor and Delivery Nurse',
+    'Home Health Nurse',
+    'Hospice Nurse',
+    'Ambulatory Care Nurse',
+    'Public Health Nurse'
+
+];
 
 for ($i = 0; $i < 8; $i++) {
     Offer::create([
@@ -180,9 +204,10 @@ for ($i = 0; $i < 8; $i++) {
         'total_goodwork_amount' => random_int(2500, 3000),
         'total_contract_amount' => random_int(3000, 3600),
         'weekly_pay' => random_int(3500, 4200),
-        'is_draft' => (bool)random_int(0, 1),
+        'is_draft' => false,
         'is_counter' => (bool)random_int(0, 1),
-        'created_by' => 'GWU000005'
+        'created_by' => 'GWU000005',
+        'specialty' => $Specialties[$i]
     ]);
 }
 

@@ -132,7 +132,8 @@ class JobsTableSeeder extends Seeder
                 'auto_offers' => $faker->numberBetween(0, 10),
                 'is_hidden' => $faker->boolean,
                 'is_closed' => $faker->boolean,
-
+                'tax_status' => $faker->randomElement(['W2', '1099']),
+                'terms' => $faker->word,
                 //new fields
                 'highest_nursing_degree' => $faker->randomElement(['BSN', 'MSN', 'PhD']),
                 'specialty' => $faker->randomElement(['Pediatrics', 'Oncology', 'Cardiology']),

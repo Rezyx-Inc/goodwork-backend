@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "@vue/compiler-sfc": "^3.3.9",
+        "chart.js": "^4.4.2",
         "laravel-echo": "^1.15.3",
         "socket.io-client": "^2.5.0",
         "update": "^0.7.4",

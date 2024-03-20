@@ -15,18 +15,6 @@ $user = auth()->guard('recruiter')->user();
       </div>
     </div>
 
-    <div class="col-lg-4">
-      <div class="ss-dash-serch-bx">
-        <div class="input-group">
-          <div class="form-outline">
-            <input type="search" id="form1" class="form-control" placeholder="Search anything...">
-          </div>
-          <button type="button" class="ssbtn">
-            <i class="fas fa-search" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-    </div>
 
     <div class="col-lg-4">
       <div class="ss-dash-hed-noti-divv">
