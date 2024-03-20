@@ -19,6 +19,7 @@ class CreateOffersTable extends Migration
             $table->string('status');
             $table->string('type');
             $table->string('terms');
+            $table->string('specialty');
             $table->string('profession');
             $table->boolean('block_scheduling')->nullable();
             $table->boolean('float_requirement');

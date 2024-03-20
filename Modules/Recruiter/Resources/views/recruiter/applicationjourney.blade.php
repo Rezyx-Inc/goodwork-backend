@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-lg-6">
                         <ul>
-                            <li ><a href="javascript:void(0)" onclick="applicationType('Done')" id="child_done" >Done</a>
+                            <li><a href="javascript:void(0)" onclick="applicationType('Done')" id="child_done">Done</a>
                             </li>
                             <li><a href="javascript:void(0)" onclick="applicationType('Rejected')"
                                     id="Rejected">Rejected</a></li>
@@ -71,41 +71,12 @@
                     </div>
                 </div>
             </div>
-            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-                        </div> -->
             <div class="ss-acount-profile">
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="ss-account-form-lft-1">
                             <h5 class="mb-4" id="listingname">New application</h5>
                             <div id="application-list">
-                                <!-- <div class="d-flex justify-content-between">
-                                                <a href="" class="p-0 bg-transparent">1112323</a>
-                                                <i>Recently Added</i>
-                                            </div>
-                                            <div class="d-flex">
-                                                <img src="" alt="" class="mr-2">
-                                                <h4>James Bond</h4>
-                                            </div>
-                                            <ul>
-                                                <li><a href="#">Los Angeles, CA</a></li>
-                                                <li><a href="#">10 wks</a></li>
-                                                <li><a href="#">2500/wk</a></li>
-                                            </ul> -->
                             </div>
                         </div>
                     </div>
@@ -121,13 +92,78 @@
         </div>
     </main>
     <script>
+        function validateFirst() {
+    var access = true;
+
+    var fields = [
+        'job_name',
+        'type',
+        'term',
+        'description',
+        'profession',
+        'preferred_specialty',
+        'float_requirement',
+        'facility_shift_cancelation_policy',
+        'contract_termination_policy',
+        'traveler_distance_from_facility',
+        'facility',
+        'clinical_setting',
+        'Patient_ratio',
+        'emr',
+        'Unit',
+        'scrub_color',
+        'as_soon_as',
+        'start_date',
+        'rto',
+        'shift-of-day',
+        'hours_per_week',
+        'guaranteed_hours',
+        'hours_shift',
+        'preferred_assignment_duration',
+        'weeks_shift',
+        'sign_on_bonus',
+        'completion_bonus',
+        'extension_bonus',
+        'referral_bonus',
+        'other_bonus',
+        '401k',
+        'health-insurance',
+        'dental',
+        'vision',
+        'actual_hourly_rate',
+        'overtime',
+        'holiday',
+        'on_call',
+        'tax_status',
+        'orientation_rate'
+    ];
+
+    fields.forEach(function(field) {
+       var test = document.getElementById(field);
+        console.log(test.value);
+        var value = document.getElementById(field).value;
+
+        if (value.trim() === '') {
+            $('.help-block-' + field).text('Please enter the ' + field);
+            $('.help-block-' + field).addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-' + field).text('');
+        }
+    });
+
+    return access;
+}
+
         function applicationType(type, id = "", formtype, jobid = "") {
+            
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
 
-            if (formtype == "joballdetails" || formtype == "createdraft") {
+            if ((formtype == "joballdetails" || formtype == "createdraft" ) && validateFirst() ) {
+                
                 event.preventDefault();
                 var $form = $('#send-job-offer');
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -135,16 +171,11 @@
                     console.error('CSRF token not found.');
                     return;
                 }
-
                 // Create a FormData object from the form
                 var formData = new FormData($form[0]);
-
                 // Append the new attribute
                 formData.append('funcionalityType', formtype);
-
-
                 console.log(formData);
-
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -153,8 +184,8 @@
                     url: "{{ route('recruiter-send-job-offer') }}",
                     data: formData,
                     dataType: 'json',
-                    processData: false, // tell jQuery not to process the data
-                    contentType: false, // tell jQuery not to set contentType
+                    processData: false, 
+                    contentType: false, 
                     success: function(data) {
                         if (type == "createdraft") {
                             notie.alert({
@@ -190,12 +221,9 @@
             var rejectedElement = document.getElementById('Rejected');
             var blockedElement = document.getElementById('Blocked');
             var holdElement = document.getElementById('child_done');
-
-
             if (draftElement.classList.contains("active")) {
                 draftElement.classList.remove("active");
             }
-
             if (applyElement.classList.contains("active")) {
                 applyElement.classList.remove("active");
             }
@@ -231,12 +259,11 @@
 
             if (activeElement) {
                 activeElement.classList.add("active");
-                 holdElement.classList.add("active");
+                holdElement.classList.add("active");
                 if (type == 'Rejected' || type == 'Blocked') {
-                     holdElement.classList.remove("active");
+                    holdElement.classList.remove("active");
                 }
             }
-
             document.getElementById('listingname').innerHTML = type + ' Application';
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked') {
 
@@ -246,6 +273,8 @@
             }
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
+                console.log(formtype);
+                console.log(type);
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -272,7 +301,7 @@
                         list_certifications();
                     },
                     error: function(error) {
-                        // Handle errors
+                        console.log(error);
                     }
                 });
             } else {
@@ -531,10 +560,6 @@
     <script>
         var speciality = {};
 
-        // console.log(window.allspecialty)
-        // console.log(window.allvaccinations)
-        // console.log(window.allcertificate)
-
         function add_speciality(obj) {
             if (!$('#preferred_specialty').val()) {
                 notie.alert({
@@ -636,21 +661,6 @@
         var vaccinations = {};
 
         function addvacc() {
-
-            // var container = document.getElementById('add-more-certifications');
-
-            // var newSelect = document.createElement('select');
-            // newSelect.name = 'certificate';
-            // newSelect.className = 'mb-3';
-
-            // var originalSelect = document.getElementById('certificate');
-            // var options = originalSelect.querySelectorAll('option');
-            // for (var i = 0; i < options.length; i++) {
-            //     var option = options[i].cloneNode(true);
-            //     newSelect.appendChild(option);
-            // }
-            // container.querySelector('.col-md-11').appendChild(newSelect);
-
             if (!$('#vaccinations').val()) {
                 notie.alert({
                     type: 'error',
@@ -954,7 +964,6 @@
                 }
             });
         }
-
         function getSpecialitiesByProfession(e) {
             var selectedValue = e.value;
             let formData = {

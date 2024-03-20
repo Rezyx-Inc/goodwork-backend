@@ -111,7 +111,7 @@
                                         <div class="ss-form-group col-md-4">
 
                                             <select name="perferred_profession" id="perferred_profession">
-                                                <option value="">Proffession</option>
+                                                <option value="">Profession</option>
                                                 @foreach($proffesions as $proffesion)
                                                 <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}
                                                 </option>

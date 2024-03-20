@@ -114,9 +114,16 @@ class ApplicationController extends Controller
 
     public function getApplicationListing(Request $request)
     {
+      
         $type = $request->type;
+        //return response()->json(['type'=>$type]); 
         $allspecialty = [];
-        $offerLists = Offer::where('status', $type)->get();
+        if($type == 'Draft'){
+            $offerLists = Offer::where('is_draft', true)->get();
+        }else{
+            $offerLists = Offer::where('status', $type)->get();
+        }
+        
         if (0 >= count($offerLists)) {
             $responseData = [
                 'applicationlisting' => '<div class="text-center"><span>No Application</span></div>',
@@ -176,9 +183,6 @@ class ApplicationController extends Controller
                             </li>
                         </ul>
                         <ul class="ss-expl-applicion-ul2">';
-                // if (isset($nurse['highest_nursing_degree'])) {
-                //     $data .= '<li"><a href="#">' . $nurse['highest_nursing_degree'] . '</a></li>';
-                // }
                 if (isset($nurse['facility_hourly_pay_rate'])) {
                     $data .= '<li"><a href="#"> Hourely pay rate ' . $nurse['facility_hourly_pay_rate'] . ' $</a></li>';
                 }
@@ -190,7 +194,6 @@ class ApplicationController extends Controller
                 if (isset($nurse['mu_specialty'])) {
                     $data .= '<li"><a href="#">' . $nurse['mu_specialty'] . '</a></li>';
                 }
-
                 //end new changes
                 if (isset($nurse['specialty'])) {
                     $data .= '<li"><a href="#">' . $nurse['specialty'] . '</a></li>';
@@ -216,19 +219,11 @@ class ApplicationController extends Controller
         if ($request->formtype == 'jobdetails') {
             $jobdetails = Job::where('id', $request->jobid)->first();
         } else {
-            // there is no job referneces table
-            // $jobdetails = Job::select('jobs.*','job_references.name','job_references.min_title_of_reference','job_references.recency_of_reference')
-            // ->leftJoin('job_references','job_references.job_id', '=', 'jobs.id')
-            // ->where('jobs.id', $offerdetails->job_id)->first();
             $jobdetails = Job::select('jobs.*')
                 ->where('jobs.id', $offerdetails->job_id)
                 ->first();
         }
         if (isset($offerdetails)) {
-            // there is no nurse references
-            // $nursedetails = NURSE::select('nurses.*','nurse_references.name','nurse_references.min_title_of_reference','nurse_references.recency_of_reference')
-            // ->leftJoin('nurse_references','nurse_references.worker_user_id', '=', 'nurses.id')
-            // ->where('nurses.id', $offerdetails['worker_user_id'])->first();
             $nursedetails = NURSE::select('nurses.*')
                 ->where('nurses.id', $offerdetails['worker_user_id'])
                 ->first();
@@ -260,19 +255,6 @@ class ApplicationController extends Controller
                         </li>
                         <li>';
 
-                // if ($request->type == 'Apply' || $request->type == 'Screening' || $request->type == 'Submitted') {
-                //     // send offer button on the comparison details
-                //     $data2 .=
-                //         '
-                //                     <button class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="applicationType(\'' .
-                //         $type .
-                //         '\', \'' .
-                //         $request->id .
-                //         '\', \'jobdetails\', \'' .
-                //         $request->jobid .
-                //         '\')">Send Offer from comparison</button>
-                //                 ';
-                // }
                 $data2 .= '
                         </li>
                     </ul>';
@@ -423,27 +405,6 @@ class ApplicationController extends Controller
                     '</p>
                     </div>
                     </div>';
-
-                // $data2 .=
-                //     '
-                //     <div class="row ' .
-                //     (($jobdetails->job_state == $nursedetails->nursing_license_state ) ? 'ss-s-jb-apl-bg-blue':'ss-s-jb-apl-bg-pink') .
-                //     ' d-flex align-items-center" style="margin:auto;">
-                //         <div class="col-md-6">
-                //             <h6>' .
-                //     ($jobdetails->job_state ?? '----') .
-                //     '</h6>
-                //         </div>
-                //         <div class="col-md-6 ' .
-                //     ($jobdetails->job_state ? '' : 'd-none') .
-                //     '">
-                //             <p>' .
-                //     ($nursedetails->nursing_license_state ?? '<u onclick="askWorker(this, \'nursing_license_state\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
-                //     '</p>
-                //         </div>
-                //         </div>
-                //         ';
-
                 $data2 .=
                     '
                             <div class="col-md-12">
@@ -1198,7 +1159,9 @@ class ApplicationController extends Controller
                     '</h6>
                             </div>
                         </ul>
-                    </div>
+                    </div>';
+                    if ($request->type != 'Done' && $request->type != 'Rejected' && $request->type != 'Blocked') {   
+                    $data2 .='
                     <div class="ss-counter-buttons-div">
                     
                     <button class="counter-save-for-button" onclick="offerSend(\'' .
@@ -1219,7 +1182,7 @@ class ApplicationController extends Controller
                     $jobdetails->id .
                     '\', \'offersend\')">Accept Offer</button>
                     </div>
-                    ';
+                    ';}
             } elseif ($request->formtype == 'jobdetails') {
                 $distinctFilters = Keyword::distinct()->pluck('filter');
                 $allKeywords = [];
@@ -1249,7 +1212,7 @@ class ApplicationController extends Controller
                     '
                     <div>
                         <h4><img src="' .
-                    asset('public/recruiter/assets/images/counter-left-img.png') .
+                        URL::asset('public/recruiter/assets/images/counter-left-img.png') .
                     '"> Send Offer</h4>
                         <div class="ss-job-view-off-text-fst-dv">
                             <p class="mt-3">On behalf of <a href="">Albus Percival , Hogwarts</a> would like to offer <a href="#">' .
@@ -1268,9 +1231,10 @@ class ApplicationController extends Controller
                     <form class="ss-emplor-form-sec" id="send-job-offer">
                     <div class="ss-form-group">
                         <label>Job Name</label>
-                        <input type="text" name="job_name" placeholder="Enter job name" value="' .
+                        <input type="text" name="job_name" id="job_name" placeholder="Enter job name" value="' .
                     $jobdetails['job_name'] .
                     '">
+                    
                         <input type="text" class="d-none" id="job_id" name="job_id" readonly value="' .
                     $jobdetails['id'] .
                     '">
@@ -1281,10 +1245,11 @@ class ApplicationController extends Controller
                     $userdetails->id .
                     '">
                     </div>
+                    <span class="help-block-job_name"></span>
                     <div class="ss-form-group">
                         <label>Type</label>
                         <select name="type" id="type">
-                            <option value="">Select Type</option>';
+                            <option value="'.$jobdetails['type'].'">'.$jobdetails['type'].'</option>';
                 if (isset($allKeywords['Type'])) {
                     foreach ($allKeywords['Type'] as $value) {
                         $data2 .= '<option value="' . $value->title . '" ' . ($jobdetails['type'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
@@ -1293,10 +1258,12 @@ class ApplicationController extends Controller
                 $data2 .= '
                         </select>
                     </div>
+                    <span class="help-block-type"></span>
                     <div class="ss-form-group">
                         <label>Terms</label>
                         <select name="terms" id="term">
-                            <option value="">Select Terms</option>';
+                        
+                        ';
                 if (isset($allKeywords['Terms'])) {
                     foreach ($allKeywords['Terms'] as $value) {
                         $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['terms'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
@@ -1306,16 +1273,18 @@ class ApplicationController extends Controller
                     '
                         </select>
                     </div>
+                    <span class="help-block-term"></span>
                     <div class="ss-form-group">
                         <h6>Description</h6>
                         <textarea name="description" id="description" placeholder="Enter Job Description" cols="30" rows="2"> ' .
                     $jobdetails['description'] .
                     '</textarea>
                     </div>
+                    <span class="help-block-description"></span>
                     <div class="ss-form-group">
                         <label>Profession</label>
                         <select name="profession" id="profession" >
-                            <option value="">Select Profession</option>';
+                        <option value="'.$jobdetails['proffesion'].'">'.$jobdetails['proffesion'].'</option>';
                 if (isset($allKeywords['Profession'])) {
                     foreach ($allKeywords['Profession'] as $value) {
                         $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['proffesion'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
@@ -1324,12 +1293,13 @@ class ApplicationController extends Controller
                 $data2 .= '
                         </select>
                     </div>
+                    <span class="help-block-profession"></span>
                     <div class="ss-form-group ss-prsnl-frm-specialty">
                         <label>Specialty</label>
                         
                                 <div class="col-md-12">
                                     <select name="preferred_specialty" class="m-0" id="preferred_specialty">
-                                        <option value="">Select Specialty</option>';
+                                    <option value="'.$jobdetails['preferred_specialty'].'">'.$jobdetails['preferred_specialty'].'</option>';
                 if (isset($allKeywords['Speciality'])) {
                     foreach ($allKeywords['Speciality'] as $value) {
                         $data2 .= '<option value="' . $value->id . '">' . $value->title . '</option>';
@@ -1342,6 +1312,7 @@ class ApplicationController extends Controller
                                
                             
                     </div>
+                    <span class="help-block-preferred_specialty"></span>
                     
                     <div class="ss-form-group row justify-contenet-center align-items-center" style="margin-top:36px;">
                         <label class="col-lg-6 col-sm-8 col-xs-8 col-md-8" >Block scheduling</label>
@@ -1352,17 +1323,18 @@ class ApplicationController extends Controller
                         <select name="float_requirement" class="float_requirement mb-3" id="float_requirement" value="' .
                     $jobdetails['float_requirement'] .
                     '" >
-                            <option value="">Enter Float requirements</option>
+                    <option value="'.$jobdetails['float_requirement'].'">'.$jobdetails['float_requirement'].'</option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
                     </div>
+                    <span class="help-block-float_requirement"></span>
                     <div class="ss-form-group">
                         <label>Facility Shift Cancellation Policy</label>
                         <select name="facility_shift_cancelation_policy" class="facility_shift_cancelation_policy mb-3" id="facility_shift_cancelation_policy" value="' .
                     $jobdetails['facility_shift_cancelation_policy'] .
                     '" >
-                            <option value="">Enter Facility Shift Cancellation Policy</option>';
+                    <option value="'.$jobdetails['facility_shift_cancelation_policy'].'">'.$jobdetails['facility_shift_cancelation_policy'].'</option>';
                 if (isset($allKeywords['AssignmentDuration'])) {
                     foreach ($allKeywords['AssignmentDuration'] as $value) {
                         $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['block_scheduling'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
@@ -1372,22 +1344,25 @@ class ApplicationController extends Controller
                     '
                         </select>
                     </div>
+                    <span class="help-block-facility_shift_cancelation_policy"></span>
                     <div class="ss-form-group">
                         <label>Contract Termination Policy</label>
-                        <input type="text" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="' .
+                        <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="' .
                     (isset($jobdetails['contract_termination_policy']) ? $jobdetails['contract_termination_policy'] : '2 weeks of guaranteed pay unless canceled for cause') .
                     '">
                     </div>
+                    <span class="help-block-contract_termination_policy"></span>
                     <div class="ss-form-group">
                         <label>Traveler Distance From Facility</label>
-                        <input type="number" name="traveler_distance_from_facility" placeholder="Enter Traveler Distance From Facility" value="' .
+                        <input type="number" id="traveler_distance_from_facility" name="traveler_distance_from_facility" placeholder="Enter Traveler Distance From Facility" value="' .
                     $jobdetails['traveler_distance_from_facility'] .
                     '" >
                     </div>
+                    <span class="help-block-traveler_distance_from_facility"></span>
                     <div class="ss-form-group">
                         <label>Facility</label>
                         <select name="facility" class="facility mb-3" id="facility">
-                            <option value="">Enter Facility</option>';
+                        <option value="'.$jobdetails['facility'].'">'.$jobdetails['facility'].'</option>';
                 if (isset($allKeywords['FacilityName'])) {
                     foreach ($allKeywords['FacilityName'] as $value) {
                         $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['facility'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
@@ -1397,45 +1372,50 @@ class ApplicationController extends Controller
                     '
                         </select>
                     </div>
+                    <span class="help-block-facility"></span>
                     <div class="ss-form-group">
                         <label>Clinical Setting</label>
-                        <input type="text" name="clinical_setting" placeholder="Enter clinical setting" value="' .
+                        <input type="text" id="clinical_setting" name="clinical_setting" placeholder="Enter clinical setting" value="' .
                     $jobdetails['clinical_setting'] .
                     '">
                     </div>
+                    <span class="help-block-clinical_setting"></span>
                     <div class="ss-form-group">
                         <label>Patient ratio</label>
-                        <input type="number" name="Patient_ratio" placeholder="How many patients can you handle?" value="' .
+                        <input type="number" id="Patient_ratio" name="Patient_ratio" placeholder="How many patients can you handle?" value="' .
                     $jobdetails['Patient_ratio'] .
                     '">
                     </div>
+                    <span class="help-block-Patient_ratio"></span>
                     <div class="ss-form-group">
                         <label>EMR</label>
                         <select name="emr" class="emr mb-3" id="emr">
-                            <option value="">Enter EMR</option>';
+                        <option value="'.$jobdetails['Emr'].'">'.$jobdetails['Emr'].'</option>';
                 if (isset($allKeywords['EMR'])) {
                     foreach ($allKeywords['EMR'] as $value) {
-                        $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['emr'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
+                        $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['Emr'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
                     }
                 }
                 $data2 .=
                     '
                         </select>
                     </div>
+                    <span class="help-block-emr"></span>
                     <div class="ss-form-group">
                         <label>Unit</label>
-                        <input type="number" name="Unit" placeholder="Enter Unit" value="' .
+                        <input id="Unit" type="text" name="Unit" placeholder="Enter Unit" value="' .
                     $jobdetails['Unit'] .
                     '">
                     </div>
+                    <span class="help-block-Unit"></span>
                     <div class="ss-form-group">
                         <label>Scrub Color</label>
-                        <input type="text" name="scrub_color" placeholder="Enter Scrub Color" value="' .
+                        <input id="scrub_color" type="text" name="scrub_color" placeholder="Enter Scrub Color" value="' .
                     $jobdetails['scrub_color'] .
                     '">
                     </div>
                     
-                    
+                    <span class="help-block-scrub_color"></span>
 
                     <div class="ss-form-group">
                          <div class="row">
@@ -1443,24 +1423,26 @@ class ApplicationController extends Controller
                                 <label>Start Date</label>
                             </div>
                             <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12" style="display: flex; justify-content: end;">
-                                <input type="checkbox" style="box-shadow:none; width:auto;" class="col-6">
+                                <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" style="box-shadow:none; width:auto;" class="col-6">
                                 <label class="col-6">
                                     As soon As possible
                                 </label>
                             </div>
                         </div>
-                         <input type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="1994-03-02">
+                         <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="1994-03-02">
                     </div>
+                    <span class="help-block-start_date"></span>
                     <div class="ss-form-group">
                         <label>Enter RTO</label>
-                        <input type="text" name="rto" placeholder="RTO" value="' .
+                        <input id="rto" type="text" name="rto" placeholder="RTO" value="' .
                     $jobdetails['rto'] .
                     '">
                     </div>
+                    <span class="help-block-rto"></span>
                     <div class="ss-form-group">
                         <label>Shift Time of Day</label>
                         <select name="preferred_shift" id="shift-of-day">
-                            <option value="">Select Shift of Day</option>';
+                        <option value="'.$jobdetails['preferred_shift'].'">'.$jobdetails['preferred_shift'].'</option>';
                 if (isset($allKeywords['PreferredShift'])) {
                     foreach ($allKeywords['PreferredShift'] as $value) {
                         $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['preferred_shift'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
@@ -1470,172 +1452,174 @@ class ApplicationController extends Controller
                     '
                         </select>
                     </div>
+                    <span class="help-block-shift-of-day"></span>
                     <div class="ss-form-group">
                         <label>Hours/Week</label>
-                        <input type="number" name="hours_per_week" placeholder="Enter Hours/Week" value="' .
+                        <input id="hours_per_week" type="number" name="hours_per_week" placeholder="Enter Hours/Week" value="' .
                     $jobdetails['hours_per_week'] .
                     '">
                     </div>
+                    <span class="help-block-hours_per_week"></span>
                     <div class="ss-form-group">
                         <label>Guaranteed Hours</label>
-                        <input type="number" name="guaranteed_hours" placeholder="Enter Guaranteed Hours" value="' .
+                        <input id="guaranteed_hours" type="number" name="guaranteed_hours" placeholder="Enter Guaranteed Hours" value="' .
                     $jobdetails['guaranteed_hours'] .
                     '">
                     </div>
+                    <span class="help-block-guaranteed_hours"></span>
                     <div class="ss-form-group">
                         <label>Hours/Shift</label>
-                        <input type="number" name="hours_shift" placeholder="Enter Hours/Shift" value="' .
+                        <input id="hours_shift" type="number" name="hours_shift" placeholder="Enter Hours/Shift" value="' .
                     $jobdetails['hours_shift'] .
                     '">
                     </div>
+                    <span class="help-block-hours_shift"></span>
                     <div class="ss-form-group">
                         <label>Weeks/Assignment</label>
-                        <input type="number" name="preferred_assignment_duration" placeholder="Enter Weeks/Assignment" value="' .
+                        <input id="preferred_assignment_duration" type="number" name="preferred_assignment_duration" placeholder="Enter Weeks/Assignment" value="' .
                     $jobdetails['preferred_assignment_duration'] .
                     '">
                     </div>
+                    <span class="help-block-preferred_assignment_duration"></span>
                     <div class="ss-form-group">
                         <label>Shifts/Week</label>
-                        <input type="number" name="weeks_shift" placeholder="Enter Shifts/Week" value="' .
+                        <input id="weeks_shift" type="number" name="weeks_shift" placeholder="Enter Shifts/Week" value="' .
                     $jobdetails['weeks_shift'] .
                     '">
                     </div>
+                    <span class="help-block-weeks_shift"></span>
                     <div class="ss-form-group">
                         <label>Sign-On Bonus</label>
-                        <input type="number" name="sign_on_bonus" placeholder="Enter Sign-On Bonus" value="' .
+                        <input id="sign_on_bonus" type="number" name="sign_on_bonus" placeholder="Enter Sign-On Bonus" value="' .
                     $jobdetails['sign_on_bonus'] .
                     '">
                     </div>
+                    <span class="help-block-sign_on_bonus"></span>
                     <div class="ss-form-group">
                         <label>Completion Bonus</label>
-                        <input type="number" name="completion_bonus" placeholder="Enter Completion Bonus" value="' .
+                        <input id="completion_bonus" type="number" name="completion_bonus" placeholder="Enter Completion Bonus" value="' .
                     $jobdetails['completion_bonus'] .
                     '">
                     </div>
+                    <span class="help-block-completion_bonus"></span>
                     <div class="ss-form-group">
                         <label>Extension Bonus</label>
-                        <input type="number" name="extension_bonus" placeholder="Enter Extension Bonus" value="' .
+                        <input id="extension_bonus" type="number" name="extension_bonus" placeholder="Enter Extension Bonus" value="' .
                     $jobdetails['extension_bonus'] .
                     '">
                     </div>
+                    <span class="help-block-extension_bonus"></span>
                     <div class="ss-form-group">
                         <label>Other Bonus</label>
-                        <input type="number" name="other_bonus" placeholder="Enter Other Bonus" value="' .
+                        <input id="other_bonus" type="number" name="other_bonus" placeholder="Enter Other Bonus" value="' .
                     $jobdetails['other_bonus'] .
                     '">
                     </div>
+                    <span class="help-block-other_bonus"></span>
                     <div class="ss-form-group">
                         <label>Referral Bonus</label>
-                        <input type="number" name="referral_bonus" placeholder="Enter Referral Bonus" value="' .
+                        <input id="referral_bonus" type="number" name="referral_bonus" placeholder="Enter Referral Bonus" value="' .
                     $jobdetails['referral_bonus'] .
                     '">
                     </div>
+                    <span class="help-block-referral_bonus"></span>
                     <div class="ss-form-group">
                         <label>401K</label>
                         <select name="four_zero_one_k" id="401k">
-                            <option value="">Select</option>';
-                // if(isset($allKeywords['401k'])){
-                //     foreach ($allKeywords['401k'] as $value){
-                //         $data2 .= '<option value="'. $value->id .'" ' . ($jobdetails['four_zero_one_k'] == $value->id ? 'selected' : '') . '>' .$value->title .'</option>';
-                //     }
-                // }
+                            ';
                 $data2 .= '
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
                     </div>
+                    <span class="help-block-401k"></span>
                     <div class="ss-form-group">
                         <label>Health Insurance</label>
                         <select name="health_insaurance" id="health-insurance">
-                            <option value=""><option value="true">Yes</option>
+                       
+                            <option value="'.$jobdetails['health_insaurance'].'">'.(($jobdetails['health_insaurance'] == '1') ? 'Yes': 'No').'</option>
+                            <option value="true">Yes</option>
                             <option value="false">No</option></option>
                             ';
-                //     if(isset($allKeywords['HealthInsurance'])){
-                //         foreach ($allKeywords['HealthInsurance'] as $value){
-                //             $data2 .= '<option value="'. $value->id .'" ' . ($jobdetails['health_insaurance'] == $value->id ? 'selected' : '') . '>' .$value->title .'</option>';
-                //         }
-                //     }
                 $data2 .= '
                         </select>
                     </div>
+                    <span class="help-block-health-insurance"></span>
                     <div class="ss-form-group">
                         <label>Dental</label>
                         <select name="dental" id="dental">
-                            <option value="">Select</option>';
-                // if(isset($allKeywords['Dental'])){
-                //     foreach ($allKeywords['Dental'] as $value){
-                //         $data2 .= '<option value="'. $value->id .'" ' . ($jobdetails['dental'] == $value->id ? 'selected' : '') . '>' .$value->title .'</option>';
-                //     }
-                // }
+                        <option value="'.$jobdetails['dental'].'">'.(($jobdetails['dental'] == '1') ? 'Yes': 'No').'</option>';
                 $data2 .= '
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
                     </div>
+                    <span class="help-block-dental"></span>
                     <div class="ss-form-group">
                         <label>Vision</label>
                         <select name="vision" id="vision">
-                            <option value="">Select</option>';
-                // if(isset($allKeywords['Vision'])){
-                //     foreach ($allKeywords['Vision'] as $value){
-                //         $data2 .= '<option value="'. $value->id .'" ' . ($jobdetails['vision'] == $value->id ? 'selected' : '') . '>' .$value->title .'</option>';
-                //     }
-                // }
+                        <option value="'.$jobdetails['vision'].'">'.(($jobdetails['vision'] == '1') ? 'Yes': 'No').'</option>';
                 $data2 .=
                     '
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
                     </div>
+                    <span class="help-block-vision"></span>
                     <div class="ss-form-group">
                         <label>Actual Hourly rate</label>
-                        <input type="number" name="actual_hourly_rate" placeholder="Enter Actual Hourly rate" value="' .
+                        <input id="actual_hourly_rate" type="number" name="actual_hourly_rate" placeholder="Enter Actual Hourly rate" value="' .
                     $jobdetails['actual_hourly_rate'] .
                     '">
                     </div>
+                    <span class="help-block-actual_hourly_rate"></span>
                     <div class="ss-form-group">
                         <label>Overtime</label>
                         <select name="overtime" class="overtime mb-3" id="overtime" value="' .
                     $jobdetails['overtime'] .
                     '">
-                            <option value="">Enter Overtime</option>
+                    <option value="'.$jobdetails['overtime'].'">'.$jobdetails['overtime'].'</option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
                     </div>
+                    <span class="help-block-overtime"></span>
                     <div class="ss-form-group">
                         <label>Holiday</label>
-                        <input type="date" name="holiday" placeholder="Select Dates" value="' .
+                        <input id="holiday" type="text" name="holiday" placeholder="Select Dates" value="' .
                     $jobdetails['holiday'] .
                     '">
                     </div>
+                    <span class="help-block-holiday"></span>
                     <div class="ss-form-group">
                         <label>On Call</label>
-                        <select name="on_call" class="on_call mb-3" id="on_call" value="' .
+                        <select  name="on_call" class="on_call mb-3" id="on_call" value="' .
                     $jobdetails['on_call'] .
                     '">
-                            <option value="">Enter On Call</option>
+                    <option value="'.$jobdetails['on_call'].'">'.$jobdetails['on_call'].'</option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
                     </div>
+                    <span class="help-block-on_call"></span>
                     <div class="ss-form-group">
                         <label>Tax Status</label>
-                        <select name="tax_status" class="on_call mb-3" id="on_call" value="">
-                            <option value="">Enter Tax Status</option>
+                        <select name="tax_status" class="on_call mb-3" id="tax_status" value="">
                             <option value="W4">W4</option>
                             <option value="1099">1099</option>
                         </select>
                     </div>
+                    <span class="help-block-tax_status"></span>
                     <div class="ss-form-group">
                         <label>Orientation Rate</label>
-                        <input type="number" name="orientation_rate" placeholder="Enter Orientation Rate" value="' .
+                        <input id="orientation_rate" type="number" name="orientation_rate" placeholder="Enter Orientation Rate" value="' .
                     $jobdetails['orientation_rate'] .
                     '">
                     </div>
+                    <span class="help-block-orientation_rate"></span>
                     <div class="ss-form-group">
                         <label>Est. Weekly Taxable amount</label>
-                        <input type="number" name="weekly_taxable_amount" placeholder="---" value="' .
+                        <input  type="number" name="weekly_taxable_amount" placeholder="---" value="' .
                     $jobdetails['weekly_taxable_amount'] .
                     '" readonly>
                     </div>
@@ -1702,7 +1686,7 @@ class ApplicationController extends Controller
                         <div class="ss-jb-apl-oninfrm-mn-dv">
                             <div>
                                 <h4><img src="' .
-                    asset('public/recruiter/assets/images/counter-left-img.png') .
+                                URL::asset('public/recruiter/assets/images/counter-left-img.png') .
                     '"> Send Offer</h4>
                                 <div class="ss-job-view-off-text-fst-dv">
                                     <p class="mt-3">On behalf of <a href="">Albus Percival , Hogwarts</a> would like to offer <a href="#">' .
@@ -2097,214 +2081,212 @@ class ApplicationController extends Controller
                     '</h6>
             </div>
         </ul>
-    </div>
-    <div class="ss-counter-buttons-div">
-        <button class="ss-counter-button" onclick="offerSend(\'' .
+            </div>
+            <div class="ss-counter-buttons-div">
+                <button class="ss-counter-button" onclick="offerSend(\'' .
                     $offerdetails->id .
                     '\', \'' .
                     $jobdetails->id .
                     '\', \'offersend\')">Send Offer</button>
-        <button class="counter-save-for-button" onclick="offerSend(\'' .
+                <button class="counter-save-for-button" onclick="offerSend(\'' .
                     $offerdetails->id .
                     '\', \'' .
                     $jobdetails->id .
                     '\', \'rejectcounter\')">Reject Counter</button>
-    </div>
-    ';
+            </div>
+            ';
             } else {
                 $data2 .=
                     '
-    <ul class="ss-cng-appli-hedpfl-ul">
-        <li>
-            <span>' .
+            <ul class="ss-cng-appli-hedpfl-ul">
+                <li>
+                    <span>' .
                     $offerdetails['worker_user_id'] .
                     '</span>
-            <h6>
-                <img src="' .
+                    <h6>
+                        <img src="' .
                     URL::asset('public/images/nurses/profile/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
                     URL::asset('frontend/img/profile-pic-big.png') .
                     '\'' .
                     ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
-                ' .
+                        ' .
                     $userdetails->first_name .
                     ' ' .
                     $userdetails->last_name .
                     '
-            </h6>
-        </li>
-        <li>
-            <a href="' .
+                    </h6>
+                </li>
+                <li>
+                    <a href="' .
                     route('recruiter-messages') .
                     '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
                     $offerdetails['worker_user_id'] .
                     '\')">Chat Now</a>
-           
-        </li>
-    </ul>
-    <div class="ss-appli-cng-abt-inf-dv">
-        <h5>Applicant Information</h5>
-        <p>' .
+                    
+                </li>
+            </ul>
+            <div class="ss-appli-cng-abt-inf-dv">
+                <h5>Applicant Information</h5>
+                <p>' .
                     $userdetails->about_me .
                     '</p>
-    </div>
-    <div class="ss-applicatio-infor-texts-dv">
-        <ul class="row">
-            <li class="col-md-6">
-                <p>Profession</p>
-                <h6>' .
+            </div>
+            <div class="ss-applicatio-infor-texts-dv">
+                <ul class="row">
+                    <li class="col-md-6">
+                        <p>Profession</p>
+                        <h6>' .
                     ($userdetails->highest_nursing_degree ?? '<u onclick="askWorker(this, \'highest_nursing_degree\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-            </li>
-            <li class="col-md-6">
-                <p>Specialty</p>
-                <h6 class="mb-3">' .
+                    </li>
+                    <li class="col-md-6">
+                        <p>Specialty</p>
+                        <h6 class="mb-3">' .
                     ($nursedetails['specialty'] ?? '<u onclick="askWorker(this, \'specialty\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-            </li>
-            ';
+                    </li>
+                    ';
                 $data2 .=
                     '
-                <li class="col-md-6">
-                    <p>Traveler Distance From Facility</p>
-                    <h6 class="mb-3">' .
+                        <li class="col-md-6">
+                            <p>Traveler Distance From Facility</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['distance_from_your_home'] ?? '<u onclick="askWorker(this, \'distance_from_your_home\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Facility</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Facility</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['worked_at_facility_before'] ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Location</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Location</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['state'] ?? '<u onclick="askWorker(this, \'state\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Shift</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Shift</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['worker_shift_time_of_day'] ?? '<u onclick="askWorker(this, \'worker_shift_time_of_day\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Distance from your home</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Distance from your home</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['distance_from_your_home'] ?? '<u onclick="askWorker(this, \'distance_from_your_home\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Facilities you`ve worked at</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Facilities you`ve worked at</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['facilities_you_like_to_work_at'] ?? '<u onclick="askWorker(this, \'facilities_you_like_to_work_at\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Start Date</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Start Date</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['worker_start_date'] ?? '<u onclick="askWorker(this, \'worker_start_date\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>RTO</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>RTO</p>
+                            <h6 class="mb-3">' .
                     ($offerdetails['rto'] ?? '<u onclick="askWorker(this, \'rto\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Shift Time of Day</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Shift Time of Day</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['worker_shift_time_of_day'] ?? '<u onclick="askWorker(this, \'worker_shift_time_of_day\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Weeks/Assignment</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Weeks/Assignment</p>
+                            <h6 class="mb-3">' .
                     ($offerdetails['worker_weeks_assignment'] ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-6">
-                    <p>Employer Weekly Amount</p>
-                    <h6 class="mb-3">' .
+                        </li>
+                        <li class="col-md-6">
+                            <p>Employer Weekly Amount</p>
+                            <h6 class="mb-3">' .
                     ($nursedetails['worker_employer_weekly_amount'] ?? '<u onclick="askWorker(this, \'worker_employer_weekly_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') .
                     '</h6>
-                </li>
-                <li class="col-md-12 ss-chng-appli-slider-mn-dv">
-                    <p>Job Applied(' .
+                        </li>
+                        <li class="col-md-12 ss-chng-appli-slider-mn-dv">
+                            <p>Applicants Information(' .
                     $jobappliedcount .
                     ')</p>
-            </ul>
-        </div>
-        <div class="ss-chng-appli-slider-mn-dv">
-
-        <div class="' .
+                    </ul>
+                </div>
+                <div class="ss-chng-appli-slider-mn-dv">
+                <div class="' .
                     ($jobappliedcount > 1 ? 'owl-carousel application-job-slider-owl' : '') .
                     ' application-job-slider">
-    ';
+            ';
                 foreach ($jobapplieddetails as $key => $value) {
                     if ($value) {
                         $appliednursecount = Offer::where(['status' => $type, 'job_id' => $value->job_id])->count();
                         $jobdetails = Job::where(['id' => $value->job_id])->first();
-                        // $route = route('recruiter-single-job', ['id' => $value->job_id]);
                         $data2 .=
                             '
-                <div style="width:100%;" class="ss-chng-appli-slider-sml-dv" onclick="applicationType(\'' .
+                        <div style="width:100%;" class="ss-chng-appli-slider-sml-dv" onclick="applicationType(\'' .
                             $type .
                             '\', \'' .
                             $value->id .
                             '\', \'useralldetails\', \'' .
                             $value->job_id .
                             '\')">
-                    <ul class="ss-cng-appli-slid-ul1">
-                        <li class="d-flex">
-                            <p>' .
+                            <ul class="ss-cng-appli-slid-ul1">
+                                <li class="d-flex">
+                                    <p>' .
                             $jobdetails->terms .
                             '</p>
-                            <span>' .
+                                    <span>' .
                             $appliednursecount .
                             ' Workeds Applied</span>
-                        </li>
-                        <li>Posted on ' .
+                                </li>
+                                <li>Posted on ' .
                             (new DateTime($jobdetails->start_date))->format('M d, Y') .
                             '</li>
-                    </ul>
-                    <h4>' .
+                            </ul>
+                            <h4>' .
                             $jobdetails->job_name .
                             '</h4>
-                    <ul class="ss-cng-appli-slid-ul2 d-block">
-                        <li class="d-inline-block">' .
+                            <ul class="ss-cng-appli-slid-ul2 d-block">
+                                <li class="d-inline-block">' .
                             $jobdetails->job_location .
                             ', ' .
                             $jobdetails->job_state .
                             '</li>
-                        <li class="d-inline-block">' .
+                                <li class="d-inline-block">' .
                             $jobdetails->preferred_shift .
                             'preferred_shift</li>
-                        <li class="d-inline-block">' .
+                                <li class="d-inline-block">' .
                             $jobdetails->preferred_days_of_the_week .
                             ' wks</li>
-                    </ul>
-                    <ul class="ss-cng-appli-slid-ul3">
-                        <li><span>' .
+                            </ul>
+                            <ul class="ss-cng-appli-slid-ul3">
+                                <li><span>' .
                             $jobdetails->facility .
                             '</span></li>
-                        <li><h6>$' .
+                                <li><h6>$' .
                             $jobdetails->hours_per_week .
                             '/wk</h6></li>
-                    </ul>
-                    <h5>' .
+                            </ul>
+                            <h5>' .
                             $value->job_id .
                             '</h5>
-                </div>
-            ';
+                        </div>
+                    ';
                     }
                 }
                 $data2 .= '</div>
-    </div>
-    </div>';
+            </div>
+            </div>';
                 if ($data2 == '') {
                     $data2 = '<div class="text-center"><span>Data Not found</span></div>';
                 }
@@ -2354,14 +2336,12 @@ class ApplicationController extends Controller
     }
     public function sendJobOffer(Request $request)
     {
-        //return response()->json($request->all());
         $validator = Validator::make($request->all(), [
-            // 'id' => 'required',
-            // 'worker_user_id' => 'required',
             'worker_user_id' => 'required',
             'job_id' => 'required',
         ]);
         $responseData = [];
+        $message = 'Try Again !';
         if ($validator->fails()) {
             $responseData = [
                 'status' => 'error',
@@ -2377,12 +2357,6 @@ class ApplicationController extends Controller
                 $update_array['type'] = isset($request->type) ? $request->type : $job_data->type;
                 $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
                 $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->proffesion;
-                // not needed
-                //$update_array["preferred_specialty"] = isset($request->preferred_specialty) ? $request->preferred_specialty : $job_data->preferred_specialty;
-                // not needed
-                //$update_array["facility"] = isset($request->facility) ? $request->facility : $job_data->facility;
-                // not needed
-                // $update_array["job_location"] = isset($request->job_location) ? $request->job_location : $job_data->job_location;
                 $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
                 $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;
                 $update_array['facility_shift_cancelation_policy'] = isset($request->facility_shift_cancelation_policy) ? $request->facility_shift_cancelation_policy : $job_data->facility_shift_cancelation_policy;
@@ -2391,21 +2365,14 @@ class ApplicationController extends Controller
                 $update_array['job_id'] = isset($request->job_id) ? $request->job_id : $job_data->job_id;
                 $update_array['recruiter_id'] = isset($request->recruiter_id) ? $request->recruiter_id : $job_data->recruiter_id;
                 $update_array['worker_user_id'] = isset($nurse->id) ? $nurse->id : '';
-                // not needed
-                // $update_array["compact"] = isset($request->compact) ? $request->compact : $job_data->compact;
-                // not needed
-                //$update_array["facility_id"] = isset($request->facility_id) ? $request->facility_id : $job_data->facility_id;
                 $update_array['clinical_setting'] = isset($request->clinical_setting) ? $request->clinical_setting : $job_data->clinical_setting;
                 $update_array['Patient_ratio'] = isset($request->Patient_ratio) ? $request->Patient_ratio : $job_data->Patient_ratio;
                 $update_array['emr'] = isset($request->emr) ? $request->emr : $job_data->emr;
                 $update_array['Unit'] = isset($request->Unit) ? $request->Unit : $job_data->Unit;
                 $update_array['scrub_color'] = isset($request->scrub_color) ? $request->scrub_color : $job_data->scrub_color;
                 $update_array['start_date'] = isset($request->start_date) ? $request->start_date : $job_data->start_date;
-                // alternative start date
                 $update_array['as_soon_as'] = isset($request->as_soon_as) ? $request->as_soon_as : $job_data->as_soon_as;
                 $update_array['rto'] = isset($request->rto) ? $request->rto : $job_data->rto;
-                // not needed
-                // $update_array["preferred_shift"] = isset($request->preferred_shift) ? $request->preferred_shift : $job_data->preferred_shift;
                 $update_array['hours_per_week'] = isset($request->hours_per_week) ? $request->hours_per_week : $job_data->hours_per_week;
                 $update_array['guaranteed_hours'] = isset($request->guaranteed_hours) ? $request->guaranteed_hours : $job_data->guaranteed_hours;
                 $update_array['hours_shift'] = isset($request->hours_shift) ? $request->hours_shift : $job_data->hours_shift;
@@ -2435,18 +2402,20 @@ class ApplicationController extends Controller
                 $update_array['total_contract_amount'] = isset($update_array['total_goodwork_amount']) && isset($update_array['total_employer_amount']) ? $update_array['total_goodwork_amount'] + isset($update_array['total_employer_amount']) : null;
                 $update_array['weekly_pay'] = isset($job_data->weekly_pay) ? $job_data->weekly_pay : null;
                 $update_array['tax_status'] = isset($request->tax_status) ? $request->tax_status : null;
-                //$update_array["job_city"] = isset($job_data->job_city)?$job_data->job_city:'';
-                //$update_array["job_state"] = isset($job_data->job_state)?$job_data->job_state:'';
                 if ($request->funcionalityType == 'createdraft') {
+                    $update_array['status'] = 'Draft';
                     $update_array['is_draft'] = '1';
                     $update_array['is_counter'] = '0';
+                    $message = 'Draft Created Successfully !';
                 } else {
+                    $update_array['status'] = 'Offered';
                     $update_array['is_draft'] = '0';
                     $update_array['is_counter'] = '1';
+                    $message = 'Counter Offer Created Successfully !';
                 }
                 /* create job */
                 $update_array['created_by'] = isset($job_data->recruiter_id) && $job_data->recruiter_id != '' ? $job_data->recruiter_id : '';
-                $update_array['status'] = 'Offered';
+                
                 $offerexist = DB::table('offers')
                     ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
                     ->first();
@@ -2461,12 +2430,12 @@ class ApplicationController extends Controller
                 if ($job) {
                     $responseData = [
                         'status' => 'success',
-                        'message' => $request->all(),
+                        'message' => $message,
                     ];
                 } else {
                     $responseData = [
                         'status' => 'error',
-                        'message' => $job,
+                        'message' => $message,
                     ];
                 }
             } catch (\Exception $e) {
@@ -2519,31 +2488,6 @@ class ApplicationController extends Controller
                     ];
                 }
             }
-            // $update_array['is_draft'] = '0';
-            // $job = DB::table('offers')
-            //     ->where(['id' => $request->id])
-            //     ->first();
-            // if ($job->is_draft == '0') {
-            //     $responseData = [
-            //         'status' => 'Error',
-            //         'message' => 'Job Offer Already Send',
-            //     ];
-            // } else {
-            //     $job = DB::table('offers')
-            //         ->where(['id' => $request->id])
-            //         ->update($update_array);
-            //     if ($job) {
-            //         $responseData = [
-            //             'status' => 'success',
-            //             'message' => 'Job Offer Send successfully',
-            //         ];
-            //     } else {
-            //         $responseData = [
-            //             'status' => 'error',
-            //             'message' => 'Somthing went wrong!',
-            //         ];
-            //     }
-            // }
             return response()->json($responseData);
         }
     }
