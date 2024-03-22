@@ -97,6 +97,16 @@ class WorkerController extends Controller
         return view('worker::dashboard/my-profile');
     }
 
+    public function details($id)
+    {
+        $data = [];
+        $data['model'] = Job::findOrFail($id);
+        // $user = auth()->guard('frontend')->user();
+        // dd($user->nurse->id);
+        $data['jobSaved'] = new JobSaved();
+        return view('worker::dashboard.details', $data);
+    }
+
     public function sendMessages(Request $request)
     {
 

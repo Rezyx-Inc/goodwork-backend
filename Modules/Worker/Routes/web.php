@@ -56,8 +56,9 @@ Route::prefix('worker')->group(function() {
         Route::post('/send-message', ['uses' => 'WorkerController@sendMessages', 'as' => 'send.message']);
         Route::get('/get-messages', ['uses' => 'WorkerController@getMessages', 'as' => 'GetMessages']);
         
-        // still in use ???
+        // still in use ??? 
         Route::get('/get-rooms', ['uses' => 'WorkerController@get_rooms', 'as' => 'GetRooms']);
+        Route::get('job/{id}/details', ['uses' => 'WorkerController@details', 'as' => 'worker_job-details']);
     }
 
     );
