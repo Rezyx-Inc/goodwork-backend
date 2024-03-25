@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('worker::layouts.main')
 @section('mytitle', 'My Profile')
 @section('css')
 @stop
@@ -35,9 +35,6 @@
           </div>
 
   </div>
-
-
-
   <!----------------jobs applay view details--------------->
 
   <div class="ss-job-apply-on-view-detls-mn-dv">
@@ -139,134 +136,10 @@
             <span>Specialty</span>
             <h6>{{str_replace(',',', ',$model->preferred_specialty)}}</h6>
         </li>
-        <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li>
+        {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
+        <li><p data-target="dropdown" data-title="What's your specialty?" data-filter="Speciality" data-name="specialty" onclick="open_modal(this)">What's your specialty?</p></li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Professional Licensure</span>
-        <h6>{{$model->job_location}}</h6>
-        </li>
-        <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-pop-cale">Where are you licensed?</p></li>
-    </ul>
-
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['preferred_experience']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Experience</span>
-        <h6>{{str_replace(',',', ',$model->preferred_experience)}} Years</h6>
-        </li>
-        <li><p>How long have you done this?</p></li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-            @php
-                $vaccines = explode(',', $model->vaccinations);
-            @endphp
-            <span>Vaccinations & Immunizations</span>
-            @foreach ($vaccines as $v)
-            <h6>{{$v}} Required</h6>
-            @endforeach
-        </li>
-        <li>
-            @foreach ($vaccines as $v)
-            <p>Did you get the {{$v}} Vaccines?</p>
-            @endforeach
-
-        </li>
-    </ul>
-
-    {{-- <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['number_of_references']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>References</span>
-            <h6>{{$model->number_of_references}}  references </h6>
-            <h6>{{$model->recency_of_reference}} months Recency</h6>
-        </li>
-        <li>
-            <p>Who are your References?</p>
-            <p data-bs-toggle="modal" data-bs-target="#job-dtl-References">Is this from your last assignment?</p>
-        </li>
-    </ul> --}}
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-            @php
-                $certificates = explode(',', $model->certificate);
-            @endphp
-            <span>Certifications</span>
-            @foreach ($certificates as $v)
-            <h6>{{$v}} Required</h6>
-            @endforeach
-        </li>
-        <li>
-            <p></p>
-            @foreach ($certificates as $v)
-            <p data-target="file" data-hidden_name="{{strtolower($v)}}_cer" data-hidden_value="Yes" data-href="{{route('certification')}}" data-title="No {{$v}}?" data-name="{{strtolower($v)}}" onclick="open_modal(this)">No {{$v}}?</p>
-            @endforeach
-        </li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Skills checklist</span>
-        <h6>{{str_replace(',', ', ',$model->skills)}} </h6>
-
-        </li>
-        <li><p>Upload your latest skills checklist</p>
-
-        </li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['eligible_work_in_us']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>Eligible to work in the US</span>
-            <h6>Required</h6>
-            {{-- <h6>Flu 2022 Preferred</h6> --}}
-        </li>
-        <li>
-            <p data-target="binary" data-title="Does Congress allow you to work here?" data-name="eligible_work_in_us" onclick="open_modal(this)">Does Congress allow you to work here?</p>
-        </li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['urgency']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Urgency</span>
-        <h6>{{$model->urgency}} </h6>
-
-        </li>
-        <li>
-            <p  data-target="input" data-title="How quickly you can be ready to submit?" data-placeholder="How quickly you can be ready to submit?" data-name="worker_urgency" onclick="open_modal(this)">How quickly you can be ready to submit?</p>
-        </li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span># Of positions available</span>
-        <h6>{{$model->position_available - $model->getOfferCount() }} of {{$model->position_available}}</h6>
-        </li>
-        <li>
-            <p>You have applied to # jobs?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['msp']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>MSP</span>
-        <h6>{{$model->msp}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="Any MSPs you prefer to avoid?" data-filter="MSP" data-name="MSP" onclick="open_modal(this)">Any MSPs you prefer to avoid?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['vms']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>VMS</span>
-        <h6>{{$model->vms}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="Who's is your favorite VMS?" data-filter="VMS" data-name="VMS" onclick="open_modal(this)">Who's is your favorite VMS?</p>
-        </li>
-    </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['block_scheduling']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Block Scheduling</span>
@@ -321,42 +194,7 @@
             <p data-target="input" data-title="What Facilities have you worked at?" data-placeholder="Write Name Of Facilities" data-name="facilities_you_like_to_work_at" onclick="open_modal(this)">What Facilities have you worked at?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Facility's Parent System</span>
-        <h6>{{$model->facilitys_parent_system}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="What Facilities would you like to work at?" data-placeholder="Write Name Of Facilities" data-name="worker_facility_parent_system" onclick="open_modal(this)">What Facilities would you like to work at?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Facility Average Rating</span>
-        <h6>{{$model->facility_average_rating}} </h6>
-        </li>
-        <li>
-            <p  data-target="input" data-title="Your average rating by your facilities?" data-placeholder="Your average rating by your facilities" data-name="avg_rating_by_facilities" onclick="open_modal(this)">Your average rating by your facilities?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Recruiter Average Rating</span>
-        <h6>{{$model->recruiter_average_rating}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="Your average rating by your recruiters?" data-placeholder="Your average rating by your recruiters" data-name="worker_avg_rating_by_recruiters" onclick="open_modal(this)">Your average rating by your recruiters?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Employer Average Rating</span>
-        <h6>{{$model->employer_average_rating}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="Your average rating by your employers?" data-placeholder="Your average rating by your employers" data-name="worker_avg_rating_by_employers" onclick="open_modal(this)">Your average rating by your employers?</p>
-        </li>
-    </ul>
+   
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>Clinical Setting</span>
@@ -378,7 +216,7 @@
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>EMR</span>
-        <h6>{{$model->emr}} </h6>
+        <h6>{{$model->Emr}} </h6>
         </li>
         <li>
             <p data-target="dropdown" data-title="What EMRs have you used?" data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What EMRs have you used?</p>
@@ -393,33 +231,8 @@
             <p data-target="input" data-title="Fav Unit?" data-placeholder="Fav Unit?" data-name="worker_unit" onclick="open_modal(this)">Fav Unit?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Department</span>
-        <h6>{{$model->Department}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="Fav Department?" data-placeholder="Fav Department?" data-name="worker_department" onclick="open_modal(this)">Fav Department?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Bed Size</span>
-        <h6>{{$model->Bed_Size}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="King or California king?" data-placeholder="King or California king?" data-name="worker_bed_size" onclick="open_modal(this)">King or California king?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Trauma Level</span>
-        <h6>{{$model->Trauma_Level}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="Ideal Trauma Level?" data-placeholder="Ideal Trauma Level?" data-name="worker_trauma_level" onclick="open_modal(this)">Ideal Trauma Level?</p>
-        </li>
-    </ul>
+   
+ 
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>Scrub Color</span>
@@ -618,15 +431,7 @@
             <p>What rate is fair?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Feels Like $/Hr</span>
-        <h6>${{$model->feels_like_per_hour}} </h6>
-        </li>
-        <li>
-            <p>Does this seem fair based on the market?</p>
-        </li>
-    </ul>
+
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>Overtime</span>
@@ -702,7 +507,7 @@
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>Goodwork Weekly Amount</span>
-        <h6>${{$model->goodwork_weekly_amount}} </h6>
+        <h6>${{$model->weekly_taxable_amount}} </h6>
         </li>
         <li>
             <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p>
@@ -766,7 +571,8 @@
       </div>
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
-            <form method="post" action="{{route('worker-upload-files')}}" id="file_modal_form" class="modal-form">
+            <form method="post" action="{{route('worker-upload-files')}}" id="file_modal_form" class="modal-form" enctype="multipart/form-data">
+                @csrf
                 <div class="ss-job-dtl-pop-frm-sml-dv"></div>
                 <h4></h4>
                 <div class="ss-form-group fileUploadInput">
@@ -797,6 +603,7 @@
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form">
             <form method="post" action="{{route('my-profile.store')}}" id="binary_modal_form" class="modal-form">
+                @csrf
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4></h4>
                 <ul class="ss-jb-dtlpop-chck">
@@ -836,6 +643,7 @@
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form">
             <form method="post" action="{{route('my-profile.store')}}" id="input_modal_form" class="modal-form">
+                @csrf
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4></h4>
                 <div class="ss-form-group">
@@ -864,6 +672,7 @@
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form">
             <form>
+                @csrf
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4>Yes we need your SS# to submit you</h4>
                 <div class="ss-form-group">
@@ -890,6 +699,7 @@
         <div class="modal-body">
             <div class="ss-job-dtl-pop-form">
                 <form method="post"  action="{{route('my-profile.store')}}" id="dropdown_modal_form" class="modal-form">
+                    @csrf
                     <h4></h4>
                     <div class="ss-form-group">
                         <select name=""></select>
@@ -920,6 +730,7 @@
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
             <form method="post" action="{{route('references.store')}}" id="ref-modal-form" enctype="multipart/form-data">
+                @csrf
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4>Who are your References?</h4>
                 <div class="ss-form-group">
@@ -982,6 +793,7 @@
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
             <form>
+                @csrf
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4>Upload your latest skills checklist</h4>
                 <div class="ss-form-group">
@@ -1027,6 +839,7 @@
       <div class="modal-body">
         <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
             <form>
+                @csrf
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4>Upload your latest skills checklist</h4>
 
@@ -1114,6 +927,7 @@
                 $(form).find('input[type="hidden"]').attr('name',$(obj).data('hidden_name'));
                 $(form).find('input[type="hidden"]').val($(obj).data('hidden_value'));
                 $(form).attr('action', $(obj).data('href'));
+                $(form).append('<input type="hidden" name="_token" value="{{ csrf_token() }}">');
                 break;
             case 'input':
                 $(form).find('input[type="text"]').attr('name',name);

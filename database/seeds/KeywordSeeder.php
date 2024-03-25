@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Keyword;
 use App\Models\User;
+use App\Models\State;
 
 class KeywordSeeder extends Seeder
 {
@@ -411,7 +412,8 @@ class KeywordSeeder extends Seeder
             'EMR'=>[
                 'Epic',
                 'Cerner'
-            ]
+            ],
+            'State'=>State::all()->pluck('name')->toArray(),
         ];
     }
 }

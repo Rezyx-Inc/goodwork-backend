@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('worker::layouts.main')
 @section('mytitle', 'My Profile')
 @section('css')
 @stop

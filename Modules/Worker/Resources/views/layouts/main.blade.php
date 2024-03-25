@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head>
+    <script type="text/javascript">
+        var full_path = '<?= url('/') . '/'; ?>';
+        var logged_in = '<?= (Auth()->guard('frontend')->guest()) ? false : true; ?>';
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -25,6 +29,7 @@
 <body>
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
     <header>
+        
         @include('worker::partials.worker_sidebar')
         @include('worker::partials.worker_header')
     </header>
