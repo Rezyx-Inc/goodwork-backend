@@ -342,4 +342,133 @@ class WorkerDashboardController extends Controller
         //return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
     }
     }
+
+    public function my_work_journey()
+    {
+        try{
+        $user = auth()->guard('frontend')->user();
+        $whereCond = [
+            'jobs.is_open' => "1",
+            'jobs.is_closed' => "0",
+            // 'job_saved.is_delete'=>'0',
+            // 'job_saved.nurse_id'=>$user->id,
+        ];
+
+        $data = [];
+
+        switch(request()->route()->getName())
+        {
+            case 'my-work-journey':
+                $whereCond['jobs.is_hidden'] = '0';
+                // $jobs = Job::select("jobs.*")
+                // ->join('job_saved', function ($join) use ($user){
+                //     $join->on('job_saved.job_id', '=', 'jobs.id')
+                //     ->where(function ($query) use ($user) {
+                //         $query->where('job_saved.is_delete', '=', '0')
+                //         ->where('job_saved.is_save', '=', '1')
+                //         ->where('job_saved.nurse_id', '=', $user->id);
+                //     });
+                // })
+                // ->where($whereCond)
+                // ->orderBy('job_saved.created_at', 'DESC')
+                // ->get();
+
+                $jobs = Job::first();
+                $data['type'] = 'saved';
+                //return response()->json(['message' =>  $user]);
+                break;
+
+            case 'applied-jobs':
+                $jobs = Job::select("jobs.*")
+                ->join('offers', function ($join) use ($user){
+                    $join->on('offers.job_id', '=', 'jobs.id')
+                    ->where(function ($query) use ($user) {
+                        $query->whereIn('offers.status', ['Apply', 'Screening', 'Submitted'])
+                        ->where('offers.active', '=', '1')
+                        ->where('offers.nurse_id', '=', $user->nurse->id)
+                        ->where(function($q){
+                            $q->whereNull('offers.expiration')
+                            ->orWhere('offers.expiration', '>', date('Y-m-d'));
+                        });
+                    });
+                })
+                ->where($whereCond)
+                ->orderBy('offers.created_at', 'DESC')
+                ->get();
+                $data['type'] = 'applied';
+                break;
+
+            case 'hired-jobs':
+                unset($whereCond['jobs.is_closed']);
+                $jobs = Job::select("jobs.*")
+                ->join('offers', function ($join) use ($user){
+                    $join->on('offers.job_id', '=', 'jobs.id')
+                    ->where(function ($query) use ($user) {
+                        $query->whereIn('offers.status', ['Onboarding', 'Working'])
+                        ->where('offers.active', '=', '1')
+                        ->where('offers.nurse_id', '=', $user->nurse->id);
+
+                    });
+                })
+                ->where($whereCond)
+                ->orderBy('offers.created_at', 'DESC')
+                ->get();
+                $data['type'] = 'hired';
+                break;
+
+            case 'offered-jobs':
+                $jobs = Job::select("jobs.*")
+                ->join('offers', function ($join) use ($user){
+                    $join->on('offers.job_id', '=', 'jobs.id')
+                    ->where(function ($query) use ($user) {
+                        $query->whereIn('offers.status', ['Offered', 'Rejected', 'Hold'])
+                        ->where('offers.active', '=', '1')
+                        ->where('offers.nurse_id', '=', $user->nurse->id)
+                        ->where(function($q){
+                            $q->whereNull('offers.expiration')
+                            ->orWhere('offers.expiration', '>', date('Y-m-d'));
+                        });
+                    });
+                })
+                ->where($whereCond)
+                ->orderBy('offers.created_at', 'DESC')
+                ->get();
+                $data['type'] = 'offered';
+                break;
+
+            case 'past-jobs':
+                unset($whereCond['jobs.is_closed']);
+                $jobs = Job::select("jobs.*")
+                ->join('offers', function ($join) use ($user){
+                    $join->on('offers.job_id', '=', 'jobs.id')
+                    ->where(function ($query) use ($user) {
+                        $query->where('offers.status', '=', 'Done')
+                        ->where('offers.active', '=', '1')
+                        ->where('offers.nurse_id', '=', $user->nurse->id)
+                        ->where(function($q){
+                            $q->whereNull('offers.expiration')
+                            ->orWhere('offers.expiration', '>', date('Y-m-d'));
+                        });
+                    });
+                })
+                ->where($whereCond)
+                ->orderBy('offers.created_at', 'DESC')
+                ->get();
+                $data['type'] = 'past';
+                break;
+            default:
+                return redirect()->back();
+                break;
+        }
+
+        $model = $jobs;
+        // return response()->json(['message' => $model]);
+        return view('worker::dashboard.my_work_journey',compact('model'));
+    }
+    catch (\Exception $e) {
+        // Handle other exceptions
+        // Display a generic error message or redirect with an error status
+        return redirect()->route('worker.dashboard')->with('error', $e->getmessage());
+    }
+    }
 }

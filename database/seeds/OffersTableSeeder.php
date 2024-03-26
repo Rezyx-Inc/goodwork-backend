@@ -21,7 +21,7 @@ class OffersTableSeeder extends Seeder
             'traveler_distance_from_facility' => '10 miles',
             'job_id' => 'GWJ000001',
             'recruiter_id' => 'GWU000006',
-            'worker_user_id' => 'GWW000001',
+            'worker_user_id' => 'GWW000002',
             'clinical_setting' => 'Hospital',
             'Patient_ratio' => 4.0,
             'emr' => 'Epic',
@@ -79,7 +79,7 @@ class OffersTableSeeder extends Seeder
             'traveler_distance_from_facility' => '15 miles',
             'job_id' => 'GWJ000001',
             'recruiter_id' => 'GWU000006',
-            'worker_user_id' => 'GWW000001',
+            'worker_user_id' => 'GWW000002',
             'clinical_setting' => 'Clinic',
             'Patient_ratio' => 6.0,
             'emr' => 'Cerner',
@@ -124,6 +124,7 @@ class OffersTableSeeder extends Seeder
 
         $jobNames = ['Nurse Practitioner', 'Medical Assistant', 'Radiologist', 'Dentist', 'Pharmacist', 'Surgeon', 'Pediatrician', 'Anesthesiologist'];
 $statuses = ['Submitted', 'Offered', 'Onboarding', 'Working', 'Done', 'Rejected', 'Blocked', 'Hold'];
+$jobs_id = ['GWJ000001','GWJ000002','GWJ000003','GWJ000004','GWJ000005','GWJ000006','GWJ000007','GWJ000008','GWJ000009','GWJ000010']; 
 $types = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship'];
 $terms = ['Permanent', 'Contract', 'Temporary', 'Internship'];
 $professions = ['Nursing', 'Medical', 'Radiology', 'Dentistry', 'Pharmacy', 'Surgery', 'Pediatrics', 'Anesthesiology'];
@@ -165,9 +166,9 @@ for ($i = 0; $i < 8; $i++) {
         'facility_shift_cancelation_policy' => random_int(24, 48) . ' hours notice',
         'contract_termination_policy' => random_int(30, 60) . ' days notice',
         'traveler_distance_from_facility' => random_int(5, 20) . ' miles',
-        'job_id' => 'GWJ000001',
+        'job_id' => $jobs_id[$i],
         'recruiter_id' => 'GWU000006',
-        'worker_user_id' => 'GWW000001',
+        'worker_user_id' => 'GWW000002',
         'clinical_setting' => $settings[array_rand($settings)],
         'Patient_ratio' => random_int(4, 10),
         'emr' => 'Cerner',
