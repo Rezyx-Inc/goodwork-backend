@@ -24,7 +24,7 @@ $user = auth()->guard('frontend')->user();
         </a>
 
 
-        <a href="{{route('my-work-journey')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'my-work-journey') ? 'active':''}}">
+        <a href="{{route('worker.my-work-journey')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.my-work-journey') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>My Work Journey</span>
         </a>
 

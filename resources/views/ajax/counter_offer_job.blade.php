@@ -16,59 +16,77 @@
 <!-----counter form------>
 <div class="ss-counter-form-mn-dv">
     <form method="post" enctype="multipart/form-data" action="{{route('post-counter-offer')}}" id="counter-offer-form">
-        <div class="ss-form-group">
-            <label>Type</label>
-            <select name="type">
-              <option value="">Select</option>
-              @foreach($keywords['Type'] as $k=>$v)
-              <option value="{{$v->title}}" {{ ($v->title == $model->type) ? 'selected' : ''}}>{{$v->title}}</option>
-              @endforeach
-            </select>
-          </div>
+      <div class="ss-form-group">
+        <label>Job Name</label>
+        <input type="text" name="job_name" id="job_name" placeholder="Enter job name" value="{{
+    $model->job_name}}">
+    </div>
+    <span class="help-block-job_name"></span>
 
-           <div class="ss-form-group">
-            <label>Terms</label>
-            <select name="terms">
-                <option value="">Select</option>
-                @foreach($keywords['Terms'] as $k=>$v)
-                <option value="{{$v->title}}" {{ ($v->title == $model->terms) ? 'selected' : ''}}>{{$v->title}}</option>
-                @endforeach
-            </select>
-          </div>
+    <div class="ss-form-group">
+      <label>Type</label>
+      <select name="type" id="type">
+          <option value="{{$model['type']}}">{{$model['type']}}</option>
+  @if(isset($keywords['Type'])) 
+  @foreach ($keywords['Type'] as $value) 
+      <option value="{{$value->title}}
+        @if ($model['type'] == $value->id)
+          'selected' @else '' @endif
+          "> {{$value->title}}  
+        </option>
+  @endforeach
+@endif
+
+      </select>
+  </div>
+  <span class="help-block-type"></span>
+  <div class="ss-form-group">
+    <label>Terms</label>
+    <select name="terms" id="term">
+@if (isset($keywords['Terms'])) 
+@foreach ($keywords['Terms'] as $value) 
+    <option value="{{$value->id}}  @if ($model['terms'] == $value->id) 'selected' @else '' @endif ">{{$value->title}}</option>
+@endforeach
+@endif
+    </select>
+</div>
+<span class="help-block-term"></span>
+          <div class="ss-form-group">
+            <h6>Description</h6>
+            <input name="description" id="description" placeholder="Enter Job Description" cols="30" rows="2" value="{{
+            $model['description']}}"  />
+        </div>
+        <span class="help-block-description"></span>
 
            <div class="ss-form-group">
             <label>Profession</label>
             <select name="profession"  onchange="get_speciality(this)">
-                <option value="">Select</option>
+              <option value="{{$model['proffesion']}}">{{$model['proffesion']}}</option>
                 @foreach($keywords['Profession'] as $k=>$v)
                 <option value="{{$v->title}}" {{ ($v->title == $model->type) ? 'selected' : ''}} data-id="{{$v->id}}">{{$v->title}}</option>
                 @endforeach
             </select>
           </div>
+          <span class="help-block-profession"></span>
 
-          <div class="ss-counter-form-uplpls-dv">
-            <label>Specialty and Experience</label>
-            <div class="ss-speilty-exprnc-add-list speciality-content">
-             </div>
-            <ul>
-                <li>
-                    <div class="ss-form-group">
-                    <select name="speciality" id="speciality" class="ss-form-group">
-                        <option value="">Select Specialty</option>
-                    </select>
+          <div class="ss-form-group ss-prsnl-frm-specialty">
+            <label>Specialty</label>
+            
+                    <div class="col-md-12">
+                        <select name="preferred_specialty" class="m-0" id="preferred_specialty">
+                        <option value="{{$model['preferred_specialty']}}">{{$model['preferred_specialty']}}</option>
+                          @if (isset($keywords['Speciality'])) 
+                              @foreach ($keywords['Speciality'] as $value) 
+                                  <option value="{{$value->id}}"> {{ $value->title }}</option>
+                              @endforeach
+                          @endif
+                        </select>
                     </div>
-                </li>
-                <li>
-                    <div class="ss-form-group">
-                        <input type="text"  name="experience" id="experience" placeholder="Enter Experience in years">
-                    </div>
+        </div>
+        <span class="help-block-preferred_specialty"></span>
+      
 
-                 </li>
-                 <li><div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="add_speciality(this)"><i class="fa fa-plus" aria-hidden="true"></i></a></div></li>
-             </ul>
-          </div>
-
-          <div class="ss-count-profsn-lins-dv">
+          {{-- <div class="ss-count-profsn-lins-dv">
             <ul>
               <li>
                 <label>Professional Licensure</label>
@@ -81,18 +99,18 @@
                     <option value="{{$v->iso2}}" {{ ($model->job_location == $v->iso2) ? 'selected' :'' }}>{{$v->iso2}}</option>
                 @endforeach
             </select>
-          </div>
+          </div> --}}
 
-          <div class="ss-countr-vacny-imznt">
+          {{-- <div class="ss-countr-vacny-imznt">
             <label>Vaccinations & Immunizations name</label>
             <div class="vaccination-content">
             </div>
-          </div>
+          </div> --}}
 
-          <div class="ss-counter-immu-plus-div">
+          {{-- <div class="ss-counter-immu-plus-div">
             <ul>
               <li>
-                {{-- <input type="vaccinations" name="vaccinations" id="vaccination" placeholder="Enter Vacc. or Immu. name"> --}}
+                 <input type="vaccinations" name="vaccinations" id="vaccination" placeholder="Enter Vacc. or Immu. name"> 
                 <select name="vaccinations" id="vaccination">
                     <option value="">Select</option>
                     @foreach($keywords['Vaccinations'] as $k=>$v)
@@ -102,10 +120,10 @@
               </li>
               <li><div class="ss-prsn-frm-plu-div"><a href="javascript:void(0);" data-type="vac" onclick="add_element(this)"><i class="fa fa-plus" aria-hidden="true"></i></a></div></li>
             </ul>
-          </div>
+          </div> --}}
 
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>number of references</label>
             <input type="text" name="number_of_references" value="{{$model->number_of_references}}" placeholder="number of references">
           </div>
@@ -125,9 +143,9 @@
             <label>Certifications</Label>
             <div class="certifications-content">
             </div>
-          </div>
+          </div> --}}
 
-          <div class="ss-counter-immu-plus-div">
+          {{-- <div class="ss-counter-immu-plus-div">
             <ul>
               <li>
 
@@ -140,9 +158,9 @@
               </li>
               <li><div class="ss-prsn-frm-plu-div"><a  href="javascript:void(0);" data-type="cer" onclick="add_element(this)"><i class="fa fa-plus" aria-hidden="true"></i></a></div></li>
             </ul>
-          </div>
+          </div> --}}
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>Skills checklist</label>
             <select name="skills">
                 <option value="">Select</option>
@@ -150,9 +168,9 @@
                 <option value="{{$v->title}}">{{$v->title}}</option>
                 @endforeach
             </select>
-          </div>
+          </div> --}}
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>Urgency</label>
             <input type="text" name="urgency" value="{{$model->urgency}}" placeholder="Enter Urgency ">
           </div>
@@ -160,9 +178,9 @@
           <div class="ss-form-group">
             <label># of Positions Available</label>
             <input type="text" name="position_available" value="{{$model->position_available}}" placeholder="Enter # of Positions Available">
-          </div>
+          </div> --}}
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>MSP</label>
             <select name="msp">
                 <option value="">Select</option>
@@ -170,9 +188,9 @@
                 <option value="{{$v->title}}" {{($v->title==$model->msp) ? 'selected' : ''}}>{{$v->title}}</option>
                 @endforeach
             </select>
-          </div>
+          </div> --}}
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>VMS</label>
             <select name="vms">
                 <option value="">Select</option>
@@ -180,12 +198,12 @@
                 <option value="{{$v->title}}" {{($v->title==$model->vms) ? 'selected' : ''}}>{{$v->title}}</option>
                 @endforeach
             </select>
-          </div>
+          </div> --}}
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label># of Submissions in VMS</label>
             <input type="text" name="submission_of_vms" value="{{$model->submission_of_vms}}" placeholder="Enter # of Submissions in VMS">
-          </div>
+          </div> --}}
 
           <div class="ss-form-group">
             <label>Block scheduling</label>
@@ -202,18 +220,19 @@
                 <option value="No" {{($model->float_requirement == 'No') ? 'selected' : ''}}>No</option>
             </select>
           </div>
+          <span class="help-block-float_requirement"></span>
 
           <div class="ss-form-group">
             <label>Facility Shift Cancellation Policy</label>
             <select name="facility_shift_cancelation_policy">
-                <option value="">Select</option>
+              <option value="{{$model['facility_shift_cancelation_policy']}}">{{$model['facility_shift_cancelation_policy']}}</option>
                 @foreach($keywords['AssignmentDuration'] as $k=>$v)
                 <option value="{{$v->title}}" {{($v->title==$model->facility_shift_cancelation_policy) ? 'selected' : ''}}>{{$v->title}}</option>
                 @endforeach
             </select>
           </div>
-
-          <div class="ss-form-group">
+          <span class="help-block-facility_shift_cancelation_policy"></span>
+          {{-- <div class="ss-form-group">
             <label>Contract Termination Policy</label>
             <select name="contract_termination_policy">
                 <option value="">Select</option>
@@ -221,7 +240,17 @@
                 <option value="{{$v->title}}" {{($v->title==$model->contract_termination_policy) ? 'selected' : ''}}>{{$v->title}}</option>
                 @endforeach
             </select>
-          </div>
+          </div> --}}
+
+          <div class="ss-form-group">
+            <label>Contract Termination Policy</label>
+            <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="@if (isset($model['contract_termination_policy'])){{$model['contract_termination_policy']}} 
+            @else 
+              '2 weeks of guaranteed pay unless canceled for cause'
+            @endif
+              ">
+        </div>
+        <span class="help-block-contract_termination_policy"></span>
 
           <div class="ss-form-group">
             <label>Traveler Distance From Facility</label>
@@ -230,38 +259,15 @@
 
           <div class="ss-form-group">
             <label>Facility</label>
-            <input type="text" name="facility_id" value="{{$model->facility_id}}" placeholder="Enter Facility">
-          </div>
-
-          <div class="ss-form-group">
-            <label>Facility's Parent System</label>
-            <input type="text" name="facilitys_parent_system" value="{{$model->facilitys_parent_system}}" placeholder="Enter Facility's Parent System">
-          </div>
-
-          <div class="ss-form-group">
-            <label>Facility Average Rating</label>
-            <input type="text" name="facility_average_rating" value="{{$model->facility_average_rating}}" placeholder="Enter Facility Average Rating">
-          </div>
-
-          <div class="ss-form-group">
-            <label>Recruiter Average Rating</label>
-            <input type="text" name="recruiter_average_rating" value="{{$model->recruiter_average_rating}}" placeholder="Enter Recruiter Average Rating">
-          </div>
-
-          <div class="ss-form-group">
-            <label>Employer Average Rating</label>
-            <input type="text" name="employer_average_rating" value="{{$model->employer_average_rating}}" placeholder="Enter Employer Average Rating">
+            <input type="text" name="facility_id" value="{{$model->facility}}" placeholder="Enter Facility">
           </div>
 
           <div class="ss-form-group">
             <label>Clinical Setting</label>
-            <select name="clinical_setting">
-                <option value="">Select</option>
-                @foreach($keywords['SettingType'] as $k=>$v)
-                <option value="{{$v->title}}" {{($v->title==$model->clinical_setting) ? 'selected' : ''}}>{{$v->title}}</option>
-                @endforeach
-            </select>
-          </div>
+            <input type="text" id="clinical_setting" name="clinical_setting" placeholder="Enter clinical setting" value="{{$model['clinical_setting']}}
+        ">
+        </div>
+        <span class="help-block-clinical_setting"></span>
 
           <div class="ss-form-group">
             <label>Patient ratio</label>
@@ -270,43 +276,35 @@
 
           <div class="ss-form-group">
             <label>EMR</label>
-            <input type="text" name="emr" value="{{$model->emr}}" placeholder="What EMRs have you used?">
+            <input type="text" name="emr" value="{{$model->Emr}}" placeholder="What EMRs have you used?">
           </div>
 
           <div class="ss-form-group">
             <label>Unit</label>
-            <input type="text" name="unit" value="{{$model->unit}}" placeholder="Enter Unit">
+            <input type="text" name="unit" value="{{$model->Unit}}" placeholder="Enter Unit">
           </div>
 
-          <div class="ss-form-group">
-            <label>Department</label>
-            <input type="text" name="department" value="{{$model->department}}" placeholder="Enter Department">
-          </div>
-
-           <div class="ss-form-group">
-            <label>Bed Size</label>
-            <input type="text" name="Bed_Size" value="{{$model->Bed_Size}}" placeholder="Enter Bed Size">
-          </div>
-
-           <div class="ss-form-group">
-            <label>Trauma Level</label>
-            <input type="text" name="Trauma_Level" value="{{$model->Trauma_Level}}" placeholder="Enter Trauma Level">
-          </div>
 
            <div class="ss-form-group">
             <label>Scrub Color</label>
             <input type="text" name="scrub_color" value="{{$model->scrub_color}}" placeholder="Enter Scrub Color">
           </div>
 
-          <div class="ss-count-strt-dte ss-count-profsn-lins-dv">
-            <ul>
-              <li>
-                <label>Start Date</label>
-              </li>
-              <li> <input type="checkbox" id="AutoOffers" name="as_soon_as" value="1"> <label for="AutoOffers">As soon As Posible</label></li>
-            </ul>
-            <input type="date"  name="start_date" placeholder="Select Date">
-          </div>
+          <div class="ss-form-group">
+            <div class="row">
+               <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                   <label>Start Date</label>
+               </div>
+               <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12" style="display: flex; justify-content: end;">
+                   <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" style="box-shadow:none; width:auto;" class="col-6">
+                   <label class="col-6">
+                       As soon As possible
+                   </label>
+               </div>
+           </div>
+            <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="1994-03-02">
+       </div>
+       <span class="help-block-start_date"></span>
 
            <div class="ss-form-group">
             <label>RTO</label>
@@ -315,13 +313,22 @@
 
           <div class="ss-form-group">
             <label>Shift Time of Day</label>
-            <select name="preferred_shift" >
-                <option value="">Select</option>
-                @foreach($keywords['shift_time_of_day'] as $k=>$v)
-                <option value="{{$v->title}}" {{($v->title==$model->preferred_shift) ? 'selected' : ''}}>{{$v->title}}</option>
-                @endforeach
+            <select name="preferred_shift" id="shift-of-day">
+            <option value="{{$model['preferred_shift']}}">{{$model['preferred_shift']}}</option>
+    @if (isset($keywords['PreferredShift'])) 
+        @foreach ($keywords['PreferredShift'] as $value) 
+            <option value="{{$value->id}}" 
+              @if($model['preferred_shift'] == $value->id)
+                'selected' 
+              @else 
+              ''> {{$value->title}}
+              @endif
+              </option>
+        @endforeach
+    @endif
             </select>
-          </div>
+        </div>
+        <span class="help-block-shift-of-day"></span>
 
           <div class="ss-form-group">
             <label>Hours/Week</label>
@@ -375,43 +382,55 @@
 
           <div class="ss-form-group">
             <label>401K</label>
-            <select name="four_zero_one_k">
-                <option value="">Select</option>
-                @foreach($keywords['401k'] as $k=>$v)
-                <option value="{{$v->title}}" {{($v->title==$model->four_zero_one_k) ? 'selected' : ''}}>{{$v->title}}</option>
-                @endforeach
+            <select name="four_zero_one_k" id="401k">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
             </select>
-          </div>
+        </div>
+        <span class="help-block-401k"></span>
 
-          <div class="ss-form-group">
-            <label>Health Insurance</label>
-            <select name="health_insaurance">
-                <option value="">Select</option>
-                @foreach($keywords['HealthInsurance'] as $k=>$v)
-                <option value="{{$v->title}}" {{($v->title==$model->health_insaurance) ? 'selected' : ''}}>{{$v->title}}</option>
-                @endforeach
-            </select>
-          </div>
+        <div class="ss-form-group">
+          <label>Health Insurance</label>
+          <select name="health_insaurance" id="health-insurance">
+         
+              <option value="{{$model['health_insaurance']}}">
+                @if ($model['health_insaurance'] == '1') 
+                Yes @else No
+              @endif
+              </option>
+              <option value="true">Yes</option>
+              <option value="false">No</option></option>
+          </select>
+      </div>
+      <span class="help-block-health-insurance"></span>
 
-          <div class="ss-form-group">
-            <label>Dental</label>
-            <select name="dental">
-                <option value="">Select</option>
-                @foreach($keywords['Dental'] as $k=>$v)
-                <option value="{{$v->title}}" {{($v->title==$model->dental) ? 'selected' : ''}}>{{$v->title}}</option>
-                @endforeach
-            </select>
-          </div>
+      <div class="ss-form-group">
+        <label>Dental</label>
+        <select name="dental" id="dental">
+        <option value="{{$model['dental']}}">
+          @if ($model['dental'] == '1') 
+          Yes @else No
+        @endif
+        </option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </div>
+    <span class="help-block-dental"></span>
 
-          <div class="ss-form-group">
-            <label>Vision</label>
-            <select name="vision">
-                <option value="">Select</option>
-                @foreach($keywords['Vision'] as $k=>$v)
-                <option value="{{$v->title}}" {{($v->title==$model->vision) ? 'selected' : ''}}>{{$v->title}}</option>
-                @endforeach
-            </select>
-          </div>
+    <div class="ss-form-group">
+      <label>Vision</label>
+      <select name="vision" id="vision">
+        <option value="{{$model['vision']}}">
+          @if ($model['vision'] == '1') 
+          Yes @else No
+        @endif
+        </option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+      </select>
+  </div>
+  <span class="help-block-vision"></span>
 
           <div class="ss-form-group">
             <label>Actual Hourly rate</label>
@@ -430,8 +449,11 @@
 
           <div class="ss-form-group">
             <label>Holiday</label>
-            <input type="date" id="birthday" name="holiday">
-          </div>
+            <input id="holiday" type="text" name="holiday" placeholder="Select Dates" 
+            value="{{$model['holiday']}}
+          ">
+        </div>
+        <span class="help-block-holiday"></span>
 
           <div class="ss-form-group">
             <label>On Call</label>

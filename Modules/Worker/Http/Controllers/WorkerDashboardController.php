@@ -119,8 +119,6 @@ class WorkerDashboardController extends Controller
         }
     }
 
-
-
     /** Help center page */
     public function help_center()
     {

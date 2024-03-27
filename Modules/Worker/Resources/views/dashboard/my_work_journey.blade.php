@@ -3840,7 +3840,7 @@
                     }
                 });
                 $.ajax({
-                    url: full_path+'fetch-job-content',
+                    url: full_path+'worker/fetch-job-content',
                     type: 'POST',
                     dataType: 'json',
                     // processData: false,

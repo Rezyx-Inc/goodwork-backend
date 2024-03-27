@@ -809,25 +809,26 @@ class JobController extends Controller
         // $nurse = Nurse::where('id', $offerLists->nurse_id)->first();
         $user = auth()->guard('frontend')->user();
         $job_data = Job::where('id', $request->jobid)->first();
-        $update_array["job_name"] = ($job_data->job_name != $request->job_name)?$request->job_name:'';
+        return response()->json(["msg"=>$job_data], 200);
+        //$update_array["job_name"] = ($job_data->job_name != $request->job_name)?$request->job_name:$job_data->job_name;
         $update_array["type"] = ($job_data->type != $request->type)?$request->type:'';
         $update_array["terms"] = ($job_data->terms != $request->terms)?$request->terms:'';
         $update_array["profession"] = ($job_data->profession != $request->profession)?$request->profession:'';
-        $update_array["preferred_specialty"] = ($job_data->preferred_specialty != $request->preferred_specialty)?$request->preferred_specialty:'';
-        $update_array["preferred_experience"] = ($job_data->preferred_experience != $request->preferred_experience)?$request->preferred_experience:'';
-        $update_array["number_of_references"] = ($job_data->number_of_references != $request->number_of_references)?$request->number_of_references:'';
-        $update_array["min_title_of_reference"] = ($job_data->min_title_of_reference != $request->min_title_of_reference)?$request->min_title_of_reference:'';
-        $update_array["recency_of_reference"] = ($job_data->recency_of_reference != $request->recency_of_reference)?$request->recency_of_reference:'';
-        $update_array["skills"] = ($job_data->skills != $request->skills)?$request->skills:'';
-        $update_array["urgency"] = ($job_data->urgency != $request->urgency)?$request->urgency:'';
-        $update_array["msp"] = ($job_data->msp != $request->msp)?$request->msp:'';
-        $update_array["vms"] = ($job_data->vms != $request->vms)?$request->vms:'';
-        $update_array["facility"] = ($job_data->facility != $request->facility)?$request->facility:'';
-        $update_array["job_location"] = ($job_data->job_location != $request->job_location)?$request->job_location:'';
-        $update_array["vaccinations"] = ($job_data->vaccinations != $request->vaccinations)?$request->vaccinations:'';
-        $update_array["certificate"] = ($job_data->certificate != $request->certificate)?$request->certificate:'';
-        $update_array["position_available"] = ($job_data->position_available != $request->position_available)?$request->position_available:'';
-        $update_array["submission_of_vms"] = ($job_data->submission_of_vms != $request->submission_of_vms)?$request->submission_of_vms:'';
+        //$update_array["preferred_specialty"] = ($job_data->preferred_specialty != $request->preferred_specialty)?$request->preferred_specialty:'';
+        //$update_array["preferred_experience"] = ($job_data->preferred_experience != $request->preferred_experience)?$request->preferred_experience:'';
+        //$update_array["number_of_references"] = ($job_data->number_of_references != $request->number_of_references)?$request->number_of_references:'';
+        //$update_array["min_title_of_reference"] = ($job_data->min_title_of_reference != $request->min_title_of_reference)?$request->min_title_of_reference:'';
+        //$update_array["recency_of_reference"] = ($job_data->recency_of_reference != $request->recency_of_reference)?$request->recency_of_reference:'';
+        //$update_array["skills"] = ($job_data->skills != $request->skills)?$request->skills:'';
+        //$update_array["urgency"] = ($job_data->urgency != $request->urgency)?$request->urgency:'';
+        //$update_array["msp"] = ($job_data->msp != $request->msp)?$request->msp:'';
+        //$update_array["vms"] = ($job_data->vms != $request->vms)?$request->vms:'';
+        //$update_array["facility"] = ($job_data->facility != $request->facility)?$request->facility:'';
+        //$update_array["job_location"] = ($job_data->job_location != $request->job_location)?$request->job_location:'';
+        //$update_array["vaccinations"] = ($job_data->vaccinations != $request->vaccinations)?$request->vaccinations:'';
+        //$update_array["certificate"] = ($job_data->certificate != $request->certificate)?$request->certificate:'';
+        //$update_array["position_available"] = ($job_data->position_available != $request->position_available)?$request->position_available:'';
+        //$update_array["submission_of_vms"] = ($job_data->submission_of_vms != $request->submission_of_vms)?$request->submission_of_vms:'';
         $update_array["block_scheduling"] = ($job_data->block_scheduling != $request->block_scheduling)?$request->block_scheduling:'';
         $update_array["float_requirement"] = ($job_data->float_requirement != $request->float_requirement)?$request->float_requirement:'';
         $update_array["facility_shift_cancelation_policy"] = ($job_data->facility_shift_cancelation_policy != $request->facility_shift_cancelation_policy)?$request->facility_shift_cancelation_policy:'';
@@ -836,20 +837,20 @@ class JobController extends Controller
         $update_array["job_id"] = ($job_data->job_id != $request->id)?$request->id:'';
         $update_array["recruiter_id"] = ($job_data->recruiter_id != $request->recruiter_id)?$request->recruiter_id:'';
         $update_array["worker_user_id"] = ($job_data->worker_user_id != $user->id)?$user->id:'';
-        $update_array["compact"] = ($job_data->compact != $request->compact)?$request->compact:'';
-        $update_array["facility_id"] = ($job_data->facility_id != $request->facility_id)?$request->facility_id:'';
+       // $update_array["compact"] = ($job_data->compact != $request->compact)?$request->compact:'';
+       // $update_array["facility_id"] = ($job_data->facility_id != $request->facility_id)?$request->facility_id:'';
         $update_array["clinical_setting"] = ($job_data->clinical_setting != $request->clinical_setting)?$request->clinical_setting:'';
         $update_array["Patient_ratio"] = ($job_data->Patient_ratio != $request->Patient_ratio)?$request->Patient_ratio:'';
         $update_array["emr"] = ($job_data->emr != $request->emr)?$request->emr:'';
         $update_array["Unit"] = ($job_data->Unit != $request->Unit)?$request->Unit:'';
-        $update_array["Department"] = ($job_data->Department != $request->Department)?$request->Department:'';
-        $update_array["Bed_Size"] = ($job_data->Bed_Size != $request->Bed_Size)?$request->Bed_Size:'';
-        $update_array["Trauma_Level"] = ($job_data->Trauma_Level != $request->Trauma_Level)?$request->Trauma_Level:'';
+        //$update_array["Department"] = ($job_data->Department != $request->Department)?$request->Department:'';
+        //$update_array["Bed_Size"] = ($job_data->Bed_Size != $request->Bed_Size)?$request->Bed_Size:'';
+        //$update_array["Trauma_Level"] = ($job_data->Trauma_Level != $request->Trauma_Level)?$request->Trauma_Level:'';
         $update_array["scrub_color"] = ($job_data->scrub_color != $request->scrub_color)?$request->scrub_color:'';
         $update_array["start_date"] = ($job_data->start_date != $request->start_date)?$request->start_date:'';
         $update_array["as_soon_as"] = ($job_data->as_soon_as != $request->as_soon_as)?$request->as_soon_as:'';
         $update_array["rto"] = ($job_data->rto != $request->rto)?$request->rto:'';
-        $update_array["preferred_shift"] = ($job_data->preferred_shift != $request->preferred_shift)?$request->preferred_shift:'';
+        //$update_array["preferred_shift"] = ($job_data->preferred_shift != $request->preferred_shift)?$request->preferred_shift:'';
         $update_array["hours_per_week"] = ($job_data->hours_per_week != $request->hours_per_week)?$request->hours_per_week:'';
         $update_array["guaranteed_hours"] = ($job_data->guaranteed_hours != $request->guaranteed_hours)?$request->guaranteed_hours:'';
         $update_array["hours_shift"] = ($job_data->hours_shift != $request->hours_shift)?$request->hours_shift:'';
@@ -877,25 +878,25 @@ class JobController extends Controller
         $update_array["total_employer_amount"] = 0;
         $update_array["total_goodwork_amount"] = 0;
         $update_array["total_contract_amount"] = 0;
-        if($update_array["hours_per_week"] == 0){
-            $update_array["feels_like_per_hour"] = 0;
-        }else{
-            $update_array["feels_like_per_hour"] = $update_array["employer_weekly_amount"]/$update_array["hours_per_week"];
-        }
+        //if($update_array["hours_per_week"] == 0){
+          //  $update_array["feels_like_per_hour"] = 0;
+        //}else{
+          //  $update_array["feels_like_per_hour"] = $update_array["employer_weekly_amount"]/$update_array["hours_per_week"];
+        //}
         $update_array['weekly_pay'] = ($job_data->weekly_pay != $request->weekly_pay)?$request->weekly_pay:'';
-        $update_array["facilitys_parent_system"] = ($job_data->facilitys_parent_system != $request->facilitys_parent_system)?$request->facilitys_parent_system:'';
-        $update_array["facility_average_rating"] = ($job_data->facility_average_rating != $request->facility_average_rating)?$request->facility_average_rating:'';
-        $update_array["recruiter_average_rating"] = ($job_data->recruiter_average_rating != $request->recruiter_average_rating)?$request->recruiter_average_rating:'';
-        $update_array["employer_average_rating"] = ($job_data->employer_average_rating != $request->employer_average_rating)?$request->employer_average_rating:'';
-        $update_array["job_city"] = ($job_data->job_city != $request->job_city)?$request->job_city:'';
-        $update_array["job_state"] = ($job_data->job_state != $request->job_state)?$request->job_state:'';
+        //$update_array["facilitys_parent_system"] = ($job_data->facilitys_parent_system != $request->facilitys_parent_system)?$request->facilitys_parent_system:'';
+        //$update_array["facility_average_rating"] = ($job_data->facility_average_rating != $request->facility_average_rating)?$request->facility_average_rating:'';
+        //$update_array["recruiter_average_rating"] = ($job_data->recruiter_average_rating != $request->recruiter_average_rating)?$request->recruiter_average_rating:'';
+        //$update_array["employer_average_rating"] = ($job_data->employer_average_rating != $request->employer_average_rating)?$request->employer_average_rating:'';
+        //$update_array["job_city"] = ($job_data->job_city != $request->job_city)?$request->job_city:'';
+        //$update_array["job_state"] = ($job_data->job_state != $request->job_state)?$request->job_state:'';
         $update_array["is_draft"] = !empty($request->is_draft) ? $request->is_draft : '0';
         $update_array["is_counter"] = '1';
         $update_array["recruiter_id"] = $job_data->recruiter_id;
 
         /* create job */
         $update_array["created_by"] = $user->id;
-        $job = DB::table('offer_jobs')->insert($update_array);
+        $job = DB::table('offers')->insert($update_array);
         return response()->json(['success'=>true, 'msg'=>'Counter offer created successfully']);;
     }
 

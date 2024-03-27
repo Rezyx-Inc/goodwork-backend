@@ -378,7 +378,7 @@ class WorkerController extends Controller
 
         switch(request()->route()->getName())
         {
-            case 'my-work-journey':
+            case 'worker.my-work-journey':
                 $whereCond['jobs.is_hidden'] = '0';
                 $jobs = Job::select("jobs.*")
                 ->join('job_saved', function ($join) use ($user){
@@ -464,7 +464,7 @@ class WorkerController extends Controller
         }
 
         $data['jobs'] = $jobs;
-        return view('jobs.jobs', $data);
+        return view('worker::jobs.jobs', $data);
     }
 
     public function explore(Request $request)
@@ -740,6 +740,7 @@ class WorkerController extends Controller
 
 
             $data['model'] = $job;
+            // this will return one of the ajax views in the public resources 
             $response['content'] = view('ajax.'.$view.'_job', $data)->render();
             return new JsonResponse($response, 200);
         }
