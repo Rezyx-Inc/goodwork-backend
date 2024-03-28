@@ -2,7 +2,8 @@ const pm2 = require('pm2');
 var path = require("path");
 var cron = require('node-cron');
 
-const script = path.join(path.dirname(__filename), "server.js")
+const server = path.join(path.dirname(__filename), "server.js")
+const crons = path.join(path.dirname(__filename), "/src/crons/index.js")
 
 const { argv } = require('node:process');
 
@@ -23,7 +24,7 @@ pm2.connect(function(err) {
     console.log("Starting the file management service.")
 
     pm2.start({
-      script    : script,
+      script    : server,
       name      : 'files',
       watch     : watch
     }, function(err, apps) {
@@ -34,10 +35,16 @@ pm2.connect(function(err) {
       return pm2.disconnect()
     });
 
-    // will reside here for now, to be moved to crons/index.js
-    console.log("Starting integrations cron jobs.")
-    var integrations = cron.schedule('* * * * *', () => {
-      console.log('running a task every minute');
+    pm2.start({
+      script    : crons,
+      name      : 'crons',
+      watch     : watch
+    }, function(err, apps) {
+      if (err) {
+        console.error(err)
+        return pm2.disconnect()
+      }
+      return pm2.disconnect()
     });
   
   }else if(argv[2] === "stop"){
@@ -57,8 +64,10 @@ pm2.connect(function(err) {
           pm2.disconnect()
         });
 
-        // this will reside here for now
-        integrations ? integrations.stop() : console.log("No integrations cron to stop, skipping.")
+        pm2.delete('crons', (err, proc) => {
+          // Disconnects from PM2
+          pm2.disconnect()
+        });
 
       }else{
         console.log("Unable to list processes", err)
