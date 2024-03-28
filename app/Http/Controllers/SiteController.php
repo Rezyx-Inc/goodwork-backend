@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Artisan;
 // ************ Requests ************
 use App\Http\Requests\{LoginRequest, SignupRequest, ForgotRequest, ResetRequest, OTPRequest, ContactUsRequest};
 // ************ models ************
-use App\Models\{User, States, Countries, Nurse, Availability,Keyword};
+use App\Models\{User, States, Countries, Nurse, Availability,Keyword,Speciality};
 
 class SiteController extends Controller {
 
@@ -428,12 +428,6 @@ class SiteController extends Controller {
         }
     }
 
-
-
-
-
-
-
     public function get_city(Request $request){
 
         if ($request->ajax()) {
@@ -457,17 +451,19 @@ class SiteController extends Controller {
 
     public function get_speciality(Request $request)
     {
+        
         if ($request->ajax()) {
             if ($request->has('kid')) {
-                $keywords = Keyword::where(['active'=>'1','filter'=>$request->kid])->get();
+                $keywords = Speciality::where(['Profession_id'=>$request->kid])->get();
+                
                 $content = '<option value="">Select</option>';
                 if ($keywords->count()) {
                     foreach($keywords as $k)
                     {
-                        $content .= '<option value="'.$k->title.'">'.$k->title.'</option>';
+                        $content .= '<option value="'.$k->full_name.'">'.$k->full_name.'</option>';
                     }
                 }else{
-                    $content = '<option value="">No speciality found.</option>';
+                        $content = '<option value="">No speciality found.</option>';
                 }
                 $response = array('success'=>true ,'content'=>$content);
                 return $response;

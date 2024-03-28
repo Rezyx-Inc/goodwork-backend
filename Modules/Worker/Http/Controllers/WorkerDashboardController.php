@@ -156,7 +156,8 @@ class WorkerDashboardController extends Controller
         $data = [];
         $data['user'] = auth()->guard('frontend')->user();
         $data['jobSaved'] = new JobSaved();
-        $data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
+        //$data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
+        $data['professions'] = Profession::all();
         $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
         $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
         $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();

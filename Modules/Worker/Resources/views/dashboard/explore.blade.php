@@ -21,15 +21,14 @@
             <h4>Filters</h4>
             <form method="get" action="{{route('worker.explore')}}" id="filter_form">
 
-
               <div class="ss-input-slct-grp">
                 <label for="cars">Profession</label>
                 <select name="profession" onchange="get_speciality(this, false)">
                     <option value="">Select</option>
                     @foreach($professions as $v)
-                    <option value="{{$v->title}}" data-id="{{$v->id}}" {{ ($profession == $v->title) ? 'selected': ''}}>{{$v->title}}</option>
+                    <option value="{{$v->id}}" data-id="{{$v->id}}" {{ ($profession == $v->full_name) ? 'selected': ''}}>{{$v->full_name}}</option>
                     @endforeach
-              </select>
+                </select>
               </div>
 
               <div class="ss-input-slct-grp">
