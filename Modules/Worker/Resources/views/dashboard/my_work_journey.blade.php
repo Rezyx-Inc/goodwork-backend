@@ -3831,6 +3831,7 @@
         });
         function fetch_job_content(obj)
         {
+            
             if (!$(obj).hasClass('active')) {
                 $('.job-list').removeClass('active')
                 ajaxindicatorstart();
@@ -3864,6 +3865,41 @@
                     }
                 });
             }
+        }
+
+        function store_counter_offer(obj)
+        {
+                ajaxindicatorstart();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: full_path+'post-counter-offer',
+                    type: 'POST',
+                    dataType: 'json',
+                    // processData: false,
+                    // contentType: false,
+                    data: {
+                        jid: $(obj).data('id'),
+                        type: $(obj).data('type')
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                        if (resp.success) {
+
+                            $('.job-content').html(resp.content);
+                            $(obj).addClass('active')
+                        }
+                    },
+                    error: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                    }
+                });
+            
         }
     </script>
 @stop

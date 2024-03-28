@@ -1,7 +1,7 @@
 <!----------------jobs applay view details--------------->
 
 <div class="ss-counter-ofred-mn-div">
-    <h4><a href="javascript:void(0)" title="Back"  data-id="{{$model->id}}" data-type="offered" onclick="fetch_job_content(this)"><img src="{{URL::asset('frontend/img/counter-left-img.png')}}" /></a> Counter Offer</h4>
+    <h4><a href="javascript:void(0)" title="Back"  data-id="{{$model->id}}" data-type="offered" onclick="fetch_job_content(this)"><img src="{{URL::asset('frontend/img/counter-left-img.png')}}" /></a>Counter Offer</h4>
 
     <div class="ss-job-view-off-text-fst-dv">
         <p>On behalf of <a href="">Albus Percival , Hogwarts</a> would like to offer <a href="#">GWJ234065</a> to <a href="#">James Bond</a> with the following terms. This offer is only available for the next <a hre="#">6 weeks:</a></p>
@@ -45,7 +45,7 @@
     <select name="terms" id="term">
 @if (isset($keywords['Terms'])) 
 @foreach ($keywords['Terms'] as $value) 
-    <option value="{{$value->id}}  @if ($model['terms'] == $value->id) 'selected' @else '' @endif ">{{$value->title}}</option>
+    <option value="{{$value->title}}"  @if ($model['terms'] == $value->id) 'selected' @else '' @endif >{{$value->title}}</option>
 @endforeach
 @endif
     </select>
@@ -281,7 +281,7 @@
 
           <div class="ss-form-group">
             <label>Unit</label>
-            <input type="text" name="unit" value="{{$model->Unit}}" placeholder="Enter Unit">
+            <input type="text" name="Unit" value="{{$model->Unit}}" placeholder="Enter Unit">
           </div>
 
 
@@ -302,7 +302,7 @@
                    </label>
                </div>
            </div>
-            <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="1994-03-02">
+            <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="2024-03-06">
        </div>
        <span class="help-block-start_date"></span>
 
@@ -517,7 +517,7 @@
           </div>
 
          <div class="ss-counter-buttons-div">
-           <button class="ss-counter-button">Counter Offer</button>
+           <button  class="ss-counter-button" onclick="store_counter_offer(this)">Counter Offer</button>
            <button class="counter-save-for-button">Save for Later</button>
          </div>
          <input type="hidden" name="jobid" value="{{$model->id}}">
@@ -707,7 +707,7 @@ function list_specialities()
 
 
 $(document).ready(function () {
-    list_specialities();
+    //list_specialities();
     list_elements('vac');
     list_elements('cer');
     get_speciality($('select[name="profession"]'), false);
@@ -762,7 +762,6 @@ $(document).ready(function () {
                     form.find('[name="' + key + '"]').closest('.ss-form-group').find('.help-block').html(val[0]);
                     form.find('[name="' + key + '"]').closest('.ss-form-group').addClass('has-error');
                 });
-
             }
         })
     });
