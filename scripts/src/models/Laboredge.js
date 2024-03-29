@@ -14,59 +14,67 @@ const laboredgeSchema = mongoose.Schema({
         type: Array,
         required: false
     },
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    updated: {
+        type: Date,
+        required: false
+    },
     professions: [
         {
             professionId: {
-                type: String,
-                required: true
+                type: Number,
+                required: false
             },
             profession: {
                 type: String,
-                required: true
+                required: false
             }
         }
     ],
     specialties: [
         {
             specialtyId: {
-                type: String,
-                required: true
+                type: Number,
+                required: false
             },
             specialty: {
                 type: String,
-                required: true
+                required: false
             }
         }
     ],
     states: [
         {
             stateId: {
-                type: String,
-                required: true
+                type: Number,
+                required: false
             },
             stateCode: {
                 type: String,
-                required: true
+                required: false
             },
             stateName: {
                 type: String,
-                required: true
+                required: false
             }
         }
     ],
     countries: [
         {
             countryId: {
-                type: String,
-                required: true
+                type: Number,
+                required: false
             },
             countryCode: {
                 type: String,
-                required: true
+                required: false
             },
             countryName: {
                 type: String,
-                required: true
+                required: false
             }
         }
     ],
@@ -74,47 +82,47 @@ const laboredgeSchema = mongoose.Schema({
         {
             id: {
                 type: Number,
-                required: true
+                required: false
             },
             jobTitle: {
-                type: String,
+                type: mongoose.Mixed,
                 required: false
             },
             postingId: {
-                type: String,
+                type: mongoose.Mixed,
                 required: false
             },
             description: {
                 type: String,
-                required: true
+                required: false
             },
             signOnBonus: {
-                type: String,
+                type: mongoose.Mixed,
                 required: false
             },
             jobType: {
                 type: String,
-                required: true
+                required: false
             },
             startDate: {
                 type: String,
-                required: true
+                required: false
             },
             endDate: {
                 type: String,
-                required: true
+                required: false
             },
             duration: {
                 type: Number,
-                required: true
+                required: false
             },
             durationType: {
                 type: String,
-                required: true
+                required: false
             },
             jobStatus: {
                 type: String,
-                required: true
+                required: false
             },
             floatingReqUnits: {
                 type: String,
@@ -122,11 +130,11 @@ const laboredgeSchema = mongoose.Schema({
             },
             shiftsPerWeek1: {
                 type: Number,
-                required: true
+                required: false
             },
             scheduledHrs1: {
                 type: Number,
-                required: true
+                required: false
             },
             shift: {
                 type: String,
@@ -134,25 +142,25 @@ const laboredgeSchema = mongoose.Schema({
             },
             professionId: {
                 type: Number,
-                required: true
+                required: false
             },
             specialtyId: {
                 type: Number,
-                required: true
+                required: false
             },
             hourlyPay: {
                 type: Number,
-                required: true
+                required: false
             },
             rates: [
                 {
                     billRateCodeId: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     billRateCode: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     rate: {
                         type: Number,
@@ -162,11 +170,11 @@ const laboredgeSchema = mongoose.Schema({
                 {
                     billRateCodeId: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     billRateCode: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     rate: {
                         type: Number,
@@ -176,11 +184,11 @@ const laboredgeSchema = mongoose.Schema({
                 {
                     billRateCodeId: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     billRateCode: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     rate: {
                         type: Number,
@@ -190,11 +198,11 @@ const laboredgeSchema = mongoose.Schema({
                 {
                     billRateCodeId: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     billRateCode: {
                         type: String,
-                        required: true
+                        required: false
                     },
                     rate: {
                         type: Number,
@@ -206,5 +214,5 @@ const laboredgeSchema = mongoose.Schema({
     ]
 });
 
-const laboredgeDB = mongoose.connection.useDb(process.env.MONGODB_INTEGRATIONS_DATABASE_NAME);
-module.exports = laboredgeDB.model('Laboredge', laboredgeSchema, 'laboredge');
+const integrationsDB = mongoose.connection.useDb(process.env.MONGODB_INTEGRATIONS_DATABASE_NAME);
+module.exports = integrationsDB.model('Laboredge', laboredgeSchema, 'laboredge');

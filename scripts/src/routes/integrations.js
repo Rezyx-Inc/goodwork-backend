@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     res.send('Integrations page');
 });
 
-//  The jobs returned here are for convenience only since they would be managed directly from the mysql database, however, one may want to get the pending jobs, at least for development purposes.
+// To be clear, this is only about laboredge integration, hence it is named jobs for convenience and to avoid naming issues with Laboredge.
 
 /*
     /get-jobs
@@ -33,6 +33,51 @@ router.get('/get-jobs', async (req, res) => {
             console.log("Unexpected error", e)
             return res.status(400).send("Unexpected error.")
         });
+});
+
+/*  
+    /add-jobs
+    Add documents
+    @param userId required
+    @param userType required
+
+*/
+router.post('/add-jobs', async (req, res) => {
+    
+    if(!Object.keys(req.body).length) {
+        return res.status(400).send("Empty request")
+    }
+    else if ( !req.body.userId || !req.body.userType){
+
+        return res.status(400).send("Missing parameters.")
+    }
+
+    let job = await Laboredge.findOne({userId: req.body.userId})
+    .then(async jobs => {
+
+        if(!jobs){
+
+            let job = await Laboredge.create({
+                userId: req.body.userId,
+                userType: req.body.userType
+            })
+        
+            return res.status(200).send("OK");
+        
+        }
+        else if (jobs){
+        
+            return res.status(500).send("User exists.");
+        
+        }else{
+
+            return res.status(500).send("Unexpected Error.");
+        }
+    })
+    .catch(e => {
+        console.log("Unexpected error", e)
+        return res.status(400).send("Unexpected error.")
+    });
 });
 
 /*
