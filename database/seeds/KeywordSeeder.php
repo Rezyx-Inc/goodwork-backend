@@ -344,9 +344,9 @@ class KeywordSeeder extends Seeder
                 '12-hour'
             ],
             'PreferredShift' => [
-                'Day shift only',
-                'Night shift only',
-                'Open to day or night shift'
+                'Day',
+                'Night',
+                'Day & Night'
             ],
             'DaisyCategory' => [
                 'Extraordinary Nurse',

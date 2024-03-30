@@ -149,6 +149,7 @@ class WorkerDashboardController extends Controller
 
    public function explore(Request $request)
     {
+        
         try {
 
            // commenting this for now we need to return only jobs data
@@ -158,13 +159,13 @@ class WorkerDashboardController extends Controller
         $data['jobSaved'] = new JobSaved();
         //$data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
         $data['professions'] = Profession::all();
-        $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
+        $data['terms'] = Keyword::where(['filter'=>'Terms'])->get();
         $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
         $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
         $data['us_states'] = States::where('country_id', $usa->id)->get();
         // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
 
-        $data['profession'] = isset($request->profession) ? $request->profession : '';
+        $data['profession'] = isset($request->profession_text) ? $request->profession_text : '';
         $data['speciality'] = isset($request->speciality) ? $request->speciality : '';
         $data['experience'] = isset($request->experience) ? $request->experience : '';
         $data['city'] = isset($request->city) ? $request->city : '';
@@ -172,8 +173,11 @@ class WorkerDashboardController extends Controller
         $data['job_type'] = isset($request->job_type) ? explode('-', $request->job_type) : [];
         $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
         $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
+        $data['start_date'] = new DateTime($data['start_date']);
+        $data['start_date'] = $data['start_date']->format('Y-m-d');
+        $data['end_date'] = new DateTime($data['end_date']);
+        $data['end_date'] = $data['end_date']->format('Y-m-d');
         $data['shifts'] = isset($request->shifts) ? explode('-',$request->shifts) : [];
-        $data['auto_offers'] = isset($request->auto_offers) ? $request->auto_offers : 0;
 
         $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
         $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
@@ -200,47 +204,22 @@ class WorkerDashboardController extends Controller
             // 'job_saved.nurse_id'=>$user->id,
         ];
 
-        $ret = Job::select('jobs.id as job_id', 'jobs.auto_offers as auto_offers', 'jobs.*')
-            ->leftJoin('facilities', function ($join) {
-                $join->on('facilities.id', '=', 'jobs.facility_id');
-            })
-            ->leftJoin('job_saved', function ($join) use ($user){
-                $join->on('job_saved.job_id', '=', 'jobs.id')
-                ->where(function ($query) use ($user) {
-                    $query->where('job_saved.is_delete', '=', 0)
-                    ->where('job_saved.nurse_id', '=', $user->id);
-                });
-            })
-            ->where($whereCond)
-            ->whereNotIN('jobs.id', $jobs_id)
-            ->orderBy('jobs.created_at', 'desc');
+        $ret = Job::select('jobs.*','name')
+        ->leftJoin('facilities', function ($join) {
+            $join->on('facilities.id', '=', 'jobs.facility_id');
+        });
 
         if ($data['profession']) {
-            $ret->where('jobs.profession', '=', $data['profession']);
-        }
-
-        if ($data['speciality']) {
-            $ret->where('jobs.preferred_specialty', '=', $data['speciality']);
-        }
-
-        if ($data['experience']) {
-            $ret->where('jobs.preferred_experience', '=', $data['experience']);
-        }
-        if($data['city'])
-        {
-            $ret->where('jobs.job_city', '=', $data['city']);
-        }
-
-        if($data['state'])
-        {
-            $ret->where('jobs.job_state', '=', $data['state']);
+            $ret->where('jobs.proffesion', '=', $data['profession']);
         }
 
         if(count($data['job_type'])){
             $ret->whereIn('jobs.job_type', $data['job_type']);
         }
 
+
         if ($data['start_date']) {
+            // return response()->json(['message end' =>  $data['end_date'], 'message start' =>  $data['start_date']]);
             $ret->where('jobs.start_date', '<=', $data['start_date']);
             $ret->where('jobs.end_date', '>=', $data['start_date']);
         }
@@ -254,9 +233,6 @@ class WorkerDashboardController extends Controller
             $ret->whereIn('jobs.preferred_shift', $data['shifts']);
         }
 
-        if ($data['auto_offers']) {
-            $ret->where('jobs.auto_offers', '=', $data['auto_offers']);
-        }
 
         if ($data['weekly_pay_from']) {
             $ret->where(function (Builder $query) use ($data) {
@@ -308,16 +284,11 @@ class WorkerDashboardController extends Controller
         }
 
         $result = $ret->get();
-
-
-
-
             $resl = Job::select('jobs.*','name')
             ->leftJoin('facilities', function ($join) {
                 $join->on('facilities.id', '=', 'jobs.facility_id');
             });
             $data['jobs'] = $resl->get();
-
 
             // $data['jobSaved'] = [""];
             // $data['prefered_shifts '] = [""];
@@ -327,8 +298,8 @@ class WorkerDashboardController extends Controller
             // $data['professions'] = ['title'=>'','id'=>''];
             // $data['profession'] = "";
 
-        //$data['jobs'] = $result;
-
+        $data['jobs'] = $result;
+        //return response()->json(['success' => false, 'message' =>  $data]);
         return view('worker::dashboard.explore', $data);
         
         //return response()->json(['message' =>  $data['jobs']]);
@@ -338,7 +309,7 @@ class WorkerDashboardController extends Controller
 
         // Display a generic error message or redirect with an error status
          return redirect()->route('worker.dashboard')->with('error', $e->getmessage());
-        //return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+        // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
     }
     }
 

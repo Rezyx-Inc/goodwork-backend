@@ -42,18 +42,10 @@
                     </select>
               </div>
 
-              <div class="ss-input-slct-grp">
-                    <label>Years of Experience Required</label>
-                    <select name="experience">
-                        <option value="">Select</option>
-                        @for( $i=1; $i<20; $i++ )
-                        <option value="{{$i}}" {{ ($experience == $i) ? 'selected': ''}}>{{$i}} Years</option>
-                        @endfor
-                    </select>
-              </div>
+            
 
               <div class="ss-input-slct-grp">
-                <label>Job State</label>
+                <label>State</label>
                 <select name="state" onchange="get_cities(this)">
                     <option value="">Select</option>
                     @foreach ($us_states as $v)
@@ -63,19 +55,20 @@
               </div>
 
               <div class="ss-input-slct-grp">
-                <label>Job City</label>
+                <label>City</label>
                 <select name="city" id="city">
+                  <option value="">Select</option>
                     @if(!empty($city))
                     <option value="{{$city}}" selected>{{$city}}</option>
                     @else
-                    <option value="">Select</option>
+                    <option value="">Select City</option>
                     @endif
                 </select>
               </div>
 
 
               <div class="ss-jobtype-dv">
-                <label>Work type</label>
+                <label>Type</label>
                 <ul class="ks-cboxtags">
                     @foreach($terms as $k=>$v)
                     <li><input type="checkbox" name="terms[]" id="checkbox-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title, $job_type)) ? 'checked': ''}}><label for="checkbox-{{$k}}">{{$v->title}}</label></li>
@@ -85,9 +78,14 @@
 
 
               <div class="ss-explr-datepkr">
-                <label>Availability</label>
+                <label>Start Date</label>
                 <ul class="ss-date-with">
                     <li><input type="date" value="{{$start_date}}" name="start_date" placeholder="Start Date"></li>
+                </ul>
+              </div>
+              <div class="ss-explr-datepkr">
+                <label>End Date</label>
+                <ul class="ss-date-with">
                   <li><div class="ss-end-date"><input type="date" value="{{$end_date}}" name="end_date" placeholder="End Date"></div></li>
                 </ul>
               </div>
@@ -130,11 +128,6 @@
                         <li><input type="checkbox" name="shift[]" id="checkboxDay-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title,$shifts)) ? 'checked': ''}}><label for="checkboxDay-{{$k}}">{{$v->title}}</label></li>
                         @endforeach
                     </ul>
-              </div>
-
-              <div class="ss-auto-offer-dv">
-                <input type="checkbox" id="AutoOffers" name="auto_offers" value="1" {{ ($auto_offers==1) ? 'checked': ''}}>
-                <label for="AutoOffers">Auto Offers</label>
               </div>
 
               <div class="ss-fliter-btn-dv">
@@ -190,86 +183,6 @@
                     <h4>No Data found</h4>
                 </div>
                 @endforelse
-
-                {{-- <div class="ss-job-prfle-sec">
-                    <p>Travel <span>+50 Applied</span></p>
-                    <h4>Manager CRNA - Anesthesia</h4>
-                    <h6>Medical Solutions Recruiter</h6>
-                    <ul>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
-                    </ul>
-                    <h5>Recently Added</h5>
-                    <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" /></a>
-                </div>
-                <div class="ss-job-prfle-sec">
-                    <p>Travel <span>+50 Applied</span></p>
-                    <h4>Manager CRNA - Anesthesia</h4>
-                    <h6>Medical Solutions Recruiter</h6>
-                    <ul>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
-                    </ul>
-                    <h5>Recently Added</h5>
-                    <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" /></a>
-                </div> --}}
-              </div>
-
-              {{-- <div class="ss-dash-profile-4-bx-dv">
-                <div class="ss-job-prfle-sec">
-                    <p>Travel <span>+50 Applied</span></p>
-                    <h4>Manager CRNA - Anesthesia</h4>
-                    <h6>Medical Solutions Recruiter</h6>
-                    <ul>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
-                    </ul>
-                    <h5>Recently Added</h5>
-                    <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" /></a>
-                </div>
-
-                <div class="ss-job-prfle-sec">
-                    <p>Travel <span>+50 Applied</span></p>
-                    <h4>Manager CRNA - Anesthesia</h4>
-                    <h6>Medical Solutions Recruiter</h6>
-                    <ul>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
-                    </ul>
-                    <h5>Recently Added</h5>
-                    <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" /></a>
-                </div>
-
-                <div class="ss-job-prfle-sec">
-                    <p>Travel <span>+50 Applied</span></p>
-                    <h4>Manager CRNA - Anesthesia</h4>
-                    <h6>Medical Solutions Recruiter</h6>
-                    <ul>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
-                    </ul>
-                    <h5>Recently Added</h5>
-                    <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" /></a>
-                </div>
-
-                <div class="ss-job-prfle-sec">
-                    <p>Travel <span>+50 Applied</span></p>
-                    <h4>Manager CRNA - Anesthesia</h4>
-                    <h6>Medical Solutions Recruiter</h6>
-                    <ul>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/location.png')}}"> Los Angeles, CA</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/calendar.png')}}"> 10 wks</a></li>
-                    <li><a href="#"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}"> 2500/wk</a></li>
-                    </ul>
-                    <h5>Recently Added</h5>
-                    <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" /></a>
-                </div>
-              </div> --}}
             </div>
         </div>
       </div>
@@ -500,8 +413,23 @@ $('#slider4 .ui-slider-handle:eq(1)').append('<span class="price-range-max-4 val
 				$("#shift").val(shiftString);
 				$(this).find("input[name='terms[]']").remove();
                 $(this).find("input[name='shift[]']").remove();
+
+        // Change the value of the profession select to the text of the selected option
+        const professionSelect = $("select[name='profession']");
+        const selectedOptionText = professionSelect.find("option:selected").text();
+        
+        // Add a hidden input to the form with the text of the selected option
+        $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
+
+
 				// Now, you can submit the form programmatically
-				this.submit();
+        console.log('my form');
+        console.log($(this).serializeArray());
+        // setInterval(() => {
+        //   this.submit();
+        // }, 500000);
+				
+        this.submit();
 			});
 		});
 </script>
