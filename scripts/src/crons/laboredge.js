@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGODB_FILES_URI)
     console.error('Error connecting to MongoDB:', error);
 });
 
-// Process laboredge integrations
+// Process laboredge integrations for the first time
 module.exports.init = async () => {
 
 	var limit = 100;
@@ -69,13 +69,98 @@ module.exports.init = async () => {
 				const countries = await getCountries(accessToken, mysqlResp.user_id)
 				user.countries = countries;
 
-				// update updated with date.now
+				// update updated with new Date().toLocaleString()
+				user.updated = new Date().toLocaleString();
+
+				// Get Jobs
+				const jobs = await getJobs(accessToken, mysqlResp.user_id)
+				user.importedJobs = jobs;
+
+				// Send jobs to mysql
+				// for job in jobs | insert into jobs (...) values (...)
+				// import_id is job.id not job._id
+
 				// Save
 				await user.save().then(resp => {}).catch(e=>{console.log(e)})
 			}
 		})			
 	}
 }
+
+// Update the existing integrations
+module.exports.update = async () => {
+
+	var limit = 100;
+	var totalIntegrations = await Laboredge.countDocuments({});
+	var totalPages = Math.ceil(totalIntegrations/limit);
+
+	for( i = 0; i < totalPages; i++ ){
+
+		// offset the results by i (current page) * limit (100 by default)
+		var offset = i * limit;
+		
+		// only find updated documents AKA Initialised integrations
+		await Laboredge.find({updated: { $exists:true }}).limit(limit).skip(offset)
+		.then( async laboredge => {
+			
+			// this error should trigger a notification somewhere
+			if(!laboredge){
+				process.exit(1)
+			}
+
+			for ( let [index,user] of laboredge.entries()){
+				
+				console.log( "INDEX : ", index,"User ID : ", user.userId)
+				
+				// select * from laboredge where user_id = user.userId
+				
+				// WARNING : uses real data - mimic a normal mysql response
+				const mysqlResp = {
+					user_id:"UWU445837",
+					le_password:"Api@Quality_050923",
+					le_username:"api_quality",
+					le_organization_code:"Quality",
+					le_client_id:"nexus"
+				}
+
+				// Get the accessToken
+				var accessToken = await connectNexus(mysqlResp);
+
+				// update updated with new Date().toLocaleString()
+				user.updated = new Date().toLocaleString();
+
+				// Get Jobs
+				const jobs = await getJobs(accessToken, mysqlResp.user_id)
+				
+				// Check which job has changed
+				const updatedJobs = updateJobs(jobs, mysqlResp.user_id);
+				// check if the job ids from mongodb are in the api response, otherwise return them as closed
+				// check if the open jobs are still the same, otherwise update them
+				// check if there are new jobs and add them
+				// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
+				
+				/*
+				// Get Jobs - mysql
+				// use the updatedJobs response to apply the same changes as above
+
+				// select user_id,import_id from jobs where user_id= mysqlResp.user_id AND import_id NOT NULL
+				const mysqlJobs = {
+					user_id: mysqlResp.user_id,
+					import_id: 13239884
+				}
+
+				*/
+
+				// Save
+				await user.save().then(resp => {}).catch(e=>{console.log(e)})
+			}
+		})			
+	}
+}
+
+// Update the other integration data - professions, specialties ...
+module.exports.updateOthers = async () => {}
+
 // get professions
 async function getProfession (accessToken, userId){
 
@@ -192,34 +277,77 @@ async function getCountries (accessToken, userId){
 }
 
 // get jobs
-async function getSpecialties (accessToken, userId){
+async function getJobs (accessToken, userId){
 
-	var activeSpecialty = [];
+	var importedJobs = [];
 
 	var headers = {
 		'Authorization' : 'Bearer '+accessToken,
 		'Content-Type': 'application/json'
 	};
 	
+	// set the params for the first query
+	var params = {
+	    jobStatusCode: "OPEN",
+	    pagingDetails:{
+	        start:0,
+	        maxRowsToFetch:100
+    	}
+	};
+
 	// Get the total amount of records
 	try{
 		
-		var { data } = await axios.get("https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/specialties", {headers});
+		var { data } = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
 
 	}catch(e){
 	
 		log("Unable to fetch for total records from Nexus.", e.message, userId)
+	}
 	
+	if( data.count > 100 ){
+
+		for(; params.pagingDetails.start < data.count ;){
+
+			try{
+
+				var res = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
+
+			}catch(e){
+
+				log("Unable to fetch records from nexus. count > 100.", e.message, userId)
+			}
+
+			for( entries of res.data.records ){
+
+				importedJobs.push(entries);
+			}
+
+			// Increment
+			params.pagingDetails.start+=100;
+		}
+	
+	}else if (data.count == 0){
+		
+		log("No jobs to load", "data.count is empty", userId);
+	
+	}else{
+
+		for( entries of data.records ){
+
+			importedJobs.push(entries);
+		}
+
 	}
 
-	for( specialty of data){
-		if(profession.active){
-			activeSpecialty.push({specialty: specialty.name, specialtyId: specialty.id})
-		}
-	}
-	
-	return activeSpecialty
+	return importedJobs;
 }
+
+async function updateJobs(){
+
+	// should return {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
+}
+
 // Seed function
 module.exports.seed = async ( amount ) =>{
 
