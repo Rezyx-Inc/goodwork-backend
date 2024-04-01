@@ -10,7 +10,7 @@ use Hash;
 use App\Enums\Role;
 use File;
 /** Models */
-use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities};
+use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities, Nurse};
 
 class UserController extends Controller
 {
@@ -24,6 +24,7 @@ class UserController extends Controller
 
     public function edit()
     {
+
         $data = [];
         $user = auth()->guard('frontend')->user();
         $id = $user->nurse->id;
@@ -120,8 +121,9 @@ class UserController extends Controller
     {
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
-        $id = $user->worker->id;
-        $model = Worker::findOrFail($id);
+        
+        $id = $user->id;
+        $model = Nurse::where('user_id',$id)->first();
         $inputFields = collect($request->all())->filter(function ($value) {
             return $value !== null;
         });
@@ -314,7 +316,7 @@ class UserController extends Controller
         if ($request->covid_vac == 'Yes') {
             $asset = NurseAsset::where('nurse_id', $id)->where('filter', 'covid')->first();
             $input = [];
-            $input['using_date'] = isset($request->covid_date)?$request->covid_date:'';
+           // $input['using_date'] = isset($request->covid_date)?$request->covid_date:'';
             $input['nurse_id'] = $id;
             $input['filter'] = 'covid';
             if ($request->hasFile('covid'))
@@ -363,7 +365,7 @@ class UserController extends Controller
         if ($request->flu_vac == 'Yes') {
             $asset = NurseAsset::where('nurse_id', $id)->where('filter', 'flu')->first();
 
-            $input['using_date'] = isset($request->flu_date)?$request->flu_date:'';
+            //$input['using_date'] = isset($request->flu_date)?$request->flu_date:'';
             $input['filter'] = 'flu';
             $input['nurse_id'] = $id;
 
@@ -592,7 +594,7 @@ class UserController extends Controller
 
     public function skills_submit(Request $request)
     {
-        // dd($request->input());
+        // dd($request->all());
         $user = auth()->guard('frontend')->user();
         $id = $user->nurse->id;
         $worker = NURSE::findOrFail($id);
@@ -624,7 +626,7 @@ class UserController extends Controller
                         'nurse_id' => $id,
                         'name' => $driving_license,
                         'filter' => 'driving_license',
-                        'using_date' => $license_expiration_date,
+                        //'using_date' => $license_expiration_date,
                     ]);
                 }
             }
@@ -643,9 +645,10 @@ class UserController extends Controller
         // Upload diploma
         if ($request->has('diploma_cer')) {
             if ($request->diploma_cer == 'Yes') {
+                
                 if ($request->hasFile('diploma'))
                 {
-
+                    
                     NurseAsset::where('nurse_id', $id)->where('filter', 'diploma')->forceDelete();
                     if (!empty($worker->diploma)) {
                         if(file_exists(public_path('images/nurses/diploma/').$worker->diploma))
@@ -724,7 +727,7 @@ class UserController extends Controller
                         }
                     }
                 }
-                $input['using_date'] = isset($request->old_completion_date[$k]) ? $request->old_completion_date[$k] : '';
+                //$input['using_date'] = isset($request->old_completion_date[$k]) ? $request->old_completion_date[$k] : '';
                 $skill->update($input);
             }
         }
@@ -747,25 +750,25 @@ class UserController extends Controller
                     'nurse_id' => $id,
                     'name' => $skill,
                     'filter' => 'skill',
-                    'using_date' => $completion_date
+                    //'using_date' => $completion_date
                 ]);
             }
 
         }
 
-        $worker->skills_checklists = implode(',',$skills_img);
+        //$worker->skills_checklists = implode(',',$skills_img);
 
-        $worker->recent_experience = !empty($request->recent_experience) ? $request->recent_experience : '';
+        //$worker->recent_experience = !empty($request->recent_experience) ? $request->recent_experience : '';
         $worker->worked_at_facility_before = !empty($request->worked_at_facility_before) ? $request->worked_at_facility_before : '';
         $worker->worker_ss_number = !empty($request->worker_ss_number) ? $request->worker_ss_number : '';
-        $worker->eligible_work_in_us = !empty($request->eligible_work_in_us) ? $request->eligible_work_in_us : '';
+        //$worker->eligible_work_in_us = !empty($request->eligible_work_in_us) ? $request->eligible_work_in_us : '';
         NURSE::where(['id' => $worker->id])->update([
             'worker_ss_number' => $worker->worker_ss_number,
             'driving_license' => $worker->driving_license,
-            'recent_experience' => $worker->recent_experience,
+            // 'recent_experience' => $worker->recent_experience,
             'worked_at_facility_before' => $worker->worked_at_facility_before,
-            'eligible_work_in_us' => $worker->eligible_work_in_us,
-            'skills_checklists' => $worker->skills_checklists,
+            //'eligible_work_in_us' => $worker->eligible_work_in_us,
+            //'skills_checklists' => $worker->skills_checklists,
             'diploma' => $worker->diploma,
         ]);
         $response = array('success'=>true,'msg'=>'Updated Successfully!');

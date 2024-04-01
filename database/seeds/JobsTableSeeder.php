@@ -81,9 +81,10 @@ class JobsTableSeeder extends Seeder
             'Seattle, WA',
             'Denver, CO',
             'Washington, D.C.',
-
         ];
 
+        $is_open = ['1','1','1','1','1','0','0','1','0','1'];
+        $is_close = ['0','0','0','0','1','1','1','0','0','0'];
 
         // Adjust the number of jobs you want to create
         $numberOfJobs = 10;
@@ -116,7 +117,7 @@ class JobsTableSeeder extends Seeder
                 'job_other_exp' => $faker->text(100),
                 'job_photos' => $faker->imageUrl(),
                 'video_embed_url' => $faker->url,
-                'is_open' => $faker->boolean,
+                'is_open' => $is_open[$i],
                 'recruiter_id' => 'GWU000005',
                 'job_name' => $faker->word,
                 'proffesion' => $nursingProfessions[array_rand($nursingProfessions)],
@@ -131,7 +132,7 @@ class JobsTableSeeder extends Seeder
                 'hours_per_week' => $faker->numberBetween(20, 50),
                 'auto_offers' => $faker->numberBetween(0, 10),
                 'is_hidden' => $faker->boolean,
-                'is_closed' => $faker->boolean,
+                'is_closed' => $is_close[$i],
                 'tax_status' => $faker->randomElement(['W2', '1099']),
                 'terms' => $faker->word,
                 //new fields

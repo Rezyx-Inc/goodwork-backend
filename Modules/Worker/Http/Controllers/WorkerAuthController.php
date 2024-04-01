@@ -63,7 +63,7 @@ class WorkerAuthController extends Controller
                     ->orWhere('mobile', $input['id']);            
                 })
             
-                ->where('ROLE', 'WORKER')           
+                ->where('ROLE', 'NURSE')           
                 ->where('active', '1')            
                 ->first();            
                 if (isset($model)) {            
@@ -144,7 +144,7 @@ class WorkerAuthController extends Controller
                     // we should add facility id
                     'facility_id'=>'1',
                     'active' => '1',
-                    'role' => 'WORKER',
+                    'role' => 'NURSE',
                 ]);
 
                 // dispatching the event after creating user before validate

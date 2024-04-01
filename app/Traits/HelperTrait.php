@@ -36,9 +36,9 @@ trait HelperTrait
     public function get_cities($state_id, $country_id=null)
     {
         if (is_null($country_id)) {
-            return Cities::select('id','name')->where(['flag'=>'1', 'state_id'=>$state_id])->orderBy('name','ASC')->get();
+            return Cities::select('id','name')->where(['state_id'=>$state_id])->orderBy('name','ASC')->get();
         }
-        return Cities::select('id','name')->where(['flag'=>'1'])->where(function($q) use($state_id, $country_id){
+        return Cities::select('id','name')->where(function($q) use($state_id, $country_id){
             $q->where('state_id',$state_id)
             ->orWhere('country_id',$country_id);
         })->orderBy('name','ASC')->get();

@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdjustRoleandPermissionsSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(NurseSeeder::class);
-        $this->call(KeywordSeeder::class);
+        
        // $this->call(FacilitySeeder::class);
         $this->call(CountriesTableSeeder::class);
         $this->call(StateTableSeeder::class);
@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CityTableSeeder::class);
         $this->call(ChatTableSeeder::class);
         $this->call(OffersTableSeeder::class);
+        $this->call(KeywordSeeder::class);
 
     }
  }

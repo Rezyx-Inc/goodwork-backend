@@ -699,10 +699,10 @@
         </ul>
 
         <div class="ss-job-apl-on-offer-btn">
-            <button class="ss-acpect-offer-btn">Accept Offer</button>
+            <button class="ss-acpect-offer-btn" data-offer_id="{{$offer_id}}" onclick="accept_job_offer(this)">Accept Offer</button>
             <ul>
                 <li><button  type="button" class="ss-counter-btn" data-id="{{$model->id}}" data-type="counter" onclick="fetch_job_content(this)">Counter offer</button></li>
-                <li><button type="button" class="ss-reject-offer-btn">Reject Offer</button></li>
+                <li><button type="button" class="ss-reject-offer-btn" data-offer_id="{{$offer_id}}" onclick="reject_job_offer(this)">Reject Offer</button></li>
             </ul>
         </div>
 

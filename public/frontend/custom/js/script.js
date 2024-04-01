@@ -423,6 +423,7 @@ function get_cities(obj)
 
 function get_speciality(obj, empty_content=true)
 {
+   
     speciality = {};
     if (empty_content) {
         $('.speciality-content').empty();
@@ -439,7 +440,7 @@ function get_speciality(obj, empty_content=true)
         // processData: false,
         // contentType: false,
         data: {
-            kid: $(obj).find('option:selected').data('id')
+            kid: $(obj).find('option:selected').val()
         },
         success: function (resp) {
             console.log(resp);

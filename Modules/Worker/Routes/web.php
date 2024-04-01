@@ -42,7 +42,7 @@ Route::prefix('worker')->group(function() {
       //  Route::get('worker-messages/{idEmployer}', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
        // Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
         Route::get('/getMessages', ['uses'=>'WorkerController@get_private_messages', 'as'=>'getPrivateMessages']);
-        Route::get('my-work-journey', ['uses' => 'WorkerDashboardController@get_my_work_journey', 'as' => 'my-work-journey']);
+        Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'worker.my-work-journey']);
 
 
         //Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'my-work-journey']);
@@ -56,8 +56,16 @@ Route::prefix('worker')->group(function() {
         Route::post('/send-message', ['uses' => 'WorkerController@sendMessages', 'as' => 'send.message']);
         Route::get('/get-messages', ['uses' => 'WorkerController@getMessages', 'as' => 'GetMessages']);
         
-        // still in use ???
+        // still in use ??? 
         Route::get('/get-rooms', ['uses' => 'WorkerController@get_rooms', 'as' => 'GetRooms']);
+        Route::get('job/{id}/details', ['uses' => 'WorkerController@details', 'as' => 'worker_job-details']);
+
+        // accept offer 
+        Route::post('accept-offer',['uses'=>'WorkerController@accept_offer', 'as'=>'accept-offer']);
+
+        // reject offer 
+        Route::post('reject-offer',['uses'=>'WorkerController@reject_offer', 'as'=>'reject-offer']);
+
     }
 
     );

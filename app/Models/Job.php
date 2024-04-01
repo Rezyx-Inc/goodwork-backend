@@ -223,13 +223,13 @@ class Job extends Model
 
     public function getOfferCount()
     {
-        return $this->hasMany(Offer::class)->where(['active'=>'1'])->whereNull('deleted_at')->count();
+        return $this->hasMany(Offer::class)->where(['status'=>'Apply'])->whereNull('deleted_at')->count();
     }
 
     public function checkIfApplied()
     {
         $user = auth()->guard('frontend')->user();
-        return $this->hasMany(Offer::class)->where(['active'=>'1','nurse_id'=>$user->nurse->id, 'status'=>'Apply'])->whereNull('deleted_at')->count();
+        return $this->hasMany(Offer::class)->where(['worker_user_id'=>$user->nurse->id, 'status'=>'Apply'])->whereNull('deleted_at')->count();
     }
 
     public function matchWithWorker()
