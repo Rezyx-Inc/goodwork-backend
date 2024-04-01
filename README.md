@@ -114,11 +114,16 @@ Procedure to go live or staging.
 ``php artisan storage:link``
 
 
-
-
-
 SideNotes
 
+nginx will have to proxy a few ports, including laravel-echo-server and the file management service
+
+npm i
+npm run build:storage
+npm run service:files
+
 Install mongodb and redis
+
 install laravel-echo-server or use npx and start it
+
 use php artisan serve
