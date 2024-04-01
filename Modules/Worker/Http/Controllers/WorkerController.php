@@ -427,11 +427,12 @@ class WorkerController extends Controller
                 break;
 
             case 'offered-jobs':
-                $jobs = Job::select("jobs.*")
+
+                $jobs = Job::select("jobs.*","offers.id as offer_id")
                 ->join('offers', function ($join) use ($user){
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
-                        $query->whereIn('offers.status', ['Offered', 'Rejected', 'Hold'])
+                        $query->whereIn('offers.status', ['Offered', 'Hold'])
                         ->where('offers.worker_user_id', '=', $user->nurse->id)
                         ;
                     });
@@ -439,7 +440,7 @@ class WorkerController extends Controller
                 ->where($whereCond)
                 ->orderBy('offers.created_at', 'DESC')
                 ->get();
-                //return response()->json(['msg'=>$jobs]);
+                // return response()->json(['msg'=>$jobs]);
                 $data['type'] = 'offered';
                 break;
 
@@ -688,6 +689,8 @@ class WorkerController extends Controller
             $response['success'] = true;
             $data = [];
             $job = Job::findOrFail($request->jid);
+            $id = Auth::guard('frontend')->user()->id;
+            return response()->json(['msg'=>$id]);
             switch($request->type)
             {
                 case 'saved':
@@ -745,4 +748,78 @@ class WorkerController extends Controller
             return new JsonResponse($response, 200);
         }
     }
+
+    public function accept_offer(Request $request){
+
+        try{
+            $request->validate([
+                'offer_id'=>'required',
+            ]);
+
+            $offer = Offer::where('id',$request->offer_id)->first();
+            if(!$offer){
+                return response()->json(['success' => false, 'message' => 'Offer not found']);
+            }
+    
+            $job = Job::where('id',$offer->job_id)->first();
+            if(!$job){
+                return response()->json(['success' => false, 'message' => 'Job not found']);
+            }
+    
+            $offer->update([
+                'status' => 'Onboarding',
+                'is_draft' => '0',
+                'is_counter' => '0'
+            ]);
+    
+            $job->update([
+                'active' => '0',
+                'is_open' => '0',
+                'is_closed' => '1'
+            ]);
+    
+            return response()->json(['msg'=>'offer accepted successfully','success' => true]);
+    
+        } catch (\Exception $e) {
+           // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
+           return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
+        }
+    }
+
+    public function reject_offer(Request $request){
+
+        try{
+            $request->validate([
+                'offer_id'=>'required',
+            ]);
+
+            $offer = Offer::where('id',$request->offer_id)->first();
+            if(!$offer){
+                return response()->json(['success' => false, 'message' => 'Offer not found']);
+            }
+    
+            $job = Job::where('id',$offer->job_id)->first();
+            if(!$job){
+                return response()->json(['success' => false, 'message' => 'Job not found']);
+            }
+    
+            $updated = $offer->update([
+                'status' => 'Rejected',
+                'is_draft' => '0',
+                'is_counter' => '0'
+            ]);
+    
+            if ($updated) {
+                return response()->json(['msg'=>'Offer rejected successfully','success' => true]);
+            } else {
+                return response()->json(['msg'=>'offer not rejected', 'success' => false]);
+            }
+            
+    
+        } catch (\Exception $e) {
+           // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
+           return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
+        }
+    }
+
 }

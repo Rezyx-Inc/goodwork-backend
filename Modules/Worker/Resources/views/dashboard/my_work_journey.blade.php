@@ -3829,43 +3829,74 @@
         $(document).ready(function(){
             $('.job-list')[0].click('active');
         });
-        function fetch_job_content(obj)
-        {
+        // function fetch_job_content(obj)
+        // {
             
-            if (!$(obj).hasClass('active')) {
-                $('.job-list').removeClass('active')
-                ajaxindicatorstart();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: full_path+'worker/fetch-job-content',
-                    type: 'POST',
-                    dataType: 'json',
-                    // processData: false,
-                    // contentType: false,
-                    data: {
-                        jid: $(obj).data('id'),
-                        type: $(obj).data('type')
-                    },
-                    success: function (resp) {
-                        console.log(resp);
-                        ajaxindicatorstop();
-                        if (resp.success) {
+        //     if (!$(obj).hasClass('active')) {
+        //         $('.job-list').removeClass('active')
+        //         ajaxindicatorstart();
+        //         $.ajaxSetup({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             }
+        //         });
+        //         $.ajax({
+        //             url: full_path+'worker/fetch-job-content',
+        //             type: 'POST',
+        //             dataType: 'json',
+        //             // processData: false,
+        //             // contentType: false,
+        //             data: {
+        //                 jid: $(obj).data('id'),
+        //                 type: $(obj).data('type')
+        //             },
+        //             success: function (resp) {
+        //                 console.log(resp);
+        //                 ajaxindicatorstop();
+        //                 if (resp.success) {
 
-                            $('.job-content').html(resp.content);
-                            $(obj).addClass('active')
-                        }
-                    },
-                    error: function (resp) {
-                        console.log(resp);
-                        ajaxindicatorstop();
-                    }
-                });
-            }
-        }
+        //                     $('.job-content').html(resp.content);
+        //                     $(obj).addClass('active')
+        //                 }
+        //             },
+        //             error: function (resp) {
+        //                 console.log(resp);
+        //                 ajaxindicatorstop();
+        //             }
+        //         });
+        //     }
+        // }
+
+        // function accept_job_offer(obj){
+        //     ajaxindicatorstart();
+        //     $.ajaxSetup({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             }
+        //         });
+        //         $.ajax({
+        //             url: full_path+'accept-offer',
+        //             type: 'POST',
+        //             dataType: 'json',
+        //             data: {
+        //                 offer_id: $(obj).data('offer_id')
+        //             },
+        //             success: function (resp) {
+        //                 console.log(resp);
+        //                 ajaxindicatorstop();
+        //                 if (resp.success) {
+
+        //                     $('.job-content').html(resp.content);
+        //                     $(obj).addClass('active')
+        //                 }
+        //             },
+        //             error: function (resp) {
+        //                 console.log(resp);
+        //                 ajaxindicatorstop();
+        //             }
+        //         });
+
+        // }
 
         function store_counter_offer(obj)
         {
@@ -3879,8 +3910,6 @@
                     url: full_path+'post-counter-offer',
                     type: 'POST',
                     dataType: 'json',
-                    // processData: false,
-                    // contentType: false,
                     data: {
                         jid: $(obj).data('id'),
                         type: $(obj).data('type')

@@ -143,5 +143,76 @@
             });
         }
     }
+
+    function accept_job_offer(obj){
+            ajaxindicatorstart();
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: full_path+'worker/accept-offer',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        offer_id: $(obj).data('offer_id')
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i>' + resp.msg,
+                                time: 5
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+                        
+                    },
+                    error: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                    }
+                });
+
+        }
+
+
+        function reject_job_offer(obj){
+            ajaxindicatorstart();
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: full_path+'worker/reject-offer',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        offer_id: $(obj).data('offer_id')
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i>' + resp.msg,
+                                time: 5
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+                        
+                    },
+                    error: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                    }
+                });
+
+        }
 </script>
 @stop

@@ -59,6 +59,13 @@ Route::prefix('worker')->group(function() {
         // still in use ??? 
         Route::get('/get-rooms', ['uses' => 'WorkerController@get_rooms', 'as' => 'GetRooms']);
         Route::get('job/{id}/details', ['uses' => 'WorkerController@details', 'as' => 'worker_job-details']);
+
+        // accept offer 
+        Route::post('accept-offer',['uses'=>'WorkerController@accept_offer', 'as'=>'accept-offer']);
+
+        // reject offer 
+        Route::post('reject-offer',['uses'=>'WorkerController@reject_offer', 'as'=>'reject-offer']);
+
     }
 
     );
