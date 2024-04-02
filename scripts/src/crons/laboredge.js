@@ -8,7 +8,7 @@ const Laboredge = require('../models/Laboredge');
 const Logs = require('../models/Logs');
 
 //Connect to DB
-mongoose.connect(process.env.MONGODB_FILES_URI)
+mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
 .then(() => {
     console.log('Connected to MongoDB');
 })
@@ -37,7 +37,7 @@ module.exports.init = async () => {
 			}
 			for ( let [index,user] of laboredge.entries()){
 				
-				console.log( "INDEX : ", index,"User ID : ", user.userId)
+				//console.log( "INDEX : ", index,"User ID : ", user.userId)
 				
 				// select * from laboredge where user_id = laboredge.userId
 				
@@ -91,7 +91,7 @@ module.exports.init = async () => {
 module.exports.update = async () => {
 
 	var limit = 100;
-	var totalIntegrations = await Laboredge.countDocuments({});
+	var totalIntegrations = await Laboredge.countDocuments();
 	var totalPages = Math.ceil(totalIntegrations/limit);
 
 	for( i = 0; i < totalPages; i++ ){
@@ -100,7 +100,7 @@ module.exports.update = async () => {
 		var offset = i * limit;
 		
 		// only find updated documents AKA Initialised integrations
-		await Laboredge.find({updated: { $exists:true }}).limit(limit).skip(offset)
+		await Laboredge.find({updated: { $exists:true }}, {'_id':0, 'importedJobs._id':0, 'importedJobs.rates._id':0}).limit(limit).skip(offset)
 		.then( async laboredge => {
 			
 			// this error should trigger a notification somewhere
@@ -110,7 +110,7 @@ module.exports.update = async () => {
 
 			for ( let [index,user] of laboredge.entries()){
 				
-				console.log( "INDEX : ", index,"User ID : ", user.userId)
+				console.log( "INDEX : ", index,"User ID : ", user.userId, "_id:", user._id)
 				
 				// select * from laboredge where user_id = user.userId
 				
@@ -133,12 +133,9 @@ module.exports.update = async () => {
 				const jobs = await getJobs(accessToken, mysqlResp.user_id)
 				
 				// Check which job has changed
-				const updatedJobs = updateJobs(jobs, mysqlResp.user_id);
-				// check if the job ids from mongodb are in the api response, otherwise return them as closed
-				// check if the open jobs are still the same, otherwise update them
-				// check if there are new jobs and add them
+				const updatedJobs = await updateJobs(jobs, user.importedJobs, mysqlResp.user_id);
 				// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
-				
+
 				/*
 				// Get Jobs - mysql
 				// use the updatedJobs response to apply the same changes as above
@@ -152,14 +149,11 @@ module.exports.update = async () => {
 				*/
 
 				// Save
-				await user.save().then(resp => {}).catch(e=>{console.log(e)})
+				//await user.save().then(resp => {}).catch(e=>{console.log(e)})
 			}
 		})			
 	}
 }
-
-// Update the other integration data - professions, specialties ...
-module.exports.updateOthers = async () => {}
 
 // get professions
 async function getProfession (accessToken, userId){
@@ -276,6 +270,9 @@ async function getCountries (accessToken, userId){
 	return activeCountry
 }
 
+// Update the other integration data - professions, specialties ...
+module.exports.updateOthers = async () => {}
+
 // get jobs
 async function getJobs (accessToken, userId){
 
@@ -322,7 +319,7 @@ async function getJobs (accessToken, userId){
 
 				importedJobs.push(entries);
 			}
-
+			
 			// Increment
 			params.pagingDetails.start+=100;
 		}
@@ -343,11 +340,96 @@ async function getJobs (accessToken, userId){
 	return importedJobs;
 }
 
-async function updateJobs(){
+async function updateJobs(newJobs, oldJobs, userId){
 
-	// should return {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
+	// check if the job ids from mongodb are in the api response, otherwise return them as closed
+	// check if the open jobs are still the same, otherwise update them
+	// check if there are new jobs and add them
+	// should return {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]
+
+	var toClose = [], toAdd = [], toUpdate = [];
+	var newFormatedJobs = await formatJobs(newJobs);
+	var jobIds = [];
+	
+	// May need to be optimised
+	for( job of oldJobs ){
+		
+		// Useful later - Jobs processed
+		jobIds.push(job.id);
+		
+		// Check if OldJobs is in NewJobs --> should be kept
+		let needle = newFormatedJobs.filter((newJob) => {if(newJob.id == job.id){return newJob}})
+		
+		if(needle.length == 1){
+			
+			// check if that OldJobs is the same in NewJobs --> if not, shall be sent to toUpdate
+			if(JSON.stringify(needle[0]) === JSON.stringify(job)){
+
+				// nothing to do
+			
+			}else{
+
+				toUpdate.push(needle[0])
+			}
+		
+		}
+		// > 2 is an error  
+		else if (needle.length > 1){
+
+			//notify maintainers
+		}
+		// Should be removed
+		else{
+			toClose.push(job.id)
+		}
+
+	}
+
+	for( jobb of newJobs){
+
+		if(!jobIds.includes(jobb.id)){
+			toAdd.push(jobb)
+			continue;
+		}else{
+			console.log("no")
+		}
+	}
+
+	console.log("done", toAdd.length, toUpdate.length, toClose.length, oldJobs.length, newJobs.length)
 }
 
+async function formatJobs(jobs){
+
+	var formatedJobs = [];
+
+	for(job of jobs){
+
+		formatedJobs.push({
+
+            id: job.id,
+            jobTitle: job.jobTitle,
+            postingId: job.postingId,
+            description: job.description,
+            signOnBonus: job.signOnBonus,
+            jobType: job.jobType,
+            startDate: job.startDate,
+            endDate: job.endDate,
+            duration: job.duration,
+            durationType: job.durationType,
+            jobStatus: job.jobStatus,
+            floatingReqUnits: job.floatingReqUnits,
+            shiftsPerWeek1: job.shiftsPerWeek1,
+            scheduledHrs1: job.scheduledHrs1,
+            shift: job.shift,
+            professionId: job.professionId,
+            specialtyId: job.specialtyId,
+            hourlyPay: job.hourlyPay,
+            rates: job.rates
+		})
+	}
+
+	return formatedJobs
+}
 // Seed function
 module.exports.seed = async ( amount ) =>{
 

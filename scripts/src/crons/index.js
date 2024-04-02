@@ -3,7 +3,8 @@ var laboredge = require('./laboredge.js');
 
 // Uncomment to seed accounts
 //laboredge.seed(999);
-laboredge.init()
+//laboredge.init()
+laboredge.update()
 
 // will reside here for now, to be moved to crons/index.js
 console.log("Starting integrations cron jobs.")
