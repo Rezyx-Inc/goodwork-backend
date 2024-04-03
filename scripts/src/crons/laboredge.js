@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const Laboredge = require('../models/Laboredge');
 const Logs = require('../models/Logs');
 
+var _ = require('lodash');
+
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
 .then(() => {
@@ -133,18 +135,44 @@ module.exports.update = async () => {
 				const jobs = await getJobs(accessToken, mysqlResp.user_id)
 				
 				// Check which job has changed
-				const updatedJobs = await updateJobs(jobs, user.importedJobs, mysqlResp.user_id);
+				const updatedJobs = await getUpdatedJobs(jobs, user.importedJobs, mysqlResp.user_id);
 				// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
+
+				for( [ind, item] of user.importedJobs.entries()){
+
+					if ( _.includes(updatedJobs.toClose,item.id) ){
+
+						user.importedJobs[ind] = null
+						continue
+					}
+
+					// Not closed, so update
+					for ( updateItem of updatedJobs.toUpdate ){
+
+						if(updateItem.id == item.id){
+
+							user.importedJobs[ind] = updateItem;
+						}
+					}
+
+				}
+
+				// add new jobs
+
+				for ( newItem of updatedJobs.toAdd ){
+
+					user.importedJobs.push(newItem)
+				}
+				
+				console.log("ACTUAL JOB",user.importedJobs.length, "NEW JOB",jobs.length)
+				console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
 
 				/*
 				// Get Jobs - mysql
 				// use the updatedJobs response to apply the same changes as above
 
 				// select user_id,import_id from jobs where user_id= mysqlResp.user_id AND import_id NOT NULL
-				const mysqlJobs = {
-					user_id: mysqlResp.user_id,
-					import_id: 13239884
-				}
+				// apply the changes from updatedJobs
 
 				*/
 
@@ -271,7 +299,68 @@ async function getCountries (accessToken, userId){
 }
 
 // Update the other integration data - professions, specialties ...
-module.exports.updateOthers = async () => {}
+module.exports.updateOthers = async () => {
+
+	var limit = 100;
+	var totalIntegrations = await Laboredge.countDocuments({});
+	var totalPages = Math.ceil(totalIntegrations/limit);
+
+	for( i = 0; i < totalPages; i++ ){
+
+		// offset the results by i (current page) * limit (100 by default)
+		var offset = i * limit;
+		
+		// only find non updated documents AKA recently enabled integrations
+		await Laboredge.find({updated: { $exists:true }}).limit(limit).skip(offset)
+		.then( async laboredge => {
+			
+			if(!laboredge){
+				return
+			}
+			for ( let [index,user] of laboredge.entries()){
+				
+				//console.log( "INDEX : ", index,"User ID : ", user.userId)
+				
+				// select * from laboredge where user_id = laboredge.userId
+				
+				// WARNING : uses real data - mimic a normal mysql response
+				const mysqlResp = {
+					user_id:"UWU445837",
+					le_password:"Api@Quality_050923",
+					le_username:"api_quality",
+					le_organization_code:"Quality",
+					le_client_id:"nexus"
+				}
+
+				// Get the accessToken
+				var accessToken = await connectNexus(mysqlResp);
+
+				// Get professions
+				const professions = await getProfession(accessToken, mysqlResp.user_id)
+				user.professions = professions;
+				
+				// Get specialties
+				const specialties = await getSpecialties(accessToken, mysqlResp.user_id)
+				user.specialties = specialties;
+
+				// Get States
+				const states = await getStates(accessToken, mysqlResp.user_id)
+				user.states = states;
+
+				// Get Countries
+				const countries = await getCountries(accessToken, mysqlResp.user_id)
+				user.countries = countries;
+
+				// update updated with new Date().toLocaleString()
+				user.updated = new Date().toLocaleString();
+
+				// Save
+				await user.save().then(resp => {}).catch(e=>{console.log(e)})
+			}
+		})			
+	}
+
+}
 
 // get jobs
 async function getJobs (accessToken, userId){
@@ -340,62 +429,51 @@ async function getJobs (accessToken, userId){
 	return importedJobs;
 }
 
-async function updateJobs(newJobs, oldJobs, userId){
+async function getUpdatedJobs(newJobs, oldJobs, userId){
 
 	// check if the job ids from mongodb are in the api response, otherwise return them as closed
 	// check if the open jobs are still the same, otherwise update them
 	// check if there are new jobs and add them
 	// should return {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]
 
-	var toClose = [], toAdd = [], toUpdate = [];
+	var toClose = [], toAdd = [], toUpdate = [], unchanged = [];
 	var newFormatedJobs = await formatJobs(newJobs);
-	var jobIds = [];
-	
+
 	// May need to be optimised
-	for( job of oldJobs ){
+	for( job of newFormatedJobs ){
 		
-		// Useful later - Jobs processed
-		jobIds.push(job.id);
+		// Check if OldJobs is in NewJobs --> should be kept		
+		let needle = _.find(oldJobs, ['id', job.id]);
 		
-		// Check if OldJobs is in NewJobs --> should be kept
-		let needle = newFormatedJobs.filter((newJob) => {if(newJob.id == job.id){return newJob}})
-		
-		if(needle.length == 1){
+		if(needle){
 			
 			// check if that OldJobs is the same in NewJobs --> if not, shall be sent to toUpdate
-			if(JSON.stringify(needle[0]) === JSON.stringify(job)){
-
-				// nothing to do
+			if(JSON.stringify(needle) === JSON.stringify(job)){
+				
+				unchanged.push(needle)
 			
 			}else{
 
-				toUpdate.push(needle[0])
+				toUpdate.push(needle)
 			}
 		
 		}
-		// > 2 is an error  
-		else if (needle.length > 1){
-
-			//notify maintainers
-		}
-		// Should be removed
 		else{
+
+			toAdd.push(job)
+		}
+	}
+
+	for( job of oldJobs){
+
+		let needle = _.find(newFormatedJobs, ['id', job.id]);
+
+		if(!needle){
 			toClose.push(job.id)
 		}
-
 	}
 
-	for( jobb of newJobs){
-
-		if(!jobIds.includes(jobb.id)){
-			toAdd.push(jobb)
-			continue;
-		}else{
-			console.log("no")
-		}
-	}
-
-	console.log("done", toAdd.length, toUpdate.length, toClose.length, oldJobs.length, newJobs.length)
+	return {toAdd : toAdd, toUpdate: toUpdate, toClose: toClose, unchanged: unchanged}
 }
 
 async function formatJobs(jobs){
@@ -430,6 +508,7 @@ async function formatJobs(jobs){
 
 	return formatedJobs
 }
+
 // Seed function
 module.exports.seed = async ( amount ) =>{
 
