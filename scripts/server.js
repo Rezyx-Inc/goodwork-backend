@@ -32,6 +32,4 @@ some notes:
  - max 25 files per user
  - file size max 5mb
  - max upload at once 130mb
-
-
 */

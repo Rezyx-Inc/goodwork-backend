@@ -34,7 +34,7 @@ use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, 
 // ************ models ************
 /** Models */
 use App\Models\{User, Nurse,Follows, NurseReference,Job,Offer, NurseAsset,
-    Keyword, Facility, Availability, Countries, States, Cities, JobSaved};
+    Keyword, Facility, Availability, Countries, States, Cities, JobSaved,State};
 
 
 define('default_max_step', 5);
@@ -130,6 +130,10 @@ class WorkerDashboardController extends Controller
     {
         $data = [];
         $data['worker'] = auth()->guard('frontend')->user();
+        $data['specialities'] = Speciality::select('full_name')->get();
+        $data['proffesions'] = Profession::select('full_name')->get();
+        // send the states
+        $data['states'] = State::select('id','name')->get();
         return view('worker::dashboard.worker_profile', $data);
     }
 
