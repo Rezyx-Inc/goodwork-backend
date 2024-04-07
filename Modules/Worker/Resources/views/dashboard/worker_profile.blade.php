@@ -123,7 +123,7 @@
                     <!--------Professional Information form--------->
                     <div class="col-lg-7 bodyAll">
                         <div class="ss-pers-info-form-mn-dv">
-                            {{-- <form method="post" action="{{route('')}}"> --}}
+                            
                               <div class="ss-persnl-frm-hed">
                                 {{-- Basic Information Or Professional Information Or Document management --}}
                                 <p id="information_type"><span><img
@@ -135,44 +135,44 @@
                                 </div>
                             </div>
                             <div class="form-outer">
-                            <form>
+                              <form method="post" action="{{route('update-worker-profile')}}">
+                            {{-- <form> --}}
                                 @csrf
-                                
                                 <!-- first form slide Basic Information -->
                                 <div class="page slide-page">
                                     <div class="row justify-content-center">
                                         {{-- First Name --}}
                                         <div class="ss-form-group col-11">
                                             <label>First Name</label>
-                                            <input type="text" name="text" placeholder="Please enter your first name">
+                                            <input type="text" name="first_name" placeholder="Please enter your first name">
                                         </div>
                                         {{-- Last Name --}}
                                         <div class="ss-form-group col-11">
                                             <label>Last Name</label>
-                                            <input type="text" name="text" placeholder="Please enter your last name">
+                                            <input type="text" name="last_name" placeholder="Please enter your last name">
                                         </div>
                                         {{-- Phone Number --}}
                                         <div class="ss-form-group col-11">
                                             <label>Phone Number</label>
-                                            <input type="text" name="text"
+                                            <input type="text" name="mobile"
                                                 placeholder="Please enter your phone number">
                                         </div>
                                         {{-- Address Information --}}
-                                        <div class="ss-form-group col-11>
+                                        <div class="ss-form-group col-11">
                                             <label>Address</label>
-                                            <input type="text" name="text" placeholder="Please enter your address">
+                                            <input type="text" name="address" placeholder="Please enter your address">
                                         </div>
                                         {{-- City Information --}}
                                         <div class="ss-form-group col-11">
                                             <label>City</label>
-                                            <select name="job_city" id="job_city">
+                                            <select name="city" id="job_city">
                                                 <option value="">What City are you located in?</option>
                                             </select>
                                         </div>
                                         {{-- State Information --}}
                                         <div class="ss-form-group col-11">
                                             <label>State</label>
-                                            <select name="job_state" id="job_state">
+                                            <select name="state" id="job_state">
                                               <option value="">What State are you located in?</option>
                                               @foreach($states as $state)
                                               <option id="{{$state->id}}" value="{{$state->name}}">{{$state->name}}
@@ -183,13 +183,12 @@
                                         {{-- Zip Code Information --}}
                                         <div class="ss-form-group col-11">
                                             <label>Zip Code</label>
-                                            <input type="text" name="text"
+                                            <input type="text" name="zip_code"
                                                 placeholder="Please enter your Zip Code">
                                         </div>
 
                                         {{-- Skip && Save --}}
                                         <div class="ss-prsn-form-btn-sec col-11">
-                                            {{-- <button type="text" class="ss-prsnl-skip-btn"> Skip </button> --}}
                                             <button type="text" class="ss-prsnl-save-btn firstNext"> Save & Next
                                             </button>
                                         </div>
@@ -203,7 +202,7 @@
                                         {{-- Profession --}}
                                         <div class="ss-form-group col-11">
                                             <label>Profession</label>
-                                            <select name="cars" id="cars">
+                                            <select name="profession" id="profession">
                                                 <option value="">What Kind of Professional are you?</option>
                                                 @foreach($proffesions as $proffesion)
                                                 <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}
@@ -212,9 +211,9 @@
                                             </select>
                                         </div>
                                         {{-- Specialty --}}
-                                        <div class="ss-form-group ss-prsnl-frm-specialty col-11">
+                                        <div class="ss-form-group  col-11">
                                             <label>Specialty</label>
-                                            <select name="cars" id="cars">
+                                            <select name="specialty" id="specialty">
                                                 <option value="">Select Specialty</option>
                                                 @foreach($specialities as $specialty)
                                                 <option value="{{$specialty->full_name}}">{{$specialty->full_name}}
@@ -223,6 +222,164 @@
                                             </select>
                                         </div>
 
+                                        <div class="ss-form-group col-11">
+                                          <label>Terms</label>
+                                          <select name="terms" id="term">
+                                          ';
+                                            @if (isset($allKeywords['Terms'])) 
+                                                @foreach ($allKeywords['Terms'] as $value) 
+                                                    <option value="{{$value->id}}">{{$value->title}}</option>
+                                                @endforeach
+                                            @endif
+                                          </select>
+                                      </div>
+
+                                      <div class="ss-form-group col-11">
+                                        <label>Type</label>
+                                        <select name="type" id="type">
+                                            <option value="">Select Type</option>';
+                                            @if (isset($allKeywords['Type']))
+                                    @foreach ($allKeywords['Type'] as $value) 
+                                        <option value="{{$value->title}}">{{$value->title}}</option>
+                                        @endforeach
+                                        @endif
+                                        </select>
+                                    </div>
+
+                                  {{-- Block scheduling --}}
+                                    <div class="ss-form-group row justify-content-center align-items-center col-11" style="margin-top:36px;">
+                                      <label class="col-lg-6 col-sm-8 col-xs-8 col-md-8">Block scheduling</label>
+                                      <input style="box-shadow:none; width: auto;" class="col-lg-6 col-sm-2 col-xs-2 col-md-2" type="radio" id="option1" name="block_scheduling" value="1" autocompleted="" disabled>
+                                  </div>
+                                  {{-- end scheduling --}}
+                                  {{-- Float requirements --}}
+                                  <div class="ss-form-group col-11">
+                                      <label>Float requirements</label>
+                                      <select name="float_requirement" class="float_requirement mb-3" id="float_requirement" value="">
+                                  <option value="">Select Float requirements</option>
+                                          <option value="Yes">Yes</option>
+                                          <option value="No">No</option>
+                                      </select>
+                                  </div>
+                                  <span class="help-block-float_requirement"></span>
+                                  {{-- end Float requirements --}}
+                                  {{-- Facility Shift Cancellation Policy --}}
+                                  <div class="ss-form-group  col-11">
+                                      <label>Facility Shift Cancellation Policy</label>
+                                      <select name="facility_shift_cancelation_policy" class="facility_shift_cancelation_policy mb-3" id="facility_shift_cancelation_policy" value="" >
+                                  <option value="">Select Facility Shift Cancellation Policy </option>';
+                              @if (isset($allKeywords['AssignmentDuration'])) 
+                                  @foreach ($allKeywords['AssignmentDuration'] as $value) 
+                                      <option value="{{$value->id}}" >{{$value->title}}</option>;
+                                  @endforeach
+                              @endif
+                                      </select>
+                                  </div>
+                                  <span class="help-block-facility_shift_cancelation_policy"></span>
+                                  {{-- End Facility Shift Cancellation Policy --}}
+                                  {{-- Contract Termination Policy --}}
+                                  <div class="ss-form-group col-11">
+                                      <label>Contract Termination Policy</label>
+                                      <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy">
+                                  </div>
+                                  {{-- end Contract Termination Policy --}}
+                                  {{-- Traveler Distance From Facility --}}
+                                  <div class="ss-form-group col-11">
+                                    <label>Traveler Distance From Facility</label>
+                                    <input type="number" id="traveler_distance_from_facility" name="distance_from_your_home" placeholder="Enter Traveler Distance From Facility">
+                                </div>
+                                  {{-- end Traveler Distance From Facility  --}}
+                                  {{-- Clinical Setting --}}
+                                  <div class="ss-form-group col-11">
+                                    <label>Clinical Setting</label>
+                                    <input type="text" id="clinical_setting" name="clinical_setting_you_prefer" placeholder="Enter clinical setting">
+                                </div>
+                                <span class="help-block-clinical_setting"></span>
+                                {{-- End Clinical Setting --}}
+                                {{-- Patient ratio --}}
+                                <div class="ss-form-group col-11">
+                                    <label>Patient ratio</label>
+                                    <input type="number" id="Patient_ratio" name="worker_patient_ratio" placeholder="How many patients can you handle?">
+                                </div>
+                                <span class="help-block-Patient_ratio"></span>
+                                {{-- End Patient ratio --}}
+                                {{-- EMR --}}
+                                <div class="ss-form-group col-11">
+                                    <label>EMR</label>
+                                    <select name="worker_emr" class="emr mb-3" id="emr">
+                                    <option value="">Select EMR</option>';
+                            @if (isset($allKeywords['EMR'])) 
+                                @foreach ($allKeywords['EMR'] as $value) 
+                                    <option value="{{$value->id}}">{{$value->title}}</option>
+                                @endforeach
+                            @endif
+                                    </select>
+                                </div>
+                                <span class="help-block-emr"></span>
+                                {{-- End EMR --}}
+                                {{-- Unit --}}
+                                <div class="ss-form-group col-11">
+                                    <label>Unit</label>
+                                    <input id="Unit" type="text" name="worker_unit" placeholder="Enter Unit">
+                                </div>
+                                <span class="help-block-Unit"></span>
+                                {{-- End Unit --}}
+                                {{-- Scrub Color --}}
+                                <div class="ss-form-group col-11">
+                                  <label>Scrub Color</label>
+                                  <input id="scrub_color" type="text" name="worker_scrub_color" placeholder="Enter Scrub Color" >
+                              </div>
+                              <span class="help-block-scrub_color"></span>
+                              {{-- End Scrub Color --}}
+                              {{-- RTO --}}
+                              <div class="ss-form-group col-11">
+                                <label>RTO</label>
+                                <input id="rto" type="text" name="rto" placeholder="Enter RTO">
+                            </div>
+                            <span class="help-block-rto"></span>
+                            {{-- End RTO --}}
+                            {{-- Shift Time of Day --}}
+                            <div class="ss-form-group col-11">
+                                <label>Shift Time of Day</label>
+                                <select name="worker_shift_time_of_day" id="shift-of-day">
+                                <option value="">Enter Shift Time of Day</option>';
+                        @if (isset($allKeywords['PreferredShift'])) 
+                            @foreach ($allKeywords['PreferredShift'] as $value) 
+                                <option value="{{$value->id}}">{{$value->title}}</option>
+                            @endforeach
+                        @endif
+                                </select>
+                            </div>
+                            <span class="help-block-shift-of-day"></span>
+                            {{-- End Shift Time of Day --}}
+                            {{-- Hours/Week --}}
+                            <div class="ss-form-group col-11">
+                                <label>Hours/Week</label>
+                                <input id="hours_per_week" type="number" name="worker_hours_per_week" placeholder="Enter Hours/Week">
+                            </div>
+                            <span class="help-block-hours_per_week"></span>
+                            {{-- End Hours/Week --}}
+                            {{-- Hours/Shift --}}
+                            <div class="ss-form-group col-11">
+                              <label>Hours/Shift</label>
+                              <input id="hours_shift" type="number" name="worker_hours_per_shift " placeholder="Enter Hours/Shift">
+                          </div>
+                          <span class="help-block-hours_shift"></span>
+                          {{-- End Hours/Shift --}}
+                          {{-- Weeks/Assignment --}}
+                          <div class="ss-form-group col-11">
+                              <label>Weeks/Assignment</label>
+                              <input id="preferred_assignment_duration" type="number" name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment">
+                          </div>
+                          <span class="help-block-preferred_assignment_duration"></span>
+                          {{-- End Weeks/Assignment --}}
+                          {{-- Shifts/Week --}}
+                          <div class="ss-form-group col-11">
+                              <label>Shifts/Week</label>
+                              <input id="weeks_shift" type="number" name="worker_shifts_week" placeholder="Enter Shifts/Week">
+                          </div>
+                          <span class="help-block-weeks_shift"></span>
+                          {{-- End Shifts/Week --}}
                                         {{-- Skip && Save --}}
                                         <div class="ss-prsn-form-btn-sec col-11">
                                             {{-- <button type="text" class="ss-prsnl-skip-btn"> Skip </button> --}}
@@ -271,7 +428,7 @@
                                         {{-- Skip && Save --}}
                                         <div class="ss-prsn-form-btn-sec">
                                             <button type="text" class="ss-prsnl-skip-btn prev-2"> Previous </button>
-                                            <button type="text" class="ss-prsnl-save-btn next-2"> Save & Next </button>
+                                            <button id="submit_button" type="submit" class="ss-prsnl-save-btn next-2"> Save </button>
                                         </div>
                                     </div>
                                 </div>

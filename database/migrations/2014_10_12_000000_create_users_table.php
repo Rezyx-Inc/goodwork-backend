@@ -31,6 +31,18 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
+            // assembling user table
+            $table->timestamp('banned_until')->nullable();
+            $table->datetime('last_login_at')->nullable();
+            $table->string('last_login_ip',100)->nullable();
+            $table->string('otp')->nullable();
+            $table->timestamp('otp_expiry')->nullable();
+            $table->string('about_me');
+            $table->string('qualities');
+            $table->string('facility_id');
+            // adding zip_code
+            $table->string('zip_code')->nullable();
+
         });
     }
 
