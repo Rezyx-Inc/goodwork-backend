@@ -1262,7 +1262,6 @@ class ApplicationController extends Controller
                     <div class="ss-form-group">
                         <label>Terms</label>
                         <select name="terms" id="term">
-                        
                         ';
                 if (isset($allKeywords['Terms'])) {
                     foreach ($allKeywords['Terms'] as $value) {

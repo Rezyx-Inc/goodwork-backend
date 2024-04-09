@@ -4,7 +4,12 @@ const mongoose = require('mongoose');
 
 const express = require('express');
 var bodyParser = require('body-parser');
+const cors = require('cors'); 
 const app = express();
+
+app.use(cors({
+    origin: 'http://127.0.0.1:8000' 
+}));
 
 const docsRoute = require('./src/routes/docs');
 
@@ -32,6 +37,4 @@ some notes:
  - max 25 files per user
  - file size max 5mb
  - max upload at once 130mb
-
-
 */

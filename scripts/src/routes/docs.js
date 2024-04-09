@@ -42,9 +42,14 @@ router.post('/add-docs', async (req, res) => {
                 }
 
                 let doc = await Docs.create(req.body)
-            	return res.status(200).send("OK");
+            	return res.status(200).json({ok:true});
             }
             
+            // check if files length is less than 25
+            if(docs.files.length + files.length > 25){
+                return res.status(500).json([{"error":"Max 25 files per user."}])
+            }
+
             for( let file of files){
                 file.content = Buffer.from(file.content, 'base64');
                 docs.files.push(file)
@@ -52,7 +57,7 @@ router.post('/add-docs', async (req, res) => {
             
             docs.save()
             .then((docs) => {
-	         return res.status(200).send("OK");
+	         return res.status(200).json({ok:true});
 	        })
 	        .catch((e) => {
 	          console.log("Unable to save document.", e);
@@ -180,12 +185,13 @@ router.post('/del-doc', async (req, res) => {
 
                 if(file._id == req.body.bsonId){
                     
-                    const filesFilter = docs.files.splice(index, 1)
+                    // const filesFilter = docs.files.splice(index, 1)
 
-                    docs.files = filesFilter;
+                    // docs.files = filesFilter;
 
-                    console.log(filesFilter)
-
+                    // console.log(filesFilter)
+                    docs.files.splice(index, 1);
+   
                     docs.save()
                     .then((docs) => {
                         return res.status(200).send("OK");
