@@ -123,8 +123,8 @@
                     <!--------Professional Information form--------->
                     <div class="col-lg-7 bodyAll">
                         <div class="ss-pers-info-form-mn-dv">
-                            
-                              <div class="ss-persnl-frm-hed">
+
+                            <div class="ss-persnl-frm-hed">
                                 {{-- Basic Information Or Professional Information Or Document management --}}
                                 <p id="information_type"><span><img
                                             src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Basic
@@ -135,307 +135,345 @@
                                 </div>
                             </div>
                             <div class="form-outer">
-                              <form method="post" action="{{route('update-worker-profile')}}">
-                            {{-- <form> --}}
-                                @csrf
-                                <!-- first form slide Basic Information -->
-                                <div class="page slide-page">
-                                    <div class="row justify-content-center">
-                                        {{-- First Name --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>First Name</label>
-                                            <input type="text" name="first_name" placeholder="Please enter your first name">
-                                        </div>
-                                        {{-- Last Name --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>Last Name</label>
-                                            <input type="text" name="last_name" placeholder="Please enter your last name">
-                                        </div>
-                                        {{-- Phone Number --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>Phone Number</label>
-                                            <input type="text" name="mobile"
-                                                placeholder="Please enter your phone number">
-                                        </div>
-                                        {{-- Address Information --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>Address</label>
-                                            <input type="text" name="address" placeholder="Please enter your address">
-                                        </div>
-                                        {{-- City Information --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>City</label>
-                                            <select name="city" id="job_city">
-                                                <option value="">What City are you located in?</option>
-                                            </select>
-                                        </div>
-                                        {{-- State Information --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>State</label>
-                                            <select name="state" id="job_state">
-                                              <option value="">What State are you located in?</option>
-                                              @foreach($states as $state)
-                                              <option id="{{$state->id}}" value="{{$state->name}}">{{$state->name}}
-                                              </option>
-                                              @endforeach
-                                          </select>
-                                        </div>
-                                        {{-- Zip Code Information --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>Zip Code</label>
-                                            <input type="text" name="zip_code"
-                                                placeholder="Please enter your Zip Code">
-                                        </div>
+                                <form method="post" action="{{ route('update-worker-profile') }}">
+                                    {{-- <form> --}}
+                                    @csrf
+                                    <!-- first form slide Basic Information -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- First Name --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>First Name</label>
+                                                <input type="text" name="first_name"
+                                                    placeholder="Please enter your first name">
+                                            </div>
+                                            {{-- Last Name --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Last Name</label>
+                                                <input type="text" name="last_name"
+                                                    placeholder="Please enter your last name">
+                                            </div>
+                                            {{-- Phone Number --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Phone Number</label>
+                                                <input type="text" name="mobile"
+                                                    placeholder="Please enter your phone number">
+                                            </div>
+                                            {{-- Address Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Address</label>
+                                                <input type="text" name="address"
+                                                    placeholder="Please enter your address">
+                                            </div>
+                                            {{-- City Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>City</label>
+                                                <select name="city" id="job_city">
+                                                    <option value="">What City are you located in?</option>
+                                                </select>
+                                            </div>
+                                            {{-- State Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>State</label>
+                                                <select name="state" id="job_state">
+                                                    <option value="">What State are you located in?</option>
+                                                    @foreach ($states as $state)
+                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                            {{ $state->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            {{-- Zip Code Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Zip Code</label>
+                                                <input type="text" name="zip_code"
+                                                    placeholder="Please enter your Zip Code">
+                                            </div>
 
-                                        {{-- Skip && Save --}}
-                                        <div class="ss-prsn-form-btn-sec col-11">
-                                            <button type="text" class="ss-prsnl-save-btn firstNext"> Save & Next
-                                            </button>
+                                            {{-- Skip && Save --}}
+                                            <div class="ss-prsn-form-btn-sec col-11">
+                                                <button type="text" class="ss-prsnl-save-btn firstNext"> Save & Next
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- end first form slide Basic Information -->
+                                    <!-- end first form slide Basic Information -->
 
-                                <!-- second form slide Professional Information -->
-                                <div class="page slide-page">
-                                    <div class="row justify-content-center">
-                                        {{-- Profession --}}
-                                        <div class="ss-form-group col-11">
-                                            <label>Profession</label>
-                                            <select name="profession" id="profession">
-                                                <option value="">What Kind of Professional are you?</option>
-                                                @foreach($proffesions as $proffesion)
-                                                <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}
-                                                </option>
-                                                @endforeach
-                                            </select>
+                                    <!-- second form slide Professional Information -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- Profession --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Profession</label>
+                                                <select name="profession" id="profession">
+                                                    <option value="">What Kind of Professional are you?</option>
+                                                    @foreach ($proffesions as $proffesion)
+                                                        <option value="{{ $proffesion->full_name }}">
+                                                            {{ $proffesion->full_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            {{-- Specialty --}}
+                                            <div class="ss-form-group  col-11">
+                                                <label>Specialty</label>
+                                                <select name="specialty" id="specialty">
+                                                    <option value="">Select Specialty</option>
+                                                    @foreach ($specialities as $specialty)
+                                                        <option value="{{ $specialty->full_name }}">
+                                                            {{ $specialty->full_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Terms</label>
+                                                <select name="terms" id="term">
+                                                    ';
+                                                    @if (isset($allKeywords['Terms']))
+                                                        @foreach ($allKeywords['Terms'] as $value)
+                                                            <option value="{{ $value->id }}">{{ $value->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Type</label>
+                                                <select name="type" id="type">
+                                                    <option value="">Select Type</option>';
+                                                    @if (isset($allKeywords['Type']))
+                                                        @foreach ($allKeywords['Type'] as $value)
+                                                            <option value="{{ $value->title }}">{{ $value->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+
+                                            {{-- Block scheduling --}}
+                                            <div class="ss-form-group row justify-content-center align-items-center col-11"
+                                                style="margin-top:36px;">
+                                                <label class="col-lg-6 col-sm-8 col-xs-8 col-md-8">Block scheduling</label>
+                                                <input style="box-shadow:none; width: auto;"
+                                                    class="col-lg-6 col-sm-2 col-xs-2 col-md-2" type="radio"
+                                                    id="option1" name="block_scheduling" value="1"
+                                                    autocompleted="" disabled>
+                                            </div>
+                                            {{-- end scheduling --}}
+                                            {{-- Float requirements --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Float requirements</label>
+                                                <select name="float_requirement" class="float_requirement mb-3"
+                                                    id="float_requirement" value="">
+                                                    <option value="">Select Float requirements</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                            <span class="help-block-float_requirement"></span>
+                                            {{-- end Float requirements --}}
+                                            {{-- Facility Shift Cancellation Policy --}}
+                                            <div class="ss-form-group  col-11">
+                                                <label>Facility Shift Cancellation Policy</label>
+                                                <select name="facility_shift_cancelation_policy"
+                                                    class="facility_shift_cancelation_policy mb-3"
+                                                    id="facility_shift_cancelation_policy" value="">
+                                                    <option value="">Select Facility Shift Cancellation Policy
+                                                    </option>';
+                                                    @if (isset($allKeywords['AssignmentDuration']))
+                                                        @foreach ($allKeywords['AssignmentDuration'] as $value)
+                                                            <option value="{{ $value->id }}">{{ $value->title }}
+                                                            </option>;
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <span class="help-block-facility_shift_cancelation_policy"></span>
+                                            {{-- End Facility Shift Cancellation Policy --}}
+                                            {{-- Contract Termination Policy --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Contract Termination Policy</label>
+                                                <input type="text" id="contract_termination_policy"
+                                                    name="contract_termination_policy"
+                                                    placeholder="Enter Contract Termination Policy">
+                                            </div>
+                                            {{-- end Contract Termination Policy --}}
+                                            {{-- Traveler Distance From Facility --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Traveler Distance From Facility</label>
+                                                <input type="number" id="traveler_distance_from_facility"
+                                                    name="distance_from_your_home"
+                                                    placeholder="Enter Traveler Distance From Facility">
+                                            </div>
+                                            {{-- end Traveler Distance From Facility  --}}
+                                            {{-- Clinical Setting --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Clinical Setting</label>
+                                                <input type="text" id="clinical_setting"
+                                                    name="clinical_setting_you_prefer"
+                                                    placeholder="Enter clinical setting">
+                                            </div>
+                                            <span class="help-block-clinical_setting"></span>
+                                            {{-- End Clinical Setting --}}
+                                            {{-- Patient ratio --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Patient ratio</label>
+                                                <input type="number" id="Patient_ratio" name="worker_patient_ratio"
+                                                    placeholder="How many patients can you handle?">
+                                            </div>
+                                            <span class="help-block-Patient_ratio"></span>
+                                            {{-- End Patient ratio --}}
+                                            {{-- EMR --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>EMR</label>
+                                                <select name="worker_emr" class="emr mb-3" id="emr">
+                                                    <option value="">Select EMR</option>';
+                                                    @if (isset($allKeywords['EMR']))
+                                                        @foreach ($allKeywords['EMR'] as $value)
+                                                            <option value="{{ $value->id }}">{{ $value->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <span class="help-block-emr"></span>
+                                            {{-- End EMR --}}
+                                            {{-- Unit --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Unit</label>
+                                                <input id="Unit" type="text" name="worker_unit"
+                                                    placeholder="Enter Unit">
+                                            </div>
+                                            <span class="help-block-Unit"></span>
+                                            {{-- End Unit --}}
+                                            {{-- Scrub Color --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Scrub Color</label>
+                                                <input id="scrub_color" type="text" name="worker_scrub_color"
+                                                    placeholder="Enter Scrub Color">
+                                            </div>
+                                            <span class="help-block-scrub_color"></span>
+                                            {{-- End Scrub Color --}}
+                                            {{-- RTO --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>RTO</label>
+                                                <input id="rto" type="text" name="rto"
+                                                    placeholder="Enter RTO">
+                                            </div>
+                                            <span class="help-block-rto"></span>
+                                            {{-- End RTO --}}
+                                            {{-- Shift Time of Day --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Shift Time of Day</label>
+                                                <select name="worker_shift_time_of_day" id="shift-of-day">
+                                                    <option value="">Enter Shift Time of Day</option>';
+                                                    @if (isset($allKeywords['PreferredShift']))
+                                                        @foreach ($allKeywords['PreferredShift'] as $value)
+                                                            <option value="{{ $value->id }}">{{ $value->title }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                            <span class="help-block-shift-of-day"></span>
+                                            {{-- End Shift Time of Day --}}
+                                            {{-- Hours/Week --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Hours/Week</label>
+                                                <input id="hours_per_week" type="number" name="worker_hours_per_week"
+                                                    placeholder="Enter Hours/Week">
+                                            </div>
+                                            <span class="help-block-hours_per_week"></span>
+                                            {{-- End Hours/Week --}}
+                                            {{-- Hours/Shift --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Hours/Shift</label>
+                                                <input id="hours_shift" type="number" name="worker_hours_per_shift "
+                                                    placeholder="Enter Hours/Shift">
+                                            </div>
+                                            <span class="help-block-hours_shift"></span>
+                                            {{-- End Hours/Shift --}}
+                                            {{-- Weeks/Assignment --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Weeks/Assignment</label>
+                                                <input id="preferred_assignment_duration" type="number"
+                                                    name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment">
+                                            </div>
+                                            <span class="help-block-preferred_assignment_duration"></span>
+                                            {{-- End Weeks/Assignment --}}
+                                            {{-- Shifts/Week --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Shifts/Week</label>
+                                                <input id="weeks_shift" type="number" name="worker_shifts_week"
+                                                    placeholder="Enter Shifts/Week">
+                                            </div>
+                                            <span class="help-block-weeks_shift"></span>
+                                            {{-- End Shifts/Week --}}
+                                            {{-- Skip && Save --}}
+                                            <div class="ss-prsn-form-btn-sec col-11">
+                                                {{-- <button type="text" class="ss-prsnl-skip-btn"> Skip </button> --}}
+                                                <button type="text" class="ss-prsnl-skip-btn prev-1"> Previous
+                                                </button>
+                                                <button type="text" class="ss-prsnl-save-btn next-1"> Save & Next
+                                                </button>
+                                            </div>
                                         </div>
-                                        {{-- Specialty --}}
-                                        <div class="ss-form-group  col-11">
-                                            <label>Specialty</label>
-                                            <select name="specialty" id="specialty">
-                                                <option value="">Select Specialty</option>
-                                                @foreach($specialities as $specialty)
-                                                <option value="{{$specialty->full_name}}">{{$specialty->full_name}}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="ss-form-group col-11">
-                                          <label>Terms</label>
-                                          <select name="terms" id="term">
-                                          ';
-                                            @if (isset($allKeywords['Terms'])) 
-                                                @foreach ($allKeywords['Terms'] as $value) 
-                                                    <option value="{{$value->id}}">{{$value->title}}</option>
-                                                @endforeach
-                                            @endif
-                                          </select>
-                                      </div>
-
-                                      <div class="ss-form-group col-11">
-                                        <label>Type</label>
-                                        <select name="type" id="type">
-                                            <option value="">Select Type</option>';
-                                            @if (isset($allKeywords['Type']))
-                                    @foreach ($allKeywords['Type'] as $value) 
-                                        <option value="{{$value->title}}">{{$value->title}}</option>
-                                        @endforeach
-                                        @endif
-                                        </select>
                                     </div>
+                                    <!-- end second form slide (Profession, Slide) -->
 
-                                  {{-- Block scheduling --}}
-                                    <div class="ss-form-group row justify-content-center align-items-center col-11" style="margin-top:36px;">
-                                      <label class="col-lg-6 col-sm-8 col-xs-8 col-md-8">Block scheduling</label>
-                                      <input style="box-shadow:none; width: auto;" class="col-lg-6 col-sm-2 col-xs-2 col-md-2" type="radio" id="option1" name="block_scheduling" value="1" autocompleted="" disabled>
-                                  </div>
-                                  {{-- end scheduling --}}
-                                  {{-- Float requirements --}}
-                                  <div class="ss-form-group col-11">
-                                      <label>Float requirements</label>
-                                      <select name="float_requirement" class="float_requirement mb-3" id="float_requirement" value="">
-                                  <option value="">Select Float requirements</option>
-                                          <option value="Yes">Yes</option>
-                                          <option value="No">No</option>
-                                      </select>
-                                  </div>
-                                  <span class="help-block-float_requirement"></span>
-                                  {{-- end Float requirements --}}
-                                  {{-- Facility Shift Cancellation Policy --}}
-                                  <div class="ss-form-group  col-11">
-                                      <label>Facility Shift Cancellation Policy</label>
-                                      <select name="facility_shift_cancelation_policy" class="facility_shift_cancelation_policy mb-3" id="facility_shift_cancelation_policy" value="" >
-                                  <option value="">Select Facility Shift Cancellation Policy </option>';
-                              @if (isset($allKeywords['AssignmentDuration'])) 
-                                  @foreach ($allKeywords['AssignmentDuration'] as $value) 
-                                      <option value="{{$value->id}}" >{{$value->title}}</option>;
-                                  @endforeach
-                              @endif
-                                      </select>
-                                  </div>
-                                  <span class="help-block-facility_shift_cancelation_policy"></span>
-                                  {{-- End Facility Shift Cancellation Policy --}}
-                                  {{-- Contract Termination Policy --}}
-                                  <div class="ss-form-group col-11">
-                                      <label>Contract Termination Policy</label>
-                                      <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy">
-                                  </div>
-                                  {{-- end Contract Termination Policy --}}
-                                  {{-- Traveler Distance From Facility --}}
-                                  <div class="ss-form-group col-11">
-                                    <label>Traveler Distance From Facility</label>
-                                    <input type="number" id="traveler_distance_from_facility" name="distance_from_your_home" placeholder="Enter Traveler Distance From Facility">
-                                </div>
-                                  {{-- end Traveler Distance From Facility  --}}
-                                  {{-- Clinical Setting --}}
-                                  <div class="ss-form-group col-11">
-                                    <label>Clinical Setting</label>
-                                    <input type="text" id="clinical_setting" name="clinical_setting_you_prefer" placeholder="Enter clinical setting">
-                                </div>
-                                <span class="help-block-clinical_setting"></span>
-                                {{-- End Clinical Setting --}}
-                                {{-- Patient ratio --}}
-                                <div class="ss-form-group col-11">
-                                    <label>Patient ratio</label>
-                                    <input type="number" id="Patient_ratio" name="worker_patient_ratio" placeholder="How many patients can you handle?">
-                                </div>
-                                <span class="help-block-Patient_ratio"></span>
-                                {{-- End Patient ratio --}}
-                                {{-- EMR --}}
-                                <div class="ss-form-group col-11">
-                                    <label>EMR</label>
-                                    <select name="worker_emr" class="emr mb-3" id="emr">
-                                    <option value="">Select EMR</option>';
-                            @if (isset($allKeywords['EMR'])) 
-                                @foreach ($allKeywords['EMR'] as $value) 
-                                    <option value="{{$value->id}}">{{$value->title}}</option>
-                                @endforeach
-                            @endif
-                                    </select>
-                                </div>
-                                <span class="help-block-emr"></span>
-                                {{-- End EMR --}}
-                                {{-- Unit --}}
-                                <div class="ss-form-group col-11">
-                                    <label>Unit</label>
-                                    <input id="Unit" type="text" name="worker_unit" placeholder="Enter Unit">
-                                </div>
-                                <span class="help-block-Unit"></span>
-                                {{-- End Unit --}}
-                                {{-- Scrub Color --}}
-                                <div class="ss-form-group col-11">
-                                  <label>Scrub Color</label>
-                                  <input id="scrub_color" type="text" name="worker_scrub_color" placeholder="Enter Scrub Color" >
-                              </div>
-                              <span class="help-block-scrub_color"></span>
-                              {{-- End Scrub Color --}}
-                              {{-- RTO --}}
-                              <div class="ss-form-group col-11">
-                                <label>RTO</label>
-                                <input id="rto" type="text" name="rto" placeholder="Enter RTO">
-                            </div>
-                            <span class="help-block-rto"></span>
-                            {{-- End RTO --}}
-                            {{-- Shift Time of Day --}}
-                            <div class="ss-form-group col-11">
-                                <label>Shift Time of Day</label>
-                                <select name="worker_shift_time_of_day" id="shift-of-day">
-                                <option value="">Enter Shift Time of Day</option>';
-                        @if (isset($allKeywords['PreferredShift'])) 
-                            @foreach ($allKeywords['PreferredShift'] as $value) 
-                                <option value="{{$value->id}}">{{$value->title}}</option>
-                            @endforeach
-                        @endif
-                                </select>
-                            </div>
-                            <span class="help-block-shift-of-day"></span>
-                            {{-- End Shift Time of Day --}}
-                            {{-- Hours/Week --}}
-                            <div class="ss-form-group col-11">
-                                <label>Hours/Week</label>
-                                <input id="hours_per_week" type="number" name="worker_hours_per_week" placeholder="Enter Hours/Week">
-                            </div>
-                            <span class="help-block-hours_per_week"></span>
-                            {{-- End Hours/Week --}}
-                            {{-- Hours/Shift --}}
-                            <div class="ss-form-group col-11">
-                              <label>Hours/Shift</label>
-                              <input id="hours_shift" type="number" name="worker_hours_per_shift " placeholder="Enter Hours/Shift">
-                          </div>
-                          <span class="help-block-hours_shift"></span>
-                          {{-- End Hours/Shift --}}
-                          {{-- Weeks/Assignment --}}
-                          <div class="ss-form-group col-11">
-                              <label>Weeks/Assignment</label>
-                              <input id="preferred_assignment_duration" type="number" name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment">
-                          </div>
-                          <span class="help-block-preferred_assignment_duration"></span>
-                          {{-- End Weeks/Assignment --}}
-                          {{-- Shifts/Week --}}
-                          <div class="ss-form-group col-11">
-                              <label>Shifts/Week</label>
-                              <input id="weeks_shift" type="number" name="worker_shifts_week" placeholder="Enter Shifts/Week">
-                          </div>
-                          <span class="help-block-weeks_shift"></span>
-                          {{-- End Shifts/Week --}}
-                                        {{-- Skip && Save --}}
-                                        <div class="ss-prsn-form-btn-sec col-11">
-                                            {{-- <button type="text" class="ss-prsnl-skip-btn"> Skip </button> --}}
-                                            <button type="text" class="ss-prsnl-skip-btn prev-1"> Previous </button>
-                                            <button type="text" class="ss-prsnl-save-btn next-1"> Save & Next </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end second form slide (Profession, Slide) -->
+                                    <!-- Third form slide Document management -->
+                                    <div class="page slide-page ">
+                                        <div class="row justify-content-center">
+                                            {{-- Upload Document --}}
+                                            <div class="ss-form-group">
+                                                <label>Upload Document</label>
+                                                {{-- <input type="file" name="file" id="file" class="inputfile" /> --}}
+                                                <input type="file" id="file" name="files" multiple
+                                                    required><br><br>
+                                                <label class="mt-2" for="file">Choose a file</label>
+                                            </div>
 
-                                <!-- Third form slide Document management -->
-                                <div class="page slide-page ">
-                                    <div class="row justify-content-center">
-                                        {{-- Upload Document --}}
-                                        <div class="ss-form-group">
-                                            <label>Upload Document</label>
-                                            <input type="file" name="file" id="file" class="inputfile" />
-                                            <label class="mt-2" for="file">Choose a file</label>
-                                        </div>
-
-                                        {{-- manage file table --}}
-                                        <table style="font-size: 16px;" class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Document Name</th>
-                                                    <th scope="col">Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {{-- @foreach ($documenst as $item) --}}
-                                                {{-- add {{}} to teh varibales once i fix it from the mogoose db --}}
-                                                <tr>
-
-                                                    <td>$item->name</td>
-                                                    <td><button type="button" class="delete" data-id="$item->id">Delete
-                                                            Documenst</button>
-                                                    </td>
-                                                </tr>
-                                                {{-- @endforeach --}}
-                                            </tbody>
-                                        </table>
-                                        {{-- <div class="ss-nojob-dv-hed">
+                                            {{-- manage file table --}}
+                                            <table style="font-size: 16px;" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Document Name</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{-- the model --}}
+                                                    <tr>
+                                                        <td>$item->name</td>
+                                                        <td><button type="button" class="delete"
+                                                                data-id="$item->id">Delete
+                                                                Documenst</button>
+                                                        </td>
+                                                    </tr>
+                                                    {{-- end of the model --}}
+                                                </tbody>
+                                            </table>
+                                            {{-- <div class="ss-nojob-dv-hed">
                 <button type="submit" name="action" value="add" id="add_key" class="add">Add New Documents</button>
                 <button type="submit" name="action" value="save" id="save_key" class="save d-none">Save changes</button>
             </div> --}}
-                                        {{-- Skip && Save --}}
-                                        <div class="ss-prsn-form-btn-sec">
-                                            <button type="text" class="ss-prsnl-skip-btn prev-2"> Previous </button>
-                                            <button id="submit_button" type="submit" class="ss-prsnl-save-btn next-2"> Save </button>
+                                            {{-- Skip && Save --}}
+                                            <div class="ss-prsn-form-btn-sec">
+                                                <button type="text" class="ss-prsnl-skip-btn prev-2"> Previous
+                                                </button>
+                                                <button id="uploadForm" class="ss-prsnl-save-btn next-2"> Save Files
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- end Third form slide Document management -->
-                                <div>
-                                </div>
-                            </form>
+                                    <!-- end Third form slide Document management -->
+                                    <div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -446,21 +484,76 @@
 @section('js')
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            $('#job_state').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#job_city');
 
-$(document).ready(function () {
-        $('#job_state').change(function () {
-            const selectedState = $(this).find(':selected').attr('id');
-            const CitySelect = $('#job_city');
-
-            $.get(`/api/cities/${selectedState}`, function (data) {
-                CitySelect.empty();
-                CitySelect.append('<option value="">Select City</option>');
-                $.each(data, function (index, city) {
-                    CitySelect.append(new Option(city.name, city.name));
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="">Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
                 });
             });
+
+            $('input[type="file"]').change(function() {
+                var file = this.files[0]; // get the selected file
+                var tbody = $('.table tbody');
+                // tbody.empty(); // remove existing rows
+                var row = $('<tr>');
+                row.append($('<td>').text(file.name)); // display the file name
+                var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id',
+                    file.id).prop('disabled', true); // disable the delete button
+                row.append($('<td>').append(deleteButton));
+                tbody.append(row);
+            });
+
+            @php
+                $worker_id = $worker->id;
+            @endphp
+            const worker_id = '{!! $worker_id !!}';
+            $.ajax({
+
+                url: 'http://localhost:4545/documents/list-docs?workerId=' +
+                    worker_id, // replace workerId with the actual workerId
+                method: 'GET',
+                success: function(resp) {
+                    var tbody = $('.table tbody');
+                    tbody.empty(); // remove existing rows
+                    resp.forEach(function(file) {
+                        var row = $('<tr>');
+                        row.append($('<td>').text(file.name));
+                        console.log(file.id);
+                        var deleteButton = $('<button>').text('Delete Document').addClass(
+                            'delete').attr('data-id', file.id);
+                        deleteButton.click(function() {
+                            $.ajax({
+                                url: 'http://localhost:4545/documents/del-doc',
+                                method: 'POST',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                contentType: 'application/json',
+                                success: function() {
+                                    row
+                                        .remove(); // remove the row from the table
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+                        row.append($('<td>').append(deleteButton));
+                        tbody.append(row);
+                    });
+                },
+                error: function(resp) {
+                    console.log('Error:', resp);
+                }
+            });
         });
-    });
 
 
 
@@ -486,46 +579,132 @@ $(document).ready(function () {
             //bullet[current - 1].classList.add("active");
             progress.style.width = "66%";
             // img need to be modified
-            infoType.innerHTML = "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
             // current += 1;
             // }
         });
 
-        nextBtnSec.addEventListener("click", function (event) {
-        event.preventDefault();
-        slidePage.style.marginLeft = "-50%";
-        //bullet[current - 1].classList.add("active");
-        progress.style.width = "100%";
-        // img need to be modified
-        infoType.innerHTML = "<span><img src='{{ URL::asset('frontend/img/my-per--con-refren.png') }}' /></span>Document management";
-        //progressText[current - 1].classList.add("active");
-        //current += 1;
-    });
+        nextBtnSec.addEventListener("click", function(event) {
+            event.preventDefault();
+            slidePage.style.marginLeft = "-50%";
+            //bullet[current - 1].classList.add("active");
+            progress.style.width = "100%";
+            // img need to be modified
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-refren.png') }}' /></span>Document management";
+            //progressText[current - 1].classList.add("active");
+            //current += 1;
+        });
 
-    prevBtnSec.addEventListener("click", function (event) {
-        event.preventDefault();
-        slidePage.style.marginLeft = "0%";
-        // bullet[current - 2].classList.remove("active");
-        progress.style.width = "25%";
-        infoType.innerHTML = "<span><img src='{{ URL::asset('frontend/img/my-per--con-user.png') }}' /></span>Basic Information";
-        // progressText[current - 2].classList.remove("active");
-        // current -= 1;
-    });
-    prevBtnThird.addEventListener("click", function (event) {
-        event.preventDefault();
-        slidePage.style.marginLeft = "-25%";
-        //bullet[current - 2].classList.remove("active");
-        progress.style.width = "75%";
-        infoType.innerHTML = "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
-        // progressText[current - 2].classList.remove("active");
-        // current -= 1;
-    });
+        prevBtnSec.addEventListener("click", function(event) {
+            event.preventDefault();
+            slidePage.style.marginLeft = "0%";
+            // bullet[current - 2].classList.remove("active");
+            progress.style.width = "25%";
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-user.png') }}' /></span>Basic Information";
+            // progressText[current - 2].classList.remove("active");
+            // current -= 1;
+        });
+        prevBtnThird.addEventListener("click", function(event) {
+            event.preventDefault();
+            slidePage.style.marginLeft = "-25%";
+            //bullet[current - 2].classList.remove("active");
+            progress.style.width = "75%";
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
+            // progressText[current - 2].classList.remove("active");
+            // current -= 1;
+        });
+
+        document.getElementById('uploadForm').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            @php
+                $worker_id_json = $worker->id;
+            @endphp
+            let worker_id = '{!! $worker_id_json !!}';
+            console.log(worker_id);
+            var workerId = worker_id;
+            var filesInput = document.getElementById('file');
+            var files = Array.from(filesInput.files);
+
+            Promise.all(files.map(file => {
+                return new Promise((resolve, reject) => {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        resolve({
+                            name: file.name,
+                            content: event.target.result.split(',')[1]
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                });
+            })).then(files => {
+                var body = {
+                    workerId: workerId,
+                    files: files
+                };
+
+                /// using ajax
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: 'http://localhost:4545/documents/add-docs',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(body),
+                    success: function(resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                        if (resp.ok) {
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i> Files uploaded successfully',
+                                time: 5
+                            });
+
+                        }
+                    },
+                    error: function(resp) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Error ! Please try again later .',
+                            time: 5
+                        });
+                    }
+                });
+                // using fetch
+
+                // fetch('http://localhost:4545/documents/add-docs', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(body)
+                // }).then(response => {
+                //     if (response.ok) {
+                //         notie.alert({
+                //         type: 'success',
+                //         text: '<i class="fa fa-check"></i> Files uploaded successfully' ,
+                //         time: 5
+                //     });
+                //     } else {
+                //         alert('Failed to upload files');
+                //     }
+                // });
+            });
+        });
     </script>
 
 @stop
 
 <style>
-  
     .add {
         border: 1px solid #3D2C39 !important;
         color: #fff !important;
@@ -629,7 +808,7 @@ $(document).ready(function () {
 <style>
     @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
-   
+
 
     .bodyAll {
         display: flex;
@@ -677,7 +856,7 @@ $(document).ready(function () {
         transition: margin-left 0.3s ease-in-out;
     }
 
-    
+
 
     .form-outer form .page .field {
 
@@ -791,10 +970,10 @@ $(document).ready(function () {
         position: relative;
         display: flex;
 
-    flex-direction: column;
+        flex-direction: column;
 
-    align-items: center;
-    justify-content: space-between;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .container .progress-bar-item .step p {
