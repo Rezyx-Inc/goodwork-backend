@@ -2025,6 +2025,7 @@ function open_modal(obj) {
 
 
     function validateFirstDraft() {
+        
 
         var access = true;
         var jobName = document.getElementById("job_nameDraft").value;

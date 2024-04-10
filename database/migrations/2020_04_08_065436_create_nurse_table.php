@@ -138,7 +138,7 @@ class CreateNurseTable extends Migration
             $table->string('worker_weekly_non_taxable_amount')->nullable();
             // add new fields
             $table->string('rto', 255)->nullable();
-            $table->string('proffesion', 255)->nullable();
+            $table->string('profession', 255)->nullable();
             // add tier field (from 0 to 3 (min 3 documents for T3))
             $table->unsignedTinyInteger('account_tier')->default(0);
             // add missing fields for the profile nurses (workers)

@@ -114,48 +114,64 @@ class WorkerDashboardController extends Controller
 
         // end of validation
 
+        
+
         $user = Auth::guard('frontend')->user();
         $nurse = Nurse::where('user_id', $user->id)->first();
 
-        $nurse_data = [];
-        isset($request->state) ? $nurse_data['state'] = $request->state : '';
-        isset($request->city) ? $nurse_data['city'] = $request->city : '';
-        isset($request->address) ? $nurse_data['address'] = $request->address : '';
-        isset($request->specialty) ? $nurse_data['specialty'] = $request->specialty : '';
-        isset($request->profession) ? $nurse_data['profession'] = $request->profession : '';
-        isset($request->terms) ? $nurse_data['terms'] = $request->terms : '';
-        isset($request->type) ? $nurse_data['type'] = $request->type : '';
-        isset($request->block_scheduling ) ? $nurse_data['block_scheduling'] = $request->block_scheduling : '';
-        isset($request->float_requirement) ? $nurse_data['float_requirement'] = $request->float_requirement : '';
-        isset($request->facility_shift_cancelation_policy) ? $nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy : '';
-        isset($request->contract_termination_policy) ? $nurse_data['contract_termination_policy'] = $request->contract_termination_policy : '';
-        isset($request->distance_from_your_home) ? $nurse_data['distance_from_your_home'] = $request->distance_from_your_home : '';
-        isset($request->clinical_setting_you_prefer) ? $nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting_you_prefer : '';
-        isset($request->worker_patient_ratio) ? $nurse_data['worker_patient_ratio'] = $request->worker_patient_ratio : '';
-        isset($request->worker_emr) ? $nurse_data['worker_emr'] = $request->worker_emr : '';
-        isset($request->worker_unit) ? $nurse_data['worker_unit'] = $request->worker_unit : '';
-        isset($request->worker_scrub_color) ? $nurse_data['worker_scrub_color'] = $request->worker_scrub_color : '';
-        isset($request->rto) ? $nurse_data['rto'] = $request->rto : '';
-        isset($request->worker_shift_time_of_day) ? $nurse_data['worker_shift_time_of_day'] = $request->worker_shift_time_of_day : '';
-        isset($request->worker_hours_per_week) ? $nurse_data['worker_hours_per_week'] = $request->worker_hours_per_week : '';
-        isset($request->worker_hours_per_shift) ? $nurse_data['worker_hours_per_shift'] = $request->worker_hours_per_shift : '';
-        isset($request->worker_weeks_assignment) ? $nurse_data['worker_weeks_assignment'] = $request->worker_weeks_assignment : '';
-        isset($request->worker_shifts_week) ? $nurse_data['worker_shifts_week'] = $request->worker_shifts_week : '';
+        if($request->InfoType == 'ProfessionalInformation'){
+            $nurse_data = [];
+           
+            isset($request->specialty) ? $nurse_data['specialty'] = $request->specialty : '';
+            isset($request->profession) ? $nurse_data['profession'] = $request->profession : '';
+            isset($request->terms) ? $nurse_data['terms'] = $request->terms : '';
+            isset($request->type) ? $nurse_data['type'] = $request->type : '';
+            isset($request->block_scheduling ) ? $nurse_data['block_scheduling'] = $request->block_scheduling : '';
+            isset($request->float_requirement) ? $nurse_data['float_requirement'] = $request->float_requirement : '';
+            isset($request->facility_shift_cancelation_policy) ? $nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy : '';
+            isset($request->contract_termination_policy) ? $nurse_data['contract_termination_policy'] = $request->contract_termination_policy : '';
+            isset($request->distance_from_your_home) ? $nurse_data['distance_from_your_home'] = $request->distance_from_your_home : '';
+            isset($request->clinical_setting_you_prefer) ? $nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting_you_prefer : '';
+            isset($request->worker_patient_ratio) ? $nurse_data['worker_patient_ratio'] = $request->worker_patient_ratio : '';
+            isset($request->worker_emr) ? $nurse_data['worker_emr'] = $request->worker_emr : '';
+            isset($request->worker_unit) ? $nurse_data['worker_unit'] = $request->worker_unit : '';
+            isset($request->worker_scrub_color) ? $nurse_data['worker_scrub_color'] = $request->worker_scrub_color : '';
+            isset($request->rto) ? $nurse_data['rto'] = $request->rto : '';
+            isset($request->worker_shift_time_of_day) ? $nurse_data['worker_shift_time_of_day'] = $request->worker_shift_time_of_day : '';
+            isset($request->worker_hours_per_week) ? $nurse_data['worker_hours_per_week'] = $request->worker_hours_per_week : '';
+            isset($request->worker_hours_per_shift) ? $nurse_data['worker_hours_per_shift'] = $request->worker_hours_per_shift : '';
+            isset($request->worker_weeks_assignment) ? $nurse_data['worker_weeks_assignment'] = $request->worker_weeks_assignment : '';
+            isset($request->worker_shifts_week) ? $nurse_data['worker_shifts_week'] = $request->worker_shifts_week : '';
+    
+            $nurse->update($nurse_data);
+        }
 
-        $nurse->update($nurse_data);
 
-        $user_data = [];
-        isset($request->first_name) ? $user_data['first_name'] = $request->first_name : '';
-        isset($request->last_name) ? $user_data['last_name'] = $request->last_name : '';
-        isset($request->mobile) ? $user_data['mobile'] = $request->mobile : '';
-        isset($request->zip_code) ? $user_data['zip_code'] = $request->zip_code : '';
+        
 
-        $user->update($user_data);
+        if($request->InfoType == 'BasicInformation'){
+            $user_data = [];
+            $nurse_data = [];
+            isset($request->first_name) ? $user_data['first_name'] = $request->first_name : '';
+            isset($request->last_name) ? $user_data['last_name'] = $request->last_name : '';
+            isset($request->mobile) ? $user_data['mobile'] = $request->mobile : '';
+            isset($request->zip_code) ? $user_data['zip_code'] = $request->zip_code : '';
+            isset($request->state) ? $nurse_data['state'] = $request->state : '';
+            isset($request->city) ? $nurse_data['city'] = $request->city : '';
+            isset($request->address) ? $nurse_data['address'] = $request->address : '';
+
+          
+            $user->update($user_data);
+            $nurse->update($nurse_data);
+        }
+
+    
 
         $nurse = $nurse->fresh();
+        $user = $user->fresh();
 
 
-        return response()->json(['msg'=>$request->all(), 'user'=>$user->id, 'nurse'=>$nurse]);
+        return response()->json(['msg'=>$request->all(), 'user'=>$user, 'nurse'=>$nurse,'status'=>true]);
     }
 
     /** update password */
@@ -181,7 +197,9 @@ class WorkerDashboardController extends Controller
     public function my_profile()
     {
         $data = [];
-        $data['worker'] = auth()->guard('frontend')->user();
+        $user = auth()->guard('frontend')->user();
+        $nurse = Nurse::where('user_id', $user->id)->first();
+        $data['worker'] = $nurse;
         $data['specialities'] = Speciality::select('full_name')->get();
         $data['proffesions'] = Profession::select('full_name')->get();
         // send the states
@@ -193,6 +211,46 @@ class WorkerDashboardController extends Controller
                 }
         $data['states'] = State::select('id','name')->get();
         $data['allKeywords'] = $allKeywords;
+
+        $progress = 0;
+
+        if(
+            isset($nurse['specialty']) &&
+            isset($nurse['profession']) &&
+            isset($nurse['terms']) &&
+            isset($nurse['type']) &&
+            isset($nurse['block_scheduling']) &&
+            isset($nurse['float_requirement']) &&
+            isset($nurse['facility_shift_cancelation_policy']) &&
+            isset($nurse['contract_termination_policy']) &&
+            isset($nurse['distance_from_your_home']) &&
+            isset($nurse['clinical_setting_you_prefer']) &&
+            isset($nurse['worker_patient_ratio']) &&
+            isset($nurse['worker_emr']) &&
+            isset($nurse['worker_unit']) &&
+            isset($nurse['worker_scrub_color']) &&
+            isset($nurse['rto']) &&
+            isset($nurse['worker_shift_time_of_day']) &&
+            isset($nurse['worker_hours_per_week']) &&
+            isset($nurse['worker_hours_per_shift']) &&
+            isset($nurse['worker_weeks_assignment']) &&
+            isset($nurse['worker_shifts_week'])
+        ){
+            $progress += 1;
+        }
+
+        if(
+            isset($user->first_name) &&
+            isset($user->last_name) &&
+            isset($user->mobile) &&
+            isset($user->zip_code)
+        ) {
+            $progress += 1;
+        }
+        $nurse_data['account_tier'] = $progress;
+        $nurse->update($nurse_data);
+        $nurse = $nurse->fresh();
+        $data['worker'] = $nurse;
         
         return view('worker::dashboard.worker_profile', $data);
     }
