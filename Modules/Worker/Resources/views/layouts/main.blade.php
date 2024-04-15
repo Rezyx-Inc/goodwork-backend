@@ -55,7 +55,7 @@
     {{-- CK editor --}}
     <script src="{{URL::asset('backend/vendors/ckeditor/ckeditor.js')}}"></script>
     {{-- Jquery Mask --}}
-    {{-- <script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script> --}}
+    <script type="text/javascript" src="{{URL::asset('frontend/vendor/mask/jquery.mask.min.js')}}"></script>
     <!-- Custom scripts -->
     <script type="text/javascript" src="{{URL::asset('frontend/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>

@@ -42,6 +42,8 @@ class CreateUsersTable extends Migration
             $table->string('facility_id');
             // adding zip_code
             $table->string('zip_code')->nullable();
+            // adding 2fa field control
+            $table->boolean('2fa')->nullable();
 
         });
     }

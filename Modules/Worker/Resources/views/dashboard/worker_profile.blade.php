@@ -17,7 +17,7 @@
                                     onerror="this.onerror=null;this.src='{{ USER_IMG }}';" id="preview"
                                     width="112px" height="112px" style="object-fit: cover;" />
                                 <h4>{{$user->first_name}} {{$user->last_name}}</h4>
-                                <p>{{$worker->account_tier}}</p>
+                                <p>{{$worker->id}}</p>
                             </div>
                             <div class="ss-profil-complet-div">
                                <div class="row d-flex justify-content-center align-items-center ">
@@ -26,7 +26,7 @@
                                         <svg  viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
                                           <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2" stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0"></circle>
                                           <circle r="90" cx="100" cy="100" stroke="#ad66a3" stroke-width="16px" stroke-linecap="round" stroke-dashoffset="118.692px" fill="transparent" stroke-dasharray="565.48px"></circle>
-                                          <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -196px)">79%</text>
+                                          <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -196px)">{{$progress_percentage}}%</text>
                                         </svg>
                                     </div>
                                     {{-- if the profile is not complete --}}
@@ -55,9 +55,9 @@
 
                             <div class="ss-my-presnl-btn-mn">
 
-                                <div class="ss-my-prsnl-wrapper">
+                                <div class="ss-my-prsnl-wrapper" >
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-1" checked />
+                                        <input type="radio" name="select" id="option-1" checked onclick="ProfileIinformationDisplay()"/>
                                         <label for="option-1" class="option option-1">
                                             <div class="dot"></div>
                                             <ul>
@@ -72,8 +72,8 @@
                                         </label>
                                     </div>
 
-                                    <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-2">
+                                    <div class="ss-my-prosnl-rdio-btn" >
+                                        <input type="radio" name="select" id="option-2" onclick="AccountSettingDisplay()">
                                         <label for="option-2" class="option option-2">
                                             <div class="dot"></div>
                                             <ul>
@@ -144,10 +144,10 @@
                     </div>
 
                     <!--------Professional Information form--------->
-                    <div class="col-lg-7 bodyAll">
-                        <div class="ss-pers-info-form-mn-dv">
+                    <div class="col-lg-7 bodyAll profile_setting">
+                        <div class="ss-pers-info-form-mn-dv" >
 
-                            <div class="ss-persnl-frm-hed">
+                            <div class="ss-persnl-frm-hed" >
                                 {{-- Basic Information Or Professional Information Or Document management --}}
                                 <p id="information_type"><span><img
                                             src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Basic
@@ -181,7 +181,7 @@
                                             {{-- Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Phone Number</label>
-                                                <input type="text" name="mobile"
+                                                <input id="contact_number" type="text" name="mobile"
                                                     placeholder="Please enter your phone number">
                                             </div>
                                             <span class="help-block-mobile"></span>
@@ -511,6 +511,77 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-7 bodyAll account_setting">
+                        <div class="ss-pers-info-form-mn-dv" >
+                            <div class="ss-persnl-frm-hed" >
+                                <p><span><img
+                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
+                                    Setting</p>
+                            </div>
+                            <div class="form-outer">
+                                <form method="post" action="{{ route('update-worker-profile') }}">
+                                {{-- <form method="post" action="{{ route('update-worker-account-setting') }}"> --}}
+                                    @csrf
+                                    <!-- slide Account Setting -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- Change User Name --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>New User Name</label>
+                                                <input type="text" name="user_name" placeholder="Please enter your new user name">
+                                            </div>
+                                            <span class="help-block-user_name"></span>
+                                            {{-- Change Password --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>New Password</label>
+                                                <input type="text" name="password" placeholder="Please enter your new password">
+                                            </div>
+                                            {{-- <span class="help-block-password"></span> --}}
+                                            {{-- Change 2FA --}}
+                                            <div class="ss-form-group row col-11">
+                                                <label>Two-factor authentication (2FA)</label>
+                                                <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
+                                                <label>Enable</label>
+                                                <input style="box-shadow:none; width: auto;"
+                                                     type="radio"
+                                                    id="option1" name="twoFa" value="1"
+                                                >
+                                                </div>
+                                                <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
+                                                <label>Disable</label>
+                                                <input style="box-shadow:none; width: auto;"
+                                                     type="radio"
+                                                    id="option2" name="twoFa" value="0"
+                                                >
+                                                </div>
+                                            </div>
+                                            {{-- <span class="help-block-2fa"></span> --}}
+                                            {{-- Change Phone Number --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>New Phone Number</label>
+                                                <input id="new_contact_number" type="text" name="new_mobile" placeholder="Please enter your new phone number">
+                                            </div>
+                                            <span class="help-block-new_mobile"></span>
+                                            {{-- Email Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>New Email</label>
+                                                <input type="text" name="email" placeholder="Please enter your new Email">
+                                            </div>
+                                            <span class="help-block-email"></span>
+                                            <span class="help-block-validation"></span>
+                                            {{-- Skip && Save --}}
+                                            <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveAccountInformation"> Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                           
+                        </div>    
+                    </div>
                 </div>
     </main>
 @stop
@@ -521,6 +592,16 @@
     // loding states cities docs on page load
 
         $(document).ready(function() {
+            $('#contact_number').mask('+1 (999) 999-9999');
+            $('#new_contact_number').mask('+1 (999) 999-9999');
+            $('.account_setting').addClass('d-none');
+            let account_tier = '{{ $progress_percentage }}';
+            if(account_tier > 67){
+                document.getElementById('profile_incomplete').classList.add('d-none');
+                document.getElementById('profile_complete').classList.remove('d-none');
+            }
+    // -----------------------------  Profile Setting area  ---------------------------- //
+
             // loading cities according to the selected state
             $('#job_state').change(function() {
                 const selectedState = $(this).find(':selected').attr('id');
@@ -610,6 +691,7 @@
         
         // inputes
         // Basic Info
+        
         const first_name = document.querySelector('input[name="first_name"]');
         const last_name = document.querySelector('input[name="last_name"]');
         const mobile = document.querySelector('input[name="mobile"]');
@@ -645,6 +727,8 @@
         const infoType = document.getElementById("information_type");
         // end change info type title
 
+        var regexPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
+        
         // validation basic information -ELH-
         function validateBasicInfo() {
             let isValid = true;
@@ -658,7 +742,8 @@
                 $('.help-block-last_name').addClass('text-danger');
                 isValid = false;
             }
-            if (mobile.value === '') {
+        
+            if ((!regexPhone.test(mobile)) &&(mobile.value === '')) {
                 $('.help-block-mobile').text('Please enter a mobile number');
                 $('.help-block-mobile').addClass('text-danger');
                 isValid = false;
@@ -862,7 +947,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
+            });
         $.ajax({
             url: '/worker/update-worker-profile',
             type: 'POST',
@@ -1018,6 +1103,141 @@
             });
         });
         // end upload files
+    
+    // --------------------------- end Profile Setting area  ---------------------------- //
+
+    // --------------------------- Account Setting Area --------------------------------- //
+
+    // inputes 
+    
+    const user_name = document.querySelector('input[name="user_name"]');
+    const password = document.querySelector('input[name="password"]');
+    const new_mobile = document.querySelector('input[name="new_mobile"]');
+    const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
+    const email = document.querySelector('input[name="email"]');
+    var inputs = [];    
+
+    // validation here 
+
+    function validateAccountSettingInformation(){
+        $('.help-block-new_mobile').text('');
+        $('.help-block-validation').text('');
+        $('.help-block-email').text('');
+        $('.help-block-user_name').text('');
+    let isValid = true;
+    // Create an array of all inputs
+    inputs = [user_name, password, new_mobile, email];
+
+    // Add the value of the selected radio button to the inputs array, if a radio button is selected
+    const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
+    if (twoFactorAuth) {
+        inputs.push(twoFactorAuth);
+    }
+
+    // Check if all inputs are empty
+    const allEmpty = inputs.every(input => input.value.trim() === '');
+
+    // If all inputs are empty, show an error
+    if (allEmpty) {
+        $('.help-block-validation').text('Please fill at least one field');
+        $('.help-block-validation').addClass('text-danger');
+        isValid = false;
+    }
+
+    // Email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email.value)) {
+        $('.help-block-email').text('Please enter a valid email');
+        $('.help-block-email').addClass('text-danger');
+        isValid = false;
+    }
+
+    // User name validation
+    const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
+    if (!userNameRegex.test(user_name.value)) {
+        $('.help-block-user_name').text('User name can only contain letters and spaces, and cannot be longer than 255 characters');
+        $('.help-block-user_name').addClass('text-danger');
+        isValid = false;
+    }
+
+    // New mobile number validation
+    const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
+    if (!regexNewPhone.test(new_mobile.value)) {
+        $('.help-block-new_mobile').text('Please enter a valid mobile number');
+        $('.help-block-new_mobile').addClass('text-danger');
+        isValid = false;
+    }
+
+    return isValid;
+}
+    
+
+    // send request to update here 
+    const SaveAccountInformation = document.getElementById('SaveAccountInformation');
+        SaveAccountInformation.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (!validateAccountSettingInformation()) {
+                return;
+            }
+
+        // clear form data from empty values
+        const formData = new FormData();
+        inputs.forEach(input => {
+        if (input.value.trim() !== '') {
+            formData.append(input.name, input.value);
+        }
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });
+        $.ajax({
+            url: '/worker/update-worker-account-setting',
+            type: 'POST',
+            processData: false,  
+            contentType: false,
+            data: formData,
+            success: function(resp) {
+                console.log(resp);
+                if (resp.status) {
+                    notie.alert({
+                        type: 'success',
+                        text: '<i class="fa fa-check"></i> ' + resp.message,
+                        time: 5
+                    });
+
+                }else{
+                    notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-check"></i> ' + resp.message,
+                    time: 5
+                });
+                }
+            },
+            error: function(resp) {
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-check"></i> Please try again later !',
+                    time: 5
+                });
+            }
+        });
+       
+
+     });
+    
+    // this functions to display profile setting / account setting forms
+    function AccountSettingDisplay(){
+            $('.profile_setting').addClass('d-none');
+            $('.account_setting').removeClass('d-none');
+        }
+
+    function ProfileIinformationDisplay(){
+        $('.account_setting').addClass('d-none');
+        $('.profile_setting').removeClass('d-none');
+        }
     </script>
 
 @stop
@@ -1173,8 +1393,6 @@
         width: 25%;
         transition: margin-left 0.3s ease-in-out;
     }
-
-
 
     .form-outer form .page .field {
 

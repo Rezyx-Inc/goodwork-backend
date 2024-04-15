@@ -110,68 +110,141 @@ class WorkerDashboardController extends Controller
 
     public function update_worker_profile(Request $request){
 
-        // here we should add the validation for the request
+        try {
+            // Validate InfoType
+            $request->validate([
+                'InfoType' => 'required|in:BasicInformation,ProfessionalInformation',
+            ]);
 
-        // end of validation
+            
+            $user = Auth::guard('frontend')->user();
+            $nurse = Nurse::where('user_id', $user->id)->first();
 
-        
+            if($request->InfoType == 'ProfessionalInformation'){
+                // Validate fields for ProfessionalInformation
+                $request->validate([
+                    'specialty' => 'required|string',
+                    'profession' => 'required|string',
+                    'terms' => 'required|string',
+                    'type' => 'required|string',
+                    'block_scheduling' => 'required|boolean',
+                    'float_requirement' => 'required|boolean',
+                    'facility_shift_cancelation_policy' => 'required|string',
+                    'contract_termination_policy' => 'required|string',
+                    'distance_from_your_home' => 'required|string',
+                    'clinical_setting_you_prefer' => 'required|string',
+                    'worker_patient_ratio' => 'required|string',
+                    'worker_emr' => 'required|string',
+                    'worker_unit' => 'required|string',
+                    'worker_scrub_color' => 'required|string',
+                    'rto' => 'required|string',
+                    'worker_shift_time_of_day' => 'required|string',
+                    'worker_hours_per_week' => 'required|integer',
+                    'worker_hours_per_shift' => 'required|integer',
+                    'worker_weeks_assignment' => 'required|integer',
+                    'worker_shifts_week' => 'required|integer',
+                ]);
 
-        $user = Auth::guard('frontend')->user();
-        $nurse = Nurse::where('user_id', $user->id)->first();
-
-        if($request->InfoType == 'ProfessionalInformation'){
-            $nurse_data = [];
+                $nurse_data = [];
            
-            isset($request->specialty) ? $nurse_data['specialty'] = $request->specialty : '';
-            isset($request->profession) ? $nurse_data['profession'] = $request->profession : '';
-            isset($request->terms) ? $nurse_data['terms'] = $request->terms : '';
-            isset($request->type) ? $nurse_data['type'] = $request->type : '';
-            isset($request->block_scheduling ) ? $nurse_data['block_scheduling'] = $request->block_scheduling : '';
-            isset($request->float_requirement) ? $nurse_data['float_requirement'] = $request->float_requirement : '';
-            isset($request->facility_shift_cancelation_policy) ? $nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy : '';
-            isset($request->contract_termination_policy) ? $nurse_data['contract_termination_policy'] = $request->contract_termination_policy : '';
-            isset($request->distance_from_your_home) ? $nurse_data['distance_from_your_home'] = $request->distance_from_your_home : '';
-            isset($request->clinical_setting_you_prefer) ? $nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting_you_prefer : '';
-            isset($request->worker_patient_ratio) ? $nurse_data['worker_patient_ratio'] = $request->worker_patient_ratio : '';
-            isset($request->worker_emr) ? $nurse_data['worker_emr'] = $request->worker_emr : '';
-            isset($request->worker_unit) ? $nurse_data['worker_unit'] = $request->worker_unit : '';
-            isset($request->worker_scrub_color) ? $nurse_data['worker_scrub_color'] = $request->worker_scrub_color : '';
-            isset($request->rto) ? $nurse_data['rto'] = $request->rto : '';
-            isset($request->worker_shift_time_of_day) ? $nurse_data['worker_shift_time_of_day'] = $request->worker_shift_time_of_day : '';
-            isset($request->worker_hours_per_week) ? $nurse_data['worker_hours_per_week'] = $request->worker_hours_per_week : '';
-            isset($request->worker_hours_per_shift) ? $nurse_data['worker_hours_per_shift'] = $request->worker_hours_per_shift : '';
-            isset($request->worker_weeks_assignment) ? $nurse_data['worker_weeks_assignment'] = $request->worker_weeks_assignment : '';
-            isset($request->worker_shifts_week) ? $nurse_data['worker_shifts_week'] = $request->worker_shifts_week : '';
-    
-            $nurse->update($nurse_data);
-        }
-
-
+                isset($request->specialty) ? $nurse_data['specialty'] = $request->specialty : '';
+                isset($request->profession) ? $nurse_data['profession'] = $request->profession : '';
+                isset($request->terms) ? $nurse_data['terms'] = $request->terms : '';
+                isset($request->type) ? $nurse_data['type'] = $request->type : '';
+                isset($request->block_scheduling ) ? $nurse_data['block_scheduling'] = $request->block_scheduling : '';
+                isset($request->float_requirement) ? $nurse_data['float_requirement'] = $request->float_requirement : '';
+                isset($request->facility_shift_cancelation_policy) ? $nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy : '';
+                isset($request->contract_termination_policy) ? $nurse_data['contract_termination_policy'] = $request->contract_termination_policy : '';
+                isset($request->distance_from_your_home) ? $nurse_data['distance_from_your_home'] = $request->distance_from_your_home : '';
+                isset($request->clinical_setting_you_prefer) ? $nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting_you_prefer : '';
+                isset($request->worker_patient_ratio) ? $nurse_data['worker_patient_ratio'] = $request->worker_patient_ratio : '';
+                isset($request->worker_emr) ? $nurse_data['worker_emr'] = $request->worker_emr : '';
+                isset($request->worker_unit) ? $nurse_data['worker_unit'] = $request->worker_unit : '';
+                isset($request->worker_scrub_color) ? $nurse_data['worker_scrub_color'] = $request->worker_scrub_color : '';
+                isset($request->rto) ? $nurse_data['rto'] = $request->rto : '';
+                isset($request->worker_shift_time_of_day) ? $nurse_data['worker_shift_time_of_day'] = $request->worker_shift_time_of_day : '';
+                isset($request->worker_hours_per_week) ? $nurse_data['worker_hours_per_week'] = $request->worker_hours_per_week : '';
+                isset($request->worker_hours_per_shift) ? $nurse_data['worker_hours_per_shift'] = $request->worker_hours_per_shift : '';
+                isset($request->worker_weeks_assignment) ? $nurse_data['worker_weeks_assignment'] = $request->worker_weeks_assignment : '';
+                isset($request->worker_shifts_week) ? $nurse_data['worker_shifts_week'] = $request->worker_shifts_week : '';
         
-
-        if($request->InfoType == 'BasicInformation'){
-            $user_data = [];
-            $nurse_data = [];
-            isset($request->first_name) ? $user_data['first_name'] = $request->first_name : '';
-            isset($request->last_name) ? $user_data['last_name'] = $request->last_name : '';
-            isset($request->mobile) ? $user_data['mobile'] = $request->mobile : '';
-            isset($request->zip_code) ? $user_data['zip_code'] = $request->zip_code : '';
-            isset($request->state) ? $nurse_data['state'] = $request->state : '';
-            isset($request->city) ? $nurse_data['city'] = $request->city : '';
-            isset($request->address) ? $nurse_data['address'] = $request->address : '';
-
-          
-            $user->update($user_data);
-            $nurse->update($nurse_data);
-        }
+                $nurse->update($nurse_data);
+            }
 
     
+            if($request->InfoType == 'BasicInformation'){
+                $request->validate([
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'mobile' => 'required|string',
+                //'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                'zip_code' => 'required|string',
+                'state' => 'required|string',
+                'city' => 'required|string',
+                'address' => 'required|string',
+                ]);
+                $user_data = [];
+                $nurse_data = [];
+                isset($request->first_name) ? $user_data['first_name'] = $request->first_name : '';
+                isset($request->last_name) ? $user_data['last_name'] = $request->last_name : '';
+                isset($request->mobile) ? $user_data['mobile'] = $request->mobile : '';
+                isset($request->zip_code) ? $user_data['zip_code'] = $request->zip_code : '';
+                isset($request->state) ? $nurse_data['state'] = $request->state : '';
+                isset($request->city) ? $nurse_data['city'] = $request->city : '';
+                isset($request->address) ? $nurse_data['address'] = $request->address : '';
+
+            
+                $user->update($user_data);
+                $nurse->update($nurse_data);
+        }
 
         $nurse = $nurse->fresh();
         $user = $user->fresh();
 
 
         return response()->json(['msg'=>$request->all(), 'user'=>$user, 'nurse'=>$nurse,'status'=>true]);
+    }   catch (\Exception $e) {
+         //return response()->json(['msg'=>$e->getMessage(), 'status'=>false]);
+         return response()->json(['msg'=>$request->all(), 'status'=>false]);
+        // return response()->json(['msg'=>'"Something was wrong please try later !"', 'status'=>false]);
+    }
+
+    }
+
+    // function to update the account setting 
+
+    public function update_worker_account_setting(Request $request)
+    {
+         try {
+            $validatedData = $request->validate([
+                'user_name' => 'regex:/^[a-zA-Z\s]+$/|max:255',
+                //'new_mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                '2fa' => 'in:0,1',
+                //needs net` access
+                'email' => 'email:rfc,dns'
+            ]);
+
+            $user = Auth::guard('frontend')->user();
+
+            isset($request->user_name) ? $user_data['user_name'] = $request->user_name : '';
+            isset($request->new_mobile) ? $user_data['new_mobile'] = $request->new_mobile : '';
+            isset($request->email) ? $user_data['email'] = $request->email : '';
+            isset($request->password) ? $user_data['password'] = Hash::make($request->password) : '';
+            isset($request->twoFa) ? $user_data['2fa'] = $request->twoFa : '';
+
+            
+            $user->update($user_data);
+            //$UpdatedUser = $user->refresh();
+
+            return response()->json(['status' => true,'message'=>'Account settings updated successfully']);
+
+        } catch (ValidationException $e) {
+            // return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['status' => false,'message' => 'An error occurred please check your infromation !']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false,'message' => 'An error occurred while updating the account settings']);
+        }
+
     }
 
     /** update password */
@@ -251,6 +324,8 @@ class WorkerDashboardController extends Controller
         $nurse->update($nurse_data);
         $nurse = $nurse->fresh();
         $data['worker'] = $nurse;
+
+        $data['progress_percentage'] = ($progress * 33) + 1;
         
         return view('worker::dashboard.worker_profile', $data);
     }
