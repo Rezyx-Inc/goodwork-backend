@@ -1,6 +1,7 @@
 const pm2 = require('pm2');
 var path = require("path");
 var cron = require('node-cron');
+require("dotenv").config();
 
 const server = path.join(path.dirname(__filename), "server.js")
 const crons = path.join(path.dirname(__filename), "/src/crons/index.js")
@@ -20,7 +21,7 @@ pm2.connect(function(err) {
     if(argv[3]){
       argv[3] == "true" ? watch = true : watch = false
     }
-    
+
     console.log("Starting the file management service.")
 
     pm2.start({
@@ -35,17 +36,20 @@ pm2.connect(function(err) {
       return pm2.disconnect()
     });
 
-    pm2.start({
-      script    : crons,
-      name      : 'crons',
-      watch     : watch
-    }, function(err, apps) {
-      if (err) {
-        console.error(err)
+    if(process.env.ENABLE_CRONS){
+      console.log("Starting the Cron service.")
+      pm2.start({
+        script    : crons,
+        name      : 'crons',
+        watch     : watch
+      }, function(err, apps) {
+        if (err) {
+          console.error(err)
+          return pm2.disconnect()
+        }
         return pm2.disconnect()
-      }
-      return pm2.disconnect()
-    });
+      });
+    }
   
   }else if(argv[2] === "stop"){
 
@@ -59,15 +63,12 @@ pm2.connect(function(err) {
       }    
       if(!err){
 
-        pm2.delete('files', (err, proc) => {
-          // Disconnects from PM2
-          pm2.disconnect()
-        });
-
-        pm2.delete('crons', (err, proc) => {
-          // Disconnects from PM2
-          pm2.disconnect()
-        });
+        for(proc of list){
+          pm2.delete(proc.name, (err, proc) => {
+            // Disconnects from PM2
+            pm2.disconnect()
+          });  
+        }
 
       }else{
         console.log("Unable to list processes", err)
