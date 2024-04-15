@@ -13,7 +13,7 @@ console.log("Starting integrations cron jobs.")
 // Check newly added integrations every 10 minutes
 cron.schedule('*/10 * * * *', () => {
   console.log('Checking new integrations');
-  laboredge.init();
+  //laboredge.init();
 });
 
 // Check updates every hour
