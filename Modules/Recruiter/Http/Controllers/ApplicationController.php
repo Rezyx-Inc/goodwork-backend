@@ -1262,7 +1262,6 @@ class ApplicationController extends Controller
                     <div class="ss-form-group">
                         <label>Terms</label>
                         <select name="terms" id="term">
-                        
                         ';
                 if (isset($allKeywords['Terms'])) {
                     foreach ($allKeywords['Terms'] as $value) {
@@ -1352,6 +1351,7 @@ class ApplicationController extends Controller
                     '">
                     </div>
                     <span class="help-block-contract_termination_policy"></span>
+                    
                     <div class="ss-form-group">
                         <label>Traveler Distance From Facility</label>
                         <input type="number" id="traveler_distance_from_facility" name="traveler_distance_from_facility" placeholder="Enter Traveler Distance From Facility" value="' .

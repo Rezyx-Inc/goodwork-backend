@@ -201,7 +201,6 @@
                 <p>How quickly you can be ready to submit?</p>
             </li>
         </ul>
-
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
             <li>
             <span># Of positions available</span>

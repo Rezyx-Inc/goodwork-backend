@@ -31,9 +31,9 @@ class ProfessionsTableSeeder extends Seeder
             'Cardiac Nurse',
         ];
 
-        foreach ($professions as $profession) {
+        foreach ($professions as $index => $profession) {
             DB::table('professions')->insert([
-                'id' => Str::uuid(),
+                'id' => $index + 1, // increment id
                 'full_name' => $profession,
                 'short_name' => strtolower(str_replace(' ', '_', $profession)),
             ]);

@@ -4,7 +4,7 @@ namespace Modules\Worker\Http\Controllers;
 
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
+use Illuminate\Http\{Request, JsonResponse};
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\{ Hash, Auth, Session, Cache };
 use App\Enums\Role;
@@ -95,6 +95,16 @@ class WorkerController extends Controller
     public function get_profile()
     {
         return view('worker::dashboard/my-profile');
+    }
+
+    public function details($id)
+    {
+        $data = [];
+        $data['model'] = Job::findOrFail($id);
+        // $user = auth()->guard('frontend')->user();
+        // dd($user->nurse->id);
+        $data['jobSaved'] = new JobSaved();
+        return view('worker::dashboard.details', $data);
     }
 
     public function sendMessages(Request $request)
@@ -354,7 +364,7 @@ class WorkerController extends Controller
         return $string;
     }
 
-    public function get_get_my_work_journey()
+    public function get_my_work_journey()
     {
         $user = auth()->guard('frontend')->user();
         $whereCond = [
@@ -368,7 +378,7 @@ class WorkerController extends Controller
 
         switch(request()->route()->getName())
         {
-            case 'my-work-journey':
+            case 'worker.my-work-journey':
                 $whereCond['jobs.is_hidden'] = '0';
                 $jobs = Job::select("jobs.*")
                 ->join('job_saved', function ($join) use ($user){
@@ -391,12 +401,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Apply', 'Screening', 'Submitted'])
-                        ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id)
-                        ->where(function($q){
-                            $q->whereNull('offers.expiration')
-                            ->orWhere('offers.expiration', '>', date('Y-m-d'));
-                        });
+                        ->where('offers.worker_user_id', '=', $user->nurse->id);
                     });
                 })
                 ->where($whereCond)
@@ -412,9 +417,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Onboarding', 'Working'])
-                        ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id);
-
+                        ->where('offers.worker_user_id', '=', $user->nurse->id);
                     });
                 })
                 ->where($whereCond)
@@ -424,22 +427,20 @@ class WorkerController extends Controller
                 break;
 
             case 'offered-jobs':
-                $jobs = Job::select("jobs.*")
+
+                $jobs = Job::select("jobs.*","offers.id as offer_id")
                 ->join('offers', function ($join) use ($user){
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
-                        $query->whereIn('offers.status', ['Offered', 'Rejected', 'Hold'])
-                        ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id)
-                        ->where(function($q){
-                            $q->whereNull('offers.expiration')
-                            ->orWhere('offers.expiration', '>', date('Y-m-d'));
-                        });
+                        $query->whereIn('offers.status', ['Offered', 'Hold'])
+                        ->where('offers.worker_user_id', '=', $user->nurse->id)
+                        ;
                     });
                 })
                 ->where($whereCond)
                 ->orderBy('offers.created_at', 'DESC')
                 ->get();
+                // return response()->json(['msg'=>$jobs]);
                 $data['type'] = 'offered';
                 break;
 
@@ -450,12 +451,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->where('offers.status', '=', 'Done')
-                        ->where('offers.active', '=', '1')
-                        ->where('offers.nurse_id', '=', $user->nurse->id)
-                        ->where(function($q){
-                            $q->whereNull('offers.expiration')
-                            ->orWhere('offers.expiration', '>', date('Y-m-d'));
-                        });
+                        ->where('offers.worker_user_id', '=', $user->nurse->id);
                     });
                 })
                 ->where($whereCond)
@@ -469,7 +465,7 @@ class WorkerController extends Controller
         }
 
         $data['jobs'] = $jobs;
-        return view('jobs.jobs', $data);
+        return view('worker::jobs.jobs', $data);
     }
 
     public function explore(Request $request)
@@ -680,4 +676,152 @@ class WorkerController extends Controller
         $data['states'] = Cache::get('statetbl');
         return view('user.edit-profile', $data);
     }
+
+    public function fetch_job_content(Request $request)
+    {
+        if ($request->ajax()) {
+            $request->validate([
+                'jid'=>'required',
+
+                'type'=>'required'
+            ]);
+            $response = [];
+            $response['success'] = true;
+            $data = [];
+            $job = Job::findOrFail($request->jid);
+            $id = Auth::guard('frontend')->user()->id;
+            return response()->json(['msg'=>$id]);
+            switch($request->type)
+            {
+                case 'saved':
+                    // $jobs = $jobCOntent;
+                    $view = 'saved';
+                    break;
+                case 'applied':
+                    // $jobs = $jobCOntent;
+                    $view = 'applied';
+                    break;
+                case 'hired':
+                    // $jobs = $jobCOntent;
+                    $view = 'hired';
+                    break;
+                case 'offered':
+                    // $jobs = $jobCOntent;
+                    $view = 'offered';
+                    break;
+                case 'past':
+                    // $jobs = $jobCOntent;
+                    $view = 'past';
+                    break;
+                case 'counter':
+                    // $jobs = $jobCOntent;
+
+                    $distinctFilters = Keyword::distinct()->pluck('filter');
+                    $keywords = [];
+
+                    foreach ($distinctFilters as $filter) {
+                        $keyword = Keyword::where('filter', $filter)->get();
+                        $keywords[$filter] = $keyword;
+                    }
+
+                    $data['keywords'] = $keywords;
+                    $data['countries'] = Countries::where('flag','1')
+                    ->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")
+                    ->orderBy('name','ASC')->get();
+                    $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
+                    $data['us_states'] = States::where('country_id', $usa->id)->get();
+                    $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+                    $view = 'counter_offer';
+
+                    break;
+                default:
+                    return new JsonResponse(['success'=>false, 'msg'=>'Oops! something went wrong.'], 400);
+                    break;
+            }
+
+
+
+
+            $data['model'] = $job;
+            // this will return one of the ajax views in the public resources 
+            $response['content'] = view('ajax.'.$view.'_job', $data)->render();
+            return new JsonResponse($response, 200);
+        }
+    }
+
+    public function accept_offer(Request $request){
+
+        try{
+            $request->validate([
+                'offer_id'=>'required',
+            ]);
+
+            $offer = Offer::where('id',$request->offer_id)->first();
+            if(!$offer){
+                return response()->json(['success' => false, 'message' => 'Offer not found']);
+            }
+    
+            $job = Job::where('id',$offer->job_id)->first();
+            if(!$job){
+                return response()->json(['success' => false, 'message' => 'Job not found']);
+            }
+    
+            $offer->update([
+                'status' => 'Onboarding',
+                'is_draft' => '0',
+                'is_counter' => '0'
+            ]);
+    
+            $job->update([
+                'active' => '0',
+                'is_open' => '0',
+                'is_closed' => '1'
+            ]);
+    
+            return response()->json(['msg'=>'offer accepted successfully','success' => true]);
+    
+        } catch (\Exception $e) {
+           // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
+           return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
+        }
+    }
+
+    public function reject_offer(Request $request){
+
+        try{
+            $request->validate([
+                'offer_id'=>'required',
+            ]);
+
+            $offer = Offer::where('id',$request->offer_id)->first();
+            if(!$offer){
+                return response()->json(['success' => false, 'message' => 'Offer not found']);
+            }
+    
+            $job = Job::where('id',$offer->job_id)->first();
+            if(!$job){
+                return response()->json(['success' => false, 'message' => 'Job not found']);
+            }
+    
+            $updated = $offer->update([
+                'status' => 'Rejected',
+                'is_draft' => '0',
+                'is_counter' => '0'
+            ]);
+    
+            if ($updated) {
+                return response()->json(['msg'=>'Offer rejected successfully','success' => true]);
+            } else {
+                return response()->json(['msg'=>'offer not rejected', 'success' => false]);
+            }
+            
+    
+        } catch (\Exception $e) {
+           // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
+           return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
+        }
+    }
+
+   
+
 }
