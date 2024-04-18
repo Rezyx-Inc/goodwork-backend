@@ -44,6 +44,10 @@ class CreateUsersTable extends Migration
             $table->string('zip_code')->nullable();
             // adding 2fa field control
             $table->boolean('2fa')->nullable();
+            // adding stripe payment information
+            $table->unsignedInteger('stripeAccountId')->nullable();
+            $table->string('stripeLoginLink')->nullable();
+            $table->string('stripeAccountType')->nullable();
 
         });
     }

@@ -90,7 +90,7 @@
                                     </div>
 
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-3">
+                                        <input type="radio" name="select" id="option-3" onclick="BonusTransfersDisplay()">
                                         <label for="option-3" class="option option-3">
                                             <div class="dot"></div>
                                             <ul>
@@ -107,7 +107,7 @@
                                     </div>
 
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-4">
+                                        <input type="radio" name="select" id="option-4" onclick="SupportDisplay()">
                                         <label for="option-4" class="option option-4">
                                             <div class="dot"></div>
                                             <ul>
@@ -124,7 +124,7 @@
 
 
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-5">
+                                        <input type="radio" name="select" id="option-5" onclick="DisactivateAccountDisplay()">
                                         <label for="option-5" class="option option-5">
                                             <div class="dot"></div>
                                             <ul>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
 
-                    <!--------Professional Information form--------->
+                    {{------------------------------------------------------------ Profile settings Form ------------------------------------------------------------}}
                     <div class="col-lg-7 bodyAll profile_setting">
                         <div class="ss-pers-info-form-mn-dv" >
 
@@ -511,8 +511,10 @@
                             </div>
                         </div>
                     </div>
+                     {{------------------------------------------------------------ End Profile settings Form ------------------------------------------------------------}}
+                    {{------------------------------------------------------------ Account settings Form ------------------------------------------------------------}}
 
-                    <div class="col-lg-7 bodyAll account_setting">
+                    <div class="col-lg-7 bodyAll account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv" >
                             <div class="ss-persnl-frm-hed" >
                                 <p><span><img
@@ -521,7 +523,6 @@
                             </div>
                             <div class="form-outer">
                                 <form method="post" action="{{ route('update-worker-profile') }}">
-                                {{-- <form method="post" action="{{ route('update-worker-account-setting') }}"> --}}
                                     @csrf
                                     <!-- slide Account Setting -->
                                     <div class="page slide-page">
@@ -537,7 +538,6 @@
                                                 <label>New Password</label>
                                                 <input type="text" name="password" placeholder="Please enter your new password">
                                             </div>
-                                            {{-- <span class="help-block-password"></span> --}}
                                             {{-- Change 2FA --}}
                                             <div class="ss-form-group row col-11">
                                                 <label>Two-factor authentication (2FA)</label>
@@ -556,7 +556,6 @@
                                                 >
                                                 </div>
                                             </div>
-                                            {{-- <span class="help-block-2fa"></span> --}}
                                             {{-- Change Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Phone Number</label>
@@ -582,6 +581,164 @@
                            
                         </div>    
                     </div>
+                    {{------------------------------------------------------------ End Account settings  ------------------------------------------------------------}}
+                    {{------------------------------------------------------------  Bonus Area ----------------------------------------------------------------------}}
+                    <div class="col-lg-7 bodyAll bonus_transfers d-none">
+                        <div class="ss-pers-info-form-mn-dv" >
+                            <div class="ss-persnl-frm-hed" >
+                                <p><span><img
+                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Bonus
+                                    Transfers</p>
+                            </div>
+                            <div class="form-outer">
+                                {{-- <form method="post" action="{{ route('update-worker-profile') }}"> --}}
+                                {{-- <form method="post" action="{{ route('update-bonus-transfer') }}">  --}}
+                                <form method="post">  
+                                    @csrf
+                                    <!-- slide Bonus Transfer -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- Full name payment--}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Full Name</label>
+                                                <input type="text" name="full_name_payment" placeholder="Please enter your full name">
+                                            </div>
+                                            <span class="help-block-full_name_payment"></span>
+                                            {{-- Address payment --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Address</label>
+                                                <input type="text" name="address_payment" placeholder="Please enter your address">
+                                            </div>
+                                            <span class="help-block-address_payment"></span>
+                                            {{-- Email --}}
+                                            <div class="ss-form-group row col-11">
+                                                <label>Email</label>
+                                                <input type="text" name="email_payment" placeholder="Please enter your new Email">
+                                            </div>
+                                            <span class="help-block-email_payment"></span>
+                                            {{-- Bank Name --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Bank Name</label>
+                                                <input id="bank_name_payment" type="text" name="bank_name_payment" placeholder="Please enter your bank name">
+                                            </div>
+                                            <span class="help-block-bank_name_payment"></span>
+                                            {{-- Rooting Number Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Routing number payment</label>
+                                                <input id="routing_number_payment" type="text" name="routing_number_payment" placeholder="Please enter your routing number payment">
+                                            </div>
+                                            <span class="help-block-routing_number_payment"></span>
+                                            {{-- Bank Account Payment Number --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Bank Account Payment Number</label>
+                                                <input id="bank_account_payment_number" type="text" name="bank_account_payment_number" placeholder="Please enter your bank account payment number">
+                                            </div>
+                                            <span class="help-block-bank_account_payment_number"></span>
+                                            {{-- Phone Number --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Phone Number</label>
+                                                <input id="phone_number_payment" type="text" name="phone_number_payment" placeholder="Please enter your phone number">
+                                            </div>
+                                            <span class="help-block-phone_number_payment"></span>
+                                            {{-- Skip && Save --}}
+                                            <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveBonusInformation"> Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                           
+                        </div>    
+                    </div>
+                    {{------------------------------------------------------------  End Bonus Area ----------------------------------------------------------------------}}
+                       {{------------------------------------------------------------  Support Area ----------------------------------------------------------------------}}
+                       <div class="col-lg-7 bodyAll support_info d-none">
+                        <div class="ss-pers-info-form-mn-dv" >
+                            <div class="ss-persnl-frm-hed" >
+                                <h1 style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
+                                Help &Support
+                                </h1>
+                            </div>
+                            <div class="form-outer">
+                                <form method="post">  
+                                    @csrf
+                                    <!-- slide Support -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- Support subject --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Subject</label>
+                                                <select name="support_subject" id="support_subject">
+                                                    <option value="">Please select your issue</option>
+                                                    <option value="login">Login</option>
+                                                    <option value="payment">Payment</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                               
+                                            </div>
+                                            <span class="help-block-support_subject"></span>
+                                            {{-- Support issue --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Issue</label>
+                                                <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
+                                            </div>
+                                            <span class="help-block-support_subject_issue"></span>                                                                 
+                                            {{-- Skip && Save --}}
+                                            <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveSupportTicket">
+                                                    {{-- spinner --}}
+                                                    <span id="loading" class="d-none" >
+                                                        <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            Loading...
+                                                    </span>
+                                                    <span id="send_ticket">Send now</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                           
+                        </div>    
+                    </div>
+                          {{--------------------------------------------------------- End Support Area ----------------------------------------------------------------------}}
+
+                          {{--------------------------------------------------------- Disable account area ----------------------------------------------------------------------}}
+                          <div class="col-lg-7 bodyAll disable_account d-none">
+                            <div class="ss-pers-info-form-mn-dv" >
+                                <div class="ss-persnl-frm-hed" >
+                                    <p><span><img
+                                                src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Disactivate your 
+                                        account</p>
+                                </div>
+                                <div class="form-outer">
+                                    <form method="post">  
+                                        @csrf
+                                        <!-- slide Support -->
+                                        <div class="page slide-page">
+                                            <div class="row justify-content-center">                                                                 
+                                                {{-- Disactivate your account --}}
+                                                <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                    
+                                                    <button type="text" class="col-12 ss-prsnl-save-btn" id="DisactivateAccount">
+                                                        {{-- spinner --}}
+                                                        <span id="loading_disableOption" class="d-none" >
+                                                            <span style="width=5%" id="loadSpan_disableOption" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                                Loading...
+                                                        </span>
+                                                        <span id="disactivate_account">Disable</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                               
+                            </div>    
+                        </div>
+                           {{--------------------------------------------------------- Disable account area ----------------------------------------------------------------------}}
                 </div>
     </main>
 @stop
@@ -594,7 +751,19 @@
         $(document).ready(function() {
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
-            $('.account_setting').addClass('d-none');
+            $('#phone_number_payment').mask('+1 (999) 999-9999');
+            $('#routing_number_payment').mask('999-999-999');
+            $('#bank_account_payment_number').mask('9999-9999-9999');
+            // solution of the case that we got - when we type a caracter : 
+            // $('#bank_account_payment_number').on('input', function() {
+            // var inputValue = $(this).val();
+            // var numericValue = inputValue.replace(/[^0-9]/g, '');
+            // var formattedValue = numericValue.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
+            // $(this).val(formattedValue);
+            // });
+            // or we should use a nother plugin
+           
+            
             let account_tier = '{{ $progress_percentage }}';
             if(account_tier > 67){
                 document.getElementById('profile_incomplete').classList.add('d-none');
@@ -689,9 +858,8 @@
         const progress = document.getElementById("progress");
         // end slide control
         
-        // inputes
+        // inputs
         // Basic Info
-        
         const first_name = document.querySelector('input[name="first_name"]');
         const last_name = document.querySelector('input[name="last_name"]');
         const mobile = document.querySelector('input[name="mobile"]');
@@ -722,7 +890,19 @@
         const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
         // Document Management
         const file = document.querySelector('input[type="file"]');
+        // bonus transfer 
+        const full_name_payment = document.querySelector('input[name="full_name_payment"]');
+        const address_payment = document.querySelector('input[name="address_payment"]');
+        const email_payment = document.querySelector('input[name="email_payment"]');
+        const bank_name_payment = document.querySelector('input[name="bank_name_payment"]');
+        const routing_number_payment = document.querySelector('input[name="routing_number_payment"]');
+        const bank_account_payment_number = document.querySelector('input[name="bank_account_payment_number"]');
+        const phone_number_payment = document.querySelector('input[name="phone_number_payment"]');
+        // support input
+        const support_subject_issue = document.querySelector('textarea[name="support_subject_issue"]');
+        const support_subject = document.querySelector('select[name="support_subject"]');
         // end inputs
+        
         // change info type title
         const infoType = document.getElementById("information_type");
         // end change info type title
@@ -884,6 +1064,86 @@
         }
         // end validation document management
 
+        // validation bonus 
+
+        function validateBonusInfo() {
+            let isValid = true;
+
+            // Full name validation
+            const fullNameRegex_payment = /^[a-zA-Z\s]{1,255}$/;
+            if (($('input[name="full_name_payment"]').val() === '') && (!fullNameRegex_payment.test(full_name_payment.value)) ) {
+                $('.help-block-full_name_payment').text('Full name can only contain letters and spaces, and cannot be longer than 255 characters');
+                $('.help-block-full_name_payment').addClass('text-danger');
+                isValid = false;
+            }
+
+
+            if ($('input[name="address_payment"]').val() === '') {
+                $('.help-block-address_payment').text('Please enter your address');
+                $('.help-block-address_payment').addClass('text-danger');
+                isValid = false;
+            }
+
+            const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (($('input[name="email_payment"]').val() === '') && (!emailRegex_payment.test(email_payment.value))) {
+                $('.help-block-email_payment').text('Please enter a valid email');
+                $('.help-block-email_payment').addClass('text-danger');
+                isValid = false;
+            }
+
+            if ($('input[name="bank_name_payment"]').val() === '') {
+                $('.help-block-bank_name_payment').text('Please enter your bank name');
+                $('.help-block-bank_name_payment').addClass('text-danger');
+                isValid = false;
+            }
+
+            if ($('input[name="routing_number_payment"]').val() === '') {
+                $('.help-block-routing_number_payment').text('Please enter your routing number');
+                $('.help-block-routing_number_payment').addClass('text-danger');
+                isValid = false;
+            }
+
+            if ($('input[name="bank_account_payment_number"]').val() === '') {
+                $('.help-block-bank_account_payment_number').text('Please enter your bank account number');
+                $('.help-block-bank_account_payment_number').addClass('text-danger');
+                isValid = false;
+            }
+            const regexPhone_payment = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
+            if (($('input[name="phone_number_payment"]').val() === '') && (!regexPhone_payment.test(phone_number_payment.value))) {
+                $('.help-block-phone_number_payment').text('Please enter a valid phone number');
+                $('.help-block-phone_number_payment').addClass('text-danger');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // end bonus validation
+
+        // validation 
+
+        function validateSupportForm() {
+                let isValid = true;
+
+                // Support subject validation
+                if ($('select[name="support_subject"]').val() === '') {
+                    $('.help-block-support_subject').text('Please select your issue');
+                    $('.help-block-support_subject').addClass('text-danger');
+                    isValid = false;
+                }
+            
+                // Support issue validation
+                if ($('textarea[name="support_subject_issue"]').val().trim() === '') {
+                    $('.help-block-support_subject_issue').text('Please tell us how we can help');
+                    $('.help-block-support_subject_issue').addClass('text-danger');
+                    isValid = false;
+                }
+            
+                return isValid;
+        }
+
+        // end validation
+
         // Save Basic Information 
         const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
 
@@ -904,21 +1164,15 @@
                     dataType: 'json',
                     contentType: 'application/json',
                     data: JSON.stringify({
-                        first_name: first_name.value,
-                        last_name: last_name.value,
-                        mobile: mobile.value,
-                        address: address.value,
-                        city: city.value,
-                        state: state.value,
-                        zip_code: zip_code.value,
-                        InfoType : "BasicInformation"
+                        support_subject: first_name.value,
+                        support_subject_issue: last_name.value,
                     }),
                     success: function(resp) {
                         console.log(resp);
                         if (resp.status) {
                             notie.alert({
                                 type: 'success',
-                                text: '<i class="fa fa-check"></i> Basic Information saved successfully',
+                                text: '<i class="fa fa-check"></i> Support ticket sent successfully.',
                                 time: 5
                             });
 
@@ -927,14 +1181,14 @@
                     error: function(resp) {
                         notie.alert({
                             type: 'error',
-                            text: '<i class="fa fa-check"></i> Error ! Please try again later .',
+                            text: '<i class="fa fa-check"></i> Support ticket sent successfully.',
                             time: 5
                         });
                     }
                 });
             
         });
-        // end Basic Information
+        // end Saving Basic Information
 
         // Save Professional Information
         const SaveProfessionalInformation = document.getElementById("SaveProfessionalInformation");       
@@ -948,55 +1202,204 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
             });
-        $.ajax({
-            url: '/worker/update-worker-profile',
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                profession: profession.value,
-                specialty: specialty.value,
-                terms: terms.value,
-                type: type.value,
-                block_scheduling: block_scheduling.value,
-                float_requirement: float_requirement.value,
-                facility_shift_cancelation_policy: facility_shift_cancelation_policy.value,
-                contract_termination_policy: contract_termination_policy.value,
-                traveler_distance_from_facility: traveler_distance_from_facility.value,
-                clinical_setting: clinical_setting.value,
-                Patient_ratio: Patient_ratio.value,
-                emr: emr.value,
-                Unit: Unit.value,
-                scrub_color: scrub_color.value,
-                rto: rto.value,
-                shift_of_day: shift_of_day.value,
-                hours_per_week: hours_per_week.value,
-                hours_shift: hours_shift.value,
-                preferred_assignment_duration: preferred_assignment_duration.value,
-                weeks_shift: weeks_shift.value,
-                InfoType : "ProfessionalInformation"
-            }),
-            success: function(resp) {
-                console.log(resp);
-                if (resp.status) {
+            $.ajax({
+                url: '/worker/update-worker-profile',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    profession: profession.value,
+                    specialty: specialty.value,
+                    terms: terms.value,
+                    type: type.value,
+                    block_scheduling: block_scheduling.value,
+                    float_requirement: float_requirement.value,
+                    facility_shift_cancelation_policy: facility_shift_cancelation_policy.value,
+                    contract_termination_policy: contract_termination_policy.value,
+                    traveler_distance_from_facility: traveler_distance_from_facility.value,
+                    clinical_setting: clinical_setting.value,
+                    Patient_ratio: Patient_ratio.value,
+                    emr: emr.value,
+                    Unit: Unit.value,
+                    scrub_color: scrub_color.value,
+                    rto: rto.value,
+                    shift_of_day: shift_of_day.value,
+                    hours_per_week: hours_per_week.value,
+                    hours_shift: hours_shift.value,
+                    preferred_assignment_duration: preferred_assignment_duration.value,
+                    weeks_shift: weeks_shift.value,
+                    InfoType : "ProfessionalInformation"
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Professional Information saved successfully',
+                            time: 5
+                        });
+
+                    }
+                },
+                error: function(resp) {
                     notie.alert({
-                        type: 'success',
-                        text: '<i class="fa fa-check"></i> Professional Information saved successfully',
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i>' + resp.message,
                         time: 5
                     });
-
                 }
-            },
-            error: function(resp) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Error ! Please try again later .',
-                    time: 5
-                });
+            });
+        });
+        // end Saving Professional Information
+
+        // Save Bonus Transfer 
+        const SaveBonusInformation = document.getElementById("SaveBonusInformation"); 
+        SaveBonusInformation.addEventListener("click",function(event){
+            event.preventDefault();
+            if (!validateBonusInfo()) {
+                return;
             }
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/worker/add-worker-payment',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        full_name_payment: full_name_payment.value,
+                        address_payment: address_payment.value,
+                        email_payment: email_payment.value,
+                        bank_name_payment: bank_name_payment.value,
+                        routing_number_payment: routing_number_payment.value,
+                        bank_account_payment_number: bank_account_payment_number.value,
+                        phone_number_payment: phone_number_payment.value,
+                    }),
+                    success: function(resp) {
+                        console.log(resp);
+                        if (resp.status) {
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i> Payment Information Successfully',
+                                time: 5
+                            });
+
+                        }
+                    },
+                    error: function(resp) {
+                        console.log(resp);
+                        notie.alert({
+                            type: 'error',
+                            text: resp,
+                            time: 5
+                        });
+                    }
+                });
+            
+        }); 
+        // end Saving Bonus Transfer
+
+        // saving Support ticket
+
+        const SaveSupportTicket = document.getElementById("SaveSupportTicket"); 
+
+        SaveSupportTicket.addEventListener("click",function(event){
+            event.preventDefault();
+            if (!validateSupportForm()) {
+               return;
+            }
+            $('#loading').removeClass('d-none');
+            $('#send_ticket').addClass('d-none');
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
+            $.ajax({
+                    url: '/worker/send-support-ticket',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        support_subject: support_subject.value,
+                        support_subject_issue: support_subject_issue.value,
+                        
+                    }),
+                    success: function(resp) {
+                        console.log(resp);
+                        if (resp.status) {
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i> Payment Information Successfully',
+                                time: 5
+                            });
+                            $('#loading').addClass('d-none');
+                            $('#send_ticket').removeClass('d-none');
+                            support_subject_issue.value = "";
+                        }
+                    },
+                    error: function(resp) {
+                        console.log(resp);
+                        notie.alert({
+                            type: 'error',
+                            text: resp,
+                            time: 5
+                        });
+                    }
+                });
         });
+
+        // end saving support ticket
+
+        // account disactivating
+
+        const DisactivateAccount = document.getElementById("DisactivateAccount");
+
+        DisactivateAccount.addEventListener("click",function(event){
+            $('#loading_disableOption').removeClass('d-none');
+                            $('#disactivate_account').addClass('d-none');
+            event.preventDefault();
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
+            $.ajax({
+                    url: '/worker/disactivate-account',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        access:true
+                    }),
+                    success: function(resp) {
+                        console.log(resp);
+                        if (resp.status) {
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i> Account disactivated Successfully',
+                                time: 5
+                            });
+                            $('#loading_disableOption').addClass('d-none');
+                            $('#disactivate_account').removeClass('d-none');
+                            window.location.href = "/";
+                        }
+                    },
+                    error: function(resp) {
+                        console.log(resp);
+                        notie.alert({
+                            type: 'error',
+                            text: resp,
+                            time: 5
+                        });
+                    }
+                });
         });
-        // end Professional Information
+
+        // end account disactivating
 
         // next and prev buttons
         nextBtnFirst.addEventListener("click", function(event) {
@@ -1026,6 +1429,7 @@
                 "<span><img src='{{ URL::asset('frontend/img/my-per--con-user.png') }}' /></span>Basic Information";
 
         });
+
         prevBtnThird.addEventListener("click", function(event) {
             event.preventDefault();
             slidePage.style.marginLeft = "-25%";
@@ -1108,7 +1512,7 @@
 
     // --------------------------- Account Setting Area --------------------------------- //
 
-    // inputes 
+    // inputs account settings
     
     const user_name = document.querySelector('input[name="user_name"]');
     const password = document.querySelector('input[name="password"]');
@@ -1117,64 +1521,65 @@
     const email = document.querySelector('input[name="email"]');
     var inputs = [];    
 
-    // validation here 
+    // account setting validation here 
 
     function validateAccountSettingInformation(){
-        $('.help-block-new_mobile').text('');
-        $('.help-block-validation').text('');
-        $('.help-block-email').text('');
-        $('.help-block-user_name').text('');
-    let isValid = true;
-    // Create an array of all inputs
-    inputs = [user_name, password, new_mobile, email];
-
-    // Add the value of the selected radio button to the inputs array, if a radio button is selected
-    const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
-    if (twoFactorAuth) {
-        inputs.push(twoFactorAuth);
-    }
-
-    // Check if all inputs are empty
-    const allEmpty = inputs.every(input => input.value.trim() === '');
-
-    // If all inputs are empty, show an error
-    if (allEmpty) {
-        $('.help-block-validation').text('Please fill at least one field');
-        $('.help-block-validation').addClass('text-danger');
-        isValid = false;
-    }
-
-    // Email validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email.value)) {
-        $('.help-block-email').text('Please enter a valid email');
-        $('.help-block-email').addClass('text-danger');
-        isValid = false;
-    }
-
-    // User name validation
-    const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
-    if (!userNameRegex.test(user_name.value)) {
-        $('.help-block-user_name').text('User name can only contain letters and spaces, and cannot be longer than 255 characters');
-        $('.help-block-user_name').addClass('text-danger');
-        isValid = false;
-    }
-
-    // New mobile number validation
-    const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
-    if (!regexNewPhone.test(new_mobile.value)) {
-        $('.help-block-new_mobile').text('Please enter a valid mobile number');
-        $('.help-block-new_mobile').addClass('text-danger');
-        isValid = false;
-    }
-
-    return isValid;
+                $('.help-block-new_mobile').text('');
+                $('.help-block-validation').text('');
+                $('.help-block-email').text('');
+                $('.help-block-user_name').text('');
+            let isValid = true;
+            // Create an array of all inputs
+            inputs = [user_name, password, new_mobile, email];
+            
+            // Add the value of the selected radio button to the inputs array, if a radio button is selected
+            const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
+            if (twoFactorAuth) {
+                inputs.push(twoFactorAuth);
+            }
+        
+            // Check if all inputs are empty
+            const allEmpty = inputs.every(input => input.value.trim() === '');
+        
+            // If all inputs are empty, show an error
+            if (allEmpty) {
+                $('.help-block-validation').text('Please fill at least one field');
+                $('.help-block-validation').addClass('text-danger');
+                isValid = false;
+            }
+        
+            // Email validation
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email.value)) {
+                $('.help-block-email').text('Please enter a valid email');
+                $('.help-block-email').addClass('text-danger');
+                isValid = false;
+            }
+        
+            // User name validation
+            const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
+            if (!userNameRegex.test(user_name.value)) {
+                $('.help-block-user_name').text('User name can only contain letters and spaces, and cannot be longer than 255 characters');
+                $('.help-block-user_name').addClass('text-danger');
+                isValid = false;
+            }
+        
+            // New mobile number validation
+            const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
+            if (!regexNewPhone.test(new_mobile.value)) {
+                $('.help-block-new_mobile').text('Please enter a valid mobile number');
+                $('.help-block-new_mobile').addClass('text-danger');
+                isValid = false;
+            }
+        
+            return isValid;
 }
+    // end account setting validation
     
 
     // send request to update here 
     const SaveAccountInformation = document.getElementById('SaveAccountInformation');
-        SaveAccountInformation.addEventListener("click", function(event) {
+    SaveAccountInformation.addEventListener("click", function(event) {
         event.preventDefault();
         if (!validateAccountSettingInformation()) {
                 return;
@@ -1226,18 +1631,38 @@
         });
        
 
-     });
+    });
     
     // this functions to display profile setting / account setting forms
     function AccountSettingDisplay(){
             $('.profile_setting').addClass('d-none');
             $('.account_setting').removeClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
         }
 
     function ProfileIinformationDisplay(){
         $('.account_setting').addClass('d-none');
         $('.profile_setting').removeClass('d-none');
+        $('.bonus_transfers').addClass('d-none');
         }
+    function BonusTransfersDisplay(){
+        $('.account_setting').addClass('d-none');
+        $('.profile_setting').addClass('d-none');
+        $('.bonus_transfers').removeClass('d-none');
+    }
+    function SupportDisplay(){
+        $('.account_setting').addClass('d-none');
+        $('.profile_setting').addClass('d-none');
+        $('.bonus_transfers').addClass('d-none');
+        $('.support_info').removeClass('d-none');
+    }
+    function DisactivateAccountDisplay(){
+        $('.account_setting').addClass('d-none');
+        $('.profile_setting').addClass('d-none');
+        $('.bonus_transfers').addClass('d-none');
+        $('.support_info').addClass('d-none');
+        $('.disable_account').removeClass('d-none');
+    }
     </script>
 
 @stop
@@ -1344,10 +1769,8 @@
 </style>
 
 <style>
+
     @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-
-
-
     .bodyAll {
         display: flex;
         align-items: center;
@@ -1603,4 +2026,7 @@
     .slide-page span {
         margin-top : 10px;
     } 
+    #loading,#send_ticket,#loadSpan,#disactivate_account,#loading_disableOption,#loadSpan_disableOption{
+        color:#fff;
+    }
 </style>

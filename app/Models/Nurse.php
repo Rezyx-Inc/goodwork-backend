@@ -179,7 +179,14 @@ class Nurse extends Model implements HasMedia
         'account_tier',
         'terms',
         'type',
-        'profession'
+        'profession',
+        'full_name_payment' ,
+        'address_payment',
+        'email_payment',
+        'new_bank_name_payment',
+        'routing_number_payment',
+        'bank_account_payment_number',
+        'phone_number_payment'
     ];
     protected static $logName = 'Nurse';
     protected static $logFillable = true;

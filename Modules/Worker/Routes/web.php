@@ -71,7 +71,15 @@ Route::prefix('worker')->group(function() {
 
         // new post route for account setting updating
         Route::post('update-worker-account-setting',['uses' => 'WorkerDashboardController@update_worker_account_setting', 'as' => 'update-worker-account-setting']);
-        
+
+        // new post route for worker payment 
+        Route::post('add-worker-payment',['uses' => 'WorkerDashboardController@add_worker_payment', 'as' => 'add_worker_payment']);
+
+        // sending support tickets 
+        Route::post('send-support-ticket',['uses' => 'WorkerDashboardController@send_support_ticket', 'as' => 'send_support_ticket']);
+
+        // disactivate account
+        Route::post('disactivate-account',['uses' => 'WorkerDashboardController@disactivate_account', 'as' => 'disactivate_account']);
 
     }
 
