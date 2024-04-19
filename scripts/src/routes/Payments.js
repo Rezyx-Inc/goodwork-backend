@@ -18,14 +18,21 @@ router.post('/create', async (req, res) => {
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
 
-    // Create the stripe connected account
-    const account = await stripe.accounts.create({
-	  type: 'express',
-	  country: 'US',
-	  email: req.body.email
-	});
+    try{
+	
+	    // Create the stripe connected account
+	    const account = await stripe.accounts.create({
+		  type: 'express',
+		  country: 'US',
+		  email: req.body.email
+		});
+		
+	}catch(e){
+		console.log(e);
+		return res.status(400).send({status: false, message: e.message})
+	}
 
-    // insert into users stripeID values account.id
+    // insert into users stripeId values account.id
 
     res.status(200).json({status: true, message:account.id});
 })
@@ -37,12 +44,19 @@ router.get('/account-link', async (req, res) => {
         return res.status(400).send({status:false, message:"Empty request"})
     }
 
-    const accountLink = await stripe.accountLinks.create({
-	  account: req.query.stripeId,
-	  refresh_url: process.env.REFRESH_URL_BASE_PATH + "/" + req.query.stripeId,
-	  return_url: process.env.RETURN_URL_BASE_PATH + "/" + req.query.stripeId,
-	  type: 'account_onboarding',
-	});
+    try{
+	
+	    const accountLink = await stripe.accountLinks.create({
+		  account: req.query.stripeId,
+		  refresh_url: process.env.REFRESH_URL_BASE_PATH + "/" + req.query.stripeId,
+		  return_url: process.env.RETURN_URL_BASE_PATH + "/" + req.query.stripeId,
+		  type: 'account_onboarding',
+		});
+
+	}catch(e){
+		console.log(e);
+		return res.status(400).send({status: false, message: e.message})
+	}
     
     // the expiracy is 5 minutes
     return res.status(200).json({status:true, message:accountLink.url})
@@ -56,7 +70,14 @@ router.get('/login-link', async (req, res) => {
         return res.status(400).send({status:false, message:"Empty request"})
     }
 
-    const loginLink = await stripe.accounts.createLoginLink.create(req.query.stripeId);
+    try{
+    
+    	const loginLink = await stripe.accounts.createLoginLink.create(req.query.stripeId);
+    
+    }catch(e){
+		console.log(e);
+		return res.status(400).send({status: false, message: e.message})
+	}
     
     return res.status(200).json({status:true, message:loginLink.url})
 
@@ -74,12 +95,19 @@ router.post('/transfer', async (req, res) => {
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
 
-    // Create the transfer
-    const account = await stripe.transfers.create({
-	  amount:req.body.amount * 100,
-	  currency: 'usd',
-	  destination: req.body.stripeId
-	});
+    try{
+	
+	    // Create the transfer
+	    const account = await stripe.transfers.create({
+		  amount:req.body.amount * 100,
+		  currency: 'usd',
+		  destination: req.body.stripeId
+		});
+	
+	}catch(e){
+		console.log(e);
+		return res.status(400).send({status: false, message: e.message})
+	}
 
     res.status(200).json({status: true, message:""});
 })
