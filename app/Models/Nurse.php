@@ -175,9 +175,18 @@ class Nurse extends Model implements HasMedia
         'worker_total_contract_amount',
         'worker_as_soon_as_posible',
         'eligible_work_in_us',
-        'worked_at_facility_before'
-
-
+        'worked_at_facility_before',
+        'account_tier',
+        'terms',
+        'type',
+        'profession',
+        'full_name_payment' ,
+        'address_payment',
+        'email_payment',
+        'new_bank_name_payment',
+        'routing_number_payment',
+        'bank_account_payment_number',
+        'phone_number_payment'
     ];
     protected static $logName = 'Nurse';
     protected static $logFillable = true;

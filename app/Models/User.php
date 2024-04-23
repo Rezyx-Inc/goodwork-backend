@@ -204,7 +204,8 @@ class User extends Authenticatable implements HasMedia
         'fcm_token',
         'facility_id',
         'otp',
-        'otp_expiry'
+        'otp_expiry',
+        'zip_code',
     ];
 
     /**

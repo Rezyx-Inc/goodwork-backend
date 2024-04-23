@@ -28,6 +28,7 @@
                 </div>
                 <div>
                     <button id="submitBtn" >
+                        
                         <span id="loading" class="d-none" >
                             <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 Loading...
