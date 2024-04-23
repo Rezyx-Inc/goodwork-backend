@@ -1,7 +1,10 @@
 const pm2 = require('pm2');
 var path = require("path");
+var cron = require('node-cron');
+require("dotenv").config();
 
-const script = path.join(path.dirname(__filename), "server.js")
+const server = path.join(path.dirname(__filename), "server.js")
+const crons = path.join(path.dirname(__filename), "/src/crons/index.js")
 
 const { argv } = require('node:process');
 
@@ -18,11 +21,11 @@ pm2.connect(function(err) {
     if(argv[3]){
       argv[3] == "true" ? watch = true : watch = false
     }
-    
-    console.log("Starting the file management service.", watch)
+
+    console.log("Starting the file management service.")
 
     pm2.start({
-      script    : script,
+      script    : server,
       name      : 'files',
       watch     : watch
     }, function(err, apps) {
@@ -31,11 +34,26 @@ pm2.connect(function(err) {
         return pm2.disconnect()
       }
       return pm2.disconnect()
-    })
+    });
+
+    if(process.env.ENABLE_CRONS){
+      console.log("Starting the Cron service.")
+      pm2.start({
+        script    : crons,
+        name      : 'crons',
+        watch     : watch
+      }, function(err, apps) {
+        if (err) {
+          console.error(err)
+          return pm2.disconnect()
+        }
+        return pm2.disconnect()
+      });
+    }
   
   }else if(argv[2] === "stop"){
 
-    console.log("Stopping the file management service")
+    console.log("Stopping the file management and integration services")
 
     // List the processes managed by PM2 then delete
     pm2.list((err, list) => {
@@ -45,10 +63,12 @@ pm2.connect(function(err) {
       }    
       if(!err){
 
-        pm2.delete('files', (err, proc) => {
-          // Disconnects from PM2
-          pm2.disconnect()
-        })
+        for(proc of list){
+          pm2.delete(proc.name, (err, proc) => {
+            // Disconnects from PM2
+            pm2.disconnect()
+          });  
+        }
 
       }else{
         console.log("Unable to list processes", err)
@@ -67,5 +87,7 @@ pm2.connect(function(err) {
   some notes
   This script here is supposed to manage storage types, either disk (using path in docs.files model) or mongodb, or any other type of storage.
   Each storage is yet to be defined, for now it is only mongodb, although a disk storage is already set by default by creating a directory for it since it will most likely be used very soon.
+
+  This script also acts as an entry point for integrations cron jobs
 
 */

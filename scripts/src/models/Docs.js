@@ -18,4 +18,5 @@ const DocsSchema = mongoose.Schema({
     ]
 });
 
-module.exports = mongoose.model('Docs', DocsSchema);
+const filesDB = mongoose.connection.useDb(process.env.MONGODB_FILES_DATABASE_NAME);
+module.exports = filesDB.model('Docs', DocsSchema);

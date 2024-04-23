@@ -12,9 +12,11 @@ app.use(cors({
 }));
 
 const docsRoute = require('./src/routes/docs');
+const integrationsRoute = require('./src/routes/integrations');
 
 app.use(bodyParser.json({ limit: '130mb' }));
 app.use(process.env.FILE_API_BASE_PATH, docsRoute);
+app.use(process.env.INTEGRATIONS_API_BASE_PATH, integrationsRoute);
 
 // Root Route
 app.get('/', (req, res) => {
@@ -37,4 +39,5 @@ some notes:
  - max 25 files per user
  - file size max 5mb
  - max upload at once 130mb
+ - integrations server is useful only in dev
 */
