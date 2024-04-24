@@ -159,7 +159,7 @@ router.post('/customer/create', async (req, res) => {
 });
 
 // Create an invoice
-router.post('/customer/create', async (req, res) => {
+router.post('/customer/invoice', async (req, res) => {
 
 	if(!Object.keys(req.body).length) {
         return res.status(400).send({status:false, message:"Empty request"})
@@ -174,22 +174,24 @@ router.post('/customer/create', async (req, res) => {
     	// Create invoice
 		const invoice = await stripe.invoices.create({
 			customer: req.body.stripeId,
-			auto_advance: false,
-			currency: "usd"
+			auto_advance: true,
+			currency: "usd",
+			collection_method:"charge_automatically"
 		});
 
 		//create invoice item
 		const invoiceItem = await stripe.invoiceItems.create({
 			customer: req.body.stripeId,
 			amount: Number(req.body.amount) * 100,
-			invoice: invoice.id
+			invoice: invoice.id,
+			description: "Goodwork Fees"
 		});
 
 		// Finalize
 		await stripe.invoices.finalizeInvoice(invoice.id);
 
 		// insert into users stripeId values customer.id
-		res.status(200).json({status: true, message:portal});
+		res.status(200).json({status: true, message:"OK"});
 
 	}catch(e){
 		console.log(e);
