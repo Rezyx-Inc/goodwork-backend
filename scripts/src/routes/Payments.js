@@ -19,12 +19,12 @@ router.post('/create', async (req, res) => {
 
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
-
+	let account;
     try{
 	
 	    // Create the stripe connected account
-	    const account = await stripe.accounts.create({
-		  type: 'standard',
+	     account = await stripe.accounts.create({
+		  type: 'express',
 		  country: 'US',
 		  email: req.body.email
 		});
@@ -47,14 +47,13 @@ router.get('/account-link', async (req, res) => {
     if(!Object.keys(req.query).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
-
+	let accountLink;
     try{
-	
-	    const accountLink = await stripe.accountLinks.create({
-			account: req.query.stripeId,
-			refresh_url: process.env.REFRESH_URL_BASE_PATH + "/" + req.query.stripeId,
-			return_url: process.env.RETURN_URL_BASE_PATH + "/" + req.query.stripeId,
-			type: 'account_onboarding'
+	     accountLink = await stripe.accountLinks.create({
+		  account: req.query.stripeId,
+		  refresh_url: process.env.REFRESH_URL_BASE_PATH + "/" + req.query.stripeId,
+		  return_url: process.env.RETURN_URL_BASE_PATH + "/" + req.query.stripeId,
+		  type: 'account_onboarding',
 		});
 
 		// the expiracy is 5 minutes
@@ -76,18 +75,18 @@ router.get('/login-link', async (req, res) => {
         return res.status(400).send({status:false, message:"Empty request"})
     }
 
+	let loginLink;
+
     try{
     
-    	const loginLink = await stripe.accounts.createLoginLink(req.query.stripeId);
-    	
-    	return res.status(200).json({status:true, message:loginLink.url})
+    	 loginLink = await stripe.accounts.createLoginLink(req.query.stripeId);
     
     }catch(e){
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}
     
-    
+    return res.status(200).json({status:true, message:loginLink.url})
 
 });
 
@@ -118,7 +117,7 @@ router.post('/transfer', async (req, res) => {
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}
-
+  
     
 })
 
@@ -211,6 +210,29 @@ router.post('/customer/invoice', async (req, res) => {
 		return res.status(400).send({status: false, message: e.message})
 	}
 
+});
+
+// get - check onboarding status | consumes stripeId
+router.get('/onboarding-status', async (req, res) => {
+    if(!Object.keys(req.query).length) {
+        return res.status(400).send({status:false, message:"Empty request"})
+    }
+
+    let account;
+    try {
+        account = await stripe.accounts.retrieve(req.query.stripeId);
+    } catch(e) {
+        console.log(e);
+        return res.status(400).send({status: false, message: e.message})
+    }
+
+    if (account.details_submitted) {
+        // The user has completed the onboarding process
+        return res.status(200).json({status: true, message: "Onboarding completed"});
+    } else {
+        // The user has not completed the onboarding process
+        return res.status(400).json({status: false, message: "Onboarding not completed"});
+    }
 });
 
 module.exports = router;

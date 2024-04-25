@@ -19,7 +19,7 @@ class CreateNurseTable extends Migration
             $table->foreign('user_id')
                 ->references('id')->on('users');          
             $table->string('nursing_license_state')->nullable();
-            $table->string('specialty')->nullable();
+            $table->string('specialty',100)->nullable();
             $table->string('nursing_license_number',190)->unique()->nullable();
             $table->string('highest_nursing_degree')->nullable();            
             $table->boolean('serving_preceptor')->default(false)->nullable();
@@ -44,10 +44,6 @@ class CreateNurseTable extends Migration
             $table->unsignedBigInteger('ehr_proficiency_epic')->nullable();
             $table->string('ehr_proficiency_other',100)->nullable();
         
-
-           
-
-            
             $table->text('summary')->nullable();
             
             $table->string('nurses_video')->nullable();
@@ -68,7 +64,7 @@ class CreateNurseTable extends Migration
             $table->boolean('is_research_publications')->default(false);
 
 
-            $table->string('mu_specialty')->nullable();
+            $table->string('mu_specialty',50)->nullable();
             
 
             
@@ -104,15 +100,15 @@ class CreateNurseTable extends Migration
             $table->boolean('float_requirement')->default(false);
             $table->string('facility_shift_cancelation_policy')->nullable();
             $table->string('contract_termination_policy')->nullable();
-            $table->string('distance_from_your_home')->nullable();
+            $table->string('distance_from_your_home',40)->nullable();
             $table->string('clinical_setting_you_prefer')->nullable();
             $table->string('worker_patient_ratio')->nullable();
             $table->string('worker_emr')->nullable();
             $table->string('worker_unit')->nullable();
             $table->string('worker_scrub_color')->nullable();
             $table->string('worker_interview_dates')->nullable();
-            $table->string('worker_start_date')->nullable();
-            $table->string('worker_as_soon_as_posible')->nullable();
+            $table->string('worker_start_date',40)->nullable();
+            $table->string('worker_as_soon_as_posible',40)->nullable();
             $table->string('worker_shift_time_of_day')->nullable();
             $table->string('worker_hours_per_week')->nullable();
             $table->string('worker_guaranteed_hours')->nullable();
@@ -137,14 +133,23 @@ class CreateNurseTable extends Migration
             $table->string('worker_employer_weekly_amount')->nullable();
             $table->string('worker_weekly_non_taxable_amount')->nullable();
             // add new fields
-            $table->string('rto', 255)->nullable();
-            $table->string('proffesion', 255)->nullable();
+            $table->string('rto', 50)->nullable();
+            $table->string('profession', 50)->nullable();
             // add tier field (from 0 to 3 (min 3 documents for T3))
             $table->unsignedTinyInteger('account_tier')->default(0);
             // add missing fields for the profile nurses (workers)
             $table->string('terms')->deault('');
             $table->string('type')->deault('');
             $table->decimal('worker_hours_per_shift', 8, 2);
+            // payment information
+            $table->string('full_name_payment',100)->nullable();
+            $table->string('address_payment',100)->nullable();
+            $table->string('email_payment',100)->nullable();
+            $table->string('bank_name_payment',100)->nullable();
+            $table->string('routing_number_payment',40)->nullable();
+            $table->string('bank_account_payment_number',40)->nullable();
+            $table->string('phone_number_payment',40)->nullable();
+
         });
     }
 

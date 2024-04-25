@@ -69,8 +69,27 @@ Route::prefix('worker')->group(function() {
         // new post route for profile updating
         Route::post('update-worker-profile', ['uses' => 'WorkerDashboardController@update_worker_profile', 'as' => 'update-worker-profile']);
 
-        
+        // new post route for account setting updating
+        Route::post('update-worker-account-setting',['uses' => 'WorkerDashboardController@update_worker_account_setting', 'as' => 'update-worker-account-setting']);
 
+        // new post route for worker payment 
+        Route::post('add-worker-payment',['uses' => 'WorkerDashboardController@add_worker_payment', 'as' => 'add_worker_payment']);
+
+        // sending support tickets 
+        Route::post('send-support-ticket',['uses' => 'WorkerDashboardController@send_support_ticket', 'as' => 'send_support_ticket']);
+
+        // disactivate account
+        Route::post('disactivate-account',['uses' => 'WorkerDashboardController@disactivate_account', 'as' => 'disactivate_account']);
+
+        // add stripe account
+        Route::post('add-stripe-account',['uses'=>'WorkerDashboardController@add_stripe_account','as'=>'add_stripe_account']);
+
+        // check onboarding status 
+        Route::post('check-onboarding-status',['uses'=>'WorkerDashboardController@check_onboarding_status','as'=>'check_onboarding_status']);
+
+        // redirecting to login 
+
+        Route::post('login-to-stripe-account',['uses'=>'WorkerDashboardController@login_to_stripe_account','as'=>'login_to_stripe_account']);
     }
 
     );
