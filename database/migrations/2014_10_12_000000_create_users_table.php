@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('banned_until')->nullable();
             $table->datetime('last_login_at')->nullable();
             $table->string('last_login_ip',100)->nullable();
-            $table->string('otp')->nullable();
+            $table->string('otp',30)->nullable();
             $table->timestamp('otp_expiry')->nullable();
             $table->string('about_me');
             $table->string('qualities');
@@ -45,9 +45,9 @@ class CreateUsersTable extends Migration
             // adding 2fa field control
             $table->boolean('2fa')->nullable();
             // adding stripe payment information
-            $table->unsignedInteger('stripeAccountId')->nullable();
+            $table->string('stripeAccountId')->nullable();
             $table->string('stripeLoginLink')->nullable();
-            $table->string('stripeAccountType')->nullable();
+            $table->string('stripeAccountType',30)->nullable();
 
         });
     }

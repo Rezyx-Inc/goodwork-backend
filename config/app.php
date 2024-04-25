@@ -13,6 +13,9 @@ return [
     |
     */
 
+    
+    'file_api_port' => env('FILE_API_PORT', 4545),
+
     'name' => env('APP_NAME', 'Nursify'),
 
     /*
