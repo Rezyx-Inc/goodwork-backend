@@ -26,6 +26,8 @@ use Carbon\Carbon;
 use File;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\support;
+use Illuminate\Support\Facades\Http;
+
 
 /* *********** Requests *********** */
 use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, BillingRequest};
@@ -664,4 +666,114 @@ class WorkerDashboardController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
+
+    
+    // adding add stripe function 
+
+    
+public function add_stripe_account(Request $request)
+{
+    try {
+        $user = Auth::guard('frontend')->user();
+        $user_email  = $user->email;
+        $user_id = $user->id;
+
+        // Define the data for the request
+        $data = [
+            'userId' => $user_id,
+            'email' => $user_email
+        ];
+    
+        // Define the URL<
+        $url = 'http://localhost:' . config('app.file_api_port') . '/payments/create';
+
+        // return response()->json(['data'=>$data , 'url' => $url]);   
+
+        // Make the request
+        $response = Http::post($url, $data);
+
+    $stripeId = $response->json()['message'];
+
+    
+    $user_data['stripeAccountId'] = $stripeId;
+    // if(!isset($user_data)){
+    //     return response()->json(['stripeidnot'=>$stripeId]);
+    // }
+
+    $user->update($user_data);
+        
+
+    // Check the response
+    if ($response->successful()) {
+        $get_account_url = 'http://localhost:' . config('app.file_api_port') . '/payments/account-link';
+        $data_account_url = [
+            'stripeId' => $response->json()['message'],
+        ];
+        $get_account_link_response = Http::get($get_account_url, $data_account_url);
+
+        return response()->json(['status'=>true,'account_link'=>$get_account_link_response->json()['message'] ]);
+
+    } else {
+        return response()->json(['status' => false, 'message' => 'Error']);
+    }
+
+        } catch (\Exception $e) {
+            // Log the exception or return a response
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+}
+
+public function check_onboarding_status(Request $request)
+{
+    $user = Auth::guard('frontend')->user();
+
+    $stripeId = $user->stripeAccountId;
+
+    if (!$stripeId) {
+        return response()->json(['status' => false, 'message' => 'Missing stripeId']);
+    }
+
+    $get_onboarding_status_url = 'http://localhost:' . config('app.file_api_port') . '/payments/onboarding-status';
+    $data = ['stripeId' => $stripeId];
+    $get_onboarding_status_response = Http::get($get_onboarding_status_url, $data);
+
+    if ($get_onboarding_status_response->successful()) {
+        return response()->json(['status' => true, 'message' => $get_onboarding_status_response->json()['message']]);
+    } else {
+        return response()->json(['status' => false, 'message' => 'Error checking onboarding status']);
+    }
+}
+
+public function login_to_stripe_account(Request $request){
+
+    $user = Auth::guard('frontend')->user();
+
+    $stripeId = $user->stripeAccountId;
+    
+    if (!$stripeId) {
+        return response()->json(['status' => false, 'message' => 'Missing stripeId']);
+    }
+    $data = ['stripeId' => $stripeId];
+        // Get login link
+        $get_login_url = 'http://localhost:' . config('app.file_api_port') . '/payments/login-link';
+        $get_login_link_response = Http::get($get_login_url,  $data);
+        //return response()->json(['login_link',$get_login_link_response->json()['message'] ]);
+
+        if ($get_login_link_response->successful()) {
+            return response()->json([
+                'status' => true, 
+                'message' => 'You have successfully created a Stripe account.', 
+              
+                'login_link' => $get_login_link_response->json()['message']
+            ]);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Error getting login link']);
+        }
+    
+
+
+}
+
+
+
 }

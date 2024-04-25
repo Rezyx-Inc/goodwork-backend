@@ -81,6 +81,15 @@ Route::prefix('worker')->group(function() {
         // disactivate account
         Route::post('disactivate-account',['uses' => 'WorkerDashboardController@disactivate_account', 'as' => 'disactivate_account']);
 
+        // add stripe account
+        Route::post('add-stripe-account',['uses'=>'WorkerDashboardController@add_stripe_account','as'=>'add_stripe_account']);
+
+        // check onboarding status 
+        Route::post('check-onboarding-status',['uses'=>'WorkerDashboardController@check_onboarding_status','as'=>'check_onboarding_status']);
+
+        // redirecting to login 
+
+        Route::post('login-to-stripe-account',['uses'=>'WorkerDashboardController@login_to_stripe_account','as'=>'login_to_stripe_account']);
     }
 
     );

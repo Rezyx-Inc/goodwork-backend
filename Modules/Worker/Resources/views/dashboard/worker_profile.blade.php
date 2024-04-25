@@ -16,29 +16,36 @@
                                 <img src="{{ URL::asset('frontend/img/account-img.png') }}"
                                     onerror="this.onerror=null;this.src='{{ USER_IMG }}';" id="preview"
                                     width="112px" height="112px" style="object-fit: cover;" />
-                                <h4>{{$user->first_name}} {{$user->last_name}}</h4>
-                                <p>{{$worker->id}}</p>
+                                <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                                <p>{{ $worker->id }}</p>
                             </div>
                             <div class="ss-profil-complet-div">
-                               <div class="row d-flex justify-content-center align-items-center ">
+                                <div class="row d-flex justify-content-center align-items-center ">
                                     {{-- <li><img src="{{ URL::asset('frontend/img/progress.png') }}" /></li> --}}
                                     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
-                                        <svg  viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
-                                          <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2" stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0"></circle>
-                                          <circle r="90" cx="100" cy="100" stroke="#ad66a3" stroke-width="16px" stroke-linecap="round" stroke-dashoffset="118.692px" fill="transparent" stroke-dasharray="565.48px"></circle>
-                                          <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -196px)">{{$progress_percentage}}%</text>
+                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                            style="transform:rotate(-90deg)">
+                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2"
+                                                stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0">
+                                            </circle>
+                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3"
+                                                stroke-width="16px" stroke-linecap="round" stroke-dashoffset="118.692px"
+                                                fill="transparent" stroke-dasharray="565.48px"></circle>
+                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold"
+                                                style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
                                         </svg>
                                     </div>
                                     {{-- if the profile is not complete --}}
-                                   <div id="profile_incomplete" class="row col-lg-9 col-md-6 col-sm-12 col-xs-12 p-0">
-                                            <div class="col-12">
-                                                <h6>Profile Incomplete</h6>
-                                            </div>
-                
-                                            <div class="col-12">
-                                                    <p>You're just a few percent away from revenue. Complete your profile and get 5%.
-                                                    </p>
-                                            </div>  
+                                    <div id="profile_incomplete" class="row col-lg-9 col-md-6 col-sm-12 col-xs-12 p-0">
+                                        <div class="col-12">
+                                            <h6>Profile Incomplete</h6>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <p>You're just a few percent away from revenue. Complete your profile and get
+                                                5%.
+                                            </p>
+                                        </div>
                                     </div>
                                     {{-- if the profile is complete --}}
                                     <div id="profile_complete" class="row col-lg-9 col-md-6 col-sm-12 col-xs-12 p-0 d-none">
@@ -46,18 +53,19 @@
                                             <h6>Profile complete</h6>
                                         </div>
                                         <div class="col-12">
-                                                <p>Congratulations! Your profile is complete. You can now start earning.</p>
-                                                </p>
-                                        </div>  
+                                            <p>Congratulations! Your profile is complete. You can now start earning.</p>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="ss-my-presnl-btn-mn">
 
-                                <div class="ss-my-prsnl-wrapper" >
+                                <div class="ss-my-prsnl-wrapper">
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-1" checked onclick="ProfileIinformationDisplay()"/>
+                                        <input type="radio" name="select" id="option-1" checked
+                                            onclick="ProfileIinformationDisplay()" />
                                         <label for="option-1" class="option option-1">
                                             <div class="dot"></div>
                                             <ul>
@@ -72,8 +80,9 @@
                                         </label>
                                     </div>
 
-                                    <div class="ss-my-prosnl-rdio-btn" >
-                                        <input type="radio" name="select" id="option-2" onclick="AccountSettingDisplay()">
+                                    <div class="ss-my-prosnl-rdio-btn">
+                                        <input type="radio" name="select" id="option-2"
+                                            onclick="AccountSettingDisplay()">
                                         <label for="option-2" class="option option-2">
                                             <div class="dot"></div>
                                             <ul>
@@ -90,7 +99,8 @@
                                     </div>
 
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-3" onclick="BonusTransfersDisplay()">
+                                        <input type="radio" name="select" id="option-3"
+                                            onclick="BonusTransfersDisplay()">
                                         <label for="option-3" class="option option-3">
                                             <div class="dot"></div>
                                             <ul>
@@ -124,11 +134,13 @@
 
 
                                     <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-5" onclick="DisactivateAccountDisplay()">
+                                        <input type="radio" name="select" id="option-5"
+                                            onclick="DisactivateAccountDisplay()">
                                         <label for="option-5" class="option option-5">
                                             <div class="dot"></div>
                                             <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" /></li>
+                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" />
+                                                </li>
                                                 <li>
                                                     <p>Disable account</p>
                                                 </li>
@@ -143,11 +155,11 @@
                         </div>
                     </div>
 
-                    {{------------------------------------------------------------ Profile settings Form ------------------------------------------------------------}}
+                    {{-- ---------------------------------------------------------- Profile settings Form ---------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll profile_setting">
-                        <div class="ss-pers-info-form-mn-dv" >
+                        <div class="ss-pers-info-form-mn-dv">
 
-                            <div class="ss-persnl-frm-hed" >
+                            <div class="ss-persnl-frm-hed">
                                 {{-- Basic Information Or Professional Information Or Document management --}}
                                 <p id="information_type"><span><img
                                             src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Basic
@@ -205,8 +217,8 @@
                                                 </select>
                                             </div>
                                             <span class="help-block-state"></span>
-                                             {{-- City Information --}}
-                                             <div class="ss-form-group col-11">
+                                            {{-- City Information --}}
+                                            <div class="ss-form-group col-11">
                                                 <label>City</label>
                                                 <select name="city" id="job_city">
                                                     <option value="">What City are you located in?</option>
@@ -223,7 +235,8 @@
                                             <span class="help-block-zip_code"></span>
                                             {{-- Skip && Save --}}
                                             <div class="ss-prsn-form-btn-sec col-11">
-                                                <button type="text" class="ss-prsnl-save-btn" id="SaveBaiscInformation"> Save
+                                                <button type="text" class="ss-prsnl-save-btn"
+                                                    id="SaveBaiscInformation"> Save
                                                 </button>
                                                 <button type="text" class="ss-prsnl-save-btn firstNext"> Next
                                                 </button>
@@ -455,17 +468,20 @@
                                             {{-- End Shifts/Week --}}
                                             {{-- Skip && Save --}}
                                             <div class="ss-prsn-form-btn-sec row col-11" style="gap:0px;">
-                                                <div class="col-4" >
-                                                <button type="text" class="ss-prsnl-skip-btn prev-1 btns_prof_info"> Previous
-                                                </button>
+                                                <div class="col-4">
+                                                    <button type="text"
+                                                        class="ss-prsnl-skip-btn prev-1 btns_prof_info"> Previous
+                                                    </button>
                                                 </div>
                                                 <div class="col-4">
-                                                <button type="text" class="ss-prsnl-save-btn next-1 btns_prof_info"> Next
-                                                </button>
+                                                    <button type="text"
+                                                        class="ss-prsnl-save-btn next-1 btns_prof_info"> Next
+                                                    </button>
                                                 </div>
                                                 <div class="col-4">
-                                                <button type="text" class="ss-prsnl-save-btn btns_prof_info" id="SaveProfessionalInformation"> Save
-                                                </button>
+                                                    <button type="text" class="ss-prsnl-save-btn btns_prof_info"
+                                                        id="SaveProfessionalInformation"> Save
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -511,14 +527,13 @@
                             </div>
                         </div>
                     </div>
-                     {{------------------------------------------------------------ End Profile settings Form ------------------------------------------------------------}}
-                    {{------------------------------------------------------------ Account settings Form ------------------------------------------------------------}}
+                    {{-- ---------------------------------------------------------- End Profile settings Form ---------------------------------------------------------- --}}
+                    {{-- ---------------------------------------------------------- Account settings Form ---------------------------------------------------------- --}}
 
                     <div class="col-lg-7 bodyAll account_setting d-none">
-                        <div class="ss-pers-info-form-mn-dv" >
-                            <div class="ss-persnl-frm-hed" >
-                                <p><span><img
-                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
+                        <div class="ss-pers-info-form-mn-dv">
+                            <div class="ss-persnl-frm-hed">
+                                <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
                                     Setting</p>
                             </div>
                             <div class="form-outer">
@@ -530,139 +545,165 @@
                                             {{-- Change User Name --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New User Name</label>
-                                                <input type="text" name="user_name" placeholder="Please enter your new user name">
+                                                <input type="text" name="user_name"
+                                                    placeholder="Please enter your new user name">
                                             </div>
                                             <span class="help-block-user_name"></span>
                                             {{-- Change Password --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Password</label>
-                                                <input type="text" name="password" placeholder="Please enter your new password">
+                                                <input type="text" name="password"
+                                                    placeholder="Please enter your new password">
                                             </div>
                                             {{-- Change 2FA --}}
                                             <div class="ss-form-group row col-11">
                                                 <label>Two-factor authentication (2FA)</label>
                                                 <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
-                                                <label>Enable</label>
-                                                <input style="box-shadow:none; width: auto;"
-                                                     type="radio"
-                                                    id="option1" name="twoFa" value="1"
-                                                >
+                                                    <label>Enable</label>
+                                                    <input style="box-shadow:none; width: auto;" type="radio"
+                                                        id="option1" name="twoFa" value="1">
                                                 </div>
                                                 <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
-                                                <label>Disable</label>
-                                                <input style="box-shadow:none; width: auto;"
-                                                     type="radio"
-                                                    id="option2" name="twoFa" value="0"
-                                                >
+                                                    <label>Disable</label>
+                                                    <input style="box-shadow:none; width: auto;" type="radio"
+                                                        id="option2" name="twoFa" value="0">
                                                 </div>
                                             </div>
                                             {{-- Change Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Phone Number</label>
-                                                <input id="new_contact_number" type="text" name="new_mobile" placeholder="Please enter your new phone number">
+                                                <input id="new_contact_number" type="text" name="new_mobile"
+                                                    placeholder="Please enter your new phone number">
                                             </div>
                                             <span class="help-block-new_mobile"></span>
                                             {{-- Email Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Email</label>
-                                                <input type="text" name="email" placeholder="Please enter your new Email">
+                                                <input type="text" name="email"
+                                                    placeholder="Please enter your new Email">
                                             </div>
                                             <span class="help-block-email"></span>
                                             <span class="help-block-validation"></span>
                                             {{-- Skip && Save --}}
-                                            <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveAccountInformation"> Save
+                                            <div
+                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
+                                                    id="SaveAccountInformation"> Save
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                           
-                        </div>    
+
+                        </div>
                     </div>
-                    {{------------------------------------------------------------ End Account settings  ------------------------------------------------------------}}
-                    {{------------------------------------------------------------  Bonus Area ----------------------------------------------------------------------}}
+                    {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
+                    {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll bonus_transfers d-none">
-                        <div class="ss-pers-info-form-mn-dv" >
-                            <div class="ss-persnl-frm-hed" >
-                                <p><span><img
-                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Bonus
+                        <div class="ss-pers-info-form-mn-dv">
+                            <div class="ss-persnl-frm-hed">
+                                <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Bonus
                                     Transfers</p>
                             </div>
                             <div class="form-outer">
                                 {{-- <form method="post" action="{{ route('update-worker-profile') }}"> --}}
                                 {{-- <form method="post" action="{{ route('update-bonus-transfer') }}">  --}}
-                                <form method="post">  
+                                <form method="post">
                                     @csrf
                                     <!-- slide Bonus Transfer -->
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
-                                            {{-- Full name payment--}}
+                                            {{-- Full name payment --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Full Name</label>
-                                                <input type="text" name="full_name_payment" placeholder="Please enter your full name">
+                                                <input type="text" name="full_name_payment"
+                                                    placeholder="Please enter your full name">
                                             </div>
                                             <span class="help-block-full_name_payment"></span>
                                             {{-- Address payment --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Address</label>
-                                                <input type="text" name="address_payment" placeholder="Please enter your address">
+                                                <input type="text" name="address_payment"
+                                                    placeholder="Please enter your address">
                                             </div>
                                             <span class="help-block-address_payment"></span>
                                             {{-- Email --}}
                                             <div class="ss-form-group row col-11">
                                                 <label>Email</label>
-                                                <input type="text" name="email_payment" placeholder="Please enter your new Email">
+                                                <input type="text" name="email_payment"
+                                                    placeholder="Please enter your new Email">
                                             </div>
                                             <span class="help-block-email_payment"></span>
                                             {{-- Bank Name --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Bank Name</label>
-                                                <input id="bank_name_payment" type="text" name="bank_name_payment" placeholder="Please enter your bank name">
+                                                <input id="bank_name_payment" type="text" name="bank_name_payment"
+                                                    placeholder="Please enter your bank name">
                                             </div>
                                             <span class="help-block-bank_name_payment"></span>
                                             {{-- Rooting Number Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Routing number payment</label>
-                                                <input id="routing_number_payment" type="text" name="routing_number_payment" placeholder="Please enter your routing number payment">
+                                                <input id="routing_number_payment" type="text"
+                                                    name="routing_number_payment"
+                                                    placeholder="Please enter your routing number payment">
                                             </div>
                                             <span class="help-block-routing_number_payment"></span>
                                             {{-- Bank Account Payment Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Bank Account Payment Number</label>
-                                                <input id="bank_account_payment_number" type="text" name="bank_account_payment_number" placeholder="Please enter your bank account payment number">
+                                                <input id="bank_account_payment_number" type="text"
+                                                    name="bank_account_payment_number"
+                                                    placeholder="Please enter your bank account payment number">
                                             </div>
                                             <span class="help-block-bank_account_payment_number"></span>
                                             {{-- Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Phone Number</label>
-                                                <input id="phone_number_payment" type="text" name="phone_number_payment" placeholder="Please enter your phone number">
+                                                <input id="phone_number_payment" type="text"
+                                                    name="phone_number_payment"
+                                                    placeholder="Please enter your phone number">
                                             </div>
                                             <span class="help-block-phone_number_payment"></span>
                                             {{-- Skip && Save --}}
-                                            <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveBonusInformation"> Save
+                                            <div
+                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
+                                                    id="SaveBonusInformation"> Save
+                                                </button>
+                                                <span class="col-12"
+                                                    style="display: block;
+                                               color: #000;
+                                               font-size: 16px;
+                                               font-weight: 500;
+                                               margin-top: 0px">Or</span>
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                    id="AddStripeAccount"> Add Stripe Account
+                                                </button>
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                    id="AccessToStripeAccount"> Access to your Stripe account
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                           
-                        </div>    
+
+                        </div>
                     </div>
-                    {{------------------------------------------------------------  End Bonus Area ----------------------------------------------------------------------}}
-                       {{------------------------------------------------------------  Support Area ----------------------------------------------------------------------}}
-                       <div class="col-lg-7 bodyAll support_info d-none">
-                        <div class="ss-pers-info-form-mn-dv" >
-                            <div class="ss-persnl-frm-hed" >
-                                <h1 style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
-                                Help &Support
+                    {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
+                    {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
+                    <div class="col-lg-7 bodyAll support_info d-none">
+                        <div class="ss-pers-info-form-mn-dv">
+                            <div class="ss-persnl-frm-hed">
+                                <h1
+                                    style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
+                                    Help &Support
                                 </h1>
                             </div>
                             <div class="form-outer">
-                                <form method="post">  
+                                <form method="post">
                                     @csrf
                                     <!-- slide Support -->
                                     <div class="page slide-page">
@@ -676,7 +717,7 @@
                                                     <option value="payment">Payment</option>
                                                     <option value="other">Other</option>
                                                 </select>
-                                               
+
                                             </div>
                                             <span class="help-block-support_subject"></span>
                                             {{-- Support issue --}}
@@ -684,14 +725,17 @@
                                                 <label>Issue</label>
                                                 <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
                                             </div>
-                                            <span class="help-block-support_subject_issue"></span>                                                                 
+                                            <span class="help-block-support_subject_issue"></span>
                                             {{-- Skip && Save --}}
-                                            <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveSupportTicket">
+                                            <div
+                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
+                                                    id="SaveSupportTicket">
                                                     {{-- spinner --}}
-                                                    <span id="loading" class="d-none" >
-                                                        <span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                            Loading...
+                                                    <span id="loading" class="d-none">
+                                                        <span id="loadSpan" class="spinner-border spinner-border-sm"
+                                                            role="status" aria-hidden="true"></span>
+                                                        Loading...
                                                     </span>
                                                     <span id="send_ticket">Send now</span>
                                                 </button>
@@ -700,55 +744,62 @@
                                     </div>
                                 </form>
                             </div>
-                           
-                        </div>    
-                    </div>
-                          {{--------------------------------------------------------- End Support Area ----------------------------------------------------------------------}}
 
-                          {{--------------------------------------------------------- Disable account area ----------------------------------------------------------------------}}
-                          <div class="col-lg-7 bodyAll disable_account d-none">
-                            <div class="ss-pers-info-form-mn-dv" >
-                                <div class="ss-persnl-frm-hed" >
-                                    <p><span><img
-                                                src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Disactivate your 
-                                        account</p>
-                                </div>
-                                <div class="form-outer">
-                                    <form method="post">  
-                                        @csrf
-                                        <!-- slide Support -->
-                                        <div class="page slide-page">
-                                            <div class="row justify-content-center">                                                                 
-                                                {{-- Disactivate your account --}}
-                                                <div class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                    
-                                                    <button type="text" class="col-12 ss-prsnl-save-btn" id="DisactivateAccount">
-                                                        {{-- spinner --}}
-                                                        <span id="loading_disableOption" class="d-none" >
-                                                            <span style="width=5%" id="loadSpan_disableOption" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                                Loading...
-                                                        </span>
-                                                        <span id="disactivate_account">Disable</span>
-                                                    </button>
-                                                </div>
+                        </div>
+                    </div>
+                    {{-- ------------------------------------------------------- End Support Area -------------------------------------------------------------------- --}}
+
+                    {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
+                    <div class="col-lg-7 bodyAll disable_account d-none">
+                        <div class="ss-pers-info-form-mn-dv">
+                            <div class="ss-persnl-frm-hed">
+                                <p><span><img
+                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Disactivate
+                                    your
+                                    account</p>
+                            </div>
+                            <div class="form-outer">
+                                <form method="post">
+                                    @csrf
+                                    <!-- slide Support -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- Disactivate your account --}}
+                                            <div
+                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+
+                                                <button type="text" class="col-12 ss-prsnl-save-btn"
+                                                    id="DisactivateAccount">
+                                                    {{-- spinner --}}
+                                                    <span id="loading_disableOption" class="d-none">
+                                                        <span style="width=5%" id="loadSpan_disableOption"
+                                                            class="spinner-border spinner-border-sm" role="status"
+                                                            aria-hidden="true"></span>
+                                                        Loading...
+                                                    </span>
+                                                    <span id="disactivate_account">Disable</span>
+                                                </button>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                               
-                            </div>    
+                                    </div>
+                                </form>
+                            </div>
+
                         </div>
-                           {{--------------------------------------------------------- Disable account area ----------------------------------------------------------------------}}
+                    </div>
+                    {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                 </div>
     </main>
 @stop
 
 @section('js')
     <script type="text/javascript">
-
-    // loding states cities docs on page load
+        // loding states cities docs on page load
 
         $(document).ready(function() {
+            const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
+            const AddStripeAccount = document.getElementById('AddStripeAccount');
+
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
             $('#phone_number_payment').mask('+1 (999) 999-9999');
@@ -762,14 +813,14 @@
             // $(this).val(formattedValue);
             // });
             // or we should use a nother plugin
-           
-            
+
+
             let account_tier = '{{ $progress_percentage }}';
-            if(account_tier > 67){
+            if (account_tier > 67) {
                 document.getElementById('profile_incomplete').classList.add('d-none');
                 document.getElementById('profile_complete').classList.remove('d-none');
             }
-    // -----------------------------  Profile Setting area  ---------------------------- //
+            // -----------------------------  Profile Setting area  ---------------------------- //
 
             // loading cities according to the selected state
             $('#job_state').change(function() {
@@ -844,7 +895,35 @@
                     console.log('Error:', resp);
                 }
             });
+
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/worker/check-onboarding-status',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    access: true
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        AccessToStripeAccount.classList.remove('d-none');
+
+                    } else {
+                        console.log(resp);
+                        AddStripeAccount.classList.remove('d-none');
+                    }
+                }
+            });
         });
+
+
+
         // end loding states cities docs on page load
 
 
@@ -857,7 +936,7 @@
         const nextBtnThird = document.querySelector(".next-2");
         const progress = document.getElementById("progress");
         // end slide control
-        
+
         // inputs
         // Basic Info
         const first_name = document.querySelector('input[name="first_name"]');
@@ -874,7 +953,8 @@
         const type = document.querySelector('select[name="type"]');
         const block_scheduling = document.querySelector('input[name="block_scheduling"]');
         const float_requirement = document.querySelector('select[name="float_requirement"]');
-        const facility_shift_cancelation_policy = document.querySelector('select[name="facility_shift_cancelation_policy"]');
+        const facility_shift_cancelation_policy = document.querySelector(
+            'select[name="facility_shift_cancelation_policy"]');
         const contract_termination_policy = document.querySelector('input[name="contract_termination_policy"]');
         const traveler_distance_from_facility = document.querySelector('input[name="distance_from_your_home"]');
         const clinical_setting = document.querySelector('input[name="clinical_setting_you_prefer"]');
@@ -902,13 +982,13 @@
         const support_subject_issue = document.querySelector('textarea[name="support_subject_issue"]');
         const support_subject = document.querySelector('select[name="support_subject"]');
         // end inputs
-        
+
         // change info type title
         const infoType = document.getElementById("information_type");
         // end change info type title
 
         var regexPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
-        
+
         // validation basic information -ELH-
         function validateBasicInfo() {
             let isValid = true;
@@ -922,8 +1002,8 @@
                 $('.help-block-last_name').addClass('text-danger');
                 isValid = false;
             }
-        
-            if ((!regexPhone.test(mobile)) &&(mobile.value === '')) {
+
+            if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
                 $('.help-block-mobile').text('Please enter a mobile number');
                 $('.help-block-mobile').addClass('text-danger');
                 isValid = false;
@@ -1071,8 +1151,10 @@
 
             // Full name validation
             const fullNameRegex_payment = /^[a-zA-Z\s]{1,255}$/;
-            if (($('input[name="full_name_payment"]').val() === '') && (!fullNameRegex_payment.test(full_name_payment.value)) ) {
-                $('.help-block-full_name_payment').text('Full name can only contain letters and spaces, and cannot be longer than 255 characters');
+            if (($('input[name="full_name_payment"]').val() === '') && (!fullNameRegex_payment.test(full_name_payment
+                    .value))) {
+                $('.help-block-full_name_payment').text(
+                    'Full name can only contain letters and spaces, and cannot be longer than 255 characters');
                 $('.help-block-full_name_payment').addClass('text-danger');
                 isValid = false;
             }
@@ -1109,7 +1191,8 @@
                 isValid = false;
             }
             const regexPhone_payment = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
-            if (($('input[name="phone_number_payment"]').val() === '') && (!regexPhone_payment.test(phone_number_payment.value))) {
+            if (($('input[name="phone_number_payment"]').val() === '') && (!regexPhone_payment.test(phone_number_payment
+                    .value))) {
                 $('.help-block-phone_number_payment').text('Please enter a valid phone number');
                 $('.help-block-phone_number_payment').addClass('text-danger');
                 isValid = false;
@@ -1123,23 +1206,23 @@
         // validation 
 
         function validateSupportForm() {
-                let isValid = true;
+            let isValid = true;
 
-                // Support subject validation
-                if ($('select[name="support_subject"]').val() === '') {
-                    $('.help-block-support_subject').text('Please select your issue');
-                    $('.help-block-support_subject').addClass('text-danger');
-                    isValid = false;
-                }
-            
-                // Support issue validation
-                if ($('textarea[name="support_subject_issue"]').val().trim() === '') {
-                    $('.help-block-support_subject_issue').text('Please tell us how we can help');
-                    $('.help-block-support_subject_issue').addClass('text-danger');
-                    isValid = false;
-                }
-            
-                return isValid;
+            // Support subject validation
+            if ($('select[name="support_subject"]').val() === '') {
+                $('.help-block-support_subject').text('Please select your issue');
+                $('.help-block-support_subject').addClass('text-danger');
+                isValid = false;
+            }
+
+            // Support issue validation
+            if ($('textarea[name="support_subject_issue"]').val().trim() === '') {
+                $('.help-block-support_subject_issue').text('Please tell us how we can help');
+                $('.help-block-support_subject_issue').addClass('text-danger');
+                isValid = false;
+            }
+
+            return isValid;
         }
 
         // end validation
@@ -1147,60 +1230,60 @@
         // Save Basic Information 
         const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
 
-        SaveBaiscInformation.addEventListener("click",function(event){
+        SaveBaiscInformation.addEventListener("click", function(event) {
             event.preventDefault();
             if (!validateBasicInfo()) {
                 return;
             }
             console.log(first_name.value);
             $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '/worker/update-worker-profile',
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        support_subject: first_name.value,
-                        support_subject_issue: last_name.value,
-                    }),
-                    success: function(resp) {
-                        console.log(resp);
-                        if (resp.status) {
-                            notie.alert({
-                                type: 'success',
-                                text: '<i class="fa fa-check"></i> Support ticket sent successfully.',
-                                time: 5
-                            });
-
-                        }
-                    },
-                    error: function(resp) {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/worker/update-worker-profile',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    support_subject: first_name.value,
+                    support_subject_issue: last_name.value,
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
                         notie.alert({
-                            type: 'error',
+                            type: 'success',
                             text: '<i class="fa fa-check"></i> Support ticket sent successfully.',
                             time: 5
                         });
+
                     }
-                });
-            
+                },
+                error: function(resp) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i> Support ticket sent successfully.',
+                        time: 5
+                    });
+                }
+            });
+
         });
         // end Saving Basic Information
 
         // Save Professional Information
-        const SaveProfessionalInformation = document.getElementById("SaveProfessionalInformation");       
+        const SaveProfessionalInformation = document.getElementById("SaveProfessionalInformation");
         SaveProfessionalInformation.addEventListener("click", function(event) {
             event.preventDefault();
             if (!validateProfessionalInfo()) {
                 return;
             }
             $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
             $.ajax({
                 url: '/worker/update-worker-profile',
@@ -1228,7 +1311,7 @@
                     hours_shift: hours_shift.value,
                     preferred_assignment_duration: preferred_assignment_duration.value,
                     weeks_shift: weeks_shift.value,
-                    InfoType : "ProfessionalInformation"
+                    InfoType: "ProfessionalInformation"
                 }),
                 success: function(resp) {
                     console.log(resp);
@@ -1253,103 +1336,103 @@
         // end Saving Professional Information
 
         // Save Bonus Transfer 
-        const SaveBonusInformation = document.getElementById("SaveBonusInformation"); 
-        SaveBonusInformation.addEventListener("click",function(event){
+        const SaveBonusInformation = document.getElementById("SaveBonusInformation");
+        SaveBonusInformation.addEventListener("click", function(event) {
             event.preventDefault();
             if (!validateBonusInfo()) {
                 return;
             }
             $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '/worker/add-worker-payment',
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        full_name_payment: full_name_payment.value,
-                        address_payment: address_payment.value,
-                        email_payment: email_payment.value,
-                        bank_name_payment: bank_name_payment.value,
-                        routing_number_payment: routing_number_payment.value,
-                        bank_account_payment_number: bank_account_payment_number.value,
-                        phone_number_payment: phone_number_payment.value,
-                    }),
-                    success: function(resp) {
-                        console.log(resp);
-                        if (resp.status) {
-                            notie.alert({
-                                type: 'success',
-                                text: '<i class="fa fa-check"></i> Payment Information Successfully',
-                                time: 5
-                            });
-
-                        }
-                    },
-                    error: function(resp) {
-                        console.log(resp);
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/worker/add-worker-payment',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    full_name_payment: full_name_payment.value,
+                    address_payment: address_payment.value,
+                    email_payment: email_payment.value,
+                    bank_name_payment: bank_name_payment.value,
+                    routing_number_payment: routing_number_payment.value,
+                    bank_account_payment_number: bank_account_payment_number.value,
+                    phone_number_payment: phone_number_payment.value,
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
                         notie.alert({
-                            type: 'error',
-                            text: resp,
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Payment Information Successfully',
                             time: 5
                         });
+
                     }
-                });
-            
-        }); 
+                },
+                error: function(resp) {
+                    console.log(resp);
+                    notie.alert({
+                        type: 'error',
+                        text: resp,
+                        time: 5
+                    });
+                }
+            });
+
+        });
         // end Saving Bonus Transfer
 
         // saving Support ticket
 
-        const SaveSupportTicket = document.getElementById("SaveSupportTicket"); 
+        const SaveSupportTicket = document.getElementById("SaveSupportTicket");
 
-        SaveSupportTicket.addEventListener("click",function(event){
+        SaveSupportTicket.addEventListener("click", function(event) {
             event.preventDefault();
             if (!validateSupportForm()) {
-               return;
+                return;
             }
             $('#loading').removeClass('d-none');
             $('#send_ticket').addClass('d-none');
             $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
             $.ajax({
-                    url: '/worker/send-support-ticket',
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        support_subject: support_subject.value,
-                        support_subject_issue: support_subject_issue.value,
-                        
-                    }),
-                    success: function(resp) {
-                        console.log(resp);
-                        if (resp.status) {
-                            notie.alert({
-                                type: 'success',
-                                text: '<i class="fa fa-check"></i> Payment Information Successfully',
-                                time: 5
-                            });
-                            $('#loading').addClass('d-none');
-                            $('#send_ticket').removeClass('d-none');
-                            support_subject_issue.value = "";
-                        }
-                    },
-                    error: function(resp) {
-                        console.log(resp);
+                url: '/worker/send-support-ticket',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    support_subject: support_subject.value,
+                    support_subject_issue: support_subject_issue.value,
+
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
                         notie.alert({
-                            type: 'error',
-                            text: resp,
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Payment Information Successfully',
                             time: 5
                         });
+                        $('#loading').addClass('d-none');
+                        $('#send_ticket').removeClass('d-none');
+                        support_subject_issue.value = "";
                     }
-                });
+                },
+                error: function(resp) {
+                    console.log(resp);
+                    notie.alert({
+                        type: 'error',
+                        text: resp,
+                        time: 5
+                    });
+                }
+            });
         });
 
         // end saving support ticket
@@ -1358,48 +1441,141 @@
 
         const DisactivateAccount = document.getElementById("DisactivateAccount");
 
-        DisactivateAccount.addEventListener("click",function(event){
+        DisactivateAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
-                            $('#disactivate_account').addClass('d-none');
+            $('#disactivate_account').addClass('d-none');
             event.preventDefault();
             $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
             $.ajax({
-                    url: '/worker/disactivate-account',
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        access:true
-                    }),
-                    success: function(resp) {
-                        console.log(resp);
-                        if (resp.status) {
-                            notie.alert({
-                                type: 'success',
-                                text: '<i class="fa fa-check"></i> Account disactivated Successfully',
-                                time: 5
-                            });
-                            $('#loading_disableOption').addClass('d-none');
-                            $('#disactivate_account').removeClass('d-none');
-                            window.location.href = "/";
-                        }
-                    },
-                    error: function(resp) {
-                        console.log(resp);
+                url: '/worker/disactivate-account',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    access: true
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
                         notie.alert({
-                            type: 'error',
-                            text: resp,
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Account disactivated Successfully',
                             time: 5
                         });
+                        $('#loading_disableOption').addClass('d-none');
+                        $('#disactivate_account').removeClass('d-none');
+                        window.location.href = "/";
                     }
-                });
+                },
+                error: function(resp) {
+                    console.log(resp);
+                    notie.alert({
+                        type: 'error',
+                        text: resp,
+                        time: 5
+                    });
+                }
+            });
         });
 
         // end account disactivating
+
+        // creating a stripe account 
+
+        AddStripeAccount.addEventListener("click", function(event) {
+            $('#loading_disableOption').removeClass('d-none');
+            $('#disactivate_account').addClass('d-none');
+            event.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/worker/add-stripe-account',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    access: true
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Account created succefuly',
+                            time: 5
+                        });
+                        $('#loading_disableOption').addClass('d-none');
+                        $('#disactivate_account').removeClass('d-none');
+                        console.log(resp);
+                        //window.location.href = resp.account_link;
+                    }
+                },
+                error: function(resp) {
+                    console.log(resp);
+                    notie.alert({
+                        type: 'error',
+                        text: resp,
+                        time: 5
+                    });
+                }
+            });
+        });
+
+        // end creating stripe account
+
+        // redirecting to login stripe link
+
+        AccessToStripeAccount.addEventListener("click", function(event) {
+            $('#loading_disableOption').removeClass('d-none');
+            $('#disactivate_account').addClass('d-none');
+            event.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/worker/login-to-stripe-account',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    access: true
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Redirecting',
+                            time: 2
+                        });
+                        $('#loading_disableOption').addClass('d-none');
+                        $('#disactivate_account').removeClass('d-none');
+                        window.location.href = resp.login_link;
+                    }
+                },
+                error: function(resp) {
+                    console.log(resp);
+                    notie.alert({
+                        type: 'error',
+                        text: resp,
+                        time: 5
+                    });
+                }
+            });
+        });
+
+
+        // redirecting to login stripe link
+
 
         // next and prev buttons
         nextBtnFirst.addEventListener("click", function(event) {
@@ -1507,47 +1683,47 @@
             });
         });
         // end upload files
-    
-    // --------------------------- end Profile Setting area  ---------------------------- //
 
-    // --------------------------- Account Setting Area --------------------------------- //
+        // --------------------------- end Profile Setting area  ---------------------------- //
 
-    // inputs account settings
-    
-    const user_name = document.querySelector('input[name="user_name"]');
-    const password = document.querySelector('input[name="password"]');
-    const new_mobile = document.querySelector('input[name="new_mobile"]');
-    const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
-    const email = document.querySelector('input[name="email"]');
-    var inputs = [];    
+        // --------------------------- Account Setting Area --------------------------------- //
 
-    // account setting validation here 
+        // inputs account settings
 
-    function validateAccountSettingInformation(){
-                $('.help-block-new_mobile').text('');
-                $('.help-block-validation').text('');
-                $('.help-block-email').text('');
-                $('.help-block-user_name').text('');
+        const user_name = document.querySelector('input[name="user_name"]');
+        const password = document.querySelector('input[name="password"]');
+        const new_mobile = document.querySelector('input[name="new_mobile"]');
+        const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
+        const email = document.querySelector('input[name="email"]');
+        var inputs = [];
+
+        // account setting validation here 
+
+        function validateAccountSettingInformation() {
+            $('.help-block-new_mobile').text('');
+            $('.help-block-validation').text('');
+            $('.help-block-email').text('');
+            $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
             inputs = [user_name, password, new_mobile, email];
-            
+
             // Add the value of the selected radio button to the inputs array, if a radio button is selected
             const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
             if (twoFactorAuth) {
                 inputs.push(twoFactorAuth);
             }
-        
+
             // Check if all inputs are empty
             const allEmpty = inputs.every(input => input.value.trim() === '');
-        
+
             // If all inputs are empty, show an error
             if (allEmpty) {
                 $('.help-block-validation').text('Please fill at least one field');
                 $('.help-block-validation').addClass('text-danger');
                 isValid = false;
             }
-        
+
             // Email validation
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(email.value)) {
@@ -1555,15 +1731,16 @@
                 $('.help-block-email').addClass('text-danger');
                 isValid = false;
             }
-        
+
             // User name validation
             const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
             if (!userNameRegex.test(user_name.value)) {
-                $('.help-block-user_name').text('User name can only contain letters and spaces, and cannot be longer than 255 characters');
+                $('.help-block-user_name').text(
+                    'User name can only contain letters and spaces, and cannot be longer than 255 characters');
                 $('.help-block-user_name').addClass('text-danger');
                 isValid = false;
             }
-        
+
             // New mobile number validation
             const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
             if (!regexNewPhone.test(new_mobile.value)) {
@@ -1571,98 +1748,107 @@
                 $('.help-block-new_mobile').addClass('text-danger');
                 isValid = false;
             }
-        
-            return isValid;
-}
-    // end account setting validation
-    
 
-    // send request to update here 
-    const SaveAccountInformation = document.getElementById('SaveAccountInformation');
-    SaveAccountInformation.addEventListener("click", function(event) {
-        event.preventDefault();
-        if (!validateAccountSettingInformation()) {
+            return isValid;
+        }
+        // end account setting validation
+
+
+        // send request to update here 
+        const SaveAccountInformation = document.getElementById('SaveAccountInformation');
+        SaveAccountInformation.addEventListener("click", function(event) {
+            event.preventDefault();
+            if (!validateAccountSettingInformation()) {
                 return;
             }
 
-        // clear form data from empty values
-        const formData = new FormData();
-        inputs.forEach(input => {
-        if (input.value.trim() !== '') {
-            formData.append(input.name, input.value);
-        }
-        });
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            // clear form data from empty values
+            const formData = new FormData();
+            inputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    formData.append(input.name, input.value);
+                }
             });
-        $.ajax({
-            url: '/worker/update-worker-account-setting',
-            type: 'POST',
-            processData: false,  
-            contentType: false,
-            data: formData,
-            success: function(resp) {
-                console.log(resp);
-                if (resp.status) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/worker/update-worker-account-setting',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+
+                    } else {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                    }
+                },
+                error: function(resp) {
                     notie.alert({
-                        type: 'success',
-                        text: '<i class="fa fa-check"></i> ' + resp.message,
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i> Please try again later !',
                         time: 5
                     });
-
-                }else{
-                    notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> ' + resp.message,
-                    time: 5
-                });
                 }
-            },
-            error: function(resp) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Please try again later !',
-                    time: 5
-                });
-            }
-        });
-       
+            });
 
-    });
-    
-    // this functions to display profile setting / account setting forms
-    function AccountSettingDisplay(){
+
+        });
+
+        // this functions to display profile setting / account setting forms
+        function AccountSettingDisplay() {
             $('.profile_setting').addClass('d-none');
             $('.account_setting').removeClass('d-none');
             $('.bonus_transfers').addClass('d-none');
         }
 
-    function ProfileIinformationDisplay(){
-        $('.account_setting').addClass('d-none');
-        $('.profile_setting').removeClass('d-none');
-        $('.bonus_transfers').addClass('d-none');
+        function ProfileIinformationDisplay() {
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').removeClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
+            $('.support_info').addClass('d-none');
+            $('.disable_account').addClass('d-none');
+
         }
-    function BonusTransfersDisplay(){
-        $('.account_setting').addClass('d-none');
-        $('.profile_setting').addClass('d-none');
-        $('.bonus_transfers').removeClass('d-none');
-    }
-    function SupportDisplay(){
-        $('.account_setting').addClass('d-none');
-        $('.profile_setting').addClass('d-none');
-        $('.bonus_transfers').addClass('d-none');
-        $('.support_info').removeClass('d-none');
-    }
-    function DisactivateAccountDisplay(){
-        $('.account_setting').addClass('d-none');
-        $('.profile_setting').addClass('d-none');
-        $('.bonus_transfers').addClass('d-none');
-        $('.support_info').addClass('d-none');
-        $('.disable_account').removeClass('d-none');
-    }
+
+        function BonusTransfersDisplay() {
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').addClass('d-none');
+            $('.bonus_transfers').removeClass('d-none');
+            $('.support_info').addClass('d-none');
+            $('.disable_account').addClass('d-none');
+        }
+
+        function SupportDisplay() {
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').addClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
+            $('.support_info').removeClass('d-none');
+            $('.disable_account').addClass('d-none');
+        }
+
+        function DisactivateAccountDisplay() {
+            $('.account_setting').addClass('d-none');
+            $('.profile_setting').addClass('d-none');
+            $('.bonus_transfers').addClass('d-none');
+            $('.support_info').addClass('d-none');
+            $('.disable_account').removeClass('d-none');
+        }
     </script>
 
 @stop
@@ -1769,8 +1955,8 @@
 </style>
 
 <style>
-
     @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
     .bodyAll {
         display: flex;
         align-items: center;
@@ -2020,13 +2206,21 @@
         margin-right: 6px;
 
     }
-    .btns_prof_info{
+
+    .btns_prof_info {
         width: 100% !important;
     }
+
     .slide-page span {
-        margin-top : 10px;
-    } 
-    #loading,#send_ticket,#loadSpan,#disactivate_account,#loading_disableOption,#loadSpan_disableOption{
-        color:#fff;
+        margin-top: 10px;
+    }
+
+    #loading,
+    #send_ticket,
+    #loadSpan,
+    #disactivate_account,
+    #loading_disableOption,
+    #loadSpan_disableOption {
+        color: #fff;
     }
 </style>
