@@ -136,8 +136,21 @@ router.post('/customer/create', async (req, res) => {
         return res.status(400).send({status:false, message:"Missing parameter."})
     }
 
-    let portal = "https://billing.stripe.com/p/login/test_8wMaFa19ddXy1wc5kk";
+    // Check if the customer exists
+    try{
 
+    	const customerTest = await stripe.customers.list({email:req.body.email});
+    	if(customerTest.data.length > 0){
+    		return res.status(400).send({status: false, message: "Client exists."})
+    	}
+    
+    }catch(e){
+    	console.log(e.message);
+		return res.status(400).send({status: false, message: e.message})
+    }
+
+    let portal = "https://billing.stripe.com/p/login/test_8wMaFa19ddXy1wc5kk";
+    
     try{
 
 		const customer = await stripe.customers.create({
@@ -155,7 +168,7 @@ router.post('/customer/create', async (req, res) => {
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}
-
+	
 });
 
 // Create an invoice
