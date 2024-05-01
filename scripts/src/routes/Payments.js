@@ -136,11 +136,10 @@ router.post('/customer/create', async (req, res) => {
 
     // Check if the customer exists
     try{
-
     	const customerTest = await stripe.customers.list({email:req.body.email});
     	
     	if(customerTest.data.length > 0){
-    		return res.status(400).send({status: false, message: "Client exists."})
+    		return res.status(400).send({status: false, message: "Client exists.", code:101})
     	}
     
     }catch(e){

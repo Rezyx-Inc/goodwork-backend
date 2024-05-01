@@ -20,7 +20,7 @@
                                 <p>{{ $user->id }}</p>
                                 <p>{{ $user->about_me }}</p>
                             </div>
-                         
+
 
                             <div class="ss-my-presnl-btn-mn">
 
@@ -125,10 +125,7 @@
                                 <p id="information_type"><span><img
                                             src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Basic
                                     Information</p>
-                                <div class="progress">
-                                    <div id="progress" class="progress-bar" role="progressbar" style="width: 33%"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+
                             </div>
                             <div class="form-outer">
                                 <form method="post" action="{{ route('update-recruiter-profile') }}">
@@ -141,32 +138,33 @@
                                             <div class="ss-form-group col-11">
                                                 <label>First Name</label>
                                                 <input type="text" name="first_name"
-                                                    placeholder="Please enter your first name">
+                                                    placeholder="Please enter your first name"
+                                                    value="{{ isset($user->first_name) ? $user->first_name : '' }}">
                                             </div>
                                             <span class="help-block-first_name"></span>
                                             {{-- Last Name --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Last Name</label>
                                                 <input type="text" name="last_name"
-                                                    placeholder="Please enter your last name">
+                                                    placeholder="Please enter your last name"
+                                                    value="{{ isset($user->last_name) ? $user->last_name : '' }}">
                                             </div>
                                             <span class="help-block-last_name"></span>
                                             {{-- Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Phone Number</label>
                                                 <input id="contact_number" type="text" name="mobile"
-                                                    placeholder="Please enter your phone number">
+                                                    placeholder="Please enter your phone number"
+                                                    value="{{ isset($user->mobile) ? $user->mobile : '' }}">
                                             </div>
                                             <span class="help-block-mobile"></span>
-                                            
-                                            
-                                         
+
+
+
                                             {{-- About Me Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>About Me</label>
-                                                <textarea type="text" name="about_me"
-                                                    placeholder="Please enter your Description">
-                                                </textarea>
+                                                <textarea type="text" name="about_me">{{ isset($user->about_me) ? $user->about_me : '' }}</textarea>
                                             </div>
                                             <span class="help-block-about_me"></span>
                                             {{-- Skip && Save --}}
@@ -211,7 +209,7 @@
                                                     placeholder="Please enter your new password">
                                             </div>
                                             {{-- Change 2FA --}}
-                                            <div class="ss-form-group row col-11">
+                                            {{-- <div class="ss-form-group row col-11">
                                                 <label>Two-factor authentication (2FA)</label>
                                                 <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
                                                     <label>Enable</label>
@@ -223,7 +221,7 @@
                                                     <input style="box-shadow:none; width: auto;" type="radio"
                                                         id="option2" name="twoFa" value="0">
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             {{-- Change Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Phone Number</label>
@@ -232,13 +230,13 @@
                                             </div>
                                             <span class="help-block-new_mobile"></span>
                                             {{-- Email Information --}}
-                                            <div class="ss-form-group col-11">
+                                            {{-- <div class="ss-form-group col-11">
                                                 <label>New Email</label>
                                                 <input type="text" name="email"
                                                     placeholder="Please enter your new Email">
                                             </div>
                                             <span class="help-block-email"></span>
-                                            <span class="help-block-validation"></span>
+                                            <span class="help-block-validation"></span> --}}
                                             {{-- Skip && Save --}}
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
@@ -254,90 +252,90 @@
                         </div>
                     </div>
                     {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
-               {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
-               <div class="col-lg-7 bodyAll bonus_transfers d-none">
-                <div class="ss-pers-info-form-mn-dv" style="width: 100% !important">
-                    <div class="ss-persnl-frm-hed">
-                        <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>
-                            Billing</p>
-                    </div>
-                    <div class="form-outer">
-                     
-                        <form method="post">
-                            @csrf
-                            <!-- slide Bonus Transfer -->
-                            <div class="page slide-page">
-                                <div class="row justify-content-center">
-                                    {{-- Skip && Save --}}
-                                    <div
-                                        class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                        <button type="text" class=" col-12 ss-prsnl-save-btn"
-                                            id="SendAmount"> Add Stripe
-                                        </button>
-                                    </div>
-                                </div>
+                    {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
+                    <div class="col-lg-7 bodyAll bonus_transfers d-none">
+                        <div class="ss-pers-info-form-mn-dv" style="width: 100% !important">
+                            <div class="ss-persnl-frm-hed">
+                                <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>
+                                    Billing</p>
                             </div>
-                        </form>
-                    </div>
+                            <div class="form-outer">
 
-                </div>
-            </div>
-            {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
-            {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
-            <div class="col-lg-7 bodyAll support_info d-none">
-                <div class="ss-pers-info-form-mn-dv">
-                    <div class="ss-persnl-frm-hed">
-                        <h1
-                            style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
-                            Help &Support
-                        </h1>
-                    </div>
-                    <div class="form-outer">
-                        <form method="post">
-                            @csrf
-                            <!-- slide Support -->
-                            <div class="page slide-page">
-                                <div class="row justify-content-center">
-                                    {{-- Support subject --}}
-                                    <div class="ss-form-group col-11">
-                                        <label>Subject</label>
-                                        <select name="support_subject" id="support_subject">
-                                            <option value="">Please select your issue</option>
-                                            <option value="login">Login</option>
-                                            <option value="payment">Payment</option>
-                                            <option value="other">Other</option>
-                                        </select>
-
+                                <form method="post">
+                                    @csrf
+                                    <!-- slide Bonus Transfer -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- Skip && Save --}}
+                                            <div
+                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="AddStripe">
+                                                    Add Stripe
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <span class="help-block-support_subject"></span>
-                                    {{-- Support issue --}}
-                                    <div class="ss-form-group col-11">
-                                        <label>Issue</label>
-                                        <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
-                                    </div>
-                                    <span class="help-block-support_subject_issue"></span>
-                                    {{-- Skip && Save --}}
-                                    <div
-                                        class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                        <button type="text" class=" col-12 ss-prsnl-save-btn"
-                                            id="SaveSupportTicket">
-                                            {{-- spinner --}}
-                                            <span id="loading" class="d-none">
-                                                <span id="loadSpan" class="spinner-border spinner-border-sm"
-                                                    role="status" aria-hidden="true"></span>
-                                                Loading...
-                                            </span>
-                                            <span id="send_ticket">Send now</span>
-                                        </button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
-                        </form>
-                    </div>
 
-                </div>
-            </div>
-            {{-- ------------------------------------------------------- End Support Area -------------------------------------------------------------------- --}}
+                        </div>
+                    </div>
+                    {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
+                    {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
+                    <div class="col-lg-7 bodyAll support_info d-none">
+                        <div class="ss-pers-info-form-mn-dv">
+                            <div class="ss-persnl-frm-hed">
+                                <h1
+                                    style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
+                                    Help &Support
+                                </h1>
+                            </div>
+                            <div class="form-outer">
+                                <form method="post">
+                                    @csrf
+                                    <!-- slide Support -->
+                                    <div class="page slide-page">
+                                        <div class="row justify-content-center">
+                                            {{-- Support subject --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Subject</label>
+                                                <select name="support_subject" id="support_subject">
+                                                    <option value="">Please select your issue</option>
+                                                    <option value="login">Login</option>
+                                                    <option value="payment">Payment</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+
+                                            </div>
+                                            <span class="help-block-support_subject"></span>
+                                            {{-- Support issue --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Issue</label>
+                                                <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
+                                            </div>
+                                            <span class="help-block-support_subject_issue"></span>
+                                            {{-- Skip && Save --}}
+                                            <div
+                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
+                                                    id="SaveSupportTicket">
+                                                    {{-- spinner --}}
+                                                    <span id="loading" class="d-none">
+                                                        <span id="loadSpan" class="spinner-border spinner-border-sm"
+                                                            role="status" aria-hidden="true"></span>
+                                                        Loading...
+                                                    </span>
+                                                    <span id="send_ticket">Send now</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    {{-- ------------------------------------------------------- End Support Area -------------------------------------------------------------------- --}}
 
                     {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll disable_account d-none">
@@ -387,10 +385,10 @@
         // loding states cities docs on page load
 
         $(document).ready(function() {
-          
+
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
-           
+
 
         });
 
@@ -412,7 +410,7 @@
         // send amount inputs 
         const amount = document.querySelector('input[name="amount"]');
         const email_payment = document.querySelector('input[name="email_payment"]');
-        const SendAmount = document.getElementById("SendAmount");
+        const AddStripe = document.getElementById("AddStripe");
         // end inputs
 
 
@@ -438,7 +436,7 @@
                 $('.help-block-mobile').addClass('text-danger');
                 isValid = false;
             }
-           
+
             return isValid;
         }
         // end validation basic information
@@ -446,9 +444,9 @@
 
         // validation amount transfer 
 
-        
-        
-      
+
+
+
 
         // validation bonus 
 
@@ -557,7 +555,7 @@
                     last_name: last_name.value,
                     mobile: mobile.value,
                     about_me: about_me.value,
-                   
+
                 }),
                 success: function(resp) {
                     console.log(resp);
@@ -585,9 +583,9 @@
 
         // saving amount transfer
 
-        SendAmount.addEventListener("click", function(event) {
+        AddStripe.addEventListener("click", function(event) {
             event.preventDefault();
-           
+
             $('#loading').removeClass('d-none');
             $('#send_ticket').addClass('d-none');
             $.ajaxSetup({
@@ -608,27 +606,28 @@
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
-                            text: '<i class="fa fa-check"></i> Your amount has been sent successfully',
+                            text: '<i class="fa fa-check"></i> Redirecting ...',
+                            time: 5
+                        });
+                        $('#loading').addClass('d-none');
+                        $('#send_ticket').removeClass('d-none');
+                        window.location.href = resp.portal_link;
+                    } else {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Client Exists',
                             time: 5
                         });
                         $('#loading').addClass('d-none');
                         $('#send_ticket').removeClass('d-none');
                         window.location.href = resp.portal_link;
                     }
-                },
-                error: function(resp) {
-                    console.log(resp);
-                    notie.alert({
-                        type: 'error',
-                        text: resp,
-                        time: 5
-                    });
                 }
             });
         });
 
 
-    
+
 
         // saving Support ticket
 
@@ -729,7 +728,7 @@
 
         // end account disactivating
 
-        
+
 
         // --------------------------- Account Setting Area --------------------------------- //
 

@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\support;
 use Illuminate\Support\Facades\Http;
 /** Models */
-use App\Models\{Profession,Speciality,Notification,User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State};
+use App\Models\{Profession, Speciality, Notification, User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State};
 
- define('USER_IMG_RECRUITER', asset('public/frontend/img/profile-pic-big.png'));
+define('USER_IMG_RECRUITER', asset('public/frontend/img/profile-pic-big.png'));
 
 class RecruiterDashboardController extends Controller
 {
@@ -32,7 +32,7 @@ class RecruiterDashboardController extends Controller
         $statusCounts = [];
         $offerLists = [];
         foreach ($alljobs as $key => $value) {
-            if(isset($value->id)){
+            if (isset($value->id)) {
                 $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
@@ -121,8 +121,7 @@ class RecruiterDashboardController extends Controller
         $user = User::select('first_name', 'last_name', 'image', 'user_name', 'email', 'date_of_birth', 'mobile', 'about_me', 'qualities', 'facility_id')->find($id);
         $data = [];
         $user = auth()->guard('recruiter')->user();
-        
-        
+
         $data['specialities'] = Speciality::select('full_name')->get();
         $data['proffesions'] = Profession::select('full_name')->get();
         // send the states
@@ -161,28 +160,27 @@ class RecruiterDashboardController extends Controller
         } else {
             $id = Auth::guard('recruiter')->user()->id;
             $user_info = USER::where('id', $id);
-            if ($user_info->count() > 0)
-            {
+            if ($user_info->count() > 0) {
                 $user = $user_info->get()->first();
-                $insert = array(
-                    "user_id" => $id,
+                $insert = [
+                    'user_id' => $id,
                     'subject' => $request->subject,
                     'issue' => $request->issue,
-                );
+                ];
 
                 $data = DB::table('help_support')->insert($insert);
-                if($data){
+                if ($data) {
                     $responseData = [
                         'status' => 'success',
                         'message' => 'Help center added successfully',
                     ];
-                }else{
+                } else {
                     $responseData = [
                         'status' => 'error',
                         'message' => 'Somthing went wrong',
                     ];
                 }
-            }else{
+            } else {
                 $responseData = [
                     'status' => 'error',
                     'message' => 'Somthing went wrong',
@@ -191,25 +189,26 @@ class RecruiterDashboardController extends Controller
         }
         return response()->json($responseData);
     }
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
         $aboutme = $request->input('about-me');
         $newqualities = $request->input('qualities');
         $id = Auth::guard('recruiter')->user()->id;
         $oldqualities = Auth::guard('recruiter')->user()->qualities;
-        if(isset($oldqualities)){
+        if (isset($oldqualities)) {
             $newqualities = array_merge($newqualities, json_decode($oldqualities));
         }
-        $insert = array(
-            "about_me" => $aboutme,
+        $insert = [
+            'about_me' => $aboutme,
             'qualities' => $newqualities,
-        );
+        ];
         $updated = User::where('id', $id)->update($insert);
-        if($updated){
+        if ($updated) {
             $responseData = [
                 'status' => 'success',
                 'message' => 'Profile update successfully',
             ];
-        }else{
+        } else {
             $responseData = [
                 'status' => 'error',
                 'message' => 'Somthing went wrong',
@@ -217,24 +216,25 @@ class RecruiterDashboardController extends Controller
         }
         return response()->json($responseData);
     }
-    public function recruiterRemoveQualities(Request $request){
+    public function recruiterRemoveQualities(Request $request)
+    {
         $quality = $request->input('quality');
         $id = Auth::guard('recruiter')->user()->id;
         $oldqualities = Auth::guard('recruiter')->user()->qualities;
-        if(isset($oldqualities)){
+        if (isset($oldqualities)) {
             $myArray = array_filter(json_decode($oldqualities), function ($element) use ($quality) {
                 return $element !== $quality;
             });
-            $insert = array(
+            $insert = [
                 'qualities' => json_encode($myArray),
-            );
+            ];
             $updated = User::where('id', $id)->update($insert);
-            if($updated){
+            if ($updated) {
                 $responseData = [
                     'status' => 'success',
                     'message' => 'Quality remove successfully',
                 ];
-            }else{
+            } else {
                 $responseData = [
                     'status' => 'error',
                     'message' => 'Somthing went wrong',
@@ -243,7 +243,8 @@ class RecruiterDashboardController extends Controller
         }
         return response()->json($responseData);
     }
-    public function askRecruiterNotification(Request $request){
+    public function askRecruiterNotification(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'worker_id' => 'required',
             'update_key' => 'required',
@@ -257,22 +258,24 @@ class RecruiterDashboardController extends Controller
         } else {
             $nurse = Nurse::where('id', $request->worker_id)->first();
             $user = User::where('id', $nurse['user_id'])->first();
-            $check = DB::table('ask_worker')->where(['text_field' => $request->update_key, 'worker_id' => $request->worker_id])->first();
-            if(empty($check)){
+            $check = DB::table('ask_worker')
+                ->where(['text_field' => $request->update_key, 'worker_id' => $request->worker_id])
+                ->first();
+            if (empty($check)) {
                 $record = DB::table('ask_worker')->insert(['text_field' => $request->update_key, 'worker_id' => $request->worker_id]);
-                $notification = Notification::create(['created_by' => $user['id'], 'title' => $request->update_key, 'job_id' => $request->job_id, 'isAskWorker' => '1', 'text' => 'Please update '.$request->update_key]);
-                if($record){
+                $notification = Notification::create(['created_by' => $user['id'], 'title' => $request->update_key, 'job_id' => $request->job_id, 'isAskWorker' => '1', 'text' => 'Please update ' . $request->update_key]);
+                if ($record) {
                     $responseData = [
                         'status' => 'success',
                         'message' => 'Message send successfully',
                     ];
-                }else{
+                } else {
                     $responseData = [
                         'status' => 'error',
                         'message' => 'Somthing went wrong',
                     ];
                 }
-            }else{
+            } else {
                 $responseData = [
                     'status' => 'success',
                     'message' => 'Message send successfully',
@@ -281,24 +284,28 @@ class RecruiterDashboardController extends Controller
         }
         return response()->json($responseData);
     }
-    public function getSingleNurseDetails(Request $request, $id){
+    public function getSingleNurseDetails(Request $request, $id)
+    {
         $nurse = Nurse::where('id', $id)->first();
-        $data = User::select('first_name', 'last_name', 'image', 'mobile')->where('id', $nurse['user_id'])->first();
+        $data = User::select('first_name', 'last_name', 'image', 'mobile')
+            ->where('id', $nurse['user_id'])
+            ->first();
         $data->profession = $nurse->highest_nursing_degree;
         $responseData = [
             'data' => $data,
         ];
         return response()->json($responseData);
     }
-    public function disactivate_account(Request $request){
+    public function disactivate_account(Request $request)
+    {
         try {
-        $user = Auth::guard('recruiter')->user();
-        $data['active'] = false;
-        $user->update($data);
-        $guard = "recruiter";
-        Auth::guard('recruiter')->logout();
-        $request->session()->invalidate();
-        return response()->json(['status' => true, 'message' => 'You are successfully disactivate your account.']);
+            $user = Auth::guard('recruiter')->user();
+            $data['active'] = false;
+            $user->update($data);
+            $guard = 'recruiter';
+            Auth::guard('recruiter')->logout();
+            $request->session()->invalidate();
+            return response()->json(['status' => true, 'message' => 'You are successfully disactivate your account.']);
         } catch (ValidationException $e) {
             return response()->json(['status' => false, 'message' => $e->errors()]);
         } catch (\Exception $e) {
@@ -309,25 +316,22 @@ class RecruiterDashboardController extends Controller
     public function update_recruiter_profile(Request $request)
     {
         try {
-            
-          
             $user = Auth::guard('recruiter')->user();
-                $request->validate([
-                    'first_name' => 'required|string',
-                    'last_name' => 'required|string',
-                    'mobile' => 'required|string',
-                    'about_me' => 'required|string',
-                ]);
+            $request->validate([
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'mobile' => 'required|string',
+                'about_me' => 'required|string',
+            ]);
             $user_data = [];
-               
+
             isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
             isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
             isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';
             isset($request->about_me) ? ($user_data['about_me'] = $request->about_me) : '';
-               
 
             $user->update($user_data);
-             
+
             $user = $user->fresh();
 
             return response()->json(['msg' => $request->all(), 'user' => $user, 'status' => true]);
@@ -369,18 +373,19 @@ class RecruiterDashboardController extends Controller
         }
     }
 
-    public function send_support_ticket(Request $request){
+    public function send_support_ticket(Request $request)
+    {
         try {
             $validatedData = $request->validate([
                 'support_subject_issue' => 'required|max:500',
                 'support_subject' => 'required',
             ]);
-        
+
             $user = Auth::guard('recruiter')->user();
-            $user_email =  $user->email;
-            $email_data = ['support_subject_issue'=>$request->support_subject_issue,'support_subject'=>$request->support_subject,'worker_email'=>$user_email ];
+            $user_email = $user->email;
+            $email_data = ['support_subject_issue' => $request->support_subject_issue, 'support_subject' => $request->support_subject, 'worker_email' => $user_email];
             Mail::to('support@goodwork.com')->send(new support($email_data));
-        
+
             return response()->json(['status' => true, 'message' => 'Support ticket sent successfully']);
         } catch (ValidationException $e) {
             return response()->json(['status' => false, 'message' => $e->errors()]);
@@ -389,38 +394,37 @@ class RecruiterDashboardController extends Controller
         }
     }
 
-    public function send_amount(Request $request){
+    public function send_amount(Request $request)
+    {
         try {
-            
-
             $user = Auth::guard('recruiter')->user();
-            $user_email  = $user->email;
+            $user_email = $user->email;
 
-             // Define the data for the request
-             $data = [
-                'email' => $user_email
+            // Define the data for the request
+            $data = [
+                'email' => $user_email,
             ];
 
-             // Define the URL<
-         $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/create';
+            // Define the URL<
+            $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/create';
 
-         // return response()->json(['data'=>$data , 'url' => $url]);   
- 
-         // Make the request
-         $response = Http::post($url, $data);
+            // return response()->json(['data'=>$data , 'url' => $url]);
 
-         $portal_link = $response->json()['message'];
-          
+            // Make the request
+            $response = Http::post($url, $data);
+
+            $portal_link = $response->json()['message'];
+            if (isset($response->json()['code'])) {
+                if ($response->json()['code'] == 101) {
+                    return response()->json(['status' => false, 'portal_link' => config('app.portal_link')]);
+                }
+            }
 
             return response()->json(['status' => true, 'message' => 'working on it !', 'portal_link' => $portal_link]);
-    }catch (ValidationException $e) {
-        return response()->json(['status' => false, 'message' => $e->errors()]);
-    } catch (\Exception $e) {
-        return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        } catch (ValidationException $e) {
+            return response()->json(['status' => false, 'message' => $e->errors()]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
     }
-
-
-    }
-
-   
 }
