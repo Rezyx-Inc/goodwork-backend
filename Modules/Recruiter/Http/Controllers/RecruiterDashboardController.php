@@ -3,19 +3,19 @@
 namespace Modules\Recruiter\Http\Controllers;
 
 use DateTime;
-use App\Models\Nurse;
-use App\Models\User;
-use App\Models\Offer;
-use App\Models\Job;
-use App\Models\Follows;
-use App\Models\Facility;
-use App\Models\Notification;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\support;
+use Illuminate\Support\Facades\Http;
+/** Models */
+use App\Models\{Profession,Speciality,Notification,User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State};
 
  define('USER_IMG_RECRUITER', asset('public/frontend/img/profile-pic-big.png'));
 
@@ -117,26 +117,27 @@ class RecruiterDashboardController extends Controller
     {
         $id = Auth::guard('recruiter')->user()->id;
         // facility_id qualities about_me are been added in user table
-        $user = User::select('first_name', 'last_name', 'image', 'user_name', 'email', 'date_of_birth', 'mobile', 'about_me', 'qualities', 'facility_id')->find($id);
-        if($user && isset($user->facility_id)){
-            $facilityIds = json_decode($user->facility_id);
-            if (!empty($facilityIds)) {
-                $facilities = Facility::select('name')->whereIn('id', $facilityIds)->first();
-                $user->facilities = $facilities->name;
-            }
-        }
-        // help_support table and keywordsdosn't exist yet
-        $helpsupportdata =[];
-        $helpsupportcomments = [];
 
-        // $helpsupportdata = DB::table('keywords')->where('filter', 'subjectType')->get();
-        // $helpsupportcomments = DB::table('help_support')->get();
-        // foreach ($helpsupportcomments as $key => $value) {
-        //     $commentuser = User::select('first_name','last_name')->find($id);
-        //     $value->first_name = $commentuser->first_name;
-        //     $value->last_name = $commentuser->last_name;
-        // }
-        return view('recruiter::recruiter/profile', compact('user', 'helpsupportdata', 'helpsupportcomments'));
+        $user = User::select('first_name', 'last_name', 'image', 'user_name', 'email', 'date_of_birth', 'mobile', 'about_me', 'qualities', 'facility_id')->find($id);
+        $data = [];
+        $user = auth()->guard('frontend')->user();
+        $nurse = Nurse::where('user_id', $user->id)->first();
+        $data['worker'] = $nurse;
+
+        $data['worker'] = $nurse;
+        $data['specialities'] = Speciality::select('full_name')->get();
+        $data['proffesions'] = Profession::select('full_name')->get();
+        // send the states
+        $distinctFilters = Keyword::distinct()->pluck('filter');
+        $allKeywords = [];
+        foreach ($distinctFilters as $filter) {
+            $keywords = Keyword::where('filter', $filter)->get();
+            $allKeywords[$filter] = $keywords;
+        }
+        $data['states'] = State::select('id', 'name')->get();
+        $data['allKeywords'] = $allKeywords;
+
+        return view('recruiter::recruiter/recruiter_profile', $data);
     }
 
     public function communication()
@@ -290,5 +291,119 @@ class RecruiterDashboardController extends Controller
             'data' => $data,
         ];
         return response()->json($responseData);
+    }
+    public function disactivate_account(Request $request){
+        try {
+        $user = Auth::guard('recruiter')->user();
+        $data['active'] = false;
+        $user->update($data);
+        $guard = "recruiter";
+        Auth::guard('recruiter')->logout();
+        $request->session()->invalidate();
+        return response()->json(['status' => true, 'message' => 'You are successfully disactivate your account.']);
+        } catch (ValidationException $e) {
+            return response()->json(['status' => false, 'message' => $e->errors()]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function update_recruiter_profile(Request $request)
+    {
+        try {
+            
+          
+            $user = Auth::guard('recruiter')->user();
+                $request->validate([
+                    'first_name' => 'required|string',
+                    'last_name' => 'required|string',
+                    'mobile' => 'required|string',
+                    'about_me' => 'required|string',
+                ]);
+            $user_data = [];
+               
+            isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
+            isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
+            isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';
+            isset($request->about_me) ? ($user_data['about_me'] = $request->about_me) : '';
+               
+
+            $user->update($user_data);
+             
+            $user = $user->fresh();
+
+            return response()->json(['msg' => $request->all(), 'user' => $user, 'status' => true]);
+        } catch (\Exception $e) {
+            //return response()->json(['msg'=>$e->getMessage(), 'status'=>false]);
+            return response()->json(['msg' => $request->all(), 'status' => false]);
+            // return response()->json(['msg'=>'"Something was wrong please try later !"', 'status'=>false]);
+        }
+    }
+
+    public function update_recruiter_account_setting(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'user_name' => 'regex:/^[a-zA-Z\s]+$/|max:255',
+                //'new_mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                '2fa' => 'in:0,1',
+                //needs net` access
+                'email' => 'email:rfc,dns',
+            ]);
+
+            $user = Auth::guard('recruiter')->user();
+
+            isset($request->user_name) ? ($user_data['user_name'] = $request->user_name) : '';
+            isset($request->new_mobile) ? ($user_data['new_mobile'] = $request->new_mobile) : '';
+            isset($request->email) ? ($user_data['email'] = $request->email) : '';
+            isset($request->password) ? ($user_data['password'] = Hash::make($request->password)) : '';
+            isset($request->twoFa) ? ($user_data['2fa'] = $request->twoFa) : '';
+
+            $user->update($user_data);
+            //$UpdatedUser = $user->refresh();
+
+            return response()->json(['status' => true, 'message' => 'Account settings updated successfully']);
+        } catch (ValidationException $e) {
+            // return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['status' => false, 'message' => 'An error occurred please check your infromation !']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => 'An error occurred while updating the account settings']);
+        }
+    }
+
+    public function send_support_ticket(Request $request){
+        try {
+            $validatedData = $request->validate([
+                'support_subject_issue' => 'required|max:500',
+                'support_subject' => 'required',
+            ]);
+        
+            $user = Auth::guard('recruiter')->user();
+            $user_email =  $user->email;
+            $email_data = ['support_subject_issue'=>$request->support_subject_issue,'support_subject'=>$request->support_subject,'worker_email'=>$user_email ];
+            Mail::to('support@goodwork.com')->send(new support($email_data));
+        
+            return response()->json(['status' => true, 'message' => 'Support ticket sent successfully']);
+        } catch (ValidationException $e) {
+            return response()->json(['status' => false, 'message' => $e->errors()]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function send_amount(Request $request){
+        try {
+            $validatedData = $request->validate([
+                'amount' => 'required|numeric',
+            ]);
+
+            return response()->json(['status' => true, 'message' => 'working on it !']);
+    }catch (ValidationException $e) {
+        return response()->json(['status' => false, 'message' => $e->errors()]);
+    } catch (\Exception $e) {
+        return response()->json(['status' => false, 'message' => $e->getMessage()]);
+    }
+
+
     }
 }

@@ -1247,15 +1247,21 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    support_subject: first_name.value,
-                    support_subject_issue: last_name.value,
+                    first_name: first_name.value,
+                    last_name: last_name.value,
+                    mobile: mobile.value,
+                    address: address.value,
+                    city: city.value,
+                    state: state.value,
+                    zip_code: zip_code.value,
+                    InfoType: "BasicInformation"
                 }),
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
-                            text: '<i class="fa fa-check"></i> Support ticket sent successfully.',
+                            text: '<i class="fa fa-check"></i> Basic Information saved successfully.',
                             time: 5
                         });
 
@@ -1264,7 +1270,7 @@
                 error: function(resp) {
                     notie.alert({
                         type: 'error',
-                        text: '<i class="fa fa-check"></i> Support ticket sent successfully.',
+                        text: '<i class="fa fa-check"></i>' + resp.message,
                         time: 5
                     });
                 }
@@ -1416,7 +1422,7 @@
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
-                            text: '<i class="fa fa-check"></i> Payment Information Successfully',
+                            text: '<i class="fa fa-check"></i> Your ticket has been sent successfully',
                             time: 5
                         });
                         $('#loading').addClass('d-none');

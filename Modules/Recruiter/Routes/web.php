@@ -161,5 +161,23 @@ Route::prefix('recruiter')->group(function () {
         Route::get('add-job', ['uses' => 'RecruiterController@addJob', 'as' => 'add-job']);
         Route::post('add-job', ['uses' => 'RecruiterController@addJobStore', 'as' => 'addJob.store']);
 
+
+         // disactivate account
+         Route::post('disactivate-account',['uses' => 'RecruiterDashboardController@disactivate_account', 'as' => 'disactivate_account']);
+
+        // new post route for profile updating
+        Route::post('update-recruiter-profile', ['uses' => 'RecruiterDashboardController@update_recruiter_profile', 'as' => 'update-recruiter-profile']);
+
+        // new post route for account setting updating
+        Route::post('update-recruiter-account-setting',['uses' => 'RecruiterDashboardController@update_recruiter_account_setting', 'as' => 'update-recruiter-account-setting']);
+
+        // sending support tickets 
+        Route::post('send-support-ticket',['uses' => 'RecruiterDashboardController@send_support_ticket', 'as' => 'send_support_ticket']);
+
+        // Send amount
+
+        Route::post('send-amount-transfer',['uses' => 'RecruiterDashboardController@send_amount', 'as' => 'send_amount']);
+
+
     });
 });
