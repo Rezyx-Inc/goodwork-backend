@@ -120,11 +120,9 @@ class RecruiterDashboardController extends Controller
 
         $user = User::select('first_name', 'last_name', 'image', 'user_name', 'email', 'date_of_birth', 'mobile', 'about_me', 'qualities', 'facility_id')->find($id);
         $data = [];
-        $user = auth()->guard('frontend')->user();
-        $nurse = Nurse::where('user_id', $user->id)->first();
-        $data['worker'] = $nurse;
-
-        $data['worker'] = $nurse;
+        $user = auth()->guard('recruiter')->user();
+        
+        
         $data['specialities'] = Speciality::select('full_name')->get();
         $data['proffesions'] = Profession::select('full_name')->get();
         // send the states
@@ -393,11 +391,28 @@ class RecruiterDashboardController extends Controller
 
     public function send_amount(Request $request){
         try {
-            $validatedData = $request->validate([
-                'amount' => 'required|numeric',
-            ]);
+            
 
-            return response()->json(['status' => true, 'message' => 'working on it !']);
+            $user = Auth::guard('recruiter')->user();
+            $user_email  = $user->email;
+
+             // Define the data for the request
+             $data = [
+                'email' => $user_email
+            ];
+
+             // Define the URL<
+         $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/create';
+
+         // return response()->json(['data'=>$data , 'url' => $url]);   
+ 
+         // Make the request
+         $response = Http::post($url, $data);
+
+         $portal_link = $response->json()['message'];
+          
+
+            return response()->json(['status' => true, 'message' => 'working on it !', 'portal_link' => $portal_link]);
     }catch (ValidationException $e) {
         return response()->json(['status' => false, 'message' => $e->errors()]);
     } catch (\Exception $e) {
@@ -406,4 +421,6 @@ class RecruiterDashboardController extends Controller
 
 
     }
+
+   
 }

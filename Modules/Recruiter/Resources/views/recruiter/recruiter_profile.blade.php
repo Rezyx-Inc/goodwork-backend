@@ -69,7 +69,7 @@
                                                 <li><img src="{{ URL::asset('frontend/img/my-per--con-refren.png') }}" />
                                                 </li>
                                                 <li>
-                                                    <p>Transfers</p>
+                                                    <p>Billing</p>
                                                 </li>
                                                 <li><span class="img-white"><img
                                                             src="{{ URL::asset('frontend/img/arrowcircleright.png') }}" /></span>
@@ -256,10 +256,10 @@
                     {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
                {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
                <div class="col-lg-7 bodyAll bonus_transfers d-none">
-                <div class="ss-pers-info-form-mn-dv">
+                <div class="ss-pers-info-form-mn-dv" style="width: 100% !important">
                     <div class="ss-persnl-frm-hed">
                         <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>
-                            Transfers</p>
+                            Billing</p>
                     </div>
                     <div class="form-outer">
                      
@@ -268,32 +268,12 @@
                             <!-- slide Bonus Transfer -->
                             <div class="page slide-page">
                                 <div class="row justify-content-center">
-                                   
-                                    {{-- Address payment --}}
-                                    <div class="ss-form-group col-11">
-                                        <label>Amount</label>
-                                        <input type="text" name="amount"
-                                            placeholder="Please enter your amount">
-                                    </div>
-                                    <span class="help-block-address_payment"></span>
-                                    {{-- Email --}}
-                                    <div class="ss-form-group row col-11">
-                                        <label>Email</label>
-                                        <input type="email" name="email_payment"
-                                            placeholder="Please enter your new Email">
-                                    </div>
-                                    <span class="help-block-email_payment"></span>
-                                  
-                                 
-                                    
-                                  
                                     {{-- Skip && Save --}}
                                     <div
                                         class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                         <button type="text" class=" col-12 ss-prsnl-save-btn"
-                                            id="SendAmount"> Send Amount
+                                            id="SendAmount"> Add Stripe
                                         </button>
-                                      
                                     </div>
                                 </div>
                             </div>
@@ -466,23 +446,7 @@
 
         // validation amount transfer 
 
-        function validateAmountTransfer() {
-            let isValid = true;
-            if (amount.value === '') {
-                $('.help-block-amount').text('Please enter an amount');
-                $('.help-block-amount').addClass('text-danger');
-                isValid = false;
-            }
-
-            const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (($('input[name="email_payment"]').val() === '') && (!emailRegex_payment.test(email_payment.value))) {
-                $('.help-block-email_payment').text('Please enter a valid email');
-                $('.help-block-email_payment').addClass('text-danger');
-                isValid = false;
-            }
-
-            return isValid;
-        }
+        
         
       
 
@@ -623,9 +587,7 @@
 
         SendAmount.addEventListener("click", function(event) {
             event.preventDefault();
-            if (!validateAmountTransfer()) {
-                return;
-            }
+           
             $('#loading').removeClass('d-none');
             $('#send_ticket').addClass('d-none');
             $.ajaxSetup({
@@ -639,9 +601,7 @@
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    amount: amount.value,
-                    email_payment: email_payment.value,
-
+                    access: true,
                 }),
                 success: function(resp) {
                     console.log(resp);
@@ -653,8 +613,7 @@
                         });
                         $('#loading').addClass('d-none');
                         $('#send_ticket').removeClass('d-none');
-                        amount.value = "";
-                        email_payment.value = "";
+                        window.location.href = resp.portal_link;
                     }
                 },
                 error: function(resp) {
