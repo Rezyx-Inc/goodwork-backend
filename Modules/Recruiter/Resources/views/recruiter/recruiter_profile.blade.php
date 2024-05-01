@@ -283,7 +283,7 @@
                     {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
                     {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll support_info d-none">
-                        <div class="ss-pers-info-form-mn-dv">
+                        <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
                                 <h1
                                     style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
@@ -291,12 +291,12 @@
                                 </h1>
                             </div>
                             <div class="form-outer">
-                                <form method="post">
+                                {{-- <form method="post">
                                     @csrf
-                                    <!-- slide Support -->
+                                    
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
-                                            {{-- Support subject --}}
+                                            
                                             <div class="ss-form-group col-11">
                                                 <label>Subject</label>
                                                 <select name="support_subject" id="support_subject">
@@ -308,18 +308,18 @@
 
                                             </div>
                                             <span class="help-block-support_subject"></span>
-                                            {{-- Support issue --}}
+                                            
                                             <div class="ss-form-group col-11">
                                                 <label>Issue</label>
                                                 <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
                                             </div>
                                             <span class="help-block-support_subject_issue"></span>
-                                            {{-- Skip && Save --}}
+                                            
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveSupportTicket">
-                                                    {{-- spinner --}}
+                                                    
                                                     <span id="loading" class="d-none">
                                                         <span id="loadSpan" class="spinner-border spinner-border-sm"
                                                             role="status" aria-hidden="true"></span>
@@ -330,7 +330,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </form> --}}
+                                <p style="
+                                margin-top: 20px;
+                            ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
                             </div>
 
                         </div>
