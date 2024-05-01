@@ -8,6 +8,7 @@ const Laboredge = require('../models/Laboredge');
 const Logs = require('../models/Logs');
 
 var _ = require('lodash');
+var { report } = require('../set.js')
 
 //Connect to DB
 mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_DATABASE_NAME)
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
 })
 .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
+    report("src/crons/laboredge.js error on mongodb connection");
 });
 
 // Process laboredge integrations for the first time

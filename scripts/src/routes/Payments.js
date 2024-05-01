@@ -142,7 +142,7 @@ router.post('/customer/create', async (req, res) => {
     	const customerTest = await stripe.customers.list({email:req.body.email});
     	
     	if(customerTest.data.length > 0){
-    		return res.status(400).send({status: false, message: "Client exists."})
+    		return res.status(400).send({status: false, message: "Client exists.", code:101})
     	}
     
     }catch(e){
@@ -179,7 +179,7 @@ router.post('/customer/invoice', async (req, res) => {
 	if(!Object.keys(req.body).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
-    else if ( !req.body.stripeId || !req.body.amount){
+    else if ( !req.body.stripeId || !req.body.amount || !req.body.offerId){
 
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
@@ -191,7 +191,10 @@ router.post('/customer/invoice', async (req, res) => {
 			customer: req.body.stripeId,
 			auto_advance: true,
 			currency: "usd",
-			collection_method:"charge_automatically"
+			collection_method:"charge_automatically",
+			metadata: {
+				offerId: req.body.offerId
+			}
 		});
 
 		//create invoice item
@@ -199,7 +202,7 @@ router.post('/customer/invoice', async (req, res) => {
 			customer: req.body.stripeId,
 			amount: Number(req.body.amount) * 100,
 			invoice: invoice.id,
-			description: "Goodwork Fees"
+			description: "Goodwork Fees for "+ req.body.offerId
 		});
 
 		// Finalize

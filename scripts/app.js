@@ -3,14 +3,18 @@ var path = require("path");
 var cron = require('node-cron');
 require("dotenv").config();
 
+var { report } = require('./src/set.js')
+
 const server = path.join(path.dirname(__filename), "server.js")
 const crons = path.join(path.dirname(__filename), "/src/crons/index.js")
+const webhooks = path.join(path.dirname(__filename), "/src/webhooks/stripe.js")
 
 const { argv } = require('node:process');
 
 pm2.connect(function(err) {
   if (err) {
     console.error(err)
+    report("Unable to connect PM2")
     process.exit(2)
   }
 
@@ -22,8 +26,9 @@ pm2.connect(function(err) {
       argv[3] == "true" ? watch = true : watch = false
     }
 
-    console.log("Starting the file management service.")
+    console.log("Starting the File Management service.")
 
+    // Files management
     pm2.start({
       script    : server,
       name      : 'files',
@@ -31,11 +36,30 @@ pm2.connect(function(err) {
     }, function(err, apps) {
       if (err) {
         console.error(err)
+        report("Unable to start File management")
         return pm2.disconnect()
+
       }
       return pm2.disconnect()
     });
 
+    console.log("Starting the Webhooks service")
+    // Webhook management
+    pm2.start({
+      script    : webhooks,
+      name      : 'webhooks',
+      watch     : watch
+    }, function(err, apps) {
+      if (err) {
+        console.error(err)
+        report("Unable to start Webhook service")
+        return pm2.disconnect()
+
+      }
+      return pm2.disconnect()
+    });
+
+    // Crons management
     if(process.env.ENABLE_CRONS){
       console.log("Starting the Cron service.")
       pm2.start({
@@ -45,6 +69,7 @@ pm2.connect(function(err) {
       }, function(err, apps) {
         if (err) {
           console.error(err)
+          report("Unable to start Cron service")
           return pm2.disconnect()
         }
         return pm2.disconnect()
@@ -72,12 +97,14 @@ pm2.connect(function(err) {
 
       }else{
         console.log("Unable to list processes", err)
+        report("Unable to list PM2 processes")
         pm2.disconnect()
       }
     })
 
   }else{
     console.error("Invalid argument")
+    report("Invalid app argument")
   }
   
 })
