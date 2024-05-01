@@ -196,12 +196,12 @@
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
                                             {{-- Change User Name --}}
-                                            <div class="ss-form-group col-11">
+                                            {{-- <div class="ss-form-group col-11">
                                                 <label>New User Name</label>
                                                 <input type="text" name="user_name"
                                                     placeholder="Please enter your new user name">
                                             </div>
-                                            <span class="help-block-user_name"></span>
+                                            <span class="help-block-user_name"></span> --}}
                                             {{-- Change Password --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Password</label>
