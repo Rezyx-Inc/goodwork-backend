@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Docs = require('../models/Docs');
+const archiver = require('archiver');
 
 router.get('/', (req, res) => {
     res.send('Docs page');
@@ -252,6 +253,46 @@ router.post('/del-docs', async (req, res) => {
             console.log("Unexpected error", e)
             return res.status(400).send("Unexpected error.")
         });
+});
+
+
+router.get('/download-docs', async (req, res) => {
+    if(!req.query.workerId) {
+        return res.status(400).send("Missing parameters.")
+    }
+
+    let docs = await Docs.findOne({workerId: req.query.workerId});
+    if(!docs) {
+        return res.status(404).send("Document not found.");
+    }
+
+    let archive = archiver('zip', {
+        zlib: { level: 9 } // Sets the compression level.
+    });
+
+    // This is to handle the error event
+    archive.on('error', function(err) {
+        res.status(500).send({error: err.message});
+    });
+
+    // This is to handle the finish event
+    archive.on('end', function() {
+        console.log('Archive wrote %d bytes', archive.pointer());
+    });
+
+    // Set the archive name
+    res.attachment('docs.zip');
+
+    // This is to handle the streaming
+    archive.pipe(res);
+
+    // Append all files from the docs to the archive
+    for(let file of docs.files) {
+        archive.append(file.content, { name: file.name });
+    }
+
+    // Finalize the archive
+    archive.finalize();
 });
 
 module.exports = router;

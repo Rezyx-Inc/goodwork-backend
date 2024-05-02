@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
     <link rel='stylesheet' href='{{URL::asset("recruiter/custom/css/owl.carousel.css")}}'>
     <link rel='stylesheet' href='{{URL::asset("recruiter/custom/css/mdb.min.css")}}'>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="{{URL::asset('frontend/css/style.css')}}" />
     <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/custom.css')}}" />
 

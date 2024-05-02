@@ -5,54 +5,64 @@
         <div class="container">
             <h2>Help your <span class="ss-color-pink">applicants advance!</span></h2>
             <div class="row mt-4 applicants-header text-center">
+                {{-- New Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Apply')" id="Apply">
                         <p>New</p>
                         <span>{{ $statusCounts['Apply'] }} Applicants</span>
                     </div>
                 </div>
-                <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Screening')" id="Screening">
-                        <p>Screening</p>
-                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
+                 {{-- Offered Applicants --}}
+                 <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="applicationType('Offered')" id="Offered">
+                        <p>Offered</p>
+                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
                     </div>
                 </div>
+                {{-- On Hold Applicants --}}
+                <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="applicationType('Hold')" id="Hold">
+                        <p>Hold</p>
+                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
+                    </div>
+                </div>
+                {{-- Submitted Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Submitted')" id="Submitted">
                         <p>Submitted</p>
                         <span>{{ $statusCounts['Submitted'] }} Applicants</span>
                     </div>
                 </div>
+                {{-- Screening Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Draft')" id="Draft">
-                        <p>Draft Offer</p>
-                        <span>{{ $status_count_draft }} Applicants</span>
+                    <div class="ss-job-prfle-sec" onclick="applicationType('Screening')" id="Screening">
+                        <p>Screening</p>
+                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
                     </div>
                 </div>
-                <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Offered')" id="Offered">
-                        <p>Offered</p>
-                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
-                    </div>
-                </div>
+                {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
                         <span>{{ $statusCounts['Onboarding'] }} Applicants</span>
                     </div>
                 </div>
+                {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Working')" id="Working">
                         <p>Working</p>
                         <span>{{ $statusCounts['Working'] }} Applicants</span>
                     </div>
                 </div>
+                {{-- Done Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Done')" id="Done">
                         <p>Done</p>
                         <span>{{ $statusCounts['Done'] }} Applicants</span>
                     </div>
                 </div>
+                
+               
             </div>
             <div class="ss-appli-done-hed-btn-dv d-none" id="ss-appli-done-hed-btn-dv">
                 <div class="row">
@@ -217,13 +227,11 @@
             var onboardingElement = document.getElementById('Onboarding');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
-            var draftElement = document.getElementById('Draft');
+            var holdElement = document.getElementById('Hold');
             var rejectedElement = document.getElementById('Rejected');
             var blockedElement = document.getElementById('Blocked');
-            var holdElement = document.getElementById('child_done');
-            if (draftElement.classList.contains("active")) {
-                draftElement.classList.remove("active");
-            }
+            var childDoneElement = document.getElementById('child_done');
+           
             if (applyElement.classList.contains("active")) {
                 applyElement.classList.remove("active");
             }
@@ -259,9 +267,10 @@
 
             if (activeElement) {
                 activeElement.classList.add("active");
-                holdElement.classList.add("active");
+                childDoneElement.classList.add("active");
                 if (type == 'Rejected' || type == 'Blocked') {
-                    holdElement.classList.remove("active");
+                    childDoneElement.classList.remove("active");
+                    doneElement.classList.add("active");
                 }
             }
             document.getElementById('listingname').innerHTML = type + ' Application';
@@ -861,35 +870,42 @@
     </script>
     <script>
         function askWorker(e, type, workerid, jobid) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('recruiter/ask-recruiter-notification') }}",
-                    data: {
-                        'token': csrfToken,
-                        'worker_id': workerid,
-                        'update_key': type,
-                        'job_id': jobid,
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> ' + result.message,
-                            time: 5
-                        });
-                    },
-                    error: function(error) {
-                        // Handle errors
-                    }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
+            // when we have the notification system inmplemented we will use this :
+
+            // var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            // if (csrfToken) {
+            //     $.ajax({
+            //         headers: {
+            //             'X-CSRF-TOKEN': csrfToken
+            //         },
+            //         url: "{{ url('recruiter/ask-recruiter-notification') }}",
+            //         data: {
+            //             'token': csrfToken,
+            //             'worker_id': workerid,
+            //             'update_key': type,
+            //             'job_id': jobid,
+            //         },
+            //         type: 'POST',
+            //         dataType: 'json',
+            //         success: function(result) {
+            //             notie.alert({
+            //                 type: 'success',
+            //                 text: '<i class="fa fa-check"></i> ' + result.message,
+            //                 time: 5
+            //             });
+            //         },
+            //         error: function(error) {
+            //             // Handle errors
+            //         }
+            //     });
+            // } else {
+            //     console.error('CSRF token not found.');
+            // }
+
+            // for now just redirecting to messages page
+            let url = "{{ url('recruiter/recruiter-messages') }}";
+           // window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
+           window.location = url;
         }
 
         function chatNow(id) {
@@ -995,4 +1011,5 @@
             });
         }
     </script>
+    
 @endsection
