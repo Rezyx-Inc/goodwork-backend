@@ -235,12 +235,19 @@ class ApplicationController extends Controller
                 
 
              // POST request
-            $response = Http::post('http://localhost:4545/documents/get-docs', ['workerId' => $nursedetails->id]);
-            // return response()->json(['nursedetails'=>$response->json()['files']]);
+            $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
+            $response = Http::post($urlDocs, ['workerId' => $nursedetails->id]);
             // Check if the nurse has files
             if (!empty($response->json()['files'])) {
                 $hasFile = true;
-                $downloadUrl = 'http://localhost:4545/documents/download-docs/?workerId='.$nursedetails->id;
+                $files = [];
+                foreach($response->json()['files'] as $file){
+                    $files[] = [
+                        'name' => $file['name'],
+                        'content' => base64_encode(implode(array_map("chr", $file['content']['data']))) 
+                    ];
+                }
+                    
             } 
             $userdetails = $nursedetails ? User::where('id', $nursedetails->user_id)->first() : '';
 
@@ -2111,12 +2118,9 @@ class ApplicationController extends Controller
                     $data2 .=
                         '
                         <li style="margin-right:10px; width:auto !important;">
-                            <a href="' .
-                            $downloadUrl .
-                            '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
-                            $offerdetails['worker_user_id'] .
-                            '\')">Download worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
-                        </li>';
+                        <a  class="rounded-pill ss-apply-btn py-2 border-0 px-4" 
+                        data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
+                    </li>';
                     }
                 $data2 .=
                     '
@@ -2132,12 +2136,9 @@ class ApplicationController extends Controller
             }else if($hasFile == true){
                 $data2 .=
                     '
-                    <li style="margin-right:10px;">
-                        <a href="' .
-                        $downloadUrl .
-                        '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
-                        $offerdetails['worker_user_id'] .
-                        '\')">Download worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
+                    <li style="margin-right:10px; ">
+                        <a style="cursor:pointer;"  class="rounded-pill ss-apply-btn py-2 border-0 px-4" 
+                        data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>
                     <li>
                         <a href="' .
@@ -2330,6 +2331,7 @@ class ApplicationController extends Controller
             'applicationlisting' => $data,
             'applicationdetails' => $data2,
             'allspecialty' => $allspecialty,
+            'files'=> $files,
         ];
         return response()->json($responseData);
     }

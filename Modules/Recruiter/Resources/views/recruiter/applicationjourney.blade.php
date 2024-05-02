@@ -12,8 +12,8 @@
                         <span>{{ $statusCounts['Apply'] }} Applicants</span>
                     </div>
                 </div>
-                 {{-- Offered Applicants --}}
-                 <div style="flex: 1 1 0px;">
+                {{-- Offered Applicants --}}
+                <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Offered')" id="Offered">
                         <p>Offered</p>
                         <span>{{ $statusCounts['Offered'] }} Applicants</span>
@@ -61,8 +61,8 @@
                         <span>{{ $statusCounts['Done'] }} Applicants</span>
                     </div>
                 </div>
-                
-               
+
+
             </div>
             <div class="ss-appli-done-hed-btn-dv d-none" id="ss-appli-done-hed-btn-dv">
                 <div class="row">
@@ -100,80 +100,117 @@
                 </div>
             </div>
         </div>
+
+        {{-- our file model --}}
+        <div class="modal fade ss-jb-dtl-pops-mn-dv" id="file_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="ss-pop-cls-vbtn">
+                        <button type="button" class="btn-close" data-target="#file_modal" onclick="close_modal(this)"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                            <form method="post" action="{{ route('worker-upload-files') }}" id="file_modal_form"
+                                class="modal-form">
+                                <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                                <h4></h4>
+                                <div class="ss-form-group fileUploadInput">
+                                    <table style="font-size: 16px;" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Document Name</th>
+                                                <th scope="col">Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </main>
     <script>
         function validateFirst() {
-    var access = true;
+            var access = true;
 
-    var fields = [
-        'job_name',
-        'type',
-        'term',
-        'description',
-        'profession',
-        'preferred_specialty',
-        'float_requirement',
-        'facility_shift_cancelation_policy',
-        'contract_termination_policy',
-        'traveler_distance_from_facility',
-        'facility',
-        'clinical_setting',
-        'Patient_ratio',
-        'emr',
-        'Unit',
-        'scrub_color',
-        'as_soon_as',
-        'start_date',
-        'rto',
-        'shift-of-day',
-        'hours_per_week',
-        'guaranteed_hours',
-        'hours_shift',
-        'preferred_assignment_duration',
-        'weeks_shift',
-        'sign_on_bonus',
-        'completion_bonus',
-        'extension_bonus',
-        'referral_bonus',
-        'other_bonus',
-        '401k',
-        'health-insurance',
-        'dental',
-        'vision',
-        'actual_hourly_rate',
-        'overtime',
-        'holiday',
-        'on_call',
-        'tax_status',
-        'orientation_rate'
-    ];
+            var fields = [
+                'job_name',
+                'type',
+                'term',
+                'description',
+                'profession',
+                'preferred_specialty',
+                'float_requirement',
+                'facility_shift_cancelation_policy',
+                'contract_termination_policy',
+                'traveler_distance_from_facility',
+                'facility',
+                'clinical_setting',
+                'Patient_ratio',
+                'emr',
+                'Unit',
+                'scrub_color',
+                'as_soon_as',
+                'start_date',
+                'rto',
+                'shift-of-day',
+                'hours_per_week',
+                'guaranteed_hours',
+                'hours_shift',
+                'preferred_assignment_duration',
+                'weeks_shift',
+                'sign_on_bonus',
+                'completion_bonus',
+                'extension_bonus',
+                'referral_bonus',
+                'other_bonus',
+                '401k',
+                'health-insurance',
+                'dental',
+                'vision',
+                'actual_hourly_rate',
+                'overtime',
+                'holiday',
+                'on_call',
+                'tax_status',
+                'orientation_rate'
+            ];
 
-    fields.forEach(function(field) {
-       var test = document.getElementById(field);
-        console.log(test.value);
-        var value = document.getElementById(field).value;
+            fields.forEach(function(field) {
+                var test = document.getElementById(field);
+                console.log(test.value);
+                var value = document.getElementById(field).value;
 
-        if (value.trim() === '') {
-            $('.help-block-' + field).text('Please enter the ' + field);
-            $('.help-block-' + field).addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-' + field).text('');
+                if (value.trim() === '') {
+                    $('.help-block-' + field).text('Please enter the ' + field);
+                    $('.help-block-' + field).addClass('text-danger');
+                    access = false;
+                } else {
+                    $('.help-block-' + field).text('');
+                }
+            });
+
+            return access;
         }
-    });
-
-    return access;
-}
 
         function applicationType(type, id = "", formtype, jobid = "") {
-            
+
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
 
-            if ((formtype == "joballdetails" || formtype == "createdraft" ) && validateFirst() ) {
-                
+            if ((formtype == "joballdetails" || formtype == "createdraft") && validateFirst()) {
+
                 event.preventDefault();
                 var $form = $('#send-job-offer');
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -194,8 +231,8 @@
                     url: "{{ route('recruiter-send-job-offer') }}",
                     data: formData,
                     dataType: 'json',
-                    processData: false, 
-                    contentType: false, 
+                    processData: false,
+                    contentType: false,
                     success: function(data) {
                         if (type == "createdraft") {
                             notie.alert({
@@ -231,7 +268,7 @@
             var rejectedElement = document.getElementById('Rejected');
             var blockedElement = document.getElementById('Blocked');
             var childDoneElement = document.getElementById('child_done');
-           
+
             if (applyElement.classList.contains("active")) {
                 applyElement.classList.remove("active");
             }
@@ -308,6 +345,18 @@
                         list_specialities();
                         list_vaccinations();
                         list_certifications();
+                        var files = result.files;
+                        var tbody = $('tbody');
+                        tbody.empty(); // Clear the table body
+                        // Add a row for each file
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            var row = $('<tr></tr>');
+                            row.append('<td>' + file.name + '</td>');
+                            row.append('<td><a href="data:application/octet-stream;base64,' + file.content +
+                                '" download="' + file.name + '">Download</a></td>');
+                            tbody.append(row);
+                        }
                     },
                     error: function(error) {
                         console.log(error);
@@ -904,8 +953,8 @@
 
             // for now just redirecting to messages page
             let url = "{{ url('recruiter/recruiter-messages') }}";
-           // window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
-           window.location = url;
+            // window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
+            window.location = url;
         }
 
         function chatNow(id) {
@@ -980,6 +1029,7 @@
                 }
             });
         }
+
         function getSpecialitiesByProfession(e) {
             var selectedValue = e.value;
             let formData = {
@@ -1010,6 +1060,24 @@
                 }
             });
         }
+
+        function open_modal(obj) {
+            let name, title, modal, form, target;
+
+            name = $(obj).data('name');
+            title = $(obj).data('title');
+            target = $(obj).data('target');
+
+            modal = '#' + target + '_modal';
+            form = modal + '_form';
+            $(form).find('h4').html(title);
+
+            $(modal).modal('show');
+        }
+
+        function close_modal(obj) {
+            let target = $(obj).data('target');
+            $(target).modal('hide');
+        }
     </script>
-    
 @endsection
