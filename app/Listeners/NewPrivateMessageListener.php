@@ -34,6 +34,9 @@ class NewPrivateMessageListener
         $message = $event->message;
         $senderRole = $event->senderRole;
         $messageTime = $event->messageTime;
+        $type = $event->type;
+        $fileName = $event->fileName;
+
         
         // Find existing chat between the employer and worker
         $chat = Chat::where('employerId', $employerId)
@@ -46,9 +49,10 @@ class NewPrivateMessageListener
             $newMessage = [
                 'id' => uniqid(),
                 'sender' => $senderRole,
-                'type' => 'text',
+                'type' => $type,
                 'time' => $messageTime,
-                'content' => $message
+                'content' => $message,
+                'fileName' => $fileName
             ];
             $chat->messages = collect($chat->messages)->prepend($newMessage)->all();
         } else {
@@ -61,9 +65,10 @@ class NewPrivateMessageListener
                 [
                     'id' => uniqid(),
                     'sender' => $senderRole,
-                    'type' => 'text',
+                    'type' => $type,
                     'time' => $messageTime,
-                    'content' => $message
+                    'content' => $message,
+                    'fileName' => $fileName
                 ]
             ];
         }

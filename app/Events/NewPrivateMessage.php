@@ -23,8 +23,11 @@ class NewPrivateMessage implements ShouldBroadcast
 
     public $senderRole;
     public $messageTime;
+    public $type;
+    public $fileName;
 
-    public function __construct($message, $EmployerId , $RecruiterId ,  $WorkerId , $senderRole , $messageTime)
+
+    public function __construct($message, $EmployerId , $RecruiterId ,  $WorkerId , $senderRole , $messageTime,$type,$fileName)
     {
         $this->message = $message;
         $this->EmployerId = $EmployerId;
@@ -32,6 +35,10 @@ class NewPrivateMessage implements ShouldBroadcast
         $this->WorkerId = $WorkerId;        
         $this->senderRole = $senderRole;
         $this->messageTime = $messageTime;
+        $this->type = $type;
+        $this->fileName = $fileName;
+
+
 
     }
 

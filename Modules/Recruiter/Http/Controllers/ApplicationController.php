@@ -2122,15 +2122,23 @@ class ApplicationController extends Controller
                         data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>';
                     }
-                $data2 .=
-                    '
-                <li style="width:auto !important;">
-                <a href="' .
-                route('recruiter-messages') .
-                '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
-                $offerdetails['worker_user_id'] .
-                '\')">Chat Now</a>
+            //     $data2 .=
+            //         '
+            //     <li style="width:auto !important;">
+            //     <a href="' .
+            //     route('recruiter-messages') .
+            //     '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
+            //     $offerdetails['worker_user_id'] .
+            //     '\')">Chat Now</a>
                 
+            // </li>';
+            $data2 .= '
+            <li style="width:auto !important;">
+                <form method="POST" action="' . route('recruiter-messages') . '">
+                    <input type="hidden" name="_token" value="' . csrf_token() . '">
+                    <input type="hidden" name="worker_user_id" value="' . $offerdetails['worker_user_id'] . '">
+                    <button type="submit" class="rounded-pill ss-apply-btn py-2 border-0 px-4">Chat Now</button>
+                </form>
             </li>';
             
             }else if($hasFile == true){

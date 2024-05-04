@@ -86,218 +86,225 @@ class RecruiterController extends Controller
     }
 
     public function get_private_messages(Request $request)
-{
-    $idEmployer = $request->query('employerId');
-    $idWorker = $request->query('workerId');
-    $page = $request->query('page', 1);
-    
-    $idRecruiter = Auth::guard('recruiter')->user()->id;
-   
-    // Calculate the number of messages to skip
-    $skip = ($page - 1) * 10;
+    {
+        $idEmployer = $request->query('employerId');
+        $idWorker = $request->query('workerId');
+        $page = $request->query('page', 1);
 
+        $idRecruiter = Auth::guard('recruiter')->user()->id;
 
-    // we need to set the recruiter static since we dont have a relation between those three roles yet so we choose "GWU000005"
+        // Calculate the number of messages to skip
+        $skip = ($page - 1) * 10;
 
-    $chat = DB::connection('mongodb')->collection('chat')
-    ->raw(function($collection) use ( $idEmployer,$idRecruiter, $idWorker, $skip) {
-        return $collection->aggregate([
-            [
-                '$match' => [
-                    'employerId' => $idEmployer,
-                    // 'recruiterId'=> $idRecruiter,
-                    // for now until get the offer works
-                    'recruiterId'=> 'GWU000005',
+        // we need to set the recruiter static since we dont have a relation between those three roles yet so we choose "GWU000005"
 
-                    'workerId' => $idWorker
-                ]
-            ],
-            [
-                '$project' => [
-                    'messages' => [
-                        '$slice' => [
-                            '$messages',
-                            $skip,
-                            10
-                        ]
-                    ]
-                ]
-            ]
-        ])->toArray();
-    });
+        $chat = DB::connection('mongodb')
+            ->collection('chat')
+            ->raw(function ($collection) use ($idEmployer, $idRecruiter, $idWorker, $skip) {
+                return $collection
+                    ->aggregate([
+                        [
+                            '$match' => [
+                                'employerId' => $idEmployer,
+                                // 'recruiterId'=> $idRecruiter,
+                                // for now until get the offer works
+                                'recruiterId' => 'GWU000005',
 
-    return $chat[0];
+                                'workerId' => $idWorker,
+                            ],
+                        ],
+                        [
+                            '$project' => [
+                                'messages' => [
+                                    '$slice' => ['$messages', $skip, 10],
+                                ],
+                            ],
+                        ],
+                    ])
+                    ->toArray();
+            });
 
-}
-
-public function get_rooms(Request $request){
-    $idRecruiter = Auth::guard('recruiter')->user()->id;
-
-    $rooms = DB::connection('mongodb')->collection('chat')
-    ->raw(function($collection) use ($idRecruiter) {
-        return $collection->aggregate([
-            [
-                '$match' => [
-                    'recruiterId' => $idRecruiter,
-                ]
-            ],
-            [
-                '$project' => [
-                    'employerId' => 1,
-                    'recruiterId'=>1,
-                    'workerId' => 1,
-                    'lastMessage' => 1,
-                    'isActive' => 1,
-                    'messages' => [
-                        '$slice' => [
-                            '$messages',
-                            1
-                        ]
-                    ]
-                ]
-            ]
-        ])->toArray();
-    });
-
-   
-    $users = [];
-    $data = [];
-    foreach($rooms as $room){
-    $user = User::where('id', $room->workerId)->where('role','NURSE')->select("first_name",
-    "last_name")->get();
-
-    $data_User['fullName'] = $user[0]->fullName;
-    $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-    $data_User['workerId'] = $room->workerId;
-    $data_User['employerId'] = $room->employerId;
-    $data_User['isActive'] = $room->isActive;
-    $data_User['messages'] = $room->messages;
-
-    array_push($data,$data_User);
+        return $chat[0];
     }
 
-    
-     return response()->json($data);
-}
+    public function get_rooms(Request $request)
+    {
+        $idRecruiter = Auth::guard('recruiter')->user()->id;
 
-    public function get_messages(){
-        
+        $rooms = DB::connection('mongodb')
+            ->collection('chat')
+            ->raw(function ($collection) use ($idRecruiter) {
+                return $collection
+                    ->aggregate([
+                        [
+                            '$match' => [
+                                'recruiterId' => $idRecruiter,
+                            ],
+                        ],
+                        [
+                            '$project' => [
+                                'employerId' => 1,
+                                'recruiterId' => 1,
+                                'workerId' => 1,
+                                'lastMessage' => 1,
+                                'isActive' => 1,
+                                'messages' => [
+                                    '$slice' => ['$messages', 1],
+                                ],
+                            ],
+                        ],
+                    ])
+                    ->toArray();
+            });
+
+        $users = [];
+        $data = [];
+        foreach ($rooms as $room) {
+            $user = User::where('id', $room->workerId)
+                ->where('role', 'NURSE')
+                ->select('first_name', 'last_name')
+                ->get();
+
+            $data_User['fullName'] = $user[0]->fullName;
+            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['workerId'] = $room->workerId;
+            $data_User['employerId'] = $room->employerId;
+            $data_User['isActive'] = $room->isActive;
+            $data_User['messages'] = $room->messages;
+
+            array_push($data, $data_User);
+        }
+
+        return response()->json($data);
+    }
+
+    public function get_messages()
+    {
         $id = Auth::guard('recruiter')->user()->id;
 
-    $rooms = DB::connection('mongodb')->collection('chat')
-    ->raw(function($collection) use ($id) {
-        return $collection->aggregate([
-            [
-                '$match' => [
-                    
-                    //'recruiterId' => $id,
+        $rooms = DB::connection('mongodb')
+            ->collection('chat')
+            ->raw(function ($collection) use ($id) {
+                return $collection
+                    ->aggregate([
+                        [
+                            '$match' => [
+                                //'recruiterId' => $id,
 
-                    // for now until get the offer works 
+                                // for now until get the offer works
 
-                    'recruiterId' => 'GWU000005',
-                    
-                ]
-            ],
-            [
-                '$project' => [
-                    'employerId' => 1,
-                    'workerId' => 1,
-                    'recruiterId' => 1,
-                    'lastMessage' => 1,
-                    'isActive' => 1,
-                    'messages' => [
-                        '$slice' => [
-                            '$messages',
-                            1
-                        ]
-                    ]
-                ]
-            ]
-        ])->toArray();
-    });
+                                'recruiterId' => 'GWU000005',
+                            ],
+                        ],
+                        [
+                            '$project' => [
+                                'employerId' => 1,
+                                'workerId' => 1,
+                                'recruiterId' => 1,
+                                'lastMessage' => 1,
+                                'isActive' => 1,
+                                'messages' => [
+                                    '$slice' => ['$messages', 1],
+                                ],
+                            ],
+                        ],
+                    ])
+                    ->toArray();
+            });
 
-    $data = [];
-    foreach($rooms as $room){
-    $user = User::where('id', $room->workerId)->where('role','NURSE')->select("first_name",
-    "last_name")->get();
+        $data = [];
+        $data_User = [];
+        foreach ($rooms as $room) {
+            //$user = User:select :where('id', $room->workerId);
+            $user = User::select('first_name', 'last_name')
+                ->where('id', $room->workerId)
+                ->get()
+                ->first();
 
-    $data_User['fullName'] = $user[0]->fullName;
-    $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-    $data_User['workerId'] = $room->workerId;
-    $data_User['isActive'] = $room->isActive;
-    $data_User['employerId'] = $room->employerId;
-    $data_User['messages'] = $room->messages;
+            if ($user) {
+                $name = $user->fullName;
+            } else {
+                // Handle the case where no user is found
+                $name = 'Default Name';
+            }
 
-    array_push($data,$data_User);
+            $data_User['fullName'] = $name;
+            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['workerId'] = $room->workerId;
+            $data_User['isActive'] = $room->isActive;
+            $data_User['employerId'] = $room->employerId;
+            $data_User['messages'] = $room->messages;
+
+            array_push($data, $data_User);
+        }
+
+        return view('recruiter::recruiter/messages', compact('id', 'data'));
     }
 
-        return  view('recruiter::recruiter/messages',compact('id','data'));
-    }
-
-    public function timeAgo($time = NULL)
+    public function timeAgo($time = null)
     {
-         // If $time is not a timestamp, try to convert it
-    if (!is_numeric($time)) {
-        $time = strtotime($time);
-    }
+        // If $time is not a timestamp, try to convert it
+        if (!is_numeric($time)) {
+            $time = strtotime($time);
+        }
 
         // Calculate difference between current
         // time and given timestamp in seconds
-        $diff     = time() - $time;
+        $diff = time() - $time;
         // Time difference in seconds
-        $sec     = $diff;
+        $sec = $diff;
         // Convert time difference in minutes
-        $min     = round($diff / 60);
+        $min = round($diff / 60);
         // Convert time difference in hours
-        $hrs     = round($diff / 3600);
+        $hrs = round($diff / 3600);
         // Convert time difference in days
-        $days     = round($diff / 86400);
+        $days = round($diff / 86400);
         // Convert time difference in weeks
-        $weeks     = round($diff / 604800);
+        $weeks = round($diff / 604800);
         // Convert time difference in months
-        $mnths     = round($diff / 2600640);
+        $mnths = round($diff / 2600640);
         // Convert time difference in years
-        $yrs     = round($diff / 31207680);
+        $yrs = round($diff / 31207680);
         // Check for seconds
         if ($sec <= 60) {
             $string = "$sec seconds ago";
         }
         // Check for minutes
-        else if ($min <= 60) {
+        elseif ($min <= 60) {
             if ($min == 1) {
-                $string = "one minute ago";
+                $string = 'one minute ago';
             } else {
                 $string = "$min minutes ago";
             }
         }
         // Check for hours
-        else if ($hrs <= 24) {
+        elseif ($hrs <= 24) {
             if ($hrs == 1) {
-                $string = "an hour ago";
+                $string = 'an hour ago';
             } else {
                 $string = "$hrs hours ago";
             }
         }
         // Check for days
-        else if ($days <= 7) {
+        elseif ($days <= 7) {
             if ($days == 1) {
-                $string = "Yesterday";
+                $string = 'Yesterday';
             } else {
                 $string = "$days days ago";
             }
         }
         // Check for weeks
-        else if ($weeks <= 4.3) {
+        elseif ($weeks <= 4.3) {
             if ($weeks == 1) {
-                $string = "a week ago";
+                $string = 'a week ago';
             } else {
                 $string = "$weeks weeks ago";
             }
         }
         // Check for months
-        else if ($mnths <= 12) {
+        elseif ($mnths <= 12) {
             if ($mnths == 1) {
-                $string = "a month ago";
+                $string = 'a month ago';
             } else {
                 $string = "$mnths months ago";
             }
@@ -305,7 +312,7 @@ public function get_rooms(Request $request){
         // Check for years
         else {
             if ($yrs == 1) {
-                $string = "one year ago";
+                $string = 'one year ago';
             } else {
                 $string = "$yrs years ago";
             }
@@ -315,45 +322,43 @@ public function get_rooms(Request $request){
 
     public function sendMessages(Request $request)
     {
-
         $message = $request->message_data;
         $user = Auth::guard('recruiter')->user();
         $id = $user->id;
         $role = $user->role;
         $idWorker = $request->idWorker;
+        $type = $request->type;
+        $fileName = $request->fileName;
 
         // if i located the recruiter dash i should get the id of the employer from the request
-        // we will use this id for now : "GWU000005"  
+        // we will use this id for now : "GWU000005"
 
         $idEmployer = $request->idEmployer;
-       
+
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message , $idEmployer, 'GWU000005' ,   $idWorker,$role,$time));
-        
-    return true;
+        event(new NewPrivateMessage($message, $idEmployer, 'GWU000005', $idWorker, $role, $time, $type, $fileName));
+
+        return true;
     }
 
-    // adding jobs : 
+    // adding jobs :
     public function addJob()
     {
         return view('recruiter::layouts.addJob');
-
     }
-
 
     public function addJobStore(Request $request)
     {
         try {
-
             $created_by = Auth::guard('recruiter')->user()->id;
             // Validate the form data
 
             $active = $request->input('active');
 
             // $active = $activeRequest['active'];
-            $validatedData =[];
+            $validatedData = [];
 
-            if($active == '0'){
+            if ($active == '0') {
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
                     'job_name' => 'string',
@@ -362,8 +367,8 @@ public function get_rooms(Request $request){
                     'preferred_assignment_duration' => 'nullable|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'nullable|string',
-                    'preferred_work_location'=>'nullable|string',
-                    'description'=>'nullable|string',
+                    'preferred_work_location' => 'nullable|string',
+                    'description' => 'nullable|string',
                     'active' => 'nullable|string',
                     'preferred_shift_duration' => 'nullable|string',
                     'preferred_work_area' => 'nullable|string',
@@ -383,9 +388,8 @@ public function get_rooms(Request $request){
                     'hours_per_week' => 'nullable|integer',
                     'responsibilities' => 'nullable|string',
                     'qualifications' => 'nullable|string',
-
                 ]);
-            }else if($active == '1'){
+            } elseif ($active == '1') {
                 $validatedData = $request->validate([
                     'job_type' => 'required|string',
                     'job_name' => 'required|string',
@@ -394,8 +398,8 @@ public function get_rooms(Request $request){
                     'preferred_assignment_duration' => 'nullable|string',
                     'weekly_pay' => 'required|numeric',
                     'preferred_specialty' => 'required|string',
-                    'preferred_work_location'=>'nullable|string',
-                    'description'=>'nullable|string',
+                    'preferred_work_location' => 'nullable|string',
+                    'description' => 'nullable|string',
                     'active' => 'string',
                     'preferred_shift_duration' => 'nullable|string',
                     'preferred_work_area' => 'nullable|string',
@@ -415,13 +419,11 @@ public function get_rooms(Request $request){
                     'hours_per_week' => 'nullable|integer',
                     'responsibilities' => 'nullable|string',
                     'qualifications' => 'nullable|string',
-
                 ]);
-            }else{
-                  //return response()->json(['success' => false, 'message' => $active]);
-                  return redirect()->route('recruiter-opportunities-manager')->with('error', 'Please Try Again Later');
+            } else {
+                //return response()->json(['success' => false, 'message' => $active]);
+                return redirect()->route('recruiter-opportunities-manager')->with('error', 'Please Try Again Later');
             }
-
 
             // Create a new Job instance with the validated data
             $job = new Job();
@@ -453,10 +455,10 @@ public function get_rooms(Request $request){
             $job->responsibilities = $validatedData['responsibilities'];
             $job->qualifications = $validatedData['qualifications'];
             $job->created_by = $created_by;
-                        // facility id should be null for now since we dont add a facility with the recruiter signup
-                        // $job->facility_id = $facility_id;
+            // facility id should be null for now since we dont add a facility with the recruiter signup
+            // $job->facility_id = $facility_id;
 
-                        // Save the job data to the database
+            // Save the job data to the database
             $job->save();
 
             // Redirect back to the add job form with a success message
@@ -468,25 +470,22 @@ public function get_rooms(Request $request){
             Log::error('Error saving job: ' . $e->getMessage());
 
             // Handle the error gracefully - display a generic error message or redirect with an error status
-             return redirect()->route('recruiter-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
-              // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
+            return redirect()->route('recruiter-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
+            // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
         } catch (\Exception $e) {
             // Handle other exceptions
             Log::error('Exception: ' . $e->getMessage());
 
             // Display a generic error message or redirect with an error status
 
-
-             return redirect()->route('recruiter-opportunities-manager')->with('error','Try again later' );
+            return redirect()->route('recruiter-opportunities-manager')->with('error', 'Try again later');
             //return response()->json(['success' => false, 'message' => $request->input('') ]);
         }
     }
 
-
     public function saveJobAsDraft(Request $request)
     {
         try {
-
             $facility_id = Auth::guard('recruiter')->user()->facility_id;
             // Validate the form data
             $validatedData = $request->validate([
@@ -497,8 +496,8 @@ public function get_rooms(Request $request){
                 'preferred_assignment_duration' => 'nullable|string',
                 'weekly_pay' => 'nullable|numeric',
                 'preferred_specialty' => 'nullable|string',
-                'preferred_work_location'=>'nullable|string',
-                'description'=>'nullable|string',
+                'preferred_work_location' => 'nullable|string',
+                'description' => 'nullable|string',
 
                 'preferred_shift_duration' => 'nullable|string',
                 'preferred_work_area' => 'nullable|string',
@@ -550,10 +549,10 @@ public function get_rooms(Request $request){
             $job->responsibilities = $validatedData['responsibilities'];
             $job->qualifications = $validatedData['qualifications'];
 
-                        // facility id should be null for now since we dont add a facility with the recruiter signup
-                        // $job->facility_id = $facility_id;
+            // facility id should be null for now since we dont add a facility with the recruiter signup
+            // $job->facility_id = $facility_id;
 
-                        // Save the job data to the database
+            // Save the job data to the database
             $job->save();
 
             // Redirect back to the add job form with a success message
@@ -565,17 +564,16 @@ public function get_rooms(Request $request){
             Log::error('Error saving job: ' . $e->getMessage());
 
             // Handle the error gracefully - display a generic error message or redirect with an error status
-             return redirect()->route('recruiter-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
-              // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
+            return redirect()->route('recruiter-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
+            // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
         } catch (\Exception $e) {
             // Handle other exceptions
             Log::error('Exception: ' . $e->getMessage());
 
             // Display a generic error message or redirect with an error status
 
-
-             return redirect()->route('recruiter-opportunities-manager')->with('error',$e->getMessage() );
-           // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+            return redirect()->route('recruiter-opportunities-manager')->with('error', $e->getMessage());
+            // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
         }
     }
 }
