@@ -190,10 +190,8 @@ class RecruiterController extends Controller
                         [
                             '$match' => [
                                 //'recruiterId' => $id,
-
                                 // for now until get the offer works
-
-                                'recruiterId' => 'GWU000005',
+                                'recruiterId' => $id,
                             ],
                         ],
                         [

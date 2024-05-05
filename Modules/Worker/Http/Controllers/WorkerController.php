@@ -115,9 +115,12 @@ class WorkerController extends Controller
         $id = $user->id;
         $role = $user->role;
         $idEmployer = $request->idEmployer;
+        $idRecruiter = $request->idRecruiter;
+        $type = $request->type;
+        $fileName = $request->fileName;
        
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message , $idEmployer,'GWU000005', $id, $role,$time));
+        event(new NewPrivateMessage($message , $idEmployer,$idRecruiter, $id, $role,$time,$type,$fileName));
         
         
         return [$id, $idEmployer];
@@ -199,9 +202,18 @@ class WorkerController extends Controller
         $users = [];
         $data = [];
         foreach($rooms as $room){
-            $user = User::where('id', $room->employerId)->select("first_name", "last_name")->get();
-            
-            $data_User['fullName'] = $user[0]->fullName;
+            //$user = User::where('id', $room->employerId)->select("first_name", "last_name")->get();
+            $user = User::select('first_name', 'last_name')
+                ->where('id', $room->employerId)
+                ->get()
+                ->first();
+            if ($user) {
+                $name = $user->fullName;
+            } else {
+                // Handle the case where no user is found
+                $name = 'Default Name';
+            }
+            $data_User['fullName'] = $name;
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['employerId'] = $room->employerId;
             $data_User['recruiterId'] = $room->recruiterId;
@@ -226,9 +238,7 @@ class WorkerController extends Controller
             return $collection->aggregate([
                 [
                     '$match' => [
-                        
                         'workerId' => $id,
-                        
                     ]
                 ],
                 [

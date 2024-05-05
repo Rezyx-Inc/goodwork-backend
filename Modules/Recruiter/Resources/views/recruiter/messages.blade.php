@@ -27,7 +27,7 @@
 
             let id = @json($id);
 
-            PrivateChannel = 'private-chat.' + idEmployer + '.' + 'GWU000005.' + idWorker_Global;
+            PrivateChannel = 'private-chat.' + idEmployer + '.' + id + '.' + idWorker_Global;
 
             let messageText = document.getElementById('message');
             console.log(messageText);
@@ -169,9 +169,21 @@
                                 var time = Array.isArray(message.time) ? message.time.join(', ') :
                                     message.time;
 
+                                    var messageContent;
+                    if (message.type === 'file') {
+                        // If the message is a file, create a link to download the file
+                        // The file name is extracted from the base64 data URL
+                        var fileName = message.fileName; // assuming 'fileName' is the key in the message data
+                        messageContent =
+                            `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
+                    } else {
+                        // If the message is not a file, display the message text
+                        messageContent = `<p>${message.content}</p>`;
+                    }
+
                                 return `
                         <div class="${senderClass}">
-                            <p>${message.content}</p>
+                            ${messageContent}
                             <span>${time}</span>
                         </div>
                     `;
@@ -200,7 +212,8 @@
         function sendMessage(type) {
             console.log(type);
             let id = @json($id);
-            PrivateChannel = 'private-chat.' + id + '.' + 'GWU000005.' + idWorker_Global;
+            console.log('recruiter id', id);
+            PrivateChannel = 'private-chat.' + idEmployer_Global + '.' + id+'.' + idWorker_Global;
             console.log(PrivateChannel);
             let messageInput = document.getElementById('messageEnvoye');
             let message = messageInput.value;
@@ -284,6 +297,15 @@
             }
 
             let sendFile = document.getElementById('sendFile');
+            let deleteFile = document.getElementById('deleteFile');
+
+            if (deleteFile) {
+                deleteFile.addEventListener('click', function() {
+                    document.getElementById('fileInfo').style.display = 'none';
+                    document.getElementById('fileInput').value = '';
+                });
+            }
+
             if (sendFile) {
                 sendFile.addEventListener('click', function() {
                     sendMessage('file');
@@ -379,15 +401,23 @@
                             </div>
                             <div class="row" style="margin-top: 25px;">
                                 <div class="row justify-content-end" id="fileInfo" style="display: none;">
-                                    <div class="col-6">
-                                        <span id="fileName"></span>
+                                    <div class="col-6" >
+                                        <span style=" margin-left: 16px;" id="fileName"></span>
                                     </div>
-                                    <div style="    display: flex;
-                                justify-content: end;"
+                                    <div style=" display: flex;
+                                justify-content: end;
+                               
+                                "
                                         class="col-6">
                                         <button
                                             style="width: 30%;
                                     border-radius: 100px;
+                                "
+                                            class="ss-prsnl-save-btn button" id="deleteFile">Delete</button>
+                                        <button
+                                            style="width: 30%;
+                                    border-radius: 100px;
+                                    margin-left: 10px;
                                 "
                                             class="ss-prsnl-save-btn button" id="sendFile">Send</button>
                                     </div>
