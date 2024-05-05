@@ -15,7 +15,7 @@
         var PrivateChannel = '';
         var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
 
-        function getPrivateMessages(idRecruiter,idEmployer, fullName) {
+        function getPrivateMessages(idRecruiter, idEmployer, fullName) {
 
             // Get Full Name and set some DOM
             document.getElementById('fullName').innerHTML = fullName;
@@ -33,6 +33,38 @@
             PrivateChannel = 'private-chat.' + idEmployer_Global + '.' + idRecruiter_Global + '.' + id;
 
             let messageText = document.getElementById('message');
+
+            function createRealMessageHTML(message) {
+                var senderClass;
+                if (message.senderRole == 'WORKER') {
+                    senderClass = 'ss-msg-rply-blue-dv';
+                } else if (message.senderRole == 'EMPLOYER') {
+                    senderClass = 'ss-msg-rply-black-dv';
+                } else {
+                    senderClass = 'ss-msg-rply-recrut-dv';
+                }
+
+                var time = Array.isArray(message.time) ? message.messageTime.join(', ') : message.messageTime;
+
+                var messageContent;
+                if (message.type === 'file') {
+                    // If the message is a file, create a link to download the file
+                    // The file name is extracted from the base64 data URL
+                    var fileName = message.message.split(';')[1].split('=')[1];
+                    messageContent =
+                        `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.message}" download="${message.fileName}">${message.fileName}</a></p>`;
+                } else {
+                    // If the message is not a file, display the message text
+                    messageContent = `<p>${message.message}</p>`;
+                }
+
+                return `
+            <div class="${senderClass}">
+                ${messageContent}
+                <span>${message.messageTime}</span>
+            </div>
+        `;
+            }
 
             // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
             window.Echo.channel('goodwork_database_messages')
@@ -59,6 +91,39 @@
                 // Parse the returned data
                 var messages = data.messages;
 
+                // Function to create the HTML for a message
+                function createMessageHTML(message) {
+                    var senderClass;
+                    if (message.sender == 'WORKER') {
+                        senderClass = 'ss-msg-rply-blue-dv';
+                    } else if (message.sender == 'EMPLOYER') {
+                        senderClass = 'ss-msg-rply-black-dv';
+                    } else {
+                        senderClass = 'ss-msg-rply-recrut-dv';
+                    }
+
+                    var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
+
+                    var messageContent;
+                    if (message.type === 'file') {
+                        // If the message is a file, create a link to download the file
+                        // The file name is extracted from the base64 data URL
+                        var fileName = message.fileName; // assuming 'fileName' is the key in the message data
+                        messageContent =
+                            `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
+                    } else {
+                        // If the message is not a file, display the message text
+                        messageContent = `<p>${message.content}</p>`;
+                    }
+
+                    return `
+            <div class="${senderClass}">
+                ${messageContent}
+                <span>${time}</span>
+            </div>
+        `;
+                }
+
                 // Create the HTML for each message and prepend it to the messages area
                 messages.forEach(function(message) {
                     var messageHTML = createMessageHTML(message);
@@ -73,7 +138,7 @@
 
         function createRealMessageHTML(message) {
             var senderClass;
-            if (message.senderRole == 'NURSE') {
+            if (message.senderRole == 'WORKER') {
                 senderClass = 'ss-msg-rply-blue-dv';
                 console.log(senderClass);
             } else if (message.senderRole == 'EMPLOYER') {
@@ -84,16 +149,16 @@
             var time = Array.isArray(message.time) ? message.messageTime.join(', ') : message.messageTime;
 
             var messageContent;
-                    if (message.type === 'file') {
-                        // If the message is a file, create a link to download the file
-                        // The file name is extracted from the base64 data URL
-                        var fileName = message.message.split(';')[1].split('=')[1];
-                        messageContent =
-                            `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.message}" download="${message.fileName}">${message.fileName}</a></p>`;
-                    } else {
-                        // If the message is not a file, display the message text
-                        messageContent = `<p>${message.message}</p>`;
-                    }
+            if (message.type === 'file') {
+                // If the message is a file, create a link to download the file
+                // The file name is extracted from the base64 data URL
+                var fileName = message.message.split(';')[1].split('=')[1];
+                messageContent =
+                    `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.message}" download="${message.fileName}">${message.fileName}</a></p>`;
+            } else {
+                // If the message is not a file, display the message text
+                messageContent = `<p>${message.message}</p>`;
+            }
             return `
             <div class="${senderClass}">
                 
@@ -106,7 +171,7 @@
         // Function to create the HTML for a message
         function createMessageHTML(message) {
             var senderClass;
-            if (message.sender == 'NURSE') {
+            if (message.sender == 'WORKER') {
                 senderClass = 'ss-msg-rply-blue-dv';
             } else if (message.sender == 'EMPLOYER') {
                 senderClass = 'ss-msg-rply-black-dv';
@@ -115,16 +180,16 @@
             }
             var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
             var messageContent;
-                    if (message.type === 'file') {
-                        // If the message is a file, create a link to download the file
-                        // The file name is extracted from the base64 data URL
-                        var fileName = message.content.split(';')[1].split('=')[1];
-                        messageContent =
-                            `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.message}" download="${message.fileName}">${message.fileName}</a></p>`;
-                    } else {
-                        // If the message is not a file, display the message text
-                        messageContent = `<p>${message.content}</p>`;
-                    }
+            if (message.type === 'file') {
+                // If the message is a file, create a link to download the file
+                // The file name is extracted from the base64 data URL
+                var fileName = message.content.split(';')[1].split('=')[1];
+                messageContent =
+                    `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.message}" download="${message.fileName}">${message.fileName}</a></p>`;
+            } else {
+                // If the message is not a file, display the message text
+                messageContent = `<p>${message.content}</p>`;
+            }
             return `
             <div class="${senderClass}">
                 ${messageContent}
@@ -154,11 +219,51 @@
                     $('#login').addClass('d-none');
 
                     // Make an AJAX request to the API
-                    $.get('/worker/getMessages?page=' + page + '&employerId=' + idEmployer_Global +'&recruiterId=GWU000005',
+                    $.get('/worker/getMessages?page=' + page + '&employerId=' + idEmployer_Global +
+                        '&recruiterId=GWU000005',
                         function(data) {
 
                             // Parse the returned data
                             var messages = data.messages;
+
+                            function createMessageHTML(message) {
+                                //  var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+
+                                console.log('messageeeee :' + message.sender);
+                                var senderClass;
+                                if (message.sender == 'WORKER') {
+                                    senderClass = 'ss-msg-rply-blue-dv';
+                                } else if (message.sender == 'EMPLOYER') {
+                                    senderClass = 'ss-msg-rply-black-dv';
+                                } else {
+                                    senderClass = 'ss-msg-rply-recrut-dv';
+                                }
+
+
+
+                                var time = Array.isArray(message.time) ? message.time.join(', ') :
+                                    message.time;
+
+                                var messageContent;
+                                if (message.type === 'file') {
+                                    // If the message is a file, create a link to download the file
+                                    // The file name is extracted from the base64 data URL
+                                    var fileName = message
+                                    .fileName; // assuming 'fileName' is the key in the message data
+                                    messageContent =
+                                        `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
+                                } else {
+                                    // If the message is not a file, display the message text
+                                    messageContent = `<p>${message.content}</p>`;
+                                }
+
+                                return `
+                        <div class="${senderClass}">
+                            ${messageContent}
+                            <span>${time}</span>
+                        </div>
+                    `;
+                            }
 
                             // Create the HTML for each message and prepend it to the messages area
                             messages.forEach(function(message) {
@@ -181,12 +286,12 @@
                 });
         }
 
-       
+
 
         function sendMessage(type) {
             console.log(type);
             let id = @json($id);
-            PrivateChannel = 'private-chat.' + idEmployer_Global + '.' +idRecruiter_Global+ '.' + id;
+            PrivateChannel = 'private-chat.' + idEmployer_Global + '.' + idRecruiter_Global + '.' + id;
             console.log(PrivateChannel);
             let messageInput = document.getElementById('messageEnvoye');
             let message = messageInput.value;
@@ -218,6 +323,7 @@
 
             sendAjaxRequest(formData);
         }
+
         function sendAjaxRequest(formData) {
             $.ajax({
                 url: 'send-message',
@@ -291,26 +397,26 @@
 
                             <!-- rooms  -->
                             @if ($data)
-                            @foreach ($data as $room)
-                            <div onclick="getPrivateMessages('{{ $room['recruiterId'] }}','{{ $room['employerId'] }}','{{ $room['fullName'] }}')"
-                                class="ss-mesg-sml-div">
-                                <ul class="ss-msg-user-ul-dv">
-                                    <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
-                                    <li>
-                                        <h5>{{ $room['fullName'] }}</h5>
-                                        <p>{{ $room['messages'][0]['type'] === 'file' ? $room['messages'][0]['fileName'] : $room['messages'][0]['content'] }}
-                                        </p>
-                                    </li>
-                                </ul>
+                                @foreach ($data as $room)
+                                    <div onclick="getPrivateMessages('{{ $room['recruiterId'] }}','{{ $room['employerId'] }}','{{ $room['fullName'] }}')"
+                                        class="ss-mesg-sml-div">
+                                        <ul class="ss-msg-user-ul-dv">
+                                            <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
+                                            <li>
+                                                <h5>{{ $room['fullName'] }}</h5>
+                                                <p>{{ $room['messages'][0]['type'] === 'file' ? $room['messages'][0]['fileName'] : $room['messages'][0]['content'] }}
+                                                </p>
+                                            </li>
+                                        </ul>
 
-                                <ul style="width:100%" class="ss-msg-notifi-sec">
-                                    <li>
-                                        <p>{{ $room['lastMessage'] }}</p>
-                                    </li><br>
-                                    <li><span>3</span></li>
-                                </ul>
-                            </div>
-                        @endforeach
+                                        <ul style="width:100%" class="ss-msg-notifi-sec">
+                                            <li>
+                                                <p>{{ $room['lastMessage'] }}</p>
+                                            </li><br>
+                                            <li><span>3</span></li>
+                                        </ul>
+                                    </div>
+                                @endforeach
                             @else
                                 <div class="ss-mesg-sml-div">
                                     <h5>No chats for now ...</h5>
@@ -356,7 +462,7 @@
                             </div>
                             <div class="row" style="margin-top: 25px;">
                                 <div class="row justify-content-end" id="fileInfo" style="display: none;">
-                                    <div class="col-6" >
+                                    <div class="col-6">
                                         <span style=" margin-left: 16px;" id="fileName"></span>
                                     </div>
                                     <div style=" display: flex;

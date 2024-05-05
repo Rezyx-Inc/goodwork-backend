@@ -165,7 +165,7 @@ class RecruiterController extends Controller
                 ->select('first_name', 'last_name')
                 ->get();
 
-            $data_User['fullName'] = $user[0]->fullName;
+            $data_User['fullName'] = $user[0]->last_name;
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['workerId'] = $room->workerId;
             $data_User['employerId'] = $room->employerId;

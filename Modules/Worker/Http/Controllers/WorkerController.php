@@ -113,14 +113,14 @@ class WorkerController extends Controller
         $message = $request->message_data;
         $user = Auth::guard('frontend')->user();
         $id = $user->id;
-        $role = $user->role;
+        //$role = $user->role;
         $idEmployer = $request->idEmployer;
         $idRecruiter = $request->idRecruiter;
         $type = $request->type;
         $fileName = $request->fileName;
        
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message , $idEmployer,$idRecruiter, $id, $role,$time,$type,$fileName));
+        event(new NewPrivateMessage($message , $idEmployer,$idRecruiter, $id, 'WORKER',$time,$type,$fileName));
         
         
         return [$id, $idEmployer];
@@ -208,7 +208,7 @@ class WorkerController extends Controller
                 ->get()
                 ->first();
             if ($user) {
-                $name = $user->fullName;
+                $name = $user->last_name;
             } else {
                 // Handle the case where no user is found
                 $name = 'Default Name';
@@ -276,9 +276,21 @@ class WorkerController extends Controller
 
         $data = [];
         foreach($rooms as $room){
-            $user = User::where('id', $room->employerId)->select("first_name","last_name")->get();
+            //$user = User::where('id', $room->employerId)->select("first_name","last_name")->get();
+            $user = User::select('first_name', 'last_name')
+                ->where('id', $room->recruiterId)
+                ->get()
+                ->first();
 
-            $data_User['fullName'] = $user[0]->fullName;
+            if ($user) {
+                $name = $user->fullName;
+            } else {
+                // Handle the case where no user is found
+                $name = 'Default Name';
+            }
+
+            $data_User['fullName'] = $name;
+
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['employerId'] = $room->employerId;
             $data_User['isActive'] = $room->isActive;
