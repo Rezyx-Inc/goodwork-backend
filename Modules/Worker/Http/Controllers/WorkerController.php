@@ -397,7 +397,7 @@ class WorkerController extends Controller
         ];
 
         $data = [];
-
+        
         switch(request()->route()->getName())
         {
             case 'worker.my-work-journey':
