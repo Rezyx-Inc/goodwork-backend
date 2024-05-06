@@ -104,7 +104,6 @@ router.post('/transfer', async (req, res) => {
     }
 
     try{
-	
 	    // Create the transfer
 	    const account = await stripe.transfers.create({
 		  	amount: Number(req.body.amount) * 100,
@@ -119,7 +118,6 @@ router.post('/transfer', async (req, res) => {
 		return res.status(400).send({status: false, message: e.message})
 	}
   
-    
 })
 
 
@@ -138,7 +136,6 @@ router.post('/customer/create', async (req, res) => {
 
     // Check if the customer exists
     try{
-
     	const customerTest = await stripe.customers.list({email:req.body.email});
     	
     	if(customerTest.data.length > 0){

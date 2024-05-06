@@ -69,6 +69,7 @@ Route::prefix('worker')->group(function() {
         // new post route for profile updating
         Route::post('update-worker-profile', ['uses' => 'WorkerDashboardController@update_worker_profile', 'as' => 'update-worker-profile']);
 
+        
         // new post route for account setting updating
         Route::post('update-worker-account-setting',['uses' => 'WorkerDashboardController@update_worker_account_setting', 'as' => 'update-worker-account-setting']);
 

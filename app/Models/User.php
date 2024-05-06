@@ -206,7 +206,8 @@ class User extends Authenticatable implements HasMedia
         'otp',
         'otp_expiry',
         'zip_code',
-        'stripeAccountId'
+        'stripeAccountId',
+        'about_me',
     ];
 
     /**
