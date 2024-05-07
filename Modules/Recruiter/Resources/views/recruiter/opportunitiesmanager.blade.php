@@ -195,6 +195,129 @@
                                 <!-- Second form slide required inputs for adding jobs -->
                                 <div class="page">
                                     <div class="row">
+                                        {{-- edits --}}
+                                        <div class="ss-form-group col-md-4">
+                                            <select name="facility_shift_cancelation_policy" id="facility_shift_cancelation_policy">
+                                                <option value="">facility shift</option>
+                                                @foreach($allKeywords['AssignmentDuration'] as $value)
+                                                <option value="{{$value->title}}">{{$value->title}}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <span class="help-block-facility_shift_cancelation_policy"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="traveler_distance_from_facility" id="traveler_distance_from_facility"
+                                                placeholder="Enter travel distance">
+                                            <span class="help-block-traveler_distance_from_facility"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="text" name="clinical_setting" id="clinical_setting"
+                                                placeholder="Enter clinical setting">
+                                            <span class="help-block-clinical_setting"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="Patient_ratio" id="Patient_ratio"
+                                                placeholder="Enter travel distance">
+                                            <span class="help-block-Patient_ratio"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="text" name="Unit" id="Unit"
+                                                placeholder="Enter Unit">
+                                            <span class="help-block-Unit"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="text" name="scrub_color" id="scrub_color"
+                                                placeholder="Enter scrub color">
+                                            <span class="help-block-scrub_color"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="text" name="rto" id="rto"
+                                                placeholder="Enter rto">
+                                            <span class="help-block-rto"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="guaranteed_hours" id="guaranteed_hours"
+                                                placeholder="Enter guaranteed hours">
+                                            <span class="help-block-guaranteed_hours"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="hours_per_week" id="hours_per_week"
+                                                placeholder="Enter hours per week">
+                                            <span class="help-block-hours_per_week"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="hours_shift" id="hours_shift"
+                                                placeholder="Enter hours shift">
+                                            <span class="help-block-hours_shift"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="weeks_shift" id="weeks_shift"
+                                                placeholder="Enter weeks shift">
+                                            <span class="help-block-weeks_shift"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="referral_bonus" id="referral_bonus"
+                                                placeholder="Enter referral bonus">
+                                            <span class="help-block-referral_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="sign_on_bonus" id="sign_on_bonus"
+                                                placeholder="Enter sign on bonus">
+                                            <span class="help-block-sign_on_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="completion_bonus" id="completion_bonus"
+                                                placeholder="Enter completion bonus">
+                                            <span class="help-block-completion_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="extension_bonus" id="extension_bonus"
+                                                placeholder="Enter extension bonus">
+                                            <span class="help-block-extension_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="other_bonus" id="other_bonus"
+                                                placeholder="Enter other bonus">
+                                            <span class="help-block-other_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
+                                                placeholder="Enter actual hourly rate">
+                                            <span class="help-block-actual_hourly_rate"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <select name="overtime" id="overtime">
+                                                <option value="">Overtime</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-overtime"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <select name="on_call" id="on_call">
+                                                <option value="">On call</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-on_call"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="text" name="holiday" id="holiday"
+                                                placeholder="Enter holiday">
+                                            <span class="help-block-holiday"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <input type="number" name="orientation_rate" id="orientation_rate"
+                                                placeholder="Enter orientation rate">
+                                            <span class="help-block-orientation_rate"></span>
+                                        </div>
+
+                                        {{-- end edits --}}
                                         <div class="ss-form-group col-md-4">
                                             <input type="text" name="preferred_work_area" id="preferred_work_area"
                                                 placeholder="Enter Preferred Work Area">
@@ -1862,6 +1985,8 @@ function open_modal(obj) {
         var city = document.getElementById("job_city").value;
         var state = document.getElementById("job_state").value;
         var weeklyPay = document.getElementById("weekly_pay").value;
+
+
         document.getElementById("active").value = "1";
 
         if (jobName.trim() === '') {
@@ -1921,10 +2046,217 @@ function open_modal(obj) {
             $('.help-block-weekly_pay').text('Please enter the job weekly pay');
             $('.help-block-weekly_pay').addClass('text-danger');
             access = false;
-        } else {
+        }else {
             $('.help-block-weekly_pay').text('');
 
         }
+         
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function validateseconde(){
+        var access = true;
+                // edits
+                var facility_shift_cancelation_policy = document.getElementById("facility_shift_cancelation_policy").value;
+        var traveler_distance_from_facility = document.getElementById("traveler_distance_from_facility").value;
+        var clinical_setting = document.getElementById("clinical_setting").value;
+        var Patient_ratio = document.getElementById("Patient_ratio").value;
+        var Unit = document.getElementById("Unit").value;
+        var scrub_color = document.getElementById("scrub_color").value;
+        var rto = document.getElementById("rto").value;
+        var guaranteed_hours = document.getElementById("guaranteed_hours").value;
+        var hours_per_week = document.getElementById("hours_per_week").value;
+        var hours_shift = document.getElementById("hours_shift").value;
+        var weeks_shift = document.getElementById("weeks_shift").value;
+        var referral_bonus = document.getElementById("referral_bonus").value;
+        var sign_on_bonus = document.getElementById("sign_on_bonus").value;
+        var completion_bonus = document.getElementById("completion_bonus").value;
+        var extension_bonus = document.getElementById("extension_bonus").value;
+        var other_bonus = document.getElementById("other_bonus").value;
+        var actual_hourly_rate = document.getElementById("actual_hourly_rate").value;
+        var overtime = document.getElementById("overtime").value;
+        var holiday     = document.getElementById("holiday").value;
+        var orientation_rate = document.getElementById("orientation_rate").value;
+        var on_call = document.getElementById("on_call").value;
+        
+        if (facility_shift_cancelation_policy.trim() === '') {
+            $('.help-block-facility_shift_cancelation_policy').text('Please enter the facility shift cancelation policy');
+            $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
+            access = false;
+        } else {
+
+            $('.help-block-facility_shift_cancelation_policy').text('');
+        }
+
+        if (traveler_distance_from_facility.trim() === '') {
+            $('.help-block-traveler_distance_from_facility').text('Please enter the traveler distance from facility');
+            $('.help-block-traveler_distance_from_facility').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-traveler_distance_from_facility').text('');
+        }
+
+        if (clinical_setting.trim() === '') {
+            $('.help-block-clinical_setting').text('Please enter the clinical setting');
+            $('.help-block-clinical_setting').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-clinical_setting').text('');
+        }
+
+
+        if (Patient_ratio.trim() === '') {
+            $('.help-block-Patient_ratio').text('Please enter the patient ratio');
+            $('.help-block-Patient_ratio').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-Patient_ratio').text('');
+        }
+
+
+        if (Unit.trim() === '') {
+            $('.help-block-Unit').text('Please enter the unit');
+            $('.help-block-Unit').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-Unit').text('');
+        }
+
+        if (scrub_color.trim() === '') {
+            $('.help-block-scrub_color').text('Please enter the scrub color');
+            $('.help-block-scrub_color').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-scrub_color').text('');
+        }
+
+        if (rto.trim() === '') {
+            $('.help-block-rto').text('Please enter the rto');
+            $('.help-block-rto').addClass('text-danger');
+            access = false;
+
+        } else {
+            $('.help-block-rto').text('');
+        }
+
+        if (guaranteed_hours.trim() === '') {
+            $('.help-block-guaranteed_hours').text('Please enter the guaranteed hours');
+            $('.help-block-guaranteed_hours').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-guaranteed_hours').text('');
+        }
+
+        if (hours_per_week.trim() === '') {
+            $('.help-block-hours_per_week').text('Please enter the hours per week');
+            $('.help-block-hours_per_week').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_per_week').text('');
+        }
+
+        if (hours_shift.trim() === '') {
+            $('.help-block-hours_shift').text('Please enter the hours shift');
+            $('.help-block-hours_shift').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_shift').text('');
+        }
+
+        if (weeks_shift.trim() === '') {
+            $('.help-block-weeks_shift').text('Please enter the weeks shift');
+            $('.help-block-weeks_shift').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-weeks_shift').text('');
+        }
+
+        if (referral_bonus.trim() === '') {
+            $('.help-block-referral_bonus').text('Please enter the referral bonus');
+            $('.help-block-referral_bonus').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-referral_bonus').text('');
+        }
+
+        if (sign_on_bonus.trim() === '') {
+            $('.help-block-sign_on_bonus').text('Please enter the sign on bonus');
+            $('.help-block-sign_on_bonus').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-sign_on_bonus').text('');
+        }
+
+        if (completion_bonus.trim() === '') {
+            $('.help-block-completion_bonus').text('Please enter the completion bonus');
+            $('.help-block-completion_bonus').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-completion_bonus').text('');
+        }
+
+        if (extension_bonus.trim() === '') {
+            $('.help-block-extension_bonus').text('Please enter the extension bonus');
+            $('.help-block-extension_bonus').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-extension_bonus').text('');
+        }
+
+        if (other_bonus.trim() === '') {
+            $('.help-block-other_bonus').text('Please enter the other bonus');
+            $('.help-block-other_bonus').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-other_bonus').text('');
+        }
+
+        if (actual_hourly_rate.trim() === '') {
+            $('.help-block-actual_hourly_rate').text('Please enter the actual hourly rate');
+            $('.help-block-actual_hourly_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-actual_hourly_rate').text('');
+        }
+
+        if (overtime.trim() === '') {
+            $('.help-block-overtime').text('Please enter the overtime');
+            $('.help-block-overtime').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-overtime').text('');
+        }
+        
+
+        if (holiday.trim() === '') {
+            $('.help-block-holiday').text('Please enter the holiday');
+            $('.help-block-holiday').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-holiday').text('');
+        }
+
+        if (orientation_rate.trim() === '') {
+            $('.help-block-orientation_rate').text('Please enter the orientation rate');
+            $('.help-block-orientation_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-orientation_rate').text('');
+        }
+        if (on_call.trim() === '') {
+            $('.help-block-on_call').text('Please enter the on call rate');
+            $('.help-block-on_call').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call').text('');
+        }
+        
+
+
         if (access) {
             return true;
         } else {
@@ -1947,11 +2279,13 @@ function open_modal(obj) {
     });
     nextBtnSec.addEventListener("click", function (event) {
         event.preventDefault();
+        if (validateseconde()) {
         slidePage.style.marginLeft = "-50%";
         bullet[current - 1].classList.add("active");
         progressCheck[current - 1].classList.add("active");
         progressText[current - 1].classList.add("active");
         current += 1;
+        }
     });
     nextBtnThird.addEventListener("click", function (event) {
         event.preventDefault();

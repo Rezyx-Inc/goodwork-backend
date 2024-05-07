@@ -10,6 +10,7 @@ use Illuminate\Http\{Request, jsonResponse};
 use Illuminate\Contracts\Support\Renderable;
 use URL;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 // ************ models ************
 /** Models */
 use App\Models\{Job, Offer, Nurse, User, OffersLogs,States,Cities,Keyword};
@@ -92,13 +93,14 @@ class ApplicationController extends Controller
      */
     public function application()
     {
+        $recruiter = Auth::guard('recruiter')->user();
         $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        $statusCountsQuery = Offer::whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+        $statusCountsQuery = Offer::where('created_by',$recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
             if ($statusCount) {
                 $statusCounts[$statusCount->status] = $statusCount->count;
@@ -116,10 +118,11 @@ class ApplicationController extends Controller
         $type = $request->type;
         //return response()->json(['type'=>$type]); 
         $allspecialty = [];
+        $recruiter = Auth::guard('recruiter')->user();
         if($type == 'Draft'){
-            $offerLists = Offer::where('is_draft', true)->get();
+            $offerLists = Offer::where('is_draft', true)->where('created_by',$recruiter->id)->get();
         }else{
-            $offerLists = Offer::where('status', $type)->get();
+            $offerLists = Offer::where('status', $type)->where('created_by',$recruiter->id)->get();
         }
         
         if (0 >= count($offerLists)) {

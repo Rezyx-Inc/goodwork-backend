@@ -39,7 +39,16 @@ class OpportunitiesController extends Controller
         // send the states
         $states = State::select('id','name')->get();
 
-        return view('recruiter::recruiter/opportunitiesmanager',compact('darftJobs','specialities','proffesions','publishedJobs','onholdJobs','states'));
+        $allKeywords = [];
+        
+        $distinctFilters = Keyword::distinct()->pluck('filter');
+        
+        foreach ($distinctFilters as $filter) {
+            $keywords = Keyword::where('filter', $filter)->get();
+            $allKeywords[$filter] = $keywords;
+        }
+
+        return view('recruiter::recruiter/opportunitiesmanager',compact('darftJobs','specialities','proffesions','publishedJobs','onholdJobs','states','allKeywords'));
       //return response()->json(['success' => false, 'message' =>  $states]);
         //return view('recruiter::recruiter/opportunitiesmanager');
     }

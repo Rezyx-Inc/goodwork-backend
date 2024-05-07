@@ -563,6 +563,7 @@ function apply_on_jobs(obj, reload_page = false)
                         }
                     });
 
+                    
                     $.ajax({
                         url: full_path + 'apply-on-job',
                         type: 'POST',

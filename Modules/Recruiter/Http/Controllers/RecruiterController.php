@@ -417,6 +417,29 @@ class RecruiterController extends Controller
                     'hours_per_week' => 'nullable|integer',
                     'responsibilities' => 'nullable|string',
                     'qualifications' => 'nullable|string',
+                    'facility_shift_cancelation_policy' => 'nullable|string',
+                    'traveler_distance_from_facility' => 'nullable|string',
+                    'clinical_setting' => 'nullable|string',
+                    'Patient_ratio' => 'nullable|string',
+                    'Unit' => 'nullable|string',
+                    'scrub_color' => 'nullable|string',
+                    'rto' => 'nullable|string',
+                    'guaranteed_hours' => 'nullable|string',
+                    'hours_per_week' => 'nullable|string',
+                    'hours_shift' => 'nullable|string',
+                    'weeks_shift' => 'nullable|string',
+                    'referral_bonus' => 'nullable|string',
+                    'sign_on_bonus' => 'nullable|string',
+                    'completion_bonus' => 'nullable|string',
+                    'extension_bonus' => 'nullable|string',
+                    'other_bonus' => 'nullable|string',
+                    'actual_hourly_rate' => 'nullable|string',
+                    'overtime' => 'nullable|string',
+                    'holiday' => 'nullable|string',
+                    'orientation_rate' => 'nullable|string',
+                    'on_call' => 'nullable|string',
+
+
                 ]);
             } else {
                 //return response()->json(['success' => false, 'message' => $active]);
@@ -452,6 +475,28 @@ class RecruiterController extends Controller
             $job->hours_per_week = $validatedData['hours_per_week'];
             $job->responsibilities = $validatedData['responsibilities'];
             $job->qualifications = $validatedData['qualifications'];
+            $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
+            $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
+            $job->clinical_setting = $validatedData['clinical_setting'];
+            $job->Patient_ratio = $validatedData['Patient_ratio'];
+            $job->Unit = $validatedData['Unit'];
+            $job->scrub_color = $validatedData['scrub_color'];
+            $job->rto = $validatedData['rto'];
+            $job->guaranteed_hours = $validatedData['guaranteed_hours'];
+            $job->hours_per_week = $validatedData['hours_per_week'];
+            $job->hours_shift = $validatedData['hours_shift'];
+            $job->weeks_shift = $validatedData['weeks_shift'];
+            $job->referral_bonus = $validatedData['referral_bonus'];
+            $job->sign_on_bonus = $validatedData['sign_on_bonus'];
+            $job->completion_bonus = $validatedData['completion_bonus'];
+            $job->extension_bonus = $validatedData['extension_bonus'];
+            $job->other_bonus = $validatedData['other_bonus'];
+            $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
+            $job->overtime = $validatedData['overtime'];
+            $job->holiday = $validatedData['holiday'];
+            $job->orientation_rate = $validatedData['orientation_rate'];
+            $job->on_call = $validatedData['on_call'];
+
             $job->created_by = $created_by;
             // facility id should be null for now since we dont add a facility with the recruiter signup
             // $job->facility_id = $facility_id;

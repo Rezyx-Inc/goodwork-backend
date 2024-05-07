@@ -548,11 +548,11 @@ class JobController extends Controller
         $rec = Offer::where(['worker_user_id'=>$user->nurse->id, 'job_id'=>$request->jid])->whereNull('deleted_at')->first();
         $input = [
             'job_id'=>$request->jid,
-            'created_by'=>$user->id,
+            'created_by'=>$job->created_by,
             'worker_user_id'=>$user->nurse->id,
             'job_name'=>$request->job_name,
             'job_name'=>$job->job_name,
-            'type'=>$job->type,
+            'type'=>$job->job_type,
             'terms'=>$job->terms,
             'proffesion'=>$job->proffesion,
             'block_scheduling'=>$job->block_scheduling,

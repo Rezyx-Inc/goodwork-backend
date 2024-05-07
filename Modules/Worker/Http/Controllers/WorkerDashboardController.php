@@ -452,7 +452,8 @@ class WorkerDashboardController extends Controller
             // $data['professions'] = ['title'=>'','id'=>''];
             // $data['profession'] = "";
 
-            $data['jobs'] = $result;
+            //$data['jobs'] = $result;
+            //$jobs = $data['jobs'];
             //return response()->json(['success' => false, 'message' =>  $data]);
             return view('worker::dashboard.explore', $data);
 

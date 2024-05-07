@@ -951,5 +951,6 @@
         let target = $(obj).data('target');
         $(target).modal('hide');
     }
+    
 </script>
 @stop

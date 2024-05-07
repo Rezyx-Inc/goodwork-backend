@@ -36,7 +36,7 @@
                                             <a href="{{route('worker.login')}}">Login</a>
                                         </li>
                                         <li>
-                                            <a href="{{route('worker.signup')}}">Join Goodwork</a>
+                                            <a href="{{route('worker-signup')}}">Join Goodwork</a>
                                         </li>
                                         @else
                                         <li></li>
