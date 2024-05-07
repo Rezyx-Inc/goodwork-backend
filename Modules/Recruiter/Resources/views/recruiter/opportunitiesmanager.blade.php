@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="form-outer">
-                            <form method="post" action="{{route('addJob.store')}}">
+                            <form method="post" id="create_job_form" action="{{route('addJob.store')}}">
                                 @csrf
                                 <!-- first form slide required inputs for adding jobs -->
 
@@ -87,18 +87,20 @@
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
+                                            <label> Job Name</label>
                                             <input type="text" name="job_name" id="job_name"
                                                 placeholder="Enter job name">
                                             <span class="help-block-job_name"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Job Type</label>
                                             <input type="text" name="job_type" id="job_type"
                                                 placeholder="Enter job type">
                                             <span class="help-block-job_type"></span>
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
-
+                                            <label>Preferred Specialty</label>
                                             <select name="preferred_specialty" id="preferred_specialty">
                                                 <option value="">Specialty</option>
                                                 @foreach($specialities as $specialty)
@@ -109,7 +111,7 @@
                                             <span class="help-block-preferred_specialty"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
-
+                                            <label>Preferred Profession</label>
                                             <select name="perferred_profession" id="perferred_profession">
                                                 <option value="">Profession</option>
                                                 @foreach($proffesions as $proffesion)
@@ -123,7 +125,7 @@
 
 
                                         <div class="ss-form-group col-md-4">
-
+                                            <label> Job State </label>
                                         <select name="job_state" id="job_state">
                                                 <option value="">States</option>
                                                 @foreach($states as $state)
@@ -143,7 +145,7 @@
 
                                             <!-- <input type="text" name="job_city" id="job_city"
                                                 placeholder="Enter Job Location (City)"> -->
-
+                                            <label> Job City </label>
                                                 <select name="job_city" id="job_city">
                                                 <option value="">Select a state first</option>
                                             </select>
@@ -153,6 +155,7 @@
 
 
                                         <div class="ss-form-group col-md-4">
+                                            <label>Preferred Work Location</label>
                                             <input type="text" name="preferred_work_location"
                                                 id="preferred_work_location" placeholder="Enter Work Location">
                                             <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
@@ -160,7 +163,7 @@
                                             </span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
-
+                                            <label>Preferred Assignment Duration</label>
                                             <input type="number" name="preferred_assignment_duration"
                                                 id="preferred_assignment_duration"
                                                 placeholder="Enter Work Duration Per Week">
@@ -170,6 +173,7 @@
 
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label> Weekly Pay </label>
                                             <input type="number" step="0.01" name="weekly_pay" id="weekly_pay"
                                                 placeholder="Enter Weekly Pay">
                                             <span class="help-block-weekly_pay"></span>
@@ -177,6 +181,7 @@
 
 
                                         <div class="ss-form-group col-md-4">
+                                            <label>Job Description</label>
                                             <textarea type="text" name="description" id="description"
                                                 placeholder="Enter Job Description"></textarea>
                                             <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
@@ -197,6 +202,7 @@
                                     <div class="row">
                                         {{-- edits --}}
                                         <div class="ss-form-group col-md-4">
+                                            <label>Facility shift</label>
                                             <select name="facility_shift_cancelation_policy" id="facility_shift_cancelation_policy">
                                                 <option value="">facility shift</option>
                                                 @foreach($allKeywords['AssignmentDuration'] as $value)
@@ -207,145 +213,105 @@
                                             <span class="help-block-facility_shift_cancelation_policy"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Traveler distance from facility</label>
                                             <input type="number" name="traveler_distance_from_facility" id="traveler_distance_from_facility"
                                                 placeholder="Enter travel distance">
                                             <span class="help-block-traveler_distance_from_facility"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Clinical Setting</label>
                                             <input type="text" name="clinical_setting" id="clinical_setting"
                                                 placeholder="Enter clinical setting">
                                             <span class="help-block-clinical_setting"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Travel Distance</label>
                                             <input type="number" name="Patient_ratio" id="Patient_ratio"
                                                 placeholder="Enter travel distance">
                                             <span class="help-block-Patient_ratio"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Unit</label>
                                             <input type="text" name="Unit" id="Unit"
                                                 placeholder="Enter Unit">
                                             <span class="help-block-Unit"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Scrub Color</label>
                                             <input type="text" name="scrub_color" id="scrub_color"
                                                 placeholder="Enter scrub color">
                                             <span class="help-block-scrub_color"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Rto</label>
                                             <input type="text" name="rto" id="rto"
                                                 placeholder="Enter rto">
                                             <span class="help-block-rto"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Guaranteed Hours</label>
                                             <input type="number" name="guaranteed_hours" id="guaranteed_hours"
                                                 placeholder="Enter guaranteed hours">
                                             <span class="help-block-guaranteed_hours"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label >Hours Per Week</label>
                                             <input type="number" name="hours_per_week" id="hours_per_week"
                                                 placeholder="Enter hours per week">
                                             <span class="help-block-hours_per_week"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Hours Shift</label>
                                             <input type="number" name="hours_shift" id="hours_shift"
                                                 placeholder="Enter hours shift">
                                             <span class="help-block-hours_shift"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Weeks Shift</label>
                                             <input type="number" name="weeks_shift" id="weeks_shift"
                                                 placeholder="Enter weeks shift">
                                             <span class="help-block-weeks_shift"></span>
                                         </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="referral_bonus" id="referral_bonus"
-                                                placeholder="Enter referral bonus">
-                                            <span class="help-block-referral_bonus"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="sign_on_bonus" id="sign_on_bonus"
-                                                placeholder="Enter sign on bonus">
-                                            <span class="help-block-sign_on_bonus"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="completion_bonus" id="completion_bonus"
-                                                placeholder="Enter completion bonus">
-                                            <span class="help-block-completion_bonus"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="extension_bonus" id="extension_bonus"
-                                                placeholder="Enter extension bonus">
-                                            <span class="help-block-extension_bonus"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="other_bonus" id="other_bonus"
-                                                placeholder="Enter other bonus">
-                                            <span class="help-block-other_bonus"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
-                                                placeholder="Enter actual hourly rate">
-                                            <span class="help-block-actual_hourly_rate"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <select name="overtime" id="overtime">
-                                                <option value="">Overtime</option>
-                                                <option value="Yes">Yes
-                                                </option>
-                                                <option value="No">No
-                                                </option>
-                                            </select>
-                                            <span class="help-block-overtime"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <select name="on_call" id="on_call">
-                                                <option value="">On call</option>
-                                                <option value="Yes">Yes
-                                                </option>
-                                                <option value="No">No
-                                                </option>
-                                            </select>
-                                            <span class="help-block-on_call"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="holiday" id="holiday"
-                                                placeholder="Enter holiday">
-                                            <span class="help-block-holiday"></span>
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="number" name="orientation_rate" id="orientation_rate"
-                                                placeholder="Enter orientation rate">
-                                            <span class="help-block-orientation_rate"></span>
-                                        </div>
+                                        
+                                        
+
+
 
                                         {{-- end edits --}}
-                                        <div class="ss-form-group col-md-4">
+                                        {{-- <div class="ss-form-group col-md-4">
+                                            <label>Preferred Work Area</label>
                                             <input type="text" name="preferred_work_area" id="preferred_work_area"
                                                 placeholder="Enter Preferred Work Area">
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Preferred Experience</label>
                                             <input type="text" name="preferred_experience" id="preferred_experience"
                                                 placeholder="Enter Preferred Experience">
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
+                                            <label>Preferred Shift Duration</label>
                                             <input type="number" name="preferred_shift_duration"
                                                 placeholder="Enter Preferred Shift Duration">
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
+                                            <label>Preferred Days of the Week</label>
                                             <input type="number" name="preferred_days_of_the_week"
                                                 placeholder="Enter Preferred Days of the Week">
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
+                                            <label>Preferred Hourly Pay Rate</label>
                                             <input type="number" step="0.01" name="preferred_hourly_pay_rate"
                                                 placeholder="Enter Preferred Hourly Pay Rate">
                                         </div>
 
                                         <div class="ss-form-group col-md-4">
+                                            <label>Preferred Shift</label>
                                             <input type="text" name="preferred_shift" id="preferred_shift"
                                                 placeholder="Enter Preferred Shift">
-                                        </div>
+                                        </div> --}}
 
                                         <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                             ( The above fields are not required )
@@ -363,6 +329,107 @@
                                 <div class="page">
                                     <div class="row">
                                         <div class="ss-form-group col-md-4">
+                                            <label>Referral Bonus</label>
+                                            <input type="number" name="referral_bonus" id="referral_bonus"
+                                                placeholder="Enter referral bonus">
+                                            <span class="help-block-referral_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Sign on Bonus</label>
+                                            <input type="number" name="sign_on_bonus" id="sign_on_bonus"
+                                                placeholder="Enter sign on bonus">
+                                            <span class="help-block-sign_on_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Completion Bonus</label>
+                                            <input type="number" name="completion_bonus" id="completion_bonus"
+                                                placeholder="Enter completion bonus">
+                                            <span class="help-block-completion_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Extension Bonus</label>
+
+                                            <input type="number" name="extension_bonus" id="extension_bonus"
+                                                placeholder="Enter extension bonus">
+                                            <span class="help-block-extension_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Other bonus</label>
+                                            <input type="number" name="other_bonus" id="other_bonus"
+                                                placeholder="Enter other bonus">
+                                            <span class="help-block-other_bonus"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>hourly rate</label>
+                                            <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
+                                                placeholder="Enter actual hourly rate">
+                                            <span class="help-block-actual_hourly_rate"></span>
+                                        </div>
+                                        
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Hourly Overtime</label>
+                                            <input type="number" name="overtime" id="overtime"
+                                                placeholder="Enter actual hourly overtime">
+                                            <span class="help-block-overtime"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>On call</label>
+                                            <select name="on_call" id="on_call">
+                                                <option value="">On call</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-on_call"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Holiday</label>
+                                            <input type="text" name="holiday" id="holiday"
+                                                placeholder="Enter holiday">
+                                            <span class="help-block-holiday"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Orientation rate</label>
+                                            <input type="number" name="orientation_rate" id="orientation_rate"
+                                                placeholder="Enter orientation rate">
+                                            <span class="help-block-orientation_rate"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Terms</label>
+                                            <select name="terms" id="terms">
+                                                <option value="">Terms</option>
+                                                @foreach($allKeywords['Terms'] as $value)
+                                                <option value="{{$value->title}}">{{$value->title}}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <span class="help-block-terms"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Block scheduling</label>
+                                            <select name="block_scheduling" id="block_scheduling">
+                                                <option value="">Block scheduling</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-block_scheduling"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Float requirements</label>
+                                            <select name="float_requirement" id="float_requirement">
+                                                <option value="">Float requirements</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-float_requirement"></span>
+                                        </div>
+                                        
+                                        {{-- <div class="ss-form-group col-md-4">
                                             <input type="text" name="job_function" id="job_function"
                                                 placeholder="Enter Job Function">
                                         </div>
@@ -392,7 +459,7 @@
                                             <textarea type="text" name="job_other_exp" id="job_other_exp"
                                                 placeholder="Enter Other Experiences"></textarea>
 
-                                        </div>
+                                        </div> --}}
                                         <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                             ( The above fields are not required )
                                         </span>
@@ -412,24 +479,118 @@
                                 <div class="page">
                                     <div class="row">
                                         <div class="ss-form-group col-md-4">
-                                            <label>Start Date</label>
-                                            <input type="date" name="start_date" id="start_date"
-                                                placeholder="Enter Start Date">
+                                            <label>Contract Termination Policy</label>
+                                            <input type="text" name="contract_termination_policy" id="contract_termination_policy"
+                                                placeholder="Enter Contract Termination Policy">
+                                            <span class="help-block-contract_termination_policy"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
-                                            <label>End Date</label>
-                                            <input type="date" name="end_date" id="end_date"
-                                                placeholder="Enter End Date">
+                                            <label>EMR</label>
+                                            <input type="text" name="emr" id="emr"
+                                                placeholder="Enter EMR">
+                                            <span class="help-block-emr"></span>
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>401K</label>
+                                            <select name="four_zero_one_k" id="four_zero_one_k">
+                                                <option value="">401k</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-four_zero_one_k"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Health Insurance</label>
+                                            <select name="health_insaurance" id="health_insaurance">
+                                                <option value="">Health Insurance</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-health_insaurance"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Dental</label>
+                                            <select name="dental" id="dental">
+                                                <option value="">Dental</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-dental"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Vision</label>
+                                            <select name="vision" id="vision">
+                                                <option value="">Vision</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-vision"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Feels Like $/hrs</label>
+                                            <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
+                                                placeholder="Enter Feels Like $/hrs">
+                                            <span class="help-block-feels_like_per_hour"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Call Back</label>
+                                            <select name="call_back" id="call_back">
+                                                <option value="">Call Back</option>
+                                                <option value="Yes">Yes
+                                                </option>
+                                                <option value="No">No
+                                                </option>
+                                            </select>
+                                            <span class="help-block-call_back"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Weekly Taxable amount</label>
+                                            <input type="number" name="weekly_taxable_amount" id="weekly_taxable_amount"
+                                                placeholder="Enter Weekly Taxable amount">
+                                            <span class="help-block-weekly_taxable_amount"></span>
+                                        </div>
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Weekly non-taxable amount</label>
+                                            <input type="number" name="weekly_non_taxable_amount" id="weekly_non_taxable_amount"
+                                                placeholder="Enter Weekly non-taxable amount">
+                                            <span class="help-block-weekly_non_taxable_amount"></span>
+                                        </div>
+                                        
+                                
+                                        <div class="ss-form-group col-md-4">
+                                            <label>Hours per Shift"</label>
                                             <input type="number" name="hours_shift" id="hours_shift"
                                                 placeholder="Enter Hours per Shift">
                                         </div>
                                         <div class="ss-form-group col-md-4">
+                                            <label>Hours per Week</label>
                                             <input type="number" name="hours_per_week" id="hours_shift"
                                                 placeholder="Enter Hours per week">
                                         </div>
-                                        <div class="ss-form-group col-md-4">
+                                        <div class="ss-form-group col-md-12">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                                   <label>Start Date</label>
+                                               </div>
+                                               <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12" style="display: flex; justify-content: end;">
+                                                   <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" style="box-shadow:none; width:auto;" class="col-6">
+                                                   <label class="col-6">
+                                                       As soon As possible
+                                                   </label>
+                                               </div>
+                                           </div>
+                                            <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="2024-03-06">
+                                       </div>
+                                       <span class="help-block-start_date"></span>
+                                        {{-- <div class="ss-form-group col-md-4">
                                             <input type="text" name="responsibilities" id="responsibilities"
                                                 placeholder="Enter Responsibilities">
                                         </div>
@@ -437,7 +598,7 @@
                                         <div class="ss-form-group col-md-4">
                                             <input type="text" name="qualifications" id="qualifications"
                                                 placeholder="Enter Qualifications">
-                                        </div>
+                                        </div> --}}
                                         <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                             ( The above fields are not required )
                                         </span>
@@ -1803,6 +1964,7 @@ function open_modal(obj) {
 </script>
 @stop
 <script type="text/javascript">
+    const myForm = document.getElementById('create_job_form');
     const darftJobs = @json($darftJobs);
     const publishedJobs = @json($publishedJobs);
     const onholdJobs = @json($onholdJobs);
@@ -2061,7 +2223,7 @@ function open_modal(obj) {
     function validateseconde(){
         var access = true;
                 // edits
-                var facility_shift_cancelation_policy = document.getElementById("facility_shift_cancelation_policy").value;
+        var facility_shift_cancelation_policy = document.getElementById("facility_shift_cancelation_policy").value;
         var traveler_distance_from_facility = document.getElementById("traveler_distance_from_facility").value;
         var clinical_setting = document.getElementById("clinical_setting").value;
         var Patient_ratio = document.getElementById("Patient_ratio").value;
@@ -2072,16 +2234,16 @@ function open_modal(obj) {
         var hours_per_week = document.getElementById("hours_per_week").value;
         var hours_shift = document.getElementById("hours_shift").value;
         var weeks_shift = document.getElementById("weeks_shift").value;
-        var referral_bonus = document.getElementById("referral_bonus").value;
-        var sign_on_bonus = document.getElementById("sign_on_bonus").value;
-        var completion_bonus = document.getElementById("completion_bonus").value;
-        var extension_bonus = document.getElementById("extension_bonus").value;
-        var other_bonus = document.getElementById("other_bonus").value;
-        var actual_hourly_rate = document.getElementById("actual_hourly_rate").value;
-        var overtime = document.getElementById("overtime").value;
-        var holiday     = document.getElementById("holiday").value;
-        var orientation_rate = document.getElementById("orientation_rate").value;
-        var on_call = document.getElementById("on_call").value;
+        // var referral_bonus = document.getElementById("referral_bonus").value;
+        // var sign_on_bonus = document.getElementById("sign_on_bonus").value;
+        // var completion_bonus = document.getElementById("completion_bonus").value;
+        // var extension_bonus = document.getElementById("extension_bonus").value;
+        // var other_bonus = document.getElementById("other_bonus").value;
+        // var actual_hourly_rate = document.getElementById("actual_hourly_rate").value;
+        // var overtime = document.getElementById("overtime").value;
+        // var holiday     = document.getElementById("holiday").value;
+        // var orientation_rate = document.getElementById("orientation_rate").value;
+        // var on_call = document.getElementById("on_call").value;
         
         if (facility_shift_cancelation_policy.trim() === '') {
             $('.help-block-facility_shift_cancelation_policy').text('Please enter the facility shift cancelation policy');
@@ -2175,7 +2337,110 @@ function open_modal(obj) {
             $('.help-block-weeks_shift').text('');
         }
 
-        if (referral_bonus.trim() === '') {
+        // if (referral_bonus.trim() === '') {
+        //     $('.help-block-referral_bonus').text('Please enter the referral bonus');
+        //     $('.help-block-referral_bonus').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-referral_bonus').text('');
+        // }
+
+        // if (sign_on_bonus.trim() === '') {
+        //     $('.help-block-sign_on_bonus').text('Please enter the sign on bonus');
+        //     $('.help-block-sign_on_bonus').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-sign_on_bonus').text('');
+        // }
+
+        // if (completion_bonus.trim() === '') {
+        //     $('.help-block-completion_bonus').text('Please enter the completion bonus');
+        //     $('.help-block-completion_bonus').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-completion_bonus').text('');
+        // }
+
+        // if (extension_bonus.trim() === '') {
+        //     $('.help-block-extension_bonus').text('Please enter the extension bonus');
+        //     $('.help-block-extension_bonus').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-extension_bonus').text('');
+        // }
+
+        // if (other_bonus.trim() === '') {
+        //     $('.help-block-other_bonus').text('Please enter the other bonus');
+        //     $('.help-block-other_bonus').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-other_bonus').text('');
+        // }
+
+        // if (actual_hourly_rate.trim() === '') {
+        //     $('.help-block-actual_hourly_rate').text('Please enter the actual hourly rate');
+        //     $('.help-block-actual_hourly_rate').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-actual_hourly_rate').text('');
+        // }
+
+        // if (overtime.trim() === '') {
+        //     $('.help-block-overtime').text('Please enter the overtime');
+        //     $('.help-block-overtime').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-overtime').text('');
+        // }
+        
+
+        // if (holiday.trim() === '') {
+        //     $('.help-block-holiday').text('Please enter the holiday');
+        //     $('.help-block-holiday').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-holiday').text('');
+        // }
+
+        // if (orientation_rate.trim() === '') {
+        //     $('.help-block-orientation_rate').text('Please enter the orientation rate');
+        //     $('.help-block-orientation_rate').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-orientation_rate').text('');
+        // }
+        // if (on_call.trim() === '') {
+        //     $('.help-block-on_call').text('Please enter the on call rate');
+        //     $('.help-block-on_call').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-on_call').text('');
+        // }
+        
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function validateThird(){
+        var access = true;
+        var referral_bonus = document.getElementById("referral_bonus").value;
+        var sign_on_bonus = document.getElementById("sign_on_bonus").value;
+        var completion_bonus = document.getElementById("completion_bonus").value;
+        var extension_bonus = document.getElementById("extension_bonus").value;
+        var other_bonus = document.getElementById("other_bonus").value;
+        var actual_hourly_rate = document.getElementById("actual_hourly_rate").value;
+        var overtime = document.getElementById("overtime").value;
+        var holiday     = document.getElementById("holiday").value;
+        var orientation_rate = document.getElementById("orientation_rate").value;
+        var on_call = document.getElementById("on_call").value;
+        var block_scheduling = document.getElementById("block_scheduling").value;
+        var terms = document.getElementById("terms").value;
+        var float_requirement = document.getElementById("float_requirement").value;
+
+         if (referral_bonus.trim() === '') {
             $('.help-block-referral_bonus').text('Please enter the referral bonus');
             $('.help-block-referral_bonus').addClass('text-danger');
             access = false;
@@ -2254,7 +2519,31 @@ function open_modal(obj) {
         } else {
             $('.help-block-on_call').text('');
         }
-        
+
+        if (block_scheduling.trim() === '') {
+            $('.help-block-block_scheduling').text('Please enter the block scheduling');
+            $('.help-block-block_scheduling').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-block_scheduling').text('');
+        }
+
+        if (terms.trim() === '') {
+            $('.help-block-terms').text('Please enter the terms');
+            $('.help-block-terms').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-terms').text('');
+        }
+
+        if (float_requirement.trim() === '') {
+            $('.help-block-float_requirement').text('Please enter the float requirement');
+            $('.help-block-float_requirement').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-float_requirement').text('');
+        }
+
 
 
         if (access) {
@@ -2262,6 +2551,145 @@ function open_modal(obj) {
         } else {
             return false;
         }
+
+    }
+
+    function validateForth(){
+        var access = true;
+        var contract_termination_policy = document.getElementById("contract_termination_policy").value;
+        var emr = document.getElementById("emr").value;
+        var four_zero_one_k = document.getElementById("four_zero_one_k").value;
+        var health_insaurance = document.getElementById("health_insaurance").value;
+        var dental = document.getElementById("dental").value;
+        var vision = document.getElementById("vision").value;
+        var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
+        var call_back = document.getElementById("call_back").value;
+        var weekly_taxable_amount   = document.getElementById("weekly_taxable_amount").value;
+        var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
+        var hours_per_week = document.getElementById("hours_per_week").value;
+        var hours_shift = document.getElementById("hours_shift").value;
+        var start_date = document.getElementById("start_date").value;
+        var as_soon_as = document.getElementById("as_soon_as").value;
+
+
+        if (contract_termination_policy.trim() === '') {
+            $('.help-block-contract_termination_policy').text('Please enter the contract termination policy');
+            $('.help-block-contract_termination_policy').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-contract_termination_policy').text('');
+        }
+
+        if (emr.trim() === '') {
+            $('.help-block-emr').text('Please enter the emr');
+            $('.help-block-emr').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-emr').text('');
+        }
+
+        if (four_zero_one_k.trim() === '') {
+            $('.help-block-four_zero_one_k').text('Please enter the four zero one k');
+            $('.help-block-four_zero_one_k').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-four_zero_one_k').text('');
+        }
+
+
+        if (health_insaurance.trim() === '') {
+            $('.help-block-health_insaurance').text('Please enter the health insurance');
+            $('.help-block-health_insaurance').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-health_insaurance').text('');
+        }
+
+        if (dental.trim() === '') {
+            $('.help-block-dental').text('Please enter the dental insurance');
+            $('.help-block-dental').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-dental_insurance').text('');
+        }
+
+        if (vision.trim() === '') {
+            $('.help-block-vision').text('Please enter the vision');
+            $('.help-block-vision').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-vision').text('');
+        }
+
+        if (feels_like_per_hour.trim() === '') {
+            $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
+            $('.help-block-feels_like_per_hour').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-feels_like_per_hour').text('');
+        }
+
+        if (call_back.trim() === '') {
+            $('.help-block-call_back').text('Please enter the call back');
+            $('.help-block-call_back').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-call_back').text('');
+        }
+
+        if (weekly_taxable_amount.trim() === '') {
+            $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
+            $('.help-block-weekly_taxable_amount').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-weekly_taxable_amount').text('');
+        }
+
+        if (weekly_non_taxable_amount.trim() === '') {
+            $('.help-block-weekly_non_taxable_amount').text('Please enter the weekly non taxable amount');
+            $('.help-block-weekly_non_taxable_amount').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-weekly_non_taxable_amount').text('');
+        }
+
+        if (hours_per_week.trim() === '') {
+            $('.help-block-hours_per_week').text('Please enter the hours per week');
+            $('.help-block-hours_per_week').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_per_week').text('');
+        }
+
+        if (hours_shift.trim() === '') {
+            $('.help-block-hours_shift').text('Please enter the hours shift');
+            $('.help-block-hours_shift').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_shift').text('');
+        }
+
+        if (start_date.trim() === '') {
+            $('.help-block-start_date').text('Please enter the start date');
+            $('.help-block-start_date').addClass('text-danger');
+            access = false;
+            if (as_soon_as.trim() === '') {
+            $('.help-block-as_soon_as').text('Please enter the as soon as possible');
+            $('.help-block-as_soon_as').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-as_soon_as').text('');
+        }
+        } else {
+            $('.help-block-start_date').text('');
+        }
+
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
 
@@ -2289,17 +2717,23 @@ function open_modal(obj) {
     });
     nextBtnThird.addEventListener("click", function (event) {
         event.preventDefault();
+        if (validateThird()) {
         slidePage.style.marginLeft = "-75%";
         bullet[current - 1].classList.add("active");
         progressCheck[current - 1].classList.add("active");
         progressText[current - 1].classList.add("active");
         current += 1;
+        }
     });
     submitBtn.addEventListener("click", function () {
+        
         bullet[current - 1].classList.add("active");
         progressCheck[current - 1].classList.add("active");
         progressText[current - 1].classList.add("active");
         current += 1;
+
+        
+        
     });
 
     saveDrftBtn.addEventListener("click", function (event) {
@@ -2593,6 +3027,10 @@ function open_modal(obj) {
         position: absolute;
         top: -30px;
         font-weight: 500;
+        display: block;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
     }
 
     form .page .field input {
@@ -2795,6 +3233,12 @@ function open_modal(obj) {
         background: transparent !important;
         margin-right: 6px;
 
+    }
+    label {
+        display: block;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
     }
 </style>
 @endsection

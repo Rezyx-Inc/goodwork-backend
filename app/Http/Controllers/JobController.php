@@ -746,6 +746,11 @@ class JobController extends Controller
             $response['success'] = true;
             $data = [];
             $job = Job::findOrFail($request->jid);
+            $recruiter_id =  $job->created_by;
+            $recruiter = User::findOrFail($recruiter_id);
+            $data['recruiter'] = $recruiter;
+
+            
             
             switch($request->type)
             {

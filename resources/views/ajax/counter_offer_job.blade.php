@@ -439,7 +439,7 @@
 
           <div class="ss-form-group">
             <label>Feels Like $/hrs</label>
-            <input type="text" name="feels_like_per_hour" value="{{$model->feels_like_per_hour}}" placeholder="---">
+            <input type="number" name="feels_like_per_hour" value="{{$model->feels_like_per_hour}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
@@ -478,27 +478,27 @@
 
           <div class="ss-form-group">
             <label>Weekly Taxable amount</label>
-            <input type="text" name="weekly_taxable_amount" value="{{$model->weekly_taxable_amount}}" placeholder="---">
+            <input type="number" name="weekly_taxable_amount" value="{{$model->weekly_taxable_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Weekly non-taxable amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+            <input type="number" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Employer Weekly Amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+            <input type="number" name="employer_weekly_amount" value="{{$model->employer_weekly_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Goodwork Weekly Amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+            <input type="number" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Total Employer Amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" id="Total Employer Amount" name="Total Employer Amount" placeholder="---">
+            <input type="text" name="total_employer_amount" value="{{$model->weekly_non_taxable_amount}}" id="Total Employer Amount" name="Total Employer Amount" placeholder="---">
           </div>
 
           <div class="ss-form-group">
