@@ -272,8 +272,8 @@
                                                 placeholder="Enter weeks shift">
                                             <span class="help-block-weeks_shift"></span>
                                         </div>
-                                        
-                                        
+
+
 
 
 
@@ -365,7 +365,7 @@
                                                 placeholder="Enter actual hourly rate">
                                             <span class="help-block-actual_hourly_rate"></span>
                                         </div>
-                                        
+
                                         <div class="ss-form-group col-md-4">
                                             <label>Hourly Overtime</label>
                                             <input type="number" name="overtime" id="overtime"
@@ -428,7 +428,7 @@
                                             </select>
                                             <span class="help-block-float_requirement"></span>
                                         </div>
-                                        
+
                                         {{-- <div class="ss-form-group col-md-4">
                                             <input type="text" name="job_function" id="job_function"
                                                 placeholder="Enter Job Function">
@@ -563,8 +563,8 @@
                                                 placeholder="Enter Weekly non-taxable amount">
                                             <span class="help-block-weekly_non_taxable_amount"></span>
                                         </div>
-                                        
-                                
+
+
                                         <div class="ss-form-group col-md-4">
                                             <label>Hours per Shift"</label>
                                             <input type="number" name="hours_shift" id="hours_shift"
@@ -2212,7 +2212,7 @@ function open_modal(obj) {
             $('.help-block-weekly_pay').text('');
 
         }
-         
+
         if (access) {
             return true;
         } else {
@@ -2244,7 +2244,7 @@ function open_modal(obj) {
         // var holiday     = document.getElementById("holiday").value;
         // var orientation_rate = document.getElementById("orientation_rate").value;
         // var on_call = document.getElementById("on_call").value;
-        
+
         if (facility_shift_cancelation_policy.trim() === '') {
             $('.help-block-facility_shift_cancelation_policy').text('Please enter the facility shift cancelation policy');
             $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
@@ -2392,7 +2392,7 @@ function open_modal(obj) {
         // } else {
         //     $('.help-block-overtime').text('');
         // }
-        
+
 
         // if (holiday.trim() === '') {
         //     $('.help-block-holiday').text('Please enter the holiday');
@@ -2416,7 +2416,7 @@ function open_modal(obj) {
         // } else {
         //     $('.help-block-on_call').text('');
         // }
-        
+
         if (access) {
             return true;
         } else {
@@ -2495,7 +2495,7 @@ function open_modal(obj) {
         } else {
             $('.help-block-overtime').text('');
         }
-        
+
 
         if (holiday.trim() === '') {
             $('.help-block-holiday').text('Please enter the holiday');
@@ -2689,7 +2689,7 @@ function open_modal(obj) {
         } else {
             return false;
         }
-        
+
     }
 
 
@@ -2726,14 +2726,14 @@ function open_modal(obj) {
         }
     });
     submitBtn.addEventListener("click", function () {
-        
+
         bullet[current - 1].classList.add("active");
         progressCheck[current - 1].classList.add("active");
         progressText[current - 1].classList.add("active");
         current += 1;
 
-        
-        
+
+
     });
 
     saveDrftBtn.addEventListener("click", function (event) {
@@ -2793,7 +2793,7 @@ function open_modal(obj) {
 
 
     function validateFirstDraft() {
-        
+
 
         var access = true;
         var jobName = document.getElementById("job_nameDraft").value;

@@ -537,7 +537,7 @@ class JobController extends Controller
 
     public function apply_on_jobs(Request $request)
     {
-        
+
         $request->validate([
             'jid'=>'required'
         ]);
@@ -596,6 +596,7 @@ class JobController extends Controller
             'weekly_pay'=>$job->weekly_pay,
             'tax_status'=>$job->tax_status,
             'status'=>'Apply',
+            'recruiter_id'=>$job->created_by
         ];
         if (empty($rec)) {
             offer::create($input);
@@ -750,8 +751,8 @@ class JobController extends Controller
             $recruiter = User::findOrFail($recruiter_id);
             $data['recruiter'] = $recruiter;
 
-            
-            
+
+
             switch($request->type)
             {
                 case 'saved':
@@ -908,7 +909,7 @@ class JobController extends Controller
     }
 
 
-   
+
 
     public function accept_offer(Request $request){
         try{
@@ -920,26 +921,26 @@ class JobController extends Controller
             if(!$offer){
                 return response()->json(['success' => false, 'message' => 'Offer not found']);
             }
-    
+
             $job = Job::where('id',$offer->job_id)->first();
             if(!$job){
                 return response()->json(['success' => false, 'message' => 'Job not found']);
             }
-    
+
             $offer->update([
                 'status' => 'Onboarding',
                 'is_draft' => '0',
                 'is_counter' => '0'
             ]);
-    
+
             $job->update([
                 'active' => '0',
                 'is_open' => '0',
                 'is_closed' => '1'
             ]);
-    
+
             return response()->json(['msg'=>'offer accepted successfully ']);
-    
+
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
         }

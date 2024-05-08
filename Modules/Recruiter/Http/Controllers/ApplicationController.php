@@ -114,9 +114,9 @@ class ApplicationController extends Controller
 
     public function getApplicationListing(Request $request)
     {
-      
+
         $type = $request->type;
-        //return response()->json(['type'=>$type]); 
+        //return response()->json(['type'=>$type]);
         $allspecialty = [];
         $recruiter = Auth::guard('recruiter')->user();
         if($type == 'Draft'){
@@ -124,7 +124,7 @@ class ApplicationController extends Controller
         }else{
             $offerLists = Offer::where('status', $type)->where('created_by',$recruiter->id)->get();
         }
-        
+
         if (0 >= count($offerLists)) {
             $responseData = [
                 'applicationlisting' => '<div class="text-center"><span>No Application</span></div>',
@@ -217,7 +217,7 @@ class ApplicationController extends Controller
         if (isset($request->id)) {
             $offerdetails = Offer::where(['status' => $type, 'id' => $request->id])->first();
             $offerLogs = OffersLogs::where('original_offer_id', $request->id)->get();
-            
+
         } else {
             $offerdetails = Offer::where('status', $type)->first();
         }
@@ -230,35 +230,37 @@ class ApplicationController extends Controller
         }
         if (isset($offerdetails)) {
             $waitingForPayment = true;
-            
+
             $nursedetails = NURSE::select('nurses.*')
                 ->where('nurses.id', $offerdetails['worker_user_id'])
                 ->first();
 
-                
+
 
              // POST request
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
             $response = Http::post($urlDocs, ['workerId' => $nursedetails->id]);
             // Check if the nurse has files
+            $files = [];
             if (!empty($response->json()['files'])) {
                 $hasFile = true;
-                $files = [];
+
                 foreach($response->json()['files'] as $file){
                     $files[] = [
                         'name' => $file['name'],
-                        'content' => base64_encode(implode(array_map("chr", $file['content']['data']))) 
+                        'content' => base64_encode(implode(array_map("chr", $file['content']['data'])))
                     ];
                 }
-                    
-            } 
+
+            }
             $userdetails = $nursedetails ? User::where('id', $nursedetails->user_id)->first() : '';
 
-            $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id']])->get() : '';
-            $jobappliedcount = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id']])->count() : '';
+            $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type])->where('created_by',$recruiter->id)->get() : '';
+            //return $jobapplieddetails;
+            $jobappliedcount = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id']])->where('created_by',$recruiter->id)->count() : '';
             if ($request->formtype == 'useralldetails') {
                 // need to check payments here first
-           
+
                 $data2 .=
                     '
                     <ul class="ss-cng-appli-hedpfl-ul">
@@ -289,7 +291,7 @@ class ApplicationController extends Controller
                 $data2 .=
                     '
                     <div class="ss-chng-apcon-st-ssele">
-                    
+
                         <label class="mb-2">Change Application Status</label>
                         <div class="row d-flex justify-content-center align-items-center">
                         <div class="col-9">
@@ -1144,10 +1146,10 @@ class ApplicationController extends Controller
                             </div>
                         </ul>
                     </div>';
-                    if ($request->type == 'Offered' || $request->type == 'Apply' ) {   
+                    if ($request->type == 'Offered' || $request->type == 'Apply' ) {
                     $data2 .='
                     <div class="ss-counter-buttons-div">
-                    
+
                     <button class="counter-save-for-button" onclick="offerSend(\'' .
                     $offerdetails->id .
                     '\', \'' .
@@ -1211,7 +1213,7 @@ class ApplicationController extends Controller
                     '</a> with the following terms. This offer is only available for the next <a
                                 hre="#">6 weeks:</a>
                             </p>
-                            
+
                         </div>
                     </div>
                     <form class="ss-emplor-form-sec" id="send-job-offer">
@@ -1220,7 +1222,7 @@ class ApplicationController extends Controller
                         <input type="text" name="job_name" id="job_name" placeholder="Enter job name" value="' .
                     $jobdetails['job_name'] .
                     '">
-                    
+
                         <input type="text" class="d-none" id="job_id" name="job_id" readonly value="' .
                     $jobdetails['id'] .
                     '">
@@ -1281,7 +1283,7 @@ class ApplicationController extends Controller
                     <span class="help-block-profession"></span>
                     <div class="ss-form-group ss-prsnl-frm-specialty">
                         <label>Specialty</label>
-                        
+
                                 <div class="col-md-12">
                                     <select name="preferred_specialty" class="m-0" id="preferred_specialty">
                                     <option value="'.$jobdetails['preferred_specialty'].'">'.$jobdetails['preferred_specialty'].'</option>';
@@ -1294,11 +1296,11 @@ class ApplicationController extends Controller
                     '
                                     </select>
                                 </div>
-                               
-                            
+
+
                     </div>
                     <span class="help-block-preferred_specialty"></span>
-                    
+
                     <div class="ss-form-group row justify-contenet-center align-items-center" style="margin-top:36px;">
                         <label class="col-lg-6 col-sm-8 col-xs-8 col-md-8" >Block scheduling</label>
                         <input style="box-shadow:none; width: auto;" class="col-lg-6 col-sm-2 col-xs-2 col-md-2" type="radio" id="option1" name="option" value="1" autocompleted="" disabled>
@@ -1337,7 +1339,7 @@ class ApplicationController extends Controller
                     '">
                     </div>
                     <span class="help-block-contract_termination_policy"></span>
-                    
+
                     <div class="ss-form-group">
                         <label>Traveler Distance From Facility</label>
                         <input type="number" id="traveler_distance_from_facility" name="traveler_distance_from_facility" placeholder="Enter Traveler Distance From Facility" value="' .
@@ -1400,7 +1402,7 @@ class ApplicationController extends Controller
                     $jobdetails['scrub_color'] .
                     '">
                     </div>
-                    
+
                     <span class="help-block-scrub_color"></span>
 
                     <div class="ss-form-group">
@@ -1522,7 +1524,7 @@ class ApplicationController extends Controller
                     <div class="ss-form-group">
                         <label>Health Insurance</label>
                         <select name="health_insaurance" id="health-insurance">
-                       
+
                             <option value="'.$jobdetails['health_insaurance'].'">'.(($jobdetails['health_insaurance'] == '1') ? 'Yes': 'No').'</option>
                             <option value="true">Yes</option>
                             <option value="false">No</option></option>
@@ -1980,7 +1982,7 @@ class ApplicationController extends Controller
                     ($offerdetails->actual_hourly_rate ?? '----') .
                     '</h6>
             </div>
-           
+
             <div class="col-md-6 mb-3 ' .
                     ($jobdetails->overtime != $offerdetails->overtime ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
@@ -2103,7 +2105,7 @@ class ApplicationController extends Controller
                     $userdetails->last_name .
                     '
                     </h6>
-                   
+
                 </li>';
                 if($waitingForPayment == true && ($request->type == 'Offered' || $request->type == 'Hold') ){
                 $data2 .=
@@ -2121,7 +2123,7 @@ class ApplicationController extends Controller
                     $data2 .=
                         '
                         <li style="margin-right:10px; width:auto !important;">
-                        <a  class="rounded-pill ss-apply-btn py-2 border-0 px-4" 
+                        <a  class="rounded-pill ss-apply-btn py-2 border-0 px-4"
                         data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>';
                     }
@@ -2133,7 +2135,7 @@ class ApplicationController extends Controller
             //     '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
             //     $offerdetails['worker_user_id'] .
             //     '\')">Chat Now</a>
-                
+
             // </li>';
             $data2 .= '
             <li style="width:auto !important;">
@@ -2143,12 +2145,12 @@ class ApplicationController extends Controller
                     <button type="submit" class="rounded-pill ss-apply-btn py-2 border-0 px-4">Chat Now</button>
                 </form>
             </li>';
-            
+
             }else if($hasFile == true){
                 $data2 .=
                     '
                     <li style="margin-right:10px; ">
-                        <a style="cursor:pointer;"  class="rounded-pill ss-apply-btn py-2 border-0 px-4" 
+                        <a style="cursor:pointer;"  class="rounded-pill ss-apply-btn py-2 border-0 px-4"
                         data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>
                     <li>
@@ -2462,7 +2464,7 @@ class ApplicationController extends Controller
                 }
                 /* create job */
                 $update_array['created_by'] = isset($job_data->recruiter_id) && $job_data->recruiter_id != '' ? $job_data->recruiter_id : '';
-                
+
                 $offerexist = DB::table('offers')
                     ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
                     ->first();

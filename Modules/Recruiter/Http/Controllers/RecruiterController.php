@@ -378,15 +378,16 @@ class RecruiterController extends Controller
                     'job_function' => 'nullable|string',
                     'job_cerner_exp' => 'nullable|string',
                     'job_meditech_exp' => 'nullable|string',
-                   
-                    
+
+                    'weekly_taxable_amount' => 'nullable|integer',
                     'job_other_exp' => 'nullable|string',
                     'start_date' => 'nullable|date',
-                    
+
                     'hours_shift' => 'nullable|integer',
                     'hours_per_week' => 'nullable|integer',
-                    
+
                     'qualifications' => 'nullable|string',
+                    'weekly_non_taxable_amount' => 'nullable|integer'
                 ]);
             } elseif ($active == '1') {
                 $validatedData = $request->validate([
@@ -394,7 +395,7 @@ class RecruiterController extends Controller
                     'job_name' => 'required|string',
                     'job_city' => 'required|string',
                     'job_state' => 'required|string',
-                   
+
                     'weekly_pay' => 'required|numeric',
                     'preferred_specialty' => 'required|string',
                     'preferred_work_location' => 'nullable|string',
@@ -407,16 +408,16 @@ class RecruiterController extends Controller
                     'preferred_experience' => 'nullable|string',
                     'preferred_shift' => 'nullable|string',
                     'job_function' => 'nullable|string',
-                    
-                    
-                  
-                    
-                   
+
+
+
+
+
                     'start_date' => 'nullable|date',
-                    
+
                     'hours_shift' => 'nullable|integer',
                     'hours_per_week' => 'nullable|integer',
-                    
+
                     'qualifications' => 'nullable|string',
                     'facility_shift_cancelation_policy' => 'nullable|string',
                     'traveler_distance_from_facility' => 'nullable|string',
@@ -426,8 +427,7 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-                    'hours_per_week' => 'nullable|string',
-                    'hours_shift' => 'nullable|string',
+                    'weekly_taxable_amount' => 'nullable|integer',
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -439,7 +439,7 @@ class RecruiterController extends Controller
                     'holiday' => 'nullable|string',
                     'orientation_rate' => 'nullable|string',
                     'on_call' => 'nullable|string',
-
+                    'weekly_non_taxable_amount' => 'nullable|integer'
 
                 ]);
             } else {
@@ -481,8 +481,8 @@ class RecruiterController extends Controller
             $job->holiday = $validatedData['holiday'];
             $job->orientation_rate = $validatedData['orientation_rate'];
             $job->on_call = $validatedData['on_call'];
-            $job->weekly_texable_amount = $validatedData['weekly_texable_amount'];
-            $job->weekly_non_texable_amount = $validatedData['weekly_non_texable_amount'];
+            $job->weekly_taxable_amount = $validatedData['weekly_taxable_amount'];
+            $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
             $job->created_by = $created_by;
 
             // Save the job data to the database
@@ -499,7 +499,7 @@ class RecruiterController extends Controller
             Log::error('Error saving job: ' . $e->getMessage());
 
             // Handle the error gracefully - display a generic error message or redirect with an error status
-           // return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
             return redirect()->route('recruiter-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
             // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
         } catch (\Exception $e) {
@@ -507,7 +507,7 @@ class RecruiterController extends Controller
             Log::error('Exception: ' . $e->getMessage());
 
             // Display a generic error message or redirect with an error status
-            //return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
             return redirect()->route('recruiter-opportunities-manager')->with('error', 'Try again later');
             //return response()->json(['success' => false, 'message' => $request->input('') ]);
         }
@@ -538,7 +538,7 @@ class RecruiterController extends Controller
                 'job_function' => 'nullable|string',
                 'job_cerner_exp' => 'nullable|string',
                 'job_meditech_exp' => 'nullable|string',
-                
+
                 'seniority_level' => 'nullable|string',
                 'job_other_exp' => 'nullable|string',
                 'start_date' => 'nullable|date',
@@ -569,7 +569,7 @@ class RecruiterController extends Controller
             $job->job_function = $validatedData['job_function'];
             $job->job_cerner_exp = $validatedData['job_cerner_exp'];
             $job->job_meditech_exp = $validatedData['job_meditech_exp'];
-           
+
             $job->seniority_level = $validatedData['seniority_level'];
             $job->job_other_exp = $validatedData['job_other_exp'];
             $job->start_date = $validatedData['start_date'];

@@ -42,7 +42,7 @@ class CreateOffersTable extends Migration
             $table->decimal('guaranteed_hours', 8, 2);
             $table->decimal('hours_shift', 8, 2);
             $table->decimal('weeks_shift', 8, 2);
-            $table->decimal('preferred_assignment_duration', 8, 2);
+            $table->decimal('preferred_assignment_duration', 8, 2)->nullable();
             $table->decimal('referral_bonus', 8, 2);
             $table->decimal('sign_on_bonus', 8, 2);
             $table->decimal('completion_bonus', 8, 2);
@@ -73,7 +73,7 @@ class CreateOffersTable extends Migration
             $table->foreign('worker_user_id')->references('id')->on('nurses')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
-            $table->timestamps();   
+            $table->timestamps();
         });
     }
 
