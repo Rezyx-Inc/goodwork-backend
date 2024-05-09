@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 
 var { report } = require('../set.js')
+const queries = require("../mysql/queries.js")
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT_SECRET;
@@ -28,7 +29,8 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
     case 'invoice.paid':
       const invoicePaid = event.data.object;
       report("INVOICE PAID _ Customer : " + invoicePaid.customer_name + " | Offer : " + invoicePaid.metadata.offerId)
-      console.log(invoicePaid.metadata)
+      // Set the invoice to onboarding
+      await queries.setOfferStatus(invoicePaid.metadata.offerId, "Onboarding")
       break;
     
     case 'invoice.finalized':
@@ -39,7 +41,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
     
     // ... handle other event types
     default:
-      console.log(`Unhandled event type ${event.type}`);
+      //console.log(`Unhandled event type ${event.type}`);
   }
 
   // Return a 200 response to acknowledge receipt of the event
