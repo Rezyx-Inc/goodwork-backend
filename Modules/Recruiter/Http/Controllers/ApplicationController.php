@@ -215,11 +215,11 @@ class ApplicationController extends Controller
         $waitingForPayment = false;
         $hasFile = false;
         if (isset($request->id)) {
-            $offerdetails = Offer::where(['status' => $type, 'id' => $request->id])->first();
+            $offerdetails = Offer::where(['status' => $type, 'id' => $request->id, 'created_by' => $recruiter->id ])->first();
             $offerLogs = OffersLogs::where('original_offer_id', $request->id)->get();
 
         } else {
-            $offerdetails = Offer::where('status', $type)->first();
+            $offerdetails = Offer::where('status', $type)->where( 'created_by' , $recruiter->id )->first();
         }
         if ($request->formtype == 'jobdetails') {
             $jobdetails = Job::where('id', $request->jobid)->first();
@@ -255,9 +255,11 @@ class ApplicationController extends Controller
             }
             $userdetails = $nursedetails ? User::where('id', $nursedetails->user_id)->first() : '';
 
-            $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type])->where('created_by',$recruiter->id)->get() : '';
-            //return $jobapplieddetails;
-            $jobappliedcount = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id']])->where('created_by',$recruiter->id)->count() : '';
+            $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id'], 'created_by'=>$recruiter->id])->get() : '';
+            $jobappliedcount = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id'], 'created_by'=>$recruiter->id])->count() : '';
+            // $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type])->where('created_by',$recruiter->id)->get() : '';
+            // //return $jobapplieddetails;
+            // $jobappliedcount = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id']])->where('created_by',$recruiter->id)->count() : '';
             if ($request->formtype == 'useralldetails') {
                 // need to check payments here first
 
@@ -2122,9 +2124,9 @@ class ApplicationController extends Controller
                 if($hasFile == true){
                     $data2 .=
                         '
-                        <li style="margin-right:10px; width:auto !important;">
+                        <li style="margin-right:10px; width:inherit !important;">
                         <a  class="rounded-pill ss-apply-btn py-2 border-0 px-4"
-                        data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
+                        data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="width: inherit !important;color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>';
                     }
             //     $data2 .=
@@ -2138,7 +2140,7 @@ class ApplicationController extends Controller
 
             // </li>';
             $data2 .= '
-            <li style="width:auto !important;">
+            <li style="width:50% !important;">
                 <form method="POST" action="' . route('recruiter-messages') . '">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="worker_user_id" value="' . $offerdetails['worker_user_id'] . '">
@@ -2351,6 +2353,7 @@ class ApplicationController extends Controller
 
     public function updateApplicationStatus(Request $request)
     {
+        $recruiter_id = Auth::guard('recruiter')->user()->id;
         $type = $request->type;
         $id = $request->id;
         $formtype = $request->formtype;
@@ -2358,7 +2361,7 @@ class ApplicationController extends Controller
 
         if (isset($request->jobid)) {
             $jobid = $request->jobid;
-            $job = Offer::where(['job_id' => $jobid, 'id' => $id])->update(['status' => $formtype]);
+            $job = Offer::where(['job_id' => $jobid, 'id' => $id,'created_by' => $recruiter_id])->update(['status' => $formtype]);
             if ($job) {
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
                 $statusCounts = [];
@@ -2366,7 +2369,7 @@ class ApplicationController extends Controller
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
                 }
-                $statusCountsQuery = Offer::whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('created_by', $recruiter_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;
@@ -2374,7 +2377,7 @@ class ApplicationController extends Controller
                         $statusCounts[$statusCount->status] = 0;
                     }
                 }
-
+               
                 return response()->json(['message' => 'Update Successfully', 'type' => $formtype, 'statusCounts' => $statusCounts]);
             } else {
                 return response()->json(['message' => 'Something went wrong! Please check']);

@@ -428,6 +428,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
+                    
                     url: "{{ url('recruiter/update-application-status') }}",
                     data: {
                         'token': csrfToken,

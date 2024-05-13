@@ -483,6 +483,7 @@ class OpportunitiesController extends Controller
         $allspecialty = [];
         $allvaccinations = [];
         $allcertificate = [];
+        $recruiter_id = Auth::guard('recruiter')->user()->id;
 
         // $formtype = $request->formtype;
         // $activestatus = "1";
@@ -544,46 +545,44 @@ class OpportunitiesController extends Controller
         // $offerdetails = "";
 
         if (isset($request->id)) {
-            $jobdetails = Job::select('jobs.*', 'job_references.name', 'job_references.min_title_of_reference', 'job_references.recency_of_reference')
-                ->leftJoin('job_references', 'job_references.job_id', '=', 'jobs.id')
-                ->where(['jobs.id' => $request->id])->first();
+            $jobdetails = Job::select('jobs.*')
+                ->where(['jobs.id' => $request->id])->where('created_by',$recruiter_id)->first();
         } else {
             if ($type == "drafts") {
-                $jobdetails = Job::select('jobs.*', 'job_references.name', 'job_references.min_title_of_reference', 'job_references.recency_of_reference')
-                    ->leftJoin('job_references', 'job_references.job_id', '=', 'jobs.id')
-                    ->where(['jobs.active' => '0'])->first();
+                $jobdetails = Job::select('jobs.*')
+                    ->where(['jobs.active' => '0'])->where('created_by',$recruiter_id)->first();
             } else if ($type == "hidden") {
-                $jobdetails = Job::select('jobs.*', 'job_references.name', 'job_references.min_title_of_reference', 'job_references.recency_of_reference')
-                    ->leftJoin('job_references', 'job_references.job_id', '=', 'jobs.id')
-                    ->where(['jobs.is_hidden' => '1'])->first();
+                $jobdetails = Job::select('jobs.*')
+                    ->where(['jobs.is_hidden' => '1'])->where('created_by',$recruiter_id)->first();
             } else if ($type == "closed") {
-                $jobdetails = Job::select('jobs.*', 'job_references.name', 'job_references.min_title_of_reference', 'job_references.recency_of_reference')
-                    ->leftJoin('job_references', 'job_references.job_id', '=', 'jobs.id')
-                    ->where(['jobs.is_closed' => '1'])->first();
+                $jobdetails = Job::select('jobs.*')
+                    ->where(['jobs.is_closed' => '1'])->where('created_by',$recruiter_id)->first();
             } else {
-                $jobdetails = Job::select('jobs.*', 'job_references.name', 'job_references.min_title_of_reference', 'job_references.recency_of_reference')
-                    ->leftJoin('job_references', 'job_references.job_id', '=', 'jobs.id')
-                    ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0'])->first();
+                $jobdetails = Job::select('jobs.*')
+                    ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0'])->where('created_by',$recruiter_id)->first();
             }
         }
         $userdetails = $jobdetails ? User::where('id', $jobdetails['created_by'])->first() : "";
         $jobappliedcount = $jobdetails ? Offer::where('job_id', $jobdetails->id)->count() : '';
         $jobapplieddetails = $jobdetails ? Offer::where('job_id', $jobdetails->id)->get() : "";
 
+        
 
         // $jobapplieddetails = $nursedetails ? Offer::where(['status' => $activestatus, 'nurse_id' => $offerdetails->nurse_id])->get() : "";
         // $jobappliedcount = $nursedetails ? Offer::where(['status' => $activestatus, 'nurse_id' => $offerdetails->nurse_id])->count() : "";
 
         if ($request->formtype == 'useralldetails') {
-            $offerdetails = Offer::where('id', $request->id)->first();
-            $nursedetails = Nurse::where('id', $offerdetails['nurse_id'])->first();
+            $offerdetails = Offer::where('id', $request->id)->where('created_by',$recruiter_id)->first();
+            
+            $nursedetails = Nurse::where('id', $offerdetails['worker_user_id'])->first();
             $userdetails = User::where('id', $nursedetails->user_id)->first();
             $jobdetails = Job::where('id', $offerdetails['job_id'])->first();
-
+            
+            
             $data2 .= '
                 <ul class="ss-cng-appli-hedpfl-ul">
                     <li>
-                        <span>' . $offerdetails['nurse_id'] . '</span>
+                        <span>' . $offerdetails['worker_user_id'] . '</span>
                         <h6>
                             <img src="' . asset('public/images/nurses/profile/' . $userdetails['image']) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                             ' . $userdetails['first_name'] . ' ' . $userdetails['last_name'] . '
@@ -599,685 +598,864 @@ class OpportunitiesController extends Controller
                         $data2 .= '
                     </li>
                 </ul>';
-            $data2 .= '
+                $data2 .=
+                '
                 <div class="ss-chng-apcon-st-ssele">
+
                     <label class="mb-2">Change Application Status</label>
-                    <select name="status" id="status application-status" onchange="applicationStatus(this.value, \'' . $type . '\', \'' . $request->id . '\', \'' . $request->jobid . '\')">
+                    <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col-9">
+                    <select name="status" id="status application-status">
                         <option value="">Select Status</option>
-                        <option value="Apply" ' . ($offerdetails['status'] === 'Apply' ? 'selected' : '') . '>Apply</option>
-                        <option value="Screening" ' . ($offerdetails['status'] === 'Screening' ? 'selected' : '') . '>Screening</option>
-                        <option value="Submitted" ' . ($offerdetails['status'] === 'Submitted' ? 'selected' : '') . '>Submitted</option>
-                        <option value="Offered" ' . ($offerdetails['status'] === 'Offered' ? 'selected' : '') . '>Offered</option>
-                        <option value="Done" ' . ($offerdetails['status'] === 'Done' ? 'selected' : '') . '>Done</option>
-                        <option value="Onboarding" ' . ($offerdetails['status'] === 'Onboarding' ? 'selected' : '') . '>Onboarding</option>
-                        <option value="Working" ' . ($offerdetails['status'] === 'Working' ? 'selected' : '') . '>Working</option>
-                        <option value="Rejected" ' . ($offerdetails['status'] === 'Rejected' ? 'selected' : '') . '>Rejected</option>
-                        <option value="Blocked" ' . ($offerdetails['status'] === 'Blocked' ? 'selected' : '') . '>Blocked</option>
-                        <option value="Hold" ' . ($offerdetails['status'] === 'Hold' ? 'selected' : '') . '>Hold</option>
+                        <option value="Apply" ' .
+                ($offerdetails['status'] === 'Apply' ? 'selected' : '') .
+                '>Apply</option>
+                        <option value="Screening" ' .
+                ($offerdetails['status'] === 'Screening' ? 'selected' : '') .
+                '>Screening</option>
+                        <option value="Submitted" ' .
+                ($offerdetails['status'] === 'Submitted' ? 'selected' : '') .
+                '>Submitted</option>
+                        <option value="Offered" ' .
+                ($offerdetails['status'] === 'Offered' ? 'selected' : '') .
+                '>Offered</option>
+                        <option value="Done" ' .
+                ($offerdetails['status'] === 'Done' ? 'selected' : '') .
+                '>Done</option>
+                        <option value="Onboarding" ' .
+                ($offerdetails['status'] === 'Onboarding' ? 'selected' : '') .
+                '>Onboarding</option>
+                        <option value="Working" ' .
+                ($offerdetails['status'] === 'Working' ? 'selected' : '') .
+                '>Working</option>
+                        <option value="Rejected" ' .
+                ($offerdetails['status'] === 'Rejected' ? 'selected' : '') .
+                '>Rejected</option>
+                        <option value="Blocked" ' .
+                ($offerdetails['status'] === 'Blocked' ? 'selected' : '') .
+                '>Blocked</option>
+                        <option value="Hold" ' .
+                ($offerdetails['status'] === 'Hold' ? 'selected' : '') .
+                '>Hold</option>
                     </select>
+                    </div>
+                    <div class="col-3">
+                    <button class="counter-save-for-button" style="margin-top:0px;" onclick="applicationStatus(document.getElementById(\'status application-status\').value, \'' .
+                $type .
+                '\', \'' .
+                $request->id .
+                '\', \'' .
+                $request->jobid .
+                '\')
+                    ">Change Status</button>
+                    </div>
+                    </div>
                 </div>
                 <div class="ss-jb-apl-oninfrm-mn-dv">
                     <ul class="ss-jb-apply-on-inf-hed-rec row">
-
                     <li class="col-md-6">
                         <h5 class="mt-3">Job Information</h5>
                     </li>
                     <li class="col-md-6">
                         <h5 class="mt-3">Worker Information</h5>
                     </li>
-                    <li class="col-md-12">
-                        <span class="mt-3">Diploma</span>
-                    </li>
-                    <li class="col-md-6">
-                        <h6>College Diploma</h6>
-                    </li>
-                    <li class="col-md-6">
-                        <p>' . ($nursedetails['diploma'] ?? '<u onclick="askWorker(this, \'diploma\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                    </li>
-                    <li class="col-md-12">
-                        <span class="mt-3">Drivers license</span>
-                    </li>
-                    <li class="col-md-6">
-                        <h6>Required</h6>
-                    </li>
-                    <li class="col-md-6">
-                        <p>' . ($nursedetails['driving_license'] ?? '<u onclick="askWorker(this, \'driving_license\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                    </li>
-                    <li class="col-md-12">
-                        <span class="mt-3">Worked at Facility Before</span>
-                    </li>
-                    <li class="col-md-6">
-                        <h6>Have you worked here in the last 18 months?</h6>
-                    </li>
-                    <li class="col-md-6">
-                        <p>' . ($nursedetails['worked_at_facility_before'] ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                    </li>
-                    <li class="col-md-12">
-                        <span class="mt-3">SS# or SS Card</span>
-                    </li>
-                    <li class="col-md-6">
-                        <h6>Last 4 digits of SS#</h6>
-                    </li>
-                    <li class="col-md-6">
-                        <p>' . ($nursedetails['worker_ss_number'] ?? '----' ) . '</p>
-                    </li>
-                    <li class="col-md-12">
-                        <span class="mt-3">Profession</span>
-                    </li>
-                    <li class="col-md-6">
-                        <h6>' . ($jobdetails->profession ?? '----') . '</h6>
-                    </li>
-                    <li class="col-md-6">
-                        <p>' . ($nursedetails['highest_nursing_degree'] ?? '<u onclick="askWorker(this, \'highest_nursing_degree\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
-                    </li>
-                    <li class="col-md-12">
-                        <span class="mt-3">Specialty</span>
-                    </li>';
-                    if(isset($jobdetails->specialty)){
-                        foreach (explode(",", $nursedetails['specialty']) as $key => $value) {
-                            if(isset($value)){
+                   ';
+            $data2 .=
+                ' <div class="col-md-12">
+            <span class="mt-3">Profession</span>
+        </div>
+            <div class="row ' .
+                ($jobdetails->proffesion == $nursedetails->proffesion ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
+                <div class="col-md-6">
+                    <h6>' .
+                ($jobdetails->proffesion ?? '----') .
+                '</h6>
+                </div>
+                <div class="col-md-6 ' .
+                ($jobdetails->proffesion ? '' : 'd-none') .
+                '">
+                    <p>' .
+                ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                </div>
+                </div>';
 
-                                $data2 .= '
-                                <div class="col-md-6 ">
-                                    <h6>' . $value . ' Required</h6>
-                                </div>
-                                <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'specialty\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
-                                </div>
-                                ';
-                            }
-                        }
-                    }
-                    $data2 .= '
-                    <div class="col-md-12">
-                        <span class="mt-3">Professional Licensure</span>
-                    </div>
-                    <div class="col-md-6">
-                        <h6>' . ($jobdetails['job_state'] ?? '----') . '</h6>
-                    </div>
-                    <div class="col-md-6 ' . ($jobdetails['job_state'] ? '' : 'd-none' ) . '">
-                        <p>' . ($nursedetails['nursing_license_state'] ?? '<u onclick="askWorker(this, \'nursing_license_state\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                    </div>
-                    <div class="col-md-12">
-                        <span class="mt-3">Experience</span>
-                    </div>
-                    <div class="col-md-6">
-                        <h6>' . ($jobdetails['preferred_experience'] ?? '----') . ' Years </h6>
-                    </div>
-                    <div class="col-md-6 ' . ($jobdetails['preferred_experience'] ? '' : 'd-none' ) . '">
-                        <p>' . (array_sum(explode(",", $nursedetails['experience'])) ? (array_sum(explode(",", $nursedetails['experience'])) . ' years') : '<u onclick="askWorker(this, \'experience\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
-                    </div>
-                    <div class="col-md-12">
-                        <span class="mt-3">Vaccinations & Immunizations</span>
-                    </div>';
-                    if(isset($jobdetails['vaccinations'])){
-                        foreach (explode(",", $jobdetails['vaccinations']) as $key => $value) {
-                            if(isset($value)){
-                                $data2 .= '
-                                <div class="col-md-6 ">
-                                    <h6>' . $value . ' Required</h6>
-                                </div>
-                                <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'vaccinations\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
-                                </div>
-                                ';
-                            }
-                        }
-                    }
-                    $data2 .= '
-                    <div class="col-md-12">
-                        <span class="mt-3">References</span>
-                    </div>';
-                    if(isset($jobdetails['number_of_references'])){
-                        foreach (explode(",", $jobdetails['number_of_references']) as $key => $value) {
-                            if(isset($value)){
-                                $data2 .= '
-                                <div class="col-md-6 ">
-                                    <h6>' . $value . ' references</h6>
-                                </div>
-                                <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'number_of_references\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
-                                </div>
-                                ';
-                            }
-                        }
-                    }
-                    $data2 .= '
-                    <div class="col-md-12">
-                        <span class="mt-3">Certifications</span>
-                    </div>';
-                    if(isset($jobdetails['certificate'])){
-                        foreach (explode(",", $nursedetails['certificate']) as $key => $value) {
-                            if(isset($value)){
-                                $data2 .= '
-                                <div class="col-md-6 ">
-                                    <h6>' . $value . ' Required</h6>
-                                </div>
-                                <div class="col-md-6 ">
-                                    <p><u onclick="askWorker(this, \'certificate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
-                                </div>
-                                ';
-                            }
-                        }
-                    }
-                    $data2 .= '
-                        <div class="col-md-12">
-                            <span class="mt-3">Skills checklist</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['skills'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['skill'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['skills'] ?? '<u onclick="askWorker(this, \'skills\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Eligible to work in the US</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Required</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['profession'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['eligible_work_in_us'] ?? '<u onclick="askWorker(this, \'eligible_work_in_us\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Urgency</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['urgency'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['urgency'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_urgency'] ?? '<u onclick="askWorker(this, \'worker_urgency\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3"># of Positions Available</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['position_available'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['position_available'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['available_position'] ?? '<u onclick="askWorker(this, \'available_position\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">MSP</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['msp'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['msp'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['MSP'] ?? '<u onclick="askWorker(this, \'MSP\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">VMS</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['vms'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['vms'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['VMS'] ?? '<u onclick="askWorker(this, \'VMS\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
+            $data2 .=
+                ' <div class="col-md-12">
+            <span class="mt-3">Specialty</span>
+        </div>
+            <div class="row ' .
+                ($jobdetails->specialty == $nursedetails->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
+                <div class="col-md-6">
+                    <h6>' .
+                ($jobdetails->specialty ?? '----') .
+                '</h6>
+                </div>
+                <div class="col-md-6 ' .
+                ($jobdetails->specialty ? '' : 'd-none') .
+                '">
+                    <p>' .
+                ($nursedetails->specialty ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_specialty\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                </div>
+                </div>';
+            $data2 .=
+                '
                         <div class="col-md-12">
                             <span class="mt-3">Block scheduling</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->block_scheduling === $nursedetails->block_scheduling ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['block_scheduling'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->block_scheduling == '1' ? 'Yes' : ($jobdetails->block_scheduling == '0' ? 'No' : '----')) .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['block_scheduling'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['block_scheduling'] ?? '<u onclick="askWorker(this, \'block_scheduling\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                (isset($jobdetails->block_scheduling) ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->block_scheduling == '1' ? 'Yes' : ($nursedetails->block_scheduling == '0' ? 'No' : '<a style="cursor: pointer;" onclick="askWorker(this, \'block_scheduling\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>')) .
+                '</p>
+                </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Float requirements</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->float_requirement === $nursedetails->float_requirement ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['float_requirement'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->float_requirement == '1' ? 'Yes' : ($jobdetails->float_requirement == '0' ? 'No' : '----')) .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['float_requirement'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['float_requirement'] ?? '<u onclick="askWorker(this, \'float_requirement\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                (isset($jobdetails->float_requirement) ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->float_requirement == '1' ? 'Yes' : ($nursedetails->float_requirement == '0' ? 'No' : '<a style="cursor: pointer;" onclick="askWorker(this, \'float_requirement\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>')) .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility Shift Cancellation Policy</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->facility_shift_cancelation_policy === $nursedetails->facility_shift_cancelation_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['facility_shift_cancelation_policy'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->facility_shift_cancelation_policy ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['facility_shift_cancelation_policy'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['facility_shift_cancelation_policy'] ?? '<u onclick="askWorker(this, \'facility_shift_cancelation_policy\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->facility_shift_cancelation_policy ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->facility_shift_cancelation_policy ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'facility_shift_cancelation_policy\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Contract Termination Policy</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->contract_termination_policy === $nursedetails->contract_termination_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['contract_termination_policy'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->contract_termination_policy ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['contract_termination_policy'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['contract_termination_policy'] ?? '<u onclick="askWorker(this, \'contract_termination_policy\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->contract_termination_policy ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->contract_termination_policy ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'contract_termination_policy\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Traveler Distance From Facility</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->traveler_distance_from_facility === $nursedetails->distance_from_your_home ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['traveler_distance_from_facility'] ?? '----') . ' miles Maximum</h6>
+                            <h6>' .
+                ($jobdetails->traveler_distance_from_facility ?? '----') .
+                ' miles Maximum</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['traveler_distance_from_facility'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['distance_from_your_home'] ?? '<u onclick="askWorker(this, \'distance_from_your_home\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->traveler_distance_from_facility ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->distance_from_your_home ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'distance_from_your_home\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Facility</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->facility === $nursedetails->worked_at_facility_before ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['facility'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->facility ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['facility'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worked_at_facility_before'] ?? '<u onclick="askWorker(this, \'worked_at_facility_before\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->facility ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worked_at_facility_before ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worked_at_facility_before\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
                         </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Facility`s Parent System</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['facilitys_parent_system'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['facilitys_parent_system'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_facility_parent_system'] ?? '<u onclick="askWorker(this, \'worker_facility_parent_system\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Facility Average Rating</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['facility_average_rating'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['facility_average_rating'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['avg_rating_by_facilities'] ?? '<u onclick="askWorker(this, \'avg_rating_by_facilities\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Recruiter Average Rating</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['recruiter_average_rating'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['recruiter_average_rating'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_avg_rating_by_recruiters'] ?? '<u onclick="askWorker(this, \'worker_avg_rating_by_recruiters\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Employer Average Rating</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['employer_average_rating'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['employer_average_rating'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_avg_rating_by_employers'] ?? '<u onclick="askWorker(this, \'worker_avg_rating_by_employers\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Clinical Setting</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->clinical_setting === $nursedetails->clinical_setting_you_prefer ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['clinical_setting'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->clinical_setting ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['clinical_setting'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['clinical_setting_you_prefer'] ?? '<u onclick="askWorker(this, \'clinical_setting_you_prefer\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->clinical_setting ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->clinical_setting_you_prefer ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'clinical_setting_you_prefer\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Patient ratio</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->patient_ratio === $nursedetails->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['Patient_ratio'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->Patient_ratio ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['Patient_ratio'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_patient_ratio'] ?? '<u onclick="askWorker(this, \'worker_patient_ratio\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->Patient_ratio ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_patient_ratio ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_patient_ratio\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">EMR</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->emr === $nursedetails->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['emr'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->Emr ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['emr'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_emr'] ?? '<u onclick="askWorker(this, \'worker_emr\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->Emr ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_emr ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_emr\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Unit</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->unit === $nursedetails->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['Unit'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->Unit ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['Unit'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_unit'] ?? '<u onclick="askWorker(this, \'worker_unit\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->Unit ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_unit ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_unit\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
                         </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Department</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['Department'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['Department'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_department'] ?? '<u onclick="askWorker(this, \'worker_department\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Bed Size</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['Bed_Size'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['Bed_Size'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_bed_size'] ?? '<u onclick="askWorker(this, \'worker_bed_size\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Trauma Level</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['Trauma_Level'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['Trauma_Level'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_trauma_level'] ?? '<u onclick="askWorker(this, \'worker_trauma_level\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Scrub Color</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->scrub_color === $nursedetails->worker_scrub_color ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['scrub_color'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->scrub_color ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['scrub_color'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_scrub_color'] ?? '<u onclick="askWorker(this, \'worker_scrub_color\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->scrub_color ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_scrub_color ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_scrub_color\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
                         </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Facility City</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['job_city'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['job_city'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_facility_city'] ?? '<u onclick="askWorker(this, \'worker_facility_city\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Facility State Code</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['job_state'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['job_state'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_facility_state_code'] ?? '<u onclick="askWorker(this, \'worker_facility_state_code\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Interview Dates</span>
                         </div>
+
                         <div class="col-md-6">
-                            <h6>' . $nursedetails['worker_interview_dates'] . '</h6>
+                            <h6>' .
+                $nursedetails->worker_interview_dates .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($nursedetails['worker_interview_dates'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_interview_dates'] ?? '<u onclick="askWorker(this, \'worker_interview_dates\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->worker_interview_dates ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_interview_dates ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_interview_dates\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Start Date</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->start_date == $nursedetails->worker_start_date ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['start_date'] ? $jobdetails['start_date'] : 'As Soon As Possible') . '</h6>
+                            <h6>' .
+                ($jobdetails->start_date ? $jobdetails->start_date : 'As Soon As Possible') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['start_date'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_start_date'] ?? '<u onclick="askWorker(this, \'worker_start_date\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->start_date ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_start_date ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_start_date\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">RTO</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->rto === $nursedetails->rto ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['rto'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->rto ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['rto'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_as_soon_as_posible'] ?? '<u onclick="askWorker(this, \'worker_as_soon_as_posible\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->rto ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->rto ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'rto\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Shift Time of Day</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->preferred_shift == $nursedetails->worker_shift_time_of_day ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['preferred_shift'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->preferred_shift ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['worker_shift_time_of_day'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_shift_time_of_day'] ?? '<u onclick="askWorker(this, \'worker_shift_time_of_day\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->preferred_shift ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_shift_time_of_day ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_shift_time_of_day\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Hours/Week</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->hours_per_week == $nursedetails->worker_hours_per_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['hours_per_week'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->hours_per_week ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['hours_per_week'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_hours_per_week'] ?? '<u onclick="askWorker(this, \'worker_hours_per_week\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->hours_per_week ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_hours_per_week ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_per_week\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Guaranteed Hours</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->guaranteed_hours == $nursedetails->worker_guaranteed_hours ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['guaranteed_hours'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->guaranteed_hours ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['guaranteed_hours'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_guaranteed_hours'] ?? '<u onclick="askWorker(this, \'worker_guaranteed_hours\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->guaranteed_hours ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_guaranteed_hours ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_guaranteed_hours\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Hours/Shift</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->preferred_assignment_duration == $nursedetails->worker_weeks_assignment ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['preferred_assignment_duration'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->preferred_assignment_duration ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['preferred_assignment_duration'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weeks_assignment'] ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->preferred_assignment_duration ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_weeks_assignment ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weeks_assignment\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Weeks/Assignment</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->weeks_shift == $nursedetails->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['preferred_assignment_duration'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->preferred_assignment_duration ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['preferred_assignment_duration'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weeks_assignment'] ?? '<u onclick="askWorker(this, \'worker_weeks_assignment\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->preferred_assignment_duration ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_weeks_assignment ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weeks_assignment\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Shifts/Week</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->weeks_shift == $nursedetails->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['weeks_shift'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->weeks_shift ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['weeks_shift'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_shifts_week'] ?? '<u onclick="askWorker(this, \'worker_shifts_week\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->weeks_shift ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_shifts_week ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_shifts_week\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Referral Bonus</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->referral_bonus === $nursedetails->worker_referral_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>$' . ($jobdetails['referral_bonus'] ?? '----') . '</h6>
+                            <h6>$' .
+                ($jobdetails->referral_bonus ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['referral_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_referral_bonus'] ?? '<u onclick="askWorker(this, \'worker_referral_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->referral_bonus ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_referral_bonus ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_referral_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Sign-On Bonus</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->sign_on_bonus === $nursedetails->worker_sign_on_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>$' . ($jobdetails['sign_on_bonus'] ?? '----') . '</h6>
+                            <h6>$' .
+                ($jobdetails->sign_on_bonus ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['sign_on_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_sign_on_bonus'] ?? '<u onclick="askWorker(this, \'worker_sign_on_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->sign_on_bonus ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_sign_on_bonus ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_sign_on_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Completion Bonus</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->completion_bonus === $nursedetails->worker_completion_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>$' . ($jobdetails['completion_bonus'] ?? '----') . '</h6>
+                            <h6>$' .
+                ($jobdetails->completion_bonus ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['completion_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_completion_bonus'] ?? '<u onclick="askWorker(this, \'worker_completion_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->completion_bonus ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_completion_bonus ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_completion_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Extension Bonus</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->extension_bonus === $nursedetails->worker_extension_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>$' . ($jobdetails['extension_bonus'] ?? '----') . '</h6>
+                            <h6>$' .
+                ($jobdetails->extension_bonus ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['extension_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_extension_bonus'] ?? '<u onclick="askWorker(this, \'worker_extension_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->extension_bonus ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_extension_bonus ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_extension_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Other Bonus</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->other_bonus === $nursedetails->worker_other_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>$' . ($jobdetails['other_bonus'] ?? '----') . '</h6>
+                            <h6>$' .
+                ($jobdetails->other_bonus ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['other_bonus'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_other_bonus'] ?? '<u onclick="askWorker(this, \'worker_other_bonus\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->other_bonus ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_other_bonus ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_other_bonus\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">401K</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->four_zero_one_k === $nursedetails->how_much_k ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['four_zero_one_k'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->four_zero_one_k == '1' ? 'Yes' : ($jobdetails->four_zero_one_k == '0' ? 'No' : '----')) .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['four_zero_one_k'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['how_much_k'] ?? '<u onclick="askWorker(this, \'how_much_k\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                (isset($jobdetails->four_zero_one_k) ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->how_much_k ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'how_much_k\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Health Insurance</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->health_insaurance === $nursedetails->worker_health_insurance ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['health_insaurance'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->health_insaurance == '1' ? 'Yes' : ($jobdetails->health_insaurance == '0' ? 'No' : '----')) .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['health_insaurance'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_health_insurance'] ?? '<u onclick="askWorker(this, \'worker_health_insurance\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                (isset($jobdetails->health_insaurance) ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_health_insurance == '1' ? 'Yes' : ($nursedetails->worker_health_insurance == '0' ? 'No' : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_health_insurance\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>')) .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Dental</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->dental === $nursedetails->worker_dental ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['dental'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->dental == '1' ? 'Yes' : ($jobdetails->dental == '0' ? 'No' : '----')) .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['dental'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_dental'] ?? '<u onclick="askWorker(this, \'worker_dental\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                (isset($jobdetails->dental) ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_dental == '1' ? 'Yes' : ($nursedetails->worker_dental == '0' ? 'No' : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_dental\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>')) .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Vision</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->vision === $nursedetails->worker_vision ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['vision'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->vision == '1' ? 'Yes' : ($jobdetails->vision == '0' ? 'No' : '----')) .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['vision'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_vision'] ?? '<u onclick="askWorker(this, \'worker_vision\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                (isset($jobdetails->vision) ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_vision == '1' ? 'Yes' : ($nursedetails->worker_vision == '0' ? 'No' : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_vision\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>')) .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Actual Hourly rate</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->actual_hourly_rate === $nursedetails->worker_actual_hourly_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['actual_hourly_rate'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->actual_hourly_rate ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['actual_hourly_rate'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_actual_hourly_rate'] ?? '<u onclick="askWorker(this, \'worker_actual_hourly_rate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->actual_hourly_rate ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_actual_hourly_rate ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_actual_hourly_rate\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
                         </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Feels Like $/hr</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['feels_like_per_hour'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['feels_like_per_hour'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_feels_like_hour'] ?? '<u onclick="askWorker(this, \'worker_feels_like_hour\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Overtime</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->overtime === $nursedetails->worker_overtime ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['overtime'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->overtime ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['overtime'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_overtime'] ?? '<u onclick="askWorker(this, \'worker_overtime\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->overtime ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_overtime ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_overtime\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Holiday</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->holiday === $nursedetails->worker_holiday ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['holiday'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->holiday ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['holiday'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_holiday'] ?? '<u onclick="askWorker(this, \'worker_holiday\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->holiday ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_holiday ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_holiday\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">On Call</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->on_call === $nursedetails->worker_on_call ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['on_call'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->on_call ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['on_call'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_on_call'] ?? '<u onclick="askWorker(this, \'worker_on_call\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->on_call ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_on_call ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_on_call\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Call Back</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->call_back === $nursedetails->worker_call_back ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['call_back'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->call_back ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['call_back'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_call_back'] ?? '<u onclick="askWorker(this, \'worker_call_back\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->call_back ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_call_back ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_call_back\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
                             <span class="mt-3">Orientation Rate</span>
                         </div>
+                        <div class="row ' .
+                ($jobdetails->orientation_rate === $nursedetails->worker_orientation_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['orientation_rate'] ?? '----') . '</h6>
+                            <h6>' .
+                ($jobdetails->orientation_rate ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-6 ' . ($jobdetails['orientation_rate'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_orientation_rate'] ?? '<u onclick="askWorker(this, \'worker_orientation_rate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-6 ' .
+                ($jobdetails->orientation_rate ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_orientation_rate ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_orientation_rate\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
                         </div>
                         <div class="col-md-12">
-                            <span class="mt-3">Weekly Taxable amount</span>
+                            <span class="mt-3">Est. Weekly Taxable amount</span>
+                        </div>
+                        <div class="row ' .
+                ($jobdetails->weekly_taxable_amount === $nursedetails->worker_weekly_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
+                        <div class="col-md-6">
+                            <h6>' .
+                ($jobdetails->weekly_taxable_amount ?? '----') .
+                '</h6>
+                        </div>
+                        <div class="col-md-6 ' .
+                ($jobdetails->weekly_taxable_amount ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_weekly_taxable_amount ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weekly_taxable_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="mt-3">Est. Employer Weekly Amount</span>
+                        </div>
+                        <div class="row ' .
+                ($jobdetails->employer_weekly_amount === $nursedetails->worker_employer_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
+                        <div class="col-md-6">
+                            <h6>' .
+                ($jobdetails->employer_weekly_amount ?? '----') .
+                '</h6>
+                        </div>
+                        <div class="col-md-6 ' .
+                ($jobdetails->employer_weekly_amount ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_employer_weekly_amount ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_employer_weekly_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="mt-3">Est. Weekly non-taxable amount</span>
+                        </div>
+                        <div class="row ' .
+                ($jobdetails->weekly_non_taxable_amount === $nursedetails->worker_weekly_non_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
+                        <div class="col-md-6">
+                            <h6>' .
+                ($jobdetails->weekly_non_taxable_amount ?? '----') .
+                '</h6>
+                        </div>
+                        <div class="col-md-6 ' .
+                ($jobdetails->weekly_non_taxable_amount ? '' : 'd-none') .
+                '">
+                            <p>' .
+                ($nursedetails->worker_weekly_non_taxable_amount ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weekly_non_taxable_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                '</p>
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="mt-3">Est. Goodwork Weekly Amount</span>
                         </div>
                         <div class="col-md-6">
-                            <h6>' . ($jobdetails['weekly_taxable_amount'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['weekly_taxable_amount'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weekly_taxable_amount'] ?? '<u onclick="askWorker(this, \'worker_weekly_taxable_amount\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Employer Weekly Amount</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['employer_weekly_amount'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['employer_weekly_amount'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_employer_weekly_amount'] ?? '<u onclick="askWorker(this, \'worker_employer_weekly_amount\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <h6>' .
+                ($jobdetails->weekly_taxable_amount ?? '----') .
+                '</h6>
                         </div>
                         <div class="col-md-12">
-                            <span class="mt-3">Weekly non-taxable amount</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['weekly_non_taxable_amount'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-6 ' . ($jobdetails['weekly_non_taxable_amount'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_weekly_non_taxable_amount'] ?? '<u onclick="askWorker(this, \'worker_weekly_non_taxable_amount\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                            <span class="mt-3">Est. Total Employer Amount</span>
                         </div>
                         <div class="col-md-12">
-                            <span class="mt-3">Goodwork Weekly Amount</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['weekly_taxable_amount'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Total Employer Amount</span>
+                            <h6>' .
+                ($jobdetails->total_employer_amount ?? '----') .
+                '</h6>
                         </div>
                         <div class="col-md-12">
-                            <h6>' . ($jobdetails['total_employer_amount'] ?? '----') . '</h6>
+                            <span class="mt-3">Est. Total Goodwork Amount</span>
                         </div>
                         <div class="col-md-12">
-                            <span class="mt-3">Total Goodwork Amount</span>
+                            <h6>' .
+                ($jobdetails->total_goodwork_amount ?? '----') .
+                '</h6>
                         </div>
                         <div class="col-md-12">
-                            <h6>' . ($jobdetails['total_goodwork_amount'] ?? '----') . '</h6>
+                            <span class="mt-3">Est. Total Contract Amount</span>
                         </div>
                         <div class="col-md-12">
-                            <span class="mt-3">Total Contract Amount</span>
+                            <h6>' .
+                ($jobdetails->total_contract_amount ?? '----') .
+                '</h6>
                         </div>
-                        <div class="col-md-12">
-                            <h6>' . ($jobdetails['total_contract_amount'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Goodwork Number</span>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>' . ($jobdetails['goodwork_number'] ?? '----') . '</h6>
-                        </div>
-                        <div class="col-md-12">
+                    </ul>
+                </div>
 
                             <button class="ss-counter-button w-100" onclick="offerSend(\'' . $request->id . '\', \''. $jobdetails['id'] .'\', \'offersend\', \'' . $nursedetails->user_id .'\', \'' . $jobdetails['recruiter_id'] .'\')">Send Offer</button>
                         </div>
@@ -1887,7 +2065,7 @@ class OpportunitiesController extends Controller
         } else {
             $data2 .= '
                     <div class="ss-job-apply-on-tx-bx-hed-dv">
-                        <ul>
+                        <ul style="display:block;">
                             <li>
                                 <p>Recruiter</p>
                             </li>
@@ -1896,9 +2074,9 @@ class OpportunitiesController extends Controller
                                 ' . $userdetails->first_name . ' ' . $userdetails->last_name . '
                             </li>
                         </ul>
-                        <ul>
+                        <ul style="display:block;">
                             <li>
-                                <span>' . $userdetails->id . '</span>
+                                <span>' . $jobdetails->id . '</span>
                                 <h6>' . $jobappliedcount . ' Applied</h6>
                             </li>
                         </ul>
@@ -1926,27 +2104,29 @@ class OpportunitiesController extends Controller
                     </div>
                     <div class="ss-jb-aap-on-txt-abt-dv">
                         <div class="application-job-slider">
-                            <div class="ss-chng-appli-slider-mn-dv">
+                            <div class="ss-chng-appli-slider-mn-dv" style="width:auto;">
                                 <h5>Workers Applied (' . $jobappliedcount . ')</h5>
                                 <div class="' . ($jobappliedcount > 1 ? 'owl-carousel application-job-slider-owl' : '') . ' application-job-slider">
                                     ';
+                                    //return response()->json([ 'data' => $jobapplieddetails]);
                                 foreach ($jobapplieddetails as $key => $value) {
                                     $nursedetails = Nurse::join('users', 'nurses.user_id', '=', 'users.id')
-                                        ->where('nurses.id', $value->nurse_id)
+                                        ->where('nurses.id', $value->worker_user_id)
                                         ->select('nurses.*', 'users.*')
                                         ->first();
-                                    $totalexp = 0;
-                                    $allexp = explode(",", $nursedetails->experience);
-                                    $totalexp = 0;
-                                    foreach ($allexp as $valuee) {
-                                        $totalexp += (int)$valuee;
-                                    }
+                                        
+                                    // $totalexp = 0;
+                                    // $allexp = explode(",", $nursedetails->experience);
+                                    // $totalexp = 0;
+                                    // foreach ($allexp as $valuee) {
+                                    //     $totalexp += (int)$valuee;
+                                    // }
 
                                     $data2 .= '
-                                    <div class="ss-chng-appli-slider-sml-dv ss-expl-applicion-div-box" onclick="opportunitiesType(\'' . $type . '\', \'' . $value->id . '\', \'useralldetails\')"">
+                                    <div style="width:auto;" class="ss-chng-appli-slider-sml-dv ss-expl-applicion-div-box" onclick="opportunitiesType(\'' . $type . '\', \'' . $value->id . '\', \'useralldetails\')"">
                                         <div class="ss-job-id-no-name">
                                             <ul>
-                                                <li class="w-50"><span>' . $value->nurse_id . '</span></li>
+                                                <li class="w-50"><span>' . $value->worker_user_id . '</span></li>
                                                 <li class="w-50">
                                                     <p>Recently Added</p>
                                                 </li>
@@ -1964,7 +2144,7 @@ class OpportunitiesController extends Controller
                                             <li class="w-auto"><a href="#">' . $nursedetails->highest_nursing_degree . '</a></li>
                                             <li class="w-auto"><a href="#">' . $nursedetails->specialty . '</a></li>
                                             <li class="w-auto"><a href="#">' . $nursedetails->worker_shift_time_of_day . '</a></li>
-                                            <li class="w-auto"><a href="#">' . $totalexp . ' Years of Experience</a></li>
+                                          
                                         </ul>
                                     </div>
                                     ';
@@ -1984,19 +2164,19 @@ class OpportunitiesController extends Controller
             $data2 .= '
             <div class="ss-job-ap-on-offred-new-dv">
                 <ul class="row ss-s-jb-apl-on-inf-txt-ul">
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Profession</p>
                         <h6>' . ($jobdetails->profession ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Specialty</p>
                         <h6>' . ($jobdetails->preferred_specialty ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Professional Licensure</p>
                         <h6>' . ($jobdetails->job_location ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Experience</p>
                         <h6>' . ($jobdetails->preferred_experience ?? '0') . ' Years </h6>
                     </div>
@@ -2005,7 +2185,7 @@ class OpportunitiesController extends Controller
                 foreach (explode(",", $jobdetails->vaccinations) as $key => $value) {
                     if (isset($value)) {
                         $data2 .= '
-                            <div class="col-md-6">
+                            <div class="col-lg-5 col-md-5 col-sm-12">
                                 <p class="mt-3">Vaccinations & Immunizations</p>
                                 <h6>' . $value . '</h6>
                             </div>
@@ -2019,15 +2199,15 @@ class OpportunitiesController extends Controller
             // }
 
             $data2 .= '
-                <div class="col-md-6">
+                <div class="col-lg-5 col-md-5 col-sm-12">
                     <p class="mt-3">No of References</p>
                     <h6>' . ($jobdetails->number_of_references ?? '----') . '</h6>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-5 col-md-5 col-sm-12">
                     <p class="mt-3">Min title of reference</p>
                     <h6>' . ($jobdetails->min_title_of_reference ?? '----') . '</h6>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-5 col-md-5 col-sm-12">
                     <p class="mt-3">Recency of reference</p>
                     <p class="mb-3">' . ($jobdetails->recency_of_reference ?? "----") . '</p>
                 </div>';
@@ -2035,7 +2215,7 @@ class OpportunitiesController extends Controller
                 foreach (explode(",", $jobdetails->certificate) as $key => $value) {
                     if (isset($value)) {
                         $data2 .= '
-                            <div class="col-md-6 ">
+                            <div class="col-lg-5 col-md-5 col-sm-12 ">
                                 <p class="mt-3">Certifications</p>
                                 <h6>' . $value . ' </h6>
                             </div>
@@ -2044,39 +2224,39 @@ class OpportunitiesController extends Controller
                 }
             }
             $data2 .= '
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Skills checklist</p>
                         <h6>' . ($jobdetails->skills ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">ACLS</p>
                         <h6>Required</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">PALS</p>
                         <h6>Required</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">CCRN</p>
                         <h6>Required</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3"># of Positions Available</p>
                         <h6>' . ($jobdetails->position_available ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">MSP</p>
                         <h6>' . ($jobdetails->msp ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">VMS</p>
                         <h6>' . ($jobdetails->vms ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3"># of Submissions in VMS</p>
                         <h6>' . ($jobdetails->submission_of_vms ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Block scheduling</p>
                         <h6>' . ($jobdetails->block_scheduling ?? '----') . '</h6>
                     </div>
@@ -2084,203 +2264,203 @@ class OpportunitiesController extends Controller
 
 
 
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Facility Shift Cancellation Policy</p>
                         <h6>' . ($jobdetails->facility_shift_cancelation_policy ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Contract Termination Policy</p>
                         <h6>' . ($jobdetails->contract_termination_policy ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Traveler Distance From Facility</p>
                         <h6>' . ($jobdetails->traveler_distance_from_facility ?? '----') . ' miles Maximum</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Facility</p>
                         <h6>' . ($jobdetails->facility ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Facility`s Parent System</p>
                         <h6>' . ($jobdetails->facilitys_parent_system ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Facility Average Rating</p>
                         <h6>' . ($jobdetails->facility_average_rating ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Recruiter Average Rating</p>
                         <h6>' . ($jobdetails->recruiter_average_rating ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Employer Average Rating</p>
                         <h6>' . ($jobdetails->employer_average_rating ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Clinical Setting</p>
                         <h6>' . ($jobdetails->clinical_setting ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Patient ratio</p>
                         <h6>' . ($jobdetails->Patient_ratio ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">EMR</p>
                         <h6>' . ($jobdetails->emr ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Unit</p>
                         <h6>' . ($jobdetails->Unit ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Department</p>
                         <h6>' . ($jobdetails->Department ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Bed Size</p>
                         <h6>' . ($jobdetails->Bed_Size ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Trauma Level</p>
                         <h6>' . ($jobdetails->Trauma_Level ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Scrub Color</p>
                         <h6>' . ($jobdetails->scrub_color ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Facility City</p>
                         <h6>' . ($jobdetails->job_city ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Facility State Code</p>
                         <h6>' . ($jobdetails->job_state ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Start Date</p>
                         <h6>' . ($jobdetails->start_date ? $jobdetails->start_date : 'As Soon As Possible') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">RTO</p>
                         <h6>' . ($jobdetails->rto ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Shift Time of Day</p>
                         <h6>' . ($jobdetails->preferred_shift ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Hours/Week</p>
                         <h6>' . ($jobdetails->hours_per_week ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Guaranteed Hours</p>
                         <h6>' . ($jobdetails->guaranteed_hours ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Hours/Shift</p>
                         <h6>' . ($jobdetails->preferred_assignment_duration ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Weeks/Assignment</p>
                         <h6>' . ($jobdetails->preferred_assignment_duration ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Shifts/Week</p>
                         <h6>' . ($jobdetails->weeks_shift ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Referral Bonus</p>
                         <h6>$' . ($jobdetails->referral_bonus ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Sign-On Bonus</p>
                         <h6>$' . ($jobdetails->sign_on_bonus ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Completion Bonus</p>
                         <h6>$' . ($jobdetails->completion_bonus ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Extension Bonus</p>
                         <h6>$' . ($jobdetails->extension_bonus ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Other Bonus</p>
                         <h6>$' . ($jobdetails->other_bonus ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">401K</p>
                         <h6>' . ($jobdetails->four_zero_one_k ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Health Insurance</p>
                         <h6>' . ($jobdetails->health_insaurance ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Dental</p>
                         <h6>' . ($jobdetails->dental ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Vision</p>
                         <h6>' . ($jobdetails->vision ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Actual Hourly rate</p>
                         <h6>' . ($jobdetails->actual_hourly_rate ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Feels Like $/hr</p>
                         <h6>' . ($jobdetails->feels_like_per_hour ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Overtime</p>
                         <h6>' . ($jobdetails->overtime ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Holiday</p>
                         <h6>' . ($jobdetails->holiday ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">On Call</p>
                         <h6>' . ($jobdetails->on_call ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Call Back</p>
                         <h6>' . ($jobdetails->call_back ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Orientation Rate</p>
                         <h6>' . ($jobdetails->orientation_rate ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Weekly Taxable amount</p>
                         <h6>' . ($jobdetails->weekly_taxable_amount ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Employer Weekly Amount</p>
                         <h6>' . ($jobdetails->employer_weekly_amount ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Weekly non-taxable amount</p>
                         <h6>' . ($jobdetails->weekly_non_taxable_amount ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Goodwork Weekly Amount</p>
                         <h6>' . ($jobdetails->weekly_taxable_amount ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Total Employer Amount</p>
                         <h6>' . ($jobdetails->total_employer_amount ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Total Goodwork Amount</p>
                         <h6>' . ($jobdetails->total_goodwork_amount ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Total Contract Amount</p>
                         <h6>' . ($jobdetails->total_contract_amount ?? '----') . '</h6>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Goodwork Number</p>
                         <h6>' . ($jobdetails->goodwork_number ?? '----') . '</h6>
                     </div>';
@@ -2289,7 +2469,7 @@ class OpportunitiesController extends Controller
                         $data2 .= '
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-6">';
+                                <div class="col-md-5">';
                                 if($type == "hidden"){
                                     $data2 .= '<a href="javascript:void(0)" class="ss-reject-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhide Job</a>';
                                 }else{
