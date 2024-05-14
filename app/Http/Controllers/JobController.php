@@ -738,6 +738,9 @@ class JobController extends Controller
 
     public function fetch_job_content(Request $request)
     {
+        try{
+
+        
         if ($request->ajax()) {
             $request->validate([
                 'jid'=>'required',
@@ -750,9 +753,16 @@ class JobController extends Controller
             $recruiter_id =  $job->created_by;
             $recruiter = User::findOrFail($recruiter_id);
             $data['recruiter'] = $recruiter;
+           
 
+            $id = Auth::guard('frontend')->user()->id;
+            $worker_id = Nurse::where('user_id',$id)->first();
+            $offer_id = Offer::where('worker_user_id',$worker_id->id)->where('job_id',$job->id)->first();
+            $data['worker_id'] = $worker_id->id;
+            $data['model'] = $job;
+            $data['offer_id'] = $offer_id->id;
 
-
+            
             switch($request->type)
             {
                 case 'saved':
@@ -777,7 +787,7 @@ class JobController extends Controller
                     break;
                 case 'counter':
                     // $jobs = $jobCOntent;
-
+                    try{
                     $distinctFilters = Keyword::distinct()->pluck('filter');
                     $keywords = [];
 
@@ -794,6 +804,10 @@ class JobController extends Controller
                     $data['us_states'] = States::where('country_id', $usa->id)->get();
                     $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
                     $view = 'counter_offer';
+                }
+                catch(\Exception $e){
+                    return response()->json(['success' => false, 'message' =>  'here']);
+                }
 
                     break;
                 default:
@@ -803,15 +817,14 @@ class JobController extends Controller
 
 
 
-            $id = Auth::guard('frontend')->user()->id;
-            $worker_id = Nurse::where('user_id',$id)->first();
-            $offer_id = Offer::where('worker_user_id',$worker_id->id)->where('job_id',$job->id)->first();
-            $data['worker_id'] = $worker_id->id;
-            $data['model'] = $job;
-            $data['offer_id'] = $offer_id->id;
+           
             $response['content'] = view('ajax.'.$view.'_job', $data)->render();
             return new JsonResponse($response, 200);
         }
+    }
+    catch(\Exception $e){
+        return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+    }
     }
 
     public function store_counter_offer(Request $request)

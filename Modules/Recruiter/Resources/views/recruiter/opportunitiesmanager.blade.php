@@ -85,6 +85,9 @@
                                             <div class="ss-form-group col-md-4 d-none">
                                                 <input type="text" name="active" id="active">
                                             </div>
+                                            <div class="ss-form-group col-md-4 d-none">
+                                                <input type="text" name="is_open" id="is_open">
+                                            </div>
 
                                             <div class="ss-form-group col-md-4">
                                                 <label> Job Name</label>
@@ -491,7 +494,7 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>EMR</label>
-                                                <input type="text" name="emr" id="emr"
+                                                <input type="text" name="Emr" id="emr"
                                                     placeholder="Enter EMR">
                                                 <span class="help-block-emr"></span>
                                             </div>
@@ -613,6 +616,7 @@
                                                 ( The above fields are not required )
                                             </span>
                                             <div class="field btns col-12 d-flex justify-content-center">
+                                                <button class="saveDrftBtn">Save as draft</button>
                                                 <button class="prev-3 prev">Previous</button>
                                                 <button class="submit">Submit</button>
                                             </div>
@@ -774,6 +778,9 @@
         
                                                     <div class="ss-form-group col-md-4 d-none">
                                                         <input type="text" name="active" id="activeDraft">
+                                                    </div>
+                                                    <div class="ss-form-group col-md-4 d-none">
+                                                        <input type="text" name="is_open" id="is_openDraft">
                                                     </div>
         
                                                     <div class="ss-form-group col-md-4">
@@ -1290,7 +1297,7 @@
         </div>
         <div class="ss-form-group col-md-4">
             <label>EMR</label>
-            <input type="text" name="emr" id="emrDraft"
+            <input type="text" name="Emr" id="emrDraft"
                 placeholder="Enter EMR">
             <span class="help-block-emr"></span>
         </div>
@@ -1404,6 +1411,7 @@
             ( The above fields are not required )
         </span>
         <div class="field btns col-12 d-flex justify-content-center">
+            <button class="saveDrftBtn">Save as draft</button>
             <button class="prev-3Draft prev">Previous</button>
             <button class="submitDraft">Submit</button>
         </div>
@@ -2572,35 +2580,90 @@
         let preferred_experience = darftJobs[jobId].preferred_experience;
         let preferred_shift_duration = darftJobs[jobId].preferred_shift_duration;
 
-        document.getElementById("job_nameDraft").value = job_name;
-        document.getElementById("job_typeDraft").value = job_type;
-        document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
-        document.getElementById("job_stateDraft").value = job_state;
-        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
-        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
-        document.getElementById("preferred_days_of_the_weekDraft").value = preferred_days_of_the_week;
-        document.getElementById("preferred_hourly_pay_rateDraft").value = preferred_hourly_pay_rate;
-        document.getElementById("preferred_shiftDraft").value = preferred_shift;
-        document.getElementById("job_functionDraft").value = job_function;
-        document.getElementById("job_cerner_expDraft").value = job_cerner_exp;
-        document.getElementById("job_meditech_expDraft").value = job_meditech_exp;
-        document.getElementById("seniority_levelDraft").value = seniority_level;
-        document.getElementById("job_epic_expDraft").value = job_epic_exp;
-        document.getElementById("job_other_expDraft").value = job_other_exp;
-        document.getElementById("start_dateDraft").value = start_date;
-        document.getElementById("end_dateDraft").value = end_date;
-        document.getElementById("hours_shiftDraft").value = hours_shift;
-        document.getElementById("hours_per_weekDraft").value = hours_per_week;
-        document.getElementById("responsibilitiesDraft").value = responsibilities;
-        document.getElementById("qualificationsDraft").value = qualifications;
-        document.getElementById("perferred_professionDraft").value = proffesion;
-        document.getElementById("descriptionDraft").value = description;
-        document.getElementById("job_cityDraft").value = job_city;
-        document.getElementById("weekly_payDraft").value = weekly_pay;
-        document.getElementById("preferred_work_areaDraft").value = preferred_work_area;
-        document.getElementById("preferred_experienceDraft").value = preferred_experience;
-        document.getElementById("preferred_shift_durationDraft").value = preferred_shift_duration;
-
+        if (job_name) {
+    document.getElementById("job_nameDraft").value = job_name;
+}
+if (job_type) {
+    document.getElementById("job_typeDraft").value = job_type;
+}
+if (preferred_specialty) {
+    document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
+}
+if (job_state) {
+    document.getElementById("job_stateDraft").value = job_state;
+}
+if (preferred_work_location) {
+    document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+}
+if (preferred_assignment_duration) {
+    document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+}
+if (preferred_days_of_the_week) {
+    document.getElementById("preferred_days_of_the_weekDraft").value = preferred_days_of_the_week;
+}
+if (preferred_hourly_pay_rate) {
+    document.getElementById("preferred_hourly_pay_rateDraft").value = preferred_hourly_pay_rate;
+}
+if (preferred_shift) {
+    document.getElementById("preferred_shiftDraft").value = preferred_shift;
+}
+if (job_function) {
+    document.getElementById("job_functionDraft").value = job_function;
+}
+if (job_cerner_exp) {
+    document.getElementById("job_cerner_expDraft").value = job_cerner_exp;
+}
+if (job_meditech_exp) {
+    document.getElementById("job_meditech_expDraft").value = job_meditech_exp;
+}
+if (seniority_level) {
+    document.getElementById("seniority_levelDraft").value = seniority_level;
+}
+if (job_epic_exp) {
+    document.getElementById("job_epic_expDraft").value = job_epic_exp;
+}
+if (job_other_exp) {
+    document.getElementById("job_other_expDraft").value = job_other_exp;
+}
+if (start_date) {
+    document.getElementById("start_dateDraft").value = start_date;
+}
+if (end_date) {
+    document.getElementById("end_dateDraft").value = end_date;
+}
+if (hours_shift) {
+    document.getElementById("hours_shiftDraft").value = hours_shift;
+}
+if (hours_per_week) {
+    document.getElementById("hours_per_weekDraft").value = hours_per_week;
+}
+if (responsibilities) {
+    document.getElementById("responsibilitiesDraft").value = responsibilities;
+}
+if (qualifications) {
+    document.getElementById("qualificationsDraft").value = qualifications;
+}
+if (proffesion) {
+    document.getElementById("perferred_professionDraft").value = proffesion;
+}
+if (description) {
+    document.getElementById("descriptionDraft").value = description;
+}
+if (job_city) {
+    document.getElementById("job_cityDraft").value = job_city;
+}
+if (weekly_pay) {
+    document.getElementById("weekly_payDraft").value = weekly_pay;
+}
+if (preferred_work_area) {
+    document.getElementById("preferred_work_areaDraft").value = preferred_work_area;
+}
+if (preferred_experience) {
+    document.getElementById("preferred_experienceDraft").value = preferred_experience;
+}
+if (preferred_shift_duration) {
+    document.getElementById("preferred_shift_durationDraft").value = preferred_shift_duration;
+}
     }
 
 
@@ -2612,7 +2675,9 @@
     const nextBtnThird = document.querySelector(".next-2");
     const prevBtnFourth = document.querySelector(".prev-3");
     const submitBtn = document.querySelector(".submit");
-    const saveDrftBtn = document.querySelector(".saveDrftBtn");
+    const saveDrftBtn = document.querySelectorAll(".saveDrftBtn");
+    console.log('savedaft buttons :');
+    console.log(saveDrftBtn);
     const progressText = document.querySelectorAll(".step p");
     const progressCheck = document.querySelectorAll(".step .check");
     const bullet = document.querySelectorAll(".step .bullet");
@@ -2631,7 +2696,7 @@
         var weeklyPay = document.getElementById("weekly_pay").value;
 
 
-        document.getElementById("active").value = "1";
+      
 
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Please enter the job name');
@@ -3216,6 +3281,9 @@
         progressCheck[current - 1].classList.add("active");
         progressText[current - 1].classList.add("active");
         current += 1;
+        document.getElementById("active").value = true;
+        document.getElementById("is_open").value = true;
+        event.target.form.submit();
         }
         
 
@@ -3223,18 +3291,25 @@
 
     });
 
-    saveDrftBtn.addEventListener("click", function(event) {
-        document.getElementById("active").value = "0";
+    saveDrftBtn.forEach(function(btn) {
+    btn.addEventListener("click", function(event) {
+        event.preventDefault();
+        document.getElementById("active").value = false;
+        document.getElementById("is_open").value = false;
+        let act = document.getElementById("active").value;
+        console.log(act);
 
         var jobName = document.getElementById("job_name").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
             $('.help-block-job_name').addClass('text-danger');
-            event.preventDefault();
+            
         } else {
             $('.help-block-job_name').text('');
+            event.target.form.submit();
         }
     });
+});
 
     prevBtnSec.addEventListener("click", function(event) {
         event.preventDefault();
@@ -3291,7 +3366,8 @@
         var weeklyPay = document.getElementById("weekly_payDraft").value;
 
 
-        document.getElementById("active").value = "1";
+        document.getElementById("active").value = false;
+        document.getElementById("is_open").value = false;
 
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Please enter the job name');
@@ -3786,11 +3862,13 @@
             progressCheckDarft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
+            event.target.form.submit();
         }
     });
 
     saveDrftBtnDraft.addEventListener("click", function(event) {
         document.getElementById("activeDraft").value = "0";
+        document.getElementById("is_openDraft").value = "0";
         var jobName = document.getElementById("job_nameDraft").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
