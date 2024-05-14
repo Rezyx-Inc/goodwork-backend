@@ -85,7 +85,7 @@
             $('.private-messages').html('');
 
             // Get the private messages
-            $.get('/worker/getMessages?page=1&employerId=' + idEmployer_Global + '&recruiterId=GWU000005', function(data) {
+            $.get('/worker/getMessages?page=1&employerId=' + idEmployer_Global + '&recruiterId=' + idRecruiter_Global, function(data) {
 
                 console.log("Receiving data", data)
                 // Parse the returned data
@@ -203,7 +203,13 @@
             $('#messageEnvoye').keypress(function(e) {
                 if (e.which == 13) { // 13 is the key code for the enter key
                     e.preventDefault(); // Prevent the default action (form submission)
-                    sendMessage('text'); // Call your function
+                    let messageInput = document.getElementById('messageEnvoye');
+                    if (messageInput.value.trim() === '') {
+                        return;
+                    }else{
+                        sendMessage('text'); // Call your function
+                    }
+                   
                 }
             });
 
@@ -404,8 +410,13 @@
                                             <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
-                                                <p>{{ $room['messages'][0]['type'] === 'file' ? $room['messages'][0]['fileName'] : $room['messages'][0]['content'] }}
-                                                </p>
+<p>
+    @if(isset($room['messages'][0]))
+        {{ $room['messages'][0]['type'] === 'file' ? $room['messages'][0]['fileName'] : $room['messages'][0]['content'] }}
+    @else
+        No messages yet.
+    @endif
+</p>
                                             </li>
                                         </ul>
 

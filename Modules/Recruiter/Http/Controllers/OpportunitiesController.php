@@ -583,6 +583,7 @@ class OpportunitiesController extends Controller
                 <ul class="ss-cng-appli-hedpfl-ul">
                     <li>
                         <span>' . $offerdetails['worker_user_id'] . '</span>
+                    
                         <h6>
                             <img src="' . asset('public/images/nurses/profile/' . $userdetails['image']) . '" onerror="this.onerror=null;this.src=' . '\'' . asset('public/frontend/img/profile-pic-big.png') . '\'' . ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                             ' . $userdetails['first_name'] . ' ' . $userdetails['last_name'] . '
@@ -604,7 +605,7 @@ class OpportunitiesController extends Controller
 
                     <label class="mb-2">Change Application Status</label>
                     <div class="row d-flex justify-content-center align-items-center">
-                    <div class="col-9">
+                    <div class="col-9 ss-change-appli-mn-div" style="border:none;">
                     <select name="status" id="status application-status">
                         <option value="">Select Status</option>
                         <option value="Apply" ' .
@@ -653,10 +654,10 @@ class OpportunitiesController extends Controller
                 </div>
                 <div class="ss-jb-apl-oninfrm-mn-dv">
                     <ul class="ss-jb-apply-on-inf-hed-rec row">
-                    <li class="col-md-6">
+                    <li class="col-md-5">
                         <h5 class="mt-3">Job Information</h5>
                     </li>
-                    <li class="col-md-6">
+                    <li class="col-md-5">
                         <h5 class="mt-3">Worker Information</h5>
                     </li>
                    ';
@@ -667,12 +668,12 @@ class OpportunitiesController extends Controller
             <div class="row ' .
                 ($jobdetails->proffesion == $nursedetails->proffesion ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h6>' .
                 ($jobdetails->proffesion ?? '----') .
                 '</h6>
                 </div>
-                <div class="col-md-6 ' .
+                <div class="col-md-5 ' .
                 ($jobdetails->proffesion ? '' : 'd-none') .
                 '">
                     <p>' .
@@ -688,12 +689,12 @@ class OpportunitiesController extends Controller
             <div class="row ' .
                 ($jobdetails->specialty == $nursedetails->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <h6>' .
                 ($jobdetails->specialty ?? '----') .
                 '</h6>
                 </div>
-                <div class="col-md-6 ' .
+                <div class="col-md-5 ' .
                 ($jobdetails->specialty ? '' : 'd-none') .
                 '">
                     <p>' .
@@ -709,12 +710,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->block_scheduling === $nursedetails->block_scheduling ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->block_scheduling == '1' ? 'Yes' : ($jobdetails->block_scheduling == '0' ? 'No' : '----')) .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 (isset($jobdetails->block_scheduling) ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -728,12 +729,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->float_requirement === $nursedetails->float_requirement ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->float_requirement == '1' ? 'Yes' : ($jobdetails->float_requirement == '0' ? 'No' : '----')) .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 (isset($jobdetails->float_requirement) ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -747,12 +748,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->facility_shift_cancelation_policy === $nursedetails->facility_shift_cancelation_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->facility_shift_cancelation_policy ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->facility_shift_cancelation_policy ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -766,12 +767,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->contract_termination_policy === $nursedetails->contract_termination_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->contract_termination_policy ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->contract_termination_policy ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -785,12 +786,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->traveler_distance_from_facility === $nursedetails->distance_from_your_home ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->traveler_distance_from_facility ?? '----') .
                 ' miles Maximum</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->traveler_distance_from_facility ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -804,12 +805,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->facility === $nursedetails->worked_at_facility_before ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->facility ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->facility ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -823,12 +824,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->clinical_setting === $nursedetails->clinical_setting_you_prefer ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->clinical_setting ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->clinical_setting ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -842,12 +843,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->patient_ratio === $nursedetails->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->Patient_ratio ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->Patient_ratio ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -861,12 +862,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->emr === $nursedetails->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->Emr ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->Emr ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -880,12 +881,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->unit === $nursedetails->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->Unit ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->Unit ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -899,12 +900,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->scrub_color === $nursedetails->worker_scrub_color ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->scrub_color ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->scrub_color ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -916,12 +917,12 @@ class OpportunitiesController extends Controller
                             <span class="mt-3">Interview Dates</span>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 $nursedetails->worker_interview_dates .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->worker_interview_dates ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -934,12 +935,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->start_date == $nursedetails->worker_start_date ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->start_date ? $jobdetails->start_date : 'As Soon As Possible') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->start_date ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -953,12 +954,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->rto === $nursedetails->rto ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->rto ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->rto ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -972,12 +973,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->preferred_shift == $nursedetails->worker_shift_time_of_day ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->preferred_shift ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->preferred_shift ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -991,12 +992,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->hours_per_week == $nursedetails->worker_hours_per_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->hours_per_week ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->hours_per_week ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1010,12 +1011,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->guaranteed_hours == $nursedetails->worker_guaranteed_hours ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->guaranteed_hours ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->guaranteed_hours ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1029,12 +1030,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->preferred_assignment_duration == $nursedetails->worker_weeks_assignment ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->preferred_assignment_duration ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->preferred_assignment_duration ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1048,12 +1049,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->weeks_shift == $nursedetails->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->preferred_assignment_duration ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->preferred_assignment_duration ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1067,12 +1068,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->weeks_shift == $nursedetails->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->weeks_shift ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->weeks_shift ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1086,12 +1087,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->referral_bonus === $nursedetails->worker_referral_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>$' .
                 ($jobdetails->referral_bonus ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->referral_bonus ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1105,12 +1106,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->sign_on_bonus === $nursedetails->worker_sign_on_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>$' .
                 ($jobdetails->sign_on_bonus ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->sign_on_bonus ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1124,12 +1125,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->completion_bonus === $nursedetails->worker_completion_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>$' .
                 ($jobdetails->completion_bonus ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->completion_bonus ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1143,12 +1144,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->extension_bonus === $nursedetails->worker_extension_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>$' .
                 ($jobdetails->extension_bonus ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->extension_bonus ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1162,12 +1163,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->other_bonus === $nursedetails->worker_other_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>$' .
                 ($jobdetails->other_bonus ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->other_bonus ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1181,12 +1182,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->four_zero_one_k === $nursedetails->how_much_k ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->four_zero_one_k == '1' ? 'Yes' : ($jobdetails->four_zero_one_k == '0' ? 'No' : '----')) .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 (isset($jobdetails->four_zero_one_k) ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1200,12 +1201,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->health_insaurance === $nursedetails->worker_health_insurance ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->health_insaurance == '1' ? 'Yes' : ($jobdetails->health_insaurance == '0' ? 'No' : '----')) .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 (isset($jobdetails->health_insaurance) ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1219,12 +1220,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->dental === $nursedetails->worker_dental ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->dental == '1' ? 'Yes' : ($jobdetails->dental == '0' ? 'No' : '----')) .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 (isset($jobdetails->dental) ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1238,12 +1239,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->vision === $nursedetails->worker_vision ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->vision == '1' ? 'Yes' : ($jobdetails->vision == '0' ? 'No' : '----')) .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 (isset($jobdetails->vision) ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1257,12 +1258,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->actual_hourly_rate === $nursedetails->worker_actual_hourly_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->actual_hourly_rate ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->actual_hourly_rate ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1276,12 +1277,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->overtime === $nursedetails->worker_overtime ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->overtime ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->overtime ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1295,12 +1296,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->holiday === $nursedetails->worker_holiday ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->holiday ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->holiday ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1314,12 +1315,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->on_call === $nursedetails->worker_on_call ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->on_call ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->on_call ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1333,12 +1334,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->call_back === $nursedetails->worker_call_back ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->call_back ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->call_back ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1352,12 +1353,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->orientation_rate === $nursedetails->worker_orientation_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->orientation_rate ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->orientation_rate ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1371,12 +1372,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->weekly_taxable_amount === $nursedetails->worker_weekly_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->weekly_taxable_amount ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->weekly_taxable_amount ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1390,12 +1391,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->employer_weekly_amount === $nursedetails->worker_employer_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->employer_weekly_amount ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->employer_weekly_amount ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1409,12 +1410,12 @@ class OpportunitiesController extends Controller
                         <div class="row ' .
                 ($jobdetails->weekly_non_taxable_amount === $nursedetails->worker_weekly_non_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->weekly_non_taxable_amount ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-6 ' .
+                        <div class="col-md-5 ' .
                 ($jobdetails->weekly_non_taxable_amount ? '' : 'd-none') .
                 '">
                             <p>' .
@@ -1425,7 +1426,7 @@ class OpportunitiesController extends Controller
                         <div class="col-md-12">
                             <span class="mt-3">Est. Goodwork Weekly Amount</span>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h6>' .
                 ($jobdetails->weekly_taxable_amount ?? '----') .
                 '</h6>

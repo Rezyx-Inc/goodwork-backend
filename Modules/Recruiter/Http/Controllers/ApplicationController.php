@@ -368,7 +368,7 @@ class ApplicationController extends Controller
                     ($jobdetails->proffesion ? '' : 'd-none') .
                     '">
                         <p>' .
-                    ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                    ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker Test</a>') .
                     '</p>
                     </div>
                     </div>';
@@ -2406,9 +2406,10 @@ class ApplicationController extends Controller
                 $user = user::where('id', $request->worker_user_id)->first();
                 $job_data = Job::where('id', $request->job_id)->first();
                 $update_array['job_name'] = isset($request->job_name) ? $request->job_name : $job_data->job_name;
-                $update_array['type'] = isset($request->type) ? $request->type : $job_data->type;
+                $update_array['type'] = isset($request->type) ? $request->type : $job_data->job_type;
                 $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
                 $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->proffesion;
+                
                 $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
                 $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;
                 $update_array['facility_shift_cancelation_policy'] = isset($request->facility_shift_cancelation_policy) ? $request->facility_shift_cancelation_policy : $job_data->facility_shift_cancelation_policy;
@@ -2419,7 +2420,7 @@ class ApplicationController extends Controller
                 $update_array['worker_user_id'] = isset($nurse->id) ? $nurse->id : '';
                 $update_array['clinical_setting'] = isset($request->clinical_setting) ? $request->clinical_setting : $job_data->clinical_setting;
                 $update_array['Patient_ratio'] = isset($request->Patient_ratio) ? $request->Patient_ratio : $job_data->Patient_ratio;
-                $update_array['emr'] = isset($request->emr) ? $request->emr : $job_data->emr;
+                $update_array['Emr'] = isset($request->emr) ? $request->emr : $job_data->emr;
                 $update_array['Unit'] = isset($request->Unit) ? $request->Unit : $job_data->Unit;
                 $update_array['scrub_color'] = isset($request->scrub_color) ? $request->scrub_color : $job_data->scrub_color;
                 $update_array['start_date'] = isset($request->start_date) ? $request->start_date : $job_data->start_date;
@@ -2468,9 +2469,11 @@ class ApplicationController extends Controller
                 /* create job */
                 $update_array['created_by'] = isset($job_data->recruiter_id) && $job_data->recruiter_id != '' ? $job_data->recruiter_id : '';
 
+                
                 $offerexist = DB::table('offers')
                     ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
                     ->first();
+                
                 if ($offerexist) {
                     $job = DB::table('offers')
                         ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])

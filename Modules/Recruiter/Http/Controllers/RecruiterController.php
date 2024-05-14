@@ -14,6 +14,7 @@ use App\Models\Offer;
 use Exception;
 use App\Models\Job;
 use App\Models\User;
+use App\Models\Nurse;
 
 class RecruiterController extends Controller
 {
@@ -109,7 +110,7 @@ class RecruiterController extends Controller
                                 'employerId' => $idEmployer,
                                 // 'recruiterId'=> $idRecruiter,
                                 // for now until get the offer works
-                                'recruiterId' => 'GWU000005',
+                                'recruiterId' => $idRecruiter,
 
                                 'workerId' => $idWorker,
                             ],
@@ -124,8 +125,118 @@ class RecruiterController extends Controller
                     ])
                     ->toArray();
             });
-
+            
         return $chat[0];
+    }
+
+    public function get_direct_private_messages(Request $request)
+    {
+        $idEmployer = $request->query('employerId');
+        $idWorker = $request->query('workerId');
+        $page = $request->query('page', 1);
+
+        $idRecruiter = Auth::guard('recruiter')->user()->id;
+
+        // Calculate the number of messages to skip
+        $skip = ($page - 1) * 10;
+
+        // we need to set the recruiter static since we dont have a relation between those three roles yet so we choose "GWU000005"
+
+        $chat = DB::connection('mongodb')
+            ->collection('chat')
+            ->raw(function ($collection) use ($idEmployer, $idRecruiter, $idWorker, $skip) {
+                return $collection
+                    ->aggregate([
+                        [
+                            '$match' => [
+                                'employerId' => $idEmployer,
+                                // 'recruiterId'=> $idRecruiter,
+                                // for now until get the offer works
+                                'recruiterId' => $idRecruiter,
+
+                                'workerId' => $idWorker,
+                            ],
+                        ],
+                        [
+                            '$project' => [
+                                'messages' => [
+                                    '$slice' => ['$messages', $skip, 10],
+                                ],
+                            ],
+                        ],
+                    ])
+                    ->toArray();
+            });
+           // {{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['employerId'] }}')"
+           $direct = true;
+           $id = Auth::guard('recruiter')->user()->id;
+
+        $rooms = DB::connection('mongodb')
+            ->collection('chat')
+            ->raw(function ($collection) use ($id) {
+                return $collection
+                    ->aggregate([
+                        [
+                            '$match' => [
+                                //'recruiterId' => $id,
+                                // for now until get the offer works
+                                'recruiterId' => $id,
+                            ],
+                        ],
+                        [
+                            '$project' => [
+                                'employerId' => 1,
+                                'workerId' => 1,
+                                'recruiterId' => 1,
+                                'lastMessage' => 1,
+                                'isActive' => 1,
+                                'messages' => [
+                                    '$slice' => ['$messages', 1],
+                                ],
+                            ],
+                        ],
+                    ])
+                    ->toArray();
+            });
+
+        $data = [];
+        $data_User = [];
+        foreach ($rooms as $room) {
+            //$user = User:select :where('id', $room->workerId);
+            $user = User::select('first_name', 'last_name')
+                ->where('id', $room->workerId)
+                ->get()
+                ->first();
+
+            if ($user) {
+                $name = $user->fullName;
+            } else {
+                // Handle the case where no user is found
+                $name = 'Default Name';
+            }
+
+            $data_User['fullName'] = $name;
+            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['workerId'] = $room->workerId;
+            $data_User['isActive'] = $room->isActive;
+            $data_User['employerId'] = $room->employerId;
+            $data_User['messages'] = $room->messages;
+
+            array_push($data, $data_User);
+        }
+        $worker = User::select('first_name', 'last_name')
+                ->where('id', $idWorker)
+                ->get()
+                ->first();
+
+            if ($worker) {
+                $nameworker = $user->fullName;
+            } else {
+                // Handle the case where no user is found
+                $nameworker = 'Default Name';
+            }
+            return view('recruiter::recruiter/messages', compact('idWorker','idEmployer','direct','id','data','nameworker'));
+        
     }
 
     public function get_rooms(Request $request)
@@ -179,8 +290,37 @@ class RecruiterController extends Controller
         return response()->json($data);
     }
 
-    public function get_messages()
+    public function get_messages(Request $request)
     {
+        
+        $worker_id = $request->input('worker_id');
+        $recruiter_id = Auth::guard('recruiter')->user()->id;
+
+        
+    
+        if (isset($worker_id)) {
+            $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
+            // Check if a room with the given worker_id and recruiter_id already exists
+            $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('recruiterId', $recruiter_id)->first();
+    
+            // If the room doesn't exist, create a new one
+            if (!$room) {
+                DB::connection('mongodb')->collection('chat')->insert([
+                    'workerId' => $nurse_user_id,
+                    'recruiterId' => $recruiter_id,
+                    'employerId' => $recruiter_id, // Replace this with the actual employerId
+                    'lastMessage' => null,
+                    'isActive' => true,
+                    'messages' => [],
+                ]);
+    
+                // Call the get_private_messages function
+                $request->query->set('workerId', $nurse_user_id);
+                $request->query->set('employerId', $recruiter_id); // Replace this with the actual employerId
+                return $this->get_direct_private_messages($request);
+            }
+        }
+
         $id = Auth::guard('recruiter')->user()->id;
 
         $rooms = DB::connection('mongodb')
@@ -236,8 +376,11 @@ class RecruiterController extends Controller
 
             array_push($data, $data_User);
         }
-
-        return view('recruiter::recruiter/messages', compact('id', 'data'));
+        $direct = false;
+        $nameworker = '';
+        $idWorker = '';
+        $idEmployer = '';
+        return view('recruiter::recruiter/messages', compact('id', 'data','direct','idWorker','idEmployer','nameworker'));
     }
 
     public function timeAgo($time = null)
@@ -335,7 +478,7 @@ class RecruiterController extends Controller
         $idEmployer = $request->idEmployer;
 
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message, $idEmployer, 'GWU000005', $idWorker, $role, $time, $type, $fileName));
+        event(new NewPrivateMessage($message, $idEmployer, $idEmployer, $idWorker, $role, $time, $type, $fileName));
 
         return true;
     }
@@ -348,6 +491,7 @@ class RecruiterController extends Controller
 
     public function addJobStore(Request $request)
     {
+        // return $request->all();
         try {
             $created_by = Auth::guard('recruiter')->user()->id;
             // Validate the form data
@@ -378,16 +522,17 @@ class RecruiterController extends Controller
                     'job_function' => 'nullable|string',
                     'job_cerner_exp' => 'nullable|string',
                     'job_meditech_exp' => 'nullable|string',
-
                     'weekly_taxable_amount' => 'nullable|integer',
                     'job_other_exp' => 'nullable|string',
                     'start_date' => 'nullable|date',
-
                     'hours_shift' => 'nullable|integer',
                     'hours_per_week' => 'nullable|integer',
-
                     'qualifications' => 'nullable|string',
-                    'weekly_non_taxable_amount' => 'nullable|integer'
+                    'weekly_non_taxable_amount' => 'nullable|integer',
+                    'proffesion' => 'nullable|string',
+                    'specialty' => 'nullable|string',
+                
+                    'Emr' => 'nullable|string',
                 ]);
             } elseif ($active == '1') {
                 $validatedData = $request->validate([
@@ -395,7 +540,6 @@ class RecruiterController extends Controller
                     'job_name' => 'required|string',
                     'job_city' => 'required|string',
                     'job_state' => 'required|string',
-
                     'weekly_pay' => 'required|numeric',
                     'preferred_specialty' => 'required|string',
                     'preferred_work_location' => 'nullable|string',
@@ -408,16 +552,9 @@ class RecruiterController extends Controller
                     'preferred_experience' => 'nullable|string',
                     'preferred_shift' => 'nullable|string',
                     'job_function' => 'nullable|string',
-
-
-
-
-
                     'start_date' => 'nullable|date',
-
                     'hours_shift' => 'nullable|integer',
                     'hours_per_week' => 'nullable|integer',
-
                     'qualifications' => 'nullable|string',
                     'facility_shift_cancelation_policy' => 'nullable|string',
                     'traveler_distance_from_facility' => 'nullable|string',
@@ -439,7 +576,11 @@ class RecruiterController extends Controller
                     'holiday' => 'nullable|string',
                     'orientation_rate' => 'nullable|string',
                     'on_call' => 'nullable|string',
-                    'weekly_non_taxable_amount' => 'nullable|integer'
+                    'weekly_non_taxable_amount' => 'nullable|integer',
+                    'proffesion' => 'nullable|string',
+                    'specialty' => 'nullable|string',
+                  
+                    'Emr' => 'nullable|string',
 
                 ]);
             } else {
@@ -483,6 +624,8 @@ class RecruiterController extends Controller
             $job->on_call = $validatedData['on_call'];
             $job->weekly_taxable_amount = $validatedData['weekly_taxable_amount'];
             $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
+            $job->proffesion = $validatedData['proffesion'];
+            $job->recruiter_id = $created_by;
             $job->created_by = $created_by;
 
             // Save the job data to the database
