@@ -97,8 +97,14 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Job Type</label>
-                                                <input type="text" name="job_type" id="job_type"
-                                                    placeholder="Enter job type">
+                                                <select name="job_type" id="job_type">
+                                                    <option value="">Job type</option>
+                                                    <option value="Clinical">Clinical
+                                                    </option>
+                                                    <option value="Non-Clinical">Non-Clinical
+                                                    </option>
+                                                </select>
+                                              
                                                 <span class="help-block-job_type"></span>
                                             </div>
 
@@ -791,8 +797,14 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Job Type</label>
-                                                        <input type="text" name="job_type" id="job_typeDraft"
-                                                            placeholder="Enter job type">
+                                                        
+                                                            <select name="job_type" id="job_typeDraft">
+                                                                <option value="">Job type</option>
+                                                                <option value="Clinical">Clinical
+                                                                </option>
+                                                                <option value="Non-Clinical">Non-Clinical
+                                                                </option>
+                                                            </select>
                                                         <span class="help-block-job_type"></span>
                                                     </div>
         

@@ -546,8 +546,9 @@ class RecruiterController extends Controller
                     'on_call' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|integer',
                     'proffesion' => 'nullable|string',
-                    'specialty' => 'nullable|string',
+                    
                     'Emr' => 'nullable|string',
+                    'terms' => 'nullable|string',
 
                 ]);
                 $job = new Job();
@@ -659,6 +660,12 @@ class RecruiterController extends Controller
                 if (isset($validatedData['proffesion'])) {
                     $job->proffesion = $validatedData['proffesion'];
                 }
+                if (isset($validatedData['preferred_specialty'])) {
+                    $job->specialty = $validatedData['preferred_specialty'];
+                }
+                if (isset($validatedData['terms'])) {
+                    $job->terms = $validatedData['terms'];
+                }
                 //return $job;
             }
             
@@ -684,7 +691,7 @@ class RecruiterController extends Controller
                     'preferred_specialty' => 'required|string',
                     'preferred_work_location' => 'nullable|string',
                     'description' => 'nullable|string',
-                    
+                    'terms' => 'nullable|string',
                     'preferred_shift_duration' => 'nullable|string',
                     'preferred_work_area' => 'nullable|string',
                     'preferred_days_of_the_week' => 'nullable|string',
@@ -718,7 +725,7 @@ class RecruiterController extends Controller
                     'on_call' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|integer',
                     'proffesion' => 'nullable|string',
-                    'specialty' => 'nullable|string',
+                   
                     'Emr' => 'nullable|string',
 
                 ]);
@@ -759,10 +766,12 @@ class RecruiterController extends Controller
                 $job->weekly_taxable_amount = $validatedData['weekly_taxable_amount'];
                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                 $job->proffesion = $validatedData['proffesion'];
+                $job->specialty = $validatedData['preferred_specialty'];
                 $job->recruiter_id = $created_by;
                 $job->created_by = $created_by;
                 $job->active = true;
                 $job->is_open = true;
+                $job->terms = $validatedData['terms'];
     
                 // Save the job data to the database
                 $job->save();
