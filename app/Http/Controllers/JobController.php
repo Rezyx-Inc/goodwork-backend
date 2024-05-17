@@ -11,7 +11,7 @@ use App\Enums\Role;
 use File;
 use Illuminate\Database\Eloquent\Builder;
 /** Models */
-use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved};
+use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, OffersLogs};
 use Auth;
 class JobController extends Controller
 {
@@ -722,6 +722,7 @@ class JobController extends Controller
 
     public function fetch_job_content(Request $request)
     {
+        
         try {
             if ($request->ajax()) {
                 $request->validate([
@@ -803,6 +804,7 @@ class JobController extends Controller
 
     public function store_counter_offer(Request $request)
     {
+        
         $user = auth()->guard('frontend')->user();
         $nurse = Nurse::where('user_id', $user->id)->first();
         $job_data = Job::where('id', $request->jobid)->first();
@@ -859,19 +861,47 @@ class JobController extends Controller
         $update_array['is_counter'] = '1';
         $update_array['recruiter_id'] = $job_data->recruiter_id;
         /* create job */
-        $update_array['created_by'] = $user->id;
+        $update_array['created_by'] = $job_data->created_by;
         $update_array['status'] = 'Offered';
         $offerexist = DB::table('offers')
-            ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
+            ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
             ->first();
 
-        // return response()->json(['job'=>$update_array], 200);
-        if ($offerexist) {
-            $job = DB::table('offers')
-                ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
-                ->update($update_array);
-        } else {
+          // return response()->json(['offer'=>$offerexist]);
+          
+          if ($offerexist) {
+              $job = DB::table('offers')
+                  ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
+                  ->first();
+          
+              if ($job) {
+                  DB::table('offers')
+                      ->where('id', $job->id)
+                      ->update($update_array);
+          
+                 // return response()->json(['offer'=>$job]);
+          
+                  $offers_log = OffersLogs::create([
+                      'original_offer_id' => $job->id,
+                      'status' => 'Counter',
+                      'employer_recruiter_id' => $job->created_by,
+                      'nurse_id' => $nurse->id,
+                      'details' => 'more infos',
+                  ]);    
+              }
+          }
+          else {
             $job = Offer::create($update_array);
+            $offers_log = OffersLogs::create([
+                'original_offer_id' => $job->id,
+                'status' => 'Counter',
+                'employer_recruiter_id' => $job->created_by,
+                'nurse_id' => $nurse->id,
+                'details' => 'more infos',
+                'counter_offer_by' => 'nurse'
+
+
+            ]); 
         }
         return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
     }

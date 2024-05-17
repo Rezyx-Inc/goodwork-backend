@@ -218,6 +218,8 @@ class ApplicationController extends Controller
             $offerdetails = Offer::where(['status' => $type, 'id' => $request->id, 'created_by' => $recruiter->id ])->first();
             $offerLogs = OffersLogs::where('original_offer_id', $request->id)->get();
 
+            //return response()->json(['offerLogs' => $request->id]);
+
         } else {
             $offerdetails = Offer::where('status', $type)->where( 'created_by' , $recruiter->id )->first();
         }
@@ -368,7 +370,7 @@ class ApplicationController extends Controller
                     ($jobdetails->proffesion ? '' : 'd-none') .
                     '">
                         <p>' .
-                    ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker Test</a>') .
+                    ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                     '</p>
                     </div>
                     </div>';
@@ -1668,9 +1670,11 @@ class ApplicationController extends Controller
                     </form>
                     ';
             } elseif ($request->formtype == 'joballdetails') {
+                $nurse_id = Nurse::where('user_id', $userdetails->id)->first()->id;
                 $offerdetails = DB::table('offers')
-                    ->where(['job_id' => $request->jobid, 'worker_user_id' => $userdetails->id])
+                    ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse_id])
                     ->first();
+                    //return response()->json(["j"=>$offerdetails ]);
                 $data2 .=
                     '
                         <div class="ss-jb-apl-oninfrm-mn-dv">
@@ -1786,14 +1790,7 @@ class ApplicationController extends Controller
                     ($offerdetails->traveler_distance_from_facility ?? '----') .
                     ' miles Maximum</h6>
             </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->facility != $offerdetails->facility ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Facility</span>
-                <h6>' .
-                    ($offerdetails->facility ?? '----') .
-                    '</h6>
-            </div>
+            
             <div class="col-md-6 mb-3 ' .
                     ($jobdetails->clinical_setting != $offerdetails->clinical_setting ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
@@ -1856,14 +1853,7 @@ class ApplicationController extends Controller
                     ($offerdetails->rto ?? '----') .
                     '</h6>
             </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->preferred_shift != $offerdetails->preferred_shift ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Shift Time of Day</span>
-                <h6>' .
-                    ($offerdetails->preferred_shift ?? '----') .
-                    '</h6>
-            </div>
+           
             <div class="col-md-6 mb-3 ' .
                     ($jobdetails->hours_per_week != $offerdetails->hours_per_week ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
@@ -2009,14 +1999,7 @@ class ApplicationController extends Controller
                     ($offerdetails->on_call ?? '----') .
                     '</h6>
             </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->call_back != $offerdetails->call_back ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Call Back</span>
-                <h6>' .
-                    ($offerdetails->call_back ?? '----') .
-                    '</h6>
-            </div>
+            
             <div class="col-md-6 mb-3 ' .
                     ($jobdetails->orientation_rate != $offerdetails->orientation_rate ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
@@ -2144,7 +2127,7 @@ class ApplicationController extends Controller
                 <form method="POST" action="' . route('recruiter-messages') . '">
                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                     <input type="hidden" name="worker_user_id" value="' . $offerdetails['worker_user_id'] . '">
-                    <button type="submit" class="rounded-pill ss-apply-btn py-2 border-0 px-4">Chat Now</button>
+                    <button onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\') class="rounded-pill ss-apply-btn py-2 border-0 px-4">Chat Now</button>
                 </form>
             </li>';
 
@@ -2156,22 +2139,18 @@ class ApplicationController extends Controller
                         data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>
                     <li>
-                        <a href="' .
-                        route('recruiter-messages') .
-                        '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
-                        $offerdetails['worker_user_id'] .
-                        '\')">Chat Now</a>
+                        <a  onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')" class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="
+                        cursor: pointer;
+                    ">Chat Now</a>
 
                     </li>';
             }else{
                 $data2 .=
                     '
                     <li>
-                        <a href="' .
-                        route('recruiter-messages') .
-                        '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
-                        $offerdetails['worker_user_id'] .
-                        '\')">Chat Now</a>
+                        <a onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')" class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="
+                        cursor: pointer;
+                    ">Chat Now</a>
                     </li>';
             }
                 $data2 .=
@@ -2188,7 +2167,7 @@ class ApplicationController extends Controller
                     <li class="col-md-6">
                         <p>Profession</p>
                         <h6>' .
-                    ($userdetails->highest_nursing_degree ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'highest_nursing_degree\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                    ($nursedetails['profession']  ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'highest_nursing_degree\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                     '</h6>
                     </li>
                     <li class="col-md-6">
@@ -2388,6 +2367,7 @@ class ApplicationController extends Controller
     }
     public function sendJobOffer(Request $request)
     {
+       
         $validator = Validator::make($request->all(), [
             'worker_user_id' => 'required',
             'job_id' => 'required',
