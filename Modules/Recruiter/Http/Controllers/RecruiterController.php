@@ -491,7 +491,7 @@ class RecruiterController extends Controller
 
     public function addJobStore(Request $request)
     {
-         
+         // return $request->all();
         try {
             $created_by = Auth::guard('recruiter')->user()->id;
             // Validate the form data
@@ -549,6 +549,10 @@ class RecruiterController extends Controller
                     
                     'Emr' => 'nullable|string',
                     'terms' => 'nullable|string',
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'block_scheduling'  => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string',
+                    'call_back' => 'nullable|string',
 
                 ]);
                 $job = new Job();
@@ -557,6 +561,9 @@ class RecruiterController extends Controller
                 
                 if (isset($validatedData['job_type'])) {
                     $job->job_type = $validatedData['job_type'];
+                }
+                if (isset($validatedData['job_type'])) {
+                    $job->type = $validatedData['job_type'];
                 }
                 if (isset($validatedData['job_name'])) {
                     $job->job_name = $validatedData['job_name'];
@@ -666,6 +673,26 @@ class RecruiterController extends Controller
                 if (isset($validatedData['terms'])) {
                     $job->terms = $validatedData['terms'];
                 }
+                if (isset($validatedData['preferred_assignment_duration'])) {
+                    $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
+                }
+                if (isset($validatedData['block_scheduling'])) {
+                    $job->block_scheduling = $validatedData['block_scheduling'];
+                }
+
+                if (isset($validatedData['contract_termination_policy'])) {
+                    $job->contract_termination_policy = $validatedData['contract_termination_policy'];
+                }
+
+                if (isset($validatedData['Emr'])) {
+                    $job->Emr = $validatedData['Emr'];
+                }
+                
+                if (isset($validatedData['call_back'])) {
+                    $job->call_back = $validatedData['call_back'];
+                }
+
+
                 //return $job;
             }
             
@@ -727,11 +754,15 @@ class RecruiterController extends Controller
                     'proffesion' => 'nullable|string',
                    
                     'Emr' => 'nullable|string',
-
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'block_scheduling'  => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string', 
+                    'call_back' => 'nullable|string',
                 ]);
 
                 $job = new Job();
                 $job->job_type = $validatedData['job_type'];
+                $job->type = $validatedData['job_type'];
                 $job->job_name = $validatedData['job_name'];
                 $job->job_city = $validatedData['job_city'];
                 $job->job_state = $validatedData['job_state'];
@@ -772,6 +803,12 @@ class RecruiterController extends Controller
                 $job->active = true;
                 $job->is_open = true;
                 $job->terms = $validatedData['terms'];
+                $job->preferred_work_location = $validatedData['preferred_work_location'];
+                $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
+                $job->block_scheduling = $validatedData['block_scheduling'];
+                $job->contract_termination_policy = $validatedData['contract_termination_policy'];
+                $job->Emr = $validatedData['Emr'];
+                $job->call_back = $validatedData['call_back'];
     
                 // Save the job data to the database
                 $job->save();
