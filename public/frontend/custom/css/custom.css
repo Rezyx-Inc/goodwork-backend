@@ -16,3 +16,26 @@
 .sidebar .list-group-flush a.active{
     color: #52DEC1 !important;
 }
+
+.ss-msg-rply-black-dv h6 {
+  font-weight: 400;
+  padding-bottom: 5px;
+}
+
+.ss-msg-rply-black-dv {
+  text-align: right;
+}
+
+
+.ss-msg-rply-black-dv p {
+  background: black;
+  display: inline-block;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 15px 0px 15px 15px;
+}
+
+.ss-msg-rply-black-dv span {
+  display: block;
+  font-size: 12px;
+}

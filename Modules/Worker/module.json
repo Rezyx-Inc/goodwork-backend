@@ -5,7 +5,7 @@
     "keywords": [],
     "priority": 0,
     "providers": [
-        "Modules\\worker\\Providers\\WorkerServiceProvider"
+        "Modules\\Worker\\Providers\\WorkerServiceProvider"
     ],
     "aliases": {},
     "files": [],

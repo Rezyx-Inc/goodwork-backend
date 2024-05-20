@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Nurse;
 use App\Models\Availability;
 
+
 class UserSeeder extends Seeder
 {
     /**
@@ -21,6 +22,7 @@ class UserSeeder extends Seeder
     {
 
         $faker = Faker\Factory::create();
+        $fakerName = app('Faker\Generator');
         
         // Admin is the first User created in the system, and it has all permissions, its id is "GWU000001"
 
@@ -38,8 +40,8 @@ class UserSeeder extends Seeder
 
         $employer = User::create([
 			'id' => Str::uuid(),
-            'first_name' => 'employer',
-            'last_name' => 'emp',
+            'first_name' => $fakerName->fantasyName('first_name'),
+            'last_name' => $fakerName->fantasyName('fantasyNames'),
             'email' => 'employer@gmail.com',
             'ROLE'=>'EMPLOYER',
             'user_name' => 'employer',
@@ -52,8 +54,8 @@ class UserSeeder extends Seeder
 
         $worker1 = User::create([
             'id' => Str::uuid(),
-            'first_name' => 'worker',
-            'last_name' => 'one',
+            'first_name' => $fakerName->fantasyName('first_name'),
+            'last_name' => $fakerName->fantasyName('fantasyNames'),
             'email' => 'worker1@gmail.com',
             'ROLE'=>'NURSE',
             'user_name' => 'worker1',
@@ -63,8 +65,8 @@ class UserSeeder extends Seeder
 
         $worker2 = User::create([
             'id' => Str::uuid(),
-            'first_name' => 'worker',
-            'last_name' => 'two',
+            'first_name' => $fakerName->fantasyName('first_name'),
+            'last_name' => $fakerName->fantasyName('fantasyNames'),
             'email' => 'worker2@gmail.com',
             'ROLE'=>'NURSE',
             'user_name' => 'worker2',
@@ -76,8 +78,8 @@ class UserSeeder extends Seeder
 
         $recruiter = User::create([
             'id' => Str::uuid(),
-            'first_name' => 'recruiter',
-            'last_name' => 'rec',
+            'first_name' => $fakerName->fantasyName('first_name'),
+            'last_name' => $fakerName->fantasyName('fantasyNames'),
             'email' => 'recruiter@gmail.com',
             'ROLE'=>'RECRUITER',
             'user_name' => 'recruiter',

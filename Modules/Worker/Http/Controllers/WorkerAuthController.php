@@ -5,6 +5,7 @@ namespace Modules\Worker\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Nurse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -145,6 +146,11 @@ class WorkerAuthController extends Controller
                     'facility_id'=>'1',
                     'active' => '1',
                     'role' => 'NURSE',
+                ]);
+
+                Nurse::create([
+                    'user_id' => $model->id,
+                    'active' => '1'
                 ]);
 
                 // dispatching the event after creating user before validate

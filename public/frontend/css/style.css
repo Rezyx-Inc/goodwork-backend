@@ -232,7 +232,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .fixed-bottom, .fixed-top{
-  margin-left: 210px;
+  margin-left: 0px;
       box-shadow: none;
 }
 
@@ -1618,6 +1618,30 @@ ul.ss-msg-notifi-sec li {
 }
 
 .ss-msg-rply-recrut-dv span {
+    display: block;
+    font-size: 12px;
+}
+
+
+.ss-msg-rply-black-dv h6 {
+    font-weight: 400;
+    padding-bottom: 5px;
+}
+
+.ss-msg-rply-black-dv {
+    text-align: right;
+}
+
+
+.ss-msg-rply-black-dv p {
+    background: black;
+    display: inline-block;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 15px 0px 15px 15px;
+}
+
+.ss-msg-rply-black-dv span {
     display: block;
     font-size: 12px;
 }

@@ -23,10 +23,10 @@
 
               <div class="ss-input-slct-grp">
                 <label for="cars">Profession</label>
-                <select name="profession" onchange="get_speciality(this, false)">
+                <select name="profession">
                     <option value="">Select</option>
                     @foreach($professions as $v)
-                    <option value="{{$v->id}}" data-id="{{$v->id}}" {{ ($profession == $v->full_name) ? 'selected': ''}}>{{$v->full_name}}</option>
+                    <option value="{{$v->full_name}}" data-id="{{$v->full_name}}" {{ ($profession == $v->full_name) ? 'selected': ''}}>{{$v->full_name}}</option>
                     @endforeach
                 </select>
               </div>
@@ -34,11 +34,11 @@
               <div class="ss-input-slct-grp">
                     <label>Specialty</label>
                     <select name="speciality" id="speciality">
-                        @if(!empty($speciality))
-                        <option value="{{$speciality}}">{{$speciality}}</option>
-                        @else
-                        <option value="">Select Profession</option>
-                        @endif
+                        <option value="">Select Specialty</option>
+                        @foreach($specialities as $speciality)
+                        <option value="{{$speciality->full_name}}">{{$speciality->full_name}}</option>
+                        @endforeach
+                       
                     </select>
               </div>
 
@@ -49,7 +49,7 @@
                 <select name="state" onchange="get_cities(this)">
                     <option value="">Select</option>
                     @foreach ($us_states as $v)
-                    <option value="{{$v->iso2}}" data-id="{{$v->id}}" {{ ($v->iso2 == $state) ? 'selected': ''}}>{{$v->name}}({{$v->iso2}})</option>
+                    <option value="{{$v->name}}" data-id="{{$v->id}}" {{ ($v->iso2 == $state) ? 'selected': ''}}>{{$v->name}}({{$v->iso2}})</option>
                     @endforeach
                 </select>
               </div>
@@ -68,10 +68,10 @@
 
 
               <div class="ss-jobtype-dv">
-                <label>Type</label>
+                <label>Terms</label>
                 <ul class="ks-cboxtags">
-                    @foreach($terms as $k=>$v)
-                    <li><input type="checkbox" name="terms[]" id="checkbox-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title, $job_type)) ? 'checked': ''}}><label for="checkbox-{{$k}}">{{$v->title}}</label></li>
+                    @foreach($terms_key as $k=>$v)
+                    <li><input type="checkbox" name="terms[]" id="checkbox-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title, $terms)) ? 'checked': ''}}><label for="checkbox-{{$k}}">{{$v->title}}</label></li>
                     @endforeach
                 </ul>
               </div>
@@ -83,12 +83,12 @@
                     <li><input type="date" value="{{$start_date}}" name="start_date" placeholder="Start Date"></li>
                 </ul>
               </div>
-              <div class="ss-explr-datepkr">
+              {{-- <div class="ss-explr-datepkr">
                 <label>End Date</label>
                 <ul class="ss-date-with">
                   <li><div class="ss-end-date"><input type="date" value="{{$end_date}}" name="end_date" placeholder="End Date"></div></li>
                 </ul>
-              </div>
+              </div> --}}
 
 
               <!-----price range------->
@@ -108,41 +108,41 @@
             </div>
         <!-- partial -->
             <!-- partial:index.partial.html -->
-            <div class="ss-price-week-sec">
+            <div class="ss-price-week-sec" >
                 <label>Hours Per Week</label>
                 <div id="slider3"></div>
             </div>
         <!-- partial -->
         <!-- partial:index.partial.html -->
-        <div class="ss-price-week-sec">
+        {{-- <div class="ss-price-week-sec">
             <label>Assignment Length</label>
             <div id="slider4"></div>
-        </div>
+        </div> --}}
     <!-- partial -->
 
 
-           <div class="ss-jobtype-dv ss-shift-type-inpy">
+           {{-- <div class="ss-jobtype-dv ss-shift-type-inpy">
                 <label>Shift type</label>
                      <ul class="ks-cboxtags">
                         @foreach($prefered_shifts as $k=>$v)
                         <li><input type="checkbox" name="shift[]" id="checkboxDay-{{$k}}" value="{{$v->title}}" {{ (in_array($v->title,$shifts)) ? 'checked': ''}}><label for="checkboxDay-{{$k}}">{{$v->title}}</label></li>
                         @endforeach
                     </ul>
-              </div>
+              </div> --}}
 
-              <div class="ss-fliter-btn-dv">
+              <div class="ss-fliter-btn-dv" style="margin-top:50px;">
                 <button class="ss-fliter-btn" type="submit">Apply</button>
               </div>
-                <input type="hidden" name="job_type" value="" id="job_type">
-                <input type="hidden" name="shifts" value="" id="shift">
+                <input type="hidden" name="terms" value="" id="job_type">
+                {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
                 <input type="hidden" name="weekly_pay_from" value="{{$weekly_pay_from}}" id="minval">
                 <input type="hidden" name="weekly_pay_to" value="{{$weekly_pay_to}}" id="maxval">
                 <input type="hidden" name="hourly_pay_from" value="{{$hourly_pay_from}}" id="hps_minval">
                 <input type="hidden" name="hourly_pay_to" value="{{$hourly_pay_to}}" id="hps_maxval">
                 <input type="hidden" name="hours_per_week_from" value="{{$hours_per_week_from}}" id="hpw_minval">
                 <input type="hidden" name="hours_per_week_to" value="{{$hours_per_week_to}}" id="hpw_maxval">
-                <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
-                <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval">
+                {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
+                <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
             </form>
           </div>
         </div>
@@ -347,45 +347,45 @@ $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 val
 $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3').slider('values', 1) + '</span>');
 
 
-$('#slider4').slider({
-    range: true,
-    min: 10,
-    max: 150,
-    step: 1,
-    values: [$('#al_minval').val() ? $('#al_minval').val() : 10, $('#al_maxval').val() ? $('#al_maxval').val() : 100],
+// $('#slider4').slider({
+//     range: true,
+//     min: 10,
+//     max: 150,
+//     step: 1,
+//     values: [$('#al_minval').val() ? $('#al_minval').val() : 10, $('#al_maxval').val() ? $('#al_maxval').val() : 100],
 
-    slide: function (event, ui) {
+//     slide: function (event, ui) {
 
-        $('#slider4 .ui-slider-handle:eq(0) .price-range-min-4').html( ui.values[ 0 ] + 'wk');
-        $('#slider4 .ui-slider-handle:eq(1) .price-range-max-4').html( ui.values[ 1 ] + 'wk');
-        $('#slider4 .price-range-both-4').html('<i>' + ui.values[ 0 ] + 'wk - '+ ui.values[ 1 ]+' wk</i>');
+//         $('#slider4 .ui-slider-handle:eq(0) .price-range-min-4').html( ui.values[ 0 ] + 'wk');
+//         $('#slider4 .ui-slider-handle:eq(1) .price-range-max-4').html( ui.values[ 1 ] + 'wk');
+//         $('#slider4 .price-range-both-4').html('<i>' + ui.values[ 0 ] + 'wk - '+ ui.values[ 1 ]+' wk</i>');
 
-        // get values of min and max
-        $("#al_minval").val(ui.values[0]);
-        $("#al_maxval").val(ui.values[1]);
+//         // get values of min and max
+//         $("#al_minval").val(ui.values[0]);
+//         $("#al_maxval").val(ui.values[1]);
 
-        if (ui.values[0] == ui.values[1]) {
-            $('#slider4 .price-range-both-4 i').css('display', 'none');
-        } else {
-            $('#slider4 .price-range-both-4 i').css('display', 'inline');
-        }
+//         if (ui.values[0] == ui.values[1]) {
+//             $('#slider4 .price-range-both-4 i').css('display', 'none');
+//         } else {
+//             $('#slider4 .price-range-both-4 i').css('display', 'inline');
+//         }
 
-        if (collision($('#slider4 .price-range-min-4'), $('#slider4 .price-range-max-4')) == true) {
-            $('#slider4 .price-range-min-4, .price-range-max-4').css('opacity', '0');
-            $('#slider4 .price-range-both-4').css('display', 'block');
-        } else {
-            $('#slider4 .price-range-min-4, .price-range-max-4').css('opacity', '1');
-            $('#slider4 .price-range-both-4').css('display', 'none');
-        }
+//         if (collision($('#slider4 .price-range-min-4'), $('#slider4 .price-range-max-4')) == true) {
+//             $('#slider4 .price-range-min-4, .price-range-max-4').css('opacity', '0');
+//             $('#slider4 .price-range-both-4').css('display', 'block');
+//         } else {
+//             $('#slider4 .price-range-min-4, .price-range-max-4').css('opacity', '1');
+//             $('#slider4 .price-range-both-4').css('display', 'none');
+//         }
 
-    }
-});
+//     }
+// });
 
-$('#slider4 .ui-slider-range').append('<span class="price-range-both-4 value"><i>' + $('#slider4').slider('values', 0) + 'wk - ' + $('#slider4').slider('values', 1) + ' wk</i></span>');
+// $('#slider4 .ui-slider-range').append('<span class="price-range-both-4 value"><i>' + $('#slider4').slider('values', 0) + 'wk - ' + $('#slider4').slider('values', 1) + ' wk</i></span>');
 
-$('#slider4 .ui-slider-handle:eq(0)').append('<span class="price-range-min-4 value">' + $('#slider4').slider('values', 0) + 'wk </span>');
+// $('#slider4 .ui-slider-handle:eq(0)').append('<span class="price-range-min-4 value">' + $('#slider4').slider('values', 0) + 'wk </span>');
 
-$('#slider4 .ui-slider-handle:eq(1)').append('<span class="price-range-max-4 value">' + $('#slider4').slider('values', 1) + 'wk</span>');
+// $('#slider4 .ui-slider-handle:eq(1)').append('<span class="price-range-max-4 value">' + $('#slider4').slider('values', 1) + 'wk</span>');
 });
 
 </script>
@@ -405,14 +405,14 @@ $('#slider4 .ui-slider-handle:eq(1)').append('<span class="price-range-max-4 val
 				// Set the categoriesString as the value of the hidden input field
 				$("#job_type").val(categoriesString);
 
-                const shiftTypes = $("input[name='shift[]']:checked");
-                const shiftString = shiftTypes.map(function() {
-					return $(this).val();
-				}).get().join('-');
+                // const shiftTypes = $("input[name='shift[]']:checked");
+                // const shiftString = shiftTypes.map(function() {
+				// 	return $(this).val();
+				// }).get().join('-');
 				// Set the categoriesString as the value of the hidden input field
-				$("#shift").val(shiftString);
+				// $("#shift").val(shiftString);
 				$(this).find("input[name='terms[]']").remove();
-                $(this).find("input[name='shift[]']").remove();
+                // $(this).find("input[name='shift[]']").remove();
 
         // Change the value of the profession select to the text of the selected option
         const professionSelect = $("select[name='profession']");

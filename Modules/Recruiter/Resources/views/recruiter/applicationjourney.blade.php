@@ -428,6 +428,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
+
                     url: "{{ url('recruiter/update-application-status') }}",
                     data: {
                         'token': csrfToken,
@@ -953,8 +954,8 @@
 
             // for now just redirecting to messages page
             let url = "{{ url('recruiter/recruiter-messages') }}";
-            // window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
-            window.location = url;
+             window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
+            // window.location = url;
         }
 
         function chatNow(id) {

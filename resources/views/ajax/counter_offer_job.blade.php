@@ -26,11 +26,11 @@
     <div class="ss-form-group">
       <label>Type</label>
       <select name="type" id="type">
-          <option value="{{$model['type']}}">{{$model['type']}}</option>
+          <option value="{{$model->job_type}}">{{$model->job_type}}</option>
   @if(isset($keywords['Type'])) 
   @foreach ($keywords['Type'] as $value) 
       <option value="{{$value->title}}
-        @if ($model['type'] == $value->id)
+        @if ($model->job_type == $value->id)
           'selected' @else '' @endif
           "> {{$value->title}}  
         </option>
@@ -45,7 +45,7 @@
     <select name="terms" id="term">
 @if (isset($keywords['Terms'])) 
 @foreach ($keywords['Terms'] as $value) 
-    <option value="{{$value->title}}"  @if ($model['terms'] == $value->id) 'selected' @else '' @endif >{{$value->title}}</option>
+    <option value="{{$value->title}}"  @if ($model->terms == $value->id) 'selected' @else '' @endif >{{$value->title}}</option>
 @endforeach
 @endif
     </select>
@@ -54,16 +54,16 @@
           <div class="ss-form-group">
             <h6>Description</h6>
             <input name="description" id="description" placeholder="Enter Job Description" cols="30" rows="2" value="{{
-            $model['description']}}"  />
+            $model->description}}"  />
         </div>
         <span class="help-block-description"></span>
 
            <div class="ss-form-group">
             <label>Profession</label>
             <select name="profession"  onchange="get_speciality(this)">
-              <option value="{{$model['proffesion']}}">{{$model['proffesion']}}</option>
+              <option value="{{$model->proffesion}}">{{$model->proffesion}}</option>
                 @foreach($keywords['Profession'] as $k=>$v)
-                <option value="{{$v->title}}" {{ ($v->title == $model->type) ? 'selected' : ''}} data-id="{{$v->id}}">{{$v->title}}</option>
+                <option value="{{$v->title}}" {{ ($v->title == $model->job_type) ? 'selected' : ''}} data-id="{{$v->id}}">{{$v->title}}</option>
                 @endforeach
             </select>
           </div>
@@ -74,7 +74,7 @@
             
                     <div class="col-md-12">
                         <select name="preferred_specialty" class="m-0" id="preferred_specialty">
-                        <option value="{{$model['preferred_specialty']}}">{{$model['preferred_specialty']}}</option>
+                        <option value="{{$model->preferred_specialty}}">{{$model->preferred_specialty}}</option>
                           @if (isset($keywords['Speciality'])) 
                               @foreach ($keywords['Speciality'] as $value) 
                                   <option value="{{$value->id}}"> {{ $value->title }}</option>
@@ -225,7 +225,7 @@
           <div class="ss-form-group">
             <label>Facility Shift Cancellation Policy</label>
             <select name="facility_shift_cancelation_policy">
-              <option value="{{$model['facility_shift_cancelation_policy']}}">{{$model['facility_shift_cancelation_policy']}}</option>
+              <option value="{{$model->facility_shift_cancelation_policy}}">{{$model->facility_shift_cancelation_policy}}</option>
                 @foreach($keywords['AssignmentDuration'] as $k=>$v)
                 <option value="{{$v->title}}" {{($v->title==$model->facility_shift_cancelation_policy) ? 'selected' : ''}}>{{$v->title}}</option>
                 @endforeach
@@ -244,7 +244,7 @@
 
           <div class="ss-form-group">
             <label>Contract Termination Policy</label>
-            <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="@if (isset($model['contract_termination_policy'])){{$model['contract_termination_policy']}} 
+            <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="@if (isset($model->contract_termination_policy)){{$model->contract_termination_policy}} 
             @else 
               '2 weeks of guaranteed pay unless canceled for cause'
             @endif
@@ -264,7 +264,7 @@
 
           <div class="ss-form-group">
             <label>Clinical Setting</label>
-            <input type="text" id="clinical_setting" name="clinical_setting" placeholder="Enter clinical setting" value="{{$model['clinical_setting']}}
+            <input type="text" id="clinical_setting" name="clinical_setting" placeholder="Enter clinical setting" value="{{$model->clinical_setting}}
         ">
         </div>
         <span class="help-block-clinical_setting"></span>
@@ -276,7 +276,7 @@
 
           <div class="ss-form-group">
             <label>EMR</label>
-            <input type="text" name="emr" value="{{$model->Emr}}" placeholder="What EMRs have you used?">
+            <input type="text" name="emr" value="{{$model->emr}}" placeholder="What EMRs have you used?">
           </div>
 
           <div class="ss-form-group">
@@ -314,11 +314,11 @@
           <div class="ss-form-group">
             <label>Shift Time of Day</label>
             <select name="preferred_shift" id="shift-of-day">
-            <option value="{{$model['preferred_shift']}}">{{$model['preferred_shift']}}</option>
+            <option value="{{$model->preferred_shift}}">{{$model->preferred_shift}}</option>
     @if (isset($keywords['PreferredShift'])) 
         @foreach ($keywords['PreferredShift'] as $value) 
             <option value="{{$value->id}}" 
-              @if($model['preferred_shift'] == $value->id)
+              @if($model->preferred_shift == $value->id)
                 'selected' 
               @else 
               ''> {{$value->title}}
@@ -393,8 +393,8 @@
           <label>Health Insurance</label>
           <select name="health_insaurance" id="health-insurance">
          
-              <option value="{{$model['health_insaurance']}}">
-                @if ($model['health_insaurance'] == '1') 
+              <option value="{{$model->health_insaurance}}">
+                @if ($model->health_insaurance == '1') 
                 Yes @else No
               @endif
               </option>
@@ -407,8 +407,8 @@
       <div class="ss-form-group">
         <label>Dental</label>
         <select name="dental" id="dental">
-        <option value="{{$model['dental']}}">
-          @if ($model['dental'] == '1') 
+        <option value="{{$model->dental}}">
+          @if ($model->dental == '1') 
           Yes @else No
         @endif
         </option>
@@ -421,8 +421,8 @@
     <div class="ss-form-group">
       <label>Vision</label>
       <select name="vision" id="vision">
-        <option value="{{$model['vision']}}">
-          @if ($model['vision'] == '1') 
+        <option value="{{$model->vision}}">
+          @if ($model->vision == '1') 
           Yes @else No
         @endif
         </option>
@@ -439,7 +439,7 @@
 
           <div class="ss-form-group">
             <label>Feels Like $/hrs</label>
-            <input type="text" name="feels_like_per_hour" value="{{$model->feels_like_per_hour}}" placeholder="---">
+            <input type="number" name="feels_like_per_hour" value="{{$model->feels_like_per_hour}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
@@ -450,7 +450,7 @@
           <div class="ss-form-group">
             <label>Holiday</label>
             <input id="holiday" type="text" name="holiday" placeholder="Select Dates" 
-            value="{{$model['holiday']}}
+            value="{{$model->holiday}}
           ">
         </div>
         <span class="help-block-holiday"></span>
@@ -478,27 +478,27 @@
 
           <div class="ss-form-group">
             <label>Weekly Taxable amount</label>
-            <input type="text" name="weekly_taxable_amount" value="{{$model->weekly_taxable_amount}}" placeholder="---">
+            <input type="number" name="weekly_taxable_amount" value="{{$model->weekly_taxable_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Weekly non-taxable amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+            <input type="number" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Employer Weekly Amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+            <input type="number" name="employer_weekly_amount" value="{{$model->employer_weekly_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Goodwork Weekly Amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+            <input type="number" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
           </div>
 
           <div class="ss-form-group">
             <label>Total Employer Amount</label>
-            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" id="Total Employer Amount" name="Total Employer Amount" placeholder="---">
+            <input type="text" name="total_employer_amount" value="{{$model->weekly_non_taxable_amount}}" id="Total Employer Amount" name="Total Employer Amount" placeholder="---">
           </div>
 
           <div class="ss-form-group">
@@ -520,8 +520,8 @@
            <button  class="ss-counter-button" onclick="store_counter_offer(this)">Counter Offer</button>
            <button class="counter-save-for-button">Save for Later</button>
          </div>
-         <input type="hidden" name="jobid" value="{{$model->id}}">
-         <input type="hidden" name="user_id" value="{{$model->id}}">
+         <input type="hidden" name="jobid" value="{{$model->job_id}}">
+         <input type="hidden" name="user_id" value="{{$model->worker_user_id}}">
 </form>
 </div>
 
@@ -554,24 +554,6 @@ var speciality = {};
 var vac_content = [];
 var cer_content = [];
 
-@if(count($specialty))
-@for($i=0; $i<count($specialty);$i++)
-speciality['{{$specialty[$i]}}'] = '{{$experience[$i]}}';
-@endfor
-@endif
-console.log(speciality);
-
-@if(count($vaccinations))
-@for($i=0; $i<count($vaccinations);$i++)
-vac_content.push('{{$vaccinations[$i]}}');
-@endfor
-@endif
-
-@if(count($certificate))
-@for($i=0; $i<count($certificate);$i++)
-cer_content.push('{{$certificate[$i]}}');
-@endfor
-@endif
 
 var dynamic_elements = {
     vac : {

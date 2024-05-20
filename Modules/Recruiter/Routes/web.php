@@ -29,7 +29,7 @@ Route::prefix('recruiter')->group(function () {
     Route::middleware(['recruiter_logged_in'])->group(function () {
         /** Dashboard routes */
         Route::get('recruiter-dashboard', ['uses' => 'RecruiterDashboardController@index', 'as' => 'recruiter-dashboard']);
-        Route::get('recruiter-messages', ['uses' => 'RecruiterDashboardController@communication', 'as' => 'recruiter-messages']);
+        //Route::post('recruiter-messages', ['uses' => 'RecruiterDashboardController@communication', 'as' => 'recruiter-messages']);
         Route::get('recruiter-profile', ['uses' => 'RecruiterDashboardController@profile', 'as' => 'recruiter-profile']);
         Route::post('help-and-support', ['uses' => 'RecruiterDashboardController@helpAndSupport', 'as' => 'help-and-support']);
         Route::post('recruiter-update-profile', ['uses' => 'RecruiterDashboardController@updateProfile', 'as' => 'recruiter-update-profile']);
