@@ -761,6 +761,17 @@ class JobController extends Controller
                         break;
                     case 'offered':
                         // $jobs = $jobCOntent;
+                        $offerdetails = Offer::where('id', $offer_id->id)->first();
+                        $jobdetails = Job::where('id', $job->id)->first();
+                        $nursedetails = Nurse::where('id', $worker_id->id)->first();
+                        $recruiter = User::where('id', $jobdetails->created_by)->first();
+                        $data['offerdetails'] = $offerdetails;
+                        $data['jobdetails'] = $jobdetails;
+                        $data['nursedetails'] = $nursedetails;
+                        $data['recruiter'] = $recruiter;
+                        // return $data;
+                        $response['content'] = view('ajax.counter_details', $data)->render();
+                return new JsonResponse($response, 200);
                         $view = 'offered';
                         break;
                     case 'past':
