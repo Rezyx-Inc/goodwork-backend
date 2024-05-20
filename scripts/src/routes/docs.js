@@ -25,7 +25,7 @@ router.post('/add-docs', async (req, res) => {
             return res.status(400).send("No file sent.")
         
         }else{
-		  
+
             return res.status(400).send("Missing parameters.")
       }
 	}

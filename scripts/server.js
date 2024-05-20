@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 const cors = require('cors'); 
 const app = express();
 
+var { report } = require('./src/set.js')
+
 app.use(cors({
     origin: 'http://127.0.0.1:8000' 
 }));
@@ -32,9 +34,16 @@ mongoose.connect(process.env.MONGODB_FILES_URI)
 })
 .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
+    report("Unable to connect MongoDB in server.js");
 });
 
 app.listen(process.env.FILE_API_PORT);
+
+// catches uncaught exceptions
+process.on('uncaughtException', async function() {
+    console.log("Some issues with the server")
+    report("Unexpected Server exit | uncaughtException")
+});
 
 /*
 some notes:
