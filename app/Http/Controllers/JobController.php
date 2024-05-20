@@ -794,6 +794,8 @@ class JobController extends Controller
                             $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
                             $data['us_states'] = States::where('country_id', $usa->id)->get();
                             $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+                            $offerdetails = Offer::where('id', $offer_id->id)->first();
+                            $data['model'] = $offerdetails;
                             $view = 'counter_offer';
                         } catch (\Exception $e) {
                             return response()->json(['success' => false, 'message' => 'here']);
@@ -819,6 +821,7 @@ class JobController extends Controller
         $user = auth()->guard('frontend')->user();
         $nurse = Nurse::where('user_id', $user->id)->first();
         $job_data = Job::where('id', $request->jobid)->first();
+       // return response()->json(['success' => false, 'message' => $job_data]);
         $update_array['job_name'] = $job_data->job_name != $request->job_name ? $request->job_name : $job_data->job_name;
         $update_array['type'] = $job_data->type != $request->type ? $request->type : $job_data->type;
         $update_array['terms'] = $job_data->terms != $request->terms ? $request->terms : $job_data->terms;

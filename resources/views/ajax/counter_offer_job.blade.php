@@ -276,7 +276,7 @@
 
           <div class="ss-form-group">
             <label>EMR</label>
-            <input type="text" name="emr" value="{{$model->Emr}}" placeholder="What EMRs have you used?">
+            <input type="text" name="emr" value="{{$model->emr}}" placeholder="What EMRs have you used?">
           </div>
 
           <div class="ss-form-group">
@@ -520,8 +520,8 @@
            <button  class="ss-counter-button" onclick="store_counter_offer(this)">Counter Offer</button>
            <button class="counter-save-for-button">Save for Later</button>
          </div>
-         <input type="hidden" name="jobid" value="{{$model->id}}">
-         <input type="hidden" name="user_id" value="{{$model->id}}">
+         <input type="hidden" name="jobid" value="{{$model->job_id}}">
+         <input type="hidden" name="user_id" value="{{$model->worker_user_id}}">
 </form>
 </div>
 
