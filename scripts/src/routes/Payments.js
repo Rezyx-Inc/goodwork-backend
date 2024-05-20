@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const queries = require("../mysql/queries.js")
 
 router.get('/', (req, res) => {
     res.send('Payments page');
@@ -31,7 +32,7 @@ router.post('/create', async (req, res) => {
 			email: req.body.email
 		});
 		
-		 // insert into users stripeId values account.id
+		await queries.insertStripeId(account.id, req.body.userId)
 
     	res.status(200).json({status: true, message:account.id});
 
@@ -45,13 +46,20 @@ router.post('/create', async (req, res) => {
 router.get('/account-link', async (req, res) => {
     
     if(!Object.keys(req.query).length) {
+    
         return res.status(400).send({status:false, message:"Empty request"})
+    
+    }else if ( !req.body.stripeId){
+
+        return res.status(400).send({status:false, message:"Missing parameters."})
     }
 	
 	let accountLink;
     
     try{
 	    
+	    await queries.checkStripeId(req.body.userId)
+
 	    accountLink = await stripe.accountLinks.create({
 		  	account: req.query.stripeId,
 		  	refresh_url: process.env.REFRESH_URL_BASE_PATH + "/" + req.query.stripeId,
@@ -73,14 +81,20 @@ router.get('/account-link', async (req, res) => {
 router.get('/login-link', async (req, res) => {
     
     if(!Object.keys(req.query).length) {
+    
         return res.status(400).send({status:false, message:"Empty request"})
+    
+    }else if ( !req.body.stripeId){
+
+        return res.status(400).send({status:false, message:"Missing parameters."})
     }
 
 	let loginLink;
 
     try{
-    
-    	 loginLink = await stripe.accounts.createLoginLink(req.query.stripeId);
+    	
+    	await queries.checkStripeId(req.body.userId)
+    	loginLink = await stripe.accounts.createLoginLink(req.query.stripeId);
     
     }catch(e){
 		console.log(e);
@@ -104,13 +118,17 @@ router.post('/transfer', async (req, res) => {
     }
 
     try{
+
+    	let stripeId = query.getStripeId(accountId);
+
 	    // Create the transfer
 	    const account = await stripe.transfers.create({
 		  	amount: Number(req.body.amount) * 100,
 		  	currency: 'usd',
-		  	destination: req.body.stripeId
+		  	destination: stripeId
 		});
-	
+		
+		// DB save worker payment
 		res.status(200).json({status: true, message:"OK"});
 
 	}catch(e){
@@ -129,7 +147,7 @@ router.post('/customer/create', async (req, res) => {
 	if(!Object.keys(req.body).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
-    else if ( !req.body.email){
+    else if ( !req.body.email ){
 
         return res.status(400).send({status:false, message:"Missing parameter."})
     }
@@ -147,7 +165,7 @@ router.post('/customer/create', async (req, res) => {
 		return res.status(400).send({status: false, message: e.message})
     }
 
-    let portal = "https://billing.stripe.com/p/login/test_8wMaFa19ddXy1wc5kk";
+    const portal = "https://billing.stripe.com/p/login/test_8wMaFa19ddXy1wc5kk";
     
     // Create the customer
     try{
@@ -160,7 +178,8 @@ router.post('/customer/create', async (req, res) => {
   			}
 		});
 
-		// insert into users stripeId values customer.id
+		await queries.insertCustomerStripeId(customer.id, req.body.email)
+
 		res.status(200).json({status: true, message:portal});
 
 	}catch(e){
@@ -176,19 +195,25 @@ router.post('/customer/invoice', async (req, res) => {
 	if(!Object.keys(req.body).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
-    else if ( !req.body.stripeId || !req.body.amount){
+    else if ( !req.body.stripeId || !req.body.amount || !req.body.offerId){
 
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
 
     try{
+    	
+    	// first set the offer on hold
+    	await queries.setOfferStatus(req.body.offerId, "Hold")
 
     	// Create invoice
 		const invoice = await stripe.invoices.create({
 			customer: req.body.stripeId,
 			auto_advance: true,
 			currency: "usd",
-			collection_method:"charge_automatically"
+			collection_method:"charge_automatically",
+			metadata: {
+				offerId: req.body.offerId
+			}
 		});
 
 		//create invoice item
@@ -196,13 +221,12 @@ router.post('/customer/invoice', async (req, res) => {
 			customer: req.body.stripeId,
 			amount: Number(req.body.amount) * 100,
 			invoice: invoice.id,
-			description: "Goodwork Fees"
+			description: "Goodwork Fees for "+ req.body.offerId
 		});
 
 		// Finalize
 		await stripe.invoices.finalizeInvoice(invoice.id);
 
-		// insert into users stripeId values customer.id
 		res.status(200).json({status: true, message:"OK"});
 
 	}catch(e){
