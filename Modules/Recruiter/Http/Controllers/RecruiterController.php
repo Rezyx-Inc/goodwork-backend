@@ -558,7 +558,6 @@ class RecruiterController extends Controller
                 $job = new Job();
                 try {
 
-                
                 if (isset($validatedData['job_type'])) {
                     $job->job_type = $validatedData['job_type'];
                 }
@@ -809,7 +808,13 @@ class RecruiterController extends Controller
                 $job->contract_termination_policy = $validatedData['contract_termination_policy'];
                 $job->Emr = $validatedData['Emr'];
                 $job->call_back = $validatedData['call_back'];
-    
+                
+                $job->employer_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
+                $job->total_employer_amount  =  ($job->preferred_assignment_duration * $job->employer_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus) ;
+                $job->goodwork_weekly_amount  = ($job->employer_weekly_amount) * 0.05;
+                $job->total_goodwork_amount  = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
+                $job->total_contract_amount = $job->total_goodwork_amount  + $job->total_employer_amount ;
+
                 // Save the job data to the database
                 $job->save();
             } else {

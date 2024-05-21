@@ -118,6 +118,7 @@ class CreateJobsTable extends Migration
              $table->decimal('total_employer_amount', 8, 2)->nullable();
              $table->decimal('total_goodwork_amount', 8, 2)->nullable();
              $table->decimal('total_contract_amount', 8, 2)->nullable();
+             $table->decimal('goodwork_weekly_amount', 8, 2)->nullable();
              $table->string('tax_status', 36);
              $table->string('terms');
              $table->string('type')->nullable();
