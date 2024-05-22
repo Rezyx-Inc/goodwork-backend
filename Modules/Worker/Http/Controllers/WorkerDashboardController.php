@@ -142,6 +142,8 @@ class WorkerDashboardController extends Controller
 
                 $nurse_data = [];
 
+               
+
                 isset($request->specialty) ? ($nurse_data['specialty'] = $request->specialty) : '';
                 isset($request->profession) ? ($nurse_data['profession'] = $request->profession) : '';
                 isset($request->terms) ? ($nurse_data['terms'] = $request->terms) : '';
@@ -167,6 +169,7 @@ class WorkerDashboardController extends Controller
             }
 
             if ($request->InfoType == 'BasicInformation') {
+                //return $request->all();
                 $request->validate([
                     'first_name' => 'required|string',
                     'last_name' => 'required|string',
@@ -186,6 +189,13 @@ class WorkerDashboardController extends Controller
                 isset($request->state) ? ($nurse_data['state'] = $request->state) : '';
                 isset($request->city) ? ($nurse_data['city'] = $request->city) : '';
                 isset($request->address) ? ($nurse_data['address'] = $request->address) : '';
+
+                if($request->hasFile('profile_pic')){
+                    $file = $request->file('profile_pic');
+                    $filename = time() . $nurse->id .'.'. $file->getClientOriginalExtension();
+                    $file->move(public_path('uploads'), $filename);
+                    $user_data['image'] = $filename;
+                }
 
                 $user->update($user_data);
                 $nurse->update($nurse_data);
@@ -208,9 +218,9 @@ class WorkerDashboardController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'user_name' => 'regex:/^[a-zA-Z\s]+$/|max:255',
+                // 'user_name' => 'regex:/^[a-zA-Z\s]+$/|max:255',
                 //'new_mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
-                '2fa' => 'in:0,1',
+                // '2fa' => 'in:0,1',
                 //needs net` access
                 'email' => 'email:rfc,dns',
             ]);
@@ -218,7 +228,7 @@ class WorkerDashboardController extends Controller
             $user = Auth::guard('frontend')->user();
 
             isset($request->user_name) ? ($user_data['user_name'] = $request->user_name) : '';
-            isset($request->new_mobile) ? ($user_data['new_mobile'] = $request->new_mobile) : '';
+            isset($request->new_mobile) ? ($user_data['mobile'] = $request->new_mobile) : '';
             isset($request->email) ? ($user_data['email'] = $request->email) : '';
             isset($request->password) ? ($user_data['password'] = Hash::make($request->password)) : '';
             isset($request->twoFa) ? ($user_data['2fa'] = $request->twoFa) : '';
@@ -676,9 +686,13 @@ public function add_stripe_account(Request $request)
     if ($response->successful()) {
         $get_account_url = 'http://localhost:' . config('app.file_api_port') . '/payments/account-link';
         $data_account_url = [
-            'stripeId' => $response->json()['message'],
+            'stripeId' => $user_data['stripeAccountId'],
+            'userId' => $user_id
         ];
+        //return response()->json(['status'=>true,'message'=>$data_account_url]);
         $get_account_link_response = Http::get($get_account_url, $data_account_url);
+        
+        
 
         return response()->json(['status'=>true,'account_link'=>$get_account_link_response->json()['message'] ]);
 

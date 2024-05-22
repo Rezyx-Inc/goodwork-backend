@@ -315,6 +315,7 @@ class RecruiterDashboardController extends Controller
 
     public function update_recruiter_profile(Request $request)
     {
+
         try {
             $user = Auth::guard('recruiter')->user();
             $request->validate([
@@ -324,6 +325,13 @@ class RecruiterDashboardController extends Controller
                 'about_me' => 'required|string',
             ]);
             $user_data = [];
+
+            if($request->hasFile('profile_pic')){
+                $file = $request->file('profile_pic');
+                $filename = time() . $user->id .'.'. $file->getClientOriginalExtension();
+                $file->move(public_path('uploads'), $filename);
+                $user_data['image'] = $filename;
+            }
 
             isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
             isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';

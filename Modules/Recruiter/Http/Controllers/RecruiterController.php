@@ -532,7 +532,7 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-                    'weekly_taxable_amount' => 'nullable|integer',
+                    
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -657,9 +657,7 @@ class RecruiterController extends Controller
                 if (isset($validatedData['on_call'])) {
                     $job->on_call = $validatedData['on_call'];
                 }
-                if (isset($validatedData['weekly_taxable_amount'])) {
-                    $job->weekly_taxable_amount = $validatedData['weekly_taxable_amount'];
-                }
+               
                 if (isset($validatedData['weekly_non_taxable_amount'])) {
                     $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                 }
@@ -737,7 +735,7 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-                    'weekly_taxable_amount' => 'nullable|integer',
+                   
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -751,7 +749,6 @@ class RecruiterController extends Controller
                     'on_call' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|integer',
                     'proffesion' => 'nullable|string',
-                   
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
                     'block_scheduling'  => 'nullable|string',
@@ -767,11 +764,9 @@ class RecruiterController extends Controller
                 $job->job_state = $validatedData['job_state'];
                 $job->weekly_pay = $validatedData['weekly_pay'];
                 $job->preferred_specialty = $validatedData['preferred_specialty'];
-                
                 $job->description = $validatedData['description'];
                 $job->start_date = $validatedData['start_date'];
                 $job->hours_shift = $validatedData['hours_shift'];
-                $job->hours_per_week = $validatedData['hours_per_week'];
                 $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
                 $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
                 $job->clinical_setting = $validatedData['clinical_setting'];
@@ -780,8 +775,6 @@ class RecruiterController extends Controller
                 $job->scrub_color = $validatedData['scrub_color'];
                 $job->rto = $validatedData['rto'];
                 $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-                $job->hours_per_week = $validatedData['hours_per_week'];
-                $job->hours_shift = $validatedData['hours_shift'];
                 $job->weeks_shift = $validatedData['weeks_shift'];
                 $job->referral_bonus = $validatedData['referral_bonus'];
                 $job->sign_on_bonus = $validatedData['sign_on_bonus'];
@@ -793,7 +786,7 @@ class RecruiterController extends Controller
                 $job->holiday = $validatedData['holiday'];
                 $job->orientation_rate = $validatedData['orientation_rate'];
                 $job->on_call = $validatedData['on_call'];
-                $job->weekly_taxable_amount = $validatedData['weekly_taxable_amount'];
+                
                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                 $job->proffesion = $validatedData['proffesion'];
                 $job->specialty = $validatedData['preferred_specialty'];
@@ -809,12 +802,14 @@ class RecruiterController extends Controller
                 $job->Emr = $validatedData['Emr'];
                 $job->call_back = $validatedData['call_back'];
                 
+                $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
+                $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
                 $job->employer_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
                 $job->total_employer_amount  =  ($job->preferred_assignment_duration * $job->employer_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus) ;
                 $job->goodwork_weekly_amount  = ($job->employer_weekly_amount) * 0.05;
                 $job->total_goodwork_amount  = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
                 $job->total_contract_amount = $job->total_goodwork_amount  + $job->total_employer_amount ;
-
+                
                 // Save the job data to the database
                 $job->save();
             } else {

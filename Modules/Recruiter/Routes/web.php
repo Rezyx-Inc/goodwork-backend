@@ -178,6 +178,8 @@ Route::prefix('recruiter')->group(function () {
 
         Route::post('send-amount-transfer',['uses' => 'RecruiterDashboardController@send_amount', 'as' => 'send_amount']);
 
+        
+
 
     });
 });

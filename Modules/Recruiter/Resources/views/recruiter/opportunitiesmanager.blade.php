@@ -175,17 +175,15 @@
                                                 </span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Preferred Assignment Duration</label>
+                                                <label>Weeks per Assignment</label>
                                                 <input type="number" name="preferred_assignment_duration"
                                                     id="preferred_assignment_duration"
-                                                    placeholder="Enter Work Duration Per Week">
-                                                <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                    (Duration not required)
-                                                </span><br>
+                                                    placeholder="Enter Work Duration Per Assignment">
+                                                    <span class="help-block-preferred_assignment_duration"></span>
 
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label> Weekly Pay </label>
+                                                <label>Est. Weekly Pay </label>
                                                 <input type="number" step="0.01" name="weekly_pay" id="weekly_pay"
                                                     placeholder="Enter Weekly Pay">
                                                 <span class="help-block-weekly_pay"></span>
@@ -238,9 +236,9 @@
                                                 <span class="help-block-clinical_setting"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Travel Distance</label>
+                                                <label>Patient ratio</label>
                                                 <input type="number" name="Patient_ratio" id="Patient_ratio"
-                                                    placeholder="Enter travel distance">
+                                                    placeholder="Enter Patient ratio">
                                                 <span class="help-block-Patient_ratio"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -262,27 +260,29 @@
                                                 <span class="help-block-rto"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Guaranteed Hours</label>
+                                                <label>Guaranteed Hours per week</label>
                                                 <input type="number" name="guaranteed_hours" id="guaranteed_hours"
-                                                    placeholder="Enter guaranteed hours">
+                                                    placeholder="Enter Guaranteed Hours per week">
                                                 <span class="help-block-guaranteed_hours"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Hours Per Week</label>
                                                 <input type="number" name="hours_per_week" id="hours_per_week"
                                                     placeholder="Enter hours per week">
                                                 <span class="help-block-hours_per_week"></span>
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
-                                                <label>Hours Shift</label>
+                                                <label>Hours Per Shift</label>
                                                 <input type="number" name="hours_shift" id="hours_shift"
-                                                    placeholder="Enter hours shift">
+                                                    placeholder="Enter Hours Per Shift">
                                                 <span class="help-block-hours_shift"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Weeks Shift</label>
+                                                <label>Shift Per Weeks
+                                                    
+                                                    </label>
                                                 <input type="number" name="weeks_shift" id="weeks_shift"
-                                                    placeholder="Enter weeks shift">
+                                                    placeholder="Enter Shift Per Weeks">
                                                 <span class="help-block-weeks_shift"></span>
                                             </div>
 
@@ -373,20 +373,20 @@
                                                 <span class="help-block-other_bonus"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>hourly rate</label>
+                                                <label>Actual Regular Hourly rate</label>
                                                 <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
-                                                    placeholder="Enter actual hourly rate">
+                                                    placeholder="Enter actual Actual Regular Hourly rate">
                                                 <span class="help-block-actual_hourly_rate"></span>
                                             </div>
 
                                             <div class="ss-form-group col-md-4">
-                                                <label>Hourly Overtime</label>
+                                                <label>Overtime Hourly rate</label>
                                                 <input type="number" name="overtime" id="overtime"
-                                                    placeholder="Enter actual hourly overtime">
+                                                    placeholder="Enter actual Overtime Hourly rate">
                                                 <span class="help-block-overtime"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>On call</label>
+                                                <label>On Call Hourly rate</label>
                                                 <select name="on_call" id="on_call">
                                                     <option value="">On call</option>
                                                     <option value="Yes">Yes
@@ -397,15 +397,15 @@
                                                 <span class="help-block-on_call"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Holiday</label>
-                                                <input type="text" name="holiday" id="holiday"
-                                                    placeholder="Enter holiday">
+                                                <label>Holidy hourly rate</label>
+                                                <input type="number" name="holiday" id="holiday"
+                                                    placeholder="Enter Holidy hourly rate">
                                                 <span class="help-block-holiday"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Orientation rate</label>
+                                                <label>Orientation Hourly rate</label>
                                                 <input type="number" name="orientation_rate" id="orientation_rate"
-                                                    placeholder="Enter orientation rate">
+                                                    placeholder="Enter Orientation Hourly rate">
                                                 <span class="help-block-orientation_rate"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -548,31 +548,28 @@
                                                 </select>
                                                 <span class="help-block-vision"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Feels Like $/hrs</label>
                                                 <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
                                                     placeholder="Enter Feels Like $/hrs">
                                                 <span class="help-block-feels_like_per_hour"></span>
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
-                                                <label>Call Back</label>
-                                                <select name="call_back" id="call_back">
-                                                    <option value="">Call Back</option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
+                                                <label>Call Back Hourly rate</label>
+                                               
+                                                <input type="number" name="call_back"
+                                                    id="call_back" placeholder="Enter Call Back Hourly rate">
+                                                    <span class="help-block-call_back"></span>
                                                 <span class="help-block-call_back"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Weekly Taxable amount</label>
+                                            {{-- <div class="ss-form-group col-md-4">
+                                                <label>Est. Weekly Taxable amount</label>
                                                 <input type="number" name="weekly_taxable_amount"
                                                     id="weekly_taxable_amount" placeholder="Enter Weekly Taxable amount">
                                                 <span class="help-block-weekly_taxable_amount"></span>
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
-                                                <label>Weekly non-taxable amount</label>
+                                                <label>Est. Weekly non-taxable amount</label>
                                                 <input type="number" name="weekly_non_taxable_amount"
                                                     id="weekly_non_taxable_amount"
                                                     placeholder="Enter Weekly non-taxable amount">
@@ -580,7 +577,7 @@
                                             </div>
 
 
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Hours per Shift"</label>
                                                 <input type="number" name="hours_shift" id="hours_shift"
                                                     placeholder="Enter Hours per Shift">
@@ -589,7 +586,7 @@
                                                 <label>Hours per Week</label>
                                                 <input type="number" name="hours_per_week" id="hours_shift"
                                                     placeholder="Enter Hours per week">
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-12">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -875,17 +872,15 @@
                                                         </span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Assignment Duration</label>
+                                                        <label>Weeks per Assignment</label>
                                                         <input type="number" name="preferred_assignment_durationDraft"
-                                                            id="preferred_assignment_duration"
-                                                            placeholder="Enter Work Duration Per Week">
-                                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                            (Duration not required)
-                                                        </span><br>
+                                                            id="preferred_assignment_durationDraft"
+                                                            placeholder="Enter Work Duration Per Assignment">
+                                                            <span class="help-block-preferred_assignment_duration"></span>
         
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label> Weekly Pay </label>
+                                                        <label>Est. Weekly Pay </label>
                                                         <input type="number" step="0.01" name="weekly_pay" id="weekly_payDraft"
                                                             placeholder="Enter Weekly Pay">
                                                         <span class="help-block-weekly_pay"></span>
@@ -1066,9 +1061,9 @@
                                                 <span class="help-block-clinical_setting"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Travel Distance</label>
+                                                <label>Patient ratio</label>
                                                 <input type="number" name="Patient_ratio" id="Patient_ratioDraft"
-                                                    placeholder="Enter travel distance">
+                                                    placeholder="Enter Patient ratio">
                                                 <span class="help-block-Patient_ratio"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -1090,27 +1085,29 @@
                                                 <span class="help-block-rto"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Guaranteed Hours</label>
+                                                <label>Guaranteed Hours per week</label>
                                                 <input type="number" name="guaranteed_hours" id="guaranteed_hoursDraft"
-                                                    placeholder="Enter guaranteed hours">
+                                                    placeholder="Enter Guaranteed Hours per week">
                                                 <span class="help-block-guaranteed_hours"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Hours Per Week</label>
                                                 <input type="number" name="hours_per_week" id="hours_per_weekDraft"
                                                     placeholder="Enter hours per week">
                                                 <span class="help-block-hours_per_week"></span>
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
-                                                <label>Hours Shift</label>
+                                                <label>
+                                                    Hours Per Shift
+                                                    </label>
                                                 <input type="number" name="hours_shift" id="hours_shiftDraft"
-                                                    placeholder="Enter hours shift">
+                                                    placeholder="Enter Hours Per Shift">
                                                 <span class="help-block-hours_shift"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Weeks Shift</label>
+                                                <label>Shift Per Weeks</label>
                                                 <input type="number" name="weeks_shift" id="weeks_shiftDraft"
-                                                    placeholder="Enter weeks shift">
+                                                    placeholder="Enter Shift Per Weeks">
                                                 <span class="help-block-weeks_shift"></span>
                                             </div>
 
@@ -1161,20 +1158,20 @@
                                                         <span class="help-block-other_bonus"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>hourly rate</label>
+                                                        <label>Actual Regular Hourly rate</label>
                                                         <input type="number" name="actual_hourly_rate" id="actual_hourly_rateDraft"
-                                                            placeholder="Enter actual hourly rate">
+                                                            placeholder="Enter actual regular hourly rate">
                                                         <span class="help-block-actual_hourly_rate"></span>
                                                     </div>
         
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Hourly Overtime</label>
+                                                        <label>Overtime Hourly rate</label>
                                                         <input type="number" name="overtime" id="overtimeDraft"
-                                                            placeholder="Enter actual hourly overtime">
+                                                            placeholder="Enter actual Overtime Hourly rate">
                                                         <span class="help-block-overtime"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>On call</label>
+                                                        <label>On Call Hourly rate</label>
                                                         <select name="on_call" id="on_callDraft">
                                                             <option value="">On call</option>
                                                             <option value="Yes">Yes
@@ -1185,15 +1182,15 @@
                                                         <span class="help-block-on_call"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Holiday</label>
-                                                        <input type="text" name="holiday" id="holidayDraft"
-                                                            placeholder="Enter holiday">
+                                                        <label>Holidy hourly rate</label>
+                                                        <input type="NUMBER" name="holiday" id="holidayDraft"
+                                                            placeholder="Enter Holidy hourly rate">
                                                         <span class="help-block-holiday"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Orientation rate</label>
+                                                        <label>Orientation Hourly rate</label>
                                                         <input type="number" name="orientation_rate" id="orientation_rateDraft"
-                                                            placeholder="Enter orientation rate">
+                                                            placeholder="Enter Orientation Hourly rate">
                                                         <span class="help-block-orientation_rate"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1357,31 +1354,26 @@
             </select>
             <span class="help-block-vision"></span>
         </div>
-        <div class="ss-form-group col-md-4">
+        {{-- <div class="ss-form-group col-md-4">
             <label>Feels Like $/hrs</label>
             <input type="number" name="feels_like_per_hour" id="feels_like_per_hourDraft"
                 placeholder="Enter Feels Like $/hrs">
             <span class="help-block-feels_like_per_hour"></span>
-        </div>
+        </div> --}}
         <div class="ss-form-group col-md-4">
-            <label>Call Back</label>
-            <select name="call_back" id="call_backDraft">
-                <option value="">Call Back</option>
-                <option value="Yes">Yes
-                </option>
-                <option value="No">No
-                </option>
-            </select>
+            <label>Call Back Hourly rate</label>
+            <input type="number" name="call_back"
+            id="call_backDraft" placeholder="Enter Call Back Hourly rate">
             <span class="help-block-call_back"></span>
         </div>
-        <div class="ss-form-group col-md-4">
-            <label>Weekly Taxable amount</label>
+        {{-- <div class="ss-form-group col-md-4">
+            <label>Est. Weekly Taxable amount</label>
             <input type="number" name="weekly_taxable_amount"
                 id="weekly_taxable_amountDraft" placeholder="Enter Weekly Taxable amount">
             <span class="help-block-weekly_taxable_amount"></span>
-        </div>
+        </div> --}}
         <div class="ss-form-group col-md-4">
-            <label>Weekly non-taxable amount</label>
+            <label>Est. Weekly non-taxable amount</label>
             <input type="number" name="weekly_non_taxable_amount"
                 id="weekly_non_taxable_amountDraft"
                 placeholder="Enter Weekly non-taxable amount">
@@ -1389,7 +1381,7 @@
         </div>
 
 
-        <div class="ss-form-group col-md-4">
+        {{-- <div class="ss-form-group col-md-4">
             <label>Hours per Shift"</label>
             <input type="number" name="hours_shift" id="hours_shiftDraft"
                 placeholder="Enter Hours per Shift">
@@ -1398,7 +1390,7 @@
             <label>Hours per Week</label>
             <input type="number" name="hours_per_week" id="hours_shiftDraft"
                 placeholder="Enter Hours per week">
-        </div>
+        </div> --}}
         <div class="ss-form-group col-md-12">
             <div class="row">
                 <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -2465,7 +2457,7 @@
     let start_date = darftJobs[0].start_date;
     let end_date = darftJobs[0].end_date;
     let hours_shift = darftJobs[0].hours_shift;
-    let hours_per_week = darftJobs[0].hours_per_week;
+    // let hours_per_week = darftJobs[0].hours_per_week;
     let responsibilities = darftJobs[0].responsibilities;
     let description = darftJobs[0].description;
     let proffesion = darftJobs[0].proffesion;
@@ -2531,9 +2523,9 @@
     if(hours_shift !== null) {
         document.getElementById("hours_shiftDraft").value = hours_shift;
     }
-    if(hours_per_week !== null) {
-        document.getElementById("hours_per_weekDraft").value = hours_per_week;
-    }
+    // if(hours_per_week !== null) {
+    //     document.getElementById("hours_per_weekDraft").value = hours_per_week;
+    // }
     if(responsibilities !== null) {
         document.getElementById("responsibilitiesDraft").value = responsibilities;
     }
@@ -2582,7 +2574,7 @@
         let start_date = darftJobs[jobId].start_date;
         let end_date = darftJobs[jobId].end_date;
         let hours_shift = darftJobs[jobId].hours_shift;
-        let hours_per_week = darftJobs[jobId].hours_per_week;
+        // let hours_per_week = darftJobs[jobId].hours_per_week;
         let responsibilities = darftJobs[jobId].responsibilities;
         let qualifications = darftJobs[jobId].qualifications;
         let description = darftJobs[jobId].description;
@@ -2646,9 +2638,9 @@ if (end_date) {
 if (hours_shift) {
     document.getElementById("hours_shiftDraft").value = hours_shift;
 }
-if (hours_per_week) {
-    document.getElementById("hours_per_weekDraft").value = hours_per_week;
-}
+// if (hours_per_week) {
+//     document.getElementById("hours_per_weekDraft").value = hours_per_week;
+// }
 if (responsibilities) {
     document.getElementById("responsibilitiesDraft").value = responsibilities;
 }
@@ -2706,6 +2698,7 @@ if (preferred_shift_duration) {
         var city = document.getElementById("job_city").value;
         var state = document.getElementById("job_state").value;
         var weeklyPay = document.getElementById("weekly_pay").value;
+        var preferred_assignment_duration = document.getElementById("preferred_assignment_duration").value;
 
 
       
@@ -2771,6 +2764,14 @@ if (preferred_shift_duration) {
             $('.help-block-weekly_pay').text('');
 
         }
+        if (preferred_assignment_duration.trim() === '') {
+            $('.help-block-preferred_assignment_duration').text('Please enter an assignment duration');
+            $('.help-block-preferred_assignment_duration').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-preferred_assignment_duration').text('');
+
+        }
 
         if (access) {
             return true;
@@ -2790,7 +2791,7 @@ if (preferred_shift_duration) {
         var scrub_color = document.getElementById("scrub_color").value;
         var rto = document.getElementById("rto").value;
         var guaranteed_hours = document.getElementById("guaranteed_hours").value;
-        var hours_per_week = document.getElementById("hours_per_week").value;
+        // var hours_per_week = document.getElementById("hours_per_week").value;
         var hours_shift = document.getElementById("hours_shift").value;
         var weeks_shift = document.getElementById("weeks_shift").value;
         // var referral_bonus = document.getElementById("referral_bonus").value;
@@ -2873,13 +2874,13 @@ if (preferred_shift_duration) {
             $('.help-block-guaranteed_hours').text('');
         }
 
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_week').text('Please enter the hours per week');
-            $('.help-block-hours_per_week').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_week').text('');
-        }
+        // if (hours_per_week.trim() === '') {
+        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
+        //     $('.help-block-hours_per_week').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-hours_per_week').text('');
+        // }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -3122,11 +3123,11 @@ if (preferred_shift_duration) {
         var health_insaurance = document.getElementById("health_insaurance").value;
         var dental = document.getElementById("dental").value;
         var vision = document.getElementById("vision").value;
-        var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
+        //var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
         var call_back = document.getElementById("call_back").value;
-        var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
+        //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
-        var hours_per_week = document.getElementById("hours_per_week").value;
+        // var hours_per_week = document.getElementById("hours_per_week").value;
         var hours_shift = document.getElementById("hours_shift").value;
         var start_date = document.getElementById("start_date").value;
         var as_soon_as = document.getElementById("as_soon_as").value;
@@ -3181,13 +3182,13 @@ if (preferred_shift_duration) {
             $('.help-block-vision').text('');
         }
 
-        if (feels_like_per_hour.trim() === '') {
-            $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
-            $('.help-block-feels_like_per_hour').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-feels_like_per_hour').text('');
-        }
+        // if (feels_like_per_hour.trim() === '') {
+        //     $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
+        //     $('.help-block-feels_like_per_hour').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-feels_like_per_hour').text('');
+        // }
 
         if (call_back.trim() === '') {
             $('.help-block-call_back').text('Please enter the call back');
@@ -3197,13 +3198,13 @@ if (preferred_shift_duration) {
             $('.help-block-call_back').text('');
         }
 
-        if (weekly_taxable_amount.trim() === '') {
-            $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
-            $('.help-block-weekly_taxable_amount').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_taxable_amount').text('');
-        }
+        // if (weekly_taxable_amount.trim() === '') {
+        //     $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
+        //     $('.help-block-weekly_taxable_amount').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-weekly_taxable_amount').text('');
+        // }
 
         if (weekly_non_taxable_amount.trim() === '') {
             $('.help-block-weekly_non_taxable_amount').text('Please enter the weekly non taxable amount');
@@ -3213,13 +3214,13 @@ if (preferred_shift_duration) {
             $('.help-block-weekly_non_taxable_amount').text('');
         }
 
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_week').text('Please enter the hours per week');
-            $('.help-block-hours_per_week').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_week').text('');
-        }
+        // if (hours_per_week.trim() === '') {
+        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
+        //     $('.help-block-hours_per_week').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-hours_per_week').text('');
+        // }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -3376,6 +3377,7 @@ if (preferred_shift_duration) {
         var city = document.getElementById("job_cityDraft").value;
         var state = document.getElementById("job_stateDraft").value;
         var weeklyPay = document.getElementById("weekly_payDraft").value;
+        var preferred_assignment_duration = document.getElementById("preferred_assignment_durationDraft").value;
 
 
         document.getElementById("active").value = false;
@@ -3443,6 +3445,15 @@ if (preferred_shift_duration) {
 
         }
 
+        if (preferred_assignment_duration.trim() === '') {
+            $('.help-block-preferred_assignment_duration').text('Please enter an assignment duration');
+            $('.help-block-preferred_assignment_duration').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-preferred_assignment_duration').text('');
+
+        }
+
         if (access) {
             return true;
         } else {
@@ -3461,7 +3472,7 @@ if (preferred_shift_duration) {
         var scrub_color = document.getElementById("scrub_colorDraft").value;
         var rto = document.getElementById("rtoDraft").value;
         var guaranteed_hours = document.getElementById("guaranteed_hoursDraft").value;
-        var hours_per_week = document.getElementById("hours_per_weekDraft").value;
+        // var hours_per_week = document.getElementById("hours_per_weekDraft").value;
         var hours_shift = document.getElementById("hours_shiftDraft").value;
         var weeks_shift = document.getElementById("weeks_shiftDraft").value;
        
@@ -3535,13 +3546,13 @@ if (preferred_shift_duration) {
             $('.help-block-guaranteed_hours').text('');
         }
 
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_week').text('Please enter the hours per week');
-            $('.help-block-hours_per_week').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_week').text('');
-        }
+        // if (hours_per_week.trim() === '') {
+        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
+        //     $('.help-block-hours_per_week').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-hours_per_week').text('');
+        // }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -3704,11 +3715,11 @@ if (preferred_shift_duration) {
         var health_insaurance = document.getElementById("health_insaurance").value;
         var dental = document.getElementById("dental").value;
         var vision = document.getElementById("vision").value;
-        var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
+       // var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
         var call_back = document.getElementById("call_back").value;
-        var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
+        //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
-        var hours_per_week = document.getElementById("hours_per_week").value;
+        // var hours_per_week = document.getElementById("hours_per_week").value;
         var hours_shift = document.getElementById("hours_shift").value;
         var start_date = document.getElementById("start_date").value;
         var as_soon_as = document.getElementById("as_soon_as").value;
@@ -3763,13 +3774,13 @@ if (preferred_shift_duration) {
             $('.help-block-vision').text('');
         }
 
-        if (feels_like_per_hour.trim() === '') {
-            $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
-            $('.help-block-feels_like_per_hour').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-feels_like_per_hour').text('');
-        }
+        // if (feels_like_per_hour.trim() === '') {
+        //     $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
+        //     $('.help-block-feels_like_per_hour').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-feels_like_per_hour').text('');
+        // }
 
         if (call_back.trim() === '') {
             $('.help-block-call_back').text('Please enter the call back');
@@ -3779,13 +3790,13 @@ if (preferred_shift_duration) {
             $('.help-block-call_back').text('');
         }
 
-        if (weekly_taxable_amount.trim() === '') {
-            $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
-            $('.help-block-weekly_taxable_amount').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_taxable_amount').text('');
-        }
+        // if (weekly_taxable_amount.trim() === '') {
+        //     $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
+        //     $('.help-block-weekly_taxable_amount').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-weekly_taxable_amount').text('');
+        // }
 
         if (weekly_non_taxable_amount.trim() === '') {
             $('.help-block-weekly_non_taxable_amount').text('Please enter the weekly non taxable amount');
@@ -3795,13 +3806,13 @@ if (preferred_shift_duration) {
             $('.help-block-weekly_non_taxable_amount').text('');
         }
 
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_week').text('Please enter the hours per week');
-            $('.help-block-hours_per_week').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_week').text('');
-        }
+        // if (hours_per_week.trim() === '') {
+        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
+        //     $('.help-block-hours_per_week').addClass('text-danger');
+        //     access = false;
+        // } else {
+        //     $('.help-block-hours_per_week').text('');
+        // }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');

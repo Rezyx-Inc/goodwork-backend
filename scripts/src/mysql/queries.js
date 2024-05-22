@@ -2,7 +2,7 @@ const { pool } = require("./mysql.js")
 
 module.exports.getStripeId = async function (stripeId){
 
-	const [result, fields] = await pool.query("SELECT stripeId FROM users WHERE id=?;", [userId])
+	const [result, fields] = await pool.query("SELECT stripeAccountId FROM users WHERE id=?;", [userId])
 	return result[0]
 }
 
@@ -14,7 +14,7 @@ module.exports.insertStripeId = async function (stripeId, userId){
 
 module.exports.checkStripeId = async function (stripeId){
 
-	const [result, fields] = await pool.query("SELECT stripeId FROM users WHERE stripeId=?;", [stripeId])
+	const [result, fields] = await pool.query("SELECT stripeAccountId FROM users WHERE stripeAccountId=?;", [stripeId])
 	return result
 }
 
@@ -25,8 +25,24 @@ module.exports.insertCustomerStripeId = async function (stripeId, email){
 	return result
 }
 
-module.exports.setOfferStatus = async function (offerId, status){
+module.exports.setOfferStatus = async function (offerId, status, is_payment_done, is_payment_required){
+    let query = "UPDATE offers SET status=?"; 
+    let queryParams = [status];
 
-	const [result, fields] = await pool.query("UPDATE offers SET status=? WHERE oid=?;", [offerId, status])
-	return result
+    if (!_.isNull(is_payment_required)) {
+        query += ", is_payment_required=?";
+        queryParams.push(is_payment_required);
+    }
+    if (!_.isNull(is_payment_done)) {
+        query += ", is_payment_done=?";
+        queryParams.push(is_payment_done);
+    }
+
+    query += " WHERE id=?";
+    queryParams.push(offerId);
+
+    const [result, fields] = await pool.query(query, queryParams);
+    
+    return result;
 }
+

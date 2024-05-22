@@ -72,6 +72,8 @@ class CreateOffersTable extends Migration
             $table->string('tax_status', 36);
             $table->foreign('worker_user_id')->references('id')->on('nurses')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('is_payment_required')->nullable()->default(false);;
+            $table->boolean('is_payment_done')->nullable()->default(false);;
             $table->softDeletes();
             $table->timestamps();
         });

@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+var _ = require('lodash');
+var { report } = require('../set.js')
 const queries = require("../mysql/queries.js")
+
+
 
 router.get('/', (req, res) => {
     res.send('Payments page');
@@ -203,7 +207,7 @@ router.post('/customer/invoice', async (req, res) => {
     try{
     	
     	// first set the offer on hold
-    	await queries.setOfferStatus(req.body.offerId, "Hold")
+    	await queries.setOfferStatus(req.body.offerId, "Hold", "1", "0")
 
     	// Create invoice
 		const invoice = await stripe.invoices.create({
@@ -230,6 +234,7 @@ router.post('/customer/invoice', async (req, res) => {
 		res.status(200).json({status: true, message:"OK"});
 
 	}catch(e){
+		await queries.setOfferStatus(req.body.offerId, "Hold", "0", "1")
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}

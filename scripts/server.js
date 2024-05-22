@@ -10,7 +10,7 @@ const app = express();
 var { report } = require('./src/set.js')
 
 app.use(cors({
-    origin: 'http://127.0.0.1:8000' 
+    origin: ['http://127.0.0.1:8000', 'http://localhost:8000']
 }));
 
 const docsRoute = require('./src/routes/docs');

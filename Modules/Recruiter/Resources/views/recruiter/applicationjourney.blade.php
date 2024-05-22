@@ -12,18 +12,18 @@
                         <span>{{ $statusCounts['Apply'] }} Applicants</span>
                     </div>
                 </div>
+                {{-- Screening Applicants --}}
+                <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="applicationType('Screening')" id="Screening">
+                        <p>Screening</p>
+                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
+                    </div>
+                </div>
                 {{-- Offered Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Offered')" id="Offered">
                         <p>Offered</p>
                         <span>{{ $statusCounts['Offered'] }} Applicants</span>
-                    </div>
-                </div>
-                {{-- On Hold Applicants --}}
-                <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Hold')" id="Hold">
-                        <p>Hold</p>
-                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
                     </div>
                 </div>
                 {{-- Submitted Applicants --}}
@@ -33,13 +33,15 @@
                         <span>{{ $statusCounts['Submitted'] }} Applicants</span>
                     </div>
                 </div>
-                {{-- Screening Applicants --}}
+                {{-- On Hold Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Screening')" id="Screening">
-                        <p>Screening</p>
-                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
+                    <div class="ss-job-prfle-sec" onclick="applicationType('Hold')" id="Hold">
+                        <p>Hold</p>
+                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
                     </div>
                 </div>
+                
+                
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Onboarding')" id="Onboarding">

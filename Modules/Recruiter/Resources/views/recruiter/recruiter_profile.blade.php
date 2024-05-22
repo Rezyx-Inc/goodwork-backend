@@ -12,14 +12,30 @@
                     <div class="col-lg-5">
                         <div class="ss-my-profil-div">
                             <h2>My <span class="ss-pink-color">Profile</span></h2>
-                            <div class="ss-my-profil-img-div">
+                            {{-- <div class="ss-my-profil-img-div">
                                 <img src="{{ URL::asset('frontend/img/account-img.png') }}"
                                     onerror="this.onerror=null;this.src='{{ USER_IMG }}';" id="preview"
                                     width="112px" height="112px" style="object-fit: cover;" />
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $user->id }}</p>
                                 <p>{{ $user->about_me }}</p>
+                            </div> --}}
+
+                            <div class="ss-my-profil-img-div">
+                                <div class="profile-pic">
+                                    <label class="-label" for="file">
+                                      <span class="glyphicon glyphicon-camera"></span>
+                                      <span>Change Image</span>
+                                    </label>
+                                    <input id="file" type="file" onchange="loadFile(event)"/>
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
+                                  </div>
+                                <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                                <p>{{ $user->id }}</p>
+                                <p>{{ $user->about_me }}</p>
                             </div>
+
+                            
 
 
                             <div class="ss-my-presnl-btn-mn">
@@ -287,7 +303,7 @@
                             <div class="ss-persnl-frm-hed">
                                 <h1
                                     style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
-                                    Help &Support
+                                    Help & Support
                                 </h1>
                             </div>
                             <div class="form-outer">
@@ -440,6 +456,12 @@
                 isValid = false;
             }
 
+            if (about_me.value === '') {
+                $('.help-block-about_me').text('Please enter a description');
+                $('.help-block-about_me').addClass('text-danger');
+                isValid = false;
+            }
+
             return isValid;
         }
         // end validation basic information
@@ -548,18 +570,23 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            let formData = new FormData();
+            formData.append('first_name', first_name.value);
+            formData.append('last_name', last_name.value);
+            formData.append('mobile', mobile.value);
+            formData.append('about_me', about_me.value);
+            formData.append('profile_pic', $('#file')[0].files[0]); 
+
+
+
             $.ajax({
                 url: '/recruiter/update-recruiter-profile',
                 type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    first_name: first_name.value,
-                    last_name: last_name.value,
-                    mobile: mobile.value,
-                    about_me: about_me.value,
-
-                }),
+                data: formData,
+                contentType: false, 
+                cache: false, 
+                processData:false, 
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -634,53 +661,53 @@
 
         // saving Support ticket
 
-        const SaveSupportTicket = document.getElementById("SaveSupportTicket");
+        // const SaveSupportTicket = document.getElementById("SaveSupportTicket");
 
-        SaveSupportTicket.addEventListener("click", function(event) {
-            event.preventDefault();
-            if (!validateSupportForm()) {
-                return;
-            }
-            $('#loading').removeClass('d-none');
-            $('#send_ticket').addClass('d-none');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/recruiter/send-support-ticket',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    support_subject: support_subject.value,
-                    support_subject_issue: support_subject_issue.value,
+        // SaveSupportTicket.addEventListener("click", function(event) {
+        //     event.preventDefault();
+        //     if (!validateSupportForm()) {
+        //         return;
+        //     }
+        //     $('#loading').removeClass('d-none');
+        //     $('#send_ticket').addClass('d-none');
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         url: '/recruiter/send-support-ticket',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify({
+        //             support_subject: support_subject.value,
+        //             support_subject_issue: support_subject_issue.value,
 
-                }),
-                success: function(resp) {
-                    console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Your ticket has been sent successfully',
-                            time: 5
-                        });
-                        $('#loading').addClass('d-none');
-                        $('#send_ticket').removeClass('d-none');
-                        support_subject_issue.value = "";
-                    }
-                },
-                error: function(resp) {
-                    console.log(resp);
-                    notie.alert({
-                        type: 'error',
-                        text: resp,
-                        time: 5
-                    });
-                }
-            });
-        });
+        //         }),
+        //         success: function(resp) {
+        //             console.log(resp);
+        //             if (resp.status) {
+        //                 notie.alert({
+        //                     type: 'success',
+        //                     text: '<i class="fa fa-check"></i> Your ticket has been sent successfully',
+        //                     time: 5
+        //                 });
+        //                 $('#loading').addClass('d-none');
+        //                 $('#send_ticket').removeClass('d-none');
+        //                 support_subject_issue.value = "";
+        //             }
+        //         },
+        //         error: function(resp) {
+        //             console.log(resp);
+        //             notie.alert({
+        //                 type: 'error',
+        //                 text: resp,
+        //                 time: 5
+        //             });
+        //         }
+        //     });
+        // });
 
         // end saving support ticket
 
@@ -896,6 +923,12 @@
             $('.support_info').addClass('d-none');
             $('.disable_account').removeClass('d-none');
         }
+
+        var loadFile = function (event) {
+  var image = document.getElementById("output");
+  image.src = URL.createObjectURL(event.target.files[0]);
+};
+
     </script>
 
 @stop
@@ -1270,4 +1303,58 @@
     #loadSpan_disableOption {
         color: #fff;
     }
+
+    /* for the image  */
+
+    .profile-pic {
+  color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all .3s ease;
+}
+
+.profile-pic input {
+  display: none;
+}
+
+.profile-pic img {
+  position: absolute;
+  object-fit: cover;
+  width: 165px;
+  height: 165px;
+  box-shadow: 0 0 10px 0 rgba(255,255,255,.35);
+  border-radius: 100px;
+  z-index: 0;
+}
+
+.profile-pic .-label {
+  cursor: pointer;
+  height: 165px;
+  width: 165px;
+}
+
+.profile-pic:hover .-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,.8);
+  z-index: 10000;
+  color: rgb(250,250,250);
+  transition: background-color .2s ease-in-out;
+  border-radius: 100px;
+  margin-bottom: 0;
+}
+
+.profile-pic span {
+  display: inline-flex;
+  padding: .2em;
+  height: 2em;
+}
+
+
+
+    
 </style>
+
