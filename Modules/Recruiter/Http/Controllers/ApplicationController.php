@@ -2550,6 +2550,7 @@ class ApplicationController extends Controller
             'offerId' => $request->id,
             'amount' => '1', 
             'stripeId' =>$user->stripeAccountId,
+            'fullName' => $user->first_name . ' ' . $user->last_name,
         ];
 
         //return response()->json(['message'=>$data]);

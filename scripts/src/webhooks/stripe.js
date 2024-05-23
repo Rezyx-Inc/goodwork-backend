@@ -28,7 +28,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
   switch (event.type) {
     case 'invoice.paid':
       const invoicePaid = event.data.object;
-      report("INVOICE PAID _ Customer : " + invoicePaid.customer_name + " | Offer : " + invoicePaid.metadata.offerId)
+      report("INVOICE PAID _ Customer : " + invoicePaid.metadata.customer_name + " | Offer : " + invoicePaid.metadata.offerId)
       // Set the invoice to onboarding
       await queries.setOfferStatus(invoicePaid.metadata.offerId, "Onboarding")
       break;

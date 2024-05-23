@@ -207,16 +207,24 @@ router.post('/customer/invoice', async (req, res) => {
     try{
     	
     	// first set the offer on hold
-    	await queries.setOfferStatus(req.body.offerId, "Hold", "1", "0")
+    	try {
+			// first set the offer on hold
+			await queries.setOfferStatus(req.body.offerId, "Hold", "1", "0")
+		} catch (error) {
+			console.error("Error setting offer status: ", error);
+			throw error;
+		}
 
     	// Create invoice
 		const invoice = await stripe.invoices.create({
+			
 			customer: req.body.stripeId,
 			auto_advance: true,
 			currency: "usd",
 			collection_method:"charge_automatically",
 			metadata: {
-				offerId: req.body.offerId
+				offerId: req.body.offerId,
+				customer_name : req.body.fullName
 			}
 		});
 
