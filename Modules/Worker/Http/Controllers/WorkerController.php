@@ -12,6 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Builder;
 use App\Events\NewPrivateMessage;
+use Illuminate\Support\Facades\Http;
 
 
 use DB;
@@ -771,8 +772,8 @@ class WorkerController extends Controller
         }
     }
 
-    public function accept_offer(Request $request){
-
+    public function accept_offer(Request $request)
+    {
         try{
             $request->validate([
                 'offer_id'=>'required',
@@ -788,17 +789,40 @@ class WorkerController extends Controller
                 return response()->json(['success' => false, 'message' => 'Job not found']);
             }
     
-            $offer->update([
-                'status' => 'Onboarding',
-                'is_draft' => '0',
-                'is_counter' => '0'
-            ]);
-    
-            $job->update([
-                'active' => '0',
-                'is_open' => '0',
-                'is_closed' => '1'
-            ]);
+            
+                $update_array['is_counter'] = '0';
+                $update_array['is_draft'] = '0';
+                $update_array['status'] = 'Hold';
+                $offer = DB::table('offers')
+                    ->where(['id' => $request->offer_id])
+                    ->update($update_array);
+                $user_id = $job->created_by;   
+                $user = User::where('id',$user_id)->first();
+                $data = [
+                    'offerId' => $request->offer_id,
+                    'amount' => '1', 
+                    'stripeId' =>$user->stripeAccountId,
+                    'fullName' => $user->first_name . ' ' . $user->last_name,
+                ];
+
+                //return response()->json(['message'=>$data]);
+
+                $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
+                    
+                // return response()->json(['data'=>$data , 'url' => $url]);   
+                    
+                // Make the request
+                $responseInvoice = Http::post($url, $data);
+                // return response()->json(['message'=>$responseInvoice->json()]);
+                $responseData = [];
+                if ($offer) {
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => $responseInvoice->json()['message'],
+                    ];
+                }
+            
+
     
             return response()->json(['msg'=>'offer accepted successfully','success' => true]);
     

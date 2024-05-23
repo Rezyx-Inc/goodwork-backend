@@ -145,6 +145,7 @@
     }
 
     function accept_job_offer(obj){
+       
             ajaxindicatorstart();
             $.ajaxSetup({
                     headers: {
@@ -169,7 +170,6 @@
                             setTimeout(() => {
                                 location.reload();
                             }, 2000);
-                        
                     },
                     error: function (resp) {
                         console.log(resp);

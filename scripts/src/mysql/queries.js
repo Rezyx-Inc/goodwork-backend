@@ -27,13 +27,13 @@ module.exports.insertCustomerStripeId = async function (stripeId, email){
 
 module.exports.setOfferStatus = async function (offerId, status, is_payment_done, is_payment_required){
     let query = "UPDATE offers SET status=?"; 
-    if (is_payment_required !== null) query += ", is_payment_required=?";
-    if (is_payment_done !== null) query += ", is_payment_done=?";
+    if (is_payment_required != null) query += ", is_payment_required=?";
+    if (is_payment_done != null) query += ", is_payment_done=?";
     query += " WHERE id=?";		
 
     let queryParams = [status];
-    if (is_payment_required !== null) queryParams.push(is_payment_required);
-    if (is_payment_done !== null) queryParams.push(is_payment_done);
+    if (is_payment_required != null) queryParams.push(is_payment_required);
+    if (is_payment_done != null) queryParams.push(is_payment_done);
     queryParams.push(offerId);
 
     const [result, fields] = await pool.query(query, queryParams);

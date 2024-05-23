@@ -233,7 +233,7 @@ class ApplicationController extends Controller
         }
         if (isset($offerdetails)) {
 
-            if($offerdetails->is_payment_done  ){
+            if($offerdetails->is_payment_done  == 0){
                 $waitingForPayment = true;
             }
 
@@ -2546,24 +2546,24 @@ class ApplicationController extends Controller
                     ->where(['id' => $request->id])
                     ->update($update_array);
                     $user = Auth::guard('recruiter')->user();
-        $data = [
-            'offerId' => $request->id,
-            'amount' => '1', 
-            'stripeId' =>$user->stripeAccountId,
-            'fullName' => $user->first_name . ' ' . $user->last_name,
-        ];
+                $data = [
+                    'offerId' => $request->id,
+                    'amount' => '1', 
+                    'stripeId' =>$user->stripeAccountId,
+                    'fullName' => $user->first_name . ' ' . $user->last_name,
+                ];
 
-        //return response()->json(['message'=>$data]);
-    
-        // Define the URL<
-        $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
+                //return response()->json(['message'=>$data]);
 
-        // return response()->json(['data'=>$data , 'url' => $url]);   
+                // Define the URL
+                $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
 
-        // Make the request
-        $responseInvoice = Http::post($url, $data);
-        return response()->json(['message'=>$responseInvoice->json()]);
-        $responseData = [];
+                // return response()->json(['data'=>$data , 'url' => $url]);   
+
+                // Make the request
+                $responseInvoice = Http::post($url, $data);
+                // return response()->json(['message'=>$responseInvoice->json()]);
+                $responseData = [];
                 if ($job) {
                     $responseData = [
                         'status' => 'success',
