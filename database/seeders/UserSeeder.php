@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +11,7 @@ use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use App\Models\Nurse;
 use App\Models\Availability;
+use Faker\Generator;
 
 
 class UserSeeder extends Seeder
@@ -21,7 +24,7 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        $faker = Faker\Factory::create();
+        $faker = app(Generator::class);
         $fakerName = app('Faker\Generator');
         
         // Admin is the first User created in the system, and it has all permissions, its id is "GWU000001"

@@ -1,7 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Offer;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class OffersTableSeeder extends Seeder
 {

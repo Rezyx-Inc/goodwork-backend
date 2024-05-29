@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Enums\Role;
@@ -17,7 +19,7 @@ class NurseSeeder extends Seeder
      */
     public function run()
     {
-        $user = factory(User::class)->create([
+        $user = User::create([
 			'first_name' => 'Michael',
             'last_name' => 'Nicolas',
             'email' => 'info@nurseify.io',
@@ -28,7 +30,7 @@ class NurseSeeder extends Seeder
         ]);
         $user->assignRole('Nurse');
         
-        $nurse = factory(Nurse::class)->create([
+        $nurse = Nurse::create([
             'user_id' => $user->id,
             
         ]);

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Keyword;
 use App\Models\User;
@@ -26,7 +28,7 @@ class KeywordSeeder extends Seeder
         $keywords = $this->keywordData();
         foreach ($keywords as $key => $value) {
             foreach($value as $item){
-                factory(Keyword::class)->create([
+                Keyword::create([
                     'created_by' => $mainSuperUserId,
                     'filter' => $key,
                     'title' => $item,

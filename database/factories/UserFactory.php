@@ -2,8 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use App\Enums\Role;
 use Illuminate\Support\Facades\Hash;
@@ -18,28 +20,33 @@ use Illuminate\Support\Facades\Hash;
 | model instances for testing / seeding your application's database.
 |
 */
-
-$factory->define(User::class, function (Faker $faker) {
-
-
-
-    return [
-        'id' => Str::uuid(),
-        'role' => Role::getKey(Role::FULLADMIN),
-        // 'first_name' => $faker->firstName,
-        // 'last_name' => $faker->lastName,
-        'first_name' => $faker->fantasyName('first_name'),
-        'last_name' => $faker->fantasyName('last_name'),
-        'image' => null,
-        'email' => $faker->unique()->safeEmail,
-        'user_name' => $faker->userName,
-        'password' => Hash::make('password'), // password
-        'date_of_birth' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'mobile' => $faker->phoneNumber,
-        'email_notification' => true,
-        'sms_notification' => true,
-        'active' => true,
-        'email_verified_at' => now(),
-        'remember_token' => Str::random(10),
-    ];
-});
+class UserFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'id' => Str::uuid(),
+            'role' => Role::getKey(Role::FULLADMIN),
+            // 'first_name' => $faker->firstName,
+            // 'last_name' => $faker->lastName,
+            'first_name' => $this->faker->fantasyName('first_name'),
+            'last_name' => $this->faker->fantasyName('last_name'),
+            'image' => null,
+            'email' => $this->faker->unique()->safeEmail,
+            'user_name' => $this->faker->userName,
+            'password' => Hash::make('password'), // password
+            'date_of_birth' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+            'mobile' => $this->faker->phoneNumber,
+            'email_notification' => true,
+            'sms_notification' => true,
+            'active' => true,
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

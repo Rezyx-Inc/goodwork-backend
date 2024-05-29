@@ -2,6 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+namespace Database\Factories;
+
 use App\Models\Notavailability;
 use App\Models\Nurse;
 use Illuminate\Support\Str;

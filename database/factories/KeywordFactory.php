@@ -2,6 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+namespace Database\Factories;
+
 use App\Models\Keyword;
 use App\Models\User;
 use App\Enums\KeywordEnum;
