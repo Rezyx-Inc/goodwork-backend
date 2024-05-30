@@ -201,7 +201,7 @@
                                                 <input type="text" name="last_name"
                                                     placeholder="Please enter your last name"
                                                     value="{{ isset($user->last_name) ? $user->last_name : '' }}">
-                                                    >
+                                                    
                                             </div>
                                             <span class="help-block-last_name"></span>
                                             {{-- Phone Number --}}
@@ -210,7 +210,7 @@
                                                 <input id="contact_number" type="text" name="mobile"
                                                     placeholder="Please enter your phone number"
                                                     value="{{ isset($user->mobile) ? $user->mobile : '' }}">
-                                                    >
+                                                    
                                             </div>
                                             <span class="help-block-mobile"></span>
                                             {{-- Address Information --}}
@@ -219,7 +219,7 @@
                                                 <input type="text" name="address"
                                                     placeholder="Please enter your address"
                                                     value="{{ isset($worker->address) ? $worker->address : '' }}">
-                                                    >
+                                                    
                                             </div>
                                             <span class="help-block-address"></span>
                                             {{-- State Information --}}
@@ -251,7 +251,7 @@
                                                 <input type="number" name="zip_code"
                                                     placeholder="Please enter your Zip Code"
                                                     value="{{ isset($user->zip_code) ? $user->zip_code : '' }}">
-                                                    >
+                                                    
                                             </div>
                                             <span class="help-block-zip_code"></span>
                                             {{-- Skip && Save --}}
@@ -273,7 +273,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Profession</label>
                                                 <select name="profession" id="profession">
-                                                    <option value="">What Kind of Professional are you?</option>
+                                                    <option value="{{ !empty($worker->profession) ? $worker->profession : '' }}">{{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }} </option>
                                                     @foreach ($proffesions as $proffesion)
                                                         <option value="{{ $proffesion->full_name }}">
                                                             {{ $proffesion->full_name }}
@@ -286,7 +286,8 @@
                                             <div class="ss-form-group  col-11">
                                                 <label>Specialty</label>
                                                 <select name="specialty" id="specialty">
-                                                    <option value="">Select Specialty</option>
+                                                    <option value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">{{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }} </option>
+                                                    
                                                     @foreach ($specialities as $specialty)
                                                         <option value="{{ $specialty->full_name }}">
                                                             {{ $specialty->full_name }}
@@ -299,7 +300,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Terms</label>
                                                 <select name="terms" id="term">
-                                                    <option value="">Select a specefic term</option>
+                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">{{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }} </option>
+                                                    
                                                     @if (isset($allKeywords['Terms']))
                                                         @foreach ($allKeywords['Terms'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -314,7 +316,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Type</label>
                                                 <select name="type" id="type">
-                                                    <option value="">Select Type</option>
+                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}">{{ !empty($worker->type) ? $worker->type : 'Select Type' }} </option>
+                                                   
                                                     @if (isset($allKeywords['Type']))
                                                         @foreach ($allKeywords['Type'] as $value)
                                                             <option value="{{ $value->title }}">{{ $value->title }}
@@ -339,9 +342,11 @@
                                             {{-- Float requirements --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Float requirements</label>
+
                                                 <select name="float_requirement" class="float_requirement mb-3"
                                                     id="float_requirement" value="">
-                                                    <option value="">Select Float requirements</option>
+                                                    <option value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">{{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }} </option>
+                                                    
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select>
@@ -354,8 +359,8 @@
                                                 <select name="facility_shift_cancelation_policy"
                                                     class="facility_shift_cancelation_policy mb-3"
                                                     id="facility_shift_cancelation_policy" value="">
-                                                    <option value="">Select Facility Shift Cancellation Policy
-                                                    </option>
+                                                    <option value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }} </option>
+                                                    
                                                     @if (isset($allKeywords['AssignmentDuration']))
                                                         @foreach ($allKeywords['AssignmentDuration'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -371,7 +376,9 @@
                                                 <label>Contract Termination Policy</label>
                                                 <input type="text" id="contract_termination_policy"
                                                     name="contract_termination_policy"
-                                                    placeholder="Enter Contract Termination Policy">
+                                                    placeholder="Enter Contract Termination Policy"
+                                                    value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
+                                                    >
                                             </div>
                                             <span class="help-block-contract_termination_policy"></span>
                                             {{-- end Contract Termination Policy --}}
@@ -380,7 +387,9 @@
                                                 <label>Traveler Distance From Facility</label>
                                                 <input type="number" id="traveler_distance_from_facility"
                                                     name="distance_from_your_home"
-                                                    placeholder="Enter Traveler Distance From Facility">
+                                                    placeholder="Enter Traveler Distance From Facility"
+                                                    value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-traveler_distance_from_facility"></span>
                                             {{-- end Traveler Distance From Facility  --}}
@@ -389,7 +398,9 @@
                                                 <label>Clinical Setting</label>
                                                 <input type="text" id="clinical_setting"
                                                     name="clinical_setting_you_prefer"
-                                                    placeholder="Enter clinical setting">
+                                                    placeholder="Enter clinical setting"
+                                                    value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-clinical_setting_you_prefer"></span>
                                             {{-- End Clinical Setting --}}
@@ -397,7 +408,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Patient ratio</label>
                                                 <input type="number" id="Patient_ratio" name="worker_patient_ratio"
-                                                    placeholder="How many patients can you handle?">
+                                                    placeholder="How many patients can you handle?"
+                                                    value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_patient_ratio"></span>
                                             {{-- End Patient ratio --}}
@@ -405,7 +418,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>EMR</label>
                                                 <select name="worker_emr" class="emr mb-3" id="emr">
-                                                    <option value="">Select EMR</option>
+                                                    <option value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">{{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }} </option>
+                                                    
                                                     @if (isset($allKeywords['EMR']))
                                                         @foreach ($allKeywords['EMR'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -420,7 +434,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Unit</label>
                                                 <input id="Unit" type="text" name="worker_unit"
-                                                    placeholder="Enter Unit">
+                                                    placeholder="Enter Unit"
+                                                    value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_unit"></span>
                                             {{-- End Unit --}}
@@ -428,7 +444,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Scrub Color</label>
                                                 <input id="scrub_color" type="text" name="worker_scrub_color"
-                                                    placeholder="Enter Scrub Color">
+                                                    placeholder="Enter Scrub Color"
+                                                    value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_scrub_color"></span>
                                             {{-- End Scrub Color --}}
@@ -436,7 +454,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>RTO</label>
                                                 <input id="rto" type="text" name="rto"
-                                                    placeholder="Enter RTO">
+                                                    placeholder="Enter RTO"
+                                                    value=" {{ !empty($worker->rto) ? $worker->rto : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-rto"></span>
                                             {{-- End RTO --}}
@@ -444,7 +464,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Shift Time of Day</label>
                                                 <select name="worker_shift_time_of_day" id="shift-of-day">
-                                                    <option value="">Enter Shift Time of Day</option>
+                                                    <option value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}">{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }} </option>
                                                     @if (isset($allKeywords['PreferredShift']))
                                                         @foreach ($allKeywords['PreferredShift'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -459,7 +479,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Week</label>
                                                 <input id="hours_per_week" type="number" name="worker_hours_per_week"
-                                                    placeholder="Enter Hours/Week">
+                                                    placeholder="Enter Hours/Week"
+                                                    value="{{ !empty($worker->worker_hours_per_week) ? $worker->worker_hours_per_week : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_hours_per_week"></span>
                                             {{-- End Hours/Week --}}
@@ -467,7 +489,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Shift</label>
                                                 <input id="hours_shift" type="number" name="worker_hours_per_shift"
-                                                    placeholder="Enter Hours/Shift">
+                                                    placeholder="Enter Hours/Shift"
+                                                    value="{{ !empty($worker->worker_hours_per_shift) ? $worker->worker_hours_per_shift : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_hours_per_shift"></span>
                                             {{-- End Hours/Shift --}}
@@ -475,7 +499,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Weeks/Assignment</label>
                                                 <input id="preferred_assignment_duration" type="number"
-                                                    name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment">
+                                                    name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment"
+                                                    value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_weeks_assignment"></span>
                                             {{-- End Weeks/Assignment --}}
@@ -483,7 +509,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Shifts/Week</label>
                                                 <input id="weeks_shift" type="number" name="worker_shifts_week"
-                                                    placeholder="Enter Shifts/Week">
+                                                    placeholder="Enter Shifts/Week"
+                                                    value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_shifts_week"></span>
                                             {{-- End Shifts/Week --}}
@@ -515,7 +543,7 @@
                                             {{-- Upload Document --}}
                                             <div class="ss-form-group">
                                                 <label>Upload Document</label>
-                                                <input type="file" id="file" name="files" multiple
+                                                <input type="file" id="document_file" name="files" multiple
                                                     required><br><br>
                                                 <label class="mt-2" for="file">Choose a file</label>
                                             </div>
@@ -864,7 +892,7 @@
             // end loading cities according to the selected state
 
             // append each uploaded file to the table
-            $('input[type="file"]').change(function() {
+            $('#document_file').change(function() {
                 var file = this.files[0]; // get the selected file
                 var tbody = $('.table tbody');
                 // tbody.empty(); // remove existing rows
@@ -994,7 +1022,8 @@
         const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
         const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
         // Document Management
-        const file = document.querySelector('input[type="file"]');
+        //const file = document.querySelector('input[type="file"]');
+        const file = document.getElementById('document_file');
         // bonus transfer 
         const full_name_payment = document.querySelector('input[name="full_name_payment"]');
         const address_payment = document.querySelector('input[name="address_payment"]');
@@ -1182,6 +1211,8 @@
                     'Full name can only contain letters and spaces, and cannot be longer than 255 characters');
                 $('.help-block-full_name_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-full_name_payment').text('');
             }
 
 
@@ -1189,39 +1220,53 @@
                 $('.help-block-address_payment').text('Please enter your address');
                 $('.help-block-address_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-address_payment').text('');
             }
 
             const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (($('input[name="email_payment"]').val() === '') && (!emailRegex_payment.test(email_payment.value))) {
+            if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($('input[name="email_payment"]').val() ))) {
+                console.log(email_payment.value);
                 $('.help-block-email_payment').text('Please enter a valid email');
                 $('.help-block-email_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-email_payment').text('');
             }
 
             if ($('input[name="bank_name_payment"]').val() === '') {
                 $('.help-block-bank_name_payment').text('Please enter your bank name');
                 $('.help-block-bank_name_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-bank_name_payment').text('');
             }
 
             if ($('input[name="routing_number_payment"]').val() === '') {
                 $('.help-block-routing_number_payment').text('Please enter your routing number');
                 $('.help-block-routing_number_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-routing_number_payment').text('');
             }
 
             if ($('input[name="bank_account_payment_number"]').val() === '') {
                 $('.help-block-bank_account_payment_number').text('Please enter your bank account number');
                 $('.help-block-bank_account_payment_number').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-bank_account_payment_number').text('');
             }
+
             const regexPhone_payment = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
             if (($('input[name="phone_number_payment"]').val() === '') && (!regexPhone_payment.test(phone_number_payment
                     .value))) {
                 $('.help-block-phone_number_payment').text('Please enter a valid phone number');
                 $('.help-block-phone_number_payment').addClass('text-danger');
                 isValid = false;
-            }
+            }else{
+                $('.help-block-phone_number_payment').text('');
+            }   
 
             return isValid;
         }
@@ -1293,7 +1338,12 @@
                             time: 5
                         });
 
+                        setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+
                     }
+                  
                 },
                 error: function(resp) {
                     notie.alert({
@@ -1355,7 +1405,9 @@
                             text: '<i class="fa fa-check"></i> Professional Information saved successfully',
                             time: 5
                         });
-
+                        setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1403,7 +1455,9 @@
                             text: '<i class="fa fa-check"></i> Payment Information Successfully',
                             time: 5
                         });
-
+                        setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1504,6 +1558,7 @@
                         $('#disactivate_account').removeClass('d-none');
                         window.location.href = "/";
                     }
+                    
                 },
                 error: function(resp) {
                     console.log(resp);
@@ -1548,7 +1603,7 @@
                         $('#loading_disableOption').addClass('d-none');
                         $('#disactivate_account').removeClass('d-none');
                         console.log(resp);
-                        window.location.href = resp.account_link;
+                         window.location.href = resp.account_link;
                     }
                 },
                 error: function(resp) {
@@ -1662,7 +1717,7 @@
             let worker_id = '{!! $worker_id_json !!}';
             console.log(worker_id);
             var workerId = worker_id;
-            var filesInput = document.getElementById('file');
+            var filesInput = document.getElementById('document_file');
             var files = Array.from(filesInput.files);
 
             Promise.all(files.map(file => {

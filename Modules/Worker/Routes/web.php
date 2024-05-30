@@ -66,6 +66,10 @@ Route::prefix('worker')->group(function() {
         // reject offer 
         Route::post('reject-offer',['uses'=>'WorkerController@reject_offer', 'as'=>'reject-offer']);
 
+        // counter offer 
+
+        Route::post('post-counter-offer', ['uses' => 'WorkerDashboardController@store_counter_offer', 'as' => 'post-counter-offer']);
+
         // new post route for profile updating
         Route::post('update-worker-profile', ['uses' => 'WorkerDashboardController@update_worker_profile', 'as' => 'update-worker-profile']);
 

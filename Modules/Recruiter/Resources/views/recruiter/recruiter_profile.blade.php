@@ -650,7 +650,7 @@
                         });
                         $('#loading').addClass('d-none');
                         $('#send_ticket').removeClass('d-none');
-                        window.location.href = resp.portal_link;
+                        // window.location.href = resp.portal_link;
                     }
                 }
             });
@@ -768,7 +768,7 @@
         const password = document.querySelector('input[name="password"]');
         const new_mobile = document.querySelector('input[name="new_mobile"]');
         const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
-        const email = document.querySelector('input[name="email"]');
+        //const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
         // account setting validation here 
@@ -780,7 +780,7 @@
             $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
-            inputs = [user_name, password, new_mobile, email];
+            inputs = [password, new_mobile /*, email, user_name*/];
 
             // Add the value of the selected radio button to the inputs array, if a radio button is selected
             const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
@@ -799,21 +799,21 @@
             }
 
             // Email validation
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test(email.value)) {
-                $('.help-block-email').text('Please enter a valid email');
-                $('.help-block-email').addClass('text-danger');
-                isValid = false;
-            }
+            // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            // if (!emailRegex.test(email.value)) {
+            //     $('.help-block-email').text('Please enter a valid email');
+            //     $('.help-block-email').addClass('text-danger');
+            //     isValid = false;
+            // }
 
             // User name validation
-            const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
-            if (!userNameRegex.test(user_name.value)) {
-                $('.help-block-user_name').text(
-                    'User name can only contain letters and spaces, and cannot be longer than 255 characters');
-                $('.help-block-user_name').addClass('text-danger');
-                isValid = false;
-            }
+            // const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
+            // if (!userNameRegex.test(user_name.value)) {
+            //     $('.help-block-user_name').text(
+            //         'User name can only contain letters and spaces, and cannot be longer than 255 characters');
+            //     $('.help-block-user_name').addClass('text-danger');
+            //     isValid = false;
+            // }
 
             // New mobile number validation
             const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;

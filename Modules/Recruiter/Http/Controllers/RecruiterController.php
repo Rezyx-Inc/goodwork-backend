@@ -501,18 +501,18 @@ class RecruiterController extends Controller
             // $active = $activeRequest['active'];
             $validatedData = [];
 
-            if ($active == 'false') {
+            if ($active == '0') {
                
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
-                    'job_name' => 'string',
+                    'job_name' => 'nullable|string',
                     'job_city' => 'nullable|string',
                     'job_state' => 'nullable|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'nullable|string',
                     'preferred_work_location' => 'nullable|string',
                     'description' => 'nullable|string',
-                   
+                    'terms' => 'nullable|string',
                     'preferred_shift_duration' => 'nullable|string',
                     'preferred_work_area' => 'nullable|string',
                     'preferred_days_of_the_week' => 'nullable|string',
@@ -532,7 +532,7 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-                    
+                   
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -540,20 +540,19 @@ class RecruiterController extends Controller
                     'extension_bonus' => 'nullable|string',
                     'other_bonus' => 'nullable|string',
                     'actual_hourly_rate' => 'nullable|string',
+                    
                     'overtime' => 'nullable|string',
                     'holiday' => 'nullable|string',
                     'orientation_rate' => 'nullable|string',
                     'on_call' => 'nullable|string',
-                    'weekly_non_taxable_amount' => 'nullable|integer',
+                    'weekly_non_taxable_amount' => 'nullable|string',
                     'proffesion' => 'nullable|string',
                     
                     'Emr' => 'nullable|string',
-                    'terms' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
                     'block_scheduling'  => 'nullable|string',
-                    'contract_termination_policy' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string', 
                     'call_back' => 'nullable|string',
-
                 ]);
                 $job = new Job();
                 try {
@@ -704,7 +703,7 @@ class RecruiterController extends Controller
 
             
             $job->save();
-            } elseif ($active == 'true') {
+            } elseif ($active == '1') {
                
                 $validatedData = $request->validate([
                     'job_type' => 'required|string',
@@ -939,4 +938,50 @@ class RecruiterController extends Controller
             // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
         }
     }
+
+    
+        function get_job_to_edit(Request $request){
+            try {
+                $validated = $request->validate([
+                    'id' => 'required',
+                ]);
+            
+                $job_id = $request->id;
+                $job = Job::find($job_id);
+            
+                if ($job === null) {
+                    return response()->json(['error' => "Job not found"], 404);
+                }
+            
+                return response()->json($job);
+            } catch (\Exception $e) {
+                return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+            }
+        }
+
+        function edit_job(Request $request){
+            try {
+                $validated = $request->validate([
+                    'job_id' => 'required',
+                ]);
+            
+                $job_id = $request->job_id;
+                $job = Job::find($job_id);
+            
+                if ($job === null) {
+                    return response()->json(['error' => "Job not found"], 404);
+                }
+            
+                $job->update($request->all());
+
+                return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
+
+                return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
+            
+                //return response()->json($job);
+            } catch (\Exception $e) {
+                return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+            }
+        }
+
 }

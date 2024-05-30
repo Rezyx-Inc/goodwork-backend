@@ -26,11 +26,11 @@
     <div class="ss-form-group">
       <label>Type</label>
       <select name="type" id="type">
-          <option value="{{$model->job_type}}">{{$model->job_type}}</option>
+          <option value="{{$model->type}}">{{$model->type}}</option>
   @if(isset($keywords['Type'])) 
   @foreach ($keywords['Type'] as $value) 
       <option value="{{$value->title}}
-        @if ($model->job_type == $value->id)
+        @if ($model->type == $value->title)
           'selected' @else '' @endif
           "> {{$value->title}}  
         </option>
@@ -61,9 +61,9 @@
            <div class="ss-form-group">
             <label>Profession</label>
             <select name="profession"  onchange="get_speciality(this)">
-              <option value="{{$model->proffesion}}">{{$model->proffesion}}</option>
+              <option value="{{$model->profession}}">{{$model->profession}}</option>
                 @foreach($keywords['Profession'] as $k=>$v)
-                <option value="{{$v->title}}" {{ ($v->title == $model->job_type) ? 'selected' : ''}} data-id="{{$v->id}}">{{$v->title}}</option>
+                <option value="{{$v->title}}" {{ ($v->title == $model->type) ? 'selected' : ''}} data-id="{{$v->id}}">{{$v->title}}</option>
                 @endforeach
             </select>
           </div>
@@ -73,8 +73,8 @@
             <label>Specialty</label>
             
                     <div class="col-md-12">
-                        <select name="preferred_specialty" class="m-0" id="preferred_specialty">
-                        <option value="{{$model->preferred_specialty}}">{{$model->preferred_specialty}}</option>
+                        <select name="specialty" class="m-0" id="preferred_specialty">
+                        <option value="{{$model->specialty}}">{{$model->specialty}}</option>
                           @if (isset($keywords['Speciality'])) 
                               @foreach ($keywords['Speciality'] as $value) 
                                   <option value="{{$value->id}}"> {{ $value->title }}</option>
@@ -244,11 +244,7 @@
 
           <div class="ss-form-group">
             <label>Contract Termination Policy</label>
-            <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="@if (isset($model->contract_termination_policy)){{$model->contract_termination_policy}} 
-            @else 
-              '2 weeks of guaranteed pay unless canceled for cause'
-            @endif
-              ">
+            <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="{{$model->contract_termination_policy}}">
         </div>
         <span class="help-block-contract_termination_policy"></span>
 
@@ -257,10 +253,10 @@
             <input type="text" name="traveler_distance_from_facility" value="{{$model->traveler_distance_from_facility}}" placeholder="Enter Traveler Distance From Facility">
           </div>
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>Facility</label>
             <input type="text" name="facility_id" value="{{$model->facility}}" placeholder="Enter Facility">
-          </div>
+          </div> --}}
 
           <div class="ss-form-group">
             <label>Clinical Setting</label>
@@ -311,7 +307,7 @@
             <input type="text" name="rto" value="{{$model->rto}}" placeholder="Enter RTO">
           </div>
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>Shift Time of Day</label>
             <select name="preferred_shift" id="shift-of-day">
             <option value="{{$model->preferred_shift}}">{{$model->preferred_shift}}</option>
@@ -328,7 +324,7 @@
     @endif
             </select>
         </div>
-        <span class="help-block-shift-of-day"></span>
+        <span class="help-block-shift-of-day"></span> --}}
 
           <div class="ss-form-group">
             <label>Hours/Week</label>
@@ -437,10 +433,10 @@
             <input type="text" name="actual_hourly_rate" value="{{$model->actual_hourly_rate}}" placeholder="Enter Actual Rate">
           </div>
 
-          <div class="ss-form-group">
+          {{-- <div class="ss-form-group">
             <label>Feels Like $/hrs</label>
             <input type="number" name="feels_like_per_hour" value="{{$model->feels_like_per_hour}}" placeholder="---">
-          </div>
+          </div> --}}
 
           <div class="ss-form-group">
             <label>Overtime</label>
@@ -521,6 +517,7 @@
            <button class="counter-save-for-button">Save for Later</button>
          </div>
          <input type="hidden" name="jobid" value="{{$model->job_id}}">
+         <input type="hidden" name="offer_id" value="{{$model->id}}">
          <input type="hidden" name="user_id" value="{{$model->worker_user_id}}">
 </form>
 </div>

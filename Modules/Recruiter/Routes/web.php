@@ -125,7 +125,7 @@ Route::prefix('recruiter')->group(function () {
 
         Route::get('recruiter-opportunities-manager', ['uses' => 'OpportunitiesController@index', 'as' => 'recruiter-opportunities-manager']);
         Route::get('recruiter-create-opportunity', ['uses' => 'OpportunitiesController@create', 'as' => 'recruiter-create-opportunity']);
-        Route::post('recruiter-create-opportunity/{check_type}', ['uses' => 'OpportunitiesController@store', 'as' => 'recruiter-create-opportunity-store']);
+        Route::post('recruiter-create-opportunity/{check_type}', ['uses' => 'OpportunitiesController@hide_job', 'as' => 'recruiter-create-opportunity-store']);
         Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'recruiter-get-job-listing']);
 
         Route::get('recruiter-logout', ['uses' => 'RecruiterAuthController@logout', 'as' => 'recruiter-logout']);
@@ -178,8 +178,10 @@ Route::prefix('recruiter')->group(function () {
 
         Route::post('send-amount-transfer',['uses' => 'RecruiterDashboardController@send_amount', 'as' => 'send_amount']);
 
-        
+        //edit job 
+        Route::post('get-job-to-edit', ['uses' => 'RecruiterController@get_job_to_edit', 'as' => 'get_job_to_edit']);
 
+        Route::post('edit-job', ['uses' => 'RecruiterController@edit_job', 'as' => 'edit_job']);
 
     });
 });

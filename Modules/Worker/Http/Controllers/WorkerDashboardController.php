@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, BillingRequest};
 // ************ models ************
 /** Models */
-use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State};
+use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State,OffersLogs};
 
 define('default_max_step', 5);
 define('min_increment', 1);
@@ -44,13 +44,33 @@ class WorkerDashboardController extends Controller
 {
     use HelperTrait;
     /** dashboard page */
+    
     public function dashboard()
     {
         $data = [];
         $data['user'] = $user = auth()->guard('frontend')->user();
-
-        return view('worker::dashboard.dashboard', $data);
+    
+        $user_id = Auth::guard('frontend')->user()->id;
+        $id = Nurse::where('user_id', $user_id)->first()->id;
+    
+        $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
+        $statusCounts = array_fill_keys($statusList, 0);
+    
+        $statusCountsQuery = Offer::whereIn('status', $statusList)
+            ->select(\DB::raw('status, count(*) as count'))
+            ->where('worker_user_id', $id)
+            ->groupBy('status')
+            ->get();
+    
+        foreach ($statusCountsQuery as $statusCount) {
+            $statusCounts[$statusCount->status] = $statusCount->count;
+        }
+    
+        $statusCounts = array_values($statusCounts);
+    
+        return view('worker::dashboard.dashboard',compact('statusCounts','data'));
     }
+    
     /** verified users page */
     public function setting()
     {
@@ -122,22 +142,22 @@ class WorkerDashboardController extends Controller
                     'profession' => 'required|string',
                     'terms' => 'required|string',
                     'type' => 'required|string',
-                    'block_scheduling' => 'required|boolean',
-                    'float_requirement' => 'required|boolean',
+                    'block_scheduling' => 'required|string',
+                    'float_requirement' => 'required|string',
                     'facility_shift_cancelation_policy' => 'required|string',
                     'contract_termination_policy' => 'required|string',
-                    'distance_from_your_home' => 'required|string',
-                    'clinical_setting_you_prefer' => 'required|string',
-                    'worker_patient_ratio' => 'required|string',
-                    'worker_emr' => 'required|string',
-                    'worker_unit' => 'required|string',
-                    'worker_scrub_color' => 'required|string',
+                    'traveler_distance_from_facility' => 'required|string',
+                    'clinical_setting' => 'required|string',
+                    'Patient_ratio' => 'required|string',
+                    'emr' => 'required|string',
+                    'Unit' => 'required|string',
+                    'scrub_color' => 'required|string',
                     'rto' => 'required|string',
-                    'worker_shift_time_of_day' => 'required|string',
-                    'worker_hours_per_week' => 'required|integer',
-                    'worker_hours_per_shift' => 'required|integer',
-                    'worker_weeks_assignment' => 'required|integer',
-                    'worker_shifts_week' => 'required|integer',
+                    'shift_of_day' => 'required|string',
+                    'hours_per_week' => 'required|string',
+                    'hours_shift' => 'required|string',
+                    'preferred_assignment_duration' => 'required|string',
+                    'weeks_shift' => 'required|string',
                 ]);
 
                 $nurse_data = [];
@@ -152,18 +172,18 @@ class WorkerDashboardController extends Controller
                 isset($request->float_requirement) ? ($nurse_data['float_requirement'] = $request->float_requirement) : '';
                 isset($request->facility_shift_cancelation_policy) ? ($nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy) : '';
                 isset($request->contract_termination_policy) ? ($nurse_data['contract_termination_policy'] = $request->contract_termination_policy) : '';
-                isset($request->distance_from_your_home) ? ($nurse_data['distance_from_your_home'] = $request->distance_from_your_home) : '';
-                isset($request->clinical_setting_you_prefer) ? ($nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting_you_prefer) : '';
-                isset($request->worker_patient_ratio) ? ($nurse_data['worker_patient_ratio'] = $request->worker_patient_ratio) : '';
-                isset($request->worker_emr) ? ($nurse_data['worker_emr'] = $request->worker_emr) : '';
-                isset($request->worker_unit) ? ($nurse_data['worker_unit'] = $request->worker_unit) : '';
-                isset($request->worker_scrub_color) ? ($nurse_data['worker_scrub_color'] = $request->worker_scrub_color) : '';
+                isset($request->traveler_distance_from_facility) ? ($nurse_data['distance_from_your_home'] = $request->traveler_distance_from_facility) : '';
+                isset($request->clinical_setting) ? ($nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting) : '';
+                isset($request->Patient_ratio) ? ($nurse_data['worker_patient_ratio'] = $request->Patient_ratio) : '';
+                isset($request->emr) ? ($nurse_data['worker_emr'] = $request->emr) : '';
+                isset($request->Unit) ? ($nurse_data['worker_unit'] = $request->Unit) : '';
+                isset($request->scrub_color) ? ($nurse_data['worker_scrub_color'] = $request->scrub_color) : '';
                 isset($request->rto) ? ($nurse_data['rto'] = $request->rto) : '';
-                isset($request->worker_shift_time_of_day) ? ($nurse_data['worker_shift_time_of_day'] = $request->worker_shift_time_of_day) : '';
-                isset($request->worker_hours_per_week) ? ($nurse_data['worker_hours_per_week'] = $request->worker_hours_per_week) : '';
-                isset($request->worker_hours_per_shift) ? ($nurse_data['worker_hours_per_shift'] = $request->worker_hours_per_shift) : '';
-                isset($request->worker_weeks_assignment) ? ($nurse_data['worker_weeks_assignment'] = $request->worker_weeks_assignment) : '';
-                isset($request->worker_shifts_week) ? ($nurse_data['worker_shifts_week'] = $request->worker_shifts_week) : '';
+                isset($request->shift_of_day) ? ($nurse_data['worker_shift_time_of_day'] = $request->shift_of_day) : '';
+                isset($request->hours_per_week) ? ($nurse_data['worker_hours_per_week'] = $request->hours_per_week) : '';
+                isset($request->hours_shift) ? ($nurse_data['worker_hours_per_shift'] = $request->hours_shift) : '';
+                isset($request->preferred_assignment_duration) ? ($nurse_data['worker_weeks_assignment'] = $request->preferred_assignment_duration) : '';
+                isset($request->weeks_shift) ? ($nurse_data['worker_shifts_week'] = $request->weeks_shift) : '';
 
                 $nurse->update($nurse_data);
             }
@@ -206,8 +226,8 @@ class WorkerDashboardController extends Controller
 
             return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
         } catch (\Exception $e) {
-            //return response()->json(['msg'=>$e->getMessage(), 'status'=>false]);
-            return response()->json(['msg' => $request->all(), 'status' => false]);
+            return response()->json(['msg'=>$e->getMessage(), 'status'=>false]);
+            //return response()->json(['msg' => $request->all(), 'status' => false]);
             // return response()->json(['msg'=>'"Something was wrong please try later !"', 'status'=>false]);
         }
     }
@@ -282,23 +302,33 @@ class WorkerDashboardController extends Controller
         }
         $data['states'] = State::select('id', 'name')->get();
         $data['allKeywords'] = $allKeywords;
-        //
+        
         $progress = 0;
-
+       
         if (isset($nurse['specialty']) && isset($nurse['profession']) && isset($nurse['terms']) && isset($nurse['type']) && isset($nurse['block_scheduling']) && isset($nurse['float_requirement']) && isset($nurse['facility_shift_cancelation_policy']) && isset($nurse['contract_termination_policy']) && isset($nurse['distance_from_your_home']) && isset($nurse['clinical_setting_you_prefer']) && isset($nurse['worker_patient_ratio']) && isset($nurse['worker_emr']) && isset($nurse['worker_unit']) && isset($nurse['worker_scrub_color']) && isset($nurse['rto']) && isset($nurse['worker_shift_time_of_day']) && isset($nurse['worker_hours_per_week']) && isset($nurse['worker_hours_per_shift']) && isset($nurse['worker_weeks_assignment']) && isset($nurse['worker_shifts_week'])) {
             $progress += 1;
         }
 
-        if (isset($user->first_name) && isset($user->last_name) && isset($user->mobile) && isset($user->zip_code)) {
+        if (isset($user['first_name']) && isset($user['last_name']) && isset($user['mobile']) && isset($user['zip_code'])) {
             $progress += 1;
         }
+
+        $url = "http://localhost:" . config('app.file_api_port') . "/documents/list-docs";
+        $worker_id = ['workerId' => $nurse['id']];
+        $response = Http::get($url,$worker_id);
+
+        if ($response->json() !== null) {
+            $progress += 1;
+           
+        }
+        
         $nurse_data['account_tier'] = $progress;
         $nurse->update($nurse_data);
         $nurse = $nurse->fresh();
         $data['worker'] = $nurse;
 
         $data['progress_percentage'] = $progress * 33 + 1;
-
+        
         return view('worker::dashboard.worker_profile', $data);
     }
 
@@ -577,7 +607,7 @@ class WorkerDashboardController extends Controller
                 'full_name_payment' => 'required|max:255',
                 'address_payment' => 'required',
                 'email_payment' => 'required|email:rfc,dns',
-                'bank_name_payment' => 'required|max:255',
+                'bank_name_payment' => 'required',
                 'routing_number_payment' => 'required',
                 'bank_account_payment_number' => 'required',
                 'phone_number_payment' => 'required|regex:/^\+1 \(\d{3}\) \d{3}-\d{4}$/',
@@ -689,7 +719,8 @@ public function add_stripe_account(Request $request)
             'stripeId' => $user_data['stripeAccountId'],
             'userId' => $user_id
         ];
-        //return response()->json(['status'=>true,'message'=>$data_account_url]);
+        
+
         $get_account_link_response = Http::get($get_account_url, $data_account_url);
         
         
@@ -755,6 +786,120 @@ public function login_to_stripe_account(Request $request){
     
 
 
+}
+
+
+public function store_counter_offer(Request $request)
+{
+    
+    $user = auth()->guard('frontend')->user();
+    $nurse = Nurse::where('user_id', $user->id)->first();
+    $job_data = Job::where('id', $request->jobid)->first();
+    $offer = Offer::where('id', $request->offer_id)->first();
+   // return response()->json(['success' => false, 'message' => $job_data]);
+    $update_array['job_name'] = $job_data->job_name != $request->job_name ? $request->job_name : $job_data->job_name;
+    $update_array['type'] = $job_data->type != $request->type ? $request->type : $job_data->type;
+    $update_array['terms'] = $job_data->terms != $request->terms ? $request->terms : $job_data->terms;
+    $update_array['profession'] = $job_data->profession != $request->profession ? $request->profession : $job_data->profession;
+    $update_array['block_scheduling'] = $job_data->block_scheduling != $request->block_scheduling ? $request->block_scheduling : $job_data->block_scheduling;
+    $update_array['float_requirement'] = $job_data->float_requirement != $request->float_requirement ? $request->float_requirement : $job_data->float_requirement;
+    $update_array['facility_shift_cancelation_policy'] = $job_data->facility_shift_cancelation_policy != $request->facility_shift_cancelation_policy ? $request->facility_shift_cancelation_policy : $job_data->facility_shift_cancelation_policy;
+    $update_array['contract_termination_policy'] = $job_data->contract_termination_policy != $request->contract_termination_policy ? $request->contract_termination_policy : $job_data->contract_termination_policy;
+    $update_array['traveler_distance_from_facility'] = $job_data->traveler_distance_from_facility != $request->traveler_distance_from_facility ? $request->traveler_distance_from_facility : $job_data->traveler_distance_from_facility;
+    //$update_array['job_id'] = $request->jobid;
+    //$update_array['recruiter_id'] = $job_data->recruiter_id != $request->recruiter_id ? $request->recruiter_id : $job_data->recruiter_id;
+
+    //$update_array['worker_user_id'] = $nurse->id;
+    $update_array['clinical_setting'] = $job_data->clinical_setting != $request->clinical_setting ? $request->clinical_setting : $job_data->clinical_setting;
+    $update_array['Patient_ratio'] = $job_data->Patient_ratio != $request->Patient_ratio ? $request->Patient_ratio : $job_data->Patient_ratio;
+    $update_array['emr'] = $job_data->emr != $request->emr ? $request->emr : $job_data->emr;
+    $update_array['Unit'] = $job_data->Unit != $request->Unit ? $request->Unit : $job_data->Unit;
+    $update_array['scrub_color'] = $job_data->scrub_color != $request->scrub_color ? $request->scrub_color : $job_data->scrub_color;
+    $update_array['start_date'] = $job_data->start_date != $request->start_date ? $request->start_date : $job_data->start_date;
+    $update_array['as_soon_as'] = $job_data->as_soon_as != $request->as_soon_as ? $request->as_soon_as : $job_data->as_soon_as;
+    $update_array['rto'] = $job_data->rto != $request->rto ? $request->rto : $job_data->rto;
+    $update_array['hours_per_week'] = $job_data->hours_per_week != $request->hours_per_week ? $request->hours_per_week : $job_data->hours_per_week;
+    $update_array['guaranteed_hours'] = $job_data->guaranteed_hours != $request->guaranteed_hours ? $request->guaranteed_hours : $job_data->guaranteed_hours;
+    $update_array['hours_shift'] = $job_data->hours_shift != $request->hours_shift ? $request->hours_shift : $job_data->hours_shift;
+    $update_array['weeks_shift'] = $job_data->weeks_shift != $request->weeks_shift ? $request->weeks_shift : $job_data->weeks_shift;
+    $update_array['preferred_assignment_duration'] = $job_data->preferred_assignment_duration != $request->preferred_assignment_duration ? $request->preferred_assignment_duration : $job_data->preferred_assignment_duration;
+    $update_array['referral_bonus'] = $job_data->referral_bonus != $request->referral_bonus ? $request->referral_bonus : $job_data->referral_bonus;
+    $update_array['sign_on_bonus'] = $job_data->sign_on_bonus != $request->sign_on_bonus ? $request->sign_on_bonus : $job_data->sign_on_bonus;
+    $update_array['completion_bonus'] = $job_data->completion_bonus != $request->completion_bonus ? $request->completion_bonus : $job_data->completion_bonus;
+    $update_array['extension_bonus'] = $job_data->extension_bonus != $request->extension_bonus ? $request->extension_bonus : $job_data->extension_bonus;
+    $update_array['other_bonus'] = $job_data->other_bonus != $request->other_bonus ? $request->other_bonus : $job_data->other_bonus;
+    $update_array['four_zero_one_k'] = $job_data->four_zero_one_k != $request->four_zero_one_k ? $request->four_zero_one_k : $job_data->four_zero_one_k;
+    $update_array['health_insaurance'] = $job_data->health_insaurance != $request->health_insaurance ? $request->health_insaurance : $job_data->health_insaurance;
+    $update_array['dental'] = $job_data->dental != $request->dental ? $request->dental : $job_data->dental;
+    $update_array['vision'] = $job_data->vision != $request->vision ? $request->vision : $job_data->vision;
+    $update_array['actual_hourly_rate'] = $job_data->actual_hourly_rate != $request->actual_hourly_rate ? $request->actual_hourly_rate : $job_data->actual_hourly_rate;
+    $update_array['overtime'] = $job_data->overtime != $request->overtime ? $request->overtime : $job_data->overtime;
+    $update_array['holiday'] = $job_data->holiday != $request->holiday ? $request->holiday : $job_data->holiday;
+    $update_array['on_call'] = $job_data->on_call != $request->on_call ? $request->on_call : $job_data->on_call;
+    $update_array['orientation_rate'] = $job_data->orientation_rate != $request->orientation_rate ? $request->orientation_rate : $job_data->orientation_rate;
+    $update_array['weekly_non_taxable_amount'] = $job_data->weekly_non_taxable_amount != $request->weekly_non_taxable_amount ? $request->weekly_non_taxable_amount : $job_data->weekly_non_taxable_amount;
+    $update_array['description'] = $job_data->description != $request->description ? $request->description : $job_data->description;
+
+
+    
+    
+    $update_array['weekly_pay'] = $job_data->weekly_pay;
+    $update_array['hours_per_week'] = $update_array['weeks_shift'] * $update_array['hours_shift'];
+    $update_array['weekly_taxable_amount'] = $update_array['hours_per_week'] * $update_array['actual_hourly_rate'];
+    $update_array['employer_weekly_amount'] = $update_array['weekly_taxable_amount'] + $update_array['weekly_non_taxable_amount'];
+    $update_array['total_employer_amount']  =  ($update_array['preferred_assignment_duration'] * $update_array['employer_weekly_amount']) + ($update_array['sign_on_bonus'] + $update_array['completion_bonus']) ;
+    $update_array['goodwork_weekly_amount']  = ($update_array['employer_weekly_amount']) * 0.05;
+    $update_array['total_goodwork_amount']  = $update_array['goodwork_weekly_amount'] * $update_array['preferred_assignment_duration'];
+    $update_array['total_contract_amount'] = $update_array['total_goodwork_amount']  + $update_array['total_employer_amount'] ;
+
+
+    $update_array['is_draft'] = !empty($request->is_draft) ? $request->is_draft : '0';
+    $update_array['is_counter'] = '1';
+    //$update_array['recruiter_id'] = $job_data->recruiter_id;
+    /* create job */
+    $update_array['created_by'] = $job_data->created_by;
+    $update_array['status'] = 'Offered';
+    $offerexist = DB::table('offers')
+        ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
+        ->first();
+
+      // return response()->json(['offer'=>$offerexist]);
+      
+      if ($offerexist) {
+          $job = DB::table('offers')
+              ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
+              ->first();
+      
+          if ($job) {
+              DB::table('offers')
+                  ->where('id', $job->id)
+                  ->update($update_array);
+      
+             // return response()->json(['offer'=>$job]);
+      
+              $offers_log = OffersLogs::create([
+                  'original_offer_id' => $job->id,
+                  'status' => 'Counter',
+                  'employer_recruiter_id' => $job->created_by,
+                  'nurse_id' => $nurse->id,
+                  'details' => 'more infos',
+              ]);    
+          }
+      }
+      else {
+        $job = Offer::create($update_array);
+        $offers_log = OffersLogs::create([
+            'original_offer_id' => $job->id,
+            'status' => 'Counter',
+            'employer_recruiter_id' => $job->created_by,
+            'nurse_id' => $nurse->id,
+            'details' => 'more infos',
+            'counter_offer_by' => 'nurse'
+
+
+        ]); 
+    }
+    return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
 }
 
 

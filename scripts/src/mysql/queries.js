@@ -41,3 +41,25 @@ module.exports.setOfferStatus = async function (offerId, status, is_payment_done
     return result;
 }
 
+
+//  queeries for worker payment 
+
+
+module.exports.getWorkerDetails = async function (workerId){
+
+	const [result, fields] = await pool.query("SELECT stripeAccountId, account_tier FROM users WHERE id=?;", [workerId])
+	return result
+}
+
+module.exports.getOfferDetails = async function (offerId){
+
+	const [result, fields] = await pool.query("SELECT worker_user_id, total_employer_amount, worker_payment_status FROM offers WHERE id=?;", [offerId])
+	return result
+}
+
+module.exports.setWorkerPaymentStatus = async function (offerId) {
+    const [result, fields] = await pool.query("UPDATE offers SET worker_payment_status = 'Done' WHERE id = ?;", [offerId]);
+    return result;
+}
+
+

@@ -139,11 +139,84 @@
             </div>
         </div>
 
+
+        {{--  add stripe account modal --}}
+
+        <div class="modal fade ss-jb-dtl-pops-mn-dv" id="stripe_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="ss-pop-cls-vbtn">
+                        <button type="button" class="btn-close" data-target="#stripe_modal" onclick="close_modal(this)"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center" ><h3 class="col-6">Payment Method</h3></div>
+                    <div class="modal-body" style="padding:0px !important;">
+
+                        <div
+                        class="ss-prsn-form-btn-sec row col-12 d-flex justify-content-center align-items-center">
+                        
+                        <button type="text" class="ss-prsnl-save-btn" id="AddStripe">
+                            Add Stripe
+                        </button>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </main>
     <script>
+
+const AddStripe = document.getElementById("AddStripe");
+
+AddStripe.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            $('#loading').removeClass('d-none');
+            $('#send_ticket').addClass('d-none');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/recruiter/send-amount-transfer',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    access: true,
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Redirecting ...',
+                            time: 5
+                        });
+                        $('#loading').addClass('d-none');
+                        $('#send_ticket').removeClass('d-none');
+                        window.location.href = resp.portal_link;
+                    } else {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Client Exists',
+                            time: 5
+                        });
+                        $('#loading').addClass('d-none');
+                        $('#send_ticket').removeClass('d-none');
+                        close_stripe_modal();
+                        //window.location.href = resp.portal_link;
+                    }
+                }
+            });
+        });
+
         function validateFirst() {
             var access = true;
-
             var fields = [
                 'job_name',
                 'type',
@@ -442,9 +515,12 @@
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
+                        
+
+                       
                         notie.alert({
                             type: 'success',
-                            text: 'Updated Successfully',
+                            text: result.message,
                             time: 5
                         });
 
@@ -463,9 +539,16 @@
                             console.log(result.type);
                             applicationType(result.type);
                         }, 3000);
+                    
                     },
-                    error: function(error) {
-                        // Handle errors
+                    error: function(result) {
+                        notie.alert({
+                            type: 'error',
+                            text: result.responseJSON.message,
+                            time: 5
+                        });
+
+                        open_stripe_modal();
                     }
                 });
             } else {
@@ -575,9 +658,9 @@
                             text: '<i class="fa fa-check"></i> ' + result.message,
                             time: 5
                         });
-                        setTimeout(() => {
-                            location.reload();
-                        }, 3000);
+                        // setTimeout(() => {
+                        //     location.reload();
+                        // }, 3000);
                     },
                     error: function(error) {
                         // Handle errors
@@ -1078,8 +1161,25 @@
             $(modal).modal('show');
         }
 
+        function open_stripe_modal() {
+            let name, title, modal;
+
+            name = 'stripe';
+            title = 'add payment method';
+            modal = '#stripe_modal';
+            
+           
+
+            $(modal).modal('show');
+        }
+
         function close_modal(obj) {
             let target = $(obj).data('target');
+            $(target).modal('hide');
+        }
+
+        function close_stripe_modal() {
+            let target = '#stripe_modal';
             $(target).modal('hide');
         }
     </script>

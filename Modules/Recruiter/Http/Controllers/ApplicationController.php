@@ -2369,6 +2369,14 @@ class ApplicationController extends Controller
 
         if (isset($request->jobid)) {
             $jobid = $request->jobid;
+
+            // add a recruiter payment setting here to check if the recruiter has a payment method set up
+            if ($formtype == 'Offered' || $formtype == 'Working' || $formtype == 'Onboarding' || $formtype == 'Done') {
+                if (!$this->checkPaymentMethod($recruiter_id)) {
+                    return response()->json(['status' => false ,'message' => 'Please add a payment method to offer a job'],400);
+                }
+            }
+
             $job = Offer::where(['job_id' => $jobid, 'id' => $id,'created_by' => $recruiter_id])->update(['status' => $formtype]);
             if ($job) {
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
@@ -2394,6 +2402,35 @@ class ApplicationController extends Controller
             return response()->json(['message' => 'Something went wrong! Please check']);
         }
     }
+
+
+    public function check_recruiter_payment(Request $request){
+
+    $recruiter_id = Auth::guard('recruiter')->user()->id;
+
+    if (!$this->checkPaymentMethod($recruiter_id)) {
+        return response()->json(['status' => false , 'message' => 'Please add a payment method']);
+    }
+
+        return response()->json(['status' => true , 'message' => 'Please add a payment method']);
+    }
+
+    public function checkPaymentMethod($recruiter_id) {
+        $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/customer-payment-method';
+        $stripe_id = User::where('id', $recruiter_id)->first()->stripeAccountId;
+        $data = ['customerId' => $stripe_id];
+        $response = Http::get($url, $data);
+        
+        if ($stripe_id == null ||  $response->json()['status'] == false) {
+            return false;
+        }
+        return true;
+    }
+    
+
+
+
+
     public function sendJobOffer(Request $request)
     {
        

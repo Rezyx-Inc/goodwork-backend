@@ -25,33 +25,34 @@ class RecruiterDashboardController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
-    {
-        $id = Auth::guard('recruiter')->user()->id;
-        $alljobs = Job::where('recruiter_id', $id)->get();
-        $statusCounts = [];
-        $offerLists = [];
-        foreach ($alljobs as $key => $value) {
-            if (isset($value->id)) {
-                $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
-                foreach ($statusList as $status) {
-                    $statusCounts[$status] = 0;
-                }
-                $statusCountsQuery = Offer::whereIn('status', $statusList)
-                    ->select(\DB::raw('status, count(*) as count'))
-                    ->where('job_id', $value->id)
-                    ->groupBy('status')
-                    ->get();
+    
+public function index()
+{
+    $id = Auth::guard('recruiter')->user()->id;
+    $alljobs = Job::where('recruiter_id', $id)->get();
 
-                foreach ($statusCountsQuery as $statusCount) {
-                    $statusCounts[$statusCount->status] = $statusCount->count;
-                }
+    $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
+    $statusCounts = array_fill_keys($statusList, 0);
+
+    foreach ($alljobs as $key => $value) {
+        if (isset($value->id)) {
+            $statusCountsQuery = Offer::whereIn('status', $statusList)
+                ->select(\DB::raw('status, count(*) as count'))
+                ->where('job_id', $value->id)
+                ->groupBy('status')
+                ->get();
+
+            foreach ($statusCountsQuery as $statusCount) {
+                $statusCounts[$statusCount->status] += $statusCount->count;
             }
         }
-        $statusCounts = array_values($statusCounts);
-        $statusCounts = implode(', ', $statusCounts);
-        return view('recruiter::dashboard', compact('statusCounts'));
     }
+
+    $statusCounts = array_values($statusCounts);
+
+    return view('recruiter::dashboard', compact('statusCounts'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -424,7 +425,7 @@ class RecruiterDashboardController extends Controller
             $portal_link = $response->json()['message'];
             if (isset($response->json()['code'])) {
                 if ($response->json()['code'] == 101) {
-                    return response()->json(['status' => false, 'portal_link' => config('app.portal_link')]);
+                    return response()->json(['status' => false, 'message' => 'Client Exist !']);
                 }
             }
 

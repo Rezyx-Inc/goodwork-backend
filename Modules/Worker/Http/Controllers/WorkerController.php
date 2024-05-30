@@ -772,8 +772,34 @@ class WorkerController extends Controller
         }
     }
 
+
+    // check stripe account onboarding
+
+    public function checkPaymentMethod($nurse_id) {
+        $url = 'http://localhost:' . config('app.file_api_port') . '/payments/onboarding-status';
+        $stripe_id = User::where('id', $nurse_id)->first()->stripeAccountId;
+        $data = ['stripeId' => $stripe_id];
+        $response = Http::get($url, $data);
+        
+        if ($stripe_id == null ||  $response->json()['status'] == false) {
+            return false;
+        }
+        return true;
+    }
+    
+
     public function accept_offer(Request $request)
     {
+
+        // check first stripe account onboarding
+        $nurse_id = Auth::guard('frontend')->user()->id;
+        if (!$this->checkPaymentMethod($nurse_id)) {
+            return response()->json(['success' => false, 'message' => 'Please complete your payment method onboarding first']);
+        }
+
+
+
+
         try{
             $request->validate([
                 'offer_id'=>'required',

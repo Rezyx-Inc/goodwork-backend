@@ -53,8 +53,8 @@ router.get('/account-link', async (req, res) => {
     
         return res.status(400).send({status:false, message:"Empty request"})
     
-    }else if ( !req.body.stripeId){
-
+	} else if (!req.query.stripeId || !req.query.userId) {
+		
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
 	
@@ -247,6 +247,29 @@ router.post('/customer/invoice', async (req, res) => {
 		return res.status(400).send({status: false, message: e.message})
 	}
 
+});
+
+// get - customer payment methods
+router.get('/customer/customer-payment-method', async (req, res) => {
+    
+    if(!Object.keys(req.query).length) {
+        return res.status(400).send({status:false, message:"Empty request"})
+    }
+    else if ( !req.query.customerId){
+        return res.status(400).send({status:false, message:"Missing parameters."})
+    }
+
+    try {
+        const customer = await stripe.customers.retrieve(req.query.customerId);
+        if (customer.invoice_settings.default_payment_method) {
+            return res.status(200).send({status: true, message: customer.invoice_settings.default_payment_method});
+        } else {
+            return res.status(404).send({status: false, message: "No default payment method found"});
+        }
+    } catch(e) {
+        console.log(e);
+        return res.status(400).send({status: false, message: e.message})
+    }
 });
 
 // get - check onboarding status | consumes stripeId
