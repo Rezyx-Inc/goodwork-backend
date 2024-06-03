@@ -232,8 +232,15 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .fixed-bottom, .fixed-top{
-  margin-left: 0px;
+  margin-left: 210px;
       box-shadow: none;
+}
+
+@media (max-width: 992px) {
+    .fixed-bottom, .fixed-top {
+        margin-left: 0;
+        box-shadow: none;
+    }
 }
 
 .list-group-flush>.list-group-item{

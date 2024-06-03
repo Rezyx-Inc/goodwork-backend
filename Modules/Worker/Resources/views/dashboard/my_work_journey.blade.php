@@ -3907,7 +3907,7 @@
                     }
                 });
                 $.ajax({
-                    url: full_path+'post-counter-offer',
+                    url: '/worker/post-counter-offer',
                     type: 'POST',
                     dataType: 'json',
                     data: {

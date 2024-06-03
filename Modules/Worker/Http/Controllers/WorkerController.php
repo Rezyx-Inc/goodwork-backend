@@ -12,6 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Builder;
 use App\Events\NewPrivateMessage;
+use Illuminate\Support\Facades\Http;
 
 
 use DB;
@@ -771,7 +772,33 @@ class WorkerController extends Controller
         }
     }
 
-    public function accept_offer(Request $request){
+
+    // check stripe account onboarding
+
+    public function checkPaymentMethod($nurse_id) {
+        $url = 'http://localhost:' . config('app.file_api_port') . '/payments/onboarding-status';
+        $stripe_id = User::where('id', $nurse_id)->first()->stripeAccountId;
+        $data = ['stripeId' => $stripe_id];
+        $response = Http::get($url, $data);
+        
+        if ($stripe_id == null ||  $response->json()['status'] == false) {
+            return false;
+        }
+        return true;
+    }
+    
+
+    public function accept_offer(Request $request)
+    {
+
+        // check first stripe account onboarding
+        $nurse_id = Auth::guard('frontend')->user()->id;
+        if (!$this->checkPaymentMethod($nurse_id)) {
+            return response()->json(['success' => false, 'message' => 'Please complete your payment method onboarding first']);
+        }
+
+
+
 
         try{
             $request->validate([
@@ -788,17 +815,40 @@ class WorkerController extends Controller
                 return response()->json(['success' => false, 'message' => 'Job not found']);
             }
     
-            $offer->update([
-                'status' => 'Onboarding',
-                'is_draft' => '0',
-                'is_counter' => '0'
-            ]);
-    
-            $job->update([
-                'active' => '0',
-                'is_open' => '0',
-                'is_closed' => '1'
-            ]);
+            
+                $update_array['is_counter'] = '0';
+                $update_array['is_draft'] = '0';
+                $update_array['status'] = 'Hold';
+                $offer = DB::table('offers')
+                    ->where(['id' => $request->offer_id])
+                    ->update($update_array);
+                $user_id = $job->created_by;   
+                $user = User::where('id',$user_id)->first();
+                $data = [
+                    'offerId' => $request->offer_id,
+                    'amount' => '1', 
+                    'stripeId' =>$user->stripeAccountId,
+                    'fullName' => $user->first_name . ' ' . $user->last_name,
+                ];
+
+                //return response()->json(['message'=>$data]);
+
+                $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
+                    
+                // return response()->json(['data'=>$data , 'url' => $url]);   
+                    
+                // Make the request
+                $responseInvoice = Http::post($url, $data);
+                // return response()->json(['message'=>$responseInvoice->json()]);
+                $responseData = [];
+                if ($offer) {
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => $responseInvoice->json()['message'],
+                    ];
+                }
+            
+
     
             return response()->json(['msg'=>'offer accepted successfully','success' => true]);
     

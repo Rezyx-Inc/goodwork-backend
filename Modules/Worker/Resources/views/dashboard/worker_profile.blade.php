@@ -3,6 +3,7 @@
 @section('content')
     @php
         $user = auth()->guard('frontend')->user();
+       
     @endphp
     <!--Main layout-->
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
@@ -12,27 +13,36 @@
                     <div class="col-lg-5">
                         <div class="ss-my-profil-div">
                             <h2>My <span class="ss-pink-color">Profile</span></h2>
-                            <div class="ss-my-profil-img-div">
+                            {{-- <div class="ss-my-profil-img-div">
                                 <img src="{{ URL::asset('frontend/img/account-img.png') }}"
                                     onerror="this.onerror=null;this.src='{{ USER_IMG }}';" id="preview"
                                     width="112px" height="112px" style="object-fit: cover;" />
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $worker->id }}</p>
+                            </div> --}}
+
+                            <div class="ss-my-profil-img-div">
+                                <div class="profile-pic">
+                                    <label class="-label" for="file">
+                                      <span class="glyphicon glyphicon-camera"></span>
+                                      <span>Change Image</span>
+                                    </label>
+                                    <input id="file" type="file" onchange="loadFile(event)"/>
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
+                                  </div>
+                                <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                                <p>{{ $worker->id }}</p>
                             </div>
+
+
                             <div class="ss-profil-complet-div">
                                 <div class="row d-flex justify-content-center align-items-center ">
                                     {{-- <li><img src="{{ URL::asset('frontend/img/progress.png') }}" /></li> --}}
                                     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
-                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                            style="transform:rotate(-90deg)">
-                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2"
-                                                stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0">
-                                            </circle>
-                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3"
-                                                stroke-width="16px" stroke-linecap="round" stroke-dashoffset="118.692px"
-                                                fill="transparent" stroke-dasharray="565.48px"></circle>
-                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold"
-                                                style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
+                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
+                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2" stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0"></circle>
+                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3" stroke-width="16px" stroke-linecap="round" fill="transparent" stroke-dasharray="565.48px" stroke-dashoffset="{{ 565.48 * (1 - $progress_percentage / 100) }}px"></circle>
+                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
                                         </svg>
                                     </div>
                                     {{-- if the profile is not complete --}}
@@ -180,35 +190,43 @@
                                             <div class="ss-form-group col-11">
                                                 <label>First Name</label>
                                                 <input type="text" name="first_name"
-                                                    placeholder="Please enter your first name">
+                                                    placeholder="Please enter your first name"
+                                                    value="{{ isset($user->first_name) ? $user->first_name : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-first_name"></span>
                                             {{-- Last Name --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Last Name</label>
                                                 <input type="text" name="last_name"
-                                                    placeholder="Please enter your last name">
+                                                    placeholder="Please enter your last name"
+                                                    value="{{ isset($user->last_name) ? $user->last_name : '' }}">
+                                                    
                                             </div>
                                             <span class="help-block-last_name"></span>
                                             {{-- Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Phone Number</label>
                                                 <input id="contact_number" type="text" name="mobile"
-                                                    placeholder="Please enter your phone number">
+                                                    placeholder="Please enter your phone number"
+                                                    value="{{ isset($user->mobile) ? $user->mobile : '' }}">
+                                                    
                                             </div>
                                             <span class="help-block-mobile"></span>
                                             {{-- Address Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Address</label>
                                                 <input type="text" name="address"
-                                                    placeholder="Please enter your address">
+                                                    placeholder="Please enter your address"
+                                                    value="{{ isset($worker->address) ? $worker->address : '' }}">
+                                                    
                                             </div>
                                             <span class="help-block-address"></span>
                                             {{-- State Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>State</label>
                                                 <select name="state" id="job_state">
-                                                    <option value="">What State are you located in?</option>
+                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}">{{ !empty($worker->state) ? $worker->state : 'What State are you located in?' }} </option>
                                                     @foreach ($states as $state)
                                                         <option id="{{ $state->id }}" value="{{ $state->name }}">
                                                             {{ $state->name }}
@@ -221,7 +239,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>City</label>
                                                 <select name="city" id="job_city">
-                                                    <option value="">What City are you located in?</option>
+                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}">{{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }} </option>
+                                                    
                                                 </select>
                                             </div>
                                             <span class="help-block-city"></span>
@@ -229,8 +248,10 @@
                                             {{-- Zip Code Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Zip Code</label>
-                                                <input type="text" name="zip_code"
-                                                    placeholder="Please enter your Zip Code">
+                                                <input type="number" name="zip_code"
+                                                    placeholder="Please enter your Zip Code"
+                                                    value="{{ isset($user->zip_code) ? $user->zip_code : '' }}">
+                                                    
                                             </div>
                                             <span class="help-block-zip_code"></span>
                                             {{-- Skip && Save --}}
@@ -252,7 +273,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Profession</label>
                                                 <select name="profession" id="profession">
-                                                    <option value="">What Kind of Professional are you?</option>
+                                                    <option value="{{ !empty($worker->profession) ? $worker->profession : '' }}">{{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }} </option>
                                                     @foreach ($proffesions as $proffesion)
                                                         <option value="{{ $proffesion->full_name }}">
                                                             {{ $proffesion->full_name }}
@@ -265,7 +286,8 @@
                                             <div class="ss-form-group  col-11">
                                                 <label>Specialty</label>
                                                 <select name="specialty" id="specialty">
-                                                    <option value="">Select Specialty</option>
+                                                    <option value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">{{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }} </option>
+                                                    
                                                     @foreach ($specialities as $specialty)
                                                         <option value="{{ $specialty->full_name }}">
                                                             {{ $specialty->full_name }}
@@ -278,7 +300,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Terms</label>
                                                 <select name="terms" id="term">
-                                                    <option value="">Select a specefic term</option>
+                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">{{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }} </option>
+                                                    
                                                     @if (isset($allKeywords['Terms']))
                                                         @foreach ($allKeywords['Terms'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -293,7 +316,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Type</label>
                                                 <select name="type" id="type">
-                                                    <option value="">Select Type</option>
+                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}">{{ !empty($worker->type) ? $worker->type : 'Select Type' }} </option>
+                                                   
                                                     @if (isset($allKeywords['Type']))
                                                         @foreach ($allKeywords['Type'] as $value)
                                                             <option value="{{ $value->title }}">{{ $value->title }}
@@ -318,9 +342,11 @@
                                             {{-- Float requirements --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Float requirements</label>
+
                                                 <select name="float_requirement" class="float_requirement mb-3"
                                                     id="float_requirement" value="">
-                                                    <option value="">Select Float requirements</option>
+                                                    <option value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">{{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }} </option>
+                                                    
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select>
@@ -333,8 +359,8 @@
                                                 <select name="facility_shift_cancelation_policy"
                                                     class="facility_shift_cancelation_policy mb-3"
                                                     id="facility_shift_cancelation_policy" value="">
-                                                    <option value="">Select Facility Shift Cancellation Policy
-                                                    </option>
+                                                    <option value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }} </option>
+                                                    
                                                     @if (isset($allKeywords['AssignmentDuration']))
                                                         @foreach ($allKeywords['AssignmentDuration'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -350,7 +376,9 @@
                                                 <label>Contract Termination Policy</label>
                                                 <input type="text" id="contract_termination_policy"
                                                     name="contract_termination_policy"
-                                                    placeholder="Enter Contract Termination Policy">
+                                                    placeholder="Enter Contract Termination Policy"
+                                                    value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
+                                                    >
                                             </div>
                                             <span class="help-block-contract_termination_policy"></span>
                                             {{-- end Contract Termination Policy --}}
@@ -359,7 +387,9 @@
                                                 <label>Traveler Distance From Facility</label>
                                                 <input type="number" id="traveler_distance_from_facility"
                                                     name="distance_from_your_home"
-                                                    placeholder="Enter Traveler Distance From Facility">
+                                                    placeholder="Enter Traveler Distance From Facility"
+                                                    value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-traveler_distance_from_facility"></span>
                                             {{-- end Traveler Distance From Facility  --}}
@@ -368,7 +398,9 @@
                                                 <label>Clinical Setting</label>
                                                 <input type="text" id="clinical_setting"
                                                     name="clinical_setting_you_prefer"
-                                                    placeholder="Enter clinical setting">
+                                                    placeholder="Enter clinical setting"
+                                                    value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-clinical_setting_you_prefer"></span>
                                             {{-- End Clinical Setting --}}
@@ -376,7 +408,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Patient ratio</label>
                                                 <input type="number" id="Patient_ratio" name="worker_patient_ratio"
-                                                    placeholder="How many patients can you handle?">
+                                                    placeholder="How many patients can you handle?"
+                                                    value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_patient_ratio"></span>
                                             {{-- End Patient ratio --}}
@@ -384,7 +418,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>EMR</label>
                                                 <select name="worker_emr" class="emr mb-3" id="emr">
-                                                    <option value="">Select EMR</option>
+                                                    <option value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">{{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }} </option>
+                                                    
                                                     @if (isset($allKeywords['EMR']))
                                                         @foreach ($allKeywords['EMR'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -399,7 +434,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Unit</label>
                                                 <input id="Unit" type="text" name="worker_unit"
-                                                    placeholder="Enter Unit">
+                                                    placeholder="Enter Unit"
+                                                    value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_unit"></span>
                                             {{-- End Unit --}}
@@ -407,7 +444,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Scrub Color</label>
                                                 <input id="scrub_color" type="text" name="worker_scrub_color"
-                                                    placeholder="Enter Scrub Color">
+                                                    placeholder="Enter Scrub Color"
+                                                    value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_scrub_color"></span>
                                             {{-- End Scrub Color --}}
@@ -415,7 +454,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>RTO</label>
                                                 <input id="rto" type="text" name="rto"
-                                                    placeholder="Enter RTO">
+                                                    placeholder="Enter RTO"
+                                                    value=" {{ !empty($worker->rto) ? $worker->rto : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-rto"></span>
                                             {{-- End RTO --}}
@@ -423,7 +464,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Shift Time of Day</label>
                                                 <select name="worker_shift_time_of_day" id="shift-of-day">
-                                                    <option value="">Enter Shift Time of Day</option>
+                                                    <option value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}">{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }} </option>
                                                     @if (isset($allKeywords['PreferredShift']))
                                                         @foreach ($allKeywords['PreferredShift'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -438,7 +479,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Week</label>
                                                 <input id="hours_per_week" type="number" name="worker_hours_per_week"
-                                                    placeholder="Enter Hours/Week">
+                                                    placeholder="Enter Hours/Week"
+                                                    value="{{ !empty($worker->worker_hours_per_week) ? $worker->worker_hours_per_week : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_hours_per_week"></span>
                                             {{-- End Hours/Week --}}
@@ -446,7 +489,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Shift</label>
                                                 <input id="hours_shift" type="number" name="worker_hours_per_shift"
-                                                    placeholder="Enter Hours/Shift">
+                                                    placeholder="Enter Hours/Shift"
+                                                    value="{{ !empty($worker->worker_hours_per_shift) ? $worker->worker_hours_per_shift : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_hours_per_shift"></span>
                                             {{-- End Hours/Shift --}}
@@ -454,7 +499,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Weeks/Assignment</label>
                                                 <input id="preferred_assignment_duration" type="number"
-                                                    name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment">
+                                                    name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment"
+                                                    value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_weeks_assignment"></span>
                                             {{-- End Weeks/Assignment --}}
@@ -462,7 +509,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Shifts/Week</label>
                                                 <input id="weeks_shift" type="number" name="worker_shifts_week"
-                                                    placeholder="Enter Shifts/Week">
+                                                    placeholder="Enter Shifts/Week"
+                                                    value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}"
+                                                    >
                                             </div>
                                             <span class="help-block-worker_shifts_week"></span>
                                             {{-- End Shifts/Week --}}
@@ -494,7 +543,7 @@
                                             {{-- Upload Document --}}
                                             <div class="ss-form-group">
                                                 <label>Upload Document</label>
-                                                <input type="file" id="file" name="files" multiple
+                                                <input type="file" id="document_file" name="files" multiple
                                                     required><br><br>
                                                 <label class="mt-2" for="file">Choose a file</label>
                                             </div>
@@ -543,20 +592,20 @@
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
                                             {{-- Change User Name --}}
-                                            <div class="ss-form-group col-11">
+                                            {{-- <div class="ss-form-group col-11">
                                                 <label>New User Name</label>
                                                 <input type="text" name="user_name"
                                                     placeholder="Please enter your new user name">
                                             </div>
-                                            <span class="help-block-user_name"></span>
+                                            <span class="help-block-user_name"></span> --}}
                                             {{-- Change Password --}}
-                                            <div class="ss-form-group col-11">
+                                            {{-- <div class="ss-form-group col-11">
                                                 <label>New Password</label>
                                                 <input type="text" name="password"
                                                     placeholder="Please enter your new password">
-                                            </div>
+                                            </div> --}}
                                             {{-- Change 2FA --}}
-                                            <div class="ss-form-group row col-11">
+                                            {{-- <div class="ss-form-group row col-11">
                                                 <label>Two-factor authentication (2FA)</label>
                                                 <div class="col-lg-6 col-sm-2 col-xs-2 col-md-2">
                                                     <label>Enable</label>
@@ -568,7 +617,7 @@
                                                     <input style="box-shadow:none; width: auto;" type="radio"
                                                         id="option2" name="twoFa" value="0">
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             {{-- Change Phone Number --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Phone Number</label>
@@ -695,20 +744,20 @@
                     {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
                     {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll support_info d-none">
-                        <div class="ss-pers-info-form-mn-dv">
+                        <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
                                 <h1
                                     style="font-family: Neue Kabel; font-size: 32px; font-weight: 500; line-height: 34px; text-align: center;color:3D2C39;">
-                                    Help &Support
+                                    Help & Support
                                 </h1>
                             </div>
                             <div class="form-outer">
-                                <form method="post">
+                                {{-- <form method="post">
                                     @csrf
-                                    <!-- slide Support -->
+                                 
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
-                                            {{-- Support subject --}}
+                                            
                                             <div class="ss-form-group col-11">
                                                 <label>Subject</label>
                                                 <select name="support_subject" id="support_subject">
@@ -720,18 +769,18 @@
 
                                             </div>
                                             <span class="help-block-support_subject"></span>
-                                            {{-- Support issue --}}
+                                            
                                             <div class="ss-form-group col-11">
                                                 <label>Issue</label>
                                                 <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
                                             </div>
                                             <span class="help-block-support_subject_issue"></span>
-                                            {{-- Skip && Save --}}
+                                            
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveSupportTicket">
-                                                    {{-- spinner --}}
+                                                  
                                                     <span id="loading" class="d-none">
                                                         <span id="loadSpan" class="spinner-border spinner-border-sm"
                                                             role="status" aria-hidden="true"></span>
@@ -742,7 +791,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </form> --}}
+                                <p style="
+                                margin-top: 20px;
+                            ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+                           
                             </div>
 
                         </div>
@@ -751,7 +804,7 @@
 
                     {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll disable_account d-none">
-                        <div class="ss-pers-info-form-mn-dv">
+                        <div class="ss-pers-info-form-mn-dv" style="width:100%" >
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img
                                             src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Disactivate
@@ -839,7 +892,7 @@
             // end loading cities according to the selected state
 
             // append each uploaded file to the table
-            $('input[type="file"]').change(function() {
+            $('#document_file').change(function() {
                 var file = this.files[0]; // get the selected file
                 var tbody = $('.table tbody');
                 // tbody.empty(); // remove existing rows
@@ -969,7 +1022,8 @@
         const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
         const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
         // Document Management
-        const file = document.querySelector('input[type="file"]');
+        //const file = document.querySelector('input[type="file"]');
+        const file = document.getElementById('document_file');
         // bonus transfer 
         const full_name_payment = document.querySelector('input[name="full_name_payment"]');
         const address_payment = document.querySelector('input[name="address_payment"]');
@@ -979,8 +1033,8 @@
         const bank_account_payment_number = document.querySelector('input[name="bank_account_payment_number"]');
         const phone_number_payment = document.querySelector('input[name="phone_number_payment"]');
         // support input
-        const support_subject_issue = document.querySelector('textarea[name="support_subject_issue"]');
-        const support_subject = document.querySelector('select[name="support_subject"]');
+        // const support_subject_issue = document.querySelector('textarea[name="support_subject_issue"]');
+        // const support_subject = document.querySelector('select[name="support_subject"]');
         // end inputs
 
         // change info type title
@@ -1157,6 +1211,8 @@
                     'Full name can only contain letters and spaces, and cannot be longer than 255 characters');
                 $('.help-block-full_name_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-full_name_payment').text('');
             }
 
 
@@ -1164,39 +1220,53 @@
                 $('.help-block-address_payment').text('Please enter your address');
                 $('.help-block-address_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-address_payment').text('');
             }
 
             const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (($('input[name="email_payment"]').val() === '') && (!emailRegex_payment.test(email_payment.value))) {
+            if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($('input[name="email_payment"]').val() ))) {
+                console.log(email_payment.value);
                 $('.help-block-email_payment').text('Please enter a valid email');
                 $('.help-block-email_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-email_payment').text('');
             }
 
             if ($('input[name="bank_name_payment"]').val() === '') {
                 $('.help-block-bank_name_payment').text('Please enter your bank name');
                 $('.help-block-bank_name_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-bank_name_payment').text('');
             }
 
             if ($('input[name="routing_number_payment"]').val() === '') {
                 $('.help-block-routing_number_payment').text('Please enter your routing number');
                 $('.help-block-routing_number_payment').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-routing_number_payment').text('');
             }
 
             if ($('input[name="bank_account_payment_number"]').val() === '') {
                 $('.help-block-bank_account_payment_number').text('Please enter your bank account number');
                 $('.help-block-bank_account_payment_number').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-bank_account_payment_number').text('');
             }
+
             const regexPhone_payment = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
             if (($('input[name="phone_number_payment"]').val() === '') && (!regexPhone_payment.test(phone_number_payment
                     .value))) {
                 $('.help-block-phone_number_payment').text('Please enter a valid phone number');
                 $('.help-block-phone_number_payment').addClass('text-danger');
                 isValid = false;
-            }
+            }else{
+                $('.help-block-phone_number_payment').text('');
+            }   
 
             return isValid;
         }
@@ -1205,25 +1275,23 @@
 
         // validation 
 
-        function validateSupportForm() {
-            let isValid = true;
+        // function validateSupportForm() {
+        //     let isValid = true;
 
-            // Support subject validation
-            if ($('select[name="support_subject"]').val() === '') {
-                $('.help-block-support_subject').text('Please select your issue');
-                $('.help-block-support_subject').addClass('text-danger');
-                isValid = false;
-            }
+        //     if ($('select[name="support_subject"]').val() === '') {
+        //         $('.help-block-support_subject').text('Please select your issue');
+        //         $('.help-block-support_subject').addClass('text-danger');
+        //         isValid = false;
+        //     }
 
-            // Support issue validation
-            if ($('textarea[name="support_subject_issue"]').val().trim() === '') {
-                $('.help-block-support_subject_issue').text('Please tell us how we can help');
-                $('.help-block-support_subject_issue').addClass('text-danger');
-                isValid = false;
-            }
+        //     if ($('textarea[name="support_subject_issue"]').val().trim() === '') {
+        //         $('.help-block-support_subject_issue').text('Please tell us how we can help');
+        //         $('.help-block-support_subject_issue').addClass('text-danger');
+        //         isValid = false;
+        //     }
 
-            return isValid;
-        }
+        //     return isValid;
+        // }
 
         // end validation
 
@@ -1241,21 +1309,26 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
+            let formData = new FormData();
+            formData.append('first_name', first_name.value);
+            formData.append('last_name', last_name.value);
+            formData.append('mobile', mobile.value);
+            formData.append('address', address.value);
+            formData.append('city', city.value);
+            formData.append('state', state.value);
+            formData.append('zip_code', zip_code.value);
+            formData.append('InfoType', "BasicInformation");
+            formData.append('profile_pic', $('#file')[0].files[0]); 
+
+
             $.ajax({
                 url: '/worker/update-worker-profile',
                 type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    first_name: first_name.value,
-                    last_name: last_name.value,
-                    mobile: mobile.value,
-                    address: address.value,
-                    city: city.value,
-                    state: state.value,
-                    zip_code: zip_code.value,
-                    InfoType: "BasicInformation"
-                }),
+                data: formData,
+                contentType: false, 
+                cache: false, 
+                processData:false,
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -1265,7 +1338,12 @@
                             time: 5
                         });
 
+                        setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+
                     }
+                  
                 },
                 error: function(resp) {
                     notie.alert({
@@ -1327,7 +1405,9 @@
                             text: '<i class="fa fa-check"></i> Professional Information saved successfully',
                             time: 5
                         });
-
+                        setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1375,7 +1455,9 @@
                             text: '<i class="fa fa-check"></i> Payment Information Successfully',
                             time: 5
                         });
-
+                        setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1393,53 +1475,53 @@
 
         // saving Support ticket
 
-        const SaveSupportTicket = document.getElementById("SaveSupportTicket");
+        // const SaveSupportTicket = document.getElementById("SaveSupportTicket");
 
-        SaveSupportTicket.addEventListener("click", function(event) {
-            event.preventDefault();
-            if (!validateSupportForm()) {
-                return;
-            }
-            $('#loading').removeClass('d-none');
-            $('#send_ticket').addClass('d-none');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/worker/send-support-ticket',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    support_subject: support_subject.value,
-                    support_subject_issue: support_subject_issue.value,
+        // SaveSupportTicket.addEventListener("click", function(event) {
+        //     event.preventDefault();
+        //     if (!validateSupportForm()) {
+        //         return;
+        //     }
+        //     $('#loading').removeClass('d-none');
+        //     $('#send_ticket').addClass('d-none');
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+        //     $.ajax({
+        //         url: '/worker/send-support-ticket',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify({
+        //             support_subject: support_subject.value,
+        //             support_subject_issue: support_subject_issue.value,
 
-                }),
-                success: function(resp) {
-                    console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Your ticket has been sent successfully',
-                            time: 5
-                        });
-                        $('#loading').addClass('d-none');
-                        $('#send_ticket').removeClass('d-none');
-                        support_subject_issue.value = "";
-                    }
-                },
-                error: function(resp) {
-                    console.log(resp);
-                    notie.alert({
-                        type: 'error',
-                        text: resp,
-                        time: 5
-                    });
-                }
-            });
-        });
+        //         }),
+        //         success: function(resp) {
+        //             console.log(resp);
+        //             if (resp.status) {
+        //                 notie.alert({
+        //                     type: 'success',
+        //                     text: '<i class="fa fa-check"></i> Your ticket has been sent successfully',
+        //                     time: 5
+        //                 });
+        //                 $('#loading').addClass('d-none');
+        //                 $('#send_ticket').removeClass('d-none');
+        //                 support_subject_issue.value = "";
+        //             }
+        //         },
+        //         error: function(resp) {
+        //             console.log(resp);
+        //             notie.alert({
+        //                 type: 'error',
+        //                 text: resp,
+        //                 time: 5
+        //             });
+        //         }
+        //     });
+        // });
 
         // end saving support ticket
 
@@ -1476,6 +1558,7 @@
                         $('#disactivate_account').removeClass('d-none');
                         window.location.href = "/";
                     }
+                    
                 },
                 error: function(resp) {
                     console.log(resp);
@@ -1520,7 +1603,7 @@
                         $('#loading_disableOption').addClass('d-none');
                         $('#disactivate_account').removeClass('d-none');
                         console.log(resp);
-                        //window.location.href = resp.account_link;
+                         window.location.href = resp.account_link;
                     }
                 },
                 error: function(resp) {
@@ -1634,7 +1717,7 @@
             let worker_id = '{!! $worker_id_json !!}';
             console.log(worker_id);
             var workerId = worker_id;
-            var filesInput = document.getElementById('file');
+            var filesInput = document.getElementById('document_file');
             var files = Array.from(filesInput.files);
 
             Promise.all(files.map(file => {
@@ -1696,10 +1779,10 @@
 
         // inputs account settings
 
-        const user_name = document.querySelector('input[name="user_name"]');
-        const password = document.querySelector('input[name="password"]');
+        // const user_name = document.querySelector('input[name="user_name"]');
+        // const password = document.querySelector('input[name="password"]');
         const new_mobile = document.querySelector('input[name="new_mobile"]');
-        const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
+        // const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
         const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
@@ -1709,10 +1792,10 @@
             $('.help-block-new_mobile').text('');
             $('.help-block-validation').text('');
             $('.help-block-email').text('');
-            $('.help-block-user_name').text('');
+            // $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
-            inputs = [user_name, password, new_mobile, email];
+            inputs = [new_mobile, email];
 
             // Add the value of the selected radio button to the inputs array, if a radio button is selected
             const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
@@ -1739,13 +1822,13 @@
             }
 
             // User name validation
-            const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
-            if (!userNameRegex.test(user_name.value)) {
-                $('.help-block-user_name').text(
-                    'User name can only contain letters and spaces, and cannot be longer than 255 characters');
-                $('.help-block-user_name').addClass('text-danger');
-                isValid = false;
-            }
+            // const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
+            // if (!userNameRegex.test(user_name.value)) {
+            //     $('.help-block-user_name').text(
+            //         'User name can only contain letters and spaces, and cannot be longer than 255 characters');
+            //     $('.help-block-user_name').addClass('text-danger');
+            //     isValid = false;
+            // }
 
             // New mobile number validation
             const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
@@ -1855,6 +1938,11 @@
             $('.support_info').addClass('d-none');
             $('.disable_account').removeClass('d-none');
         }
+
+        var loadFile = function (event) {
+  var image = document.getElementById("output");
+  image.src = URL.createObjectURL(event.target.files[0]);
+};
     </script>
 
 @stop
@@ -2229,4 +2317,54 @@
     #loadSpan_disableOption {
         color: #fff;
     }
+
+     /* for the image  */
+
+     .profile-pic {
+  color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all .3s ease;
+}
+
+.profile-pic input {
+  display: none;
+}
+
+.profile-pic img {
+  position: absolute;
+  object-fit: cover;
+  width: 165px;
+  height: 165px;
+  box-shadow: 0 0 10px 0 rgba(255,255,255,.35);
+  border-radius: 100px;
+  z-index: 0;
+}
+
+.profile-pic .-label {
+  cursor: pointer;
+  height: 165px;
+  width: 165px;
+}
+
+.profile-pic:hover .-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,.8);
+  z-index: 10000;
+  color: rgb(250,250,250);
+  transition: background-color .2s ease-in-out;
+  border-radius: 100px;
+  margin-bottom: 0;
+}
+
+.profile-pic span {
+  display: inline-flex;
+  padding: .2em;
+  height: 2em;
+}
+
 </style>

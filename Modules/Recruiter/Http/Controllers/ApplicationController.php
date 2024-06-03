@@ -213,6 +213,7 @@ class ApplicationController extends Controller
         $offerdetails = '';
         $jobdetails = '';
         $waitingForPayment = false;
+        $paymentRequired = false;
         $hasFile = false;
         if (isset($request->id)) {
             $offerdetails = Offer::where(['status' => $type, 'id' => $request->id, 'created_by' => $recruiter->id ])->first();
@@ -231,7 +232,15 @@ class ApplicationController extends Controller
                 ->first();
         }
         if (isset($offerdetails)) {
-            $waitingForPayment = true;
+
+            if($offerdetails->is_payment_done  == 0){
+                $waitingForPayment = true;
+            }
+
+            if($offerdetails->is_payment_required == 1 ){
+                $paymentRequired = true;
+            }
+            
 
             $nursedetails = NURSE::select('nurses.*')
                 ->where('nurses.id', $offerdetails['worker_user_id'])
@@ -2092,7 +2101,7 @@ class ApplicationController extends Controller
                     </h6>
 
                 </li>';
-                if($waitingForPayment == true && ($request->type == 'Offered' || $request->type == 'Hold') ){
+                if($waitingForPayment == true && $request->type == 'Hold' ){
                 $data2 .=
                     '
                 <li style="background: #3D2C39;
@@ -2112,26 +2121,46 @@ class ApplicationController extends Controller
                         data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="width: inherit !important;color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>';
                     }
-            //     $data2 .=
-            //         '
-            //     <li style="width:auto !important;">
-            //     <a href="' .
-            //     route('recruiter-messages') .
-            //     '" class="rounded-pill ss-apply-btn py-2 border-0 px-4" onclick="chatNow(\'' .
-            //     $offerdetails['worker_user_id'] .
-            //     '\')">Chat Now</a>
+            
+                  $data2 .= '
+                  <li>
+                   <a  onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')" class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="
+                    cursor: pointer;
+                   ">Chat Now</a>
 
-            // </li>';
-            $data2 .= '
-            <li style="width:50% !important;">
-                <form method="POST" action="' . route('recruiter-messages') . '">
-                    <input type="hidden" name="_token" value="' . csrf_token() . '">
-                    <input type="hidden" name="worker_user_id" value="' . $offerdetails['worker_user_id'] . '">
-                    <button onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\') class="rounded-pill ss-apply-btn py-2 border-0 px-4">Chat Now</button>
-                </form>
-            </li>';
+                   </li>';
 
-            }else if($hasFile == true){
+            }else if($paymentRequired == true && $request->type == 'Hold'){
+
+                $data2 .=
+                    '
+                <li style="background: #3D2C39;
+                color: #fff;
+                width:auto !important;
+                border-radius: 500px;
+                margin-right:10px;
+                width:auto !important;
+                " class="rounded-pill ss-apply-btn py-2 border-0 px-4"><p style="width:max-content;">Please Contact Us
+                </li>
+                ';
+                if($hasFile == true){
+                    $data2 .=
+                        '
+                        <li style="margin-right:10px; width:inherit !important;">
+                        <a  class="rounded-pill ss-apply-btn py-2 border-0 px-4"
+                        data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="width: inherit !important;color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
+                    </li>';
+                    }
+            
+                  $data2 .= '
+                  <li>
+                   <a  onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')" class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="
+                    cursor: pointer;
+                   ">Chat Now</a>
+
+                   </li>';
+            }
+            else if($hasFile == true){
                 $data2 .=
                     '
                     <li style="margin-right:10px; ">
@@ -2340,6 +2369,14 @@ class ApplicationController extends Controller
 
         if (isset($request->jobid)) {
             $jobid = $request->jobid;
+
+            // add a recruiter payment setting here to check if the recruiter has a payment method set up
+            if ($formtype == 'Offered' || $formtype == 'Working' || $formtype == 'Onboarding' || $formtype == 'Done') {
+                if (!$this->checkPaymentMethod($recruiter_id)) {
+                    return response()->json(['status' => false ,'message' => 'Please add a payment method to offer a job'],400);
+                }
+            }
+
             $job = Offer::where(['job_id' => $jobid, 'id' => $id,'created_by' => $recruiter_id])->update(['status' => $formtype]);
             if ($job) {
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
@@ -2365,6 +2402,35 @@ class ApplicationController extends Controller
             return response()->json(['message' => 'Something went wrong! Please check']);
         }
     }
+
+
+    public function check_recruiter_payment(Request $request){
+
+    $recruiter_id = Auth::guard('recruiter')->user()->id;
+
+    if (!$this->checkPaymentMethod($recruiter_id)) {
+        return response()->json(['status' => false , 'message' => 'Please add a payment method']);
+    }
+
+        return response()->json(['status' => true , 'message' => 'Please add a payment method']);
+    }
+
+    public function checkPaymentMethod($recruiter_id) {
+        $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/customer-payment-method';
+        $stripe_id = User::where('id', $recruiter_id)->first()->stripeAccountId;
+        $data = ['customerId' => $stripe_id];
+        $response = Http::get($url, $data);
+        
+        if ($stripe_id == null ||  $response->json()['status'] == false) {
+            return false;
+        }
+        return true;
+    }
+    
+
+
+
+
     public function sendJobOffer(Request $request)
     {
        
@@ -2512,14 +2578,33 @@ class ApplicationController extends Controller
             } elseif ($request->type == 'offersend') {
                 $update_array['is_counter'] = '0';
                 $update_array['is_draft'] = '0';
-                $update_array['status'] = 'Done';
+                $update_array['status'] = 'Hold';
                 $job = DB::table('offers')
                     ->where(['id' => $request->id])
                     ->update($update_array);
+                    $user = Auth::guard('recruiter')->user();
+                $data = [
+                    'offerId' => $request->id,
+                    'amount' => '1', 
+                    'stripeId' =>$user->stripeAccountId,
+                    'fullName' => $user->first_name . ' ' . $user->last_name,
+                ];
+
+                //return response()->json(['message'=>$data]);
+
+                // Define the URL
+                $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
+
+                // return response()->json(['data'=>$data , 'url' => $url]);   
+
+                // Make the request
+                $responseInvoice = Http::post($url, $data);
+                // return response()->json(['message'=>$responseInvoice->json()]);
+                $responseData = [];
                 if ($job) {
                     $responseData = [
                         'status' => 'success',
-                        'message' => 'Job Accepted successfully',
+                        'message' => $responseInvoice->json()['message'],
                     ];
                 }
             }

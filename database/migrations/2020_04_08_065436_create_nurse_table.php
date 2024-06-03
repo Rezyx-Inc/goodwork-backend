@@ -27,7 +27,7 @@ class CreateNurseTable extends Migration
             $table->unsignedBigInteger('leadership_roles')->nullable();
             $table->string('address')->nullable();
             $table->string('city', 50)->nullable();
-            $table->enum("state", \App\Enums\State::getKeys())->nullable();
+            $table->string("state")->nullable();
             $table->string('postcode', 15)->nullable();
             $table->string('country', 150)->nullable();
             $table->string('hourly_pay_rate')->nullable();

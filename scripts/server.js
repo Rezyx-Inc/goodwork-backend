@@ -10,12 +10,12 @@ const app = express();
 var { report } = require('./src/set.js')
 
 app.use(cors({
-    origin: 'http://127.0.0.1:8000' 
+    origin: ['http://127.0.0.1:8000', 'http://localhost:8000']
 }));
 
 const docsRoute = require('./src/routes/docs');
 const integrationsRoute = require('./src/routes/integrations');
-const paymentsRoute = require('./src/routes/payments');
+const paymentsRoute = require('./src/routes/Payments');
 
 app.use(bodyParser.json({ limit: '130mb' }));
 app.use(process.env.FILE_API_BASE_PATH, docsRoute);

@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+var _ = require('lodash');
+var { report } = require('../set.js')
 const queries = require("../mysql/queries.js")
+
+
 
 router.get('/', (req, res) => {
     res.send('Payments page');
@@ -49,8 +53,8 @@ router.get('/account-link', async (req, res) => {
     
         return res.status(400).send({status:false, message:"Empty request"})
     
-    }else if ( !req.body.stripeId){
-
+	} else if (!req.query.stripeId || !req.query.userId) {
+		
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
 	
@@ -203,16 +207,24 @@ router.post('/customer/invoice', async (req, res) => {
     try{
     	
     	// first set the offer on hold
-    	await queries.setOfferStatus(req.body.offerId, "Hold")
+    	try {
+			// first set the offer on hold
+			await queries.setOfferStatus(req.body.offerId, "Hold", "1", "0")
+		} catch (error) {
+			console.error("Error setting offer status: ", error);
+			throw error;
+		}
 
     	// Create invoice
 		const invoice = await stripe.invoices.create({
+			
 			customer: req.body.stripeId,
 			auto_advance: true,
 			currency: "usd",
 			collection_method:"charge_automatically",
 			metadata: {
-				offerId: req.body.offerId
+				offerId: req.body.offerId,
+				customer_name : req.body.fullName
 			}
 		});
 
@@ -230,10 +242,34 @@ router.post('/customer/invoice', async (req, res) => {
 		res.status(200).json({status: true, message:"OK"});
 
 	}catch(e){
+		await queries.setOfferStatus(req.body.offerId, "Hold", "0", "1")
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}
 
+});
+
+// get - customer payment methods
+router.get('/customer/customer-payment-method', async (req, res) => {
+    
+    if(!Object.keys(req.query).length) {
+        return res.status(400).send({status:false, message:"Empty request"})
+    }
+    else if ( !req.query.customerId){
+        return res.status(400).send({status:false, message:"Missing parameters."})
+    }
+
+    try {
+        const customer = await stripe.customers.retrieve(req.query.customerId);
+        if (customer.invoice_settings.default_payment_method) {
+            return res.status(200).send({status: true, message: customer.invoice_settings.default_payment_method});
+        } else {
+            return res.status(404).send({status: false, message: "No default payment method found"});
+        }
+    } catch(e) {
+        console.log(e);
+        return res.status(400).send({status: false, message: e.message})
+    }
 });
 
 // get - check onboarding status | consumes stripeId

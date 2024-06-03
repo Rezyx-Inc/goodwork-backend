@@ -6,35 +6,11 @@
 <main style="padding-top: 170px" class="ss-main-body-sec">
     <div class="container">
 
-        <!--------Ghraph area------->
-        <!-- <div class="ss-home-graph-main-sec">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ss-home-graph-div1">
-                        <img src="{{URL::asset('frontend/img/home-graph-1.png')}}" />
-                    </div>
-                </div>
-
-                <div class="col-lg-7">
-                    <div class="ss-home-graph-div2">
-                        <img src="{{URL::asset('frontend/img/home-graph-2.png')}}" />
-                    </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="ss-home-graph-div3">
-                        <img src="{{URL::asset('frontend/img/home-graph-3.png')}}" />
-                    </div>
-                </div>
-
-            </div>
-        </div> -->
-        <!-- <canvas id="myChart" style="width:100%;max-width:600px"></canvas> -->
         <div class="row mb-5">
             <div class="col-md-12">
                 <div class="w-75 ss-job-prfle-sec m-auto p-5">
                     <h3 class="ss-color-pink font-weight-bold">Application stages</h3>
-                    <canvas id="myChart"></canvas>
+                    <canvas id="recruiterStats"></canvas>
                 </div>
             </div>
             <div class="col-md-8">
@@ -53,11 +29,13 @@
 <script>
     let values = <?php echo json_encode($statusCounts); ?>;
     console.log(values);
-    let yValues = values.split(",");
-    const ctx = document.getElementById('myChart');
-    // const yValues = [55, 49, 44, 24, 15];
+    
+    let yValues = values;
+    const ctx = document.getElementById('recruiterStats');
+   
     const xValues = ['New', 'Offered', 'Onboard', 'Working', 'Done'];
-
+    
+    
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -74,13 +52,7 @@
 
             }]
         },
-        // options: {
-        //     scales: {
-        //         y: {
-        //             beginAtZero: true
-        //         }
-        //     }
-        // }
+        
         options: {
             legend: {
                 display: false
@@ -91,5 +63,7 @@
             }
         }
     });
+
+    
 </script>
 @endsection

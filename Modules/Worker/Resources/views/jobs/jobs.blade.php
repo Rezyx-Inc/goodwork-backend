@@ -57,18 +57,7 @@
                     @empty
                     @endforelse
 
-                    {{-- <div class="ss-job-prfle-sec my-work-sved-job-div2">
-                        <p>Travel <span>+50 Applied</span></p>
-                        <h4>Manager CRNA - Anesthesia</h4>
-                        <h6>Medical Solutions Recruiter</h6>
-                        <ul>
-                        <li><a href="#"><img src="img/location.png"> Los Angeles, CA</a></li>
-                        <li><a href="#"><img src="img/calendar.png"> 10 wks</a></li>
-                        <li><a href="#"><img src="img/dollarcircle.png"> 2500/wk</a></li>
-                        </ul>
-                        <h5>Recently Added</h5>
-                        <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
-                    </div> --}}
+                    
 
                 </div>
             </div>
@@ -86,6 +75,32 @@
 
     </div>
 
+
+
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="stripe_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="ss-pop-cls-vbtn">
+                        <button type="button" class="btn-close" data-target="#stripe_modal" onclick="close_modal(this)"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center" ><h3 class="col-6">Payment Method</h3></div>
+                    <div class="modal-body" style="padding:0px !important;">
+
+                        <div
+                        class="ss-prsn-form-btn-sec row col-12 d-flex justify-content-center align-items-center">
+                        
+                        <button type="text" class="ss-prsnl-save-btn" id="AddStripe">
+                            Add Stripe
+                        </button>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
   </main>
 @stop
 
@@ -98,6 +113,72 @@
       }
       e.target.className = "active";
     }
+
+    const AddStripe = document.getElementById("AddStripe");
+
+AddStripe.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            $('#loading').removeClass('d-none');
+            $('#send_ticket').addClass('d-none');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/worker/add-stripe-account',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    access: true,
+                }),
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Redirecting ...',
+                            time: 5
+                        });
+                        $('#loading').addClass('d-none');
+                        $('#send_ticket').removeClass('d-none');
+                        window.location.href = resp.account_link;
+                    } else {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Client Exists',
+                            time: 5
+                        });
+                        $('#loading').addClass('d-none');
+                        $('#send_ticket').removeClass('d-none');
+                        close_stripe_modal();
+                        //window.location.href = resp.portal_link;
+                    }
+                }
+            });
+        });
+
+        function open_stripe_modal() {
+            let name, title, modal;
+
+            name = 'stripe';
+            title = 'add payment method';
+            modal = '#stripe_modal';
+            
+           
+
+            $(modal).modal('show');
+        }
+
+
+        function close_stripe_modal() {
+            let target = '#stripe_modal';
+            $(target).modal('hide');
+        }
+
+
 </script>
 
 <script>
@@ -145,6 +226,7 @@
     }
 
     function accept_job_offer(obj){
+       
             ajaxindicatorstart();
             $.ajaxSetup({
                     headers: {
@@ -161,15 +243,25 @@
                     success: function (resp) {
                         console.log(resp);
                         ajaxindicatorstop();
+                        if(resp.success == true){
                             notie.alert({
                                 type: 'success',
-                                text: '<i class="fa fa-check"></i>' + resp.msg,
+                                text: '<i class="fa fa-check"></i>' + resp.message,
                                 time: 5
                             });
                             setTimeout(() => {
                                 location.reload();
                             }, 2000);
-                        
+                        }else{
+                            open_stripe_modal();
+                            notie.alert({
+                                type: 'error',
+                                text: '<i class="fa fa-times"></i>' + resp.message,
+                                time: 5
+                            });
+
+                        }
+
                     },
                     error: function (resp) {
                         console.log(resp);

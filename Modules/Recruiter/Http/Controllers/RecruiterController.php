@@ -501,18 +501,18 @@ class RecruiterController extends Controller
             // $active = $activeRequest['active'];
             $validatedData = [];
 
-            if ($active == 'false') {
+            if ($active == '0') {
                
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
-                    'job_name' => 'string',
+                    'job_name' => 'nullable|string',
                     'job_city' => 'nullable|string',
                     'job_state' => 'nullable|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'nullable|string',
                     'preferred_work_location' => 'nullable|string',
                     'description' => 'nullable|string',
-                   
+                    'terms' => 'nullable|string',
                     'preferred_shift_duration' => 'nullable|string',
                     'preferred_work_area' => 'nullable|string',
                     'preferred_days_of_the_week' => 'nullable|string',
@@ -532,7 +532,7 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-                    'weekly_taxable_amount' => 'nullable|integer',
+                   
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -540,20 +540,19 @@ class RecruiterController extends Controller
                     'extension_bonus' => 'nullable|string',
                     'other_bonus' => 'nullable|string',
                     'actual_hourly_rate' => 'nullable|string',
+                    
                     'overtime' => 'nullable|string',
                     'holiday' => 'nullable|string',
                     'orientation_rate' => 'nullable|string',
                     'on_call' => 'nullable|string',
-                    'weekly_non_taxable_amount' => 'nullable|integer',
+                    'weekly_non_taxable_amount' => 'nullable|string',
                     'proffesion' => 'nullable|string',
                     
                     'Emr' => 'nullable|string',
-                    'terms' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
                     'block_scheduling'  => 'nullable|string',
-                    'contract_termination_policy' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string', 
                     'call_back' => 'nullable|string',
-
                 ]);
                 $job = new Job();
                 try {
@@ -657,9 +656,7 @@ class RecruiterController extends Controller
                 if (isset($validatedData['on_call'])) {
                     $job->on_call = $validatedData['on_call'];
                 }
-                if (isset($validatedData['weekly_taxable_amount'])) {
-                    $job->weekly_taxable_amount = $validatedData['weekly_taxable_amount'];
-                }
+               
                 if (isset($validatedData['weekly_non_taxable_amount'])) {
                     $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                 }
@@ -706,7 +703,7 @@ class RecruiterController extends Controller
 
             
             $job->save();
-            } elseif ($active == 'true') {
+            } elseif ($active == '1') {
                
                 $validatedData = $request->validate([
                     'job_type' => 'required|string',
@@ -737,7 +734,7 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-                    'weekly_taxable_amount' => 'nullable|integer',
+                   
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -751,7 +748,6 @@ class RecruiterController extends Controller
                     'on_call' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|integer',
                     'proffesion' => 'nullable|string',
-                   
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
                     'block_scheduling'  => 'nullable|string',
@@ -767,11 +763,9 @@ class RecruiterController extends Controller
                 $job->job_state = $validatedData['job_state'];
                 $job->weekly_pay = $validatedData['weekly_pay'];
                 $job->preferred_specialty = $validatedData['preferred_specialty'];
-                
                 $job->description = $validatedData['description'];
                 $job->start_date = $validatedData['start_date'];
                 $job->hours_shift = $validatedData['hours_shift'];
-                $job->hours_per_week = $validatedData['hours_per_week'];
                 $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
                 $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
                 $job->clinical_setting = $validatedData['clinical_setting'];
@@ -780,8 +774,6 @@ class RecruiterController extends Controller
                 $job->scrub_color = $validatedData['scrub_color'];
                 $job->rto = $validatedData['rto'];
                 $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-                $job->hours_per_week = $validatedData['hours_per_week'];
-                $job->hours_shift = $validatedData['hours_shift'];
                 $job->weeks_shift = $validatedData['weeks_shift'];
                 $job->referral_bonus = $validatedData['referral_bonus'];
                 $job->sign_on_bonus = $validatedData['sign_on_bonus'];
@@ -793,7 +785,7 @@ class RecruiterController extends Controller
                 $job->holiday = $validatedData['holiday'];
                 $job->orientation_rate = $validatedData['orientation_rate'];
                 $job->on_call = $validatedData['on_call'];
-                $job->weekly_taxable_amount = $validatedData['weekly_taxable_amount'];
+                
                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                 $job->proffesion = $validatedData['proffesion'];
                 $job->specialty = $validatedData['preferred_specialty'];
@@ -809,12 +801,14 @@ class RecruiterController extends Controller
                 $job->Emr = $validatedData['Emr'];
                 $job->call_back = $validatedData['call_back'];
                 
+                $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
+                $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
                 $job->employer_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
                 $job->total_employer_amount  =  ($job->preferred_assignment_duration * $job->employer_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus) ;
                 $job->goodwork_weekly_amount  = ($job->employer_weekly_amount) * 0.05;
                 $job->total_goodwork_amount  = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
                 $job->total_contract_amount = $job->total_goodwork_amount  + $job->total_employer_amount ;
-
+                
                 // Save the job data to the database
                 $job->save();
             } else {
@@ -944,4 +938,50 @@ class RecruiterController extends Controller
             // return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
         }
     }
+
+    
+        function get_job_to_edit(Request $request){
+            try {
+                $validated = $request->validate([
+                    'id' => 'required',
+                ]);
+            
+                $job_id = $request->id;
+                $job = Job::find($job_id);
+            
+                if ($job === null) {
+                    return response()->json(['error' => "Job not found"], 404);
+                }
+            
+                return response()->json($job);
+            } catch (\Exception $e) {
+                return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+            }
+        }
+
+        function edit_job(Request $request){
+            try {
+                $validated = $request->validate([
+                    'job_id' => 'required',
+                ]);
+            
+                $job_id = $request->job_id;
+                $job = Job::find($job_id);
+            
+                if ($job === null) {
+                    return response()->json(['error' => "Job not found"], 404);
+                }
+            
+                $job->update($request->all());
+
+                return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
+
+                return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
+            
+                //return response()->json($job);
+            } catch (\Exception $e) {
+                return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+            }
+        }
+
 }
