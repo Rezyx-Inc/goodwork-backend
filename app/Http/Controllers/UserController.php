@@ -10,7 +10,7 @@ use Hash;
 use App\Enums\Role;
 use File;
 /** Models */
-use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities, Nurse};
+use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities, Nurse, Professions, Specialties};
 
 class UserController extends Controller
 {
@@ -44,7 +44,8 @@ class UserController extends Controller
 
         $data['types'] = Keyword::where(['filter'=>'SettingType','active'=>'1'])->get();
         $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
-        $data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
+        $data['specialities'] = Speciality::select('full_name')->get();
+        $data['professions'] = Profession::select('full_name')->get();
         $data['vaccinations'] = Keyword::where(['filter'=>'Vaccinations','active'=>'1'])->get();
         $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
         $data['license_types'] = Keyword::where(['filter'=>'LicenseType','active'=>'1'])->get();

@@ -1,0 +1,2665 @@
+[
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.44336,
+      "longitude": -157.74981
+    },
+    "cityId": 7262734,
+    "name": "Marine Corps Base Hawaii - MCBH",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 9517,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "0RkevC7D7e",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.72861,
+      "longitude": -155.98167
+    },
+    "cityId": 5847746,
+    "name": "Kalaoa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 9644,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "1FyljldaYz",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.45759,
+      "longitude": -157.84431
+    },
+    "cityId": 5847207,
+    "name": "Kahalu‘u",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4738,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "1HgvuHENk3",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 22.21758,
+      "longitude": -159.47888
+    },
+    "cityId": 5852602,
+    "name": "Princeville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2158,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "1Ur2ku8Voc",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.85694,
+      "longitude": -156.31306
+    },
+    "cityId": 5850616,
+    "name": "Makawao",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 7184,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "1fFh7gKrK5",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.51429,
+      "longitude": -158.02464
+    },
+    "cityId": 5854857,
+    "name": "Whitmore Village",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4499,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "1nhqrmMcxo",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.50611,
+      "longitude": -154.91194
+    },
+    "cityId": 5851364,
+    "name": "Nanawale Estates",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1426,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "28b2OGfWHg",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.55583,
+      "longitude": -155.10806
+    },
+    "cityId": 5851253,
+    "name": "Mountain View",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3924,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "2BaoebfE6G",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.41629,
+      "longitude": -158.17531
+    },
+    "cityId": 5850492,
+    "name": "Mā‘ili",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 9488,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "2NwXxekJMY",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.92581,
+      "longitude": -159.48818
+    },
+    "cityId": 5851719,
+    "name": "‘Ōma‘o",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1301,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "3YreXyJSVi",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.46972,
+      "longitude": -154.91778
+    },
+    "cityId": 5850212,
+    "name": "Leilani Estates",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1560,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "3a7o09Pe9L",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.32776,
+      "longitude": -157.98301
+    },
+    "cityId": 5856563,
+    "name": "Iroquois Point",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3374,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.569Z",
+    "updatedAt": "2019-12-11T12:40:00.569Z",
+    "objectId": "3ufKTESExb",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.57967,
+      "longitude": -158.15313
+    },
+    "cityId": 5851156,
+    "name": "Mokulēia",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1811,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "5G9orIK2cw",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.43621,
+      "longitude": -158.1863
+    },
+    "cityId": 5854189,
+    "name": "Waianae",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 13177,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "6WP2QpZPqv",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.68973,
+      "longitude": -156.4419
+    },
+    "cityId": 5854450,
+    "name": "Wailea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 5938,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.009Z",
+    "updatedAt": "2019-12-11T12:40:00.009Z",
+    "objectId": "7LEnZV1f8o",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.68048,
+      "longitude": -157.95237
+    },
+    "cityId": 5847387,
+    "name": "Kahuku",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2614,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "7LLBN1TjL3",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.90733,
+      "longitude": -159.5944
+    },
+    "cityId": 5855631,
+    "name": "Hanapēpē",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2638,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "7PdBUfXST0",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.28906,
+      "longitude": -157.71734
+    },
+    "cityId": 7315245,
+    "name": "East Honolulu",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 49914,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "7uyXNNyXAS",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.52083,
+      "longitude": -155.9225
+    },
+    "cityId": 5848956,
+    "name": "Kealakekua",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2019,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "8W6GnyAUKg",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.56084,
+      "longitude": -155.01527
+    },
+    "cityId": 5851821,
+    "name": "Orchidlands Estates",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2815,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "8bihhG3lXg",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.51222,
+      "longitude": -155.08028
+    },
+    "cityId": 5855088,
+    "name": "Fern Acres",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1504,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "8epO35uHQ1",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.39392,
+      "longitude": -158.0267
+    },
+    "cityId": 7262791,
+    "name": "Royal Kunia",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 14525,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "90kI6KdkZd",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.57181,
+      "longitude": -155.96172
+    },
+    "cityId": 7262725,
+    "name": "Kahaluu-Keauhou",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3549,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "9DIex7M0aG",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.54306,
+      "longitude": -154.91583
+    },
+    "cityId": 5855802,
+    "name": "Hawaiian Beaches",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4280,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "9HEVNvV2Jg",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.61979,
+      "longitude": -155.94831
+    },
+    "cityId": 5856050,
+    "name": "Hōlualoa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 8538,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "9oAIhaJAMg",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.53806,
+      "longitude": -155.05222
+    },
+    "cityId": 5855803,
+    "name": "Hawaiian Acres",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2700,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "AP9FlQax9D",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.9309,
+      "longitude": -156.68778
+    },
+    "cityId": 5856852,
+    "name": "Kaanapali Landing",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1943,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "AcaZ7FE2no",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.64547,
+      "longitude": -157.9225
+    },
+    "cityId": 5850027,
+    "name": "Lā‘ie",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 6138,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "BEECPqV2Qv",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.57045,
+      "longitude": -157.87557
+    },
+    "cityId": 5852773,
+    "name": "Punalu‘u",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1164,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "BZLweYHnUw",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.74472,
+      "longitude": -155.095
+    },
+    "cityId": 5854599,
+    "name": "Wainaku",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1224,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "CC1e6nn03q",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.45,
+      "longitude": -158.00111
+    },
+    "cityId": 5851030,
+    "name": "Mililani Town",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 27629,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "CMXAC6lBjw",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.37848,
+      "longitude": -157.91388
+    },
+    "cityId": 5855327,
+    "name": "Hālawa Heights",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 13408,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "Ciq8D4MOmR",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 22.05271,
+      "longitude": -159.33781
+    },
+    "cityId": 5854469,
+    "name": "Wailua",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2254,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.009Z",
+    "updatedAt": "2019-12-11T12:40:00.009Z",
+    "objectId": "CnhF9GhO6o",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.39994,
+      "longitude": -157.79895
+    },
+    "cityId": 5848189,
+    "name": "Kaneohe",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 34597,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "Cuw43j4W7t",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.33999,
+      "longitude": -158.03039
+    },
+    "cityId": 5855070,
+    "name": "‘Ewa Gentry",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 22690,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "DgkrtGNge3",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.88953,
+      "longitude": -156.47432
+    },
+    "cityId": 5847411,
+    "name": "Kahului",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 26337,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "DoGXJfKE0w",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.02323,
+      "longitude": -155.67288
+    },
+    "cityId": 5854571,
+    "name": "Waimea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 9212,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "EDBqJ02Vwy",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.45627,
+      "longitude": -155.86466
+    },
+    "cityId": 7262717,
+    "name": "Honaunau-Napoopoo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2567,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "FyAcbJTgP7",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.46485,
+      "longitude": -158.01331
+    },
+    "cityId": 5854718,
+    "name": "Waipi‘o Acres",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 5236,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "G1ETKQqLZS",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.38667,
+      "longitude": -158.00917
+    },
+    "cityId": 5854686,
+    "name": "Waipahu",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 38216,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "GNENB3TLUA",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.41823,
+      "longitude": -157.99906
+    },
+    "cityId": 5854717,
+    "name": "Waipio",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 11674,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "GeCBDsdEXH",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.46627,
+      "longitude": -158.21037
+    },
+    "cityId": 5850511,
+    "name": "Mākaha",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 8278,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "Gq0TAUlQ36",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.92159,
+      "longitude": -159.50376
+    },
+    "cityId": 5850181,
+    "name": "Lawai",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2363,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "GuPEXK2ZBe",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.39806,
+      "longitude": -158.03028
+    },
+    "cityId": 5853965,
+    "name": "Village Park",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 11099,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "IAYFH0gbUm",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.59284,
+      "longitude": -158.10339
+    },
+    "cityId": 5855420,
+    "name": "Hale‘iwa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3970,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "IZsXV5yNpI",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.37944,
+      "longitude": -157.92167
+    },
+    "cityId": 5855319,
+    "name": "Hālawa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 14014,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "IhBUXTck7S",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.83361,
+      "longitude": -155.10722
+    },
+    "cityId": 5852322,
+    "name": "Pepeekeo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1789,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "J1pXkoGx7n",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.31066,
+      "longitude": -158.03638
+    },
+    "cityId": 7315246,
+    "name": "Ocean Pointe",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 8361,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "JEK9nMShpj",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.39362,
+      "longitude": -158.15429
+    },
+    "cityId": 5851349,
+    "name": "Nānākuli",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 12666,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "JJaVcMX8G7",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.43054,
+      "longitude": -157.81611
+    },
+    "cityId": 5855847,
+    "name": "He‘eia",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4963,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "JzUC2qDyNv",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.93942,
+      "longitude": -155.78931
+    },
+    "cityId": 5854410,
+    "name": "Waikoloa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4806,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "LFvkXh8KGx",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.33407,
+      "longitude": -157.70003
+    },
+    "cityId": 5854535,
+    "name": "Waimānalo Beach",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4481,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "Lj2BE9HkCk",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.99773,
+      "longitude": -159.35918
+    },
+    "cityId": 5855629,
+    "name": "Hanamā‘ulu",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3835,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "Ml8DcqD4XM",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.15306,
+      "longitude": -157.03677
+    },
+    "cityId": 5849718,
+    "name": "Kualapu‘u",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2027,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "NMbAZ7hVKf",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.62265,
+      "longitude": -155.03744
+    },
+    "cityId": 5848891,
+    "name": "Kea‘au",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2253,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.336Z",
+    "updatedAt": "2019-12-11T12:39:59.336Z",
+    "objectId": "O9R8xtm0YE",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.79094,
+      "longitude": -156.32695
+    },
+    "cityId": 8531961,
+    "name": "Kula",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 6452,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "ONT5DcUb7r",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.54639,
+      "longitude": -155.93194
+    },
+    "cityId": 5856094,
+    "name": "Honalo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2423,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.569Z",
+    "updatedAt": "2019-12-11T12:40:00.569Z",
+    "objectId": "PC5MFoUiA6",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.59333,
+      "longitude": -154.97306
+    },
+    "cityId": 5855809,
+    "name": "Hawaiian Paradise Park",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 11404,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "PItmFAOPkQ",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.47583,
+      "longitude": -158.19918
+    },
+    "cityId": 5850522,
+    "name": "Mākaha Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1341,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "QcZQRTRuzw",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.44276,
+      "longitude": -155.23398
+    },
+    "cityId": 5853971,
+    "name": "Volcano",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2575,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "RxvfXcMrgG",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.55445,
+      "longitude": -157.85103
+    },
+    "cityId": 5856759,
+    "name": "Ka‘a‘awa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1379,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.569Z",
+    "updatedAt": "2019-12-11T12:40:00.569Z",
+    "objectId": "RzOOCe4LTp",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.84861,
+      "longitude": -156.13639
+    },
+    "cityId": 5854471,
+    "name": "Wailua",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2156,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "SA5vY3tF2p",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.72991,
+      "longitude": -155.09073
+    },
+    "cityId": 5855927,
+    "name": "Hilo",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "HI",
+    "population": 43263,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "SQ9DLSAr9Y",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.37278,
+      "longitude": -157.77056
+    },
+    "cityId": 5850966,
+    "name": "Maunawili",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2040,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "U8ny8R7cJk",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.39734,
+      "longitude": -157.97516
+    },
+    "cityId": 5852275,
+    "name": "Pearl City",
+    "country": "US",
+    "muni": "7306149",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 47698,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "VCYHhqfUNy",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 22.14226,
+      "longitude": -159.31388
+    },
+    "cityId": 5857121,
+    "name": "Anahola",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2223,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "VaHjUzETjM",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.93022,
+      "longitude": -156.50458
+    },
+    "cityId": 7262796,
+    "name": "Waihee-Waiehu",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 8841,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "VsNEchVEEJ",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.83667,
+      "longitude": -156.33667
+    },
+    "cityId": 5852697,
+    "name": "Pukalani",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 7574,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "W9xXTpFEHI",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.65456,
+      "longitude": -158.06065
+    },
+    "cityId": 5852824,
+    "name": "Pupukea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4551,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "WLG0BHjzNd",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.70711,
+      "longitude": -156.35446
+    },
+    "cityId": 5849207,
+    "name": "Kēōkea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1612,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "WZ1xEa0s8Q",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.90333,
+      "longitude": -156.36944
+    },
+    "cityId": 5851942,
+    "name": "Paia",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2668,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "WzAKyH0PO7",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.33993,
+      "longitude": -158.12562
+    },
+    "cityId": 8555982,
+    "name": "Ko Olina",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1799,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:01.148Z",
+    "updatedAt": "2019-12-11T12:40:01.148Z",
+    "objectId": "XEWRwvcUUM",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.52694,
+      "longitude": -154.99306
+    },
+    "cityId": 5857040,
+    "name": "Ainaloa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2965,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "YkgV2XNW6e",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.38222,
+      "longitude": -157.93361
+    },
+    "cityId": 5856430,
+    "name": "‘Aiea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 9338,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.569Z",
+    "updatedAt": "2019-12-11T12:40:00.569Z",
+    "objectId": "YxtI9ZxhuN",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.9069,
+      "longitude": -159.46994
+    },
+    "cityId": 5849616,
+    "name": "Koloa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2144,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "ZD8mZv92rW",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.92881,
+      "longitude": -156.69422
+    },
+    "cityId": 5856844,
+    "name": "Kā‘anapali",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1045,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "ZwCfUfN6VW",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.06861,
+      "longitude": -155.765
+    },
+    "cityId": 5855815,
+    "name": "Hawaiian Ocean View",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4437,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "acfkSOHttv",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.24122,
+      "longitude": -155.83351
+    },
+    "cityId": 5855841,
+    "name": "Hāwī",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1081,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "bb2yYx5Qm3",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.20297,
+      "longitude": -155.4786
+    },
+    "cityId": 5851902,
+    "name": "Pāhala",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1356,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "bpzgsDLpKZ",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.96686,
+      "longitude": -159.71186
+    },
+    "cityId": 5849164,
+    "name": "Kekaha",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3537,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "c6C5FMwYSU",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.87429,
+      "longitude": -156.67663
+    },
+    "cityId": 5849996,
+    "name": "Lahaina",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 11704,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "cDGqLYJNTC",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.50279,
+      "longitude": -158.02464
+    },
+    "cityId": 5853992,
+    "name": "Wahiawā",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 17821,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "cINrGeVzIk",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.82757,
+      "longitude": -156.92399
+    },
+    "cityId": 5850059,
+    "name": "Lanai City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3102,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "cJcKNGEQea",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.23389,
+      "longitude": -155.80194
+    },
+    "cityId": 5848308,
+    "name": "Kapaau",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1734,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "cswXTDqggv",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.90738,
+      "longitude": -159.58322
+    },
+    "cityId": 5855028,
+    "name": "‘Ele‘ele",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2390,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "dEif7clMLw",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 22.07521,
+      "longitude": -159.31895
+    },
+    "cityId": 5848280,
+    "name": "Kapa‘a",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 10699,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "dftpdkYRqV",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.78718,
+      "longitude": -155.09326
+    },
+    "cityId": 5852140,
+    "name": "Pāpa‘ikou",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1314,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "drxG5iPDf0",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.40472,
+      "longitude": -157.94333
+    },
+    "cityId": 5854530,
+    "name": "Waimalu",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 13730,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "eEbJfIxWCQ",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.34614,
+      "longitude": -157.7238
+    },
+    "cityId": 5854532,
+    "name": "Waimanalo",
+    "country": "US",
+    "featureCode": "PPLA3",
+    "adminCode": "HI",
+    "population": 5451,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "eqo6g2be9W",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.96888,
+      "longitude": -159.40012
+    },
+    "cityId": 5852676,
+    "name": "Puhi",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2906,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "fD0aa6MPZn",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.64016,
+      "longitude": -155.99912
+    },
+    "cityId": 5847504,
+    "name": "Kailua-Kona",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 11975,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "fuHpdlk4uV",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 22.21208,
+      "longitude": -159.41342
+    },
+    "cityId": 5849346,
+    "name": "Kīlauea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2803,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "fzy99298th",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.35237,
+      "longitude": -158.08655
+    },
+    "cityId": 7262761,
+    "name": "Makakilo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 18248,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "gfXzib6aet",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.57389,
+      "longitude": -157.87861
+    },
+    "cityId": 5852774,
+    "name": "Punaluu",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1164,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "iz8cMD09vL",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.31556,
+      "longitude": -158.00722
+    },
+    "cityId": 5855051,
+    "name": "‘Ewa Beach",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 14955,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "jEhpAcmFcV",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.98121,
+      "longitude": -159.3721
+    },
+    "cityId": 5850248,
+    "name": "Lihue",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "HI",
+    "population": 6455,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "kFpzze3wvv",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.85806,
+      "longitude": -156.50694
+    },
+    "cityId": 5854354,
+    "name": "Waikapū",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2965,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "kNDv7ICpJi",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.91633,
+      "longitude": -159.58995
+    },
+    "cityId": 5855644,
+    "name": "Hanapēpē Heights",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2692,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "kU7ZPk5Eam",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.44472,
+      "longitude": -157.83778
+    },
+    "cityId": 5856516,
+    "name": "‘Āhuimanu",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 8810,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.569Z",
+    "updatedAt": "2019-12-11T12:40:00.569Z",
+    "objectId": "kpXEQGaL8g",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.76462,
+      "longitude": -156.44578
+    },
+    "cityId": 5849297,
+    "name": "Kīhei",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 20881,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "kydxUscstM",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.07931,
+      "longitude": -155.46691
+    },
+    "cityId": 5856111,
+    "name": "Honoka‘a",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 2258,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.569Z",
+    "updatedAt": "2019-12-11T12:40:00.569Z",
+    "objectId": "mKceQWEFn4",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.75806,
+      "longitude": -155.99028
+    },
+    "cityId": 5855471,
+    "name": "Hana",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1235,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "mLewMd4SI1",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.60361,
+      "longitude": -155.05722
+    },
+    "cityId": 5849961,
+    "name": "Kurtistown",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1298,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.337Z",
+    "updatedAt": "2019-12-11T12:39:59.337Z",
+    "objectId": "mzg9uDnDUt",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.97533,
+      "longitude": -156.67826
+    },
+    "cityId": 7262771,
+    "name": "Napili-Honokowai",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 7261,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "oRFtCBxhAV",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.33967,
+      "longitude": -157.96018
+    },
+    "cityId": 7262713,
+    "name": "Hickam Field",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 6920,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "oY00GQ7ro6",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.09363,
+      "longitude": -157.02613
+    },
+    "cityId": 5848652,
+    "name": "Kaunakakai",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3425,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "ohFQnlpTmI",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.6076,
+      "longitude": -157.90868
+    },
+    "cityId": 5855741,
+    "name": "Hau‘ula",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4148,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.568Z",
+    "updatedAt": "2019-12-11T12:40:00.568Z",
+    "objectId": "pKM9HkO4zw",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.95707,
+      "longitude": -159.66893
+    },
+    "cityId": 5854564,
+    "name": "Waimea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 1855,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "rIdx5nv6ny",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 19.49694,
+      "longitude": -155.92167
+    },
+    "cityId": 5857264,
+    "name": "Captain Cook",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3429,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "rilV0LRcBO",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.40241,
+      "longitude": -157.74054
+    },
+    "cityId": 5847486,
+    "name": "Kailua",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 38635,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "sCx7nYRn7h",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.10028,
+      "longitude": -156.76139
+    },
+    "cityId": 5854173,
+    "name": "Waialua",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3751,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "sWBik7mjXq",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.89133,
+      "longitude": -156.50604
+    },
+    "cityId": 5854496,
+    "name": "Wailuku",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "HI",
+    "population": 15313,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "tq56qAioYe",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.34694,
+      "longitude": -158.08583
+    },
+    "cityId": 5850554,
+    "name": "Makakilo City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 15383,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.706Z",
+    "updatedAt": "2019-12-11T12:39:59.706Z",
+    "objectId": "udboWCmM5y",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.33555,
+      "longitude": -158.0582
+    },
+    "cityId": 6957263,
+    "name": "Kapolei",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 15186,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "upCkGeCB9W",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.57688,
+      "longitude": -158.13154
+    },
+    "cityId": 5854171,
+    "name": "Waialua",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 3860,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.008Z",
+    "updatedAt": "2019-12-11T12:40:00.008Z",
+    "objectId": "veXYegtfM3",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.49837,
+      "longitude": -158.06515
+    },
+    "cityId": 7262790,
+    "name": "Schofield Barracks",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 16370,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "xXGKAvPN54",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 22.07244,
+      "longitude": -159.37677
+    },
+    "cityId": 7262802,
+    "name": "Wailua Homesteads",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 5188,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "xcBj6g7IcB",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 20.92187,
+      "longitude": -156.30508
+    },
+    "cityId": 7262697,
+    "name": "Haiku-Pauwela",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 8118,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.872Z",
+    "updatedAt": "2019-12-11T12:40:00.872Z",
+    "objectId": "y393zgkAzy",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.30694,
+      "longitude": -157.85833
+    },
+    "cityId": 5856195,
+    "name": "Honolulu",
+    "country": "US",
+    "featureCode": "PPLA",
+    "adminCode": "HI",
+    "population": 371657,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.569Z",
+    "updatedAt": "2019-12-11T12:40:00.569Z",
+    "objectId": "yPdL1VHPfV",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.92416,
+      "longitude": -159.52686
+    },
+    "cityId": 5847662,
+    "name": "Kalāheo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 4595,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:39:59.330Z",
+    "updatedAt": "2019-12-11T12:39:59.330Z",
+    "objectId": "zDw4cBEVk0",
+    "className": "HI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 21.34127,
+      "longitude": -158.0397
+    },
+    "cityId": 5855073,
+    "name": "‘Ewa Villages",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "HI",
+    "population": 6108,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "99Odvp6TuS"
+    },
+    "createdAt": "2019-12-11T12:40:00.268Z",
+    "updatedAt": "2019-12-11T12:40:00.268Z",
+    "objectId": "zaKlTN6Ute",
+    "className": "HI"
+  }
+]

@@ -1,0 +1,4600 @@
+[
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.75589,
+      "longitude": -111.67096
+    },
+    "cityId": 5551665,
+    "name": "Arizona City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 10475,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "0GSGPARyh8",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.07087,
+      "longitude": -112.15071
+    },
+    "cityId": 5285131,
+    "name": "Black Canyon City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2837,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "0RgM36u5WD",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.78188,
+      "longitude": -114.47775
+    },
+    "cityId": 7315173,
+    "name": "Golden Shores",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2047,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "0YE38WoNBy",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.22174,
+      "longitude": -110.92648
+    },
+    "cityId": 5318313,
+    "name": "Tucson",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 531641,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "1EAwv1mkKl",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.04477,
+      "longitude": -110.48539
+    },
+    "cityId": 5289812,
+    "name": "Cibecue",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1713,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.784Z",
+    "updatedAt": "2019-12-11T12:38:30.784Z",
+    "objectId": "1RkR0u2rzj",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.14119,
+      "longitude": -111.02843
+    },
+    "cityId": 5293183,
+    "name": "Drexel Heights",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 27749,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "2EldX9chlp",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.39422,
+      "longitude": -110.7865
+    },
+    "cityId": 5296013,
+    "name": "Globe",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 7396,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "2HVAe3jVVb",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.22333,
+      "longitude": -114.22301
+    },
+    "cityId": 5296189,
+    "name": "Golden Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 8370,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "3OgWcVSP0x",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.52916,
+      "longitude": -113.42549
+    },
+    "cityId": 5308335,
+    "name": "Peach Springs",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1090,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "4A37MSuxnM",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.15445,
+      "longitude": -109.55261
+    },
+    "cityId": 5289626,
+    "name": "Chinle",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4518,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.187Z",
+    "updatedAt": "2019-12-11T12:38:30.187Z",
+    "objectId": "4jIZ2XmI0i",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.71287,
+      "longitude": -110.06758
+    },
+    "cityId": 5317714,
+    "name": "Tombstone",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1312,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "4pSZQmEfXj",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.69002,
+      "longitude": -112.54101
+    },
+    "cityId": 5321135,
+    "name": "Williamson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5438,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "5JRhTNg4te",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.46504,
+      "longitude": -110.09123
+    },
+    "cityId": 5316960,
+    "name": "Taylor",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4151,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "5NsPekiW7w",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.07672,
+      "longitude": -111.7393
+    },
+    "cityId": 5312393,
+    "name": "Sacaton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2672,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "6H7xIIrTBY",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.04637,
+      "longitude": -112.15406
+    },
+    "cityId": 5296409,
+    "name": "Grand Canyon Village",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1550,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "6Y1wqdUQVP",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.2542,
+      "longitude": -111.26125
+    },
+    "cityId": 5316215,
+    "name": "Sun Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1755,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "6mgvC6L202",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.19952,
+      "longitude": -110.96842
+    },
+    "cityId": 5315313,
+    "name": "South Tucson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5715,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "6skFyJrucJ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.61171,
+      "longitude": -111.71736
+    },
+    "cityId": 5295177,
+    "name": "Fountain Hills",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 23899,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "6uuS91ldFq",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.26504,
+      "longitude": -114.03226
+    },
+    "cityId": 7261968,
+    "name": "New Kingman-Butler",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 12134,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "743T8te2hq",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.14778,
+      "longitude": -114.5683
+    },
+    "cityId": 5287565,
+    "name": "Bullhead City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 39445,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "7eZbYsUu1e",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.44838,
+      "longitude": -112.07404
+    },
+    "cityId": 5308655,
+    "name": "Phoenix",
+    "country": "US",
+    "featureCode": "PPLA",
+    "adminCode": "AZ",
+    "population": 1563025,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "7l8jppVq1X",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.83395,
+      "longitude": -109.70758
+    },
+    "cityId": 5312476,
+    "name": "Safford",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 9683,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "7mDUmL8veK",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.36282,
+      "longitude": -112.16932
+    },
+    "cityId": 5301641,
+    "name": "Laveen",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5930,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "7qUJnAjstg",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.0509,
+      "longitude": -109.29618
+    },
+    "cityId": 5290124,
+    "name": "Clifton",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 3685,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "84mZZxcj4M",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.04786,
+      "longitude": -110.71203
+    },
+    "cityId": 5319311,
+    "name": "Vail",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 10208,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "8GW3wlEnSw",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.05701,
+      "longitude": -110.91067
+    },
+    "cityId": 5300854,
+    "name": "Kearny",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2038,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "8RHVYApNF9",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.59644,
+      "longitude": -114.70968
+    },
+    "cityId": 5315062,
+    "name": "Somerton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 15048,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "8ipr8V3hCu",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.5806,
+      "longitude": -112.23738
+    },
+    "cityId": 5308480,
+    "name": "Peoria",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 171237,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "8leZ6whDpW",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.96786,
+      "longitude": -110.29452
+    },
+    "cityId": 5553284,
+    "name": "Benson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4888,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "93DFxAbDvM",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.15002,
+      "longitude": -114.28912
+    },
+    "cityId": 5308116,
+    "name": "Parker",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 3046,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "98jPFSK62X",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.1911,
+      "longitude": -111.528
+    },
+    "cityId": 7310164,
+    "name": "San Tan Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 81321,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "A274UrxuvV",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.72532,
+      "longitude": -114.6244
+    },
+    "cityId": 5322053,
+    "name": "Yuma",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 94139,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "AGm7vk2XkY",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.72731,
+      "longitude": -111.0612
+    },
+    "cityId": 5551650,
+    "name": "Arivaca Junction",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1090,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "AJ1p3KQA89",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.29367,
+      "longitude": -111.30429
+    },
+    "cityId": 5296106,
+    "name": "Gold Camp",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 10159,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "AKJxUxmX1x",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.86724,
+      "longitude": -111.80543
+    },
+    "cityId": 5550192,
+    "name": "West Sedona",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 11299,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "AZIeAO1Ska",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.24866,
+      "longitude": -111.6343
+    },
+    "cityId": 5310193,
+    "name": "Queen Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 34614,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "AkKwtuP041",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.13499,
+      "longitude": -111.23986
+    },
+    "cityId": 5318279,
+    "name": "Tuba City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 8611,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "AkzumXEEA1",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.72979,
+      "longitude": -109.71397
+    },
+    "cityId": 5316540,
+    "name": "Swift Trail Junction",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2935,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "An5PXUidCA",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.93306,
+      "longitude": -114.58885
+    },
+    "cityId": 5305230,
+    "name": "Mohave Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2616,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "AvTwvoBrEw",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.7559,
+      "longitude": -111.55484
+    },
+    "cityId": 5294167,
+    "name": "Eloy",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 17059,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.069Z",
+    "updatedAt": "2019-12-11T12:38:31.069Z",
+    "objectId": "AyO4U0tq2f",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.34591,
+      "longitude": -111.24621
+    },
+    "cityId": 5308778,
+    "name": "Picture Rocks",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 9563,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "B8qoXQAjbj",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.79359,
+      "longitude": -114.01275
+    },
+    "cityId": 7315184,
+    "name": "Scenic",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1643,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "BBjW40BgVA",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.41505,
+      "longitude": -111.54958
+    },
+    "cityId": 5551535,
+    "name": "Apache Junction",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 38074,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "BDQl7bCpjR",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.62787,
+      "longitude": -110.33397
+    },
+    "cityId": 5298978,
+    "name": "Huachuca City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1755,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "BetXYPva3T",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.85425,
+      "longitude": -110.9937
+    },
+    "cityId": 5296802,
+    "name": "Green Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 21391,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "BmqRzZ7CR6",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.03145,
+      "longitude": -111.38734
+    },
+    "cityId": 5294902,
+    "name": "Florence",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 31110,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.069Z",
+    "updatedAt": "2019-12-11T12:38:31.069Z",
+    "objectId": "CSBrXXhpQO",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.53115,
+      "longitude": -111.94265
+    },
+    "cityId": 5308049,
+    "name": "Paradise Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 13922,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "CeFycnQOwi",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.50556,
+      "longitude": -110.92111
+    },
+    "cityId": 5288784,
+    "name": "Catalina",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 7569,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "CiHzbyAcre",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.38529,
+      "longitude": -110.32068
+    },
+    "cityId": 5292715,
+    "name": "Dilkon",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1184,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "CrYEERdcuR",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.59722,
+      "longitude": -111.07431
+    },
+    "cityId": 5300756,
+    "name": "Kaibito",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1522,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "D3lXx7O0Qn",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.83333,
+      "longitude": -111.95083
+    },
+    "cityId": 5288858,
+    "name": "Cave Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5341,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.187Z",
+    "updatedAt": "2019-12-11T12:38:30.187Z",
+    "objectId": "DQYIWJ4Iig",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.43532,
+      "longitude": -112.35821
+    },
+    "cityId": 5296266,
+    "name": "Goodyear",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 79003,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "DUG7eoZpHs",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.47148,
+      "longitude": -110.97648
+    },
+    "cityId": 5311433,
+    "name": "Rio Rico",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 18962,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "Djhkh07Iz0",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.03117,
+      "longitude": -111.58263
+    },
+    "cityId": 5285857,
+    "name": "Blackwater",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1062,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "E0pFdj5qt5",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.49337,
+      "longitude": -112.35794
+    },
+    "cityId": 5302053,
+    "name": "Litchfield Park",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5533,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.397Z",
+    "updatedAt": "2019-12-11T12:38:31.397Z",
+    "objectId": "E928sQF2jY",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.41414,
+      "longitude": -110.56956
+    },
+    "cityId": 7261418,
+    "name": "Heber-Overgaard",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2822,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "EFj6gPqRSA",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.32341,
+      "longitude": -110.9951
+    },
+    "cityId": 5288661,
+    "name": "Casas Adobes",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 66795,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "EMDGCwXzgT",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.90225,
+      "longitude": -110.15818
+    },
+    "cityId": 5284580,
+    "name": "Holbrook",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 5019,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "EYDzLfYCfc",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.07867,
+      "longitude": -109.36535
+    },
+    "cityId": 5305503,
+    "name": "Morenci",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1489,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "EahjJnUpJF",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.43785,
+      "longitude": -111.31539
+    },
+    "cityId": 5552323,
+    "name": "Avra Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 6050,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "EdN2oMMOYh",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.41035,
+      "longitude": -111.01732
+    },
+    "cityId": 5317867,
+    "name": "Tortolita",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4274,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "EiLsHBs4VK",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.36678,
+      "longitude": -110.7746
+    },
+    "cityId": 7315185,
+    "name": "Six Shooter Canyon",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1019,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "EpzkPAwkls",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.71904,
+      "longitude": -114.66005
+    },
+    "cityId": 7315164,
+    "name": "Avenue B and C",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4176,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "ExUriCrAGc",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.7178,
+      "longitude": -111.92154
+    },
+    "cityId": 5290912,
+    "name": "Cornville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3280,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "FB80OS5umd",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.34503,
+      "longitude": -112.15905
+    },
+    "cityId": 5315517,
+    "name": "Spring Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1148,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "Fu714SAUxz",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.65783,
+      "longitude": -114.41189
+    },
+    "cityId": 5295143,
+    "name": "Fortuna Foothills",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 26265,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "G9tHRG4GVC",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.95586,
+      "longitude": -110.33401
+    },
+    "cityId": 5300182,
+    "name": "Joseph City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1386,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "Gvvmbr4RrZ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.83171,
+      "longitude": -111.29457
+    },
+    "cityId": 5317749,
+    "name": "Tonto Basin",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1424,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "HWobsNMinj",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.61091,
+      "longitude": -110.77093
+    },
+    "cityId": 5307460,
+    "name": "Oracle",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3686,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "Hf0uvFQWWX",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.4839,
+      "longitude": -114.32245
+    },
+    "cityId": 5301388,
+    "name": "Lake Havasu City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 53553,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "HmKqjoPbDJ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.73919,
+      "longitude": -112.00988
+    },
+    "cityId": 5291033,
+    "name": "Cottonwood",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 11818,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "HrbKGpVmdW",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.29785,
+      "longitude": -110.9187
+    },
+    "cityId": 5288786,
+    "name": "Catalina Foothills",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 50796,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.187Z",
+    "updatedAt": "2019-12-11T12:38:30.187Z",
+    "objectId": "I1Ybon1PJJ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.41421,
+      "longitude": -111.94348
+    },
+    "cityId": 5317071,
+    "name": "Tempe Junction",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 158368,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "I2oKjCVenf",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.16393,
+      "longitude": -109.98955
+    },
+    "cityId": 5301442,
+    "name": "Lake of the Woods",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4094,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "I2oTJGaq8X",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.86974,
+      "longitude": -111.76099
+    },
+    "cityId": 5313667,
+    "name": "Sedona",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 10388,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "IHWFqtYlj9",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.54865,
+      "longitude": -112.44433
+    },
+    "cityId": 5289961,
+    "name": "Citrus Park",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4028,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "ISOxH7MX2e",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.53472,
+      "longitude": -110.87361
+    },
+    "cityId": 7249307,
+    "name": "Saddle Brooke",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 9614,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "JKI0ZWodCX",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.34038,
+      "longitude": -110.93425
+    },
+    "cityId": 5306611,
+    "name": "Nogales",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 20252,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "JhkgWAF7w3",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.08529,
+      "longitude": -111.66599
+    },
+    "cityId": 5305714,
+    "name": "Mountainaire",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1119,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "K2bRgaqhTm",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.21116,
+      "longitude": -111.87542
+    },
+    "cityId": 5316209,
+    "name": "Sun Lakes",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 13975,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "KKGFbmecGe",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.94554,
+      "longitude": -112.52659
+    },
+    "cityId": 5295349,
+    "name": "Fredonia",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1322,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "KeaZvGggyH",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.14254,
+      "longitude": -109.96038
+    },
+    "cityId": 5309135,
+    "name": "Pinetop-Lakeside",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4345,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "KuAyUA4NTy",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.59754,
+      "longitude": -112.27182
+    },
+    "cityId": 5316201,
+    "name": "Sun City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 37499,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.595Z",
+    "updatedAt": "2019-12-11T12:38:32.595Z",
+    "objectId": "LYdeuyDMOm",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.16253,
+      "longitude": -112.85074
+    },
+    "cityId": 5290559,
+    "name": "Congress",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1975,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "MFRAYQl95p",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.86211,
+      "longitude": -111.44063
+    },
+    "cityId": 7261646,
+    "name": "LeChee",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1443,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "MSQzTI4dGt",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.34588,
+      "longitude": -111.8507
+    },
+    "cityId": 5312845,
+    "name": "San Carlos",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4103,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "MsapMi4JtP",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.19807,
+      "longitude": -111.65127
+    },
+    "cityId": 5294810,
+    "name": "Flagstaff",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 70320,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.069Z",
+    "updatedAt": "2019-12-11T12:38:31.069Z",
+    "objectId": "N1iWzgn3YN",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.25504,
+      "longitude": -111.25847
+    },
+    "cityId": 5315713,
+    "name": "Star Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2277,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "N3nBUwR3hW",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.33538,
+      "longitude": -109.94813
+    },
+    "cityId": 5306112,
+    "name": "Naco",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1046,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "Nco8thm3N0",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.7584,
+      "longitude": -109.71619
+    },
+    "cityId": 5288063,
+    "name": "Cactus Flat",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1518,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "Nro6c7EmKe",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.37172,
+      "longitude": -112.86071
+    },
+    "cityId": 5550996,
+    "name": "Ajo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3304,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "O1OZxsBvUI",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.29396,
+      "longitude": -111.00982
+    },
+    "cityId": 5294937,
+    "name": "Flowing Wells",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 16419,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.069Z",
+    "updatedAt": "2019-12-11T12:38:31.069Z",
+    "objectId": "O3uq36NODb",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.28308,
+      "longitude": -109.20704
+    },
+    "cityId": 5298887,
+    "name": "Houck",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1024,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "OBI8ACwNiL",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.26057,
+      "longitude": -111.94877
+    },
+    "cityId": 5308164,
+    "name": "Parks",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1188,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "OC1hz354Lb",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.13428,
+      "longitude": -110.12004
+    },
+    "cityId": 5287938,
+    "name": "Bylas",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1962,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "ODAyMwpf2T",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.35283,
+      "longitude": -111.78903
+    },
+    "cityId": 5295903,
+    "name": "Gilbert",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 247542,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "OTHuuljj3z",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.91195,
+      "longitude": -114.60663
+    },
+    "cityId": 5321321,
+    "name": "Willow Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1062,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "OmlOwRB0Ri",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.86726,
+      "longitude": -112.14682
+    },
+    "cityId": 5551498,
+    "name": "Anthem",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 21700,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "OuGrdxWfT6",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.97784,
+      "longitude": -111.51762
+    },
+    "cityId": 5290663,
+    "name": "Coolidge",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 12297,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "PEWQ44luOO",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.07675,
+      "longitude": -111.31371
+    },
+    "cityId": 5317377,
+    "name": "Three Points",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5581,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "PccRErz3tF",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.25421,
+      "longitude": -110.02983
+    },
+    "cityId": 5314245,
+    "name": "Show Low",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 10860,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "Pd6ak1Y2lK",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.55454,
+      "longitude": -110.30369
+    },
+    "cityId": 5314328,
+    "name": "Sierra Vista",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 43355,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "PjOBWmF8C6",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.05811,
+      "longitude": -112.04764
+    },
+    "cityId": 5303752,
+    "name": "Maricopa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 48602,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "PkGL5ZD2MA",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.91202,
+      "longitude": -111.88123
+    },
+    "cityId": 5313737,
+    "name": "Sells",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2495,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "PyJxzjIhZ3",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.30781,
+      "longitude": -112.10349
+    },
+    "cityId": 5290834,
+    "name": "Cordes Lakes",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2633,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "QBiWEYLBIm",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.70935,
+      "longitude": -114.67822
+    },
+    "cityId": 7315169,
+    "name": "Donovan Estates",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1508,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "QHj6VE0Som",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.63224,
+      "longitude": -111.77793
+    },
+    "cityId": 5301407,
+    "name": "Lake Montezuma",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4706,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "QJaHiZyRKK",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.89656,
+      "longitude": -109.82835
+    },
+    "cityId": 5308867,
+    "name": "Pima",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2524,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "Qzg8iz0JyX",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.00167,
+      "longitude": -109.96355
+    },
+    "cityId": 7315177,
+    "name": "North Fork",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1417,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "RNOHbCjNxK",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.12033,
+      "longitude": -111.88819
+    },
+    "cityId": 5288629,
+    "name": "Casa Blanca",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1388,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "RaMfwoFvGY",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.13238,
+      "longitude": -111.11414
+    },
+    "cityId": 7262440,
+    "name": "Valencia West",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 9355,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.199Z",
+    "updatedAt": "2019-12-11T12:38:33.199Z",
+    "objectId": "SAU1ry6Zay",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.34455,
+      "longitude": -109.54534
+    },
+    "cityId": 5293083,
+    "name": "Douglas",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 16592,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "SCJGP9rZMR",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.54002,
+      "longitude": -112.4685
+    },
+    "cityId": 5309842,
+    "name": "Prescott",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 41899,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "SIEX2Bh8FZ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.7114,
+      "longitude": -109.54205
+    },
+    "cityId": 5295585,
+    "name": "Ganado",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1210,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "SYbNuquiaM",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.91472,
+      "longitude": -111.45583
+    },
+    "cityId": 5307778,
+    "name": "Page",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 7490,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "SwwtoOnc1E",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.39922,
+      "longitude": -110.86872
+    },
+    "cityId": 5304640,
+    "name": "Miami",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1783,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "TAaSj0Glfg",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.7809,
+      "longitude": -111.76227
+    },
+    "cityId": 7260892,
+    "name": "Village of Oak Creek (Big Park)",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 6147,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "TIveR0k6Ik",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.95381,
+      "longitude": -112.98132
+    },
+    "cityId": 7315166,
+    "name": "Centennial Park",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1264,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "TsHByGfWQT",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.72254,
+      "longitude": -111.67569
+    },
+    "cityId": 5311414,
+    "name": "Rio Verde",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1811,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "U4rojiQMXC",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.58113,
+      "longitude": -113.20464
+    },
+    "cityId": 5552575,
+    "name": "Bagdad",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1876,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "Ueo96R1Gk7",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.35716,
+      "longitude": -109.56352
+    },
+    "cityId": 5309291,
+    "name": "Pirtleville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1744,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "VM8mPlG6k0",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.67283,
+      "longitude": -114.14688
+    },
+    "cityId": 5320160,
+    "name": "Wellton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2936,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "Vdby6KAZRt",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.72778,
+      "longitude": -110.25458
+    },
+    "cityId": 5300830,
+    "name": "Kayenta",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5189,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "VmLCVyOpDC",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.99008,
+      "longitude": -110.43535
+    },
+    "cityId": 5304488,
+    "name": "Mescal",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1812,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "W75BO1Z7W4",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.02419,
+      "longitude": -110.69736
+    },
+    "cityId": 5321473,
+    "name": "Winslow",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 9600,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "WQdbW48RAV",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.83667,
+      "longitude": -110.38152
+    },
+    "cityId": 5294698,
+    "name": "First Mesa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1555,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.069Z",
+    "updatedAt": "2019-12-11T12:38:31.069Z",
+    "objectId": "WgDBpMe9oX",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.83699,
+      "longitude": -109.96427
+    },
+    "cityId": 5320800,
+    "name": "Whiteriver",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4104,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "X80sPQBoc4",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.59194,
+      "longitude": -114.27329
+    },
+    "cityId": 5292912,
+    "name": "Dolan Springs",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2033,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "XE5eUq5BtZ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.59979,
+      "longitude": -110.63093
+    },
+    "cityId": 5312933,
+    "name": "San Manuel",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3551,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "XXUYv5lxoH",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.31034,
+      "longitude": -110.45538
+    },
+    "cityId": 5308497,
+    "name": "Peridot",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1350,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "YDLk7SypK3",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.94782,
+      "longitude": -112.71683
+    },
+    "cityId": 5295860,
+    "name": "Gila Bend",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2025,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "YJa7SZmF6b",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.39781,
+      "longitude": -112.23627
+    },
+    "cityId": 5304060,
+    "name": "Mayer",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1497,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "YL8BMKgeXW",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.60419,
+      "longitude": -114.52523
+    },
+    "cityId": 5293951,
+    "name": "Ehrenberg",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1470,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.069Z",
+    "updatedAt": "2019-12-11T12:38:31.069Z",
+    "objectId": "ZSOg44vzKB",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.96536,
+      "longitude": -110.77564
+    },
+    "cityId": 5290925,
+    "name": "Corona de Tucson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5675,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "ZY7x8EtKUR",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.5539,
+      "longitude": -114.37246
+    },
+    "cityId": 5292505,
+    "name": "Desert Hills",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2245,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "aEZhENuLMI",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.7803,
+      "longitude": -111.76265
+    },
+    "cityId": 5553533,
+    "name": "Big Park",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 6695,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "apcL6s7dOQ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.35278,
+      "longitude": -109.61789
+    },
+    "cityId": 5303643,
+    "name": "Many Farms",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1348,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "c3ypCOpIjA",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.30616,
+      "longitude": -111.84125
+    },
+    "cityId": 5289282,
+    "name": "Chandler",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 260828,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.187Z",
+    "updatedAt": "2019-12-11T12:38:30.187Z",
+    "objectId": "cGGHJqPXc5",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.41477,
+      "longitude": -111.90931
+    },
+    "cityId": 5317058,
+    "name": "Tempe",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 175826,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "cU19EXt5aH",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.51337,
+      "longitude": -110.07845
+    },
+    "cityId": 5314943,
+    "name": "Snowflake",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5666,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "d1S5AtnMeZ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.37088,
+      "longitude": -111.96292
+    },
+    "cityId": 5296962,
+    "name": "Guadalupe",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 6177,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "d6DHMCLP06",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.24946,
+      "longitude": -112.191
+    },
+    "cityId": 5321098,
+    "name": "Williams",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3122,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "dJxBIwPySo",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.7105,
+      "longitude": -112.01152
+    },
+    "cityId": 7176038,
+    "name": "Verde Village",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 11605,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "dRSKAh96Q9",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.37145,
+      "longitude": -111.43691
+    },
+    "cityId": 7261353,
+    "name": "Gold Canyon",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 10159,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "eH7sGmDSdB",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.18944,
+      "longitude": -114.05301
+    },
+    "cityId": 5301067,
+    "name": "Kingman",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 28912,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "eMUtxrAAlc",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.8795,
+      "longitude": -111.75735
+    },
+    "cityId": 5288636,
+    "name": "Casa Grande",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 51460,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "etOFsQFyLH",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.70105,
+      "longitude": -110.33987
+    },
+    "cityId": 7262527,
+    "name": "Whetstone",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2617,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.199Z",
+    "updatedAt": "2019-12-11T12:38:33.199Z",
+    "objectId": "g2onbRXiH5",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.50921,
+      "longitude": -111.89903
+    },
+    "cityId": 5313457,
+    "name": "Scottsdale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 236839,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "gnZZ8xPWWm",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.00221,
+      "longitude": -114.06829
+    },
+    "cityId": 5304306,
+    "name": "Meadview",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1224,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "gy3OwMbkz6",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.90425,
+      "longitude": -110.21424
+    },
+    "cityId": 5312572,
+    "name": "Saint David",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1699,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.316Z",
+    "updatedAt": "2019-12-11T12:38:32.316Z",
+    "objectId": "hfegJ4P0n3",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.95731,
+      "longitude": -110.34202
+    },
+    "cityId": 5320513,
+    "name": "Whetstone",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2617,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "hmgsPoBmIh",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.29395,
+      "longitude": -111.09623
+    },
+    "cityId": 5316405,
+    "name": "Superior",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2943,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "iFWutLXGjo",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.77113,
+      "longitude": -112.05794
+    },
+    "cityId": 5290007,
+    "name": "Clarkdale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4240,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "iXSHn8606c",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.96864,
+      "longitude": -112.72962
+    },
+    "cityId": 5320871,
+    "name": "Wickenburg",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 6806,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "j1bHoNC7uy",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.03224,
+      "longitude": -110.75291
+    },
+    "cityId": 5301692,
+    "name": "LeChee",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1443,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "j5f2sCnzy4",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.38447,
+      "longitude": -111.45514
+    },
+    "cityId": 5308938,
+    "name": "Pine",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1963,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "jHfjKCtnQa",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.45385,
+      "longitude": -110.21637
+    },
+    "cityId": 7261785,
+    "name": "Sierra Vista Southeast",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 14797,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "jiJPceAEZ8",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.56364,
+      "longitude": -111.85432
+    },
+    "cityId": 5288261,
+    "name": "Camp Verde",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 11155,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "k6yC0nkAXs",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.44815,
+      "longitude": -109.92841
+    },
+    "cityId": 5284905,
+    "name": "Bisbee",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 5208,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "kCKfUFUNhY",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.64474,
+      "longitude": -109.09565
+    },
+    "cityId": 5312634,
+    "name": "Saint Michaels",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1443,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.316Z",
+    "updatedAt": "2019-12-11T12:38:32.316Z",
+    "objectId": "kDhTpe9RX2",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.61309,
+      "longitude": -112.3246
+    },
+    "cityId": 5293996,
+    "name": "El Mirage",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 33935,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.069Z",
+    "updatedAt": "2019-12-11T12:38:31.069Z",
+    "objectId": "kHqzwnaIVL",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.82226,
+      "longitude": -111.9182
+    },
+    "cityId": 5288523,
+    "name": "Carefree",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3610,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "lGhiQNkFuN",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.74446,
+      "longitude": -109.07648
+    },
+    "cityId": 5295093,
+    "name": "Fort Defiance",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3624,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "lIyBo5dPTQ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.95758,
+      "longitude": -110.95565
+    },
+    "cityId": 5312544,
+    "name": "Sahuarita",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 25707,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "lmXtVR2WMm",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.487,
+      "longitude": -114.78218
+    },
+    "cityId": 5312913,
+    "name": "San Luis",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 31520,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "ls4OP9BDjw",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.41088,
+      "longitude": -113.86271
+    },
+    "cityId": 7315189,
+    "name": "Valle Vista",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1659,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.488Z",
+    "updatedAt": "2019-12-11T12:38:33.488Z",
+    "objectId": "m4CcVV6ReJ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.53865,
+      "longitude": -112.18599
+    },
+    "cityId": 5295985,
+    "name": "Glendale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 240126,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "mlxkVelNGQ",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.34562,
+      "longitude": -110.45504
+    },
+    "cityId": 5312844,
+    "name": "San Carlos",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4038,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "n1lHWmSQ63",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.13355,
+      "longitude": -109.28834
+    },
+    "cityId": 5315525,
+    "name": "Springerville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1954,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "n5YIAC9k33",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.89942,
+      "longitude": -113.93274
+    },
+    "cityId": 5552905,
+    "name": "Beaver Dam",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1962,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "nBpWT3IeCu",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.68057,
+      "longitude": -109.05259
+    },
+    "cityId": 5321390,
+    "name": "Window Rock",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2712,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "nM0AOljKdX",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.41117,
+      "longitude": -110.84261
+    },
+    "cityId": 5290051,
+    "name": "Claypool",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1538,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "nbQEJ1gAqc",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.11124,
+      "longitude": -109.29238
+    },
+    "cityId": 5293569,
+    "name": "Eagar",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4869,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "oCyBSMAT95",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.63059,
+      "longitude": -112.33322
+    },
+    "cityId": 5316428,
+    "name": "Surprise",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 128422,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "oKEDEzZKtm",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.61259,
+      "longitude": -111.04592
+    },
+    "cityId": 5318288,
+    "name": "Tubac",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1191,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "oKF3TqJsHD",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.18758,
+      "longitude": -111.09093
+    },
+    "cityId": 5318320,
+    "name": "Tucson Estates",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 12192,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "pPoaUFshTE",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.45004,
+      "longitude": -112.25932
+    },
+    "cityId": 5317663,
+    "name": "Tolleson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 7008,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "pnAjAR8pNx",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.78477,
+      "longitude": -110.02649
+    },
+    "cityId": 5288439,
+    "name": "Canyon Day",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1209,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "psaXwjSnuo",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.66198,
+      "longitude": -112.34127
+    },
+    "cityId": 5316205,
+    "name": "Sun City West",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 24535,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "qYCVBsdE8A",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.42227,
+      "longitude": -111.82264
+    },
+    "cityId": 5304391,
+    "name": "Mesa",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 471825,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "qdJb6wP9z2",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.66391,
+      "longitude": -114.22995
+    },
+    "cityId": 5310183,
+    "name": "Quartzsite",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3626,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "qgDCGQQOrK",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.25285,
+      "longitude": -109.83201
+    },
+    "cityId": 5321088,
+    "name": "Willcox",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3552,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "rerN1uGIn1",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.43674,
+      "longitude": -111.22538
+    },
+    "cityId": 5303705,
+    "name": "Marana",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 41315,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "ri6A66pIPi",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.09696,
+      "longitude": -111.69266
+    },
+    "cityId": 5300735,
+    "name": "Kachina Village",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2622,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "rsh8zN3Cg8",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.61002,
+      "longitude": -112.31572
+    },
+    "cityId": 5309858,
+    "name": "Prescott Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 42197,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "s3gVoPx7w7",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.06702,
+      "longitude": -110.95148
+    },
+    "cityId": 5316172,
+    "name": "Summit",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5372,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.317Z",
+    "updatedAt": "2019-12-11T12:38:32.317Z",
+    "objectId": "s8dANN1mFN",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.78114,
+      "longitude": -113.61465
+    },
+    "cityId": 5312677,
+    "name": "Salome",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1530,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.316Z",
+    "updatedAt": "2019-12-11T12:38:32.316Z",
+    "objectId": "s91tJyYih9",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.88558,
+      "longitude": -112.46823
+    },
+    "cityId": 5308281,
+    "name": "Paulden",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 5231,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "sL9SPd3NPm",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.41695,
+      "longitude": -109.22871
+    },
+    "cityId": 5303304,
+    "name": "Lukachukai",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1701,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.397Z",
+    "updatedAt": "2019-12-11T12:38:31.397Z",
+    "objectId": "su3ppE4iTc",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.53,
+      "longitude": -112.24222
+    },
+    "cityId": 7149330,
+    "name": "Dewey-Humboldt",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 3894,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "tMioQ95ytB",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.39091,
+      "longitude": -110.96649
+    },
+    "cityId": 5307540,
+    "name": "Oro Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 43565,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "thSPHZCyB2",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.84923,
+      "longitude": -109.75925
+    },
+    "cityId": 5317170,
+    "name": "Thatcher",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4992,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "u2t8l6oOBT",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.99026,
+      "longitude": -112.97577
+    },
+    "cityId": 5290463,
+    "name": "Colorado City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 4832,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "u7EyABuFYn",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.40372,
+      "longitude": -110.81541
+    },
+    "cityId": 7261055,
+    "name": "Central Heights-Midland City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2534,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "uGFSXBAA8f",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.23087,
+      "longitude": -111.32514
+    },
+    "cityId": 5308305,
+    "name": "Payson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 15345,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.996Z",
+    "updatedAt": "2019-12-11T12:38:31.996Z",
+    "objectId": "uO5E9sowwR",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.3033,
+      "longitude": -109.21566
+    },
+    "cityId": 7262401,
+    "name": "Tsaile",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1205,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "uoYNKXxwFj",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.94286,
+      "longitude": -110.92842
+    },
+    "cityId": 5293796,
+    "name": "East Sahuarita",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1622,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "uv1tpsU3G9",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.25174,
+      "longitude": -110.73731
+    },
+    "cityId": 5316890,
+    "name": "Tanque Verde",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 16901,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.596Z",
+    "updatedAt": "2019-12-11T12:38:32.596Z",
+    "objectId": "vbV1Mrs8WP",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.18863,
+      "longitude": -114.22467
+    },
+    "cityId": 5289863,
+    "name": "Cienega Springs",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1798,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.785Z",
+    "updatedAt": "2019-12-11T12:38:30.785Z",
+    "objectId": "vluRu6SCyw",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.28504,
+      "longitude": -110.15706
+    },
+    "cityId": 5301981,
+    "name": "Linden",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2597,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.396Z",
+    "updatedAt": "2019-12-11T12:38:31.396Z",
+    "objectId": "vvwETNOArd",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.34865,
+      "longitude": -109.99789
+    },
+    "cityId": 5320655,
+    "name": "White Mountain Lake",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 2205,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "wKdsGvjOnU",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.75752,
+      "longitude": -112.45378
+    },
+    "cityId": 5289658,
+    "name": "Chino Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 11137,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.187Z",
+    "updatedAt": "2019-12-11T12:38:30.187Z",
+    "objectId": "wQ7H3xPVja",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.50587,
+      "longitude": -109.36093
+    },
+    "cityId": 5312595,
+    "name": "Saint Johns",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AZ",
+    "population": 3480,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.316Z",
+    "updatedAt": "2019-12-11T12:38:32.316Z",
+    "objectId": "woFmj4jaCa",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.4356,
+      "longitude": -112.3496
+    },
+    "cityId": 5552301,
+    "name": "Avondale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 80684,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:33.198Z",
+    "updatedAt": "2019-12-11T12:38:33.198Z",
+    "objectId": "xQqDX2iTaS",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.59393,
+      "longitude": -112.30294
+    },
+    "cityId": 5322027,
+    "name": "Youngtown",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 6613,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:32.912Z",
+    "updatedAt": "2019-12-11T12:38:32.912Z",
+    "objectId": "y7yB3K55ze",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.91587,
+      "longitude": -112.13599
+    },
+    "cityId": 5306523,
+    "name": "New River",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 14952,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.716Z",
+    "updatedAt": "2019-12-11T12:38:31.716Z",
+    "objectId": "yJsOOHvQlF",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.37032,
+      "longitude": -112.58378
+    },
+    "cityId": 5287262,
+    "name": "Buckeye",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 50876,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:30.186Z",
+    "updatedAt": "2019-12-11T12:38:30.186Z",
+    "objectId": "yMecrm931Y",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.05443,
+      "longitude": -112.13934
+    },
+    "cityId": 5296391,
+    "name": "Grand Canyon",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1460,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.070Z",
+    "updatedAt": "2019-12-11T12:38:31.070Z",
+    "objectId": "zSk2DShB5n",
+    "className": "AZ"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.72257,
+      "longitude": -110.64065
+    },
+    "cityId": 5303587,
+    "name": "Mammoth",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AZ",
+    "population": 1487,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "8enbDj7PMY"
+    },
+    "createdAt": "2019-12-11T12:38:31.397Z",
+    "updatedAt": "2019-12-11T12:38:31.397Z",
+    "objectId": "zhC0VzXkGE",
+    "className": "AZ"
+  }
+]

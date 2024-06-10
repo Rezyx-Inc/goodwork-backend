@@ -1,0 +1,6888 @@
+[
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.74454,
+      "longitude": -86.15581
+    },
+    "cityId": 4085311,
+    "name": "Ragland",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1682,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "0JGeW7Hol2",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.29906,
+      "longitude": -85.34438
+    },
+    "cityId": 4070997,
+    "name": "Kinsey",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2197,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "0c2QWqeY2C",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.17982,
+      "longitude": -85.76136
+    },
+    "cityId": 4072156,
+    "name": "Leesburg",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1014,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "0ghgVM4OyI",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.59094,
+      "longitude": -86.49082
+    },
+    "cityId": 4076842,
+    "name": "Moody",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 12593,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "1CWd90eIcd",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.35128,
+      "longitude": -85.34216
+    },
+    "cityId": 4066716,
+    "name": "Headland",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4736,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "1NaqDfCRII",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.15204,
+      "longitude": -85.67885
+    },
+    "cityId": 4054555,
+    "name": "Centre",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3570,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "1OJp4XBYcc",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.80264,
+      "longitude": -86.97298
+    },
+    "cityId": 11497201,
+    "name": "Washington Street Courthouse Annex",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 0,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "1ONmDJ5Moq",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.82074,
+      "longitude": -88.07056
+    },
+    "cityId": 4088628,
+    "name": "Saraland",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 13906,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "1Ykx7kMTui",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.12296,
+      "longitude": -85.45271
+    },
+    "cityId": 4085771,
+    "name": "Rehobeth",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1449,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "1gH0LlZLD6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.32012,
+      "longitude": -87.9028
+    },
+    "cityId": 4064664,
+    "name": "Gordo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1687,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "1wQp0QE3iB",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.47408,
+      "longitude": -87.91916
+    },
+    "cityId": 4084324,
+    "name": "Point Clear",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2125,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "1xuIokbEwu",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.83122,
+      "longitude": -87.27751
+    },
+    "cityId": 4069659,
+    "name": "Jasper",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 14071,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "1y1DR6Lchq",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.17482,
+      "longitude": -86.84361
+    },
+    "cityId": 4057835,
+    "name": "Cullman",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 15350,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "2KEHLCeDcB",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.87695,
+      "longitude": -87.69717
+    },
+    "cityId": 7260216,
+    "name": "Underwood-Petersville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3247,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "2lulxIJ75J",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.31517,
+      "longitude": -85.85522
+    },
+    "cityId": 4060791,
+    "name": "Enterprise",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 27978,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.181Z",
+    "updatedAt": "2019-12-11T12:38:18.181Z",
+    "objectId": "2ziPJZJQWW",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.68621,
+      "longitude": -86.47498
+    },
+    "cityId": 4074599,
+    "name": "Margaret",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4554,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "3FbLVFuLVL",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.10518,
+      "longitude": -87.07219
+    },
+    "cityId": 4051714,
+    "name": "Brewton",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 5434,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.265Z",
+    "updatedAt": "2019-12-11T12:38:17.265Z",
+    "objectId": "3Q9MejyFjd",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.06567,
+      "longitude": -86.0533
+    },
+    "cityId": 4064598,
+    "name": "Goodwater",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1343,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.489Z",
+    "updatedAt": "2019-12-11T12:38:18.489Z",
+    "objectId": "3X6PYP1z0r",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.22009,
+      "longitude": -85.60774
+    },
+    "cityId": 4054073,
+    "name": "Cedar Bluff",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1802,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "3dMJvJZjHo",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.31815,
+      "longitude": -86.49582
+    },
+    "cityId": 4830455,
+    "name": "Arab",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 8295,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "3ivS4vXdgi",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.77399,
+      "longitude": -85.88552
+    },
+    "cityId": 4829861,
+    "name": "Alexandria",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3917,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "40Cj1HzSTT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.40736,
+      "longitude": -87.0211
+    },
+    "cityId": 4089114,
+    "name": "Selma",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 19519,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "4gsPD0SwXg",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.89177,
+      "longitude": -87.52612
+    },
+    "cityId": 4053671,
+    "name": "Carbon Hill",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1975,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "4iLYfFkp9f",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.49094,
+      "longitude": -86.97027
+    },
+    "cityId": 4083846,
+    "name": "Pleasant Grove",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 10260,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "54zB2MTK0h",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.29962,
+      "longitude": -85.77799
+    },
+    "cityId": 4072271,
+    "name": "Level Plains",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2023,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "59IJty26SX",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.09073,
+      "longitude": -88.22806
+    },
+    "cityId": 4055535,
+    "name": "Citronelle",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3887,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "5E4r1Qox50",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.48625,
+      "longitude": -88.29642
+    },
+    "cityId": 4098776,
+    "name": "York",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2399,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "5YJqXUeN8f",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.51764,
+      "longitude": -87.8364
+    },
+    "cityId": 4058662,
+    "name": "Demopolis",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 7148,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "5l5EmuJk3y",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.94758,
+      "longitude": -85.71442
+    },
+    "cityId": 4051774,
+    "name": "Bridgeport",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2355,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.265Z",
+    "updatedAt": "2019-12-11T12:38:17.265Z",
+    "objectId": "5t84wheYmy",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.14432,
+      "longitude": -85.71495
+    },
+    "cityId": 4094975,
+    "name": "Union Springs",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3919,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "6CrwaqmAF4",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.43566,
+      "longitude": -86.67388
+    },
+    "cityId": 4051894,
+    "name": "Brook Highland",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6746,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.265Z",
+    "updatedAt": "2019-12-11T12:38:17.265Z",
+    "objectId": "6LQlVo3H3p",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.80243,
+      "longitude": -86.97219
+    },
+    "cityId": 4830668,
+    "name": "Athens",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 24966,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "6idKc4MllV",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.67094,
+      "longitude": -86.8561
+    },
+    "cityId": 4077867,
+    "name": "Mount Olive",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4079,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "7Y6aTPUx04",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.4335,
+      "longitude": -86.95692
+    },
+    "cityId": 4061064,
+    "name": "Evergreen",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3774,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.181Z",
+    "updatedAt": "2019-12-11T12:38:18.181Z",
+    "objectId": "7e4uvL8Irf",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.46402,
+      "longitude": -86.4597
+    },
+    "cityId": 4084796,
+    "name": "Prattville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 35420,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "7tG7TM4LxQ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.08959,
+      "longitude": -88.22197
+    },
+    "cityId": 4052726,
+    "name": "Butler",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 1798,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "7zqOpglnMD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.26783,
+      "longitude": -86.20878
+    },
+    "cityId": 4829791,
+    "name": "Albertville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 21462,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "854Bf3KOZ5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.49791,
+      "longitude": -86.33136
+    },
+    "cityId": 4056837,
+    "name": "Coosada",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1240,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "8GGubBBAU5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.28431,
+      "longitude": -86.10302
+    },
+    "cityId": 4083073,
+    "name": "Pike Road",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 8274,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "8Hg4idJLaQ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.6371,
+      "longitude": -86.74192
+    },
+    "cityId": 4064006,
+    "name": "Georgiana",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1667,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.489Z",
+    "updatedAt": "2019-12-11T12:38:18.489Z",
+    "objectId": "8YvXbWT8GN",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.61316,
+      "longitude": -86.11831
+    },
+    "cityId": 4072767,
+    "name": "Lincoln",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6524,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "8saEJ68g8t",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.464,
+      "longitude": -86.73193
+    },
+    "cityId": 4052964,
+    "name": "Cahaba Heights",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5287,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "8zMexhZCqX",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.48121,
+      "longitude": -87.29335
+    },
+    "cityId": 4077329,
+    "name": "Moulton",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3337,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "99g83ySNGp",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.06065,
+      "longitude": -86.7675
+    },
+    "cityId": 4066065,
+    "name": "Hanceville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3281,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "9FtnalHe4H",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.47098,
+      "longitude": -85.00077
+    },
+    "cityId": 4082866,
+    "name": "Phenix City",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 37570,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "9GBXXfHS5h",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.44793,
+      "longitude": -86.09429
+    },
+    "cityId": 7315157,
+    "name": "Emerald Mountain",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2561,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "9KfDbIRxfU",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.10067,
+      "longitude": -86.86416
+    },
+    "cityId": 4076771,
+    "name": "Montevallo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6648,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "9OUQxNcwqH",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.40178,
+      "longitude": -86.95444
+    },
+    "cityId": 4048023,
+    "name": "Bessemer",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 26730,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "9ObcDXJNgp",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.12957,
+      "longitude": -88.15142
+    },
+    "cityId": 4829885,
+    "name": "Aliceville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2381,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "9a5XatURVB",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.60676,
+      "longitude": -87.08835
+    },
+    "cityId": 4094048,
+    "name": "Trinity",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2157,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "A3sGFJtFLM",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.14637,
+      "longitude": -87.40247
+    },
+    "cityId": 4059162,
+    "name": "Double Springs",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 1056,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "ABRrvOYD8p",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.20984,
+      "longitude": -87.56917
+    },
+    "cityId": 4094455,
+    "name": "Tuscaloosa",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 98332,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "AISvtvs7F8",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.40539,
+      "longitude": -86.81138
+    },
+    "cityId": 4067994,
+    "name": "Hoover",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 84848,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "AJwqMK1KMD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.69436,
+      "longitude": -88.04305
+    },
+    "cityId": 4076598,
+    "name": "Mobile",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 194288,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "APMJ59WtOI",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.86874,
+      "longitude": -85.1905
+    },
+    "cityId": 4071763,
+    "name": "Lanett",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6452,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "Ad4pLoh0pT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.59019,
+      "longitude": -88.17084
+    },
+    "cityId": 4093753,
+    "name": "Tillmans Corner",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 17398,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.031Z",
+    "updatedAt": "2019-12-11T12:38:21.031Z",
+    "objectId": "As4lajjY8i",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.72872,
+      "longitude": -87.09028
+    },
+    "cityId": 4059070,
+    "name": "Dora",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1960,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "AyXUsMcA6i",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.47705,
+      "longitude": -87.08027
+    },
+    "cityId": 4086500,
+    "name": "Rock Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1456,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "B1eE1G2Zua",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.68387,
+      "longitude": -86.64764
+    },
+    "cityId": 7260623,
+    "name": "Redstone Arsenal",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1946,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "BATSr9bQii",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.69926,
+      "longitude": -86.74833
+    },
+    "cityId": 4074267,
+    "name": "Madison",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 46962,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.393Z",
+    "updatedAt": "2019-12-11T12:38:19.393Z",
+    "objectId": "BdYHDqqrtC",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.93231,
+      "longitude": -86.57194
+    },
+    "cityId": 4066686,
+    "name": "Hazel Green",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3630,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "BnR9EiBOhh",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.82578,
+      "longitude": -87.29676
+    },
+    "cityId": 4086921,
+    "name": "Rogersville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1231,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "Bp2cwzqZfC",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.56231,
+      "longitude": -85.81247
+    },
+    "cityId": 4092692,
+    "name": "Sylvania",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1854,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "Btwmr0aA6W",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.30625,
+      "longitude": -87.79807
+    },
+    "cityId": 4072752,
+    "name": "Linden",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 2025,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "C5OZhVzF80",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.8926,
+      "longitude": -86.75777
+    },
+    "cityId": 4066613,
+    "name": "Hayden",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1341,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.805Z",
+    "updatedAt": "2019-12-11T12:38:18.805Z",
+    "objectId": "C8R081FOnP",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.25567,
+      "longitude": -87.32083
+    },
+    "cityId": 4051971,
+    "name": "Brookwood",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1822,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "CFQ0yUJ9Oh",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.7388,
+      "longitude": -88.07889
+    },
+    "cityId": 4084888,
+    "name": "Prichard",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 22351,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "CRX9hpX5du",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.47066,
+      "longitude": -86.51332
+    },
+    "cityId": 4095288,
+    "name": "Vandiver",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1135,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "CUY2OpLeJh",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.29437,
+      "longitude": -87.57359
+    },
+    "cityId": 4081696,
+    "name": "Orange Beach",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5850,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.001Z",
+    "updatedAt": "2019-12-11T12:38:20.001Z",
+    "objectId": "Car8mCdz71",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.309,
+      "longitude": -85.48467
+    },
+    "cityId": 4096712,
+    "name": "Wedowee",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 809,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "DIhnxPRpf9",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.04879,
+      "longitude": -85.30493
+    },
+    "cityId": 4057139,
+    "name": "Cottonwood",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1264,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "DJHcioaPx7",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.7638,
+      "longitude": -88.07472
+    },
+    "cityId": 4054996,
+    "name": "Chickasaw",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5954,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "DkyzCvDFfJ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.95985,
+      "longitude": -86.74665
+    },
+    "cityId": 4069722,
+    "name": "Jemison",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2619,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "DosGvvXZ2z",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.52297,
+      "longitude": -87.90333
+    },
+    "cityId": 4061234,
+    "name": "Fairhope",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 18730,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.181Z",
+    "updatedAt": "2019-12-11T12:38:18.181Z",
+    "objectId": "DtzHvz8OgQ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.36843,
+      "longitude": -86.90862
+    },
+    "cityId": 4061466,
+    "name": "Falkville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1268,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.181Z",
+    "updatedAt": "2019-12-11T12:38:18.181Z",
+    "objectId": "EDpri7rXEN",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.83874,
+      "longitude": -86.62943
+    },
+    "cityId": 4055577,
+    "name": "Clanton",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 8844,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "EWPeTIb3A0",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.52983,
+      "longitude": -85.9508
+    },
+    "cityId": 4078898,
+    "name": "Munford",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1259,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "F1nVdJ1pqD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.4615,
+      "longitude": -86.90888
+    },
+    "cityId": 4075977,
+    "name": "Midfield",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5222,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "FIpscVmQag",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.50905,
+      "longitude": -87.89444
+    },
+    "cityId": 4069458,
+    "name": "Jackson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4967,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "FOXU9VQSqg",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.60819,
+      "longitude": -86.39581
+    },
+    "cityId": 4058543,
+    "name": "Deatsville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1157,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "FkMH9TjzVT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.91003,
+      "longitude": -86.42779
+    },
+    "cityId": 4079916,
+    "name": "New Market",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1597,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "FmIJequv7y",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.64816,
+      "longitude": -86.63943
+    },
+    "cityId": 4065029,
+    "name": "Grayson Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5736,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "Fr1bZp7yjx",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.17317,
+      "longitude": -86.25164
+    },
+    "cityId": 4092671,
+    "name": "Sylacauga",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 12657,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "FsQAaHEW6a",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.13934,
+      "longitude": -85.5191
+    },
+    "cityId": 4074452,
+    "name": "Malvern",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1446,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.393Z",
+    "updatedAt": "2019-12-11T12:38:19.393Z",
+    "objectId": "FuGZAH72kv",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.44676,
+      "longitude": -85.90414
+    },
+    "cityId": 4063613,
+    "name": "Fyffe",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1023,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "Fzc6RZIPHb",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.17426,
+      "longitude": -86.12275
+    },
+    "cityId": 4088704,
+    "name": "Sardis City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1755,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "G8qmb4t2jV",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.68899,
+      "longitude": -86.68332
+    },
+    "cityId": 4083697,
+    "name": "Pinson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 7438,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "GFUgNIYy8U",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.77505,
+      "longitude": -86.47191
+    },
+    "cityId": 4091542,
+    "name": "Springville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4198,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "GQzhHRxnM2",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.54769,
+      "longitude": -88.17528
+    },
+    "cityId": 4093399,
+    "name": "Theodore",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6130,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "GT6dYei5eY",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.7026,
+      "longitude": -86.59971
+    },
+    "cityId": 4055650,
+    "name": "Clay",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 9655,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "GZ1WCY76UD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.37845,
+      "longitude": -88.0153
+    },
+    "cityId": 4085739,
+    "name": "Reform",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1632,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "GxjRL1mZtx",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.35539,
+      "longitude": -86.75443
+    },
+    "cityId": 4068933,
+    "name": "Indian Springs Village",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2523,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "GyhYoafjoj",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.54374,
+      "longitude": -86.21191
+    },
+    "cityId": 4097257,
+    "name": "Wetumpka",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 7994,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "HEA5SUOnvb",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.44425,
+      "longitude": -85.71969
+    },
+    "cityId": 4062861,
+    "name": "Fort Payne",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 14150,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "HMGGBLbnNj",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.16343,
+      "longitude": -86.06942
+    },
+    "cityId": 4097588,
+    "name": "Whitesboro",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2138,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "HQTdVmPCF0",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.47631,
+      "longitude": -88.34223
+    },
+    "cityId": 4064840,
+    "name": "Grand Bay",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3672,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "HXTuO3pSE6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.87822,
+      "longitude": -85.44966
+    },
+    "cityId": 4055696,
+    "name": "Clayton",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 2925,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "HaFitNCahn",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.43076,
+      "longitude": -86.61092
+    },
+    "cityId": 8605042,
+    "name": "Shoal Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1400,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "HctZf8cYzC",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.91349,
+      "longitude": -87.73584
+    },
+    "cityId": 4093488,
+    "name": "Thomasville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4051,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "HrsO6nAfZk",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.38455,
+      "longitude": -86.41192
+    },
+    "cityId": 4095522,
+    "name": "Vincent",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2120,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "IAMaECHPbN",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.75205,
+      "longitude": -85.81135
+    },
+    "cityId": 4096645,
+    "name": "Weaver",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3091,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "IrH6Zk4hzM",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.76509,
+      "longitude": -87.69864
+    },
+    "cityId": 4089536,
+    "name": "Sheffield",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 9108,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "J9l6m98eNv",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.52066,
+      "longitude": -86.80249
+    },
+    "cityId": 4049979,
+    "name": "Birmingham",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 212461,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "JCWBlf4eYD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.02379,
+      "longitude": -87.49387
+    },
+    "cityId": 4830759,
+    "name": "Atmore",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 10049,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "JeX90uMvXB",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.27732,
+      "longitude": -87.82864
+    },
+    "cityId": 4065731,
+    "name": "Hackleburg",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1486,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "JfaoB873O1",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.54014,
+      "longitude": -85.09855
+    },
+    "cityId": 4090684,
+    "name": "Smiths Station",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5300,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "K5uBvqr3mb",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.28567,
+      "longitude": -86.80999
+    },
+    "cityId": 4082569,
+    "name": "Pelham",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 22885,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.001Z",
+    "updatedAt": "2019-12-11T12:38:20.001Z",
+    "objectId": "KCsFeB2qvG",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.99098,
+      "longitude": -87.29055
+    },
+    "cityId": 4053200,
+    "name": "Camden",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 1930,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "KHG4r2hMIL",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.89985,
+      "longitude": -85.40106
+    },
+    "cityId": 4071267,
+    "name": "Lafayette",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3003,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "KPPuyAD0fb",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.60593,
+      "longitude": -86.98334
+    },
+    "cityId": 4058553,
+    "name": "Decatur",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 55437,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "KhDJVJRofm",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.43594,
+      "longitude": -86.1058
+    },
+    "cityId": 4092788,
+    "name": "Talladega",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 15709,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "LTwiRhqQ6A",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.80953,
+      "longitude": -87.64947
+    },
+    "cityId": 4059870,
+    "name": "East Florence",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 35733,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "LUxngHi5It",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.57011,
+      "longitude": -86.89638
+    },
+    "cityId": 4062774,
+    "name": "Forestdale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 10162,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "LXvNH7Nw3N",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.6601,
+      "longitude": -86.81277
+    },
+    "cityId": 4063765,
+    "name": "Gardendale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 13711,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "MHCyuHo7SF",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.64899,
+      "longitude": -85.58746
+    },
+    "cityId": 4066793,
+    "name": "Heflin",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3499,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "MNcsXuwpPC",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.61316,
+      "longitude": -85.96108
+    },
+    "cityId": 4052824,
+    "name": "Bynum",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1795,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "MdwJRwjJu7",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.75703,
+      "longitude": -87.97281
+    },
+    "cityId": 4054866,
+    "name": "Cherokee",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1014,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "N7Axyyjw9S",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.99762,
+      "longitude": -87.63001
+    },
+    "cityId": 4077349,
+    "name": "Moundville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2460,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "NBI5VAU571",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.31067,
+      "longitude": -85.75441
+    },
+    "cityId": 4072814,
+    "name": "Lineville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2319,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "NFsqZkMmLz",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.23401,
+      "longitude": -87.48445
+    },
+    "cityId": 4067840,
+    "name": "Holt",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3638,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "NW99tFSsge",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.69871,
+      "longitude": -85.83969
+    },
+    "cityId": 4088146,
+    "name": "Saks",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 10744,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "Noaw9gmddJ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.89127,
+      "longitude": -85.14549
+    },
+    "cityId": 4060954,
+    "name": "Eufaula",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 12596,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.181Z",
+    "updatedAt": "2019-12-11T12:38:18.181Z",
+    "objectId": "NtGpDpAvgo",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.50094,
+      "longitude": -86.75221
+    },
+    "cityId": 4078646,
+    "name": "Mountain Brook",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 20691,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "NvwqsDlpXu",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.45906,
+      "longitude": -85.64049
+    },
+    "cityId": 4081936,
+    "name": "Ozark",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 14719,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.001Z",
+    "updatedAt": "2019-12-11T12:38:20.001Z",
+    "objectId": "O39T5sGiXc",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.8296,
+      "longitude": -86.61775
+    },
+    "cityId": 4065302,
+    "name": "Greenville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 7845,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "OJo8LB2oCz",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.30808,
+      "longitude": -86.48243
+    },
+    "cityId": 4830099,
+    "name": "Andalusia",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 9063,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "Ob52ibqK8W",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.51566,
+      "longitude": -87.01499
+    },
+    "cityId": 4092689,
+    "name": "Sylvan Springs",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1524,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "OqbUeq3o1A",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.79981,
+      "longitude": -87.67725
+    },
+    "cityId": 4062577,
+    "name": "Florence",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 40026,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "POioeBxi1m",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.1029,
+      "longitude": -86.7536
+    },
+    "cityId": 4053050,
+    "name": "Calera",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 13213,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "Pjr1diz6N4",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.6525,
+      "longitude": -85.8742
+    },
+    "cityId": 7260270,
+    "name": "West End-Cobb Town",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3465,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "PjuVeJIpRx",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.7304,
+      "longitude": -86.58594
+    },
+    "cityId": 4068590,
+    "name": "Huntsville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 190582,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "Ppv5tkNmxL",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.26169,
+      "longitude": -88.09503
+    },
+    "cityId": 4053823,
+    "name": "Carrollton",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 988,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "Q3L11oAxVx",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.94401,
+      "longitude": -85.95385
+    },
+    "cityId": 4829843,
+    "name": "Alexander City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 14718,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "Q4dpoT9LL6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.70124,
+      "longitude": -86.47109
+    },
+    "cityId": 4074568,
+    "name": "Marbury",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1418,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "QKZAxoJoVi",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.11295,
+      "longitude": -86.04605
+    },
+    "cityId": 4088360,
+    "name": "Samson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1928,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "QXhtr66ANG",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.29622,
+      "longitude": -86.8436
+    },
+    "cityId": 4066811,
+    "name": "Helena",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 18264,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "QYYz62qAhd",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.08149,
+      "longitude": -86.5911
+    },
+    "cityId": 4050655,
+    "name": "Blountsville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1697,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "QerO0CNExO",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.93735,
+      "longitude": -87.16472
+    },
+    "cityId": 4051669,
+    "name": "Brent",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4898,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "QkGvHlHvSP",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.81427,
+      "longitude": -86.80944
+    },
+    "cityId": 4096404,
+    "name": "Warrior",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3199,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "R9eF7mg3wM",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.60621,
+      "longitude": -86.20442
+    },
+    "cityId": 4086224,
+    "name": "Riverside",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2300,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "RE5CMIr9id",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.17817,
+      "longitude": -86.60721
+    },
+    "cityId": 4056427,
+    "name": "Columbiana",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 4168,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "RMCAjFJiq7",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.7312,
+      "longitude": -87.70253
+    },
+    "cityId": 4094484,
+    "name": "Tuscumbia",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 8474,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "RXodCThUV6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.84059,
+      "longitude": -87.88762
+    },
+    "cityId": 4060991,
+    "name": "Eutaw",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 2766,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.181Z",
+    "updatedAt": "2019-12-11T12:38:18.181Z",
+    "objectId": "RbWS7CLJB6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.60483,
+      "longitude": -86.79388
+    },
+    "cityId": 4063570,
+    "name": "Fultondale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 9048,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "ReWZeQSPL5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.53816,
+      "longitude": -86.70721
+    },
+    "cityId": 4069243,
+    "name": "Irondale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 12423,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "Rv778ftCnf",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.44872,
+      "longitude": -86.78777
+    },
+    "cityId": 4095415,
+    "name": "Vestavia Hills",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 34174,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "RvLvsnPlLA",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.52794,
+      "longitude": -87.32471
+    },
+    "cityId": 4076725,
+    "name": "Monroeville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 6110,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "Rz8MwgeBBk",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.27373,
+      "longitude": -85.83607
+    },
+    "cityId": 4830687,
+    "name": "Ashland",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 1983,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "SC1KuXGUM6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.63788,
+      "longitude": -86.91666
+    },
+    "cityId": 4051955,
+    "name": "Brookside",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1329,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "SCDBjSoE0r",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.70415,
+      "longitude": -87.5955
+    },
+    "cityId": 4065282,
+    "name": "Greensboro",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 2387,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "SdwajNXmH0",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.27482,
+      "longitude": -87.70058
+    },
+    "cityId": 4046499,
+    "name": "Bear Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1047,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "Sg7EFI3HqQ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.33517,
+      "longitude": -85.60521
+    },
+    "cityId": 4080193,
+    "name": "Newton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1472,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "ShMKiJ4BD5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.64566,
+      "longitude": -86.6836
+    },
+    "cityId": 4054378,
+    "name": "Center Point",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 16655,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "Sr3Gnu862R",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.9462,
+      "longitude": -87.11669
+    },
+    "cityId": 4054566,
+    "name": "Centreville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 2704,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "St3x8PCQVo",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.98459,
+      "longitude": -86.57859
+    },
+    "cityId": 4062824,
+    "name": "Fort Deposit",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1240,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "TNdjt2YTPO",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.01488,
+      "longitude": -85.74606
+    },
+    "cityId": 4069210,
+    "name": "Inverness",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1621,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "TTRA0etu9m",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.11817,
+      "longitude": -87.125
+    },
+    "cityId": 4096956,
+    "name": "West Blocton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1261,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "TUPCcfIaKD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.92899,
+      "longitude": -87.81725
+    },
+    "cityId": 4098161,
+    "name": "Winfield",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4570,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "TcAkMEggy5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.02176,
+      "longitude": -86.08859
+    },
+    "cityId": 4830768,
+    "name": "Attalla",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5899,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "TtQHMQlNeU",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.65983,
+      "longitude": -87.60001
+    },
+    "cityId": 4047827,
+    "name": "Berry",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1113,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "TwB1VM1D1X",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.89177,
+      "longitude": -86.82027
+    },
+    "cityId": 4090700,
+    "name": "Smoke Rise",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1825,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "TwMCdEbC3X",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.08518,
+      "longitude": -88.01333
+    },
+    "cityId": 4078348,
+    "name": "Mount Vernon",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1518,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "U0APdWqTCe",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.58815,
+      "longitude": -86.45888
+    },
+    "cityId": 4081904,
+    "name": "Owens Cross Roads",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1785,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.001Z",
+    "updatedAt": "2019-12-11T12:38:20.001Z",
+    "objectId": "U14tDJmANS",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.53712,
+      "longitude": -86.39426
+    },
+    "cityId": 4079630,
+    "name": "New Hope",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2800,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "UiyRBzxkRL",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.39838,
+      "longitude": -86.6513
+    },
+    "cityId": 7315158,
+    "name": "Highland Lakes",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3926,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "UrsLjo0ZJ2",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.85324,
+      "longitude": -88.05611
+    },
+    "cityId": 4088737,
+    "name": "Satsuma",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6182,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "VZnqCDB1v7",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.49425,
+      "longitude": -85.84775
+    },
+    "cityId": 4085373,
+    "name": "Rainsville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5031,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "Va9miCW1gw",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.35823,
+      "longitude": -86.29446
+    },
+    "cityId": 4065649,
+    "name": "Guntersville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 8385,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "VaV0HwfblJ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.1104,
+      "longitude": -86.58415
+    },
+    "cityId": 4089549,
+    "name": "Shelby",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1044,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "WH3mcBV3Qz",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.43982,
+      "longitude": -88.14087
+    },
+    "cityId": 4085521,
+    "name": "Red Bay",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3131,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "WPsD5fmvFa",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.97543,
+      "longitude": -86.2333
+    },
+    "cityId": 4093050,
+    "name": "Taylor",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1946,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "WiV6cirzLu",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.63541,
+      "longitude": -86.03441
+    },
+    "cityId": 4060176,
+    "name": "Eclectic",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1029,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "Wk1DW2HS4l",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.344,
+      "longitude": -86.43804
+    },
+    "cityId": 4066335,
+    "name": "Harpersville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1681,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "WklO57VT9Q",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.22901,
+      "longitude": -87.57723
+    },
+    "cityId": 4080555,
+    "name": "Northport",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 24772,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "WoBZ50DCGT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.17428,
+      "longitude": -87.23361
+    },
+    "cityId": 4095294,
+    "name": "Vance",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1513,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "X5zd8r2KWK",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.63624,
+      "longitude": -86.32664
+    },
+    "cityId": 4067862,
+    "name": "Holtville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4096,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "XE82oMsgOw",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.99815,
+      "longitude": -85.86636
+    },
+    "cityId": 4067623,
+    "name": "Hokes Bluff",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4301,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "XHnMbaynGp",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.36681,
+      "longitude": -86.29997
+    },
+    "cityId": 4076784,
+    "name": "Montgomery",
+    "country": "US",
+    "featureCode": "PPLA",
+    "adminCode": "AL",
+    "population": 200602,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "XYPqBFxdr1",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.11445,
+      "longitude": -86.12407
+    },
+    "cityId": 7315156,
+    "name": "Carlisle-Rockledge",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2137,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "XetZZFUeQn",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.1024,
+      "longitude": -85.69688
+    },
+    "cityId": 4066437,
+    "name": "Hartford",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2647,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "XlaKP8lDQX",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.63508,
+      "longitude": -85.76719
+    },
+    "cityId": 4066844,
+    "name": "Henagar",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2346,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "Y14B8eoTxF",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.22649,
+      "longitude": -87.62141
+    },
+    "cityId": 4065830,
+    "name": "Haleyville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4088,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "YD7ljBGlOS",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.24428,
+      "longitude": -86.81638
+    },
+    "cityId": 4829762,
+    "name": "Alabaster",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 32707,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "YiLEOeO7Rr",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.92455,
+      "longitude": -85.61135
+    },
+    "cityId": 4083004,
+    "name": "Piedmont",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4714,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "YtUc1GOx5X",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.00018,
+      "longitude": -87.26081
+    },
+    "cityId": 4062595,
+    "name": "Flomaton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1411,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "ZOEgCBWQlT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.64541,
+      "longitude": -85.37828
+    },
+    "cityId": 4081644,
+    "name": "Opelika",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 29527,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "ZSKNIOG5eg",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.03296,
+      "longitude": -85.86382
+    },
+    "cityId": 4063926,
+    "name": "Geneva",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 4460,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "ZZHV3HX9TY",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.6812,
+      "longitude": -87.40613
+    },
+    "cityId": 4093897,
+    "name": "Town Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1065,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.031Z",
+    "updatedAt": "2019-12-11T12:38:21.031Z",
+    "objectId": "Zq2Y2HD5Mm",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.48594,
+      "longitude": -86.91194
+    },
+    "cityId": 4061206,
+    "name": "Fairfield",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 10907,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.181Z",
+    "updatedAt": "2019-12-11T12:38:18.181Z",
+    "objectId": "a7pIa5TaaI",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.07929,
+      "longitude": -86.24442
+    },
+    "cityId": 4091923,
+    "name": "Stewartville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1767,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "aEhY8Yc0fW",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.65927,
+      "longitude": -85.70357
+    },
+    "cityId": 4055139,
+    "name": "Choccolocco",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2804,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "agBDGpyuTN",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.99093,
+      "longitude": -86.57749
+    },
+    "cityId": 4055815,
+    "name": "Cleveland",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1315,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "az6Flamyas",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.77824,
+      "longitude": -88.25917
+    },
+    "cityId": 4089148,
+    "name": "Semmes",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3886,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "b02K0PBhrb",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.90177,
+      "longitude": -88.13448
+    },
+    "cityId": 4092267,
+    "name": "Sulligent",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1844,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "bCYtyCn7Pv",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.85148,
+      "longitude": -86.57222
+    },
+    "cityId": 4075854,
+    "name": "Meridianville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6021,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "bh0MWJP0uK",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.43428,
+      "longitude": -86.94721
+    },
+    "cityId": 4047198,
+    "name": "Brighton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2862,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "by2reYfbUp",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.88957,
+      "longitude": -86.21969
+    },
+    "cityId": 4086637,
+    "name": "Rockford",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 449,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "cFumsp1Gby",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.67732,
+      "longitude": -86.39665
+    },
+    "cityId": 4081166,
+    "name": "Odenville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3695,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "cmjerx7t7q",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.60353,
+      "longitude": -87.9036
+    },
+    "cityId": 4058219,
+    "name": "Daphne",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 24896,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "cwiJ5Y7yHo",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.81874,
+      "longitude": -85.17939
+    },
+    "cityId": 4095186,
+    "name": "Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 9464,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "cwpe2wsgXZ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.24604,
+      "longitude": -87.70082
+    },
+    "cityId": 4065552,
+    "name": "Gulf Shores",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 11131,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "d4Wg7yk407",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.28759,
+      "longitude": -85.99414
+    },
+    "cityId": 4057731,
+    "name": "Crossville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1848,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "dMulN0kaoL",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.47986,
+      "longitude": -86.36192
+    },
+    "cityId": 4076239,
+    "name": "Millbrook",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 15314,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "dTO1OBIPly",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.95704,
+      "longitude": -85.93247
+    },
+    "cityId": 4064310,
+    "name": "Glencoe",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5153,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.489Z",
+    "updatedAt": "2019-12-11T12:38:18.489Z",
+    "objectId": "dZQgKNykJh",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.84398,
+      "longitude": -86.51832
+    },
+    "cityId": 4076982,
+    "name": "Moores Mill",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5682,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "daskcWbd8t",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.41454,
+      "longitude": -87.08751
+    },
+    "cityId": 4058198,
+    "name": "Danville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6242,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "doIUMxN4o6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.54816,
+      "longitude": -86.54443
+    },
+    "cityId": 4072130,
+    "name": "Leeds",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 11936,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "e356VxSWrG",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.70878,
+      "longitude": -85.6105
+    },
+    "cityId": 4055879,
+    "name": "Clio",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1529,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "eDEzB77jBV",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.10823,
+      "longitude": -85.59438
+    },
+    "cityId": 4090470,
+    "name": "Slocomb",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1972,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "eGa23flTRN",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.34955,
+      "longitude": -86.53582
+    },
+    "cityId": 4097211,
+    "name": "Westover",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1473,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "eYFfjKVzgR",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.72016,
+      "longitude": -85.81606
+    },
+    "cityId": 4052177,
+    "name": "Brundidge",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1989,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "eaw7SDHahb",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.53597,
+      "longitude": -85.89329
+    },
+    "cityId": 4092853,
+    "name": "Tallassee",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4778,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "eugc3WD5EX",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.05871,
+      "longitude": -85.80802
+    },
+    "cityId": 4831176,
+    "name": "Ballplay",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1580,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "fAGqwBHPBC",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.42415,
+      "longitude": -85.69096
+    },
+    "cityId": 4094490,
+    "name": "Tuskegee",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 8817,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "fCcJNa0IBE",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.83704,
+      "longitude": -86.25442
+    },
+    "cityId": 4830707,
+    "name": "Ashville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2256,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "fJSO8X4thk",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.15901,
+      "longitude": -87.34083
+    },
+    "cityId": 4056017,
+    "name": "Coaling",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1648,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "fgpYqHMiGm",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.34282,
+      "longitude": -85.71538
+    },
+    "cityId": 7259777,
+    "name": "Fort Rucker",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4636,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "foueDrazNz",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.80877,
+      "longitude": -85.96995
+    },
+    "cityId": 4094163,
+    "name": "Troy",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 18853,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "fu1w6MnMZD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.4877,
+      "longitude": -87.69971
+    },
+    "cityId": 4092347,
+    "name": "Summerdale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1128,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "gcghFdGTRq",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.09323,
+      "longitude": -87.06275
+    },
+    "cityId": 4059831,
+    "name": "East Brewton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2419,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "ghQ3nUbRP9",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.75566,
+      "longitude": -87.05
+    },
+    "cityId": 4092333,
+    "name": "Sumiton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2418,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "hC88YX2El3",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.31017,
+      "longitude": -85.71299
+    },
+    "cityId": 4058061,
+    "name": "Daleville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5141,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "hMO7OmVkck",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.65316,
+      "longitude": -86.64777
+    },
+    "cityId": 4054593,
+    "name": "Chalkville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3901,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "hTHG5beagO",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.57184,
+      "longitude": -85.25049
+    },
+    "cityId": 4829449,
+    "name": "Abbeville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 2620,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "hVIs8DvqeX",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.58621,
+      "longitude": -86.28609
+    },
+    "cityId": 4082589,
+    "name": "Pell City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 13646,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "hcuzuKF7G4",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.46761,
+      "longitude": -87.03111
+    },
+    "cityId": 4056515,
+    "name": "Concord",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1837,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "i9BB1rrEoF",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.40205,
+      "longitude": -86.69665
+    },
+    "cityId": 4075692,
+    "name": "Meadowbrook",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 8769,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "ihrshJGG6n",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.42566,
+      "longitude": -86.92666
+    },
+    "cityId": 4072842,
+    "name": "Lipscomb",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2155,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "ihv3A61Rgp",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.52315,
+      "longitude": -86.97029
+    },
+    "cityId": 4062523,
+    "name": "Flint City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1033,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "iliEixyvlf",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.28267,
+      "longitude": -86.25551
+    },
+    "cityId": 4081683,
+    "name": "Opp",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6658,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.001Z",
+    "updatedAt": "2019-12-11T12:38:20.001Z",
+    "objectId": "jLaviTVl9B",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.68778,
+      "longitude": -86.50051
+    },
+    "cityId": 4830478,
+    "name": "Argo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4071,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "jMcHV6MzDI",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.11593,
+      "longitude": -86.86361
+    },
+    "cityId": 4064548,
+    "name": "Good Hope",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2281,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.489Z",
+    "updatedAt": "2019-12-11T12:38:18.489Z",
+    "objectId": "jWPkDyLtCR",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.23428,
+      "longitude": -86.48359
+    },
+    "cityId": 4098110,
+    "name": "Wilsonville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1980,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "jfZGkAkRLa",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.81382,
+      "longitude": -85.7613
+    },
+    "cityId": 4069553,
+    "name": "Jacksonville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 12222,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "jmIeBrhqtH",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.96566,
+      "longitude": -87.91475
+    },
+    "cityId": 4065524,
+    "name": "Guin",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2322,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "ju9op2Z9CI",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.75983,
+      "longitude": -87.18333
+    },
+    "cityId": 4056920,
+    "name": "Cordova",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2028,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "kEFCJXSATE",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.27817,
+      "longitude": -86.35498
+    },
+    "cityId": 4055045,
+    "name": "Childersburg",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5046,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "kF9VSzvseD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.4335,
+      "longitude": -87.40138
+    },
+    "cityId": 4063475,
+    "name": "Frisco City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1223,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "kZ8mBhW1Ew",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.78343,
+      "longitude": -86.00247
+    },
+    "cityId": 4081197,
+    "name": "Ohatchee",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1146,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "l7aEKDQD62",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.58374,
+      "longitude": -86.46553
+    },
+    "cityId": 4083414,
+    "name": "Pine Level",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4183,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "lVROICF7uQ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.93982,
+      "longitude": -86.20164
+    },
+    "cityId": 4091755,
+    "name": "Steele",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1078,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "lXCXU5MUtX",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.94815,
+      "longitude": -86.47276
+    },
+    "cityId": 4081671,
+    "name": "Oneonta",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 6615,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.001Z",
+    "updatedAt": "2019-12-11T12:38:20.001Z",
+    "objectId": "lcHY8CoRYs",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.44958,
+      "longitude": -87.51417
+    },
+    "cityId": 4094997,
+    "name": "Uniontown",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2415,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "lit4HVSYeM",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.91568,
+      "longitude": -86.71582
+    },
+    "cityId": 4093619,
+    "name": "Thorsby",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2044,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.031Z",
+    "updatedAt": "2019-12-11T12:38:21.031Z",
+    "objectId": "lj7E7mSQfE",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.40659,
+      "longitude": -87.6836
+    },
+    "cityId": 4062644,
+    "name": "Foley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 17218,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "lkb5CHXwmF",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.44343,
+      "longitude": -86.93528
+    },
+    "cityId": 4066449,
+    "name": "Hartselle",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 14493,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.805Z",
+    "updatedAt": "2019-12-11T12:38:18.805Z",
+    "objectId": "lzTElCWngw",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.83124,
+      "longitude": -85.76357
+    },
+    "cityId": 4058027,
+    "name": "Dadeville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3150,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "m6KABLtKum",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.26398,
+      "longitude": -85.86053
+    },
+    "cityId": 4056381,
+    "name": "Collinsville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1973,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.864Z",
+    "updatedAt": "2019-12-11T12:38:17.864Z",
+    "objectId": "m7T9AFQGbX",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.70877,
+      "longitude": -87.77722
+    },
+    "cityId": 4065475,
+    "name": "Grove Hill",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 1494,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "mBTQzTODfL",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.9076,
+      "longitude": -86.61527
+    },
+    "cityId": 4073504,
+    "name": "Locust Fork",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1192,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.393Z",
+    "updatedAt": "2019-12-11T12:38:19.393Z",
+    "objectId": "mPfYf3MLfd",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.62066,
+      "longitude": -86.97138
+    },
+    "cityId": 4065034,
+    "name": "Graysville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2096,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "mgoy2eV3UF",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.26045,
+      "longitude": -85.27327
+    },
+    "cityId": 4096678,
+    "name": "Webb",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1413,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "mlKllDIJsj",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.83457,
+      "longitude": -85.22966
+    },
+    "cityId": 4068506,
+    "name": "Huguley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2540,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "mofAb2luOm",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.61427,
+      "longitude": -85.83496
+    },
+    "cityId": 4081914,
+    "name": "Oxford",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 21249,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.001Z",
+    "updatedAt": "2019-12-11T12:38:20.001Z",
+    "objectId": "mpDGnqgu1g",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.67491,
+      "longitude": -87.91527
+    },
+    "cityId": 4091136,
+    "name": "Spanish Fort",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 8065,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.751Z",
+    "updatedAt": "2019-12-11T12:38:20.751Z",
+    "objectId": "mpK0iZyhBV",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.35093,
+      "longitude": -87.70642
+    },
+    "cityId": 4082869,
+    "name": "Phil Campbell",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1235,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "n9msqgN7xH",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.88296,
+      "longitude": -87.77305
+    },
+    "cityId": 4046255,
+    "name": "Bay Minette",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 9118,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "nUdrWQ8rjx",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.22323,
+      "longitude": -85.39049
+    },
+    "cityId": 4059102,
+    "name": "Dothan",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 68567,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "neRnpo7PWT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.25548,
+      "longitude": -88.10972
+    },
+    "cityId": 4058262,
+    "name": "Dauphin Island",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1251,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "o0PL24X0u5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.47177,
+      "longitude": -86.80082
+    },
+    "cityId": 4067927,
+    "name": "Homewood",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 25708,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "o6OQByGeJ1",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.01434,
+      "longitude": -86.00639
+    },
+    "cityId": 4063619,
+    "name": "Gadsden",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 36084,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "oA06u2O84M",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.85564,
+      "longitude": -86.75083
+    },
+    "cityId": 4066463,
+    "name": "Harvest",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5281,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.805Z",
+    "updatedAt": "2019-12-11T12:38:18.805Z",
+    "objectId": "oSlmEqT3hh",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.65983,
+      "longitude": -85.83163
+    },
+    "cityId": 4830198,
+    "name": "Anniston",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 22347,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "oVGenU5vVR",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.61825,
+      "longitude": -87.75305
+    },
+    "cityId": 4073897,
+    "name": "Loxley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1785,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.393Z",
+    "updatedAt": "2019-12-11T12:38:19.393Z",
+    "objectId": "odOjQ6pjq6",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.38572,
+      "longitude": -85.92939
+    },
+    "cityId": 4079423,
+    "name": "New Brockton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1159,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "ofyAVJDA5u",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.31906,
+      "longitude": -85.49382
+    },
+    "cityId": 4075984,
+    "name": "Midland City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2386,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "ojgE6rrVvR",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.43011,
+      "longitude": -86.68054
+    },
+    "cityId": 4071488,
+    "name": "Lake Purdy",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 7857,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "ovcEHrSP0u",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.95482,
+      "longitude": -86.04192
+    },
+    "cityId": 4085336,
+    "name": "Rainbow City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 9580,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "pq358MqxJl",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.00518,
+      "longitude": -86.328
+    },
+    "cityId": 4062568,
+    "name": "Florala",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1973,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "q5VLwrPieV",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.14232,
+      "longitude": -87.98864
+    },
+    "cityId": 4065965,
+    "name": "Hamilton",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 6772,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.804Z",
+    "updatedAt": "2019-12-11T12:38:18.804Z",
+    "objectId": "q9ZHqlco88",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.58344,
+      "longitude": -86.77277
+    },
+    "cityId": 4092970,
+    "name": "Tarrant",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6210,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "qA7RaMEGTT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.53733,
+      "longitude": -86.94055
+    },
+    "cityId": 4076468,
+    "name": "Minor",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1094,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "qDGPfalW0a",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.4682,
+      "longitude": -85.0791
+    },
+    "cityId": 4071262,
+    "name": "Ladonia",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3142,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "qEv3VtET8I",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.18296,
+      "longitude": -85.23632
+    },
+    "cityId": 4830684,
+    "name": "Ashford",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2158,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "qW4NmsQRE0",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.41461,
+      "longitude": -86.06772
+    },
+    "cityId": 4828081,
+    "name": "Elba",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3903,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "qjYGxCQ7OH",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.18345,
+      "longitude": -86.26109
+    },
+    "cityId": 4076066,
+    "name": "Mignon",
+    "country": "US",
+    "featureCode": "PPLX",
+    "adminCode": "AL",
+    "population": 1284,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "qlsHQyKfB5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.60094,
+      "longitude": -86.95611
+    },
+    "cityId": 4829588,
+    "name": "Adamsville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 4400,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "rRdx17prDD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.20678,
+      "longitude": -87.15
+    },
+    "cityId": 4098518,
+    "name": "Woodstock",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1547,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "rWQSmLrCNw",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.49264,
+      "longitude": -86.19052
+    },
+    "cityId": 4050879,
+    "name": "Blue Ridge",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1341,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "rYw8WuFqL5",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.28067,
+      "longitude": -87.1375
+    },
+    "cityId": 4071540,
+    "name": "Lake View",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2114,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "raW4NZ3WGa",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.37843,
+      "longitude": -87.0074
+    },
+    "cityId": 7260110,
+    "name": "Selmont-West Selmont",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2671,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "ruu2g0pFQu",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.50902,
+      "longitude": -86.98749
+    },
+    "cityId": 4095213,
+    "name": "Valley Grande",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3849,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "s1R0hFTYnY",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.15123,
+      "longitude": -85.37217
+    },
+    "cityId": 4086285,
+    "name": "Roanoke",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 6005,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "s8RaRqj2kc",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.14567,
+      "longitude": -86.40581
+    },
+    "cityId": 4061602,
+    "name": "Fayetteville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1284,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "sY5lhoSKpr",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.41436,
+      "longitude": -87.59776
+    },
+    "cityId": 4060381,
+    "name": "Elberta",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1652,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.180Z",
+    "updatedAt": "2019-12-11T12:38:18.180Z",
+    "objectId": "tI3HATWIFu",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.67231,
+      "longitude": -86.03415
+    },
+    "cityId": 4088916,
+    "name": "Scottsboro",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 14722,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "tW19WmjAXQ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.63235,
+      "longitude": -87.31917
+    },
+    "cityId": 4074673,
+    "name": "Marion",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3447,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "tkYqBsKOUD",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.34011,
+      "longitude": -86.63026
+    },
+    "cityId": 4054852,
+    "name": "Chelsea",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 12059,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "txNFAZuFIk",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.92454,
+      "longitude": -86.02247
+    },
+    "cityId": 4091058,
+    "name": "Southside",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 8572,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "u62h2M47Wj",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.20018,
+      "longitude": -85.30465
+    },
+    "cityId": 4057320,
+    "name": "Cowarts",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1988,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "uK81k4eiOH",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.89185,
+      "longitude": -88.03972
+    },
+    "cityId": 4057531,
+    "name": "Creola",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1955,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.865Z",
+    "updatedAt": "2019-12-11T12:38:17.865Z",
+    "objectId": "uUR7v6jD9j",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.40352,
+      "longitude": -88.24852
+    },
+    "cityId": 4046319,
+    "name": "Bayou La Batre",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2621,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "uegumVp25n",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.60986,
+      "longitude": -85.48078
+    },
+    "cityId": 4830796,
+    "name": "Auburn",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 62059,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.032Z",
+    "updatedAt": "2019-12-11T12:38:24.032Z",
+    "objectId": "ukGr9p8zLV",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.68455,
+      "longitude": -87.83085
+    },
+    "cityId": 4061586,
+    "name": "Fayette",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 4490,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.488Z",
+    "updatedAt": "2019-12-11T12:38:18.488Z",
+    "objectId": "urWa81ywct",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.20065,
+      "longitude": -86.16637
+    },
+    "cityId": 4051059,
+    "name": "Boaz",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 9688,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.264Z",
+    "updatedAt": "2019-12-11T12:38:17.264Z",
+    "objectId": "vG6t30wkEI",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.71655,
+      "longitude": -86.26385
+    },
+    "cityId": 4073985,
+    "name": "Luverne",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 2834,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.393Z",
+    "updatedAt": "2019-12-11T12:38:19.393Z",
+    "objectId": "vIU4uOPprQ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.74816,
+      "longitude": -86.8086
+    },
+    "cityId": 4077143,
+    "name": "Morris",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1934,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.672Z",
+    "updatedAt": "2019-12-11T12:38:19.672Z",
+    "objectId": "vhg1XZPfSl",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.46517,
+      "longitude": -88.25446
+    },
+    "cityId": 4054818,
+    "name": "Chatom",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 1237,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:17.544Z",
+    "updatedAt": "2019-12-11T12:38:17.544Z",
+    "objectId": "vnNoJyeAZZ",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.50787,
+      "longitude": -87.72864
+    },
+    "cityId": 4087313,
+    "name": "Russellville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 9847,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "w8S20uTLXT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.86869,
+      "longitude": -85.83942
+    },
+    "cityId": 4091859,
+    "name": "Stevenson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1991,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "wTrcmn1Jgy",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.52509,
+      "longitude": -86.89473
+    },
+    "cityId": 4084883,
+    "name": "Priceville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 3179,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.320Z",
+    "updatedAt": "2019-12-11T12:38:20.320Z",
+    "objectId": "xDcbTwb2Rl",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.53874,
+      "longitude": -86.31497
+    },
+    "cityId": 4828090,
+    "name": "Elmore",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1271,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.708Z",
+    "updatedAt": "2019-12-11T12:38:23.708Z",
+    "objectId": "xDiPfEPVxj",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.18403,
+      "longitude": -86.58025
+    },
+    "cityId": 4066661,
+    "name": "Hayneville",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 862,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:18.805Z",
+    "updatedAt": "2019-12-11T12:38:18.805Z",
+    "objectId": "xN8TSuAVun",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 34.74481,
+      "longitude": -87.66753
+    },
+    "cityId": 4078964,
+    "name": "Muscle Shoals",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 13706,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "xXotuq8aal",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.45122,
+      "longitude": -86.99666
+    },
+    "cityId": 4068446,
+    "name": "Hueytown",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 15710,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.078Z",
+    "updatedAt": "2019-12-11T12:38:19.078Z",
+    "objectId": "xtjzP8h8Bv",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.20401,
+      "longitude": -87.15305
+    },
+    "cityId": 4080395,
+    "name": "North Bibb",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 1013,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.000Z",
+    "updatedAt": "2019-12-11T12:38:20.000Z",
+    "objectId": "y7lTRpQp0C",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 30.5538,
+      "longitude": -87.71193
+    },
+    "cityId": 4086363,
+    "name": "Robertsdale",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 5894,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:20.750Z",
+    "updatedAt": "2019-12-11T12:38:20.750Z",
+    "objectId": "y8C7fm9WBW",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.75705,
+      "longitude": -88.10892
+    },
+    "cityId": 4095392,
+    "name": "Vernon",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 1895,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "yGf0CNse7Q",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.74021,
+      "longitude": -86.64938
+    },
+    "cityId": 8605041,
+    "name": "Dixiana",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 22940,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:24.033Z",
+    "updatedAt": "2019-12-11T12:38:24.033Z",
+    "objectId": "yrZz6adcoT",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 31.1649,
+      "longitude": -85.46827
+    },
+    "cityId": 4093048,
+    "name": "Taylor",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2402,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:21.030Z",
+    "updatedAt": "2019-12-11T12:38:21.030Z",
+    "objectId": "z8OhljEBOO",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.61983,
+      "longitude": -86.60888
+    },
+    "cityId": 4094212,
+    "name": "Trussville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 21023,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:23.384Z",
+    "updatedAt": "2019-12-11T12:38:23.384Z",
+    "objectId": "zHcsnBXrKL",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 32.5843,
+      "longitude": -88.18725
+    },
+    "cityId": 4073383,
+    "name": "Livingston",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "AL",
+    "population": 3414,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "zICCoebKgi",
+    "className": "AL"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 33.77344,
+      "longitude": -86.81388
+    },
+    "cityId": 4070806,
+    "name": "Kimberly",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "AL",
+    "population": 2892,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "opo6B57pvA"
+    },
+    "createdAt": "2019-12-11T12:38:19.392Z",
+    "updatedAt": "2019-12-11T12:38:19.392Z",
+    "objectId": "ziaQDBGjhs",
+    "className": "AL"
+  }
+]

@@ -125,6 +125,7 @@
                                                 <select name="proffesion" id="perferred_profession">
                                                     <option value="">Profession</option>
                                                     @foreach ($proffesions as $proffesion)
+
                                                         <option value="{{ $proffesion->full_name }}">
                                                             {{ $proffesion->full_name }}
                                                         </option>
@@ -643,7 +644,6 @@
                                 @foreach ($draftJobs as $job)
                                     <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}">
-                                        <p>Travel <span>+50 Applied</span></p>
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
                                         <h6>Medical Solutions Recruiter</h6>
                                         <ul>
@@ -672,26 +672,26 @@
                             <div class="ss-account-form-lft-1">
                                 <h5 class="mb-4 text-capitalize">Published</h5>
                                 @php $counter = 0 @endphp
-                                @foreach ($publishedJobs as $job)
+                                @foreach ($publishedJobs as $key => $value)
                                     {{-- <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}"> --}}
                                     <div class="col-12 ss-job-prfle-sec"
-                                        onclick="opportunitiesType('published','{{ $job->id }}','jobdetails')"
+                                        onclick="opportunitiesType('published','{{ $value->id }}','jobdetails')"
                                         id="{{ $counter }}">
-                                        <p>Travel <span>+50 Applied</span></p>
-                                        <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
+                                        <p>Travel <span> {{ $applyCount[$key] }} Applied</span></p>
+                                        <h4>{{ $value->proffesion }} - {{ $value->preferred_specialty }}</h4>
                                         <h6>Medical Solutions Recruiter</h6>
                                         <ul>
                                             <li><a href="#"><img
                                                         src=" {{ URL::asset('frontend/img/location.png') }}">
-                                                    {{ $job->job_city }}, {{ $job->job_state }}</a></li>
+                                                    {{ $value->job_city }}, {{ $value->job_state }}</a></li>
                                             <li><a href="#"><img
                                                         src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                                    {{ $job->preferred_assignment_duration }}
+                                                    {{ $value->preferred_assignment_duration }}
                                                     wks</a></li>
                                             <li><a href="#"><img
                                                         src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ $job->weekly_pay }}/wk</a></li>
+                                                    {{ $value->weekly_pay }}/wk</a></li>
                                         </ul>
 
                                     </div>
@@ -713,7 +713,6 @@
                                 @foreach ($onholdJobs as $job)
                                     <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}">
-                                        <p>Travel <span>+50 Applied</span></p>
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
                                         <h6>Medical Solutions Recruiter</h6>
                                         <ul>
@@ -755,14 +754,14 @@
                                         <div class=" col-3 step">
                                             <p>Preferences and Requirements</p>
                                             <div class="bullet">
-                                                <span>1</span>
+                                                <span>2</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
                                         <div class="col-3 step">
                                             <p>Job Details</p>
                                             <div class="bullet">
-                                                <span>1</span>
+                                                <span>3</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
@@ -1262,14 +1261,14 @@
                                         <div class=" col-3 step">
                                             <p>Preferences and Requirements</p>
                                             <div class="bullet">
-                                                <span>1</span>
+                                                <span>2</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
                                         <div class="col-3 step">
                                             <p>Job Details</p>
                                             <div class="bullet">
-                                                <span>1</span>
+                                                <span>3</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
@@ -1987,7 +1986,7 @@
                         list_specialities();
                         list_vaccinations();
                         list_certifications();
-                        console.log(result.joblisting);
+
                         if (result.joblisting != "") {
                             document.getElementById("published-job-details").classList.remove("d-none");
                             document.getElementById("no-job-posted").classList.add("d-none");
@@ -2108,7 +2107,7 @@
                 if (csrfToken) {
                     event.preventDefault();
                     let check_type = type;
-                    console.log(document.getElementById('job_id'));
+                    
                     // if (document.getElementById('job_id').value) {
                     if (id == '0') {
                         id = document.getElementById('job_id').value;
@@ -2361,7 +2360,6 @@
                 });
             } else {
                 if (!vaccinations.hasOwnProperty($('#vaccinations').val())) {
-                    console.log($('#vaccinations').val());
 
                     var select = document.getElementById("vaccinations");
                     var selectedOption = select.options[select.selectedIndex];
@@ -2382,7 +2380,7 @@
             for (const key in vaccinations) {
                 let vaccinationsname = "";
                 var select = document.getElementById("vaccinations");
-                console.log(select);
+                
                 var allspcldata = [];
                 for (var i = 0; i < select.options.length; i++) {
                     var obj = {
@@ -2697,7 +2695,7 @@
 
 
     if (draftJobs.length !== 0) {
-        console.log(draftJobs[0])
+
     let job_name = draftJobs[0].job_name;
     let job_type = draftJobs[0].job_type;
     let preferred_specialty = draftJobs[0].preferred_specialty;
@@ -2892,8 +2890,17 @@
 
 
     function editDataJob(element) {
-        const jobId = element.id;
+        
+        var activeDocs = document.getElementsByClassName('col-12 ss-job-prfle-sec active')
+        if(activeDocs.length > 0){
+            for(i of activeDocs){
+                i.classList.remove("active");
+            }
+        }
 
+        const jobId = element.id;
+        
+        element.classList.add("active");
         let job_name = draftJobs[jobId].job_name;
         let job_type = draftJobs[jobId].job_type;
         let preferred_specialty = draftJobs[jobId].preferred_specialty;
@@ -3019,8 +3026,7 @@
     const prevBtnFourth = document.querySelector(".prev-3");
     const submitBtn = document.querySelector(".submit");
     const saveDrftBtn = document.querySelectorAll(".saveDrftBtn");
-    console.log('savedaft buttons :');
-    console.log(saveDrftBtn);
+
     const progressText = document.querySelectorAll(".step p");
     const progressCheck = document.querySelectorAll(".step .check");
     const bullet = document.querySelectorAll(".step .bullet");
@@ -4131,6 +4137,7 @@
             progressCheckDarft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
+
             event.target.form.submit();
         }
     });
@@ -4699,8 +4706,8 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     });
 
     saveDrftBtnEdit.addEventListener("click", function(event) {
-        document.getElementById("activeEdit").value = "0";
-        document.getElementById("is_openEdit").value = "0";
+        document.getElementById("activeEdit").value = "1";
+        document.getElementById("is_openEdit").value = "1";
         var jobName = document.getElementById("job_nameEdit").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
@@ -4754,65 +4761,63 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
-    console.log(result);
-    document.getElementById("job_nameEdit").value = result.job_name;
-    document.getElementById("job_typeEdit").value = result.job_type;
+                        console.log(result);
+                        document.getElementById("job_nameEdit").value = result.job_name;
+                        document.getElementById("job_typeEdit").value = result.job_type;
 
-    document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
-    document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
-    document.getElementById("job_stateEdit").value = result.job_state;
-    var city = result.job_city;
-    var select = document.getElementById('job_cityEdit');
-    var option = document.createElement('option');
-    option.value = city;
-    option.text = city;
+                        document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
+                        document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
+                        document.getElementById("job_stateEdit").value = result.job_state;
+                        var city = result.job_city;
+                        var select = document.getElementById('job_cityEdit');
+                        var option = document.createElement('option');
+                        option.value = city;
+                        option.text = city;
+                                            
+                        select.add(option);
+                        select.value = city;
+                        document.getElementById("preferred_work_locationEdit").value = result.preferred_work_location;
                         
-    select.add(option);
-    select.value = city;
-    document.getElementById("preferred_work_locationEdit").value = result.preferred_work_location;
-    
-    document.getElementById("weekly_payEdit").value = result.weekly_pay;
-    document.getElementById("descriptionEdit").value = result.description;
-    document.getElementById("preferred_assignment_durationEdit").value = result.preferred_assignment_duration;
-    document.getElementById("facility_shift_cancelation_policyEdit").value = result.facility_shift_cancelation_policy;
-    document.getElementById("traveler_distance_from_facilityEdit").value = result.traveler_distance_from_facility;
-    document.getElementById("clinical_settingEdit").value = result.clinical_setting;
-    document.getElementById("Patient_ratioEdit").value = result.Patient_ratio;
-    document.getElementById("UnitEdit").value = result.Unit;
-    document.getElementById("scrub_colorEdit").value = result.scrub_color;
-    document.getElementById("rtoEdit").value = result.rto;
-    document.getElementById("guaranteed_hoursEdit").value = result.guaranteed_hours;
-    document.getElementById("hours_shiftEdit").value = result.hours_shift;
-    document.getElementById("weeks_shiftEdit").value = result.weeks_shift;
-    document.getElementById("referral_bonusEdit").value = result.referral_bonus;
-    document.getElementById("sign_on_bonusEdit").value = result.sign_on_bonus;
-    document.getElementById("completion_bonusEdit").value = result.completion_bonus;
-    document.getElementById("extension_bonusEdit").value = result.extension_bonus;
-    document.getElementById("other_bonusEdit").value = result.other_bonus;
-    document.getElementById("actual_hourly_rateEdit").value = result.actual_hourly_rate;
-    document.getElementById("overtimeEdit").value = result.overtime;
-    document.getElementById("holidayEdit").value = result.holiday;
-    document.getElementById("orientation_rateEdit").value = result.orientation_rate;
-    document.getElementById("on_callEdit").value = (result.on_call == 0) ? 'No' : 'Yes';
-    document.getElementById("block_schedulingEdit").value = (result.block_scheduling == 0) ? 'No' : 'Yes';
-    document.getElementById("termsEdit").value = result.terms;
-    document.getElementById("float_requirementEdit").value = (result.float_requirement == 0) ? 'No' : 'Yes';
-    document.getElementById("contract_termination_policyEdit").value = result.contract_termination_policy;
-    document.getElementById("emrEdit").value = result.Emr; // corrected here
-    document.getElementById("four_zero_one_kEdit").value = (result.four_zero_one_k == 0) ? 'No' : 'Yes';
-    document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
-    document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';
-    document.getElementById("visionEdit").value = (result.vision == 0) ? 'No' : 'Yes';
-    document.getElementById("call_backEdit").value = result.call_back;
-    document.getElementById("weekly_non_taxable_amountEdit").value = result.weekly_non_taxable_amount;
-    document.getElementById("hours_shiftEdit").value = result.hours_shift;
-    document.getElementById("start_dateEdit").value = result.start_date;
-    // removed as_soon_asEdit as it does not exist in the provided object
-    document.getElementById("job_idEdit").value = result.id;
-   
-
-                
-},
+                        document.getElementById("weekly_payEdit").value = result.weekly_pay;
+                        document.getElementById("descriptionEdit").value = result.description;
+                        document.getElementById("preferred_assignment_durationEdit").value = result.preferred_assignment_duration;
+                        document.getElementById("facility_shift_cancelation_policyEdit").value = result.facility_shift_cancelation_policy;
+                        document.getElementById("traveler_distance_from_facilityEdit").value = result.traveler_distance_from_facility;
+                        document.getElementById("clinical_settingEdit").value = result.clinical_setting;
+                        document.getElementById("Patient_ratioEdit").value = result.Patient_ratio;
+                        document.getElementById("UnitEdit").value = result.Unit;
+                        document.getElementById("scrub_colorEdit").value = result.scrub_color;
+                        document.getElementById("rtoEdit").value = result.rto;
+                        document.getElementById("guaranteed_hoursEdit").value = result.guaranteed_hours;
+                        document.getElementById("hours_shiftEdit").value = result.hours_shift;
+                        document.getElementById("weeks_shiftEdit").value = result.weeks_shift;
+                        document.getElementById("referral_bonusEdit").value = result.referral_bonus;
+                        document.getElementById("sign_on_bonusEdit").value = result.sign_on_bonus;
+                        document.getElementById("completion_bonusEdit").value = result.completion_bonus;
+                        document.getElementById("extension_bonusEdit").value = result.extension_bonus;
+                        document.getElementById("other_bonusEdit").value = result.other_bonus;
+                        document.getElementById("actual_hourly_rateEdit").value = result.actual_hourly_rate;
+                        document.getElementById("overtimeEdit").value = result.overtime;
+                        document.getElementById("holidayEdit").value = result.holiday;
+                        document.getElementById("orientation_rateEdit").value = result.orientation_rate;
+                        document.getElementById("on_callEdit").value = (result.on_call == 0) ? 'No' : 'Yes';
+                        document.getElementById("block_schedulingEdit").value = (result.block_scheduling == 0) ? 'No' : 'Yes';
+                        document.getElementById("termsEdit").value = result.terms;
+                        document.getElementById("float_requirementEdit").value = (result.float_requirement == 0) ? 'No' : 'Yes';
+                        document.getElementById("contract_termination_policyEdit").value = result.contract_termination_policy;
+                        document.getElementById("emrEdit").value = result.Emr; // corrected here
+                        document.getElementById("four_zero_one_kEdit").value = (result.four_zero_one_k == 0) ? 'No' : 'Yes';
+                        document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
+                        document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';
+                        document.getElementById("visionEdit").value = (result.vision == 0) ? 'No' : 'Yes';
+                        document.getElementById("call_backEdit").value = result.call_back;
+                        document.getElementById("weekly_non_taxable_amountEdit").value = result.weekly_non_taxable_amount;
+                        document.getElementById("hours_shiftEdit").value = result.hours_shift;
+                        document.getElementById("start_dateEdit").value = result.start_date;
+                        // removed as_soon_asEdit as it does not exist in the provided object
+                        document.getElementById("job_idEdit").value = result.id;
+                                
+                },
                     error: function(error) {
                         console.log(error);
                     }

@@ -1,0 +1,1129 @@
+[
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.96677,
+      "longitude": -71.54951
+    },
+    "cityId": 5223687,
+    "name": "North Smithfield",
+    "country": "US",
+    "muni": "52480",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 11212,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "3a2khkgLYK",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.46121,
+      "longitude": -71.77757
+    },
+    "cityId": 5222680,
+    "name": "Hopkinton",
+    "country": "US",
+    "muni": "35380",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 8261,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "4XBURD9bOQ",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.82399,
+      "longitude": -71.41283
+    },
+    "cityId": 5224151,
+    "name": "Providence",
+    "country": "US",
+    "muni": "59000",
+    "featureCode": "PPLA",
+    "adminCode": "RI",
+    "population": 179207,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "6HB8bZPWtR",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.7001,
+      "longitude": -71.41617
+    },
+    "cityId": 5225507,
+    "name": "Warwick",
+    "country": "US",
+    "muni": "74300",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 81699,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "72c5mNRU0X",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.5076,
+      "longitude": -71.71618
+    },
+    "cityId": 5222665,
+    "name": "Hope Valley",
+    "country": "US",
+    "muni": "35380",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 1612,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "AgClikDnlX",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.7001,
+      "longitude": -71.68284
+    },
+    "cityId": 5221637,
+    "name": "Coventry",
+    "country": "US",
+    "muni": "18640",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 35525,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "AioEp7BMGX",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.66038,
+      "longitude": -71.45589
+    },
+    "cityId": 5221875,
+    "name": "East Greenwich",
+    "country": "US",
+    "muni": "22240",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 13682,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "BF1mw5fLSZ",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.60232,
+      "longitude": -71.25033
+    },
+    "cityId": 5224082,
+    "name": "Portsmouth",
+    "country": "US",
+    "muni": "57880",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 17756,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "DfTARAjO8G",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.58705,
+      "longitude": -71.28338
+    },
+    "cityId": 5223324,
+    "name": "Melville",
+    "country": "US",
+    "muni": "57880",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 1320,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "FAwjyLOR2F",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.85371,
+      "longitude": -71.75812
+    },
+    "cityId": 5222169,
+    "name": "Foster",
+    "country": "US",
+    "muni": "27460",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 4598,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "FcgT6iOo9S",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.44606,
+      "longitude": -71.5004
+    },
+    "cityId": 7257663,
+    "name": "Wakefield-Peacedale",
+    "country": "US",
+    "muni": "67460",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 8487,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "GhoLvOaCAN",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.92111,
+      "longitude": -71.435
+    },
+    "cityId": 8531960,
+    "name": "Lincoln",
+    "country": "US",
+    "muni": "41500",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 21670,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "H95ZFp667B",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.73038,
+      "longitude": -71.28255
+    },
+    "cityId": 5225502,
+    "name": "Warren",
+    "country": "US",
+    "muni": "73760",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 11280,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "HpnzY54nCh",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.51579,
+      "longitude": -71.28752
+    },
+    "cityId": 7257658,
+    "name": "Newport East",
+    "country": "US",
+    "muni": "45460",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 11769,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "LG2SqJm3FL",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.637,
+      "longitude": -71.66004
+    },
+    "cityId": 8260172,
+    "name": "West Greenwich",
+    "country": "US",
+    "muni": "77720",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 6135,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "LMleSxFFFl",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.82186,
+      "longitude": -71.50675
+    },
+    "cityId": 8604682,
+    "name": "Johnston",
+    "country": "US",
+    "muni": "5222928",
+    "featureCode": "PPLA3",
+    "adminCode": "RI",
+    "population": 29247,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "LmELiqcAgG",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.90677,
+      "longitude": -71.39061
+    },
+    "cityId": 5225388,
+    "name": "Valley Falls",
+    "country": "US",
+    "muni": "20080",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 11547,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "MGANKDrFwA",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.77982,
+      "longitude": -71.43728
+    },
+    "cityId": 5221659,
+    "name": "Cranston",
+    "country": "US",
+    "muni": "5221674",
+    "featureCode": "PPLA3",
+    "adminCode": "RI",
+    "population": 81073,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "MlA8Ad7Xry",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.5501,
+      "longitude": -71.46617
+    },
+    "cityId": 5223672,
+    "name": "North Kingstown",
+    "country": "US",
+    "muni": "51580",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 28042,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "NfdnZLH1pz",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.54566,
+      "longitude": -71.29144
+    },
+    "cityId": 5223358,
+    "name": "Middletown",
+    "country": "US",
+    "muni": "45460",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 17303,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "OVzKt4fdmj",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.4901,
+      "longitude": -71.31283
+    },
+    "cityId": 5223593,
+    "name": "Newport",
+    "country": "US",
+    "muni": "49960",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 24232,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "PsmYQCouA3",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.87871,
+      "longitude": -71.38256
+    },
+    "cityId": 5223869,
+    "name": "Pawtucket",
+    "country": "US",
+    "muni": "54640",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 71591,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "R06AzMGIE5",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.17233,
+      "longitude": -71.55783
+    },
+    "cityId": 5223587,
+    "name": "New Shoreham",
+    "country": "US",
+    "muni": "50500",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 1047,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "REWGIUW1VQ",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.69689,
+      "longitude": -71.52194
+    },
+    "cityId": 5225627,
+    "name": "West Warwick",
+    "country": "US",
+    "muni": "78440",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 30146,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "RRuWp98dEd",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.5776,
+      "longitude": -71.53756
+    },
+    "cityId": 5222019,
+    "name": "Exeter",
+    "country": "US",
+    "muni": "25300",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 6426,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "TcDjOvdyfO",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.9151,
+      "longitude": -71.67146
+    },
+    "cityId": 5221401,
+    "name": "Chepachet",
+    "country": "US",
+    "muni": "30340",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 1675,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "TqFSAGQpeG",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.74066,
+      "longitude": -71.30866
+    },
+    "cityId": 5220798,
+    "name": "Barrington",
+    "country": "US",
+    "muni": "05140",
+    "featureCode": "PPLA3",
+    "adminCode": "RI",
+    "population": 16669,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "VvPLz6JtgG",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.00288,
+      "longitude": -71.51478
+    },
+    "cityId": 5225809,
+    "name": "Woonsocket",
+    "country": "US",
+    "muni": "80780",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 41475,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "XdGbh2I3ir",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.96565,
+      "longitude": -71.67451
+    },
+    "cityId": 5222569,
+    "name": "Harrisville",
+    "country": "US",
+    "muni": "11800",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 1605,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "ZFCp44L4ef",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.92204,
+      "longitude": -71.54951
+    },
+    "cityId": 5224949,
+    "name": "Smithfield",
+    "country": "US",
+    "muni": "66200",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 21872,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "a9CaY0ck47",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.42343,
+      "longitude": -71.78562
+    },
+    "cityId": 5220705,
+    "name": "Ashaway",
+    "country": "US",
+    "muni": "35380",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 1485,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "bOIVdoFUK6",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.8501,
+      "longitude": -71.46617
+    },
+    "cityId": 5223681,
+    "name": "North Providence",
+    "country": "US",
+    "muni": "5223683",
+    "featureCode": "PPLA3",
+    "adminCode": "RI",
+    "population": 33835,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "eJZVHHYED8",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.48038,
+      "longitude": -71.52256
+    },
+    "cityId": 5223006,
+    "name": "Kingston",
+    "country": "US",
+    "muni": "67460",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 6974,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "fadEVEbLAY",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.49705,
+      "longitude": -71.36728
+    },
+    "cityId": 5222866,
+    "name": "Jamestown",
+    "country": "US",
+    "muni": "36820",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 5755,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "hjFXT6v6ai",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.81371,
+      "longitude": -71.37005
+    },
+    "cityId": 5221931,
+    "name": "East Providence",
+    "country": "US",
+    "muni": "22960",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 47408,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "j0o90bsrrV",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.67705,
+      "longitude": -71.26616
+    },
+    "cityId": 5221077,
+    "name": "Bristol",
+    "country": "US",
+    "muni": "09280",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 22795,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "lVjzsr2Su8",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.43232,
+      "longitude": -71.45644
+    },
+    "cityId": 5223525,
+    "name": "Narragansett Pier",
+    "country": "US",
+    "muni": "48340",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 3409,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "nyT0LaWUu7",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.87121,
+      "longitude": -71.55201
+    },
+    "cityId": 5222476,
+    "name": "Greenville",
+    "country": "US",
+    "muni": "66200",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 8658,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "o1MrCFpSdO",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.96677,
+      "longitude": -71.43284
+    },
+    "cityId": 5221703,
+    "name": "Cumberland",
+    "country": "US",
+    "muni": "20080",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 34843,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "rBL7RHZXVo",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.39899,
+      "longitude": -71.73701
+    },
+    "cityId": 5221030,
+    "name": "Bradford",
+    "country": "US",
+    "muni": "77000",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 1406,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "sNU75lGHeD",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.95565,
+      "longitude": -71.70229
+    },
+    "cityId": 5223854,
+    "name": "Pascoag",
+    "country": "US",
+    "muni": "11800",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 4577,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "sZYtHeAcBR",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.89066,
+      "longitude": -71.39228
+    },
+    "cityId": 5221341,
+    "name": "Central Falls",
+    "country": "US",
+    "muni": "14140",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 19303,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "tRgElc2s2f",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.44718,
+      "longitude": -71.52494
+    },
+    "cityId": 8436572,
+    "name": "South Kingstown",
+    "country": "US",
+    "muni": "67460",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 30826,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "tW5ELvSmcS",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.83177,
+      "longitude": -71.58729
+    },
+    "cityId": 5223685,
+    "name": "North Scituate",
+    "country": "US",
+    "muni": "64220",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 11171,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "tWUDo69nm4",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.3776,
+      "longitude": -71.82729
+    },
+    "cityId": 5225631,
+    "name": "Westerly",
+    "country": "US",
+    "muni": "77000",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 17936,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:10.380Z",
+    "updatedAt": "2019-12-11T12:44:10.380Z",
+    "objectId": "tex0rGFePy",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.38316,
+      "longitude": -71.64173
+    },
+    "cityId": 5221384,
+    "name": "Charlestown",
+    "country": "US",
+    "muni": "14500",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 8421,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "v7Yxshictn",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.4501,
+      "longitude": -71.4495
+    },
+    "cityId": 5223505,
+    "name": "Narragansett",
+    "country": "US",
+    "muni": "48340",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 15868,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "vFXWh4TR0I",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.97454,
+      "longitude": -71.467
+    },
+    "cityId": 5221705,
+    "name": "Cumberland Hill",
+    "country": "US",
+    "muni": "20080",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 7934,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:08.508Z",
+    "updatedAt": "2019-12-11T12:44:08.508Z",
+    "objectId": "yc6iUunbQq",
+    "className": "RI"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.62594,
+      "longitude": -71.21338
+    },
+    "cityId": 5225245,
+    "name": "Tiverton",
+    "country": "US",
+    "muni": "70880",
+    "featureCode": "PPL",
+    "adminCode": "RI",
+    "population": 7557,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "HKmnyxpE9v"
+    },
+    "createdAt": "2019-12-11T12:44:09.600Z",
+    "updatedAt": "2019-12-11T12:44:09.600Z",
+    "objectId": "zuKdBSf9KR",
+    "className": "RI"
+  }
+]

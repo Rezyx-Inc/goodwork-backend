@@ -6,6 +6,7 @@ const axios = require("axios");
 const mongoose = require('mongoose');
 const Laboredge = require('../models/Laboredge');
 const Logs = require('../models/Logs');
+var moment = require("moment");
 
 var _ = require('lodash');
 var { report } = require('../set.js')
@@ -74,10 +75,10 @@ module.exports.init = async () => {
 				user.countries = countries;
 
 				// update updated with new Date().toLocaleString()
-				user.updated = new Date().toLocaleString();
+				user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 
 				// Get Jobs
-				const jobs = await getJobs(accessToken, mysqlResp.user_id)
+				const jobs = await getJobs(accessToken, mysqlResp.user_id, false, false)
 				user.importedJobs = jobs;
 
 				// Send jobs to mysql
@@ -105,6 +106,7 @@ module.exports.update = async () => {
 		
 		// only find updated documents AKA Initialised integrations
 		await Laboredge.find({updated: { $exists:true }}, {'_id':0, 'importedJobs._id':0, 'importedJobs.rates._id':0}).limit(limit).skip(offset)
+
 		.then( async laboredge => {
 			
 			// this error should trigger a notification somewhere
@@ -130,11 +132,8 @@ module.exports.update = async () => {
 				// Get the accessToken
 				var accessToken = await connectNexus(mysqlResp);
 
-				// update updated with new Date().toLocaleString()
-				user.updated = new Date().toLocaleString();
-
 				// Get Jobs
-				const jobs = await getJobs(accessToken, mysqlResp.user_id)
+				const jobs = await getJobs(accessToken, mysqlResp.user_id, true, user.updated)
 				
 				// Check which job has changed
 				const updatedJobs = await getUpdatedJobs(jobs, user.importedJobs, mysqlResp.user_id);
@@ -169,6 +168,9 @@ module.exports.update = async () => {
 				console.log("ACTUAL JOB",user.importedJobs.length, "NEW JOB",jobs.length)
 				console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
 
+				// update updated with new Date().toLocaleString()
+				user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+
 				/*
 				// Get Jobs - mysql
 				// use the updatedJobs response to apply the same changes as above
@@ -198,17 +200,18 @@ async function getProfession (accessToken, userId){
 	try{
 		
 		var { data } = await axios.get("https://api-nexus.laboredge.com:9000/api/api-integration/v1/master/professions", {headers});
+		
+		for( profession of data){
+		
+			if(profession.active){
+				activeProfession.push({profession: profession.name, professionId: profession.id})
+			}
+		}
 
 	}catch(e){
 	
 		log("Unable to fetch for total records from Nexus.", e.message, userId)
 	
-	}
-
-	for( profession of data){
-		if(profession.active){
-			activeProfession.push({profession: profession.name, professionId: profession.id})
-		}
 	}
 
 	return activeProfession
@@ -365,7 +368,7 @@ module.exports.updateOthers = async () => {
 }
 
 // get jobs
-async function getJobs (accessToken, userId){
+async function getJobs (accessToken, userId, isUpdate, lastUpdate){
 
 	var importedJobs = [];
 
@@ -382,6 +385,11 @@ async function getJobs (accessToken, userId){
 	        maxRowsToFetch:100
     	}
 	};
+
+	if(isUpdate){
+		params.dateModifiedStart = lastUpdate;
+		params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+	}
 
 	// Get the total amount of records
 	try{

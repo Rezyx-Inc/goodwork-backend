@@ -1,0 +1,4096 @@
+[
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.59119,
+      "longitude": -71.73675
+    },
+    "cityId": 5083812,
+    "name": "Bristol",
+    "country": "US",
+    "muni": "07700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1688,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "0mpuKirsKD",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.7548,
+      "longitude": -71.39674
+    },
+    "cityId": 5089850,
+    "name": "Moultonborough",
+    "country": "US",
+    "muni": "49380",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5034,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "0um2mTWwMM",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.33397,
+      "longitude": -71.29284
+    },
+    "cityId": 5083007,
+    "name": "Barnstead",
+    "country": "US",
+    "muni": "03220",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4572,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "1MLdCHDIAY",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.02036,
+      "longitude": -71.60035
+    },
+    "cityId": 5086628,
+    "name": "Goffstown",
+    "country": "US",
+    "muni": "29860",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3196,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "1ksjs1wfVE",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.87453,
+      "longitude": -71.18117
+    },
+    "cityId": 5087105,
+    "name": "Hampstead",
+    "country": "US",
+    "muni": "32900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8650,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "21H7y007Lj",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.92564,
+      "longitude": -71.01672
+    },
+    "cityId": 5085719,
+    "name": "East Kingston",
+    "country": "US",
+    "muni": "21380",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1900,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.729Z",
+    "updatedAt": "2019-12-11T12:42:10.729Z",
+    "objectId": "2UENxi3CuA",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.33702,
+      "longitude": -71.56535
+    },
+    "cityId": 5084190,
+    "name": "Canterbury",
+    "country": "US",
+    "muni": "09860",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2108,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "2e3UCKH7vN",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.83842,
+      "longitude": -71.147
+    },
+    "cityId": 5082790,
+    "name": "Atkinson",
+    "country": "US",
+    "muni": "02340",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 6782,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.097Z",
+    "updatedAt": "2019-12-11T12:42:10.097Z",
+    "objectId": "3Emz2R7xA2",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.92703,
+      "longitude": -70.94394
+    },
+    "cityId": 5088311,
+    "name": "Kensington",
+    "country": "US",
+    "muni": "39780",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2016,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "3wU9Wq1oFi",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.44424,
+      "longitude": -71.6473
+    },
+    "cityId": 5086344,
+    "name": "Franklin",
+    "country": "US",
+    "muni": "27380",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8450,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "49mCq0QJtE",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.9787,
+      "longitude": -71.07284
+    },
+    "cityId": 5083780,
+    "name": "Brentwood",
+    "country": "US",
+    "muni": "07220",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 3405,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "4IaCr5M87P",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.98148,
+      "longitude": -70.94783
+    },
+    "cityId": 5085966,
+    "name": "Exeter",
+    "country": "US",
+    "muni": "25380",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 9242,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.729Z",
+    "updatedAt": "2019-12-11T12:42:10.729Z",
+    "objectId": "4mQmOgbXh3",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.89175,
+      "longitude": -71.31201
+    },
+    "cityId": 5085382,
+    "name": "Derry Village",
+    "country": "US",
+    "muni": "17940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 34539,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "5HXq8FcdBp",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.55425,
+      "longitude": -71.0309
+    },
+    "cityId": 5092346,
+    "name": "Sanbornville",
+    "country": "US",
+    "muni": "78180",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1056,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "5K6u2rttqT",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.76731,
+      "longitude": -71.8123
+    },
+    "cityId": 5086935,
+    "name": "Greenville",
+    "country": "US",
+    "muni": "31940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1108,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "5MdtSUoDxC",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.63841,
+      "longitude": -71.73647
+    },
+    "cityId": 5083803,
+    "name": "Bridgewater",
+    "country": "US",
+    "muni": "07540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1037,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "5wct8mLhvj",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.74814,
+      "longitude": -71.85424
+    },
+    "cityId": 5090183,
+    "name": "New Ipswich",
+    "country": "US",
+    "muni": "51940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5283,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "6DxsZ1HEXz",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.19147,
+      "longitude": -71.67535
+    },
+    "cityId": 5087639,
+    "name": "Hopkinton",
+    "country": "US",
+    "muni": "37540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5676,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "6NGbVDuCJE",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.7512,
+      "longitude": -72.0098
+    },
+    "cityId": 5091744,
+    "name": "Rindge",
+    "country": "US",
+    "muni": "64580",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 6049,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "7J1iwvTRh1",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.30591,
+      "longitude": -71.32423
+    },
+    "cityId": 5091251,
+    "name": "Pittsfield",
+    "country": "US",
+    "muni": "61940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1576,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "7JsME2RcPw",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.22202,
+      "longitude": -71.71397
+    },
+    "cityId": 5084917,
+    "name": "Contoocook",
+    "country": "US",
+    "muni": "37540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1444,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "7jmXz6u6Tp",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.14675,
+      "longitude": -71.45757
+    },
+    "cityId": 5090918,
+    "name": "Pembroke",
+    "country": "US",
+    "muni": "60020",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 7461,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "7mkFnwasjb",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.2362,
+      "longitude": -70.82034
+    },
+    "cityId": 5091916,
+    "name": "Rollinsford",
+    "country": "US",
+    "muni": "65540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2820,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "8YHtVa5txZ",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.03342,
+      "longitude": -71.07423
+    },
+    "cityId": 5085913,
+    "name": "Epping",
+    "country": "US",
+    "muni": "24660",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1681,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.729Z",
+    "updatedAt": "2019-12-11T12:42:10.729Z",
+    "objectId": "8YQU10J7U0",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.8598,
+      "longitude": -71.26313
+    },
+    "cityId": 5093469,
+    "name": "Tamworth",
+    "country": "US",
+    "muni": "76100",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2673,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "9GjpjrU2Iy",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.77342,
+      "longitude": -72.38314
+    },
+    "cityId": 5094812,
+    "name": "Winchester",
+    "country": "US",
+    "muni": "85540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1733,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "9IZD0sJTbk",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.52785,
+      "longitude": -71.47035
+    },
+    "cityId": 5088438,
+    "name": "Laconia",
+    "country": "US",
+    "muni": "40180",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 16227,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "A3GOw2l94T",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.19786,
+      "longitude": -70.87367
+    },
+    "cityId": 5085520,
+    "name": "Dover",
+    "country": "US",
+    "muni": "18820",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 30880,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "A8CifQq1ae",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.16925,
+      "longitude": -70.92395
+    },
+    "cityId": 5089140,
+    "name": "Madbury",
+    "country": "US",
+    "muni": "44820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1607,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "AIAcfIDQKI",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.19425,
+      "longitude": -71.1509
+    },
+    "cityId": 5090470,
+    "name": "Northwood",
+    "country": "US",
+    "muni": "56820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3877,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "AYSDxx83O1",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.81397,
+      "longitude": -72.02314
+    },
+    "cityId": 5088061,
+    "name": "Jaffrey",
+    "country": "US",
+    "muni": "38500",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2757,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "Aikqf7rnt5",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.52563,
+      "longitude": -71.86175
+    },
+    "cityId": 5085222,
+    "name": "Danbury",
+    "country": "US",
+    "muni": "16980",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1141,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "Ao9J7coT1s",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.24925,
+      "longitude": -71.39979
+    },
+    "cityId": 5084536,
+    "name": "Chichester",
+    "country": "US",
+    "muni": "12420",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2382,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "ArXZsJZMga",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.09034,
+      "longitude": -72.02648
+    },
+    "cityId": 5090375,
+    "name": "North Haverhill",
+    "country": "US",
+    "muni": "34820",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 0,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "B2A5p1kfHJ",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.99092,
+      "longitude": -71.14256
+    },
+    "cityId": 5086383,
+    "name": "Fremont",
+    "country": "US",
+    "muni": "27940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3738,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "BXSpwtU2DU",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.15673,
+      "longitude": -71.40478
+    },
+    "cityId": 11550224,
+    "name": "Allenstown",
+    "country": "US",
+    "muni": "00660",
+    "featureCode": "PPLA3",
+    "adminCode": "NH",
+    "population": 0,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.517Z",
+    "updatedAt": "2019-12-11T12:42:12.517Z",
+    "objectId": "BtIlsOYpHo",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.93369,
+      "longitude": -72.27814
+    },
+    "cityId": 5088262,
+    "name": "Keene",
+    "country": "US",
+    "muni": "39300",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 23265,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "BvjsemdjzL",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.15229,
+      "longitude": -72.03731
+    },
+    "cityId": 5094941,
+    "name": "Woodsville",
+    "country": "US",
+    "muni": "34820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1126,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.517Z",
+    "updatedAt": "2019-12-11T12:42:12.517Z",
+    "objectId": "C3cMnjVoiS",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.20814,
+      "longitude": -71.53757
+    },
+    "cityId": 5084868,
+    "name": "Concord",
+    "country": "US",
+    "muni": "14200",
+    "featureCode": "PPLA",
+    "adminCode": "NH",
+    "population": 42620,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "CJfBe2Sy6L",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.59867,
+      "longitude": -71.5112
+    },
+    "cityId": 5086978,
+    "name": "Groveton",
+    "country": "US",
+    "muni": "56100",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1118,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "Cuign9wtHu",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.68536,
+      "longitude": -71.11673
+    },
+    "cityId": 5090683,
+    "name": "Ossipee",
+    "country": "US",
+    "muni": "58740",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 4655,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "Da9xcXC5uv",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.03451,
+      "longitude": -72.06398
+    },
+    "cityId": 5087270,
+    "name": "Haverhill",
+    "country": "US",
+    "muni": "34820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4532,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "DoFRMhiTHP",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.93759,
+      "longitude": -70.83894
+    },
+    "cityId": 5087110,
+    "name": "Hampton",
+    "country": "US",
+    "muni": "33060",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 9656,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "DxiCXoRi6C",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.36535,
+      "longitude": -72.17342
+    },
+    "cityId": 5090256,
+    "name": "Newport",
+    "country": "US",
+    "muni": "52580",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 4769,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "EVp7xwWO66",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.89924,
+      "longitude": -71.1484
+    },
+    "cityId": 5089144,
+    "name": "Madison",
+    "country": "US",
+    "muni": "45060",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2113,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "EjBikRjbUt",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.97619,
+      "longitude": -71.69396
+    },
+    "cityId": 5090096,
+    "name": "New Boston",
+    "country": "US",
+    "muni": "50740",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4934,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "FOuk05EKTD",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.73202,
+      "longitude": -71.58841
+    },
+    "cityId": 5087552,
+    "name": "Holderness",
+    "country": "US",
+    "muni": "36900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2056,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "FQZhMPgHDi",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.01342,
+      "longitude": -70.77089
+    },
+    "cityId": 5092018,
+    "name": "Rye",
+    "country": "US",
+    "muni": "66180",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5277,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "FZNSxWrpGN",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.37674,
+      "longitude": -72.34676
+    },
+    "cityId": 5084633,
+    "name": "Claremont",
+    "country": "US",
+    "muni": "12900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 12984,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "FxTtK9tInk",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.96203,
+      "longitude": -72.44231
+    },
+    "cityId": 5094550,
+    "name": "Westmoreland",
+    "country": "US",
+    "muni": "82660",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1861,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "FxVuZwrdGU",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.64229,
+      "longitude": -72.25176
+    },
+    "cityId": 5088597,
+    "name": "Lebanon",
+    "country": "US",
+    "muni": "41300",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 13579,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "GDIcUfHuna",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.38784,
+      "longitude": -71.17313
+    },
+    "cityId": 5086700,
+    "name": "Gorham",
+    "country": "US",
+    "muni": "30260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1600,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "GlGWdWGutB",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.78619,
+      "longitude": -72.48648
+    },
+    "cityId": 5087494,
+    "name": "Hinsdale",
+    "country": "US",
+    "muni": "36660",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1548,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "Go4tZoKqmy",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.80535,
+      "longitude": -71.81258
+    },
+    "cityId": 5091981,
+    "name": "Rumney",
+    "country": "US",
+    "muni": "65940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1576,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "GyXPbp72az",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.69535,
+      "longitude": -71.63063
+    },
+    "cityId": 5082756,
+    "name": "Ashland",
+    "country": "US",
+    "muni": "02020",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1244,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.097Z",
+    "updatedAt": "2019-12-11T12:42:10.097Z",
+    "objectId": "H3U5SCX7sP",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.90535,
+      "longitude": -72.14009
+    },
+    "cityId": 5090662,
+    "name": "Orford",
+    "country": "US",
+    "muni": "58500",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1162,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.917Z",
+    "updatedAt": "2019-12-11T12:42:11.917Z",
+    "objectId": "HGv4dBGEO5",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.07231,
+      "longitude": -70.71616
+    },
+    "cityId": 5090100,
+    "name": "New Castle",
+    "country": "US",
+    "muni": "50980",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1076,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "HOkjYdyW7l",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.9162,
+      "longitude": -70.86366
+    },
+    "cityId": 5087122,
+    "name": "Hampton Falls",
+    "country": "US",
+    "muni": "33460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2002,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "HTgfB6aVe7",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.22286,
+      "longitude": -71.04701
+    },
+    "cityId": 5083023,
+    "name": "Barrington",
+    "country": "US",
+    "muni": "03460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8417,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "HfwvQ6zx09",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.61146,
+      "longitude": -71.79286
+    },
+    "cityId": 5082573,
+    "name": "Alexandria",
+    "country": "US",
+    "muni": "00580",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1415,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.097Z",
+    "updatedAt": "2019-12-11T12:42:10.097Z",
+    "objectId": "HmuLsleiBi",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.23841,
+      "longitude": -72.21064
+    },
+    "cityId": 5088638,
+    "name": "Lempster",
+    "country": "US",
+    "muni": "41700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1034,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "IwM8o8CwcQ",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.03091,
+      "longitude": -71.93897
+    },
+    "cityId": 5082698,
+    "name": "Antrim",
+    "country": "US",
+    "muni": "01700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1397,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.097Z",
+    "updatedAt": "2019-12-11T12:42:10.097Z",
+    "objectId": "JEi3FvPsbb",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.86814,
+      "longitude": -71.4834
+    },
+    "cityId": 5085735,
+    "name": "East Merrimack",
+    "country": "US",
+    "muni": "47540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4197,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.729Z",
+    "updatedAt": "2019-12-11T12:42:10.729Z",
+    "objectId": "JGbcUmBUMf",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.70229,
+      "longitude": -72.28954
+    },
+    "cityId": 5087168,
+    "name": "Hanover",
+    "country": "US",
+    "muni": "33860",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8636,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "JIDxpDcVio",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.22286,
+      "longitude": -71.33201
+    },
+    "cityId": 5085918,
+    "name": "Epsom",
+    "country": "US",
+    "muni": "24900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4590,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.729Z",
+    "updatedAt": "2019-12-11T12:42:10.729Z",
+    "objectId": "Jl9RW6kr5e",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.90425,
+      "longitude": -72.20786
+    },
+    "cityId": 5089236,
+    "name": "Marlborough",
+    "country": "US",
+    "muni": "45460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1094,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.309Z",
+    "updatedAt": "2019-12-11T12:42:11.309Z",
+    "objectId": "Krm97L4bms",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.09675,
+      "longitude": -71.46507
+    },
+    "cityId": 5087616,
+    "name": "Hooksett",
+    "country": "US",
+    "muni": "37300",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4147,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "L2h8L3CA0k",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.08286,
+      "longitude": -70.93506
+    },
+    "cityId": 5090246,
+    "name": "Newmarket",
+    "country": "US",
+    "muni": "52340",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5297,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "LGYHQwSEI6",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.89285,
+      "longitude": -71.67591
+    },
+    "cityId": 5093630,
+    "name": "Thornton",
+    "country": "US",
+    "muni": "76740",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1963,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "MF1qfpIcwW",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.38757,
+      "longitude": -72.08786
+    },
+    "cityId": 5093347,
+    "name": "Sunapee",
+    "country": "US",
+    "muni": "75060",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3254,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "MMgozE1ckT",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.32146,
+      "longitude": -72.03592
+    },
+    "cityId": 5090214,
+    "name": "Newbury",
+    "country": "US",
+    "muni": "50900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1813,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "MVOtDeHvRa",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.80064,
+      "longitude": -71.30423
+    },
+    "cityId": 5094817,
+    "name": "Windham",
+    "country": "US",
+    "muni": "85780",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 13091,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.517Z",
+    "updatedAt": "2019-12-11T12:42:12.517Z",
+    "objectId": "NCHkOQJnxX",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.3898,
+      "longitude": -71.06506
+    },
+    "cityId": 5086024,
+    "name": "Farmington",
+    "country": "US",
+    "muni": "26020",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3885,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "NEUrHzdchB",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.1798,
+      "longitude": -71.8223
+    },
+    "cityId": 5087365,
+    "name": "Henniker",
+    "country": "US",
+    "muni": "35540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1747,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "NkZjezX60n",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.9287,
+      "longitude": -71.18701
+    },
+    "cityId": 5092364,
+    "name": "Sandown",
+    "country": "US",
+    "muni": "67620",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5827,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "OG496iC3LU",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.89481,
+      "longitude": -70.87116
+    },
+    "cityId": 5092485,
+    "name": "Seabrook",
+    "country": "US",
+    "muni": "68260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8679,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "Oh81ngdlhX",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.94508,
+      "longitude": -72.09647
+    },
+    "cityId": 5087227,
+    "name": "Harrisville",
+    "country": "US",
+    "muni": "34420",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1145,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "PQJ19hwMC7",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.90731,
+      "longitude": -70.812
+    },
+    "cityId": 5087114,
+    "name": "Hampton Beach",
+    "country": "US",
+    "muni": "33060",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2275,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "Ptm4tXST2k",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.41895,
+      "longitude": -71.47453
+    },
+    "cityId": 5088090,
+    "name": "Jefferson",
+    "country": "US",
+    "muni": "38820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1071,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "QVEFAxMwHh",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.74314,
+      "longitude": -71.59174
+    },
+    "cityId": 5087559,
+    "name": "Hollis",
+    "country": "US",
+    "muni": "37140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 7711,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "Qw8nLK9jdE",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.45174,
+      "longitude": -71.91369
+    },
+    "cityId": 5094791,
+    "name": "Wilmot",
+    "country": "US",
+    "muni": "84900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1218,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "RFOqDn73LW",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.32703,
+      "longitude": -71.18423
+    },
+    "cityId": 5093235,
+    "name": "Strafford",
+    "country": "US",
+    "muni": "73860",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3862,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "RRtKpxWPJq",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.02647,
+      "longitude": -71.43534
+    },
+    "cityId": 5092902,
+    "name": "South Hooksett",
+    "country": "US",
+    "muni": "37300",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5418,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "RciDKE9Hg5",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.1141,
+      "longitude": -71.8992
+    },
+    "cityId": 7257618,
+    "name": "Hillsborough",
+    "country": "US",
+    "muni": "36180",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1976,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.517Z",
+    "updatedAt": "2019-12-11T12:42:12.517Z",
+    "objectId": "RhOM3BklYU",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.57339,
+      "longitude": -71.18508
+    },
+    "cityId": 5089546,
+    "name": "Milan",
+    "country": "US",
+    "muni": "47860",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1418,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "RwyHDVIvUu",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.0362,
+      "longitude": -70.83283
+    },
+    "cityId": 5086915,
+    "name": "Greenland",
+    "country": "US",
+    "muni": "31700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3417,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "SUlbOy0NBX",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.81814,
+      "longitude": -71.85147
+    },
+    "cityId": 5093508,
+    "name": "Temple",
+    "country": "US",
+    "muni": "76260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1381,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "SnIENCXtoI",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.73453,
+      "longitude": -71.32451
+    },
+    "cityId": 5090910,
+    "name": "Pelham",
+    "country": "US",
+    "muni": "59940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 12676,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "So1qb0KaBD",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.86953,
+      "longitude": -71.0345
+    },
+    "cityId": 5090268,
+    "name": "Newton",
+    "country": "US",
+    "muni": "52900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4513,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "Sv8WzQ8DQL",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.90758,
+      "longitude": -72.06258
+    },
+    "cityId": 5085564,
+    "name": "Dublin",
+    "country": "US",
+    "muni": "19140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1572,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "TADRszOC1E",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.8123,
+      "longitude": -71.03562
+    },
+    "cityId": 5086373,
+    "name": "Freedom",
+    "country": "US",
+    "muni": "27700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1388,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "TG4NKBxqgE",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.7437,
+      "longitude": -71.76896
+    },
+    "cityId": 5089293,
+    "name": "Mason",
+    "country": "US",
+    "muni": "46260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1222,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.309Z",
+    "updatedAt": "2019-12-11T12:42:11.309Z",
+    "objectId": "TgXa3CznGO",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.64063,
+      "longitude": -72.14398
+    },
+    "cityId": 5085900,
+    "name": "Enfield",
+    "country": "US",
+    "muni": "24340",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1540,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.729Z",
+    "updatedAt": "2019-12-11T12:42:10.729Z",
+    "objectId": "UEhsFfqrJt",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.83648,
+      "longitude": -71.09478
+    },
+    "cityId": 5091273,
+    "name": "Plaistow",
+    "country": "US",
+    "muni": "62500",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 7885,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "UMKu24aKUN",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.31508,
+      "longitude": -71.62091
+    },
+    "cityId": 5083654,
+    "name": "Boscawen",
+    "country": "US",
+    "muni": "06260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3911,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "UR1lqHzlfw",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.86509,
+      "longitude": -71.4934
+    },
+    "cityId": 5089478,
+    "name": "Merrimack",
+    "country": "US",
+    "muni": "47540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 26726,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.309Z",
+    "updatedAt": "2019-12-11T12:42:11.309Z",
+    "objectId": "URhVWjHHVS",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.84342,
+      "longitude": -71.73507
+    },
+    "cityId": 5094802,
+    "name": "Wilton",
+    "country": "US",
+    "muni": "85220",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1163,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "UTXGNgVM99",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.43702,
+      "longitude": -71.82341
+    },
+    "cityId": 5082671,
+    "name": "Andover",
+    "country": "US",
+    "muni": "01460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2246,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.097Z",
+    "updatedAt": "2019-12-11T12:42:10.097Z",
+    "objectId": "Ug3wESGGVK",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.94647,
+      "longitude": -71.5159
+    },
+    "cityId": 5083221,
+    "name": "Bedford",
+    "country": "US",
+    "muni": "04500",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 21188,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "UwJBavfXSs",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.99564,
+      "longitude": -71.45479
+    },
+    "cityId": 5089178,
+    "name": "Manchester",
+    "country": "US",
+    "muni": "45140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 110229,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.309Z",
+    "updatedAt": "2019-12-11T12:42:11.309Z",
+    "objectId": "VcIJwD6w8l",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.00453,
+      "longitude": -71.3484
+    },
+    "cityId": 5082811,
+    "name": "Auburn",
+    "country": "US",
+    "muni": "02820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5089,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "VrwZA1XEVf",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.75481,
+      "longitude": -72.27175
+    },
+    "cityId": 5091729,
+    "name": "Richmond",
+    "country": "US",
+    "muni": "64420",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1147,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "W6Gaa3grC0",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.91259,
+      "longitude": -71.1245
+    },
+    "cityId": 5085244,
+    "name": "Danville",
+    "country": "US",
+    "muni": "17140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4537,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "WC4V7SUClO",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.76537,
+      "longitude": -71.46757
+    },
+    "cityId": 5090046,
+    "name": "Nashua",
+    "country": "US",
+    "muni": "50260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 87970,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "XFAPYUqGrC",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.37312,
+      "longitude": -71.61008
+    },
+    "cityId": 5094647,
+    "name": "Whitefield",
+    "country": "US",
+    "muni": "84420",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1142,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "XqZLHYkdug",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.80951,
+      "longitude": -72.15592
+    },
+    "cityId": 5089108,
+    "name": "Lyme",
+    "country": "US",
+    "muni": "44260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1788,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "XwfNWithdk",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.05287,
+      "longitude": -70.89533
+    },
+    "cityId": 5093259,
+    "name": "Stratham Station",
+    "country": "US",
+    "muni": "74340",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 6949,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "XyhoxuCxyk",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.38008,
+      "longitude": -71.71702
+    },
+    "cityId": 5092276,
+    "name": "Salisbury",
+    "country": "US",
+    "muni": "66980",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1211,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "YM5U48HyxQ",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.76481,
+      "longitude": -71.43979
+    },
+    "cityId": 5087752,
+    "name": "Hudson",
+    "country": "US",
+    "muni": "37940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 7336,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "YTdj6CGMwP",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.73481,
+      "longitude": -71.65813
+    },
+    "cityId": 5083836,
+    "name": "Brookline",
+    "country": "US",
+    "muni": "08100",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4650,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "Z4Rkl09BcA",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.78842,
+      "longitude": -71.20089
+    },
+    "cityId": 5092268,
+    "name": "Salem",
+    "country": "US",
+    "muni": "66660",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 29549,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "Zb5kdSxoFA",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.44536,
+      "longitude": -71.47785
+    },
+    "cityId": 5083288,
+    "name": "Belmont",
+    "country": "US",
+    "muni": "04740",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1301,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "aTL5UbvSGs",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.4423,
+      "longitude": -71.58896
+    },
+    "cityId": 5093669,
+    "name": "Tilton",
+    "country": "US",
+    "muni": "77060",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3612,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "bCGwuhqAYC",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.7098,
+      "longitude": -71.46035
+    },
+    "cityId": 5084376,
+    "name": "Center Harbor",
+    "country": "US",
+    "muni": "49380",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1061,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "bMhVuD3yHq",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.58397,
+      "longitude": -71.20729
+    },
+    "cityId": 5094877,
+    "name": "Wolfeboro",
+    "country": "US",
+    "muni": "86420",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2838,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.517Z",
+    "updatedAt": "2019-12-11T12:42:12.517Z",
+    "objectId": "brcPDGSF6A",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.29396,
+      "longitude": -72.26037
+    },
+    "cityId": 5093977,
+    "name": "Unity",
+    "country": "US",
+    "muni": "77940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1630,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "byj3LPNpgd",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.8698,
+      "longitude": -72.28175
+    },
+    "cityId": 5093422,
+    "name": "Swanzey",
+    "country": "US",
+    "muni": "75700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 7224,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "cCHWBMqfcc",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.30453,
+      "longitude": -70.97562
+    },
+    "cityId": 5091872,
+    "name": "Rochester",
+    "country": "US",
+    "muni": "65140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 30038,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "cwqndxQmiG",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.30617,
+      "longitude": -71.77009
+    },
+    "cityId": 5088856,
+    "name": "Littleton",
+    "country": "US",
+    "muni": "42580",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4412,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "dB4DkCaL8U",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.69647,
+      "longitude": -71.22201
+    },
+    "cityId": 5093845,
+    "name": "Tuftonboro",
+    "country": "US",
+    "muni": "77620",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2288,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "dvf2o4Qmxb",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.79035,
+      "longitude": -71.41118
+    },
+    "cityId": 5092370,
+    "name": "Sandwich",
+    "country": "US",
+    "muni": "67780",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1370,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "e3qwxMHzT0",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.98758,
+      "longitude": -71.81258
+    },
+    "cityId": 5086321,
+    "name": "Francestown",
+    "country": "US",
+    "muni": "27140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1571,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "f3HNmRzngi",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.0948,
+      "longitude": -71.73063
+    },
+    "cityId": 5094329,
+    "name": "Weare",
+    "country": "US",
+    "muni": "79780",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8583,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "f9z27dDYAg",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.23062,
+      "longitude": -71.61703
+    },
+    "cityId": 5085369,
+    "name": "Deerfield",
+    "country": "US",
+    "muni": "05460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4315,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "fLHsRLejTC",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.87008,
+      "longitude": -72.32175
+    },
+    "cityId": 5094538,
+    "name": "West Swanzey",
+    "country": "US",
+    "muni": "75700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1308,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "fRFwYSSoaV",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.443,
+      "longitude": -71.59364
+    },
+    "cityId": 7257640,
+    "name": "Tilton-Northfield",
+    "country": "US",
+    "muni": "77060",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3075,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.517Z",
+    "updatedAt": "2019-12-11T12:42:12.517Z",
+    "objectId": "fi1comQWAe",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.95064,
+      "longitude": -71.8723
+    },
+    "cityId": 5086911,
+    "name": "Greenfield",
+    "country": "US",
+    "muni": "31540",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1765,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "fzQiOMFj8r",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.48952,
+      "longitude": -72.13759
+    },
+    "cityId": 5086792,
+    "name": "Grantham",
+    "country": "US",
+    "muni": "31220",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2308,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "g419JcuZww",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.8873,
+      "longitude": -72.47037
+    },
+    "cityId": 5084524,
+    "name": "Chesterfield",
+    "country": "US",
+    "muni": "12260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3773,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "gALnCTBrnL",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.86509,
+      "longitude": -71.37395
+    },
+    "cityId": 5088905,
+    "name": "Londonderry",
+    "country": "US",
+    "muni": "43220",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 11037,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "gJazXDHqDH",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.24202,
+      "longitude": -71.53813
+    },
+    "cityId": 5085688,
+    "name": "East Concord",
+    "country": "US",
+    "muni": "14200",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 42605,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "gQJ4m78o2C",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.07176,
+      "longitude": -70.76255
+    },
+    "cityId": 5091383,
+    "name": "Portsmouth",
+    "country": "US",
+    "muni": "62900",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 21530,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "gcHthdUYts",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.42425,
+      "longitude": -71.41452
+    },
+    "cityId": 5086564,
+    "name": "Gilmanton",
+    "country": "US",
+    "muni": "28980",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3259,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "hQ4um5BBvF",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.93648,
+      "longitude": -71.05339
+    },
+    "cityId": 5088377,
+    "name": "Kingston",
+    "country": "US",
+    "muni": "40100",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 6225,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "hTwIWvv7Gk",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.99425,
+      "longitude": -71.50729
+    },
+    "cityId": 5091110,
+    "name": "Pinardville",
+    "country": "US",
+    "muni": "29860",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4780,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "hVjtRsyvPu",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.32897,
+      "longitude": -71.71786
+    },
+    "cityId": 5094342,
+    "name": "Webster",
+    "country": "US",
+    "muni": "80020",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1682,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "hjGMUc9K1A",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.11453,
+      "longitude": -71.09978
+    },
+    "cityId": 5090496,
+    "name": "Nottingham",
+    "country": "US",
+    "muni": "57460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3942,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.917Z",
+    "updatedAt": "2019-12-11T12:42:11.917Z",
+    "objectId": "i77gy7ioC3",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.95675,
+      "longitude": -71.25728
+    },
+    "cityId": 5084518,
+    "name": "Chester",
+    "country": "US",
+    "muni": "12100",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5236,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "iBAHvwZAFo",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.48924,
+      "longitude": -71.5823
+    },
+    "cityId": 5092338,
+    "name": "Sanbornton",
+    "country": "US",
+    "muni": "67300",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2749,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "inexSlYBSb",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.97924,
+      "longitude": -71.12035
+    },
+    "cityId": 5084939,
+    "name": "Conway",
+    "country": "US",
+    "muni": "14660",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1823,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "jWVB6DRbXC",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.43313,
+      "longitude": -71.5923
+    },
+    "cityId": 5090459,
+    "name": "Northfield",
+    "country": "US",
+    "muni": "54260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5049,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "jcjKyHYETI",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.07786,
+      "longitude": -71.27673
+    },
+    "cityId": 5084165,
+    "name": "Candia",
+    "country": "US",
+    "muni": "09300",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4405,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "kBRwZbR6Wo",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.87064,
+      "longitude": -71.95175
+    },
+    "cityId": 5091002,
+    "name": "Peterborough",
+    "country": "US",
+    "muni": "60580",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 3103,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "kKvKZADkhQ",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.97259,
+      "longitude": -70.82978
+    },
+    "cityId": 5090383,
+    "name": "North Hampton",
+    "country": "US",
+    "muni": "54580",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4721,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "kYSrYwcB9y",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.55868,
+      "longitude": -71.94397
+    },
+    "cityId": 5086765,
+    "name": "Grafton",
+    "country": "US",
+    "muni": "30820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1212,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "kf8C1j2HqL",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.84425,
+      "longitude": -71.47979
+    },
+    "cityId": 5088753,
+    "name": "Litchfield",
+    "country": "US",
+    "muni": "42260",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8307,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "lIe54MsT11",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.76119,
+      "longitude": -70.99645
+    },
+    "cityId": 5085825,
+    "name": "Effingham",
+    "country": "US",
+    "muni": "23620",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1356,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.729Z",
+    "updatedAt": "2019-12-11T12:42:10.729Z",
+    "objectId": "lhF7xySM7Y",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.33424,
+      "longitude": -71.95147
+    },
+    "cityId": 5093410,
+    "name": "Sutton",
+    "country": "US",
+    "muni": "75460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1644,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "lxjPG8HVNI",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.43675,
+      "longitude": -71.17229
+    },
+    "cityId": 5090111,
+    "name": "New Durham",
+    "country": "US",
+    "muni": "51220",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2364,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "m6djFnLydu",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.26175,
+      "longitude": -70.86534
+    },
+    "cityId": 5092813,
+    "name": "Somersworth",
+    "country": "US",
+    "muni": "69940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 11759,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "mL9koBmEaL",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.75702,
+      "longitude": -71.68813
+    },
+    "cityId": 5091310,
+    "name": "Plymouth",
+    "country": "US",
+    "muni": "62660",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4456,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "nUKYASPO57",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.12314,
+      "longitude": -71.01145
+    },
+    "cityId": 5088619,
+    "name": "Lee",
+    "country": "US",
+    "muni": "41460",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4500,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "o6UPUfyJeR",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.97757,
+      "longitude": -71.68508
+    },
+    "cityId": 5094939,
+    "name": "Woodstock",
+    "country": "US",
+    "muni": "87060",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1213,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.517Z",
+    "updatedAt": "2019-12-11T12:42:12.517Z",
+    "objectId": "oXqGmYmH9w",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.05368,
+      "longitude": -71.1284
+    },
+    "cityId": 5090347,
+    "name": "North Conway",
+    "country": "US",
+    "muni": "14660",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2349,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "oswV3w2MNG",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.13397,
+      "longitude": -70.92645
+    },
+    "cityId": 5085618,
+    "name": "Durham",
+    "country": "US",
+    "muni": "19700",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 10345,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "osyoIkRBAq",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.89453,
+      "longitude": -71.67424
+    },
+    "cityId": 5089746,
+    "name": "Mont Vernon",
+    "country": "US",
+    "muni": "49140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2166,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "q65bCrgGnQ",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.07314,
+      "longitude": -71.84452
+    },
+    "cityId": 5085351,
+    "name": "Deering",
+    "country": "US",
+    "muni": "17780",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1997,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "qFFxGAHpfz",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.46867,
+      "longitude": -71.18508
+    },
+    "cityId": 5083330,
+    "name": "Berlin",
+    "country": "US",
+    "muni": "05140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 9367,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "qLrWrciP5K",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.0362,
+      "longitude": -71.1834
+    },
+    "cityId": 5091636,
+    "name": "Raymond",
+    "country": "US",
+    "muni": "64020",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2855,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.918Z",
+    "updatedAt": "2019-12-11T12:42:11.918Z",
+    "objectId": "qPwqI8cEZY",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.88064,
+      "longitude": -71.32729
+    },
+    "cityId": 5085374,
+    "name": "Derry",
+    "country": "US",
+    "muni": "17940",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 22015,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "qhKtpBZsE7",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.65757,
+      "longitude": -71.50035
+    },
+    "cityId": 5089449,
+    "name": "Meredith",
+    "country": "US",
+    "muni": "47140",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1718,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.309Z",
+    "updatedAt": "2019-12-11T12:42:11.309Z",
+    "objectId": "rUT36PT4F4",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.41396,
+      "longitude": -71.98508
+    },
+    "cityId": 5090189,
+    "name": "New London",
+    "country": "US",
+    "muni": "52100",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1415,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "s2Fy3nWVZN",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.56813,
+      "longitude": -71.03007
+    },
+    "cityId": 5094191,
+    "name": "Wakefield",
+    "country": "US",
+    "muni": "78180",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 4705,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.516Z",
+    "updatedAt": "2019-12-11T12:42:12.516Z",
+    "objectId": "sM3dH4PMBl",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.65505,
+      "longitude": -71.55564
+    },
+    "cityId": 5093242,
+    "name": "Stratford",
+    "country": "US",
+    "muni": "74180",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1003,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "t9jAt0OXcQ",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.90758,
+      "longitude": -71.76646
+    },
+    "cityId": 5089118,
+    "name": "Lyndeborough",
+    "country": "US",
+    "muni": "44580",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1688,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "tJyl5PCWMA",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.49507,
+      "longitude": -72.03342
+    },
+    "cityId": 5093030,
+    "name": "Springfield",
+    "country": "US",
+    "muni": "72740",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1007,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "ubyFS4nHYU",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.56339,
+      "longitude": -71.5587
+    },
+    "cityId": 5090464,
+    "name": "Northumberland",
+    "country": "US",
+    "muni": "56100",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2597,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.613Z",
+    "updatedAt": "2019-12-11T12:42:11.613Z",
+    "objectId": "uoH4fXb8Xy",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.52424,
+      "longitude": -71.70091
+    },
+    "cityId": 5087435,
+    "name": "Hill",
+    "country": "US",
+    "muni": "35860",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1057,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.999Z",
+    "updatedAt": "2019-12-11T12:42:10.999Z",
+    "objectId": "v6y6fDHSUt",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.23869,
+      "longitude": -72.42453
+    },
+    "cityId": 5084457,
+    "name": "Charlestown",
+    "country": "US",
+    "muni": "11380",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1152,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "vc3TZ79lqL",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.13064,
+      "longitude": -71.45312
+    },
+    "cityId": 5093360,
+    "name": "Suncook",
+    "country": "US",
+    "muni": "60020",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 5379,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "vsWrDB9aZU",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.12064,
+      "longitude": -71.51146
+    },
+    "cityId": 5083673,
+    "name": "Bow Bog",
+    "country": "US",
+    "muni": "06500",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8381,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.098Z",
+    "updatedAt": "2019-12-11T12:42:10.098Z",
+    "objectId": "wbFEobcpVy",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.78064,
+      "longitude": -72.14175
+    },
+    "cityId": 5086182,
+    "name": "Fitzwilliam",
+    "country": "US",
+    "muni": "26500",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2280,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "xWCFYptsEN",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.48895,
+      "longitude": -71.56925
+    },
+    "cityId": 5088529,
+    "name": "Lancaster",
+    "country": "US",
+    "muni": "40420",
+    "featureCode": "PPLA2",
+    "adminCode": "NH",
+    "population": 1725,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.308Z",
+    "updatedAt": "2019-12-11T12:42:11.308Z",
+    "objectId": "xWx4FQtm4H",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 44.89449,
+      "longitude": -71.49592
+    },
+    "cityId": 5084820,
+    "name": "Colebrook",
+    "country": "US",
+    "muni": "13780",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1394,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.468Z",
+    "updatedAt": "2019-12-11T12:42:10.468Z",
+    "objectId": "y2ANEK5IW8",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.82397,
+      "longitude": -72.18119
+    },
+    "cityId": 5093821,
+    "name": "Troy",
+    "country": "US",
+    "muni": "77380",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 1221,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:12.216Z",
+    "updatedAt": "2019-12-11T12:42:12.216Z",
+    "objectId": "y8kjHZkgbl",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.14897,
+      "longitude": -72.36064
+    },
+    "cityId": 5082595,
+    "name": "Alstead",
+    "country": "US",
+    "muni": "00820",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 2071,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.097Z",
+    "updatedAt": "2019-12-11T12:42:10.097Z",
+    "objectId": "yNpEcNsToO",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 42.83536,
+      "longitude": -71.64896
+    },
+    "cityId": 5089578,
+    "name": "Milford",
+    "country": "US",
+    "muni": "48020",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 8835,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:11.612Z",
+    "updatedAt": "2019-12-11T12:42:11.612Z",
+    "objectId": "yaQmKmMtOO",
+    "className": "NH"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 43.54758,
+      "longitude": -71.40674
+    },
+    "cityId": 5086544,
+    "name": "Gilford",
+    "country": "US",
+    "muni": "28740",
+    "featureCode": "PPL",
+    "adminCode": "NH",
+    "population": 7849,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "WvJ7fKCAFv"
+    },
+    "createdAt": "2019-12-11T12:42:10.730Z",
+    "updatedAt": "2019-12-11T12:42:10.730Z",
+    "objectId": "zhf3ROBlCL",
+    "className": "NH"
+  }
+]

@@ -36,6 +36,8 @@ class OpportunitiesController extends Controller
         $onholdJobs = Job::where('created_by', $created_by)->where('active', 1)->where('is_open', '0')->get();
         $specialities = Speciality::select('full_name')->get();
         $proffesions = Profession::select('full_name')->get();
+        $applyCount = array();
+
         // send the states
         $states = State::select('id', 'name')->get();
 
@@ -48,7 +50,14 @@ class OpportunitiesController extends Controller
             $allKeywords[$filter] = $keywords;
         }
 
-        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'proffesions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords'));
+        foreach ($publishedJobs as $key => $value){
+            
+            $userapplied = Offer::where('job_id', $value->id)->count();
+            $applyCount[$key] = $userapplied;
+
+        }
+
+        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'proffesions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount'));
         //return response()->json(['success' => false, 'message' =>  $states]);
         //return view('recruiter::recruiter/opportunitiesmanager');
     }
@@ -257,7 +266,7 @@ class OpportunitiesController extends Controller
     public function store(Request $request, $check_type = 'create')
     {
         $user_id = Auth::guard('recruiter')->user()->id;
-
+        
         if ($check_type == 'update') {
             $validation_array = ['job_id' => 'required'];
         } elseif ($check_type == 'published') {
@@ -671,10 +680,10 @@ class OpportunitiesController extends Controller
                     
                         <h6>
                             <img src="' .
-                asset('public/images/nurses/profile/' . $userdetails['image']) .
+                asset('images/nurses/profile/' . $userdetails['image']) .
                 '" onerror="this.onerror=null;this.src=' .
                 '\'' .
-                asset('public/frontend/img/profile-pic-big.png') .
+                asset('frontend/img/profile-pic-big.png') .
                 '\'' .
                 ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                             ' .
@@ -1586,7 +1595,7 @@ class OpportunitiesController extends Controller
                 asset('uploads/' . $userdetails->image) .
                 '" onerror="this.onerror=null;this.src=' .
                 '\'' .
-                asset('public/frontend/img/profile-pic-big.png') .
+                asset('frontend/img/profile-pic-big.png') .
                 '\'' .
                 ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                                 ' .
@@ -1683,7 +1692,7 @@ class OpportunitiesController extends Controller
                     asset('uploads/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
-                    asset('public/frontend/img/profile-pic-big.png') .
+                    asset('frontend/img/profile-pic-big.png') .
                     '\'' .
                     ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                                             </li>

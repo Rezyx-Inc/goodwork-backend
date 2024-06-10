@@ -1,0 +1,1124 @@
+[
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.73622,
+      "longitude": -75.69827
+    },
+    "cityId": 4144101,
+    "name": "Pike Creek Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 11217,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "3mJ4kHDyGe",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.13206,
+      "longitude": -75.53242
+    },
+    "cityId": 4144366,
+    "name": "Rodney Village",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1487,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.659Z",
+    "updatedAt": "2019-12-11T12:39:30.659Z",
+    "objectId": "40j7VdAJap",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.74261,
+      "longitude": -75.60437
+    },
+    "cityId": 4141632,
+    "name": "Bridgeville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2256,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "4OeQGdBwQj",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.64123,
+      "longitude": -75.61104
+    },
+    "cityId": 4144600,
+    "name": "Seaford",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 7586,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "6n1qoVlwqx",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.00845,
+      "longitude": -75.57798
+    },
+    "cityId": 4142485,
+    "name": "Felton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1402,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "7oM43bGBZb",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.12095,
+      "longitude": -75.52187
+    },
+    "cityId": 4142942,
+    "name": "Highland Acres",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 3459,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "827bPlRM5j",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.91261,
+      "longitude": -75.42797
+    },
+    "cityId": 4143658,
+    "name": "Milford",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 10252,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "93vNSVunNF",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.06756,
+      "longitude": -75.53748
+    },
+    "cityId": 7259226,
+    "name": "Woodside East",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2316,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "D3Yw9OZAE3",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.39511,
+      "longitude": -75.6916
+    },
+    "cityId": 4145047,
+    "name": "Townsend",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2177,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "D7A4Y8Mxfr",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.29067,
+      "longitude": -75.63437
+    },
+    "cityId": 4141982,
+    "name": "Clayton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 3123,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "FHHJZrT8QW",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.11817,
+      "longitude": -75.55881
+    },
+    "cityId": 4145483,
+    "name": "Wyoming",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1465,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "FOBsuoFAHX",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.54511,
+      "longitude": -75.08907
+    },
+    "cityId": 4047734,
+    "name": "Ocean View",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2035,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "Hh22qERBkH",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.71372,
+      "longitude": -75.60937
+    },
+    "cityId": 4143871,
+    "name": "Newport",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1058,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "KJ8uULwTAt",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.77761,
+      "longitude": -75.30991
+    },
+    "cityId": 4143698,
+    "name": "Milton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2824,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "MBtPgj3Pcs",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.75011,
+      "longitude": -75.49964
+    },
+    "cityId": 4142398,
+    "name": "Edgemoor",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 5677,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "MP0VG4i0ep",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.72095,
+      "longitude": -75.07601
+    },
+    "cityId": 4144284,
+    "name": "Rehoboth Beach",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1458,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "N0uy9axPCN",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.92372,
+      "longitude": -75.5777
+    },
+    "cityId": 4142841,
+    "name": "Harrington",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 3691,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "PFkIKwoaBM",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.60483,
+      "longitude": -75.74521
+    },
+    "cityId": 4142683,
+    "name": "Glasgow",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 14303,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "POQcErGWZj",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.69011,
+      "longitude": -75.38547
+    },
+    "cityId": 4142643,
+    "name": "Georgetown",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "DE",
+    "population": 7051,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "QT1JtuvS2D",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.09977,
+      "longitude": -75.50488
+    },
+    "cityId": 7258553,
+    "name": "Rising Sun-Lebanon",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 3391,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "RZN3xMD3FF",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.53956,
+      "longitude": -75.05518
+    },
+    "cityId": 4141435,
+    "name": "Bethany Beach",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1170,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "TpgNzIHaen",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.62928,
+      "longitude": -75.65826
+    },
+    "cityId": 4141363,
+    "name": "Bear",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 19371,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "U0IFk09X8k",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.73928,
+      "longitude": -75.59798
+    },
+    "cityId": 4142424,
+    "name": "Elsmere",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 6146,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "U3hz9CpM7o",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.66206,
+      "longitude": -75.56631
+    },
+    "cityId": 4143834,
+    "name": "New Castle",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 5382,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "UJwqoiMNfw",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.0265,
+      "longitude": -75.51076
+    },
+    "cityId": 4144338,
+    "name": "Riverview",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2456,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "UTwq7HWGuX",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.57789,
+      "longitude": -75.58881
+    },
+    "cityId": 4142191,
+    "name": "Delaware City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1741,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "WqVz6add5D",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.74595,
+      "longitude": -75.54659
+    },
+    "cityId": 4145381,
+    "name": "Wilmington",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "DE",
+    "population": 71948,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "XD9Zrkv4m0",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.46039,
+      "longitude": -75.22074
+    },
+    "cityId": 4144620,
+    "name": "Selbyville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2397,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "YNapP5HjoQ",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.66706,
+      "longitude": -75.72688
+    },
+    "cityId": 4141674,
+    "name": "Brookside",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 14353,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "YkpBLrVbnG",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.21928,
+      "longitude": -75.58576
+    },
+    "cityId": 4141903,
+    "name": "Cheswold",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1415,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "ZfGuFvbJSu",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.11345,
+      "longitude": -75.54187
+    },
+    "cityId": 4141748,
+    "name": "Camden",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 3505,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "bw3MYY4H0v",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.80706,
+      "longitude": -75.59132
+    },
+    "cityId": 4142770,
+    "name": "Greenwood",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1066,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "bwvTLiFoUH",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.68678,
+      "longitude": -75.58437
+    },
+    "cityId": 4145395,
+    "name": "Wilmington Manor",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 7889,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "eqvyUmYGAD",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.73095,
+      "longitude": -75.7041
+    },
+    "cityId": 4144100,
+    "name": "Pike Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 7898,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "f0F6EGUAU7",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.11763,
+      "longitude": -75.48393
+    },
+    "cityId": 7258211,
+    "name": "Dover Base Housing",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 3450,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "illqNv52G9",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.5915,
+      "longitude": -75.2913
+    },
+    "cityId": 4143690,
+    "name": "Millsboro",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 4216,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "ioqJG30PXI",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.779,
+      "longitude": -75.59826
+    },
+    "cityId": 4142766,
+    "name": "Greenville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 2326,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "iqhPN8bKo0",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.77456,
+      "longitude": -75.13935
+    },
+    "cityId": 4143354,
+    "name": "Lewes",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 3010,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "kJx64y4EYs",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.68372,
+      "longitude": -75.74966
+    },
+    "cityId": 4143861,
+    "name": "Newark",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 33817,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "lcmd7TDs4M",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.13178,
+      "longitude": -75.52492
+    },
+    "cityId": 4143218,
+    "name": "Kent Acres",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1890,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "mFjffkKthb",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.15817,
+      "longitude": -75.52437
+    },
+    "cityId": 4142290,
+    "name": "Dover",
+    "country": "US",
+    "featureCode": "PPLA",
+    "adminCode": "DE",
+    "population": 37522,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "myb0BdOVXE",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.44956,
+      "longitude": -75.71632
+    },
+    "cityId": 4143637,
+    "name": "Middletown",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 20372,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "n7goX9FoJ9",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.5565,
+      "longitude": -75.57131
+    },
+    "cityId": 4143319,
+    "name": "Laurel",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 4075,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "p1OQILFxJA",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.63567,
+      "longitude": -75.60993
+    },
+    "cityId": 4141541,
+    "name": "Blades",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1354,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "pDI7bLNJTS",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.78761,
+      "longitude": -75.6966
+    },
+    "cityId": 4142969,
+    "name": "Hockessin",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 13527,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "tHzOHKF1SN",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.62011,
+      "longitude": -75.15074
+    },
+    "cityId": 4143459,
+    "name": "Long Neck",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1980,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "vqM03Iblei",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.45651,
+      "longitude": -75.57715
+    },
+    "cityId": 4142226,
+    "name": "Delmar",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1730,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "w1U5vVkLOa",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.76622,
+      "longitude": -75.50936
+    },
+    "cityId": 4141402,
+    "name": "Bellefonte",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 1193,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "xXRBpa84aC",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.76122,
+      "longitude": -75.7191
+    },
+    "cityId": 4143897,
+    "name": "North Star",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 7980,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.384Z",
+    "updatedAt": "2019-12-11T12:39:30.384Z",
+    "objectId": "xiIOO3QH7g",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.29983,
+      "longitude": -75.60465
+    },
+    "cityId": 4144764,
+    "name": "Smyrna",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 11319,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:30.660Z",
+    "updatedAt": "2019-12-11T12:39:30.660Z",
+    "objectId": "yc0tKApucb",
+    "className": "DE"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.80067,
+      "longitude": -75.45964
+    },
+    "cityId": 4141974,
+    "name": "Claymont",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "DE",
+    "population": 8253,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "jM3n2Rl4nc"
+    },
+    "createdAt": "2019-12-11T12:39:29.968Z",
+    "updatedAt": "2019-12-11T12:39:29.968Z",
+    "objectId": "zOkc5bdZbi",
+    "className": "DE"
+  }
+]

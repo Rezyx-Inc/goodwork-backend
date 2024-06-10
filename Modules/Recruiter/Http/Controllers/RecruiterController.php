@@ -493,6 +493,7 @@ class RecruiterController extends Controller
     {
          // return $request->all();
         try {
+
             $created_by = Auth::guard('recruiter')->user()->id;
             // Validate the form data
 
@@ -554,158 +555,160 @@ class RecruiterController extends Controller
                     'contract_termination_policy' => 'nullable|string', 
                     'call_back' => 'nullable|string',
                 ]);
+                
                 $job = new Job();
+                
                 try {
 
-                if (isset($validatedData['job_type'])) {
-                    $job->job_type = $validatedData['job_type'];
-                }
-                if (isset($validatedData['job_type'])) {
-                    $job->type = $validatedData['job_type'];
-                }
-                if (isset($validatedData['job_name'])) {
-                    $job->job_name = $validatedData['job_name'];
-                }
-                if (isset($validatedData['job_city'])) {
-                    $job->job_city = $validatedData['job_city'];
-                }
-                if (isset($validatedData['job_state'])) {
-                    $job->job_state = $validatedData['job_state'];
-                }
-                if (isset($validatedData['weekly_pay'])) {
-                    $job->weekly_pay = $validatedData['weekly_pay'];
-                }
-                if (isset($validatedData['preferred_specialty'])) {
-                    $job->preferred_specialty = $validatedData['preferred_specialty'];
-                }
-                if (isset($validatedData['active'])) {
-                    $job->active = $validatedData['active'];
-                }
-                if (isset($validatedData['description'])) {
-                    $job->description = $validatedData['description'];
-                }
-                if (isset($validatedData['start_date'])) {
-                    $job->start_date = $validatedData['start_date'];
-                }
-                if (isset($validatedData['hours_shift'])) {
-                    $job->hours_shift = $validatedData['hours_shift'];
-                }
-                if (isset($validatedData['hours_per_week'])) {
-                    $job->hours_per_week = $validatedData['hours_per_week'];
-                }
-                if (isset($validatedData['facility_shift_cancelation_policy'])) {
-                    $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
-                }
-                if (isset($validatedData['traveler_distance_from_facility'])) {
-                    $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
-                }
-                if (isset($validatedData['clinical_setting'])) {
-                    $job->clinical_setting = $validatedData['clinical_setting'];
-                }
-                if (isset($validatedData['Patient_ratio'])) {
-                    $job->Patient_ratio = $validatedData['Patient_ratio'];
-                }
-                if (isset($validatedData['Unit'])) {
-                    $job->Unit = $validatedData['Unit'];
-                }
-                if (isset($validatedData['scrub_color'])) {
-                    $job->scrub_color = $validatedData['scrub_color'];
-                }
-                if (isset($validatedData['rto'])) {
-                    $job->rto = $validatedData['rto'];
-                }
-                if (isset($validatedData['guaranteed_hours'])) {
-                    $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-                }
-                if (isset($validatedData['hours_per_week'])) {
-                    $job->hours_per_week = $validatedData['hours_per_week'];
-                }
-                if (isset($validatedData['hours_shift'])) {
-                    $job->hours_shift = $validatedData['hours_shift'];
-                }
-                if (isset($validatedData['weeks_shift'])) {
-                    $job->weeks_shift = $validatedData['weeks_shift'];
-                }
-                if (isset($validatedData['referral_bonus'])) {
-                    $job->referral_bonus = $validatedData['referral_bonus'];
-                }
-                if (isset($validatedData['sign_on_bonus'])) {
-                    $job->sign_on_bonus = $validatedData['sign_on_bonus'];
-                }
-                if (isset($validatedData['completion_bonus'])) {
-                    $job->completion_bonus = $validatedData['completion_bonus'];
-                }
-                if (isset($validatedData['extension_bonus'])) {
-                    $job->extension_bonus = $validatedData['extension_bonus'];
-                }
-                if (isset($validatedData['other_bonus'])) {
-                    $job->other_bonus = $validatedData['other_bonus'];
-                }
-                if (isset($validatedData['actual_hourly_rate'])) {
-                    $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
-                }
-                if (isset($validatedData['overtime'])) {
-                    $job->overtime = $validatedData['overtime'];
-                }
-                if (isset($validatedData['holiday'])) {
-                    $job->holiday = $validatedData['holiday'];
-                }
-                if (isset($validatedData['orientation_rate'])) {
-                    $job->orientation_rate = $validatedData['orientation_rate'];
-                }
-                if (isset($validatedData['on_call'])) {
-                    $job->on_call = $validatedData['on_call'];
-                }
-               
-                if (isset($validatedData['weekly_non_taxable_amount'])) {
-                    $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-                }
-                if (isset($validatedData['proffesion'])) {
-                    $job->proffesion = $validatedData['proffesion'];
-                }
-                if (isset($validatedData['preferred_specialty'])) {
-                    $job->specialty = $validatedData['preferred_specialty'];
-                }
-                if (isset($validatedData['terms'])) {
-                    $job->terms = $validatedData['terms'];
-                }
-                if (isset($validatedData['preferred_assignment_duration'])) {
-                    $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
-                }
-                if (isset($validatedData['block_scheduling'])) {
-                    $job->block_scheduling = $validatedData['block_scheduling'];
-                }
+                    if (isset($validatedData['job_type'])) {
+                        $job->job_type = $validatedData['job_type'];
+                    }
+                    if (isset($validatedData['job_type'])) {
+                        $job->type = $validatedData['job_type'];
+                    }
+                    if (isset($validatedData['job_name'])) {
+                        $job->job_name = $validatedData['job_name'];
+                    }
+                    if (isset($validatedData['job_city'])) {
+                        $job->job_city = $validatedData['job_city'];
+                    }
+                    if (isset($validatedData['job_state'])) {
+                        $job->job_state = $validatedData['job_state'];
+                    }
+                    if (isset($validatedData['weekly_pay'])) {
+                        $job->weekly_pay = $validatedData['weekly_pay'];
+                    }
+                    if (isset($validatedData['preferred_specialty'])) {
+                        $job->preferred_specialty = $validatedData['preferred_specialty'];
+                    }
+                    if (isset($validatedData['active'])) {
+                        $job->active = $validatedData['active'];
+                    }
+                    if (isset($validatedData['description'])) {
+                        $job->description = $validatedData['description'];
+                    }
+                    if (isset($validatedData['start_date'])) {
+                        $job->start_date = $validatedData['start_date'];
+                    }
+                    if (isset($validatedData['hours_shift'])) {
+                        $job->hours_shift = $validatedData['hours_shift'];
+                    }
+                    if (isset($validatedData['hours_per_week'])) {
+                        $job->hours_per_week = $validatedData['hours_per_week'];
+                    }
+                    if (isset($validatedData['facility_shift_cancelation_policy'])) {
+                        $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
+                    }
+                    if (isset($validatedData['traveler_distance_from_facility'])) {
+                        $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
+                    }
+                    if (isset($validatedData['clinical_setting'])) {
+                        $job->clinical_setting = $validatedData['clinical_setting'];
+                    }
+                    if (isset($validatedData['Patient_ratio'])) {
+                        $job->Patient_ratio = $validatedData['Patient_ratio'];
+                    }
+                    if (isset($validatedData['Unit'])) {
+                        $job->Unit = $validatedData['Unit'];
+                    }
+                    if (isset($validatedData['scrub_color'])) {
+                        $job->scrub_color = $validatedData['scrub_color'];
+                    }
+                    if (isset($validatedData['rto'])) {
+                        $job->rto = $validatedData['rto'];
+                    }
+                    if (isset($validatedData['guaranteed_hours'])) {
+                        $job->guaranteed_hours = $validatedData['guaranteed_hours'];
+                    }
+                    if (isset($validatedData['hours_per_week'])) {
+                        $job->hours_per_week = $validatedData['hours_per_week'];
+                    }
+                    if (isset($validatedData['hours_shift'])) {
+                        $job->hours_shift = $validatedData['hours_shift'];
+                    }
+                    if (isset($validatedData['weeks_shift'])) {
+                        $job->weeks_shift = $validatedData['weeks_shift'];
+                    }
+                    if (isset($validatedData['referral_bonus'])) {
+                        $job->referral_bonus = $validatedData['referral_bonus'];
+                    }
+                    if (isset($validatedData['sign_on_bonus'])) {
+                        $job->sign_on_bonus = $validatedData['sign_on_bonus'];
+                    }
+                    if (isset($validatedData['completion_bonus'])) {
+                        $job->completion_bonus = $validatedData['completion_bonus'];
+                    }
+                    if (isset($validatedData['extension_bonus'])) {
+                        $job->extension_bonus = $validatedData['extension_bonus'];
+                    }
+                    if (isset($validatedData['other_bonus'])) {
+                        $job->other_bonus = $validatedData['other_bonus'];
+                    }
+                    if (isset($validatedData['actual_hourly_rate'])) {
+                        $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
+                    }
+                    if (isset($validatedData['overtime'])) {
+                        $job->overtime = $validatedData['overtime'];
+                    }
+                    if (isset($validatedData['holiday'])) {
+                        $job->holiday = $validatedData['holiday'];
+                    }
+                    if (isset($validatedData['orientation_rate'])) {
+                        $job->orientation_rate = $validatedData['orientation_rate'];
+                    }
+                    if (isset($validatedData['on_call'])) {
+                        $job->on_call = $validatedData['on_call'];
+                    }
+                   
+                    if (isset($validatedData['weekly_non_taxable_amount'])) {
+                        $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
+                    }
+                    if (isset($validatedData['proffesion'])) {
+                        $job->proffesion = $validatedData['proffesion'];
+                    }
+                    if (isset($validatedData['preferred_specialty'])) {
+                        $job->specialty = $validatedData['preferred_specialty'];
+                    }
+                    if (isset($validatedData['terms'])) {
+                        $job->terms = $validatedData['terms'];
+                    }
+                    if (isset($validatedData['preferred_assignment_duration'])) {
+                        $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
+                    }
+                    if (isset($validatedData['block_scheduling'])) {
+                        $job->block_scheduling = $validatedData['block_scheduling'];
+                    }
 
-                if (isset($validatedData['contract_termination_policy'])) {
-                    $job->contract_termination_policy = $validatedData['contract_termination_policy'];
-                }
+                    if (isset($validatedData['contract_termination_policy'])) {
+                        $job->contract_termination_policy = $validatedData['contract_termination_policy'];
+                    }
 
-                if (isset($validatedData['Emr'])) {
-                    $job->Emr = $validatedData['Emr'];
-                }
+                    if (isset($validatedData['Emr'])) {
+                        $job->Emr = $validatedData['Emr'];
+                    }
+                    
+                    if (isset($validatedData['call_back'])) {
+                        $job->call_back = $validatedData['call_back'];
+                    }
+
+                    //return $job;
                 
-                if (isset($validatedData['call_back'])) {
-                    $job->call_back = $validatedData['call_back'];
-                }
-
-
-                //return $job;
-            }
-            
-            catch (Exception $e) {
-                return response()->json(['success' => false, 'message' => $e->getMessage()]);
-            }
+                }catch (Exception $e) {
                 
-            $job->recruiter_id = $created_by;
-            $job->created_by = $created_by;
-            $job->active = false;
-            $job->is_open = false;
-
+                    return response()->json(['success' => false, 'message' => $e->getMessage()]);
+                }
             
-            $job->save();
-            } elseif ($active == 'true') {
+                $job->recruiter_id = $created_by;
+                $job->created_by = $created_by;
+                $job->active = false;
+                $job->is_open = false;
+
+                $job->save();
+
+            } elseif ($active == "true") {
                
                 $validatedData = $request->validate([
+                    
                     'job_type' => 'required|string',
                     'job_name' => 'required|string',
                     'job_city' => 'required|string',
@@ -733,8 +736,7 @@ class RecruiterController extends Controller
                     'Unit' => 'nullable|string',
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
-                    'guaranteed_hours' => 'nullable|string',
-                   
+                    'guaranteed_hours' => 'nullable|string',   
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -811,11 +813,14 @@ class RecruiterController extends Controller
                 
                 // Save the job data to the database
                 $job->save();
+
             } else {
+
                 //return response()->json(['success' => false, 'message' => $active]);
                 //return redirect()->route('recruiter-opportunities-manager')->with('error', 'Please Try Again Later');
                 return response()->json(['success' => false, 'message' => $active]);
             }
+
             //return response()->json(['success' => true, 'message' => $request->all()]);
             // Create a new Job instance with the validated data
            

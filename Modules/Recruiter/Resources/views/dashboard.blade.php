@@ -18,7 +18,7 @@
             <div class="col-md-4">
                 <div class="ss-rec-start-rec-div-sec">
                     <h6>Start Posting Your Job Request</h6>
-                    <a href="{{ route('recruiter-application') }}"><img src="{{URL::asset('recruiter/assets/images/plus-icon.png')}}" /></a>
+                    <a href="{{ route('recruiter-opportunities-manager') }}"><img src="{{URL::asset('recruiter/assets/images/plus-icon.png')}}" /></a>
                 </div>
             </div>
         </div>
@@ -28,7 +28,6 @@
 </main>
 <script>
     let values = <?php echo json_encode($statusCounts); ?>;
-    console.log(values);
     
     let yValues = values;
     const ctx = document.getElementById('recruiterStats');
@@ -63,7 +62,6 @@
             }
         }
     });
-
     
 </script>
 @endsection

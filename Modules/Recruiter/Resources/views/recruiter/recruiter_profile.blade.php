@@ -438,7 +438,9 @@
 
         // validation basic information -ELH-
         function validateBasicInfo() {
+
             let isValid = true;
+
             if (first_name.value === '') {
                 $('.help-block-first_name').text('Please enter a first name');
                 $('.help-block-first_name').addClass('text-danger');
@@ -450,10 +452,16 @@
                 isValid = false;
             }
 
-            if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
+            if ( mobile.value === '' ) {
+                
+                // don't do anything
+
+            }else if ( !regexPhone.test(mobile) && mobile.value !== '' ) {
+                
                 $('.help-block-mobile').text('Please enter a mobile number');
                 $('.help-block-mobile').addClass('text-danger');
                 isValid = false;
+                
             }
 
             if (about_me.value === '') {
@@ -560,11 +568,13 @@
         const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
 
         SaveBaiscInformation.addEventListener("click", function(event) {
+
             event.preventDefault();
+
             if (!validateBasicInfo()) {
                 return;
             }
-            console.log(first_name.value);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -322,7 +322,7 @@ public function index()
             $request->validate([
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
-                'mobile' => 'required|string',
+                'mobile' => 'nullable|string',
                 'about_me' => 'required|string',
             ]);
             $user_data = [];

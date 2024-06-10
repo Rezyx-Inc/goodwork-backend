@@ -87,10 +87,8 @@ class SiteController extends Controller {
             $data = [];
             $data['user'] = auth()->guard('frontend')->user();
             $data['jobSaved'] = new JobSaved();
-            //$data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
-           // $data['professions'] = Profession::all();
             $data['specialities'] = Speciality::select('full_name')->get();
-        $data['professions'] = Profession::select('full_name')->get();
+            $data['professions'] = Profession::select('full_name')->get();
             $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
             $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
             $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();

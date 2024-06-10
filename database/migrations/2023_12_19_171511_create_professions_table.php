@@ -14,9 +14,10 @@ class CreateProfessionsTable extends Migration
     public function up()
     {
         Schema::create('professions', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string("full_name")->nullable();
             $table->string("short_name")->nullable();
+            $table->boolean("is_clinical");
         });
     }
 
