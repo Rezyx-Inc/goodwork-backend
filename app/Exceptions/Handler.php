@@ -72,12 +72,12 @@ class Handler extends ExceptionHandler
 
 				// not authorized
 				case '403':
-					return \Response::view('pages.404',array(),403);
+					return \Response::view('403',array(),403);
 					break;
 
 				// not found
 				case '404':
-					return \Response::view('pages.404',array(),404);
+					return response(["Errors" => 'Resource Not Found'], $exception->getStatusCode());
 					break;
 
 				default:

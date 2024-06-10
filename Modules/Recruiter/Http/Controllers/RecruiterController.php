@@ -501,7 +501,7 @@ class RecruiterController extends Controller
             // $active = $activeRequest['active'];
             $validatedData = [];
 
-            if ($active == '0') {
+            if ($active == 'false') {
                
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
@@ -703,7 +703,7 @@ class RecruiterController extends Controller
 
             
             $job->save();
-            } elseif ($active == '1') {
+            } elseif ($active == 'true') {
                
                 $validatedData = $request->validate([
                     'job_type' => 'required|string',
@@ -813,7 +813,7 @@ class RecruiterController extends Controller
                 $job->save();
             } else {
                 //return response()->json(['success' => false, 'message' => $active]);
-               // return redirect()->route('recruiter-opportunities-manager')->with('error', 'Please Try Again Later');
+                //return redirect()->route('recruiter-opportunities-manager')->with('error', 'Please Try Again Later');
                 return response()->json(['success' => false, 'message' => $active]);
             }
             //return response()->json(['success' => true, 'message' => $request->all()]);

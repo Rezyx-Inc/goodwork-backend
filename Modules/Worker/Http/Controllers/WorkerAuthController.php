@@ -72,7 +72,7 @@ class WorkerAuthController extends Controller
                     $otp = $this->rand_number(4);            
                     $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);         
                     $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];           
-                 //   Mail::to($model->email)->send(new login($email_data));            
+                    Mail::to($model->email)->send(new login($email_data));            
                     $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';           
                     $data_msg['success'] = true;            
                     $data_msg['link'] = Route('worker.verify');           

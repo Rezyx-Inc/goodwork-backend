@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Validator;
 
- define('USER_IMG_RECRUITER', asset('public/frontend/img/profile-pic-big.png'));
+// define('USER_IMG_RECRUITER', asset('public/frontend/img/profile-pic-big.png'));
 
 class EmployerDashboardController extends Controller
 {
