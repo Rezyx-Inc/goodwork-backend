@@ -4,6 +4,8 @@ const url = require('url');
 const axios = require("axios");
 
 const mongoose = require('mongoose');
+const queries = require("../mysql/queries.js")
+
 const Laboredge = require('../models/Laboredge');
 const Logs = require('../models/Logs');
 var moment = require("moment");
@@ -20,6 +22,8 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
     console.error('Error connecting to MongoDB:', error);
     report("src/crons/laboredge.js error on mongodb connection");
 });
+
+// Need to refresh the data and check the hourlyPay changes
 
 // Process laboredge integrations for the first time
 module.exports.init = async () => {
@@ -49,8 +53,8 @@ module.exports.init = async () => {
 				// WARNING : uses real data - mimic a normal mysql response
 				const mysqlResp = {
 					user_id:"UWU445837",
-					le_password:"Api@Quality_050923",
-					le_username:"api_quality",
+					le_password:"Newemp1!",
+					le_username:"kirsten@qualityclinicians.com",
 					le_organization_code:"Quality",
 					le_client_id:"nexus"
 				}
@@ -118,70 +122,75 @@ module.exports.update = async () => {
 				
 				console.log( "INDEX : ", index,"User ID : ", user.userId, "_id:", user._id)
 				
-				// select * from laboredge where user_id = user.userId
+				var mysqlResp = await queries.getLaboredgeLogin(user.userId)
 				
-				// WARNING : uses real data - mimic a normal mysql response
-				const mysqlResp = {
-					user_id:"UWU445837",
-					le_password:"Api@Quality_050923",
-					le_username:"api_quality",
-					le_organization_code:"Quality",
-					le_client_id:"nexus"
+				// Not required, but better be safe
+				if(mysqlResp.length == 0){
+					console.log("no integration")
+					continue
 				}
-
-				// Get the accessToken
-				var accessToken = await connectNexus(mysqlResp);
-
-				// Get Jobs
-				const jobs = await getJobs(accessToken, mysqlResp.user_id, true, user.updated)
 				
-				// Check which job has changed
-				const updatedJobs = await getUpdatedJobs(jobs, user.importedJobs, mysqlResp.user_id);
-				// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
+				// flatten the array
+				mysqlResp = mysqlResp[0];
 
-				for( [ind, item] of user.importedJobs.entries()){
+				// Since we get everyone, better be safe again
+				if( mysqlResp.initiated == false){
 
-					if ( _.includes(updatedJobs.toClose,item.id) ){
+					// Get the accessToken
+					var accessToken = await connectNexus(mysqlResp);
+					
+					// Get Jobs
+					const jobs = await getJobs(accessToken, mysqlResp.user_id, true, user.updated)
 
-						user.importedJobs[ind] = null
-						continue
-					}
+					// Check which job has changed
+					const updatedJobs = await getUpdatedJobs(jobs, user.importedJobs, mysqlResp.user_id);
+					// should be {toClose: [ids only], toAdd: [{},{}], toUpdate:[{},{}]}
+					
+					for( [ind, item] of user.importedJobs.entries()){
 
-					// Not closed, so update
-					for ( updateItem of updatedJobs.toUpdate ){
+						if ( _.includes(updatedJobs.toClose,item.id) ){
 
-						if(updateItem.id == item.id){
-
-							user.importedJobs[ind] = updateItem;
+							user.importedJobs[ind].jobStatus = "Closed";
+							let closingJob = await queries.closeImportedJobs(user.importedJobs[ind].id);
+							continue
 						}
+
+						// Not closed, so update
+						for ( updateItem of updatedJobs.toUpdate ){
+
+							if(updateItem.id == item.id){
+
+								user.importedJobs[ind] = updateItem;
+								await queries.addImportedJob(updateItem);
+							}
+						}
+
 					}
 
+					// add new jobs
+					for ( newItem of updatedJobs.toAdd ){
+
+						user.importedJobs.push(newItem)
+					}
+					
+					console.log("ACTUAL JOB",user.importedJobs.length, "UPDATE JOBS",jobs.length)
+					console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
+
+					// update updated
+					user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+
+					/*
+					// Get Jobs - mysql
+					// use the updatedJobs response to apply the same changes as above
+
+					// select user_id,import_id from jobs where user_id= mysqlResp.user_id AND import_id NOT NULL
+					// apply the changes from updatedJobs
+
+					*/
+
+					// Save
+					//await user.save().then(resp => {}).catch(e=>{console.log(e)})
 				}
-
-				// add new jobs
-
-				for ( newItem of updatedJobs.toAdd ){
-
-					user.importedJobs.push(newItem)
-				}
-				
-				console.log("ACTUAL JOB",user.importedJobs.length, "NEW JOB",jobs.length)
-				console.log("TO CLOSE", updatedJobs.toClose.length, "TO ADD", updatedJobs.toAdd.length, "UNCHANGED", updatedJobs.unchanged.length, "TO UPDATE", updatedJobs.toUpdate.length)
-
-				// update updated with new Date().toLocaleString()
-				user.updated = moment().format("YYYY-MM-DD[T]HH:mm:ss");
-
-				/*
-				// Get Jobs - mysql
-				// use the updatedJobs response to apply the same changes as above
-
-				// select user_id,import_id from jobs where user_id= mysqlResp.user_id AND import_id NOT NULL
-				// apply the changes from updatedJobs
-
-				*/
-
-				// Save
-				//await user.save().then(resp => {}).catch(e=>{console.log(e)})
 			}
 		})			
 	}
@@ -331,8 +340,8 @@ module.exports.updateOthers = async () => {
 				// WARNING : uses real data - mimic a normal mysql response
 				const mysqlResp = {
 					user_id:"UWU445837",
-					le_password:"Api@Quality_050923",
-					le_username:"api_quality",
+					le_password:"Newemp1!",
+					le_username:"kirsten@qualityclinicians.com",
 					le_organization_code:"Quality",
 					le_client_id:"nexus"
 				}
@@ -386,57 +395,58 @@ async function getJobs (accessToken, userId, isUpdate, lastUpdate){
     	}
 	};
 
+
 	if(isUpdate){
-		params.dateModifiedStart = lastUpdate;
-		params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
+		//params.dateModifiedStart = lastUpdate;
+		//params.dateModifiedEnd = moment().format("YYYY-MM-DD[T]HH:mm:ss");
 	}
 
 	// Get the total amount of records
 	try{
-		
+
 		var { data } = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
 
-	}catch(e){
-	
-		log("Unable to fetch for total records from Nexus.", e.message, userId)
-	}
-	
-	if( data.count > 100 ){
+		if( data.count > 100 ){
 
-		for(; params.pagingDetails.start < data.count ;){
+			for(; params.pagingDetails.start < data.count ;){
 
-			try{
+				try{
 
-				var res = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
+					var res = await axios.post("https://api-nexus.laboredge.com:9000/api/job-service/v1/ats/external/jobs/search", params, {headers});
 
-			}catch(e){
+				}catch(e){
 
-				log("Unable to fetch records from nexus. count > 100.", e.message, userId)
+					log("Unable to fetch records from nexus. count > 100.", e.message, userId)
+				}
+
+				for( entries of res.data.records ){
+					
+					importedJobs.push(entries);
+				}
+				
+				// Increment
+				params.pagingDetails.start+=100;
 			}
+		
+		}else if (data.count == 0){
+			
+			console.log("No jobs to load", "data.count is empty", userId);
+		
+		}else{
 
-			for( entries of res.data.records ){
+			for( entries of data.records ){
 
 				importedJobs.push(entries);
 			}
-			
-			// Increment
-			params.pagingDetails.start+=100;
-		}
-	
-	}else if (data.count == 0){
-		
-		log("No jobs to load", "data.count is empty", userId);
-	
-	}else{
 
-		for( entries of data.records ){
-
-			importedJobs.push(entries);
 		}
 
+		return importedJobs;
+
+	}catch(e){
+	
+		console.log("Unable to fetch for total records from Nexus.", e.message, userId)
 	}
-
-	return importedJobs;
 }
 
 async function getUpdatedJobs(newJobs, oldJobs, userId){
@@ -492,6 +502,17 @@ async function formatJobs(jobs){
 
 	for(job of jobs){
 
+		var hourlyPay;
+
+		if(!job.hourlyPay){
+
+			hourlyPay = null;
+
+		}else{
+
+			hourlyPay = job.hourlyPay - job.hourlyStipendRate;
+		}
+
 		formatedJobs.push({
 
             id: job.id,
@@ -509,9 +530,9 @@ async function formatJobs(jobs){
             shiftsPerWeek1: job.shiftsPerWeek1,
             scheduledHrs1: job.scheduledHrs1,
             shift: job.shift,
-            professionId: job.professionId,
-            specialtyId: job.specialtyId,
-            hourlyPay: job.hourlyPay,
+            profession: job.profession,
+            specialty: job.specialty,
+            hourlyPay: hourlyPay,
             rates: job.rates
 		})
 	}
