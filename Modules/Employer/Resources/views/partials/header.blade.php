@@ -11,7 +11,6 @@ $user = auth()->guard('employer')->user();
     <div class="col-lg-4">
       <div class="ss-dash-wel-div">
         <h5>Hi, {{ $user->first_name }}!</h5>
-        <p>Welcome !</p>
       </div>
     </div>
 

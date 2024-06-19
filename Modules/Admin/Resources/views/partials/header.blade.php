@@ -10,7 +10,6 @@ $user = auth()->guard('admin')->user();
           <div class="col-lg-6">
           <div class="ss-dsh-adm-hed-txt-lft">
             <h4>Hello, Admin</h4>
-            <p>Welcome !</p>
           </div>
         </div>
 <div class="col-lg-6">
