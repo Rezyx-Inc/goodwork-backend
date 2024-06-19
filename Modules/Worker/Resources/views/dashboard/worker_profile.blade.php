@@ -850,6 +850,14 @@
         // loding states cities docs on page load
 
         $(document).ready(function() {
+            if (@json($type == 'profile')) {
+                document.getElementById('option-1').checked = true;
+                ProfileIinformationDisplay();
+
+            } else {
+                document.getElementById('option-2').checked = true;
+                AccountSettingDisplay();
+            }
             const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
             const AddStripeAccount = document.getElementById('AddStripeAccount');
 

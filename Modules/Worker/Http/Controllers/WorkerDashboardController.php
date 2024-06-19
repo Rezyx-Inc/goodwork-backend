@@ -285,9 +285,11 @@ class WorkerDashboardController extends Controller
         return view('user.help_center', $data);
     }
 
-    public function my_profile()
+    public function my_profile(Request $request)
     {
+
         $data = [];
+        $type = $request->route('type');
         $user = auth()->guard('frontend')->user();
         $nurse = Nurse::where('user_id', $user->id)->first();
         $data['worker'] = $nurse;
@@ -328,6 +330,7 @@ class WorkerDashboardController extends Controller
         $data['worker'] = $nurse;
 
         $data['progress_percentage'] = $progress * 33 + 1;
+        $data['type'] = $type;
         
         return view('worker::dashboard.worker_profile', $data);
     }
@@ -468,11 +471,50 @@ class WorkerDashboardController extends Controller
             //return response()->json(['message' =>  $ret->get()]);
             $data['jobs'] = $ret->get();
 
+            $jobSaved = new JobSaved;
+
+            $data['jobSaved'] = $jobSaved;
+
            
             return view('worker::dashboard.explore', $data);
 
            
         
+    }
+
+    public function add_save_jobs(Request $request)
+    {
+        if ($request->ajax()) {
+            $request->validate([
+                'jid' => 'required',
+            ]);
+            $user = auth()->guard('frontend')->user();
+            $nurse = NURSE::where('user_id', $user->id)->first();
+            $rec = JobSaved::where(['nurse_id' => $nurse->id, 'job_id' => $request->jid, 'is_delete' => '0'])->first();
+            $input = [
+                'job_id' => $request->jid,
+                'is_save' => '1',
+                'nurse_id' => $nurse->id,
+            ];
+            if (empty($rec)) {
+                JobSaved::create($input);
+                $img = asset('frontend/img/bookmark.png');
+                $message = 'Job saved successfully.';
+            } else {
+                if ($rec->is_save == '1') {
+                    $input['is_save'] = '0';
+                    $img = asset('frontend/img/job-icon-bx-Vector.png');
+                    $message = 'Job unsaved successfully.';
+                } else {
+                    $input['is_save'] = '1';
+                    $img = asset('frontend/img/bookmark.png');
+                    $message = 'Job saved successfully.';
+                }
+                $rec->update($input);
+            }
+
+            return new JsonResponse(['success' => true, 'msg' => $message, 'img' => $img], 200);
+        }
     }
 
     public function my_work_journey()

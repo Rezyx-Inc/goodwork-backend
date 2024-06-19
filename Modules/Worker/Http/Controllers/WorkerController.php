@@ -19,7 +19,7 @@ use DB;
 use Exception;
 
 use App\Models\{User, Worker,Follows, NurseReference,Job,Offer, NurseAsset,
-    Keyword, Facility, Availability, Countries, States, Cities, JobSaved};
+    Keyword, Facility, Availability, Countries, States, Cities, JobSaved,Nurse};
 
 
 class WorkerController extends Controller
@@ -389,7 +389,8 @@ class WorkerController extends Controller
 
     public function get_my_work_journey()
     {
-        $user = auth()->guard('frontend')->user();
+        $front_end_user = Auth::guard('frontend')->user();
+        $user = Nurse::where('user_id', $front_end_user->id)->first();
         $whereCond = [
             'jobs.is_open' => "1",
             'jobs.is_closed' => "0",
@@ -398,6 +399,8 @@ class WorkerController extends Controller
         ];
 
         $data = [];
+
+        //return request()->route()->getName();
         
         switch(request()->route()->getName())
         {
@@ -424,7 +427,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Apply', 'Screening', 'Submitted'])
-                        ->where('offers.worker_user_id', '=', $user->nurse->id);
+                        ->where('offers.worker_user_id', '=', $user->id);
                     });
                 })
                 ->where($whereCond)
@@ -440,7 +443,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Onboarding', 'Working'])
-                        ->where('offers.worker_user_id', '=', $user->nurse->id);
+                        ->where('offers.worker_user_id', '=', $user->id);
                     });
                 })
                 ->where($whereCond)
@@ -456,7 +459,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Offered', 'Hold'])
-                        ->where('offers.worker_user_id', '=', $user->nurse->id)
+                        ->where('offers.worker_user_id', '=', $user->id)
                         ;
                     });
                 })
@@ -474,13 +477,28 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->where('offers.status', '=', 'Done')
-                        ->where('offers.worker_user_id', '=', $user->nurse->id);
+                        ->where('offers.worker_user_id', '=', $user->id);
                     });
                 })
                 ->where($whereCond)
                 ->orderBy('offers.created_at', 'DESC')
                 ->get();
                 $data['type'] = 'past';
+                break;
+            case 'saved-jobs':
+                $jobs = Job::select("jobs.*")
+                ->join('job_saved', function ($join) use ($user){
+                    $join->on('job_saved.job_id', '=', 'jobs.id')
+                    ->where(function ($query) use ($user) {
+                        $query->where('job_saved.is_delete', '=', '0')
+                        ->where('job_saved.is_save', '=', '1')
+                        ->where('job_saved.nurse_id', '=', $user->id);
+                    });
+                })
+                ->where($whereCond)
+                ->orderBy('job_saved.created_at', 'DESC')
+                ->get();
+                $data['type'] = 'saved';
                 break;
             default:
                 return redirect()->back();

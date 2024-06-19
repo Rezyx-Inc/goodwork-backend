@@ -491,7 +491,7 @@ class RecruiterController extends Controller
 
     public function addJobStore(Request $request)
     {
-         // return $request->all();
+         // return $request->input('active');
         try {
 
             $created_by = Auth::guard('recruiter')->user()->id;
@@ -706,6 +706,7 @@ class RecruiterController extends Controller
                 $job->save();
 
             } elseif ($active == "true") {
+                //return request()->all();
                
                 $validatedData = $request->validate([
                     
@@ -718,17 +719,17 @@ class RecruiterController extends Controller
                     'preferred_work_location' => 'nullable|string',
                     'description' => 'nullable|string',
                     'terms' => 'nullable|string',
-                    'preferred_shift_duration' => 'nullable|string',
-                    'preferred_work_area' => 'nullable|string',
-                    'preferred_days_of_the_week' => 'nullable|string',
-                    'preferred_hourly_pay_rate' => 'nullable|string',
-                    'preferred_experience' => 'nullable|string',
-                    'preferred_shift' => 'nullable|string',
-                    'job_function' => 'nullable|string',
+                    
+                    
+                    
+                    
+                    
+                   
+                    
                     'start_date' => 'nullable|date',
                     'hours_shift' => 'nullable|integer',
-                    'hours_per_week' => 'nullable|integer',
-                    'qualifications' => 'nullable|string',
+                    
+                    
                     'facility_shift_cancelation_policy' => 'nullable|string',
                     'traveler_distance_from_facility' => 'nullable|string',
                     'clinical_setting' => 'nullable|string',
@@ -740,15 +741,15 @@ class RecruiterController extends Controller
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
-                    'completion_bonus' => 'nullable|string',
-                    'extension_bonus' => 'nullable|string',
-                    'other_bonus' => 'nullable|string',
-                    'actual_hourly_rate' => 'nullable|string',
+                    'completion_bonus' => 'nullable|numeric',
+                    'extension_bonus' => 'nullable|numeric',
+                    'other_bonus' => 'nullable|numeric',
+                    'actual_hourly_rate' => 'nullable|numeric',
                     'overtime' => 'nullable|string',
                     'holiday' => 'nullable|string',
                     'orientation_rate' => 'nullable|string',
                     'on_call' => 'nullable|string',
-                    'weekly_non_taxable_amount' => 'nullable|integer',
+                    'weekly_non_taxable_amount' => 'nullable|string',
                     'proffesion' => 'nullable|string',
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',

@@ -788,7 +788,7 @@
 
              <div class="ss-form-group">
               <label>Shifts/Week</label>
-              <input type="text" name="text" placeholder="Ideal shifts per week?">
+              <input type="text" name="text" placeholder="Ideal shifts per week">
             </div>
 
 

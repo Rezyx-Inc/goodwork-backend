@@ -24,7 +24,7 @@ $user = auth()->guard('frontend')->user();
         </a>
 
 
-        <a href="{{route('worker.my-work-journey')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.my-work-journey') ? 'active':''}}">
+        <a href="{{route('saved-jobs')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'worker.my-work-journey') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>My Work Journey</span>
         </a>
 
@@ -32,7 +32,7 @@ $user = auth()->guard('frontend')->user();
             <img src="{{URL::asset('frontend/img/message-icon.png')}}" /><span>Messages</span>
         </a>
 
-        <a href="{{route('profile')}}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'profile') ? 'active':''}}">
+        <a href="{{route('profile', ['type' => 'profile']) }}" class="list-group-item list-group-item-action py-2 ripple {{ (request()->route()->getName() == 'profile') ? 'active':''}}">
             <img src="{{URL::asset('frontend/img/my-profile-icon.png')}}" /><span>My Profile</span>
         </a>
 

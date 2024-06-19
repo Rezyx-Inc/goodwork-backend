@@ -487,24 +487,25 @@ class JobController extends Controller
                 'jid' => 'required',
             ]);
             $user = auth()->guard('frontend')->user();
-            $rec = JobSaved::where(['nurse_id' => $user->id, 'job_id' => $request->jid, 'is_delete' => '0'])->first();
+            $nurse = NURSE::where('user_id', $user->id)->first();
+            $rec = JobSaved::where(['nurse_id' => $nurse->id, 'job_id' => $request->jid, 'is_delete' => '0'])->first();
             $input = [
                 'job_id' => $request->jid,
                 'is_save' => '1',
-                'nurse_id' => $user->id,
+                'nurse_id' => $nurse->id,
             ];
             if (empty($rec)) {
                 JobSaved::create($input);
-                $img = asset('public/frontend/img/bookmark.png');
+                $img = asset('frontend/img/bookmark.png');
                 $message = 'Job saved successfully.';
             } else {
                 if ($rec->is_save == '1') {
                     $input['is_save'] = '0';
-                    $img = asset('public/frontend/img/job-icon-bx-Vector.png');
+                    $img = asset('frontend/img/job-icon-bx-Vector.png');
                     $message = 'Job unsaved successfully.';
                 } else {
                     $input['is_save'] = '1';
-                    $img = asset('public/frontend/img/bookmark.png');
+                    $img = asset('frontend/img/bookmark.png');
                     $message = 'Job saved successfully.';
                 }
                 $rec->update($input);

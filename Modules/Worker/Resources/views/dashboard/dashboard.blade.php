@@ -80,14 +80,14 @@
                         <canvas id="recruiterStats"></canvas>
                     </div>
                 </div>
-                <div class="col-md-8">
+                {{-- <div class="col-md-8">
                 </div>
                 <div class="col-md-4">
                     <div class="ss-rec-start-rec-div-sec">
                         <h6>Start Posting Your Job Request</h6>
                         <a href="{{ route('recruiter-application') }}"><img src="{{URL::asset('recruiter/assets/images/plus-icon.png')}}" /></a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </main>

@@ -511,7 +511,7 @@ function save_jobs(obj, reload_page=false)
         }
     });
     $.ajax({
-        url: full_path+'add-save-jobs',
+        url: full_path+'worker/add-save-jobs',
         type: 'POST',
         dataType: 'json',
         // processData: false,

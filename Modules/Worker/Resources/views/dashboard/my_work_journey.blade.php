@@ -15,7 +15,7 @@
           <div class="ss-my-work-tab-div">
               {{-- <ul onclick="myFunction(event)" id='navList'> --}}
               <ul>
-                  <li><a href="{{route('my-work-journey')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'my-work-journey' ) ? 'active' :'' }}">Saved</a></li>
+                  <li><a href="{{route('saved-jobs')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'saved-jobs' ) ? 'active' :'' }}">Saved</a></li>
                   <li><a href="{{route('applied-jobs')}}" class="ss-applied-btn {{ ( request()->route()->getName() == 'applied-jobs' ) ? 'active' :'' }}">Applied</a></li>
                   <li><a href="{{route('offered-jobs')}}" class="ss-offered-btn {{ ( request()->route()->getName() == 'offered-jobs' ) ? 'active' :'' }}">Offered</a></li>
                   <li><a href="{{route('hired-jobs')}}" class="ss-hired-btn {{ ( request()->route()->getName() == 'hired-jobs' ) ? 'active' :'' }}">Hired</a></li>
@@ -116,7 +116,7 @@
                   <span>Profession</span>
                   <h6>{{$model->profession}}</h6>
               </li>
-              <li><p>What kind of professioal are you?</p></li>
+              <li><p>What kind of professional are you?</p></li>
           </ul>
   
           <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
@@ -279,7 +279,7 @@
               <h6>{{$model->facility_shift_cancelation_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -288,7 +288,7 @@
               <h6>{{$model->contract_termination_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -441,7 +441,7 @@
               <h6>IInterview dates </h6>
               </li>
               <li>
-                  <p>Any days you'r not available?</p>
+                  <p>Any days you're not available?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -450,7 +450,7 @@
               <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
               </li>
               <li>
-                  <p>When you can start?</p>
+                  <p>When can you start?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -495,7 +495,7 @@
               <h6>{{$model->hours_shift}} </h6>
               </li>
               <li>
-                  <p>Prefered hours per shift?</p>
+                  <p>Preferred hours per shift</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -513,7 +513,7 @@
               <h6>{{$model->weeks_shift}} </h6>
               </li>
               <li>
-                  <p>Ideal shift per week?</p>
+                  <p>Ideal shifts per week</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -522,7 +522,7 @@
               <h6>{{$model->referral_bonus}} </h6>
               </li>
               <li>
-                  <p># of people you have refered?</p>
+                  <p># of people you have referred?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -675,7 +675,7 @@
               <h6>${{$model->employer_weekly_amount}} </h6>
               </li>
               <li>
-                  <p>What range is resonbable?</p>
+                  <p>What range is reasonable?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -824,7 +824,7 @@
                   <span>Profession</span>
                   <h6>{{$model->profession}}</h6>
               </li>
-              <li><p>What kind of professioal are you?</p></li>
+              <li><p>What kind of professional are you?</p></li>
           </ul>
   
           <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
@@ -988,7 +988,7 @@
               <h6>{{$model->facility_shift_cancelation_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -997,7 +997,7 @@
               <h6>{{$model->contract_termination_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1150,7 +1150,7 @@
               <h6>IInterview dates </h6>
               </li>
               <li>
-                  <p>Any days you'r not available?</p>
+                  <p>Any days you're not available?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1159,7 +1159,7 @@
               <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
               </li>
               <li>
-                  <p>When you can start?</p>
+                  <p>When can you start?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1204,7 +1204,7 @@
               <h6>{{$model->hours_shift}} </h6>
               </li>
               <li>
-                  <p>Prefered hours per shift?</p>
+                  <p>Preferred hours per shift</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1222,7 +1222,7 @@
               <h6>{{$model->weeks_shift}} </h6>
               </li>
               <li>
-                  <p>Ideal shift per week?</p>
+                  <p>Ideal shifts per week</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1231,7 +1231,7 @@
               <h6>{{$model->referral_bonus}} </h6>
               </li>
               <li>
-                  <p># of people you have refered?</p>
+                  <p># of people you have referred?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1384,7 +1384,7 @@
               <h6>${{$model->employer_weekly_amount}} </h6>
               </li>
               <li>
-                  <p>What range is resonbable?</p>
+                  <p>What range is reasonable?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1535,7 +1535,7 @@
                 <span>Profession</span>
                 <h6>{{$model->profession}}</h6>
             </li>
-            <li><p>What kind of professioal are you?</p></li>
+            <li><p>What kind of professional are you?</p></li>
         </ul>
 
         <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
@@ -1699,7 +1699,7 @@
             <h6>{{$model->facility_shift_cancelation_policy}} </h6>
             </li>
             <li>
-                <p>What terms do you prefere?</p>
+                <p>What terms do you prefer?</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1708,7 +1708,7 @@
             <h6>{{$model->contract_termination_policy}} </h6>
             </li>
             <li>
-                <p>What terms do you prefere?</p>
+                <p>What terms do you prefer?</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1861,7 +1861,7 @@
             <h6>IInterview dates </h6>
             </li>
             <li>
-                <p>Any days you'r not available?</p>
+                <p>Any days you're not available?</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1870,7 +1870,7 @@
             <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
             </li>
             <li>
-                <p>When you can start?</p>
+                <p>When can you start?</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1915,7 +1915,7 @@
             <h6>{{$model->hours_shift}} </h6>
             </li>
             <li>
-                <p>Prefered hours per shift?</p>
+                <p>Preferred hours per shift</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1933,7 +1933,7 @@
             <h6>{{$model->weeks_shift}} </h6>
             </li>
             <li>
-                <p>Ideal shift per week?</p>
+                <p>Ideal shifts per week</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -1942,7 +1942,7 @@
             <h6>{{$model->referral_bonus}} </h6>
             </li>
             <li>
-                <p># of people you have refered?</p>
+                <p># of people you have referred?</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2095,7 +2095,7 @@
             <h6>${{$model->employer_weekly_amount}} </h6>
             </li>
             <li>
-                <p>What range is resonbable?</p>
+                <p>What range is reasonable?</p>
             </li>
         </ul>
         <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2250,7 +2250,7 @@
                   <span>Profession</span>
                   <h6>{{$model->profession}}</h6>
               </li>
-              <li><p>What kind of professioal are you?</p></li>
+              <li><p>What kind of professional are you?</p></li>
           </ul>
   
           <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
@@ -2414,7 +2414,7 @@
               <h6>{{$model->facility_shift_cancelation_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2423,7 +2423,7 @@
               <h6>{{$model->contract_termination_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2576,7 +2576,7 @@
               <h6>IInterview dates </h6>
               </li>
               <li>
-                  <p>Any days you'r not available?</p>
+                  <p>Any days you're not available?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2585,7 +2585,7 @@
               <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
               </li>
               <li>
-                  <p>When you can start?</p>
+                  <p>When can you start?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2630,7 +2630,7 @@
               <h6>{{$model->hours_shift}} </h6>
               </li>
               <li>
-                  <p>Prefered hours per shift?</p>
+                  <p>Preferred hours per shift</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2648,7 +2648,7 @@
               <h6>{{$model->weeks_shift}} </h6>
               </li>
               <li>
-                  <p>Ideal shift per week?</p>
+                  <p>Ideal shifts per week</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2657,7 +2657,7 @@
               <h6>{{$model->referral_bonus}} </h6>
               </li>
               <li>
-                  <p># of people you have refered?</p>
+                  <p># of people you have referred?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2810,7 +2810,7 @@
               <h6>${{$model->employer_weekly_amount}} </h6>
               </li>
               <li>
-                  <p>What range is resonbable?</p>
+                  <p>What range is reasonable?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -2963,7 +2963,7 @@
                   <span>Profession</span>
                   <h6>{{$model->profession}}</h6>
               </li>
-              <li><p>What kind of professioal are you?</p></li>
+              <li><p>What kind of professional are you?</p></li>
           </ul>
   
           <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
@@ -3127,7 +3127,7 @@
               <h6>{{$model->facility_shift_cancelation_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -3136,7 +3136,7 @@
               <h6>{{$model->contract_termination_policy}} </h6>
               </li>
               <li>
-                  <p>What terms do you prefere?</p>
+                  <p>What terms do you prefer?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -3289,7 +3289,7 @@
               <h6>IInterview dates </h6>
               </li>
               <li>
-                  <p>Any days you'r not available?</p>
+                  <p>Any days you're not available?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -3298,7 +3298,7 @@
               <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
               </li>
               <li>
-                  <p>When you can start?</p>
+                  <p>When can you start?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -3343,7 +3343,7 @@
               <h6>{{$model->hours_shift}} </h6>
               </li>
               <li>
-                  <p>Prefered hours per shift?</p>
+                  <p>Preferred hours per shift</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -3361,7 +3361,7 @@
               <h6>{{$model->weeks_shift}} </h6>
               </li>
               <li>
-                  <p>Ideal shift per week?</p>
+                  <p>Ideal shifts per week</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -3370,7 +3370,7 @@
               <h6>{{$model->referral_bonus}} </h6>
               </li>
               <li>
-                  <p># of people you have refered?</p>
+                  <p># of people you have referred?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -3523,7 +3523,7 @@
               <h6>${{$model->employer_weekly_amount}} </h6>
               </li>
               <li>
-                  <p>What range is resonbable?</p>
+                  <p>What range is reasonable?</p>
               </li>
           </ul>
           <ul class="ss-s-jb-apl-on-inf-txt-ul">

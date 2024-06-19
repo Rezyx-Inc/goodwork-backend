@@ -2942,7 +2942,7 @@ class RecruiterController extends Controller
                         $data['match_title'] = 'Hours/Shift';
                         $data['update_key'] = 'worker_hours_shift';
                         $data['type'] = 'input';
-                        $data['worker_title'] = 'Prefered hours per shift?';
+                        $data['worker_title'] = 'Preferred hours per shift';
                         $data['job_title'] = !empty($data['job'])?$data['job']:'Hours/Shift';
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;
@@ -2970,7 +2970,7 @@ class RecruiterController extends Controller
                         $data['match_title'] = 'Shifts/Week';
                         $data['update_key'] = 'worker_shifts_week';
                         $data['type'] = 'input';
-                        $data['worker_title'] = 'Ideal shifts per week?';
+                        $data['worker_title'] = 'Ideal shifts per week';
                         $data['job_title'] = !empty($data['job'])?$data['job']:'Shifts/Week';
                         $ask_worker = DB::table('ask_worker')->where(['update_key' => $data['update_key'], 'worker_id' => $result['worker_id']])->first();
                         $data['isAlreadyAsk'] = !empty($ask_worker)?true:false;

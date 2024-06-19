@@ -55,7 +55,7 @@
             </form>
             <ul class="ss-otp-re-send">
                 <li><a href="javascript:void(0)" id="resendotp" disabled>Resend OTP in</a></li>
-                <li><p class="countdown">01:26</p></li>
+                <li><p class="countdown">04:59</p></li>
             </ul>
         </div>
 
@@ -131,7 +131,7 @@
         console.log(seconds, 'seconds');
         --seconds;
         minutes = (seconds < 0) ? --minutes : minutes;
-        if (minutes < 0) clearInterval(interval);
+        if (minutes < 0 || (minutes == 0 && seconds < 0)) clearInterval(interval);
         seconds = (seconds < 0) ? 59 : seconds;
         seconds = (seconds < 10) ? '0' + seconds : seconds;
         //minutes = (minutes < 10) ?  minutes : minutes;
@@ -140,6 +140,8 @@
         if (minutes == 0 && seconds == 0) {
             $('.countdown').html('Reloading...');
             resend_otp();
+            clearInterval(interval);  
+            return;  
         }
         if(minutes < 4){
             document.getElementById("resendotp").removeAttribute("disabled");
@@ -158,7 +160,7 @@
             }
         });
         $.ajax({
-            url: full_path+"resend-otp",
+            url: full_path+"worker/resend-otp",
             type: 'GET',
             dataType: 'json',
             // processData: false,

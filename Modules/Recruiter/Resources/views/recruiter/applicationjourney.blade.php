@@ -87,7 +87,7 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="ss-account-form-lft-1">
-                            <h5 class="mb-4" id="listingname">New application</h5>
+                            <h5 class="mb-4" id="listingname">New applications</h5>
                             <div id="application-list">
                             </div>
                         </div>
@@ -385,7 +385,7 @@ AddStripe.addEventListener("click", function(event) {
                     doneElement.classList.add("active");
                 }
             }
-            document.getElementById('listingname').innerHTML = type + ' Application';
+            document.getElementById('listingname').innerHTML = type + ' Applications';
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
@@ -1183,4 +1183,10 @@ AddStripe.addEventListener("click", function(event) {
             $(target).modal('hide');
         }
     </script>
+
+    <style>
+        .ss-job-prfle-sec:after {
+            background-image: none;
+        }
+    </style>
 @endsection

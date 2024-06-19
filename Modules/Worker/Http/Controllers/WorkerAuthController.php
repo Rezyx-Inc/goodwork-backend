@@ -96,6 +96,30 @@ class WorkerAuthController extends Controller
     
     }
 
+      /** resend otp */
+      public function resend_otp(Request $request)
+      {
+          if ($request->ajax()) {
+              $response = [];
+              $response['success'] = false;
+              if (session()->has('otp_user_id')) {
+                  $model = User::where(['id'=>session()->get('otp_user_id') , 'active'=>'1'])->first();
+                  if (!empty($model)) {
+                    session()->put('otp_user_id', $model->id);            
+                    $otp = $this->rand_number(4);            
+                    $model->update(['otp'=>$otp, 'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);         
+                    $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];           
+                    Mail::to($model->email)->send(new login($email_data));            
+                    $data_msg['msg'] = 'OTP sent to your registered email and mobile number.';           
+                    $data_msg['success'] = true;            
+                    $data_msg['link'] = Route('worker.verify');           
+                    return response()->json($data_msg);
+                  }
+              }
+              return response()->json($response, 200);
+          }
+      }
+
 
    
 

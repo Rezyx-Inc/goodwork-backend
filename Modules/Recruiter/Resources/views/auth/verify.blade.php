@@ -130,7 +130,7 @@
         console.log(seconds, 'seconds');
         --seconds;
         minutes = (seconds < 0) ? --minutes : minutes;
-        if (minutes < 0) clearInterval(interval);
+        if (minutes < 0 || (minutes == 0 && seconds < 0)) clearInterval(interval);
         seconds = (seconds < 0) ? 59 : seconds;
         seconds = (seconds < 10) ? '0' + seconds : seconds;
         //minutes = (minutes < 10) ?  minutes : minutes;
@@ -139,6 +139,8 @@
         if (minutes == 0 && seconds == 0) {
             $('.countdown').html('Reloading...');
             resend_otp();
+            clearInterval(interval);  
+            return; 
         }
         if(minutes < 4){
             document.getElementById("resendotp").removeAttribute("disabled");
@@ -157,7 +159,7 @@
             }
         });
         $.ajax({
-            url: full_path+"resend-otp",
+            url: full_path+"recruiter/resend-otp",
             type: 'GET',
             dataType: 'json',
             // processData: false,

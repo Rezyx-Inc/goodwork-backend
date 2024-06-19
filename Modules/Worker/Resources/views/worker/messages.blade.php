@@ -439,7 +439,7 @@
 
                     <div class="col-lg-7 ">
                         <div id="empty_room" class="ss-msg-rply-mn-div ">
-                            <h5 class="empty_room">no chat was choosen</h5>
+                            <h5 class="empty_room">no chat was chosen</h5>
                         </div>
                         <div id="body_room" class="d-none ss-msg-rply-mn-div messages-area parentMessages">
                             <div class="ss-msg-rply-profile-sec">

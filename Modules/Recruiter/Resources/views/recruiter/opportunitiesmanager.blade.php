@@ -15,7 +15,7 @@
                                         class="ss-darfts-sec-draft-btn">Drafts</button></li>
                                 <li><button id="published" onclick="opportunitiesType('published')"
                                         class="ss-darfts-sec-publsh-btn">Published</button></li>
-                                <li class="d-none"><button id="onhold" onclick="opportunitiesType('onhold')"
+                                <li ><button id="onhold" onclick="opportunitiesType('onhold')"
                                         class="ss-darfts-sec-publsh-btn">On Hold</button></li>
 
                                 <li><a href="#" onclick="request_job_form_appear()" class="ss-opr-mngr-plus-sec"><i
@@ -232,8 +232,14 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Clinical Setting</label>
-                                                <input type="text" name="clinical_setting" id="clinical_setting"
-                                                    placeholder="Enter clinical setting">
+                                                <select name="clinical_setting"
+                                                    id="clinical_setting">
+                                                    <option value="">Select Clinical Setting</option>
+                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-clinical_setting"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -374,9 +380,9 @@
                                                 <span class="help-block-other_bonus"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Actual Regular Hourly rate</label>
+                                                <label>Taxable Regular Hourly rate</label>
                                                 <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
-                                                    placeholder="Enter actual Actual Regular Hourly rate">
+                                                    placeholder="Enter Taxable Regular Hourly rate">
                                                 <span class="help-block-actual_hourly_rate"></span>
                                             </div>
 
@@ -501,8 +507,16 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>EMR</label>
-                                                <input type="text" name="Emr" id="emr"
-                                                    placeholder="Enter EMR">
+
+
+                                                <select name="Emr"
+                                                    id="emr">
+                                                    <option value="">Select EMR</option>
+                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-emr"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -711,7 +725,8 @@
                                 <h5 class="mb-4 text-capitalize">On Hold</h5>
                                 @php $counter = 0 @endphp
                                 @foreach ($onholdJobs as $job)
-                                    <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
+                                
+                                    <div class="col-12 ss-job-prfle-sec" onclick="opportunitiesType('onhold','{{ $job->id }}','jobdetails')"
                                         id="{{ $counter }}">
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
                                         <h6>Medical Solutions Recruiter</h6>
@@ -929,9 +944,15 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Clinical Setting</label>
-                                                        <input type="text" name="clinical_setting"
-                                                            id="clinical_settingDraft"
-                                                            placeholder="Enter clinical setting">
+                                                        <select name="clinical_setting"
+                                                    id="clinical_settingDraft">
+                                                    <option value="">Select Clinical Setting</option>
+                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                        
                                                         <span class="help-block-clinical_setting"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1030,10 +1051,10 @@
                                                         <span class="help-block-other_bonus"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Actual Regular Hourly rate</label>
+                                                        <label>Taxable Regular Hourly rate</label>
                                                         <input type="number" name="actual_hourly_rate"
                                                             id="actual_hourly_rateDraft"
-                                                            placeholder="Enter actual regular hourly rate">
+                                                            placeholder="Enter taxable regular hourly rate">
                                                         <span class="help-block-actual_hourly_rate"></span>
                                                     </div>
 
@@ -1132,8 +1153,15 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>EMR</label>
-                                                        <input type="text" name="Emr" id="emrDraft"
-                                                            placeholder="Enter EMR">
+                                                        <select name="Emr"
+                                                    id="emrDraft">
+                                                    <option value="">Select EMR</option>
+                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                        
                                                         <span class="help-block-emr"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1436,9 +1464,15 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Clinical Setting</label>
-                                                        <input type="text" name="clinical_setting"
-                                                            id="clinical_settingEdit"
-                                                            placeholder="Enter clinical setting">
+                                                        <select name="clinical_setting"
+                                                    id="clinical_settingEdit">
+                                                    <option value="">Select Clinical Setting</option>
+                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                      
                                                         <span class="help-block-clinical_setting"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1537,10 +1571,10 @@
                                                         <span class="help-block-other_bonus"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Actual Regular Hourly rate</label>
+                                                        <label>Taxable Regular Hourly rate</label>
                                                         <input type="number" name="actual_hourly_rate"
                                                             id="actual_hourly_rateEdit"
-                                                            placeholder="Enter actual regular hourly rate">
+                                                            placeholder="Enter taxable regular hourly rate">
                                                         <span class="help-block-actual_hourly_rate"></span>
                                                     </div>
 
@@ -1639,8 +1673,15 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>EMR</label>
-                                                        <input type="text" name="Emr" id="emrEdit"
-                                                            placeholder="Enter EMR">
+                                                        <select name="Emr"
+                                                    id="emrEdit">
+                                                    <option value="">Select EMR</option>
+                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                      
                                                         <span class="help-block-emr"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1770,54 +1811,10 @@
                         <!-- published details end-->
 
                         <!-- onhold details start-->
-
-                        <div class="col-lg-7 d-none" id="details_onhold">
+                       <div class="col-lg-7 d-none" id="details_onhold">
                             <div class="ss-journy-svd-jbdtl-dv">
                                 <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
-                                    <div class="row" id="application-details-apply">
-                                        <h5 class="job_details_h5">Job Detail</h5>
-                                        <div class="ss-jb-dtl-disc-sec">
-                                            <h6>Description</h6>
-                                            <p id="onholdJobDescription">This position is accountable and responsible for
-                                                nursing care administered
-                                                under the direction of a Registered Nurse (Nurse Manager, Charge Nurse,
-                                                and/or Staff Nurse). Nurse interns must utilize personal protective
-                                                equipment such as gloves, gown, mask.</p>
-                                        </div>
-                                        <div class="ss-jb-dtl-abt-txt">
-                                            <h6> About Nurse:</h6>
-                                            <ul style="gap: 33px;">
-                                                <li>
-                                                    <h5>Preferred shift:</h5>
-                                                    <p id="onholdJobPreferredShift">Associate Degree in Nursing</p>
-                                                </li>
-                                                <li>
-                                                    <h5> Years of Experience: </h5>
-                                                    <p><span id="onholdJobYearsOfExperience">3</span> + Years</p>
-                                                </li>
-                                                <li>
-                                                    <h5>Relevant Certifications:</h5>
-                                                    <p>BLS, CCRN</p>
-                                                </li>
-                                                <li>
-                                                    <h5>Salary Expectation:</h5>
-                                                    <p>$<span id="onholdJobYearsOfExperience">2500</span>/wk</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="ss-jb-dtl-disc-sec">
-                                            <h5>Start Date:</h5>
-                                            <p>28th Feb, 2023</p>
-                                        </div>
-                                        <div class="ss-jb-dtl-disc-sec">
-                                            <div class="row">
-                                                <div class="col-lg-12 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-center"
-                                                    style="padding-right:0px;  margin-top: 10px; margin-bottom: 10px;">
-                                                    <button type="text" onclick="open_modal(this)">submit
-                                                        hidden</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="row" id="application-details-apply-onhold">
                                     </div>
                                 </div>
                             </div>
@@ -1889,6 +1886,8 @@
 
         
         function opportunitiesType(type, id = "", formtype) {
+
+            console.log(type);
 
             var draftsElement = document.getElementById('drafts');
             var publishedElement = document.getElementById('published');
@@ -1991,8 +1990,12 @@
                             document.getElementById("published-job-details").classList.remove("d-none");
                             document.getElementById("no-job-posted").classList.add("d-none");
                             $("#application-details-apply").html(result.jobdetails);
-                             $("#job-list-published").html(result.joblisting);
-                             
+                            if (type == "onhold") {
+                                $("#application-details-apply-onhold").html(result.jobdetails);
+                            } 
+                            
+                            //console.log(type);
+                             $("#job-list-published").html(result.joblisting);    
                         }
                     },
                     error: function(error) {
@@ -2129,14 +2132,18 @@
                             notie.alert({
                                 type: 'success',
                                 text: '<i class="fa fa-check"></i> ' + data.message,
-                                time: 5
+                                time: 3
                             });
 
-                            if (type == "hidejob") {
-                                opportunitiesType('onhold')
-                            } else {
-                                opportunitiesType('published')
-                            }
+                            window.location.reload();
+                            
+                            // if (type == "hidejob") {
+                            //     console.log("this is data");
+                            //     //console.log(data.message);
+                            //     opportunitiesType('onhold',data.job_id)
+                            // } else {
+                            //     opportunitiesType('published',data.job_id)
+                            // }
                         },
                         error: function(error) {
                             console.log(error);
@@ -2744,10 +2751,24 @@
         document.getElementById("job_nameDraft").value = job_name;
     }
     if (job_type !== null) {
-        document.getElementById("job_typeDraft").value = job_type;
+        var jobtype = job_type;
+                        var select = document.getElementById('job_typeDraft');
+                        var option = document.createElement('option');
+                        option.value = jobtype;
+                        option.text = jobtype;
+                                            
+                        select.add(option);
+                        select.value = jobtype;
     }
     if (preferred_specialty !== null) {
-        document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
+        var preferredSpecialty = preferred_specialty;
+                        var select = document.getElementById('preferred_specialtyDraft');
+                        var option = document.createElement('option');
+                        option.value = preferredSpecialty;
+                        option.text = preferredSpecialty;
+                                            
+                        select.add(option);
+                        select.value = preferredSpecialty;
     }
     if (job_state !== null) {
         document.getElementById("job_stateDraft").value = job_state;
@@ -2776,16 +2797,41 @@
         document.getElementById("descriptionDraft").value = description;
     }
     if (proffesion !== null) {
-        document.getElementById("perferred_professionDraft").value = proffesion;
+        var proffesionValue = proffesion;
+    var select = document.getElementById('perferred_professionDraft');
+    var option = document.createElement('option');
+    option.value = proffesionValue;
+    option.text = proffesionValue;
+                        
+    select.add(option);
+    select.value = proffesionValue;
+        //document.getElementById("perferred_professionDraft").value = proffesion;
     }
     if (facility_shift_cancelation_policy !== null) {
-        document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+        var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
+    var select = document.getElementById('facility_shift_cancelation_policyDraft');
+    var option = document.createElement('option');
+    option.value = facilityShiftCancelationPolicy;
+    option.text = facilityShiftCancelationPolicy;
+                        
+    select.add(option);
+    select.value = facilityShiftCancelationPolicy;
+        //document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
     }
     if (traveler_distance_from_facility !== null) {
         document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
     }
     if (clinical_setting !== null) {
-        document.getElementById("clinical_settingDraft").value = clinical_setting;
+        var ClinicalSettingValue = clinical_setting;
+    var select = document.getElementById('clinical_settingDraft');
+    var option = document.createElement('option');
+    option.value = ClinicalSettingValue;
+    option.text = ClinicalSettingValue;
+                        
+    select.add(option);
+    select.value = ClinicalSettingValue;
+
+       // document.getElementById("clinical_settingDraft").value = clinical_setting;
     }
     if (Patient_ratio !== null) {
         document.getElementById("Patient_ratioDraft").value = Patient_ratio;
@@ -2854,7 +2900,17 @@
         document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
     }
     if (Emr !== null) {
-        document.getElementById("emrDraft").value = Emr;
+
+        var EmrValue = Emr;
+    var select = document.getElementById('emrDraft');
+    var option = document.createElement('option');
+    option.value = EmrValue;
+    option.text = EmrValue;
+                        
+    select.add(option);
+    select.value = EmrValue;
+
+       
     }
     if (four_zero_one_k !== null) {
         document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
@@ -2899,121 +2955,255 @@
         }
 
         const jobId = element.id;
-        
+        console.log(drafts[jobId.job_name])
         element.classList.add("active");
+        
         let job_name = draftJobs[jobId].job_name;
-        let job_type = draftJobs[jobId].job_type;
-        let preferred_specialty = draftJobs[jobId].preferred_specialty;
-        let job_state = draftJobs[jobId].job_state;
-        let job_city = draftJobs[jobId].job_city;
-        let preferred_work_location = draftJobs[jobId].preferred_work_location;
-        let preferred_assignment_duration = draftJobs[jobId].preferred_assignment_duration;
-        let preferred_days_of_the_week = draftJobs[jobId].preferred_days_of_the_week;
-        let preferred_hourly_pay_rate = draftJobs[jobId].preferred_hourly_pay_rate;
-        let preferred_shift = draftJobs[jobId].preferred_shift;
-        let job_function = draftJobs[jobId].job_function;
-        let job_cerner_exp = draftJobs[jobId].job_cerner_exp;
-        let job_meditech_exp = draftJobs[jobId].job_meditech_exp;
-        let seniority_level = draftJobs[jobId].seniority_level;
-        let job_epic_exp = draftJobs[jobId].job_epic_exp;
-        let job_other_exp = draftJobs[jobId].job_other_exp;
-        let start_date = draftJobs[jobId].start_date;
-        let end_date = draftJobs[jobId].end_date;
-        let hours_shift = draftJobs[jobId].hours_shift;
-        // let hours_per_week = draftJobs[jobId].hours_per_week;
-        let responsibilities = draftJobs[jobId].responsibilities;
-        let qualifications = draftJobs[jobId].qualifications;
-        let description = draftJobs[jobId].description;
-        let proffesion = draftJobs[jobId].proffesion;
-        let weekly_pay = draftJobs[jobId].weekly_pay;
-        let preferred_work_area = draftJobs[jobId].preferred_work_area;
-        let preferred_experience = draftJobs[jobId].preferred_experience;
-        let preferred_shift_duration = draftJobs[jobId].preferred_shift_duration;
+    let job_type = draftJobs[jobId].job_type;
+    let preferred_specialty = draftJobs[jobId].preferred_specialty;
+    let job_state = draftJobs[jobId].job_state;
+    let job_city = draftJobs[jobId].job_city;
+    let preferred_work_location = draftJobs[jobId].preferred_work_location;
+    let preferred_assignment_duration = draftJobs[jobId].preferred_assignment_duration;
+    let weekly_pay = draftJobs[jobId].weekly_pay;
+    let description = draftJobs[jobId].description;
+    let proffesion = draftJobs[jobId].proffesion;
+    let facility_shift_cancelation_policy = draftJobs[jobId].facility_shift_cancelation_policy;
+    let traveler_distance_from_facility = draftJobs[jobId].traveler_distance_from_facility;
+    let clinical_setting = draftJobs[jobId].clinical_setting;
+    let Patient_ratio = draftJobs[jobId].Patient_ratio;
+    let Unit = draftJobs[jobId].Unit;
+    let scrub_color = draftJobs[jobId].scrub_color;
+    let rto = draftJobs[jobId].rto;
+    let guaranteed_hours = draftJobs[jobId].guaranteed_hours;
+    let hours_shift = draftJobs[jobId].hours_shift;
+    let weeks_shift = draftJobs[jobId].weeks_shift;
+    let referral_bonus = draftJobs[jobId].referral_bonus;
+    let sign_on_bonus = draftJobs[jobId].sign_on_bonus;
+    let completion_bonus = draftJobs[jobId].completion_bonus;
+    let extension_bonus = draftJobs[jobId].extension_bonus;
+    let other_bonus = draftJobs[jobId].other_bonus;
+    let actual_hourly_rate = draftJobs[jobId].actual_hourly_rate;
+    let overtime = draftJobs[jobId].overtime;
+    let on_call = draftJobs[jobId].on_call;
+    let holiday = draftJobs[jobId].holiday;
+    let orientation_rate = draftJobs[jobId].orientation_rate;
+    let terms = draftJobs[jobId].terms;
+    let block_scheduling = draftJobs[jobId].block_scheduling;
+    let float_requirement = draftJobs[jobId].float_requirement;
+    let contract_termination_policy = draftJobs[jobId].contract_termination_policy;
+    let Emr = draftJobs[jobId].Emr;
+    let four_zero_one_k = draftJobs[jobId].four_zero_one_k;
+    let health_insaurance = draftJobs[jobId].health_insaurance;
+    let dental = draftJobs[jobId].dental;
+    let vision = draftJobs[jobId].vision;
+    let call_back = draftJobs[jobId].call_back;
+    let weekly_non_taxable_amount = draftJobs[jobId].weekly_non_taxable_amount;
+    let start_date = draftJobs[jobId].start_date;
+    let as_soon_as = draftJobs[jobId].as_soon_as;
 
-        if (job_name) {
-            document.getElementById("job_nameDraft").value = job_name;
-        }
-        if (job_type) {
-            document.getElementById("job_typeDraft").value = job_type;
-        }
-        if (preferred_specialty) {
-            document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
-        }
-        if (job_state) {
-            document.getElementById("job_stateDraft").value = job_state;
-        }
-        if (preferred_work_location) {
-            document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
-        }
-        if (preferred_assignment_duration) {
-            document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
-        }
-        if (preferred_days_of_the_week) {
-            document.getElementById("preferred_days_of_the_weekDraft").value = preferred_days_of_the_week;
-        }
-        if (preferred_hourly_pay_rate) {
-            document.getElementById("preferred_hourly_pay_rateDraft").value = preferred_hourly_pay_rate;
-        }
-        if (preferred_shift) {
-            document.getElementById("preferred_shiftDraft").value = preferred_shift;
-        }
-        if (job_function) {
-            document.getElementById("job_functionDraft").value = job_function;
-        }
-        if (job_cerner_exp) {
-            document.getElementById("job_cerner_expDraft").value = job_cerner_exp;
-        }
-        if (job_meditech_exp) {
-            document.getElementById("job_meditech_expDraft").value = job_meditech_exp;
-        }
-        if (seniority_level) {
-            document.getElementById("seniority_levelDraft").value = seniority_level;
-        }
-        if (job_epic_exp) {
-            document.getElementById("job_epic_expDraft").value = job_epic_exp;
-        }
-        if (job_other_exp) {
-            document.getElementById("job_other_expDraft").value = job_other_exp;
-        }
-        if (start_date) {
-            document.getElementById("start_dateDraft").value = start_date;
-        }
-        if (end_date) {
-            document.getElementById("end_dateDraft").value = end_date;
-        }
-        if (hours_shift) {
-            document.getElementById("hours_shiftDraft").value = hours_shift;
-        }
-        // if (hours_per_week) {
-        //     document.getElementById("hours_per_weekDraft").value = hours_per_week;
-        // }
-        if (responsibilities) {
-            document.getElementById("responsibilitiesDraft").value = responsibilities;
-        }
-        if (qualifications) {
-            document.getElementById("qualificationsDraft").value = qualifications;
-        }
-        if (proffesion) {
-            document.getElementById("perferred_professionDraft").value = proffesion;
-        }
-        if (description) {
-            document.getElementById("descriptionDraft").value = description;
-        }
-        if (job_city) {
-            document.getElementById("job_cityDraft").value = job_city;
-        }
-        if (weekly_pay) {
-            document.getElementById("weekly_payDraft").value = weekly_pay;
-        }
-        if (preferred_work_area) {
-            document.getElementById("preferred_work_areaDraft").value = preferred_work_area;
-        }
-        if (preferred_experience) {
-            document.getElementById("preferred_experienceDraft").value = preferred_experience;
-        }
-        if (preferred_shift_duration) {
-            document.getElementById("preferred_shift_durationDraft").value = preferred_shift_duration;
-        }
+    if (job_name !== null) {
+        document.getElementById("job_nameDraft").value = job_name;
+    }
+    if (job_type !== null) {
+        var jobtype = job_type;
+                        var select = document.getElementById('job_typeDraft');
+                        var option = document.createElement('option');
+                        option.value = jobtype;
+                        option.text = jobtype;
+                                            
+                        select.add(option);
+                        select.value = jobtype;
+    }
+    if (preferred_specialty !== null) {
+        var preferredSpecialty = preferred_specialty;
+                        var select = document.getElementById('preferred_specialtyDraft');
+                        var option = document.createElement('option');
+                        option.value = preferredSpecialty;
+                        option.text = preferredSpecialty;
+                                            
+                        select.add(option);
+                        select.value = preferredSpecialty;
+    }
+    if (job_state !== null) {
+        document.getElementById("job_stateDraft").value = job_state;
+    }
+    if (job_city !== null) {
+        var city = job_city;
+    var select = document.getElementById('job_cityDraft');
+    var option = document.createElement('option');
+    option.value = city;
+    option.text = city;
+                        
+    select.add(option);
+    select.value = city;
+       
+    }
+    if (preferred_work_location !== null) {
+        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+    }
+    if (preferred_assignment_duration !== null) {
+        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+    }
+    if (weekly_pay !== null) {
+        document.getElementById("weekly_payDraft").value = weekly_pay;
+    }
+    if (description !== null) {
+        document.getElementById("descriptionDraft").value = description;
+    }
+    if (proffesion !== null) {
+        var proffesionValue = proffesion;
+    var select = document.getElementById('perferred_professionDraft');
+    var option = document.createElement('option');
+    option.value = proffesionValue;
+    option.text = proffesionValue;
+                        
+    select.add(option);
+    select.value = proffesionValue;
+        //document.getElementById("perferred_professionDraft").value = proffesion;
+    }
+    if (facility_shift_cancelation_policy !== null) {
+        var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
+    var select = document.getElementById('facility_shift_cancelation_policyDraft');
+    var option = document.createElement('option');
+    option.value = facilityShiftCancelationPolicy;
+    option.text = facilityShiftCancelationPolicy;
+    select.add(option);
+    select.value = facilityShiftCancelationPolicy;
+
+    //    document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+    }
+    if (traveler_distance_from_facility !== null) {
+        document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
+    }
+    if (clinical_setting !== null) {
+        var ClinicalSettingValue = clinical_setting;
+    var select = document.getElementById('clinical_settingDraft');
+    var option = document.createElement('option');
+    option.value = ClinicalSettingValue;
+    option.text = ClinicalSettingValue;
+                        
+    select.add(option);
+    select.value = ClinicalSettingValue;
+       // document.getElementById("clinical_settingDraft").value = clinical_setting;
+    }
+    if (Patient_ratio !== null) {
+        document.getElementById("Patient_ratioDraft").value = Patient_ratio;
+    }
+    if (Unit !== null) {
+        document.getElementById("UnitDraft").value = Unit;
+    }
+    if (scrub_color !== null) {
+        document.getElementById("scrub_colorDraft").value = scrub_color;
+    }
+    if (rto !== null) {
+        document.getElementById("rtoDraft").value = rto;
+    }
+    if (guaranteed_hours !== null) {
+        document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
+    }
+    if (hours_shift !== null) {
+        document.getElementById("hours_shiftDraft").value = hours_shift;
+    }
+    if (weeks_shift !== null) {
+        document.getElementById("weeks_shiftDraft").value = weeks_shift;
+    }
+    if (referral_bonus !== null) {
+        document.getElementById("referral_bonusDraft").value = referral_bonus;
+    }
+    if (sign_on_bonus !== null) {
+        document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
+    }
+    if (completion_bonus !== null) {
+        document.getElementById("completion_bonusDraft").value = completion_bonus;
+    }
+    if (extension_bonus !== null) {
+        document.getElementById("extension_bonusDraft").value = extension_bonus;
+    }
+    if (other_bonus !== null) {
+        document.getElementById("other_bonusDraft").value = other_bonus;
+    }
+    if (actual_hourly_rate !== null) {
+        document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
+    }
+    if (overtime !== null) {
+        document.getElementById("overtimeDraft").value = overtime;
+    }
+    if (on_call !== null) {
+        document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
+        
+    }
+    if (holiday !== null) {
+        document.getElementById("holidayDraft").value = holiday;
+    }
+    if (orientation_rate !== null) {
+        document.getElementById("orientation_rateDraft").value = orientation_rate;
+    }
+    if (terms !== null) {
+        var Terms = terms;
+    var select = document.getElementById('termsDraft');
+    var option = document.createElement('option');
+    option.value = Terms;
+    option.text = Terms;
+                        
+    select.add(option);
+    select.value = Terms;
+       // document.getElementById("termsDraft").value = terms;
+    }
+    if (block_scheduling !== null) {
+        document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
+        
+    }
+    if (float_requirement !== null) {
+        document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
+        
+    }
+    if (contract_termination_policy !== null) {
+        document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
+    }
+    if (Emr !== null) {
+
+        
+        var EmrValue = Emr;
+    var select = document.getElementById('emrDraft');
+    var option = document.createElement('option');
+    option.value = EmrValue;
+    option.text = EmrValue;
+                        
+    select.add(option);
+    select.value = EmrValue;
+
+
+
+    }
+    if (four_zero_one_k !== null) {
+        document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
+        
+    }
+    if (health_insaurance !== null) {
+        document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
+
+    }
+    if (dental !== null) {
+        document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
+        
+    }
+    if (vision !== null) {
+        document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
+        
+    }
+    if (call_back !== null) {
+        document.getElementById("call_backDraft").value = call_back;
+    }
+    if (weekly_non_taxable_amount !== null) {
+        document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
+    }
+    if (start_date !== null) {
+        document.getElementById("start_dateDraft").value = start_date;
+    }
+    if (as_soon_as !== null) {
+        document.getElementById("as_soon_asDraft").checked = as_soon_as;
+    }
     }
 
 
@@ -4130,8 +4320,8 @@
     });
     submitBtnDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        document.getElementById("activeDraft").value = "0";
-        document.getElementById("is_openDraft").value = "0";
+        document.getElementById("activeDraft").value = true;
+        document.getElementById("is_openDraft").value = true;
         if (validateForthDraft()) {
             bulletDraft[currentDraft - 1].classList.add("active");
             progressCheckDarft[currentDraft - 1].classList.add("active");
@@ -4143,8 +4333,8 @@
     });
 
     saveDrftBtnDraft.addEventListener("click", function(event) {
-        document.getElementById("activeDraft").value = "0";
-        document.getElementById("is_openDraft").value = "0";
+        document.getElementById("activeDraft").value = false;
+        document.getElementById("is_openDraft").value = false;
         var jobName = document.getElementById("job_nameDraft").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
@@ -4694,8 +4884,8 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     });
     submitBtnEdit.addEventListener("click", function(event) {
         event.preventDefault();
-        document.getElementById("activeEdit").value = "1";
-        document.getElementById("is_openEdit").value = "1";
+        document.getElementById("activeEdit").value = true;
+        document.getElementById("is_openEdit").value = true;
         if (validateForthEdit()) {
             bulletEdit[currentEdit - 1].classList.add("active");
             progressCheckDarft[currentEdit - 1].classList.add("active");
@@ -4706,8 +4896,8 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     });
 
     saveDrftBtnEdit.addEventListener("click", function(event) {
-        document.getElementById("activeEdit").value = "1";
-        document.getElementById("is_openEdit").value = "1";
+        document.getElementById("activeEdit").value = true;
+        document.getElementById("is_openEdit").value = true;
         var jobName = document.getElementById("job_nameEdit").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
@@ -4763,11 +4953,42 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                     success: function(result) {
                         console.log(result);
                         document.getElementById("job_nameEdit").value = result.job_name;
-                        document.getElementById("job_typeEdit").value = result.job_type;
 
-                        document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
-                        document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
+                        // here 
+                        var jobtype = result.job_type;
+                        var select = document.getElementById('job_typeEdit');
+                        var option = document.createElement('option');
+                        option.value = jobtype;
+                        option.text = jobtype;
+                                            
+                        select.add(option);
+                        select.value = jobtype;
+
+                        //document.getElementById("job_typeEdit").value = result.job_type;
+                        
+                        var preferredSpecialty = result.preferred_specialty;
+                        var select = document.getElementById('preferred_specialtyEdit');
+                        var option = document.createElement('option');
+                        option.value = preferredSpecialty;
+                        option.text = preferredSpecialty;
+                                            
+                        select.add(option);
+                        select.value = preferredSpecialty;
+                        //document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
+
+                        var proffesionValue = result.proffesion;
+    var select = document.getElementById('perferred_professionEdit');
+    var option = document.createElement('option');
+    option.value = proffesionValue;
+    option.text = proffesionValue;
+                        
+    select.add(option);
+    select.value = proffesionValue;
+                       // document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
+
+                        // here
                         document.getElementById("job_stateEdit").value = result.job_state;
+
                         var city = result.job_city;
                         var select = document.getElementById('job_cityEdit');
                         var option = document.createElement('option');
@@ -4776,14 +4997,30 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                                             
                         select.add(option);
                         select.value = city;
+
                         document.getElementById("preferred_work_locationEdit").value = result.preferred_work_location;
                         
                         document.getElementById("weekly_payEdit").value = result.weekly_pay;
                         document.getElementById("descriptionEdit").value = result.description;
                         document.getElementById("preferred_assignment_durationEdit").value = result.preferred_assignment_duration;
-                        document.getElementById("facility_shift_cancelation_policyEdit").value = result.facility_shift_cancelation_policy;
+                        var facilityShiftCancelationPolicy = result.facility_shift_cancelation_policy;
+    var select = document.getElementById('facility_shift_cancelation_policyEdit');
+    var option = document.createElement('option');
+    option.value = facilityShiftCancelationPolicy;
+    option.text = facilityShiftCancelationPolicy;
+    select.add(option);
+    select.value = facilityShiftCancelationPolicy;
+                        //document.getElementById("facility_shift_cancelation_policyEdit").value = result.facility_shift_cancelation_policy;
                         document.getElementById("traveler_distance_from_facilityEdit").value = result.traveler_distance_from_facility;
-                        document.getElementById("clinical_settingEdit").value = result.clinical_setting;
+                        var ClinicalSettingValue = result.clinical_setting;
+    var select = document.getElementById('clinical_settingEdit');
+    var option = document.createElement('option');
+    option.value = ClinicalSettingValue;
+    option.text = ClinicalSettingValue;
+                        
+    select.add(option);
+    select.value = ClinicalSettingValue;
+                        //document.getElementById("clinical_settingEdit").value = result.clinical_setting;
                         document.getElementById("Patient_ratioEdit").value = result.Patient_ratio;
                         document.getElementById("UnitEdit").value = result.Unit;
                         document.getElementById("scrub_colorEdit").value = result.scrub_color;
@@ -4802,10 +5039,27 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                         document.getElementById("orientation_rateEdit").value = result.orientation_rate;
                         document.getElementById("on_callEdit").value = (result.on_call == 0) ? 'No' : 'Yes';
                         document.getElementById("block_schedulingEdit").value = (result.block_scheduling == 0) ? 'No' : 'Yes';
-                        document.getElementById("termsEdit").value = result.terms;
+                        var Terms = result.terms;
+    var select = document.getElementById('termsEdit');
+    var option = document.createElement('option');
+    option.value = Terms;
+    option.text = Terms;
+                        
+    select.add(option);
+    select.value = Terms;
+                        //document.getElementById("termsEdit").value = result.terms;
                         document.getElementById("float_requirementEdit").value = (result.float_requirement == 0) ? 'No' : 'Yes';
                         document.getElementById("contract_termination_policyEdit").value = result.contract_termination_policy;
-                        document.getElementById("emrEdit").value = result.Emr; // corrected here
+                        
+                        var EmrValue = result.Emr;
+                        var select = document.getElementById('emrEdit');
+                        var option = document.createElement('option');
+                        option.value = EmrValue;
+                        option.text = EmrValue;
+
+                        select.add(option);
+                        select.value = EmrValue;
+                       // document.getElementById("emrEdit").value = result.Emr; // corrected here
                         document.getElementById("four_zero_one_kEdit").value = (result.four_zero_one_k == 0) ? 'No' : 'Yes';
                         document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
                         document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';

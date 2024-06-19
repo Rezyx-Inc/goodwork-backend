@@ -139,7 +139,7 @@
               </div>
 
               <div class="ss-fliter-btn-dv">
-                <button class="ss-fliter-btn" type="submit">Apply</button>
+                <button class="ss-fliter-btn" type="submit">Search</button>
               </div>
                 <input type="hidden" name="job_type" value="" id="job_type">
                 <input type="hidden" name="shifts" value="" id="shift">

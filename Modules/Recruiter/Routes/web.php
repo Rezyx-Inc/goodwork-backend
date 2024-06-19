@@ -24,13 +24,14 @@ Route::prefix('recruiter')->group(function () {
         Route::post('recruiter-otp', ['uses' => 'RecruiterAuthController@submit_otp', 'as' => 'recruiter.otp']);
         Route::get('/signup', ['uses' => 'RecruiterAuthController@get_signup', 'as' => 'recruiter-signup']);
         Route::post('signup', ['uses' => 'RecruiterAuthController@post_signup', 'as' => 'recruiter.signup']);
+        Route::get('resend-otp', ['uses' => 'RecruiterAuthController@resend_otp', 'as' => 'recruiter.resend-otp']);
 
     });
     Route::middleware(['recruiter_logged_in'])->group(function () {
         /** Dashboard routes */
         Route::get('recruiter-dashboard', ['uses' => 'RecruiterDashboardController@index', 'as' => 'recruiter-dashboard']);
         //Route::post('recruiter-messages', ['uses' => 'RecruiterDashboardController@communication', 'as' => 'recruiter-messages']);
-        Route::get('recruiter-profile', ['uses' => 'RecruiterDashboardController@profile', 'as' => 'recruiter-profile']);
+        Route::get('recruiter-profile/{type}', ['uses' => 'RecruiterDashboardController@profile', 'as' => 'recruiter-profile']);
         Route::post('help-and-support', ['uses' => 'RecruiterDashboardController@helpAndSupport', 'as' => 'help-and-support']);
         Route::post('recruiter-update-profile', ['uses' => 'RecruiterDashboardController@updateProfile', 'as' => 'recruiter-update-profile']);
         Route::post('recruiter-remove-qualities', ['uses' => 'RecruiterDashboardController@recruiterRemoveQualities', 'as' => 'recruiter-remove-qualities']);

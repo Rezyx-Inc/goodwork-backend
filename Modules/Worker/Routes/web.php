@@ -24,6 +24,8 @@ Route::prefix('worker')->group(function() {
         Route::post('worker-otp', ['uses' => 'WorkerAuthController@submit_otp', 'as' => 'worker.otp']);
         Route::get('/signup', ['uses' => 'WorkerAuthController@get_signup', 'as' => 'worker-signup']);
         Route::post('worker-signup', ['uses' => 'WorkerAuthController@post_signup', 'as' => 'worker.signup']);
+        Route::get('resend-otp', ['uses' => 'WorkerAuthController@resend_otp', 'as' => 'worker.resend-otp']);
+
     });
 
     Route::middleware(['user_logged_in'])->group(function () {
@@ -32,7 +34,7 @@ Route::prefix('worker')->group(function() {
       
         //Route::get(' home', ['uses' => 'WorkerController@home', 'as' => 'home']);
         Route::get('messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker.messages']);
-        Route::get('profile', ['uses' => 'WorkerDashboardController@my_profile', 'as' => 'profile']);
+        Route::get('profile/{type}', ['uses' => 'WorkerDashboardController@my_profile', 'as' => 'profile']);
         Route::get('explore', ['uses' => 'WorkerDashboardController@explore', 'as' => 'worker.explore']);
         Route::post('help-and-support', ['uses' => 'WorkerDashboardController@helpAndSupport', 'as' => 'worker-help-and-support']);
         Route::post('worker-update-profile', ['uses' => 'WorkerDashboardController@updateProfile', 'as' => 'worker-update-profile']);
@@ -49,6 +51,7 @@ Route::prefix('worker')->group(function() {
         Route::post('fetch-job-content', ['uses' => 'WorkerController@fetch_job_content', 'as' => 'fetch-job-content']);
 
         Route::get('jobs/applied', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'applied-jobs']);
+        Route::get('jobs/saved', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'saved-jobs']);
         Route::get('jobs/offered', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'offered-jobs']);
         Route::get('jobs/hired', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'hired-jobs']);
         Route::get('jobs/past', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'past-jobs']);
@@ -95,6 +98,9 @@ Route::prefix('worker')->group(function() {
         // redirecting to login 
 
         Route::post('login-to-stripe-account',['uses'=>'WorkerDashboardController@login_to_stripe_account','as'=>'login_to_stripe_account']);
+
+        // add saved job
+        Route::post('add-save-jobs', ['uses' => 'WorkerDashboardController@add_save_jobs', 'as' => 'add-save-jobs']);
     }
 
     );

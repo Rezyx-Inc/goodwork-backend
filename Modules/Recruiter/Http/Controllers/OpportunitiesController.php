@@ -30,10 +30,10 @@ class OpportunitiesController extends Controller
      */
     public function index()
     {
-        $created_by = Auth::guard('recruiter')->user()->id;
-        $draftJobs = Job::where('created_by', $created_by)->where('active', 0)->get();
-        $publishedJobs = Job::where('created_by', $created_by)->where('active', 1)->where('is_open', '1')->get();
-        $onholdJobs = Job::where('created_by', $created_by)->where('active', 1)->where('is_open', '0')->get();
+        $recruiter_id = Auth::guard('recruiter')->user()->id;
+        $draftJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 0)->get();
+        $publishedJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_hidden', '0')->where('is_closed','0')->where('is_open','1')->get();
+        $onholdJobs = Job::where('recruiter_id', $recruiter_id)->where('active', '1')->where('is_open', '0')->get();
         $specialities = Speciality::select('full_name')->get();
         $proffesions = Profession::select('full_name')->get();
         $applyCount = array();
@@ -449,15 +449,25 @@ class OpportunitiesController extends Controller
 
     public function hide_job(Request $request)
     {
+       // return $request->all();
+        $param = $request->route('check_type');
+    
+
+        
         try {
             $validated = $request->validate([
                 'job_id' => 'required',
             ]);
 
             $job_id = $request->job_id;
-            $job = Job::where(['id' => $job_id])->update(['is_hidden' => '1', 'is_open' => '0', 'active' => '0']);
-
-            return response()->json(['message' => 'Job hidden successfully', 'job_id' => $job_id]);
+            if ($param == 'hidejob') {
+                $job = Job::where(['id' => $job_id])->update(['is_open' => '0']);
+                return response()->json(['message' => 'Job is onhold', 'job_id' => $job_id]);
+            } else {
+                $job = Job::where(['id' => $job_id])->update(['is_open' => '1']);
+                return response()->json(['message' => 'Job is published', 'job_id' => $job_id]);
+            }
+            
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
@@ -546,8 +556,19 @@ class OpportunitiesController extends Controller
                 ];
                 return response()->json($responseData);
             }
-        } else {
-            $jobLists = Job::where(['active' => '1', 'is_hidden' => '0', 'is_closed' => '0','recruiter_id'=> $recruiter_id])->get();
+        } elseif ($type == 'onhold') {
+            $jobLists = Job::where(['active'=> '1','is_open' => '0','recruiter_id'=> $recruiter_id])->get();
+            if (0 >= count($jobLists)) {
+                $responseData = [
+                    'joblisting' => '<div class="text-center"><span>No Job</span></div>',
+                    'jobdetails' => '<div class="text-center"><span>Data Not found</span></div>',
+                ];
+                return response()->json($responseData);
+            }
+        }
+        else {
+           
+            $jobLists = Job::where(['active' => '1', 'is_hidden' => '0', 'is_closed' => '0','recruiter_id'=> $recruiter_id,'is_open'=>'1'])->get();
             //return $jobLists;
             if (0 >= count($jobLists)) {
                 $responseData = [
@@ -629,32 +650,41 @@ class OpportunitiesController extends Controller
         if (isset($request->id)) {
             $jobdetails = Job::select('jobs.*')
                 ->where(['jobs.id' => $request->id])
-                ->where('created_by', $recruiter_id)
+                ->where('recruiter_id', $recruiter_id)
                 ->first();
         } else {
             if ($type == 'drafts') {
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.active' => '0'])
-                    ->where('created_by', $recruiter_id)
+                    ->where('recruiter_id', $recruiter_id)
                     ->first();
             } elseif ($type == 'hidden') {
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.is_hidden' => '1'])
-                    ->where('created_by', $recruiter_id)
+                    ->where('recruiter_id', $recruiter_id)
                     ->first();
             } elseif ($type == 'closed') {
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.is_closed' => '1'])
-                    ->where('created_by', $recruiter_id)
+                    ->where('recruiter_id', $recruiter_id)
                     ->first();
-            } else {
+            } elseif ($type == 'onhold') {
                 $jobdetails = Job::select('jobs.*')
-                    ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0'])
-                    ->where('created_by', $recruiter_id)
+                ->where(['jobs.is_open' => '0'])
+                ->where(['jobs.active' => '1'])
+                ->where('recruiter_id', $recruiter_id)
+                ->first();
+            }
+            else{
+                
+                $jobdetails = Job::select('jobs.*')
+                    ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0','jobs.is_open' => '1'])
+                    ->where('recruiter_id', $recruiter_id)
                     ->first();
             }
         }
-        $userdetails = $jobdetails ? User::where('id', $jobdetails['created_by'])->first() : '';
+        //return response()->json(['joblisting' => $data, 'recruiter_id' => $jobdetails]);
+        $userdetails = $jobdetails ? User::where('id', $jobdetails['recruiter_id'])->first() : '';
         $jobappliedcount = $jobdetails ? Offer::where('job_id', $jobdetails->id)->count() : '';
         $jobapplieddetails = $jobdetails ? Offer::where('job_id', $jobdetails->id)->get() : '';
 
@@ -663,7 +693,7 @@ class OpportunitiesController extends Controller
 
         if ($request->formtype == 'useralldetails') {
             $offerdetails = Offer::where('id', $request->id)
-                ->where('created_by', $recruiter_id)
+                ->where('recruiter_id', $recruiter_id)
                 ->first();
 
             $nursedetails = Nurse::where('id', $offerdetails['worker_user_id'])->first();
@@ -775,7 +805,7 @@ class OpportunitiesController extends Controller
             $data2 .=
                 ' <div class="col-md-12">
             <span class="mt-3">Profession</span>
-        </div>
+         </div>
             <div class="row ' .
                 ($jobdetails->proffesion == $nursedetails->proffesion ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
@@ -796,7 +826,7 @@ class OpportunitiesController extends Controller
             $data2 .=
                 ' <div class="col-md-12">
             <span class="mt-3">Specialty</span>
-        </div>
+         </div>
             <div class="row ' .
                 ($jobdetails->specialty == $nursedetails->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
@@ -2173,14 +2203,13 @@ class OpportunitiesController extends Controller
             if ($type != 'closed') {
                 $data2 .= '
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-5">';
-                if ($type == 'hidden') {
-                    $data2 .= '<a href="javascript:void(0)" class="ss-reject-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhide Job</a>';
+                            <div class="row">';
+                                
+                if ($type == 'onhold') {
+                    $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhold Job</a></div>';
                 } else {
-                    $data2 .= '<a href="javascript:void(0)" class="ss-reject-offer-btn d-block" onclick="changeStatus(\'hidejob\', \'' . $jobdetails->id . '\')">Hide Job</a>';
-                }
-                $data2 .=
+                    $data2 .= '<div class="col-md-5"><a href="javascript:void(0)" class="ss-reject-offer-btn d-block" onclick="changeStatus(\'hidejob\', \'' . $jobdetails->id . '\')">Hide Job</a>';
+                    $data2 .=
                     '
                                 </div>
                                 <div class="col-md-6">
@@ -2190,6 +2219,8 @@ class OpportunitiesController extends Controller
                                 </div>
                             </div>
                         </div>';
+                }
+               
             }
             $data2 .= '
                 </ul>
@@ -2200,6 +2231,8 @@ class OpportunitiesController extends Controller
                 $data2 = '<div class="text-center"><span>Data Not found</span></div>';
             }
         }
+
+        
 
         $responseData = [
             'joblisting' => $data,

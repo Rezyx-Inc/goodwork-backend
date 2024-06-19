@@ -114,10 +114,11 @@ public function index()
         //
     }
 
-    public function profile()
+    public function profile( Request $request)
     {
         $id = Auth::guard('recruiter')->user()->id;
         // facility_id qualities about_me are been added in user table
+        $type = $request->route('type');
 
         $user = User::select('first_name', 'last_name', 'image', 'user_name', 'email', 'date_of_birth', 'mobile', 'about_me', 'qualities', 'facility_id')->find($id);
         $data = [];
@@ -134,6 +135,7 @@ public function index()
         }
         $data['states'] = State::select('id', 'name')->get();
         $data['allKeywords'] = $allKeywords;
+        $data['type'] = $type;
 
         return view('recruiter::recruiter/recruiter_profile', $data);
     }

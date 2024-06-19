@@ -15,7 +15,7 @@
         <div class="ss-my-work-tab-div">
             {{-- <ul onclick="myFunction(event)" id='navList'> --}}
             <ul>
-                <li><a href="{{route('my-work-journey')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'my-work-journey' ) ? 'active' :'' }}">Saved</a></li>
+                  <li><a href="{{route('saved-jobs')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'saved-jobs' ) ? 'active' :'' }}">Saved</a></li>
                 <li><a href="{{route('applied-jobs')}}" class="ss-applied-btn {{ ( request()->route()->getName() == 'applied-jobs' ) ? 'active' :'' }}">Applied</a></li>
                 <li><a href="{{route('offered-jobs')}}" class="ss-offered-btn {{ ( request()->route()->getName() == 'offered-jobs' ) ? 'active' :'' }}">Offered</a></li>
                 <li><a href="{{route('hired-jobs')}}" class="ss-hired-btn {{ ( request()->route()->getName() == 'hired-jobs' ) ? 'active' :'' }}">Hired</a></li>

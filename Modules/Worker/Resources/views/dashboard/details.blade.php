@@ -128,7 +128,7 @@
             <span>Profession</span>
             <h6>{{$model->profession}}</h6>
         </li>
-        <li><p data-target="dropdown" data-title="What kind of professioal are you?" data-filter="Profession" data-name="highest_nursing_degree" onclick="open_modal(this)">What kind of professioal are you?</p></li>
+        <li><p data-target="dropdown" data-title="What kind of professional are you?" data-filter="Profession" data-name="highest_nursing_degree" onclick="open_modal(this)">What kind of professional are you?</p></li>
     </ul>
 
     <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['preferred_specialty']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
@@ -164,7 +164,7 @@
         <h6>{{$model->facility_shift_cancelation_policy}} </h6>
         </li>
         <li>
-            <p data-target="dropdown" data-title="What terms do you prefere?" data-filter="AssignmentDuration" data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">What terms do you prefere?</p>
+            <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="AssignmentDuration" data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">What terms do you prefer?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -173,7 +173,7 @@
         <h6>{{$model->contract_termination_policy}} </h6>
         </li>
         <li>
-            <p data-target="dropdown" data-title="What terms do you prefere?" data-filter="ContractTerminationPolicy" data-name="contract_termination_policy" onclick="open_modal(this)">What terms do you prefere?</p>
+            <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="ContractTerminationPolicy" data-name="contract_termination_policy" onclick="open_modal(this)">What terms do you prefer?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -266,7 +266,7 @@
         <h6>IInterview dates </h6>
         </li>
         <li>
-            <p>Any days you'r not available?</p>
+            <p>Any days you're not available?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -275,7 +275,7 @@
         <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
         </li>
         <li>
-            <p>When you can start?</p>
+            <p>When can you start?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -320,7 +320,7 @@
         <h6>{{$model->hours_shift}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Prefered hours per shift?" data-placeholder="Enter number Of Hours/Shift" data-name="worker_hours_shift" onclick="open_modal(this)">Prefered hours per shift?</p>
+            <p data-target="input" data-title="Preferred hours per shift" data-placeholder="Enter number Of Hours/Shift" data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours per shift</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -338,7 +338,7 @@
         <h6>{{$model->weeks_shift}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Ideal shift per week?" data-placeholder="Enter ideal shift per week" data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shift per week?</p>
+            <p data-target="input" data-title="Ideal shifts per week" data-placeholder="Enter ideal shift per week" data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per week</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -347,7 +347,7 @@
         <h6>{{$model->referral_bonus}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="# of people you have refered?" data-placeholder="# of people you have refered?" data-name="worker_referral_bonus" onclick="open_modal(this)"># of people you have refered?</p>
+            <p data-target="input" data-title="# of people you have referred?" data-placeholder="# of people you have referred?" data-name="worker_referral_bonus" onclick="open_modal(this)"># of people you have referred?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -492,7 +492,7 @@
         <h6>${{$model->employer_weekly_amount}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="What range is resonbable?" data-placeholder="What range is resonbable?" data-name="worker_employer_weekly_amount" onclick="open_modal(this)">What range is resonbable?</p>
+            <p data-target="input" data-title="What range is reasonable?" data-placeholder="What range is reasonable?" data-name="worker_employer_weekly_amount" onclick="open_modal(this)">What range is reasonable?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">

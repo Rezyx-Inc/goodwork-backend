@@ -3,6 +3,7 @@
 @section('content')
     @php
         $user = auth()->guard('recruiter')->user();
+        
     @endphp
     <!--Main layout-->
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
@@ -404,6 +405,15 @@
         // loding states cities docs on page load
 
         $(document).ready(function() {
+
+            if (@json($type == 'profile')) {
+                document.getElementById('option-1').checked = true;
+                ProfileIinformationDisplay();
+
+            } else {
+                document.getElementById('option-2').checked = true;
+                AccountSettingDisplay();
+            }
 
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
