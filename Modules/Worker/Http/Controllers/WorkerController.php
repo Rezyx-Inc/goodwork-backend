@@ -125,13 +125,13 @@ class WorkerController extends Controller
         $fileName = $request->fileName;
 
         $full_name = $user->first_name . ' ' . $user->last_name;
-        
-       
+
+
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message , $idEmployer,$idRecruiter, $id, 'WORKER',$time,$type,$fileName));
         event(new NotificationMessage($message,false,$time,$idRecruiter,$id,$full_name));
 
-        
+
         return [$id, $idEmployer];
     }
 
@@ -140,9 +140,9 @@ class WorkerController extends Controller
         $idRecruiter = $request->query('recruiterId');
         $idEmployer = $request->query('employerId');
         $page = $request->query('page', 1);
-        
+
         $idWorker = Auth::guard('frontend')->user()->id;
-       
+
         // Calculate the number of messages to skip
         $skip = ($page - 1) * 10;
 
@@ -178,15 +178,15 @@ class WorkerController extends Controller
     public function get_rooms(Request $request){
 
         $idWorker = Auth::guard('frontend')->user()->id;
-    
+
         $rooms = DB::connection('mongodb')->collection('chat')
         ->raw(function($collection) use ($idWorker) {
             return $collection->aggregate([
                 [
                     '$match' => [
-                        
+
                         'workerId' => $idWorker,
-                        
+
                     ]
                 ],
                 [
@@ -206,8 +206,8 @@ class WorkerController extends Controller
                 ]
             ])->toArray();
         });
-    
-       
+
+
         $users = [];
         $data = [];
         foreach($rooms as $room){
@@ -228,18 +228,18 @@ class WorkerController extends Controller
             $data_User['recruiterId'] = $room->recruiterId;
             $data_User['isActive'] = $room->isActive;
             $data_User['messages'] = $room->messages;
-        
+
             array_push($data, $data_User);
-            
+
         }
-    
-        
+
+
          return response()->json($data);
     }
-    
+
 
     public function get_messages(){
-        
+
         $id = Auth::guard('frontend')->user()->id;
 
         $rooms = DB::connection('mongodb')->collection('chat')
@@ -266,18 +266,18 @@ class WorkerController extends Controller
                         'messagesLength'=> [
                             '$cond' =>
                             [
-                                'if' => 
-                                    [ 
-                                        '$isArray' => '$messages' 
-                                    ], 
-                                'then' => 
-                                    [ 
-                                        '$size' => '$messages' 
-                                    ], 
+                                'if' =>
+                                    [
+                                        '$isArray' => '$messages'
+                                    ],
+                                'then' =>
+                                    [
+                                        '$size' => '$messages'
+                                    ],
                                 'else' => 'NA'
                             ]
                         ]
-                        
+
                     ]
                 ]
             ])->toArray();
@@ -409,7 +409,7 @@ class WorkerController extends Controller
         $data = [];
 
         //return request()->route()->getName();
-        
+
         switch(request()->route()->getName())
         {
             case 'worker.my-work-journey':
@@ -696,7 +696,7 @@ class WorkerController extends Controller
 
             return view('jobs.explore', $data);
             //return response()->json(['message' =>  $data['jobs']]);
-        
+
         } catch (\Exception $e) {
             // Handle other exceptions
 
@@ -708,27 +708,27 @@ class WorkerController extends Controller
     }
 
     public function my_profile() {
-        
+
         $data = [];
         $id = Auth::guard('frontend')->user()->id;
         $data['model'] = User::findOrFail($id);
-        
+
         if ($data['model']->type_id === '2') {
             $data['managers'] = User::select('id', 'first_name', 'last_name')->where(['type_id' => '3', 'status' => '1'])->get();
         }
-        
+
         if (!Cache::has('statetbl')) {
             $states = States::select('id', 'name', 'abbrev', 'is_restrict')->where('is_restrict', '=', '0')->get();
             Cache::put('statetbl', $states);
         }
-        
+
         $data['states'] = Cache::get('statetbl');
         return view('user.edit-profile', $data);
     }
 
     public function fetch_job_content(Request $request)
     {
-        if ($request->ajax()) {
+        try{
             $request->validate([
                 'jid'=>'required',
 
@@ -792,10 +792,13 @@ class WorkerController extends Controller
 
 
             $data['model'] = $job;
-            // this will return one of the ajax views in the public resources 
+            // this will return one of the ajax views in the public resources
             $response['content'] = view('ajax.'.$view.'_job', $data)->render();
             return new JsonResponse($response, 200);
+        } catch (\Exception $e) {
+            return new JsonResponse(['success'=>false, 'msg'=>'Oops! something went wrong.'], 400);
         }
+
     }
 
 
@@ -806,13 +809,13 @@ class WorkerController extends Controller
         $stripe_id = User::where('id', $nurse_id)->first()->stripeAccountId;
         $data = ['stripeId' => $stripe_id];
         $response = Http::get($url, $data);
-        
+
         if ($stripe_id == null ||  $response->json()['status'] == false) {
             return false;
         }
         return true;
     }
-    
+
 
     public function accept_offer(Request $request)
     {
@@ -835,24 +838,24 @@ class WorkerController extends Controller
             if(!$offer){
                 return response()->json(['success' => false, 'message' => 'Offer not found']);
             }
-    
+
             $job = Job::where('id',$offer->job_id)->first();
             if(!$job){
                 return response()->json(['success' => false, 'message' => 'Job not found']);
             }
-    
-            
+
+
                 $update_array['is_counter'] = '0';
                 $update_array['is_draft'] = '0';
                 $update_array['status'] = 'Hold';
                 $offer = DB::table('offers')
                     ->where(['id' => $request->offer_id])
                     ->update($update_array);
-                $user_id = $job->created_by;   
+                $user_id = $job->created_by;
                 $user = User::where('id',$user_id)->first();
                 $data = [
                     'offerId' => $request->offer_id,
-                    'amount' => '1', 
+                    'amount' => '1',
                     'stripeId' =>$user->stripeAccountId,
                     'fullName' => $user->first_name . ' ' . $user->last_name,
                 ];
@@ -860,9 +863,9 @@ class WorkerController extends Controller
                 //return response()->json(['message'=>$data]);
 
                 $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
-                    
-                // return response()->json(['data'=>$data , 'url' => $url]);   
-                    
+
+                // return response()->json(['data'=>$data , 'url' => $url]);
+
                 // Make the request
                 $responseInvoice = Http::post($url, $data);
                 // return response()->json(['message'=>$responseInvoice->json()]);
@@ -873,11 +876,11 @@ class WorkerController extends Controller
                         'message' => $responseInvoice->json()['message'],
                     ];
                 }
-            
+
 
 
             return response()->json(['msg'=>'offer accepted successfully','success' => true]);
-    
+
         } catch (\Exception $e) {
            // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
            return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
@@ -895,25 +898,25 @@ class WorkerController extends Controller
             if(!$offer){
                 return response()->json(['success' => false, 'message' => 'Offer not found']);
             }
-    
+
             $job = Job::where('id',$offer->job_id)->first();
             if(!$job){
                 return response()->json(['success' => false, 'message' => 'Job not found']);
             }
-    
+
             $updated = $offer->update([
                 'status' => 'Rejected',
                 'is_draft' => '0',
                 'is_counter' => '0'
             ]);
-    
+
             if ($updated) {
                 return response()->json(['msg'=>'Offer rejected successfully','success' => true]);
             } else {
                 return response()->json(['msg'=>'offer not rejected', 'success' => false]);
             }
-            
-    
+
+
         } catch (\Exception $e) {
            // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
            return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
@@ -923,12 +926,12 @@ class WorkerController extends Controller
 
 public function read_message_notification(Request $request)
 {
-    $sender = $request->sender; 
-    $receiver = Auth::guard('frontend')->user()->id; 
+    $sender = $request->sender;
+    $receiver = Auth::guard('frontend')->user()->id;
 
     try {
-        
-        
+
+
         $updateResult = NotificationMessageModel::raw()->updateMany(
             [
                 'receiver' => $receiver,
@@ -958,17 +961,17 @@ public function read_message_notification(Request $request)
 
 public function addDocuments(Request $request)
     {
-        $body = $request->getContent(); 
+        $body = $request->getContent();
 
         $bodyArray = json_decode($body, true);
 
-        
+
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-          
+
         ])->post('http://localhost:4545/documents/add-docs', $bodyArray);
 
-        
+
         if ($response->successful()) {
             return response()->json([
                 'ok' => true,
@@ -986,7 +989,7 @@ public function listDocs(Request $request)
 {
     $workerId = $request->WorkerId;
     //return response()->json(['workerId' => $workerId]);
-    
+
     $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
     return $response->body(); // Return the response from the external API
 }
@@ -994,7 +997,7 @@ public function listDocs(Request $request)
 public function deleteDoc(Request $request)
 {
     $bsonId = $request->input('bsonId');
-    
+
     $response = Http::post('http://localhost:4545/documents/del-doc', ['bsonId' => $bsonId]);
     if ($response->successful()) {
         return response()->json(['success' => true]);
@@ -1005,6 +1008,6 @@ public function deleteDoc(Request $request)
 
 
 
-   
+
 
 }
