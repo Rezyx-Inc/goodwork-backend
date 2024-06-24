@@ -728,77 +728,97 @@ class WorkerController extends Controller
 
     public function fetch_job_content(Request $request)
     {
-        try{
-            $request->validate([
-                'jid'=>'required',
 
-                'type'=>'required'
-            ]);
-            $response = [];
-            $response['success'] = true;
-            $data = [];
-            $job = Job::findOrFail($request->jid);
-            $id = Auth::guard('frontend')->user()->id;
-            return response()->json(['msg'=>$id]);
-            switch($request->type)
-            {
-                case 'saved':
-                    // $jobs = $jobCOntent;
-                    $view = 'saved';
-                    break;
-                case 'applied':
-                    // $jobs = $jobCOntent;
-                    $view = 'applied';
-                    break;
-                case 'hired':
-                    // $jobs = $jobCOntent;
-                    $view = 'hired';
-                    break;
-                case 'offered':
-                    // $jobs = $jobCOntent;
-                    $view = 'offered';
-                    break;
-                case 'past':
-                    // $jobs = $jobCOntent;
-                    $view = 'past';
-                    break;
-                case 'counter':
-                    // $jobs = $jobCOntent;
+        try {
+            
+                $request->validate([
+                    'jid' => 'required',
+                    'type' => 'required',
+                ]);
+                $response = [];
+                $response['success'] = true;
+                $data = [];
+                $job = Job::findOrFail($request->jid);
+                $recruiter_id = $job->created_by;
+                $recruiter = User::findOrFail($recruiter_id);
+                $data['recruiter'] = $recruiter;
 
-                    $distinctFilters = Keyword::distinct()->pluck('filter');
-                    $keywords = [];
+                $id = Auth::guard('frontend')->user()->id;
+                $worker_id = Nurse::where('user_id', $id)->first();
+                $offer_id = Offer::where('worker_user_id', $worker_id->id)
+                    ->where('job_id', $job->id)
+                    ->first();
+                $data['worker_id'] = $worker_id->id;
+                $data['model'] = $job;
+                $data['offer_id'] = $offer_id->id;
 
-                    foreach ($distinctFilters as $filter) {
-                        $keyword = Keyword::where('filter', $filter)->get();
-                        $keywords[$filter] = $keyword;
-                    }
+                switch ($request->type) {
+                    case 'saved':
+                        // $jobs = $jobCOntent;
+                        $view = 'saved';
+                        break;
+                    case 'applied':
+                        // $jobs = $jobCOntent;
+                        $view = 'applied';
+                        break;
+                    case 'hired':
+                        // $jobs = $jobCOntent;
+                        $view = 'hired';
+                        break;
+                    case 'offered':
+                        // $jobs = $jobCOntent;
+                        $offerdetails = Offer::where('id', $offer_id->id)->first();
+                        $jobdetails = Job::where('id', $job->id)->first();
+                        $nursedetails = Nurse::where('id', $worker_id->id)->first();
+                        $recruiter = User::where('id', $jobdetails->created_by)->first();
+                        $data['offerdetails'] = $offerdetails;
+                        $data['jobdetails'] = $jobdetails;
+                        $data['nursedetails'] = $nursedetails;
+                        $data['recruiter'] = $recruiter;
+                        // return $data;
+                        $response['content'] = view('ajax.counter_details', $data)->render();
+                return new JsonResponse($response, 200);
+                        $view = 'offered';
+                        break;
+                    case 'past':
+                        // $jobs = $jobCOntent;
+                        $view = 'past';
+                        break;
+                    case 'counter':
+                        // $jobs = $jobCOntent;
+                        try {
+                            $distinctFilters = Keyword::distinct()->pluck('filter');
+                            $keywords = [];
 
-                    $data['keywords'] = $keywords;
-                    $data['countries'] = Countries::where('flag','1')
-                    ->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")
-                    ->orderBy('name','ASC')->get();
-                    $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
-                    $data['us_states'] = States::where('country_id', $usa->id)->get();
-                    $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
-                    $view = 'counter_offer';
+                            foreach ($distinctFilters as $filter) {
+                                $keyword = Keyword::where('filter', $filter)->get();
+                                $keywords[$filter] = $keyword;
+                            }
 
-                    break;
-                default:
-                    return new JsonResponse(['success'=>false, 'msg'=>'Oops! something went wrong.'], 400);
-                    break;
-            }
+                            $data['keywords'] = $keywords;
+                            $data['countries'] = Countries::where('flag', '1')->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")->orderBy('name', 'ASC')->get();
+                            $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
+                            $data['us_states'] = States::where('country_id', $usa->id)->get();
+                            $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+                            $offerdetails = Offer::where('id', $offer_id->id)->first();
+                            $data['model'] = $offerdetails;
+                            $view = 'counter_offer';
+                        } catch (\Exception $e) {
+                            return response()->json(['success' => false, 'message' => 'here']);
+                        }
 
+                        break;
+                    default:
+                        return new JsonResponse(['success' => false, 'msg' => 'Oops! something went wrong.'], 400);
+                        break;
+                }
 
+                $response['content'] = view('ajax.' . $view . '_job', $data)->render();
+                return new JsonResponse($response, 200);
 
-
-            $data['model'] = $job;
-            // this will return one of the ajax views in the public resources
-            $response['content'] = view('ajax.'.$view.'_job', $data)->render();
-            return new JsonResponse($response, 200);
         } catch (\Exception $e) {
-            return new JsonResponse(['success'=>false, 'msg'=>'Oops! something went wrong.'], 400);
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
-
     }
 
 
