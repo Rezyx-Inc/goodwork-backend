@@ -184,5 +184,11 @@ Route::prefix('recruiter')->group(function () {
 
         Route::post('edit-job', ['uses' => 'RecruiterController@edit_job', 'as' => 'edit_job']);
 
+        // reading message notification 
+        Route::post('read-recruiter-message-notification', ['uses' => 'RecruiterController@read_recruiter_message_notification', 'as' => 'read-recruiter-message-notification']);
+
+        // reading job notification
+        Route::post('read-recruiter-job-notification', ['uses' => 'RecruiterController@read_recruiter_job_notification', 'as' => 'read-recruiter-job-notification']);
+
     });
 });

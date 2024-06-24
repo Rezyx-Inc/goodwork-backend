@@ -101,6 +101,22 @@ Route::prefix('worker')->group(function() {
 
         // add saved job
         Route::post('add-save-jobs', ['uses' => 'WorkerDashboardController@add_save_jobs', 'as' => 'add-save-jobs']);
+
+        // apply on job
+        Route::post('apply-on-job', ['uses' => 'WorkerDashboardController@apply_on_jobs', 'as' => 'apply-on-job']);
+
+        // reading message notification 
+        Route::post('read-message-notification', ['uses' => 'WorkerController@read_message_notification', 'as' => 'read-message-notification']);
+
+        // add doc 
+         Route::post('add-docs', ['uses' => 'WorkerController@addDocuments', 'as' => 'add-docs']);
+
+        // delete doc
+        Route::post('del-doc', ['uses' => 'WorkerController@deleteDoc', 'as' => 'del-doc']);
+
+        // list docs
+        Route::post('list-docs', ['uses' => 'WorkerController@listDocs', 'as' => 'list-docs']);
+
     }
 
     );

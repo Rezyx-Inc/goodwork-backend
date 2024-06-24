@@ -124,7 +124,7 @@ class ApplicationController extends Controller
         }else{
             $offerLists = Offer::where('status', $type)->where('created_by',$recruiter->id)->get();
         }
-
+        // return response()->json($offerLists);
         if (0 >= count($offerLists)) {
             $responseData = [
                 'applicationlisting' => '<div class="text-center"><span>No Application</span></div>',
@@ -136,9 +136,15 @@ class ApplicationController extends Controller
 
         $data = '';
         $data2 = '';
+        $nurses = [];
         // str_contains($nurse['worker_shift_time_of_day'], 'day') ? 'day' : '' . ' ' . str_contains($nurse['worker_shift_time_of_day'], 'night') ? 'night' : ''
         foreach ($offerLists as $key => $value) {
             if ($value) {
+                if(in_array($value->worker_user_id, $nurses)){
+                    continue;
+                }
+                $nurses[] = $value->worker_user_id;
+
                 $nurse = Nurse::where('id', $value->worker_user_id)->first();
                 $user = user::where('id', $nurse->user_id)->first();
                 $data .=
@@ -148,7 +154,7 @@ class ApplicationController extends Controller
                     '" id="ss-expl-applicion-div-box" onclick="applicationType(\'' .
                     $type .
                     '\', \'' .
-                    $value->id .
+                    '' .
                     '\', \'userdetails\')">
                         <div class="ss-job-id-no-name">
                             <ul>

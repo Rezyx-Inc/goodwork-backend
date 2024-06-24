@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Events\NewPrivateMessage;
+use App\Events\NotificationMessage;
 use DB;
 use Auth;
 use Illuminate\Support\Facades\Log;
@@ -15,6 +16,8 @@ use Exception;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Nurse;
+use App\Models\NotificationMessage as NotificationMessageModel;
+use App\Models\NotificationJobModel;
 
 class RecruiterController extends Controller
 {
@@ -309,7 +312,7 @@ class RecruiterController extends Controller
                     'workerId' => $nurse_user_id,
                     'recruiterId' => $recruiter_id,
                     'employerId' => $recruiter_id, // Replace this with the actual employerId
-                    'lastMessage' => null,
+                    'lastMessage' => $this->timeAgo(now()),
                     'isActive' => true,
                     'messages' => [],
                 ]);
@@ -475,10 +478,14 @@ class RecruiterController extends Controller
         // if i located the recruiter dash i should get the id of the employer from the request
         // we will use this id for now : "GWU000005"
 
+        $full_name = $user->first_name . ' ' . $user->last_name;
+       
+
         $idEmployer = $request->idEmployer;
 
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message, $idEmployer, $idEmployer, $idWorker, $role, $time, $type, $fileName));
+        event(new NewPrivateMessage($message, $idEmployer, $id, $idWorker, $role, $time, $type, $fileName));
+        event(new NotificationMessage($message,false,$time,$idWorker,$id,$full_name));
 
         return true;
     }
@@ -987,6 +994,77 @@ class RecruiterController extends Controller
                 //return response()->json($job);
             } catch (\Exception $e) {
                 return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+            }
+        }
+
+        public function read_recruiter_message_notification(Request $request)
+        {
+            
+            $sender = $request->sender; 
+            $receiver = Auth::guard('recruiter')->user()->id; 
+        
+            try {
+                
+                
+                $updateResult = NotificationMessageModel::raw()->updateMany(
+                    [
+                        'receiver' => $receiver,
+                        'all_messages_notifs.sender' => $sender
+                    ],
+                    [
+                        '$set' => [
+                            'all_messages_notifs.$[elem].notifs_of_one_sender.$[].seen' => true
+                        ]
+                    ],
+                    [
+                        'arrayFilters' => [
+                            ['elem.sender' => $sender]
+                        ]
+                    ]
+                );
+        
+                        if ($updateResult->getModifiedCount() > 0) {
+                            return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+                        } else {
+                            return response()->json(['success' => false, 'message' => 'No notifications to update']);
+                        }
+                    } catch (\Exception $e) {
+                        return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+                    }
+        }
+
+        public function read_recruiter_job_notification(Request $request)
+        {
+            $sender = $request->sender;
+            $job_id = $request->jobId; 
+            $receiver = Auth::guard('recruiter')->user()->id; 
+        
+            try {
+                $updateResult = NotificationJobModel::raw()->updateMany(
+                    [
+                        'receiver' => $receiver,
+                        'all_jobs_notifs.sender' => $sender
+                    ],
+                    [
+                        '$set' => [
+                            'all_jobs_notifs.$[elem].notifs_of_one_sender.$[notif].seen' => true
+                        ]
+                    ],
+                    [
+                        'arrayFilters' => [
+                            ['elem.sender' => $sender],
+                            ['notif.jobId' => $job_id] // Target the specific jobId within notifs_of_one_sender
+                        ]
+                    ]
+                );
+        
+                if ($updateResult->getModifiedCount() > 0) {
+                    return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+                } else {
+                    return response()->json(['success' => false, 'message' => 'No notifications to update']);
+                }
+            } catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
             }
         }
 

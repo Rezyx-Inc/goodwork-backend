@@ -6,6 +6,7 @@
        
     @endphp
     <!--Main layout-->
+    
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
         <div class="container">
             <div class="ss-my-profile--basic-mn-sec">
@@ -918,46 +919,99 @@
                 $worker_id = $worker->id;
             @endphp
             const worker_id = '{!! $worker_id !!}';
+            // $.ajax({
+            //     url: 'http://localhost:4545/documents/list-docs?workerId=' +
+            //         worker_id, // replace workerId with the actual workerId
+            //     method: 'GET',
+            //     success: function(resp) {
+            //         var tbody = $('.table tbody');
+            //         tbody.empty(); // remove existing rows
+            //         resp.forEach(function(file) {
+            //             var row = $('<tr>');
+            //             row.append($('<td>').text(file.name));
+            //             console.log(file.id);
+            //             var deleteButton = $('<button>').text('Delete Document').addClass(
+            //                 'delete').attr('data-id', file.id);
+            //             deleteButton.click(function() {
+            //                 $.ajax({
+            //                     url: 'http://localhost:4545/documents/del-doc',
+            //                     method: 'POST',
+            //                     data: JSON.stringify({
+            //                         bsonId: file.id
+            //                     }),
+            //                     contentType: 'application/json',
+            //                     success: function() {
+            //                         row
+            //                             .remove(); // remove the row from the table
+            //                     },
+            //                     error: function(resp) {
+            //                         console.log('Error:', resp);
+            //                     }
+            //                 });
+            //             });
+            //             row.append($('<td>').append(deleteButton));
+            //             tbody.append(row);
+            //         });
+            //     },
+            //     error: function(resp) {
+            //         console.log('Error:', resp);
+            //     }
+            // });
+
             $.ajax({
-                url: 'http://localhost:4545/documents/list-docs?workerId=' +
-                    worker_id, // replace workerId with the actual workerId
-                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{route("list-docs")}}', 
+                method: 'POST',
+                contentType: 'application/json', 
+                data: JSON.stringify({
+                    WorkerId: worker_id 
+                }),
                 success: function(resp) {
+                    var data;
+                    try {
+                        // Try to manually parse the response as JSON
+                        data = JSON.parse(resp);
+                    } catch (e) {
+                        // If parsing fails, assume resp is already a JavaScript object
+                        data = resp;
+                    }
+
                     var tbody = $('.table tbody');
-                    tbody.empty(); // remove existing rows
-                    resp.forEach(function(file) {
+                    tbody.empty(); 
+                    data.forEach(function(file) {
                         var row = $('<tr>');
                         row.append($('<td>').text(file.name));
                         console.log(file.id);
-                        var deleteButton = $('<button>').text('Delete Document').addClass(
-                            'delete').attr('data-id', file.id);
+                        var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id', file.id);
                         deleteButton.click(function() {
                             $.ajax({
-                                url: 'http://localhost:4545/documents/del-doc',
+                                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                                url: '{{route("del-doc")}}',
                                 method: 'POST',
+                                contentType: 'application/json',
                                 data: JSON.stringify({
                                     bsonId: file.id
                                 }),
-                                contentType: 'application/json',
                                 success: function() {
-                                    row
-                                        .remove(); // remove the row from the table
-                                },
-                                error: function(resp) {
-                                    console.log('Error:', resp);
-                                }
-                            });
-                        });
-                        row.append($('<td>').append(deleteButton));
-                        tbody.append(row);
-                    });
-                },
-                error: function(resp) {
-                    console.log('Error:', resp);
-                }
+                        row.remove(); 
+                    },
+                    error: function(resp) {
+                        console.log('Error:', resp);
+                    }
+                });
             });
-
-
+            row.append($('<td>').append(deleteButton));
+            tbody.append(row);
+        });
+    },
+    error: function(resp) {
+        console.log('Error:', resp);
+    }
+});
 
             $.ajax({
                 headers: {
@@ -1752,7 +1806,7 @@
                     }
                 });
                 $.ajax({
-                    url: 'http://localhost:4545/documents/add-docs',
+                    url: '/worker/add-docs',
                     type: 'POST',
                     dataType: 'json',
                     contentType: 'application/json',

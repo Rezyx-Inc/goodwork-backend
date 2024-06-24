@@ -33,7 +33,7 @@
 </head>
 <body>
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
-    
+    <script src="{{ asset('js/app.js') }}"></script>
     <!--Main Navigation-->
     <header>
         <!-- Sidebar -->

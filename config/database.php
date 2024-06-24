@@ -90,10 +90,17 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
+        // chat db
         'mongodb' => [
             'driver' => 'mongodb',
             'dsn' => env('MONGODB_URI'),
             'database' => env('YOUR_DATABASE_NAME'),
+        ],
+        // notification db
+        'mongodb_notification' => [
+            'driver' => 'mongodb',
+            'dsn' => env('MONGODB_URI'),
+            'database' => env('NOTIFICATION_DB'),
         ],
 
     ],

@@ -32,10 +32,12 @@
 </head>
 <body>
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <!--Main Navigation-->
     <header>
         @include('worker::partials.worker_sidebar')
         @include('worker::partials.worker_header')
+        
     </header>
 <!--Main Navigation-->
 
@@ -60,6 +62,7 @@
     <script type="text/javascript" src="{{URL::asset('frontend/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
+    
     @yield('js')
     @include('partials.flashMsg')
 

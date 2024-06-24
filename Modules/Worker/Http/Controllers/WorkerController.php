@@ -12,6 +12,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Builder;
 use App\Events\NewPrivateMessage;
+use App\Events\NotificationMessage;
+use App\Events\NotificationJob;
 use Illuminate\Support\Facades\Http;
 
 
@@ -20,6 +22,8 @@ use Exception;
 
 use App\Models\{User, Worker,Follows, NurseReference,Job,Offer, NurseAsset,
     Keyword, Facility, Availability, Countries, States, Cities, JobSaved,Nurse};
+
+use App\Models\NotificationMessage as NotificationMessageModel;
 
 
 class WorkerController extends Controller
@@ -119,10 +123,14 @@ class WorkerController extends Controller
         $idRecruiter = $request->idRecruiter;
         $type = $request->type;
         $fileName = $request->fileName;
+
+        $full_name = $user->first_name . ' ' . $user->last_name;
+        
        
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message , $idEmployer,$idRecruiter, $id, 'WORKER',$time,$type,$fileName));
-        
+        event(new NotificationMessage($message,false,$time,$idRecruiter,$id,$full_name));
+
         
         return [$id, $idEmployer];
     }
@@ -867,7 +875,7 @@ class WorkerController extends Controller
                 }
             
 
-    
+
             return response()->json(['msg'=>'offer accepted successfully','success' => true]);
     
         } catch (\Exception $e) {
@@ -911,6 +919,91 @@ class WorkerController extends Controller
            return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
         }
     }
+
+
+public function read_message_notification(Request $request)
+{
+    $sender = $request->sender; 
+    $receiver = Auth::guard('frontend')->user()->id; 
+
+    try {
+        
+        
+        $updateResult = NotificationMessageModel::raw()->updateMany(
+            [
+                'receiver' => $receiver,
+                'all_messages_notifs.sender' => $sender
+            ],
+            [
+                '$set' => [
+                    'all_messages_notifs.$[elem].notifs_of_one_sender.$[].seen' => true
+                ]
+            ],
+            [
+                'arrayFilters' => [
+                    ['elem.sender' => $sender]
+                ]
+            ]
+        );
+
+                if ($updateResult->getModifiedCount() > 0) {
+                    return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+                } else {
+                    return response()->json(['success' => false, 'message' => 'No notifications to update']);
+                }
+            } catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+            }
+}
+
+public function addDocuments(Request $request)
+    {
+        $body = $request->getContent(); 
+
+        $bodyArray = json_decode($body, true);
+
+        
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+          
+        ])->post('http://localhost:4545/documents/add-docs', $bodyArray);
+
+        
+        if ($response->successful()) {
+            return response()->json([
+                'ok' => true,
+                'message' => 'Files uploaded successfully',
+            ]);
+        } else {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Error! Please try again later.',
+            ], $response->status());
+        }
+    }
+
+public function listDocs(Request $request)
+{
+    $workerId = $request->WorkerId;
+    //return response()->json(['workerId' => $workerId]);
+    
+    $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+    return $response->body(); // Return the response from the external API
+}
+
+public function deleteDoc(Request $request)
+{
+    $bsonId = $request->input('bsonId');
+    
+    $response = Http::post('http://localhost:4545/documents/del-doc', ['bsonId' => $bsonId]);
+    if ($response->successful()) {
+        return response()->json(['success' => true]);
+    } else {
+        return response()->json(['success' => false], $response->status());
+    }
+}
+
+
 
    
 

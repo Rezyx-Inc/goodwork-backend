@@ -28,6 +28,12 @@ class EventServiceProvider extends ServiceProvider
         ] ,'App\Events\NewPrivateMessage' => [
             'App\Listeners\NewPrivateMessageListener',
         ],
+        'App\Events\NotificationMessage' => [
+            'App\Listeners\NotificationMessageListener',
+        ],
+        'App\Events\NotificationJob' => [
+            'App\Listeners\NotificationJobListener',
+        ],
     ];
 
     /**

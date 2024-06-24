@@ -87,7 +87,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('explore', ['uses' => 'JobController@explore', 'as' => 'explore']);
         Route::get('job/{id}/details', ['uses' => 'JobController@details', 'as' => 'job-details']);
         Route::post('add-save-jobs', ['uses' => 'JobController@add_save_jobs', 'as' => 'add-save-jobs']);
-        Route::post('apply-on-job', ['uses' => 'JobController@apply_on_jobs', 'as' => 'apply-on-job']);
+        // Route::post('apply-on-job', ['uses' => 'JobController@apply_on_jobs', 'as' => 'apply-on-job']);
 
         Route::get('my-work-journey', ['uses' => 'JobController@my_work_journey', 'as' => 'my-work-journey']);
         Route::post('fetch-job-content', ['uses' => 'JobController@fetch_job_content', 'as' => 'fetch-job-content']);

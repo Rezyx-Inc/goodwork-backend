@@ -20,6 +20,17 @@ class BroadcastServiceProvider extends ServiceProvider
             return $user->id === $receiverId;
         });
 
+        Broadcast::channel('private-notification.{receiverId}', function ($user, $receiverId) {
+            
+            return $user->id === $receiverId;
+        });
+
+        Broadcast::channel('private-job-notification.{receiverId}', function ($user, $receiverId) {
+           
+            return $user->id === $receiverId;
+        });
+
+
         require base_path('routes/channels.php');
     }
 }

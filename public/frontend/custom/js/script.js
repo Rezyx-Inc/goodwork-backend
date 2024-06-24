@@ -565,7 +565,7 @@ function apply_on_jobs(obj, reload_page = false)
 
                     
                     $.ajax({
-                        url: full_path + 'apply-on-job',
+                        url: full_path + 'worker/apply-on-job',
                         type: 'POST',
                         dataType: 'json',
                         // processData: false,
