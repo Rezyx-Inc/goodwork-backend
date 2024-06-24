@@ -57,7 +57,7 @@
                     @empty
                     @endforelse
 
-                    
+
 
                 </div>
             </div>
@@ -90,7 +90,7 @@
 
                         <div
                         class="ss-prsn-form-btn-sec row col-12 d-flex justify-content-center align-items-center">
-                        
+
                         <button type="text" class="ss-prsnl-save-btn" id="AddStripe">
                             Add Stripe
                         </button>
@@ -166,8 +166,8 @@ AddStripe.addEventListener("click", function(event) {
             name = 'stripe';
             title = 'add payment method';
             modal = '#stripe_modal';
-            
-           
+
+
 
             $(modal).modal('show');
         }
@@ -199,7 +199,7 @@ AddStripe.addEventListener("click", function(event) {
                 }
             });
             $.ajax({
-                url: full_path + 'fetch-job-content',
+                url: full_path + 'worker/fetch-job-content',
                 type: 'POST',
                 dataType: 'json',
                 // processData: false,
@@ -226,7 +226,7 @@ AddStripe.addEventListener("click", function(event) {
     }
 
     function accept_job_offer(obj){
-       
+
             ajaxindicatorstart();
             $.ajaxSetup({
                     headers: {
@@ -297,7 +297,7 @@ AddStripe.addEventListener("click", function(event) {
                             setTimeout(() => {
                                 location.reload();
                             }, 2000);
-                        
+
                     },
                     error: function (resp) {
                         console.log(resp);
