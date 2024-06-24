@@ -725,7 +725,7 @@
                                 <h5 class="mb-4 text-capitalize">On Hold</h5>
                                 @php $counter = 0 @endphp
                                 @foreach ($onholdJobs as $job)
-                                
+
                                     <div class="col-12 ss-job-prfle-sec" onclick="opportunitiesType('onhold','{{ $job->id }}','jobdetails')"
                                         id="{{ $counter }}">
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
@@ -952,7 +952,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                        
+
                                                         <span class="help-block-clinical_setting"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -986,7 +986,7 @@
                                                             placeholder="Enter Guaranteed Hours per week">
                                                         <span class="help-block-guaranteed_hours"></span>
                                                     </div>
-                                
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>
                                                             Hours Per Shift
@@ -1138,7 +1138,7 @@
                                             </div>
                                             {{-- end third slide draft --}}
 
-                                          
+
 
                                             <!-- Forth form slide for adding jobs -->
                                             {{-- edits forth --}}
@@ -1161,7 +1161,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                        
+
                                                         <span class="help-block-emr"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1208,14 +1208,14 @@
                                                         </select>
                                                         <span class="help-block-vision"></span>
                                                     </div>
-                     
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
                                                         <input type="number" name="call_back" id="call_backDraft"
                                                             placeholder="Enter Call Back Hourly rate">
                                                         <span class="help-block-call_back"></span>
                                                     </div>
-                         
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Est. Weekly non-taxable amount</label>
                                                         <input type="number" name="weekly_non_taxable_amount"
@@ -1225,7 +1225,7 @@
                                                     </div>
 
 
-                                                   
+
                                                     <div class="ss-form-group col-md-12">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -1472,7 +1472,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                      
+
                                                         <span class="help-block-clinical_setting"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1506,7 +1506,7 @@
                                                             placeholder="Enter Guaranteed Hours per week">
                                                         <span class="help-block-guaranteed_hours"></span>
                                                     </div>
-                                
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>
                                                             Hours Per Shift
@@ -1658,7 +1658,7 @@
                                             </div>
                                             {{-- end third slide draft --}}
 
-                                          
+
 
                                             <!-- Forth form slide for adding jobs -->
                                             {{-- edits forth --}}
@@ -1681,7 +1681,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                      
+
                                                         <span class="help-block-emr"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1728,14 +1728,14 @@
                                                         </select>
                                                         <span class="help-block-vision"></span>
                                                     </div>
-                     
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
                                                         <input type="number" name="call_back" id="call_backEdit"
                                                             placeholder="Enter Call Back Hourly rate">
                                                         <span class="help-block-call_back"></span>
                                                     </div>
-                         
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Est. Weekly non-taxable amount</label>
                                                         <input type="number" name="weekly_non_taxable_amount"
@@ -1745,7 +1745,7 @@
                                                     </div>
 
 
-                                                   
+
                                                     <div class="ss-form-group col-md-12">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -1769,7 +1769,7 @@
                                                     </div>
                                                     <span class="help-block-start_date"></span>
 
-                                                    
+
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
                                                         class="form-text">
@@ -1884,7 +1884,7 @@
         }
 
 
-        
+
         function opportunitiesType(type, id = "", formtype) {
 
             console.log(type);
@@ -1992,10 +1992,10 @@
                             $("#application-details-apply").html(result.jobdetails);
                             if (type == "onhold") {
                                 $("#application-details-apply-onhold").html(result.jobdetails);
-                            } 
-                            
+                            }
+
                             //console.log(type);
-                             $("#job-list-published").html(result.joblisting);    
+                             $("#job-list-published").html(result.joblisting);
                         }
                     },
                     error: function(error) {
@@ -2110,7 +2110,7 @@
                 if (csrfToken) {
                     event.preventDefault();
                     let check_type = type;
-                    
+
                     // if (document.getElementById('job_id').value) {
                     if (id == '0') {
                         id = document.getElementById('job_id').value;
@@ -2136,7 +2136,7 @@
                             });
 
                             window.location.reload();
-                            
+
                             // if (type == "hidejob") {
                             //     console.log("this is data");
                             //     //console.log(data.message);
@@ -2387,7 +2387,7 @@
             for (const key in vaccinations) {
                 let vaccinationsname = "";
                 var select = document.getElementById("vaccinations");
-                
+
                 var allspcldata = [];
                 for (var i = 0; i < select.options.length; i++) {
                     var obj = {
@@ -2521,35 +2521,8 @@
     </script>
     <script>
         function askWorker(e, type, workerid, jobid) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('employer/ask-employer-notification') }}",
-                    data: {
-                        'token': csrfToken,
-                        'worker_id': workerid,
-                        'update_key': type,
-                        'job_id': jobid,
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> ' + result.message,
-                            time: 5
-                        });
-                    },
-                    error: function(error) {
-                        // Handle errors
-                    }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
+            let url = "{{ url('recruiter/recruiter-messages') }}";
+             window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
         }
         // const numberOfReferencesField = document.getElementById('number_of_references');
         // numberOfReferencesField.addEventListener('input', function () {
@@ -2756,7 +2729,7 @@
                         var option = document.createElement('option');
                         option.value = jobtype;
                         option.text = jobtype;
-                                            
+
                         select.add(option);
                         select.value = jobtype;
     }
@@ -2766,7 +2739,7 @@
                         var option = document.createElement('option');
                         option.value = preferredSpecialty;
                         option.text = preferredSpecialty;
-                                            
+
                         select.add(option);
                         select.value = preferredSpecialty;
     }
@@ -2779,10 +2752,10 @@
     var option = document.createElement('option');
     option.value = city;
     option.text = city;
-                        
+
     select.add(option);
     select.value = city;
-       
+
     }
     if (preferred_work_location !== null) {
         document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
@@ -2802,7 +2775,7 @@
     var option = document.createElement('option');
     option.value = proffesionValue;
     option.text = proffesionValue;
-                        
+
     select.add(option);
     select.value = proffesionValue;
         //document.getElementById("perferred_professionDraft").value = proffesion;
@@ -2813,7 +2786,7 @@
     var option = document.createElement('option');
     option.value = facilityShiftCancelationPolicy;
     option.text = facilityShiftCancelationPolicy;
-                        
+
     select.add(option);
     select.value = facilityShiftCancelationPolicy;
         //document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
@@ -2827,7 +2800,7 @@
     var option = document.createElement('option');
     option.value = ClinicalSettingValue;
     option.text = ClinicalSettingValue;
-                        
+
     select.add(option);
     select.value = ClinicalSettingValue;
 
@@ -2877,7 +2850,7 @@
     }
     if (on_call !== null) {
         document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
-        
+
     }
     if (holiday !== null) {
         document.getElementById("holidayDraft").value = holiday;
@@ -2890,11 +2863,11 @@
     }
     if (block_scheduling !== null) {
         document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
-        
+
     }
     if (float_requirement !== null) {
         document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
-        
+
     }
     if (contract_termination_policy !== null) {
         document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
@@ -2906,15 +2879,15 @@
     var option = document.createElement('option');
     option.value = EmrValue;
     option.text = EmrValue;
-                        
+
     select.add(option);
     select.value = EmrValue;
 
-       
+
     }
     if (four_zero_one_k !== null) {
         document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
-        
+
     }
     if (health_insaurance !== null) {
         document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
@@ -2922,11 +2895,11 @@
     }
     if (dental !== null) {
         document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
-        
+
     }
     if (vision !== null) {
         document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
-        
+
     }
     if (call_back !== null) {
         document.getElementById("call_backDraft").value = call_back;
@@ -2946,7 +2919,7 @@
 
 
     function editDataJob(element) {
-        
+
         var activeDocs = document.getElementsByClassName('col-12 ss-job-prfle-sec active')
         if(activeDocs.length > 0){
             for(i of activeDocs){
@@ -2957,7 +2930,7 @@
         const jobId = element.id;
         console.log(drafts[jobId.job_name])
         element.classList.add("active");
-        
+
         let job_name = draftJobs[jobId].job_name;
     let job_type = draftJobs[jobId].job_type;
     let preferred_specialty = draftJobs[jobId].preferred_specialty;
@@ -3011,7 +2984,7 @@
                         var option = document.createElement('option');
                         option.value = jobtype;
                         option.text = jobtype;
-                                            
+
                         select.add(option);
                         select.value = jobtype;
     }
@@ -3021,7 +2994,7 @@
                         var option = document.createElement('option');
                         option.value = preferredSpecialty;
                         option.text = preferredSpecialty;
-                                            
+
                         select.add(option);
                         select.value = preferredSpecialty;
     }
@@ -3034,10 +3007,10 @@
     var option = document.createElement('option');
     option.value = city;
     option.text = city;
-                        
+
     select.add(option);
     select.value = city;
-       
+
     }
     if (preferred_work_location !== null) {
         document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
@@ -3057,7 +3030,7 @@
     var option = document.createElement('option');
     option.value = proffesionValue;
     option.text = proffesionValue;
-                        
+
     select.add(option);
     select.value = proffesionValue;
         //document.getElementById("perferred_professionDraft").value = proffesion;
@@ -3082,7 +3055,7 @@
     var option = document.createElement('option');
     option.value = ClinicalSettingValue;
     option.text = ClinicalSettingValue;
-                        
+
     select.add(option);
     select.value = ClinicalSettingValue;
        // document.getElementById("clinical_settingDraft").value = clinical_setting;
@@ -3131,7 +3104,7 @@
     }
     if (on_call !== null) {
         document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
-        
+
     }
     if (holiday !== null) {
         document.getElementById("holidayDraft").value = holiday;
@@ -3145,31 +3118,31 @@
     var option = document.createElement('option');
     option.value = Terms;
     option.text = Terms;
-                        
+
     select.add(option);
     select.value = Terms;
        // document.getElementById("termsDraft").value = terms;
     }
     if (block_scheduling !== null) {
         document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
-        
+
     }
     if (float_requirement !== null) {
         document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
-        
+
     }
     if (contract_termination_policy !== null) {
         document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
     }
     if (Emr !== null) {
 
-        
+
         var EmrValue = Emr;
     var select = document.getElementById('emrDraft');
     var option = document.createElement('option');
     option.value = EmrValue;
     option.text = EmrValue;
-                        
+
     select.add(option);
     select.value = EmrValue;
 
@@ -3178,7 +3151,7 @@
     }
     if (four_zero_one_k !== null) {
         document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
-        
+
     }
     if (health_insaurance !== null) {
         document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
@@ -3186,11 +3159,11 @@
     }
     if (dental !== null) {
         document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
-        
+
     }
     if (vision !== null) {
         document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
-        
+
     }
     if (call_back !== null) {
         document.getElementById("call_backDraft").value = call_back;
@@ -3328,7 +3301,7 @@
         var guaranteed_hours = document.getElementById("guaranteed_hours").value;
         var hours_shift = document.getElementById("hours_shift").value;
         var weeks_shift = document.getElementById("weeks_shift").value;
-        
+
 
         if (facility_shift_cancelation_policy.trim() === '') {
             $('.help-block-facility_shift_cancelation_policy').text(
@@ -3416,7 +3389,7 @@
             $('.help-block-weeks_shift').text('');
         }
 
-        
+
 
         if (access) {
             return true;
@@ -4795,7 +4768,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
             $('.help-block-vision').text('');
         }
 
-        
+
 
         if (call_back.trim() === '') {
             $('.help-block-call_back').text('Please enter the call back');
@@ -4805,7 +4778,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
             $('.help-block-call_back').text('');
         }
 
-       
+
 
         if (weekly_non_taxable_amount.trim() === '') {
             $('.help-block-weekly_non_taxable_amount').text('Please enter the weekly non taxable amount');
@@ -4815,7 +4788,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
             $('.help-block-weekly_non_taxable_amount').text('');
         }
 
-        
+
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -4954,24 +4927,24 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                         console.log(result);
                         document.getElementById("job_nameEdit").value = result.job_name;
 
-                        // here 
+                        // here
                         var jobtype = result.job_type;
                         var select = document.getElementById('job_typeEdit');
                         var option = document.createElement('option');
                         option.value = jobtype;
                         option.text = jobtype;
-                                            
+
                         select.add(option);
                         select.value = jobtype;
 
                         //document.getElementById("job_typeEdit").value = result.job_type;
-                        
+
                         var preferredSpecialty = result.preferred_specialty;
                         var select = document.getElementById('preferred_specialtyEdit');
                         var option = document.createElement('option');
                         option.value = preferredSpecialty;
                         option.text = preferredSpecialty;
-                                            
+
                         select.add(option);
                         select.value = preferredSpecialty;
                         //document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
@@ -4981,7 +4954,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     var option = document.createElement('option');
     option.value = proffesionValue;
     option.text = proffesionValue;
-                        
+
     select.add(option);
     select.value = proffesionValue;
                        // document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
@@ -4994,12 +4967,12 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                         var option = document.createElement('option');
                         option.value = city;
                         option.text = city;
-                                            
+
                         select.add(option);
                         select.value = city;
 
                         document.getElementById("preferred_work_locationEdit").value = result.preferred_work_location;
-                        
+
                         document.getElementById("weekly_payEdit").value = result.weekly_pay;
                         document.getElementById("descriptionEdit").value = result.description;
                         document.getElementById("preferred_assignment_durationEdit").value = result.preferred_assignment_duration;
@@ -5017,7 +4990,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     var option = document.createElement('option');
     option.value = ClinicalSettingValue;
     option.text = ClinicalSettingValue;
-                        
+
     select.add(option);
     select.value = ClinicalSettingValue;
                         //document.getElementById("clinical_settingEdit").value = result.clinical_setting;
@@ -5044,13 +5017,13 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     var option = document.createElement('option');
     option.value = Terms;
     option.text = Terms;
-                        
+
     select.add(option);
     select.value = Terms;
                         //document.getElementById("termsEdit").value = result.terms;
                         document.getElementById("float_requirementEdit").value = (result.float_requirement == 0) ? 'No' : 'Yes';
                         document.getElementById("contract_termination_policyEdit").value = result.contract_termination_policy;
-                        
+
                         var EmrValue = result.Emr;
                         var select = document.getElementById('emrEdit');
                         var option = document.createElement('option');
@@ -5070,7 +5043,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                         document.getElementById("start_dateEdit").value = result.start_date;
                         // removed as_soon_asEdit as it does not exist in the provided object
                         document.getElementById("job_idEdit").value = result.id;
-                                
+
                 },
                     error: function(error) {
                         console.log(error);
