@@ -600,9 +600,9 @@ class WorkerDashboardController extends Controller
             // }
             $rec->update($input);
         }
-        
+
         $time = now()->toDateTimeString();
-        event(new NotificationJob('Apply',false,$time,$job->created_by,$user->id,$user->full_name,$request->jid));
+        event(new NotificationJob('Apply',false,$time,$job->created_by,$user->id,$user->full_name,$request->jid,$job->job_name));
        
         return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
     }

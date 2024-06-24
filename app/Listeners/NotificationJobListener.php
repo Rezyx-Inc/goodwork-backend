@@ -25,6 +25,8 @@ class NotificationJobListener
             'seen' => $event->seen,
             'type' => $event->type,
             'sender' => $event->sender,
+            'full_name' => $event->full_name,
+            'job_name' => $event->job_name,
         ];
 
         $receiver = $event->receiver;

@@ -159,7 +159,7 @@ $(document).ready(function(){
     a.id = notification.sender;
     a.classList.add('dropdown-item');
     a.href = "{{route('worker.messages')}}";
-    a.innerHTML = notification.sender + ' sent you ' + notification.numOfMessagesStr + message;
+    a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
     a.setAttribute('onclick', 'handleNotificationClick(event)');
     li.appendChild(a);
     list_of_notifications.appendChild(li);
@@ -184,6 +184,7 @@ $(document).ready(function(){
                                             "id": event.sender,
                                             "numOfMessagesStr": 1,
                                             "sender": event.sender,
+                                            "full_name": event.full_name
                                         };
                     
                     // this is for checking if a notification of a specefic sender is already there
@@ -214,7 +215,7 @@ $(document).ready(function(){
                       if(notification.sender == event.sender){
                         let notification_list = document.getElementById(notification.sender);
                         if(notification_list){
-                          notification_list.innerHTML = notification.sender + ' sent you ' + notification.numOfMessagesStr + ' messages.';
+                          notification_list.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + ' messages.';
                         }else{
                           let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
                           let li = document.createElement('li');
@@ -222,7 +223,7 @@ $(document).ready(function(){
                           a.id = notification.sender;
                           a.classList.add('dropdown-item');
                           a.href = "{{route('worker.messages')}}";
-                          a.innerHTML = notification.sender + ' sent you ' + notification.numOfMessagesStr + message;
+                          a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
                           a.setAttribute('onclick', 'handleNotificationClick(event)');
                           li.appendChild(a);
                           list_of_notifications.appendChild(li);

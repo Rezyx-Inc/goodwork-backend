@@ -164,7 +164,7 @@ function handleJobNotificationClick(event , senderId){
     a.classList.add('dropdown-item');
     a.href = "{{route('recruiter-messages')}}";
     a.setAttribute('onclick', 'handleNotificationClick(event)'); 
-    a.innerHTML = notification.sender + ' sent you ' + notification.numOfMessagesStr + message;
+    a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
     li.appendChild(a);
     list_of_notifications.appendChild(li);
   });
@@ -194,7 +194,7 @@ function handleJobNotificationClick(event , senderId){
     a.classList.add('dropdown-item');
     a.href = "{{route('recruiter-application')}}";
     a.setAttribute('onclick', 'handleJobNotificationClick(event, "' + notification.sender + '")');
-    a.innerHTML =  notification.sender + ' applied to job ' + notification.jobId ;
+    a.innerHTML =  notification.full_name + ' applied to job ' + notification.job_name ;
     li.appendChild(a);
     list_of_notifications.appendChild(li);
   });
@@ -219,6 +219,9 @@ function handleJobNotificationClick(event , senderId){
                                             "id": event.sender,
                                             "numOfMessagesStr": 1,
                                             "sender": event.sender,
+                                            "full_name": event.full_name,
+                                            "job_name": event.job_name,
+                                            "jobId": event.jobId
                                         };
                     
                     // this is for checking if a notification of a specefic sender is already there
@@ -249,7 +252,7 @@ function handleJobNotificationClick(event , senderId){
                       if(notification.sender == event.sender){
                         let notification_list = document.getElementById(notification.sender);
                         if(notification_list){
-                          notification_list.innerHTML = notification.sender + ' sent you ' + notification.numOfMessagesStr + ' messages.';
+                          notification_list.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + ' messages.';
                         }else{
                           let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
                           let li = document.createElement('li');
@@ -258,7 +261,7 @@ function handleJobNotificationClick(event , senderId){
                           a.classList.add('dropdown-item');
                           a.href = "{{route('recruiter-messages')}}";
                           a.setAttribute('onclick', 'handleNotificationClick(event)'); 
-                          a.innerHTML = notification.sender + ' sent you ' + notification.numOfMessagesStr + message;
+                          a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
                           li.appendChild(a);
                           list_of_notifications.appendChild(li);
                         }
@@ -289,7 +292,7 @@ window.Echo.private('private-job-notification.' + '{{ $user->id }}')
         a.classList.add('dropdown-item');
         a.href = "{{route('recruiter-application')}}";
         a.setAttribute('onclick', 'handleJobNotificationClick(event, "' + e.sender + '")');
-        a.innerHTML =  e.sender + ' applied to job ' + e.jobId ;
+        a.innerHTML =  e.full_name + ' applied to job ' + e.job_name ;
         li.appendChild(a);
         list_of_notifications.appendChild(li);
     });

@@ -275,6 +275,7 @@ View::composer(['worker::partials.worker_header', 'worker::worker.messages'], fu
                 'id' => $detail['id'],
                 'numOfMessagesStr' => $detail['numOfMessagesStr'],
                 'sender' => $detail['sender'],
+                'full_name' => $detail['full_name']
             ];
         }, $notificationsDetails);
 
@@ -386,6 +387,7 @@ View::composer(['recruiter::partials.header', 'recruiter::recruiter.messages'], 
                 'id' => $detail['id'],
                 'numOfMessagesStr' => $detail['numOfMessagesStr'],
                 'sender' => $detail['sender'],
+                'full_name' => $detail['full_name'],
             ];
         }, $notificationsDetails);
 
@@ -414,6 +416,8 @@ $pipelinejob = [
             'sender' => '$all_jobs_notifs.sender',
             'jobId' => '$all_jobs_notifs.notifs_of_one_sender.jobId',
             'seen' => '$all_jobs_notifs.notifs_of_one_sender.seen',
+            'job_name' => '$all_jobs_notifs.notifs_of_one_sender.job_name',
+            'full_name' => '$all_jobs_notifs.notifs_of_one_sender.full_name',
         ],
     ],
 ];

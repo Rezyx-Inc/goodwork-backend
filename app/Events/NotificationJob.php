@@ -28,8 +28,9 @@ class NotificationJob implements ShouldBroadcast
     public $sender;
     public $createdAt;
     public $full_name;
+    public $job_name;
     
-    public function __construct($type,$seen,$createdAt,$receiver,$sender,$full_name,$jobId)
+    public function __construct($type,$seen,$createdAt,$receiver,$sender,$full_name,$jobId,$job_name)
     {
         $this->receiver = $receiver;
         $this->jobId = $jobId;
@@ -38,6 +39,7 @@ class NotificationJob implements ShouldBroadcast
         $this->sender = $sender;
         $this->createdAt = $createdAt;
         $this->full_name = $full_name;
+        $this->job_name = $job_name;
 
     }
 
