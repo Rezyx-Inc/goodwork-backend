@@ -488,7 +488,10 @@ class WorkerDashboardController extends Controller
 
     public function add_save_jobs(Request $request)
     {
-        if ($request->ajax()) {
+	// return asset('public/frontend/img/job-icon-bx-Vector.png');
+	try{
+
+
             $request->validate([
                 'jid' => 'required',
             ]);
@@ -501,9 +504,11 @@ class WorkerDashboardController extends Controller
                 'nurse_id' => $nurse->id,
             ];
             if (empty($rec)) {
-                JobSaved::create($input);
+              JobSaved::create($input);
+		
                 $img = asset('frontend/img/bookmark.png');
                 $message = 'Job saved successfully.';
+
             } else {
                 if ($rec->is_save == '1') {
                     $input['is_save'] = '0';
@@ -516,9 +521,12 @@ class WorkerDashboardController extends Controller
                 }
                 $rec->update($input);
             }
-
+	
             return new JsonResponse(['success' => true, 'msg' => $message, 'img' => $img], 200);
-        }
+        
+	}catch(\Exception $e){
+	return $e->getMessage();
+	}
     }
 
     public function apply_on_jobs(Request $request)
