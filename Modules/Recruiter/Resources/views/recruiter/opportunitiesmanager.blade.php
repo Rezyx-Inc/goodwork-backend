@@ -1406,7 +1406,7 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Weeks per Assignment</label>
-                                                        <input type="number" name="preferred_assignment_durationEdit"
+                                                        <input type="number" name="preferred_assignment_duration"
                                                             id="preferred_assignment_durationEdit"
                                                             placeholder="Enter Work Duration Per Assignment">
                                                         <span class="help-block-preferred_assignment_duration"></span>

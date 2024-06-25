@@ -973,29 +973,123 @@ class RecruiterController extends Controller
         }
 
         function edit_job(Request $request){
-            try {
-                $validated = $request->validate([
-                    'job_id' => 'required',
-                ]);
             
-                $job_id = $request->job_id;
-                $job = Job::find($job_id);
-            
-                if ($job === null) {
-                    return response()->json(['error' => "Job not found"], 404);
-                }
-            
-                $job->update($request->all());
-
-                return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
-
-                return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
-            
-                //return response()->json($job);
-            } catch (\Exception $e) {
-                return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
-            }
-        }
+             $created_by = Auth::guard('recruiter')->user()->id;
+             // Validate the form data
+ 
+             $active = $request->input('active');
+             
+             // $active = $activeRequest['active'];
+             $validatedData = [];
+             try {
+                 $validatedData = $request->validate([
+                     'job_type' => 'required|string',
+                     'job_name' => 'required|string',
+                     'job_city' => 'required|string',
+                     'job_state' => 'required|string',
+                     'weekly_pay' => 'required|numeric',
+                     'preferred_specialty' => 'required|string',
+                     'preferred_work_location' => 'nullable|string',
+                     'description' => 'nullable|string',
+                     'terms' => 'nullable|string',
+                     'start_date' => 'nullable|date',
+                     'hours_shift' => 'nullable|integer',
+                     'facility_shift_cancelation_policy' => 'nullable|string',
+                     'traveler_distance_from_facility' => 'nullable|string',
+                     'clinical_setting' => 'nullable|string',
+                     'Patient_ratio' => 'nullable|string',
+                     'Unit' => 'nullable|string',
+                     'scrub_color' => 'nullable|string',
+                     'rto' => 'nullable|string',
+                     'guaranteed_hours' => 'nullable|string',   
+                     'weeks_shift' => 'nullable|string',
+                     'referral_bonus' => 'nullable|string',
+                     'sign_on_bonus' => 'nullable|string',
+                     'completion_bonus' => 'nullable|numeric',
+                     'extension_bonus' => 'nullable|numeric',
+                     'other_bonus' => 'nullable|numeric',
+                     'actual_hourly_rate' => 'nullable|numeric',
+                     'overtime' => 'nullable|string',
+                     'holiday' => 'nullable|string',
+                     'orientation_rate' => 'nullable|string',
+                     'on_call' => 'nullable|string',
+                     'weekly_non_taxable_amount' => 'nullable|string',
+                     'proffesion' => 'nullable|string',
+                     'Emr' => 'nullable|string',
+                     'preferred_assignment_duration' => 'nullable|string',
+                     'block_scheduling'  => 'nullable|string',
+                     'contract_termination_policy' => 'nullable|string', 
+                     'call_back' => 'nullable|string',
+                 ]);
+ 
+                 $job = Job::find($request->job_id);
+                 
+                 if ($job === null) {
+                     return response()->json(['error' => "Job not found"], 404);
+                 }
+                 $job->job_type = $validatedData['job_type'];
+                 $job->type = $validatedData['job_type'];
+                 $job->job_name = $validatedData['job_name'];
+                 $job->job_city = $validatedData['job_city'];
+                 $job->job_state = $validatedData['job_state'];
+                 $job->weekly_pay = $validatedData['weekly_pay'];
+                 $job->preferred_specialty = $validatedData['preferred_specialty'];
+                 $job->description = $validatedData['description'];
+                 $job->start_date = $validatedData['start_date'];
+                 $job->hours_shift = $validatedData['hours_shift'];
+                 $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
+                 $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
+                 $job->clinical_setting = $validatedData['clinical_setting'];
+                 $job->Patient_ratio = $validatedData['Patient_ratio'];
+                 $job->Unit = $validatedData['Unit'];
+                 $job->scrub_color = $validatedData['scrub_color'];
+                 $job->rto = $validatedData['rto'];
+                 $job->guaranteed_hours = $validatedData['guaranteed_hours'];
+                 $job->weeks_shift = $validatedData['weeks_shift'];
+                 $job->referral_bonus = $validatedData['referral_bonus'];
+                 $job->sign_on_bonus = $validatedData['sign_on_bonus'];
+                 $job->completion_bonus = $validatedData['completion_bonus'];
+                 $job->extension_bonus = $validatedData['extension_bonus'];
+                 $job->other_bonus = $validatedData['other_bonus'];
+                 $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
+                 $job->overtime = $validatedData['overtime'];
+                 $job->holiday = $validatedData['holiday'];
+                 $job->orientation_rate = $validatedData['orientation_rate'];
+                 $job->on_call = $validatedData['on_call'];
+                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
+                 $job->proffesion = $validatedData['proffesion'];
+                 $job->specialty = $validatedData['preferred_specialty'];
+                 $job->recruiter_id = $created_by;
+                 $job->created_by = $created_by;
+                 $job->active = true;
+                 $job->is_open = true;
+                 $job->terms = $validatedData['terms'];
+                 $job->preferred_work_location = $validatedData['preferred_work_location'];
+                 $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
+                 $job->block_scheduling = $validatedData['block_scheduling'];
+                 $job->contract_termination_policy = $validatedData['contract_termination_policy'];
+                 $job->Emr = $validatedData['Emr'];
+                 $job->call_back = $validatedData['call_back'];
+                 $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
+                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
+                 $job->employer_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
+                 $job->total_employer_amount  =  ($job->preferred_assignment_duration * $job->employer_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus) ;
+                 $job->goodwork_weekly_amount  = ($job->employer_weekly_amount) * 0.05;
+                 $job->total_goodwork_amount  = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
+                 $job->total_contract_amount = $job->total_goodwork_amount  + $job->total_employer_amount ;
+                 
+                 // update the job data to the database
+                 $job->save();
+ 
+                 return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
+ 
+                 return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
+             
+                 //return response()->json($job);
+             } catch (\Exception $e) {
+                 return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+             }
+         }
 
         public function read_recruiter_message_notification(Request $request)
         {
