@@ -3153,3 +3153,8 @@ ul.ss-jb-dtlpop-chck li {
     font-weight: 500;
 }
 
+.ss-bell-sec{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
