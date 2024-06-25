@@ -53,7 +53,7 @@ Route::prefix('recruiter')->group(function () {
         */
 
         Route::post('get-application-listing', ['uses' => 'ApplicationController@getApplicationListing', 'as' => 'get-application-listing']);
-        
+
         // getApplicationListing in ApplicationController.php need to be (optimized / rebuild) it return large views and data
 
         /**
@@ -172,23 +172,27 @@ Route::prefix('recruiter')->group(function () {
         // new post route for account setting updating
         Route::post('update-recruiter-account-setting',['uses' => 'RecruiterDashboardController@update_recruiter_account_setting', 'as' => 'update-recruiter-account-setting']);
 
-        // sending support tickets 
+        // sending support tickets
         Route::post('send-support-ticket',['uses' => 'RecruiterDashboardController@send_support_ticket', 'as' => 'send_support_ticket']);
 
         // Send amount
 
         Route::post('send-amount-transfer',['uses' => 'RecruiterDashboardController@send_amount', 'as' => 'send_amount']);
 
-        //edit job 
+        //edit job
         Route::post('get-job-to-edit', ['uses' => 'RecruiterController@get_job_to_edit', 'as' => 'get_job_to_edit']);
 
         Route::post('edit-job', ['uses' => 'RecruiterController@edit_job', 'as' => 'edit_job']);
 
-        // reading message notification 
+        // reading message notification
         Route::post('read-recruiter-message-notification', ['uses' => 'RecruiterController@read_recruiter_message_notification', 'as' => 'read-recruiter-message-notification']);
 
         // reading job notification
         Route::post('read-recruiter-job-notification', ['uses' => 'RecruiterController@read_recruiter_job_notification', 'as' => 'read-recruiter-job-notification']);
+
+        // update-recruiter-profile-image
+
+        Route::post('update-recruiter-profile-image', ['uses' => 'RecruiterDashboardController@update_recruiter_profile_image', 'as' => 'update-recruiter-profile-image']);
 
     });
 });

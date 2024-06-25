@@ -25,7 +25,7 @@ class RecruiterDashboardController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    
+
 public function index()
 {
     $id = Auth::guard('recruiter')->user()->id;
@@ -432,6 +432,28 @@ public function index()
             }
 
             return response()->json(['status' => true, 'message' => 'working on it !', 'portal_link' => $portal_link]);
+        } catch (ValidationException $e) {
+            return response()->json(['status' => false, 'message' => $e->errors()]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function update_recruiter_profile_image(Request $request)
+    {
+        try {
+            $user = Auth::guard('recruiter')->user();
+
+
+            if ($request->hasFile('profile_pic')) {
+                $file = $request->file('profile_pic');
+                $filename = time() . $user->id . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads'), $filename);
+                $user->image = $filename;
+                $user->save();
+            }
+
+            return response()->json(['status' => true, 'message' => 'Profile image updated successfully']);
         } catch (ValidationException $e) {
             return response()->json(['status' => false, 'message' => $e->errors()]);
         } catch (\Exception $e) {
