@@ -45,36 +45,36 @@ class WorkerDashboardController extends Controller
 {
     use HelperTrait;
     /** dashboard page */
-    
+
     public function dashboard()
     {
         $data = [];
         $data['user'] = $user = auth()->guard('frontend')->user();
-    
+
         $user_id = Auth::guard('frontend')->user()->id;
         $id = Nurse::where('user_id', $user_id)->first()->id;
-    
+
         $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
         $statusCounts = array_fill_keys($statusList, 0);
-    
+
         $statusCountsQuery = Offer::whereIn('status', $statusList)
             ->select(\DB::raw('status, count(*) as count'))
             ->where('worker_user_id', $id)
             ->groupBy('status')
             ->get();
-    
+
         foreach ($statusCountsQuery as $statusCount) {
             $statusCounts[$statusCount->status] = $statusCount->count;
         }
-    
+
         $statusCounts = array_values($statusCounts);
 
-       
-       
-    
+
+
+
         return view('worker::dashboard.dashboard',compact('statusCounts','data'));
     }
-    
+
     /** verified users page */
     public function setting()
     {
@@ -166,7 +166,7 @@ class WorkerDashboardController extends Controller
 
                 $nurse_data = [];
 
-               
+
 
                 isset($request->specialty) ? ($nurse_data['specialty'] = $request->specialty) : '';
                 isset($request->profession) ? ($nurse_data['profession'] = $request->profession) : '';
@@ -308,9 +308,9 @@ class WorkerDashboardController extends Controller
         }
         $data['states'] = State::select('id', 'name')->get();
         $data['allKeywords'] = $allKeywords;
-        
+
         $progress = 0;
-       
+
         if (isset($nurse['specialty']) && isset($nurse['profession']) && isset($nurse['terms']) && isset($nurse['type']) && isset($nurse['block_scheduling']) && isset($nurse['float_requirement']) && isset($nurse['facility_shift_cancelation_policy']) && isset($nurse['contract_termination_policy']) && isset($nurse['distance_from_your_home']) && isset($nurse['clinical_setting_you_prefer']) && isset($nurse['worker_patient_ratio']) && isset($nurse['worker_emr']) && isset($nurse['worker_unit']) && isset($nurse['worker_scrub_color']) && isset($nurse['rto']) && isset($nurse['worker_shift_time_of_day']) && isset($nurse['worker_hours_per_week']) && isset($nurse['worker_hours_per_shift']) && isset($nurse['worker_weeks_assignment']) && isset($nurse['worker_shifts_week'])) {
             $progress += 1;
         }
@@ -325,9 +325,9 @@ class WorkerDashboardController extends Controller
 
         if ($response->json() !== null) {
             $progress += 1;
-           
+
         }
-        
+
         $nurse_data['account_tier'] = $progress;
         $nurse->update($nurse_data);
         $nurse = $nurse->fresh();
@@ -335,7 +335,7 @@ class WorkerDashboardController extends Controller
 
         $data['progress_percentage'] = $progress * 33 + 1;
         $data['type'] = $type;
-        
+
         return view('worker::dashboard.worker_profile', $data);
     }
 
@@ -381,7 +381,7 @@ class WorkerDashboardController extends Controller
             $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
             $data['start_date'] = new DateTime($data['start_date']);
             $data['start_date'] = $data['start_date']->format('Y-m-d');
-            
+
             $data['shifts'] = isset($request->shifts) ? explode('-', $request->shifts) : [];
 
             $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
@@ -390,7 +390,7 @@ class WorkerDashboardController extends Controller
             $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
             $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
             $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
-          
+
 
             $user = auth()->guard('frontend')->user();
 
@@ -399,7 +399,7 @@ class WorkerDashboardController extends Controller
                 ->select('job_id')
                 ->get();
 
-            
+
         $whereCond = [
             'active' => '1'
         ];
@@ -407,39 +407,39 @@ class WorkerDashboardController extends Controller
         $ret = Job::select('*')
             ->where($whereCond)
             ;
- 
+
 
             if ($data['profession']) {
-                
+
                 $ret->where('proffesion', '=', $data['profession']);
-                
+
             }
 
             if (count($data['terms'])) {
-               
+
                 $ret->whereIn('terms', $data['terms']);
             }
 
             // if (isset($request->start_date)) {
-               
+
             //     $ret->where('start_date', '>=', $data['start_date']);
             //     //$ret->where('end_date', '>=', $data['start_date']);
             // }
 
             if (isset($request->start_date)) {
-                
+
                 $ret->where('start_date', '<=', $data['start_date']);
-                
+
             }
 
             if ($data['shifts']) {
-                
+
                 $ret->whereIn('preferred_shift', $data['shifts']);
             }
 
 
             if (isset($request->weekly_pay_from)) {
-               
+
                 $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
             }
 
@@ -479,11 +479,11 @@ class WorkerDashboardController extends Controller
 
             $data['jobSaved'] = $jobSaved;
 
-           
+
             return view('worker::dashboard.explore', $data);
 
-           
-        
+
+
     }
 
     public function add_save_jobs(Request $request)
@@ -505,7 +505,7 @@ class WorkerDashboardController extends Controller
             ];
             if (empty($rec)) {
               JobSaved::create($input);
-		
+
                 $img = asset('frontend/img/bookmark.png');
                 $message = 'Job saved successfully.';
 
@@ -521,9 +521,9 @@ class WorkerDashboardController extends Controller
                 }
                 $rec->update($input);
             }
-	
+
             return new JsonResponse(['success' => true, 'msg' => $message, 'img' => $img], 200);
-        
+
 	}catch(\Exception $e){
 	return $e->getMessage();
 	}
@@ -611,7 +611,7 @@ class WorkerDashboardController extends Controller
 
         $time = now()->toDateTimeString();
         event(new NotificationJob('Apply',false,$time,$job->created_by,$user->id,$user->full_name,$request->jid,$job->job_name));
-       
+
         return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
     }
 
@@ -779,19 +779,19 @@ class WorkerDashboardController extends Controller
         }
     }
 
-    
+
     public function send_support_ticket(Request $request){
             try {
                 $validatedData = $request->validate([
                     'support_subject_issue' => 'required|max:500',
                     'support_subject' => 'required',
                 ]);
-            
+
                 $user = Auth::guard('frontend')->user();
                 $user_email =  $user->email;
                 $email_data = ['support_subject_issue'=>$request->support_subject_issue,'support_subject'=>$request->support_subject,'worker_email'=>$user_email ];
                 Mail::to('support@goodwork.com')->send(new support($email_data));
-            
+
                 return response()->json(['status' => true, 'message' => 'Support ticket sent successfully']);
             } catch (ValidationException $e) {
                 return response()->json(['status' => false, 'message' => $e->errors()]);
@@ -816,10 +816,10 @@ class WorkerDashboardController extends Controller
         }
     }
 
-    
-    // adding add stripe function 
 
-    
+    // adding add stripe function
+
+
 public function add_stripe_account(Request $request)
 {
     try {
@@ -832,25 +832,25 @@ public function add_stripe_account(Request $request)
             'userId' => $user_id,
             'email' => $user_email
         ];
-    
+
         // Define the URL<
         $url = 'http://localhost:' . config('app.file_api_port') . '/payments/create';
 
-        // return response()->json(['data'=>$data , 'url' => $url]);   
+        // return response()->json(['data'=>$data , 'url' => $url]);
 
         // Make the request
         $response = Http::post($url, $data);
 
     $stripeId = $response->json()['message'];
 
-    
+
     $user_data['stripeAccountId'] = $stripeId;
     // if(!isset($user_data)){
     //     return response()->json(['stripeidnot'=>$stripeId]);
     // }
 
     $user->update($user_data);
-        
+
 
     // Check the response
     if ($response->successful()) {
@@ -859,11 +859,11 @@ public function add_stripe_account(Request $request)
             'stripeId' => $user_data['stripeAccountId'],
             'userId' => $user_id
         ];
-        
+
 
         $get_account_link_response = Http::get($get_account_url, $data_account_url);
-        
-        
+
+
 
         return response()->json(['status'=>true,'account_link'=>$get_account_link_response->json()['message'] ]);
 
@@ -903,7 +903,7 @@ public function login_to_stripe_account(Request $request){
     $user = Auth::guard('frontend')->user();
 
     $stripeId = $user->stripeAccountId;
-    
+
     if (!$stripeId) {
         return response()->json(['status' => false, 'message' => 'Missing stripeId']);
     }
@@ -915,15 +915,15 @@ public function login_to_stripe_account(Request $request){
 
         if ($get_login_link_response->successful()) {
             return response()->json([
-                'status' => true, 
-                'message' => 'You have successfully created a Stripe account.', 
-              
+                'status' => true,
+                'message' => 'You have successfully created a Stripe account.',
+
                 'login_link' => $get_login_link_response->json()['message']
             ]);
         } else {
             return response()->json(['status' => false, 'message' => 'Error getting login link']);
         }
-    
+
 
 
 }
@@ -931,7 +931,7 @@ public function login_to_stripe_account(Request $request){
 
 public function store_counter_offer(Request $request)
 {
-    
+
     $user = auth()->guard('frontend')->user();
     $nurse = Nurse::where('user_id', $user->id)->first();
     $job_data = Job::where('id', $request->jobid)->first();
@@ -981,8 +981,8 @@ public function store_counter_offer(Request $request)
     $update_array['description'] = $job_data->description != $request->description ? $request->description : $job_data->description;
 
 
-    
-    
+
+
     $update_array['weekly_pay'] = $job_data->weekly_pay;
     $update_array['hours_per_week'] = $update_array['weeks_shift'] * $update_array['hours_shift'];
     $update_array['weekly_taxable_amount'] = $update_array['hours_per_week'] * $update_array['actual_hourly_rate'];
@@ -1004,26 +1004,26 @@ public function store_counter_offer(Request $request)
         ->first();
 
       // return response()->json(['offer'=>$offerexist]);
-      
+
       if ($offerexist) {
           $job = DB::table('offers')
               ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
               ->first();
-      
+
           if ($job) {
               DB::table('offers')
                   ->where('id', $job->id)
                   ->update($update_array);
-      
+
              // return response()->json(['offer'=>$job]);
-      
+
               $offers_log = OffersLogs::create([
                   'original_offer_id' => $job->id,
                   'status' => 'Counter',
                   'employer_recruiter_id' => $job->created_by,
                   'nurse_id' => $nurse->id,
                   'details' => 'more infos',
-              ]);    
+              ]);
           }
       }
       else {
@@ -1037,11 +1037,29 @@ public function store_counter_offer(Request $request)
             'counter_offer_by' => 'nurse'
 
 
-        ]); 
+        ]);
     }
     return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
 }
 
+public function update_worker_profile_picture(Request $request)
+{
+    try {
+        $user = Auth::guard('frontend')->user();
 
+        if ($request->hasFile('profile_pic')) {
+            $file = $request->file('profile_pic');
+            $filename = time() . $user->id . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $filename);
+            $user->image = $filename;
+            $user->save();
+        }
+        return response()->json(['status' => true, 'message' => 'Profile image updated successfully']);
+    } catch (ValidationException $e) {
+        return response()->json(['status' => false, 'message' => $e->errors()]);
+    } catch (\Exception $e) {
+        return response()->json(['status' => false, 'message' => $e->getMessage()]);
+    }
+}
 
 }

@@ -3,10 +3,10 @@
 @section('content')
     @php
         $user = auth()->guard('frontend')->user();
-       
+
     @endphp
     <!--Main layout-->
-    
+
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
         <div class="container">
             <div class="ss-my-profile--basic-mn-sec">
@@ -202,7 +202,7 @@
                                                 <input type="text" name="last_name"
                                                     placeholder="Please enter your last name"
                                                     value="{{ isset($user->last_name) ? $user->last_name : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-last_name"></span>
                                             {{-- Phone Number --}}
@@ -211,7 +211,7 @@
                                                 <input id="contact_number" type="text" name="mobile"
                                                     placeholder="Please enter your phone number"
                                                     value="{{ isset($user->mobile) ? $user->mobile : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-mobile"></span>
                                             {{-- Address Information --}}
@@ -220,7 +220,7 @@
                                                 <input type="text" name="address"
                                                     placeholder="Please enter your address"
                                                     value="{{ isset($worker->address) ? $worker->address : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-address"></span>
                                             {{-- State Information --}}
@@ -241,7 +241,7 @@
                                                 <label>City</label>
                                                 <select name="city" id="job_city">
                                                     <option value="{{ !empty($worker->city) ? $worker->city : '' }}">{{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }} </option>
-                                                    
+
                                                 </select>
                                             </div>
                                             <span class="help-block-city"></span>
@@ -252,7 +252,7 @@
                                                 <input type="number" name="zip_code"
                                                     placeholder="Please enter your Zip Code"
                                                     value="{{ isset($user->zip_code) ? $user->zip_code : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-zip_code"></span>
                                             {{-- Skip && Save --}}
@@ -288,7 +288,7 @@
                                                 <label>Specialty</label>
                                                 <select name="specialty" id="specialty">
                                                     <option value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">{{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }} </option>
-                                                    
+
                                                     @foreach ($specialities as $specialty)
                                                         <option value="{{ $specialty->full_name }}">
                                                             {{ $specialty->full_name }}
@@ -302,7 +302,7 @@
                                                 <label>Terms</label>
                                                 <select name="terms" id="term">
                                                     <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">{{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }} </option>
-                                                    
+
                                                     @if (isset($allKeywords['Terms']))
                                                         @foreach ($allKeywords['Terms'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -318,7 +318,7 @@
                                                 <label>Type</label>
                                                 <select name="type" id="type">
                                                     <option value="{{ !empty($worker->type) ? $worker->type : '' }}">{{ !empty($worker->type) ? $worker->type : 'Select Type' }} </option>
-                                                   
+
                                                     @if (isset($allKeywords['Type']))
                                                         @foreach ($allKeywords['Type'] as $value)
                                                             <option value="{{ $value->title }}">{{ $value->title }}
@@ -347,7 +347,7 @@
                                                 <select name="float_requirement" class="float_requirement mb-3"
                                                     id="float_requirement" value="">
                                                     <option value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">{{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }} </option>
-                                                    
+
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select>
@@ -361,7 +361,7 @@
                                                     class="facility_shift_cancelation_policy mb-3"
                                                     id="facility_shift_cancelation_policy" value="">
                                                     <option value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }} </option>
-                                                    
+
                                                     @if (isset($allKeywords['AssignmentDuration']))
                                                         @foreach ($allKeywords['AssignmentDuration'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -420,7 +420,7 @@
                                                 <label>EMR</label>
                                                 <select name="worker_emr" class="emr mb-3" id="emr">
                                                     <option value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">{{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }} </option>
-                                                    
+
                                                     @if (isset($allKeywords['EMR']))
                                                         @foreach ($allKeywords['EMR'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -755,10 +755,10 @@
                             <div class="form-outer">
                                 {{-- <form method="post">
                                     @csrf
-                                 
+
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
-                                            
+
                                             <div class="ss-form-group col-11">
                                                 <label>Subject</label>
                                                 <select name="support_subject" id="support_subject">
@@ -770,18 +770,18 @@
 
                                             </div>
                                             <span class="help-block-support_subject"></span>
-                                            
+
                                             <div class="ss-form-group col-11">
                                                 <label>Issue</label>
                                                 <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
                                             </div>
                                             <span class="help-block-support_subject_issue"></span>
-                                            
+
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveSupportTicket">
-                                                  
+
                                                     <span id="loading" class="d-none">
                                                         <span id="loadSpan" class="spinner-border spinner-border-sm"
                                                             role="status" aria-hidden="true"></span>
@@ -796,7 +796,7 @@
                                 <p style="
                                 margin-top: 20px;
                             ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
-                           
+
                             </div>
 
                         </div>
@@ -867,7 +867,7 @@
             $('#phone_number_payment').mask('+1 (999) 999-9999');
             $('#routing_number_payment').mask('999-999-999');
             $('#bank_account_payment_number').mask('9999-9999-9999');
-            // solution of the case that we got - when we type a caracter : 
+            // solution of the case that we got - when we type a caracter :
             // $('#bank_account_payment_number').on('input', function() {
             // var inputValue = $(this).val();
             // var numericValue = inputValue.replace(/[^0-9]/g, '');
@@ -962,11 +962,11 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '{{route("list-docs")}}', 
+                url: '{{route("list-docs")}}',
                 method: 'POST',
-                contentType: 'application/json', 
+                contentType: 'application/json',
                 data: JSON.stringify({
-                    WorkerId: worker_id 
+                    WorkerId: worker_id
                 }),
                 success: function(resp) {
                     var data;
@@ -979,7 +979,7 @@
                     }
 
                     var tbody = $('.table tbody');
-                    tbody.empty(); 
+                    tbody.empty();
                     data.forEach(function(file) {
                         var row = $('<tr>');
                         row.append($('<td>').text(file.name));
@@ -997,7 +997,7 @@
                                     bsonId: file.id
                                 }),
                                 success: function() {
-                        row.remove(); 
+                        row.remove();
                     },
                     error: function(resp) {
                         console.log('Error:', resp);
@@ -1086,7 +1086,7 @@
         // Document Management
         //const file = document.querySelector('input[type="file"]');
         const file = document.getElementById('document_file');
-        // bonus transfer 
+        // bonus transfer
         const full_name_payment = document.querySelector('input[name="full_name_payment"]');
         const address_payment = document.querySelector('input[name="address_payment"]');
         const email_payment = document.querySelector('input[name="email_payment"]');
@@ -1260,7 +1260,7 @@
         }
         // end validation document management
 
-        // validation bonus 
+        // validation bonus
 
         function validateBonusInfo() {
             let isValid = true;
@@ -1328,14 +1328,14 @@
                 isValid = false;
             }else{
                 $('.help-block-phone_number_payment').text('');
-            }   
+            }
 
             return isValid;
         }
 
         // end bonus validation
 
-        // validation 
+        // validation
 
         // function validateSupportForm() {
         //     let isValid = true;
@@ -1357,7 +1357,7 @@
 
         // end validation
 
-        // Save Basic Information 
+        // Save Basic Information
         const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
 
         SaveBaiscInformation.addEventListener("click", function(event) {
@@ -1381,15 +1381,15 @@
             formData.append('state', state.value);
             formData.append('zip_code', zip_code.value);
             formData.append('InfoType', "BasicInformation");
-            formData.append('profile_pic', $('#file')[0].files[0]); 
+            formData.append('profile_pic', $('#file')[0].files[0]);
 
 
             $.ajax({
                 url: '/worker/update-worker-profile',
                 type: 'POST',
                 data: formData,
-                contentType: false, 
-                cache: false, 
+                contentType: false,
+                cache: false,
                 processData:false,
                 success: function(resp) {
                     console.log(resp);
@@ -1405,7 +1405,7 @@
                     }, 2000);
 
                     }
-                  
+
                 },
                 error: function(resp) {
                     notie.alert({
@@ -1483,7 +1483,7 @@
         });
         // end Saving Professional Information
 
-        // Save Bonus Transfer 
+        // Save Bonus Transfer
         const SaveBonusInformation = document.getElementById("SaveBonusInformation");
         SaveBonusInformation.addEventListener("click", function(event) {
             event.preventDefault();
@@ -1620,7 +1620,7 @@
                         $('#disactivate_account').removeClass('d-none');
                         window.location.href = "/";
                     }
-                    
+
                 },
                 error: function(resp) {
                     console.log(resp);
@@ -1635,7 +1635,7 @@
 
         // end account disactivating
 
-        // creating a stripe account 
+        // creating a stripe account
 
         AddStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
@@ -1848,7 +1848,7 @@
         const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
-        // account setting validation here 
+        // account setting validation here
 
         function validateAccountSettingInformation() {
             $('.help-block-new_mobile').text('');
@@ -1905,7 +1905,7 @@
         // end account setting validation
 
 
-        // send request to update here 
+        // send request to update here
         const SaveAccountInformation = document.getElementById('SaveAccountInformation');
         SaveAccountInformation.addEventListener("click", function(event) {
             event.preventDefault();
@@ -2004,6 +2004,44 @@
         var loadFile = function (event) {
   var image = document.getElementById("output");
   image.src = URL.createObjectURL(event.target.files[0]);
+
+  // seding the image to server
+    var formData = new FormData();
+    formData.append('profile_pic', $('#file')[0].files[0]);
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/worker/update-worker-profile-picture',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData:false,
+        success: function(resp) {
+            console.log(resp);
+            if (resp.status) {
+                notie.alert({
+                    type: 'success',
+                    text: '<i class="fa fa-check"></i> Profile picture updated successfully.',
+                    time: 5
+                });
+
+                setTimeout(function() {
+                location.reload();
+            }, 2000);
+
+            }
+
+        },
+        error: function(resp) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i>' + resp.message,
+                time: 5
+            });
+        }
+    });
 };
     </script>
 

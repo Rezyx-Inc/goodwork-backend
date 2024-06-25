@@ -15,7 +15,7 @@ Route::prefix('worker')->group(function() {
     Route::get('/', 'WorkerController@index');
 
 
-   
+
 
     Route::middleware(['user_not_logged_in'])->group(function () {
         Route::get('/login', ['uses' => 'WorkerAuthController@get_login', 'as' => 'worker.login']);
@@ -31,7 +31,7 @@ Route::prefix('worker')->group(function() {
     Route::middleware(['user_logged_in'])->group(function () {
         Route::get('/logout', ['uses' => 'WorkerAuthController@logout', 'as' => 'worker.logout']);
         Route::get('/dashboard', ['uses' => 'WorkerDashboardController@dashboard', 'as' => 'worker.dashboard']);
-      
+
         //Route::get(' home', ['uses' => 'WorkerController@home', 'as' => 'home']);
         Route::get('messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker.messages']);
         Route::get('profile/{type}', ['uses' => 'WorkerDashboardController@my_profile', 'as' => 'profile']);
@@ -58,32 +58,32 @@ Route::prefix('worker')->group(function() {
 
         Route::post('/send-message', ['uses' => 'WorkerController@sendMessages', 'as' => 'send.message']);
         Route::get('/get-messages', ['uses' => 'WorkerController@getMessages', 'as' => 'GetMessages']);
-        
-        // still in use ??? 
+
+        // still in use ???
         Route::get('/get-rooms', ['uses' => 'WorkerController@get_rooms', 'as' => 'GetRooms']);
         Route::get('job/{id}/details', ['uses' => 'WorkerController@details', 'as' => 'worker_job-details']);
 
-        // accept offer 
+        // accept offer
         Route::post('accept-offer',['uses'=>'WorkerController@accept_offer', 'as'=>'accept-offer']);
 
-        // reject offer 
+        // reject offer
         Route::post('reject-offer',['uses'=>'WorkerController@reject_offer', 'as'=>'reject-offer']);
 
-        // counter offer 
+        // counter offer
 
         Route::post('post-counter-offer', ['uses' => 'WorkerDashboardController@store_counter_offer', 'as' => 'post-counter-offer']);
 
         // new post route for profile updating
         Route::post('update-worker-profile', ['uses' => 'WorkerDashboardController@update_worker_profile', 'as' => 'update-worker-profile']);
 
-        
+
         // new post route for account setting updating
         Route::post('update-worker-account-setting',['uses' => 'WorkerDashboardController@update_worker_account_setting', 'as' => 'update-worker-account-setting']);
 
-        // new post route for worker payment 
+        // new post route for worker payment
         Route::post('add-worker-payment',['uses' => 'WorkerDashboardController@add_worker_payment', 'as' => 'add_worker_payment']);
 
-        // sending support tickets 
+        // sending support tickets
         Route::post('send-support-ticket',['uses' => 'WorkerDashboardController@send_support_ticket', 'as' => 'send_support_ticket']);
 
         // disactivate account
@@ -92,10 +92,10 @@ Route::prefix('worker')->group(function() {
         // add stripe account
         Route::post('add-stripe-account',['uses'=>'WorkerDashboardController@add_stripe_account','as'=>'add_stripe_account']);
 
-        // check onboarding status 
+        // check onboarding status
         Route::post('check-onboarding-status',['uses'=>'WorkerDashboardController@check_onboarding_status','as'=>'check_onboarding_status']);
 
-        // redirecting to login 
+        // redirecting to login
 
         Route::post('login-to-stripe-account',['uses'=>'WorkerDashboardController@login_to_stripe_account','as'=>'login_to_stripe_account']);
 
@@ -105,10 +105,10 @@ Route::prefix('worker')->group(function() {
         // apply on job
         Route::post('apply-on-job', ['uses' => 'WorkerDashboardController@apply_on_jobs', 'as' => 'apply-on-job']);
 
-        // reading message notification 
+        // reading message notification
         Route::post('read-message-notification', ['uses' => 'WorkerController@read_message_notification', 'as' => 'read-message-notification']);
 
-        // add doc 
+        // add doc
          Route::post('add-docs', ['uses' => 'WorkerController@addDocuments', 'as' => 'add-docs']);
 
         // delete doc
@@ -116,6 +116,9 @@ Route::prefix('worker')->group(function() {
 
         // list docs
         Route::post('list-docs', ['uses' => 'WorkerController@listDocs', 'as' => 'list-docs']);
+
+        // update worker profile picture
+        Route::post('update-worker-profile-picture', ['uses' => 'WorkerDashboardController@update_worker_profile_picture', 'as' => 'update-worker-profile-picture']);
 
     }
 
