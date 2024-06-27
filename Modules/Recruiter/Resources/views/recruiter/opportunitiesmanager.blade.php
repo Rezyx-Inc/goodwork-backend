@@ -1252,7 +1252,7 @@
                                                         ( The above fields are not required )
                                                     </span>
                                                     <div class="field btns col-12 d-flex justify-content-center">
-                                                        <button class="saveDrftBtn">Save as draft</button>
+                                                        <button class="saveDrftBtnDraft">Save as draft</button>
                                                         <button class="prev-3Draft prev">Previous</button>
                                                         <button class="submitDraft">Submit</button>
                                                     </div>
@@ -1778,7 +1778,7 @@
 
 
                                                     <div class="field btns col-12 d-flex justify-content-center">
-                                                        <button class="saveDrftBtn">Save as draft</button>
+                                                        <button class="saveDrftBtnEdit">Save as draft</button>
                                                         <button class="prev-3Edit prev">Previous</button>
                                                         <button class="submitEdit">Submit</button>
                                                     </div>
@@ -2919,6 +2919,7 @@
 
 
     function editDataJob(element) {
+        console.log(element.id)
 
         var activeDocs = document.getElementsByClassName('col-12 ss-job-prfle-sec active')
         if(activeDocs.length > 0){
@@ -2928,7 +2929,7 @@
         }
 
         const jobId = element.id;
-        console.log(drafts[jobId.job_name])
+        console.log(draftJobs[jobId].job_name)
         element.classList.add("active");
 
         let job_name = draftJobs[jobId].job_name;
@@ -2977,6 +2978,8 @@
 
     if (job_name !== null) {
         document.getElementById("job_nameDraft").value = job_name;
+    }else{
+        document.getElementById("job_nameDraft").value = '';
     }
     if (job_type !== null) {
         var jobtype = job_type;
@@ -2987,6 +2990,8 @@
 
                         select.add(option);
                         select.value = jobtype;
+    }else{
+        document.getElementById("job_typeDraft").value = '';
     }
     if (preferred_specialty !== null) {
         var preferredSpecialty = preferred_specialty;
@@ -2997,9 +3002,13 @@
 
                         select.add(option);
                         select.value = preferredSpecialty;
+    }else{
+        document.getElementById("preferred_specialtyDraft").value = '';
     }
     if (job_state !== null) {
         document.getElementById("job_stateDraft").value = job_state;
+    }else{
+        document.getElementById("job_stateDraft").value = '';
     }
     if (job_city !== null) {
         var city = job_city;
@@ -3011,18 +3020,28 @@
     select.add(option);
     select.value = city;
 
+    }else{
+        document.getElementById("job_cityDraft").value = '';
     }
     if (preferred_work_location !== null) {
         document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+    }else{
+        document.getElementById("preferred_work_locationDraft").value = '';
     }
     if (preferred_assignment_duration !== null) {
         document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+    }else   {
+        document.getElementById("preferred_assignment_durationDraft").value = '';
     }
     if (weekly_pay !== null) {
         document.getElementById("weekly_payDraft").value = weekly_pay;
+    }else{
+        document.getElementById("weekly_payDraft").value = '';
     }
     if (description !== null) {
         document.getElementById("descriptionDraft").value = description;
+    }else{
+        document.getElementById("descriptionDraft").value = '';
     }
     if (proffesion !== null) {
         var proffesionValue = proffesion;
@@ -3034,6 +3053,8 @@
     select.add(option);
     select.value = proffesionValue;
         //document.getElementById("perferred_professionDraft").value = proffesion;
+    }else{
+        document.getElementById("perferred_professionDraft").value = '';
     }
     if (facility_shift_cancelation_policy !== null) {
         var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
@@ -3045,9 +3066,13 @@
     select.value = facilityShiftCancelationPolicy;
 
     //    document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+    }else{
+        document.getElementById("facility_shift_cancelation_policyDraft").value = '';
     }
     if (traveler_distance_from_facility !== null) {
         document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
+    }else{
+        document.getElementById("traveler_distance_from_facilityDraft").value = '';
     }
     if (clinical_setting !== null) {
         var ClinicalSettingValue = clinical_setting;
@@ -3059,58 +3084,94 @@
     select.add(option);
     select.value = ClinicalSettingValue;
        // document.getElementById("clinical_settingDraft").value = clinical_setting;
+    }else{
+        document.getElementById("clinical_settingDraft").value = '';
     }
     if (Patient_ratio !== null) {
         document.getElementById("Patient_ratioDraft").value = Patient_ratio;
+    }else{
+        document.getElementById("Patient_ratioDraft").value = '';
     }
     if (Unit !== null) {
         document.getElementById("UnitDraft").value = Unit;
+    }else{
+        document.getElementById("UnitDraft").value = '';
     }
     if (scrub_color !== null) {
         document.getElementById("scrub_colorDraft").value = scrub_color;
+    }else{
+        document.getElementById("scrub_colorDraft").value = '';
     }
     if (rto !== null) {
         document.getElementById("rtoDraft").value = rto;
+    }else{
+        document.getElementById("rtoDraft").value = '';
     }
     if (guaranteed_hours !== null) {
         document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
+    }else{
+        document.getElementById("guaranteed_hoursDraft").value = '';
     }
     if (hours_shift !== null) {
         document.getElementById("hours_shiftDraft").value = hours_shift;
+    }else{
+        document.getElementById("hours_shiftDraft").value = '';
     }
     if (weeks_shift !== null) {
         document.getElementById("weeks_shiftDraft").value = weeks_shift;
+    }else{
+        document.getElementById("weeks_shiftDraft").value = '';
     }
     if (referral_bonus !== null) {
         document.getElementById("referral_bonusDraft").value = referral_bonus;
+    }else{
+        document.getElementById("referral_bonusDraft").value = '';
     }
     if (sign_on_bonus !== null) {
         document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
+    }else{
+        document.getElementById("sign_on_bonusDraft").value = '';
     }
     if (completion_bonus !== null) {
         document.getElementById("completion_bonusDraft").value = completion_bonus;
+    }else{
+        document.getElementById("completion_bonusDraft").value = '';
     }
     if (extension_bonus !== null) {
         document.getElementById("extension_bonusDraft").value = extension_bonus;
+    }else{
+        document.getElementById("extension_bonusDraft").value = '';
     }
     if (other_bonus !== null) {
         document.getElementById("other_bonusDraft").value = other_bonus;
+    }else  {
+        document.getElementById("other_bonusDraft").value = '';
     }
     if (actual_hourly_rate !== null) {
         document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
+    }else {
+        document.getElementById("actual_hourly_rateDraft").value = '';
     }
     if (overtime !== null) {
         document.getElementById("overtimeDraft").value = overtime;
+    } else {
+        document.getElementById("overtimeDraft").value = '';
     }
     if (on_call !== null) {
         document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
 
+    }else {
+        document.getElementById("on_callDraft").value = '';
     }
     if (holiday !== null) {
         document.getElementById("holidayDraft").value = holiday;
+    }else {
+        document.getElementById("holidayDraft").value = '';
     }
     if (orientation_rate !== null) {
         document.getElementById("orientation_rateDraft").value = orientation_rate;
+    }else {
+        document.getElementById("orientation_rateDraft").value = '';
     }
     if (terms !== null) {
         var Terms = terms;
@@ -3122,17 +3183,25 @@
     select.add(option);
     select.value = Terms;
        // document.getElementById("termsDraft").value = terms;
+    }else {
+        document.getElementById("termsDraft").value = '';
     }
     if (block_scheduling !== null) {
         document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
 
+    }else {
+        document.getElementById("block_schedulingDraft").value = '';
     }
     if (float_requirement !== null) {
         document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
 
+    }else {
+        document.getElementById("float_requirementDraft").value = '';
     }
     if (contract_termination_policy !== null) {
         document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
+    }else {
+        document.getElementById("contract_termination_policyDraft").value = '';
     }
     if (Emr !== null) {
 
@@ -3148,36 +3217,55 @@
 
 
 
+    }else {
+        document.getElementById("emrDraft").value = '';
     }
     if (four_zero_one_k !== null) {
         document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
 
+    }else {
+        document.getElementById("four_zero_one_kDraft").value = '';
     }
     if (health_insaurance !== null) {
         document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
 
+    }else {
+        document.getElementById("health_insauranceDraft").value = '';
     }
     if (dental !== null) {
         document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
 
+    }else {
+        document.getElementById("dentalDraft").value = '';
     }
     if (vision !== null) {
         document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
 
+    }else {
+        document.getElementById("visionDraft").value = '';
     }
     if (call_back !== null) {
         document.getElementById("call_backDraft").value = call_back;
+    }else {
+        document.getElementById("call_backDraft").value = '';
     }
     if (weekly_non_taxable_amount !== null) {
         document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
+    }else {
+        document.getElementById("weekly_non_taxable_amountDraft").value = '';
     }
     if (start_date !== null) {
         document.getElementById("start_dateDraft").value = start_date;
+    }else {
+        document.getElementById("start_dateDraft").value = '';
     }
     if (as_soon_as !== null) {
         document.getElementById("as_soon_asDraft").checked = as_soon_as;
+    }else {
+        document.getElementById("as_soon_asDraft").checked = '';
     }
     }
+
 
 
     const slidePage = document.querySelector(".slide-page");
@@ -3773,7 +3861,8 @@
     const nextBtnThirdDraft = document.querySelector(".next-2Draft");
     const prevBtnFourthDraft = document.querySelector(".prev-3Draft");
     const submitBtnDraft = document.querySelector(".submitDraft");
-    const saveDrftBtnDraft = document.querySelector(".saveDrftBtnDraft");
+    const saveDrftBtnDraft = document.querySelectorAll(".saveDrftBtnDraft");
+    console.log(saveDrftBtnDraft);
     const progressTextDraft = document.querySelectorAll(".step p");
     const progressCheckDarft = document.querySelectorAll(".step .check");
     const bulletDraft = document.querySelectorAll(".step .bullet");
@@ -4305,18 +4394,22 @@
         }
     });
 
+    saveDrftBtnDraft.forEach(function(saveDrftBtnDraft) {
     saveDrftBtnDraft.addEventListener("click", function(event) {
+        event.preventDefault();
         document.getElementById("activeDraft").value = false;
         document.getElementById("is_openDraft").value = false;
         var jobName = document.getElementById("job_nameDraft").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
             $('.help-block-job_name').addClass('text-danger');
-            event.preventDefault();
+           
         } else {
             $('.help-block-job_name').text('');
+            event.target.form.submit();
         }
     });
+});
 
 
     prevBtnSecDraft.addEventListener("click", function(event) {
@@ -4355,7 +4448,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     const nextBtnThirdEdit = document.querySelector(".next-2Edit");
     const prevBtnFourthEdit = document.querySelector(".prev-3Edit");
     const submitBtnEdit = document.querySelector(".submitEdit");
-    const saveDrftBtnEdit = document.querySelector(".saveDrftBtnEdit");
+    const saveDrftBtnEdit = document.querySelectorAll(".saveDrftBtnEdit");
     const progressTextEdit = document.querySelectorAll(".step p");
     const progressCheckEdit = document.querySelectorAll(".step .check");
     const bulletEdit = document.querySelectorAll(".step .bullet");
@@ -4868,17 +4961,21 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         }
     });
 
+
+    saveDrftBtnEdit.forEach(function(saveDrftBtnEdit) {
     saveDrftBtnEdit.addEventListener("click", function(event) {
+        event.preventDefault();
         document.getElementById("activeEdit").value = true;
         document.getElementById("is_openEdit").value = true;
         var jobName = document.getElementById("job_nameEdit").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
             $('.help-block-job_name').addClass('text-danger');
-            event.preventDefault();
         } else {
             $('.help-block-job_name').text('');
+            event.target.form.submit();
         }
+    });
     });
 
 
