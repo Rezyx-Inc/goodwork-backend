@@ -803,7 +803,7 @@ class OpportunitiesController extends Controller
                     </li>
                    ';
             $data2 .=
-                ' <div class="col-md-12">
+                ' <div style="display:flex;"  class="col-md-12">
             <span class="mt-3">Profession</span>
          </div>
             <div class="row ' .
@@ -824,7 +824,7 @@ class OpportunitiesController extends Controller
                 </div>';
 
             $data2 .=
-                ' <div class="col-md-12">
+                ' <div style="display:flex;"  class="col-md-12">
             <span class="mt-3">Specialty</span>
          </div>
             <div class="row ' .
@@ -845,7 +845,7 @@ class OpportunitiesController extends Controller
                 </div>';
             $data2 .=
                 '
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Block scheduling</span>
                         </div>
                         <div class="row ' .
@@ -864,7 +864,7 @@ class OpportunitiesController extends Controller
                 '</p>
                 </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Float requirements</span>
                         </div>
                         <div class="row ' .
@@ -883,7 +883,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Facility Shift Cancellation Policy</span>
                         </div>
                         <div class="row ' .
@@ -902,7 +902,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Contract Termination Policy</span>
                         </div>
                         <div class="row ' .
@@ -921,7 +921,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Traveler Distance From Facility</span>
                         </div>
                         <div class="row ' .
@@ -940,7 +940,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Facility</span>
                         </div>
                         <div class="row ' .
@@ -959,7 +959,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Clinical Setting</span>
                         </div>
                         <div class="row ' .
@@ -978,7 +978,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Patient ratio</span>
                         </div>
                         <div class="row ' .
@@ -996,8 +996,169 @@ class OpportunitiesController extends Controller
                 ($nursedetails->worker_patient_ratio ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_patient_ratio\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                 '</p>
                         </div>
+                        </div> 
+                         <div style="display:flex;"  class="col-md-12">
+                        <span class="mt-3">Professional Licensure</span>
+                    </div>
+                    <div class="row ' . 
+                ($jobdetails->job_location === $nursedetails->nursing_license_state ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
+                    <div class="col-md-5">
+                        <h6>' . ($jobdetails['job_location'] ?? '----') . '</h6>
+                    </div>
+                    
+                    <div class="col-md-5' . ($jobdetails['job_location'] ? '' : 'd-none' ) . '">
+                        <p>' . ($nursedetails['nursing_license_state'] ?? '<u  style="cursor: pointer;" onclick="askWorker(this, \'nursing_license_state\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                    </div>
+                    </div>
+
+                        <div style="display:flex;"  class="col-md-12">
+                        <span class="mt-3">Vaccinations & Immunizations</span>
+                    </div>';
+                    if(isset($jobdetails['vaccinations'])){
+                        foreach (explode(",", $jobdetails['vaccinations']) as $key => $value) {
+                            if(isset($value)){
+                                $data2 .= '
+                                <div class="col-md-5 ">
+                                    <h6>' . $value . ' Required</h6>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'vaccinations\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                </div>
+                                ';
+                            }
+                        }
+                    }
+                    $data2 .= '<div style="display:flex;"  class="col-md-12">
+                        <span class="mt-3">References</span>
+                    </div>';
+                    if(isset($jobdetails['number_of_references'])){
+                        foreach (explode(",", $jobdetails['number_of_references']) as $key => $value) {
+                            if(isset($value)){
+                                $data2 .= '
+                                <div class="col-md-5 ">
+                                    <h6>' . $value . ' references</h6>
+                                    <h6>' . $jobdetails['recency_of_reference'] . ' months of recency</h6>
+                                    <h6>' . $jobdetails['min_title_of_reference'] . '</h6>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'number_of_references\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                </div>
+                                ';
+                            }
+                        }
+                    }
+                    $data2 .= '
+                    <div style="display:flex;"  class="col-md-12">
+                        <span class="mt-3">Certifications</span>
+                    </div>';
+                    if(isset($jobdetails['certificate'])){
+                        foreach (explode(",", $jobdetails['certificate']) as $key => $value) {
+                            if(isset($value)){
+                                $data2 .= '
+                                <div class="col-md-5 ">
+                                    <h6>' . $value . ' Required</h6>
+                                </div>
+                                <div class="col-md-5 ">
+                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'certificate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                </div>
+                                ';
+                            }
+                        }
+                    }
+                    $data2 .= '
+                        <div style="display:flex;"  class="col-md-12">
+                            <span class="mt-3">Skills checklist</span>
                         </div>
-                        <div class="col-md-12">
+                        <div class="row ' .
+                    ($jobdetails['skills'] === $nursedetails['skills'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
+                        <div class="col-md-5">
+                            <h6>' . ($jobdetails['skills'] ?? '----') . '</h6>
+                        </div>
+                        <div class="col-md-5 ' . ($jobdetails['skills'] ? '' : 'd-none' ) . '">
+                            <p>' . ($nursedetails['skills'] ?? '<u onclick="askWorker(this, \'skills\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        </div>
+                        </div>
+
+                         
+
+                        <div style="display:flex;"  class="col-md-12">
+                            <span class="mt-3">Urgency</span>
+                        </div>
+                        <div class="row ' .
+                    ($jobdetails['urgency'] === $nursedetails['worker_urgency'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
+
+                        <div class="col-md-5">
+                            <h6>' . ($jobdetails['urgency'] ?? '----') . '</h6>
+                        </div>
+                        <div class="col-md-5 ' . ($jobdetails['urgency'] ? '' : 'd-none' ) . '">
+                            <p>' . ($nursedetails['worker_urgency'] ?? '<u onclick="askWorker(this, \'urgency\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        </div>
+                        </div>
+
+                        
+
+                        <div style="display:flex;"  class="col-md-12">
+                            <span class="mt-3">Eligible to work in the US</span>
+                        </div>
+                        <div class="row ' .
+                    ($jobdetails['eligible_work_in_us'] === $nursedetails['eligible_work_in_us'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
+                        <div class="col-md-5">
+                            <h6>' . ($jobdetails['eligible_work_in_us'] == '1' ? 'Yes' : ($jobdetails['eligible_work_in_us'] == '0' ? 'No' : '----')) . '</h6>
+                        </div>
+                        <div class="col-md-5 ' . (isset($jobdetails['eligible_work_in_us']) ? '' : 'd-none' ) . '">
+                            <p>' . ($nursedetails['eligible_work_in_us'] == '1' ? 'Yes' : ($nursedetails['eligible_work_in_us'] == '0' ? 'No' : '<u onclick="askWorker(this, \'eligible_work_in_us\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') ) . '</p>
+                        </div>
+                        </div>
+
+                         <div style="display:flex;"  class="col-md-12">
+                            <span class="mt-3">Facility`s Parent System</span>
+                        </div>
+                        
+                        <div class="row ' .
+                    ($jobdetails['facilitys_parent_system'] === $nursedetails['worker_facility_parent_system'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .       
+                    ' d-flex align-items-center" style="margin:auto;">
+                        <div class="col-md-5">
+                            <h6>' . ($jobdetails['facilitys_parent_system'] ?? '----') . '</h6>
+                        </div>
+                        <div class="col-md-5 ' . ($jobdetails['facilitys_parent_system'] ? '' : 'd-none' ) . '">
+                            <p>' . ($nursedetails['worker_facility_parent_system'] ?? '<u onclick="askWorker(this, \'worker_facility_parent_system\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        </div>
+                      </div>
+                      
+                        <div style="display:flex;"  class="col-md-12">
+                                <span class="mt-3">Facility State</span>
+                            </div>
+                            <div class="row ' .
+                    ($jobdetails['facility_state'] === $nursedetails['state'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
+                                <div class="col-md-5">
+                                    <h6>' . ($jobdetails['facility_state'] ?? '----') . '</h6>
+                                </div>
+                                <div class="col-md-5 ' . ($jobdetails['facility_state'] ? '' : 'd-none' ) . '">
+                                    <p>' . ($nursedetails['state'] ?? '<u onclick="askWorker(this, \'facility_state\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                                </div>
+                            </div>
+                            <div style="display:flex;"  class="col-md-12">
+                                <span class="mt-3">Facility City</span>
+                            </div>
+                            <div class="row ' .
+                    ($jobdetails['facility_city'] === $nursedetails['city'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                    ' d-flex align-items-center" style="margin:auto;">
+                                <div class="col-md-5">
+                                    <h6>' . ($jobdetails['facility_city'] ?? '----') . '</h6>
+                                </div>
+                                <div class="col-md-5 ' . ($jobdetails['facility_city'] ? '' : 'd-none' ) . '">
+                                    <p>' . ($nursedetails['city'] ?? '<u onclick="askWorker(this, \'facility_city\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                                </div>
+                            </div>
+                           
+
+
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">EMR</span>
                         </div>
                         <div class="row ' .
@@ -1016,7 +1177,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Unit</span>
                         </div>
                         <div class="row ' .
@@ -1035,7 +1196,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Scrub Color</span>
                         </div>
                         <div class="row ' .
@@ -1054,23 +1215,8 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
-                            <span class="mt-3">Interview Dates</span>
-                        </div>
-
-                        <div class="col-md-5">
-                            <h6>' .
-                $nursedetails->worker_interview_dates .
-                '</h6>
-                        </div>
-                        <div class="col-md-5 ' .
-                ($jobdetails->worker_interview_dates ? '' : 'd-none') .
-                '">
-                            <p>' .
-                ($nursedetails->worker_interview_dates ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_interview_dates\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
-                '</p>
-                        </div>
-                        <div class="col-md-12">
+                        
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Start Date</span>
                         </div>
                         <div class="row ' .
@@ -1089,7 +1235,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">RTO</span>
                         </div>
                         <div class="row ' .
@@ -1108,7 +1254,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Shift Time of Day</span>
                         </div>
                         <div class="row ' .
@@ -1127,7 +1273,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Hours/Week</span>
                         </div>
                         <div class="row ' .
@@ -1146,7 +1292,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Guaranteed Hours</span>
                         </div>
                         <div class="row ' .
@@ -1165,7 +1311,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Hours/Shift</span>
                         </div>
                         <div class="row ' .
@@ -1184,7 +1330,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Weeks/Assignment</span>
                         </div>
                         <div class="row ' .
@@ -1203,7 +1349,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Shifts/Week</span>
                         </div>
                         <div class="row ' .
@@ -1222,7 +1368,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Referral Bonus</span>
                         </div>
                         <div class="row ' .
@@ -1241,7 +1387,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Sign-On Bonus</span>
                         </div>
                         <div class="row ' .
@@ -1260,7 +1406,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Completion Bonus</span>
                         </div>
                         <div class="row ' .
@@ -1279,7 +1425,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Extension Bonus</span>
                         </div>
                         <div class="row ' .
@@ -1298,7 +1444,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Other Bonus</span>
                         </div>
                         <div class="row ' .
@@ -1317,7 +1463,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">401K</span>
                         </div>
                         <div class="row ' .
@@ -1336,7 +1482,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Health Insurance</span>
                         </div>
                         <div class="row ' .
@@ -1355,7 +1501,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Dental</span>
                         </div>
                         <div class="row ' .
@@ -1374,7 +1520,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Vision</span>
                         </div>
                         <div class="row ' .
@@ -1393,7 +1539,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Actual Hourly rate</span>
                         </div>
                         <div class="row ' .
@@ -1412,7 +1558,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Overtime</span>
                         </div>
                         <div class="row ' .
@@ -1431,7 +1577,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Holiday</span>
                         </div>
                         <div class="row ' .
@@ -1450,7 +1596,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">On Call</span>
                         </div>
                         <div class="row ' .
@@ -1469,7 +1615,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Call Back</span>
                         </div>
                         <div class="row ' .
@@ -1488,7 +1634,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Orientation Rate</span>
                         </div>
                         <div class="row ' .
@@ -1507,7 +1653,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Est. Weekly Taxable amount</span>
                         </div>
                         <div class="row ' .
@@ -1526,7 +1672,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Est. Employer Weekly Amount</span>
                         </div>
                         <div class="row ' .
@@ -1545,7 +1691,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Est. Weekly non-taxable amount</span>
                         </div>
                         <div class="row ' .
@@ -1564,15 +1710,15 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Est. Goodwork Weekly Amount</span>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-12">
                             <h6>' .
                 ($jobdetails->weekly_taxable_amount ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;" class="col-md-12">
                             <span class="mt-3">Est. Total Employer Amount</span>
                         </div>
                         <div class="col-md-12">
@@ -1580,7 +1726,7 @@ class OpportunitiesController extends Controller
                 ($jobdetails->total_employer_amount ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;" class="col-md-12">
                             <span class="mt-3">Est. Total Goodwork Amount</span>
                         </div>
                         <div class="col-md-12">
@@ -1588,7 +1734,7 @@ class OpportunitiesController extends Controller
                 ($jobdetails->total_goodwork_amount ?? '----') .
                 '</h6>
                         </div>
-                        <div class="col-md-12">
+                        <div style="display:flex;" class="col-md-12">
                             <span class="mt-3">Est. Total Contract Amount</span>
                         </div>
                         <div class="col-md-12">
@@ -1759,9 +1905,9 @@ class OpportunitiesController extends Controller
                     <div class="ss-jb-apply-on-disc-txt col-md-12 mt-4 mb-3">
                         <h5>Description</h5>
                         <p class="mb-3">' .
-                ($userdetails->description ?? '----') .
+                ($jobdetails->description ?? '----') .
                 '</p>
-                    </div>
+                    </div>    
                 ';
 
             $data2 .=
@@ -1829,9 +1975,9 @@ class OpportunitiesController extends Controller
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-12">
                     <p class="mt-3">Recency of reference</p>
-                    <p class="mb-3">' .
+                    <h6>' .
                 ($jobdetails->recency_of_reference ?? '----') .
-                '</p>
+                '</h6>
                 </div>';
             if (isset($jobdetails->certificate)) {
                 foreach (explode(',', $jobdetails->certificate) as $key => $value) {
@@ -1856,46 +2002,29 @@ class OpportunitiesController extends Controller
                 ($jobdetails->skills ?? '----') .
                 '</h6>
                     </div>
+
+                    
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">ACLS</p>
-                        <h6>Required</h6>
+                        <p class="mt-3">Eligible to work in the US</p>
+                        
+                        <h6>' . ($jobdetails->eligible_work_in_us == '1' ? 'Yes' : ($jobdetails->eligible_work_in_us == '0' ? 'No' : '----')) . '</h6>
+               
                     </div>
+
+
+                    
+
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">PALS</p>
-                        <h6>Required</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">CCRN</p>
-                        <h6>Required</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3"># of Positions Available</p>
+                        <p class="mt-3">Urgency</p>
                         <h6>' .
-                ($jobdetails->position_available ?? '----') .
+                ($jobdetails->urgency ?? '----') .
                 '</h6>
                     </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">MSP</p>
-                        <h6>' .
-                ($jobdetails->msp ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">VMS</p>
-                        <h6>' .
-                ($jobdetails->vms ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3"># of Submissions in VMS</p>
-                        <h6>' .
-                ($jobdetails->submission_of_vms ?? '----') .
-                '</h6>
-                    </div>
+                    
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Block scheduling</p>
-                        <h6>' .
-                ($jobdetails->block_scheduling ?? '----') .
+                         <h6>' .
+                ($jobdetails->block_scheduling == '1' ? 'Yes' : ($jobdetails->block_scheduling == '0' ? 'No' : '----')) .
                 '</h6>
                     </div>
 
@@ -1930,24 +2059,6 @@ class OpportunitiesController extends Controller
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Facility Average Rating</p>
-                        <h6>' .
-                ($jobdetails->facility_average_rating ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Recruiter Average Rating</p>
-                        <h6>' .
-                ($jobdetails->recruiter_average_rating ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Employer Average Rating</p>
-                        <h6>' .
-                ($jobdetails->employer_average_rating ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Clinical Setting</p>
                         <h6>' .
                 ($jobdetails->clinical_setting ?? '----') .
@@ -1972,24 +2083,6 @@ class OpportunitiesController extends Controller
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Department</p>
-                        <h6>' .
-                ($jobdetails->Department ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Bed Size</p>
-                        <h6>' .
-                ($jobdetails->Bed_Size ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Trauma Level</p>
-                        <h6>' .
-                ($jobdetails->Trauma_Level ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Scrub Color</p>
                         <h6>' .
                 ($jobdetails->scrub_color ?? '----') .
@@ -1998,13 +2091,13 @@ class OpportunitiesController extends Controller
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Facility City</p>
                         <h6>' .
-                ($jobdetails->job_city ?? '----') .
+                ($jobdetails->facility_city ?? '----') .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Facility State Code</p>
+                        <p class="mt-3">Facility State</p>
                         <h6>' .
-                ($jobdetails->job_state ?? '----') .
+                ($jobdetails->facility_state ?? '----') .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -2017,12 +2110,6 @@ class OpportunitiesController extends Controller
                         <p class="mt-3">RTO</p>
                         <h6>' .
                 ($jobdetails->rto ?? '----') .
-                '</h6>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Shift Time of Day</p>
-                        <h6>' .
-                ($jobdetails->preferred_shift ?? '----') .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -2087,26 +2174,26 @@ class OpportunitiesController extends Controller
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">401K</p>
-                        <h6>' .
-                ($jobdetails->four_zero_one_k ?? '----') .
+                       <h6>' .
+                ($jobdetails->four_zero_one_k == '1' ? 'Yes' : ($jobdetails->four_zero_one_k == '0' ? 'No' : '----')) .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Health Insurance</p>
-                        <h6>' .
-                ($jobdetails->health_insaurance ?? '----') .
+                         <h6>' .
+                ($jobdetails->health_insaurance == '1' ? 'Yes' : ($jobdetails->health_insaurance == '0' ? 'No' : '----')) .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Dental</p>
-                        <h6>' .
-                ($jobdetails->dental ?? '----') .
+                       <h6>' .
+                ($jobdetails->dental == '1' ? 'Yes' : ($jobdetails->dental == '0' ? 'No' : '----')) .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Vision</p>
                         <h6>' .
-                ($jobdetails->vision ?? '----') .
+                ($jobdetails->vision == '1' ? 'Yes' : ($jobdetails->vision == '0' ? 'No' : '----')) .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">

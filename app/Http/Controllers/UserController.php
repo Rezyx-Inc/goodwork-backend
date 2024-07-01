@@ -424,6 +424,7 @@ class UserController extends Controller
 
     public function certification_submit(Request $request)
     {
+        return $request->all();
         $user = auth()->guard('frontend')->user();
         $id = $user->nurse->id;
         $worker = NURSE::findOrFail($id);

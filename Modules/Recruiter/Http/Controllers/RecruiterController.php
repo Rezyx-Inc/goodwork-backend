@@ -498,6 +498,7 @@ class RecruiterController extends Controller
 
     public function addJobStore(Request $request)
     {
+        //return $request->all();
          // return $request->input('active');
         try {
 
@@ -548,7 +549,6 @@ class RecruiterController extends Controller
                     'extension_bonus' => 'nullable|string',
                     'other_bonus' => 'nullable|string',
                     'actual_hourly_rate' => 'nullable|string',
-                    
                     'overtime' => 'nullable|string',
                     'holiday' => 'nullable|string',
                     'orientation_rate' => 'nullable|string',
@@ -561,6 +561,24 @@ class RecruiterController extends Controller
                     'block_scheduling'  => 'nullable|string',
                     'contract_termination_policy' => 'nullable|string', 
                     'call_back' => 'nullable|string',
+                    'job_location' => 'nullable|string',
+                        'vaccinations' => 'nullable|string',
+                        'number_of_references' => 'nullable|integer',
+                        'min_title_of_reference' => 'nullable|string',
+                        'eligible_work_in_us' => 'nullable|boolean',
+                        'recency_of_reference' => 'nullable|integer',
+                        'certificate' => 'nullable|string',
+                        'skills' => 'nullable|string',
+                        'urgency' => 'nullable|string',
+                        'facilitys_parent_system' => 'nullable|string',
+                        'facility_name' => 'nullable|string',
+                        'facility_location' => 'nullable|string',
+                        'nurse_classification' => 'nullable|string',
+                        'pay_frequency' => 'nullable|string',
+                        'benefits' => 'nullable|string',
+                        'facility_city' => 'required|string',
+                        'facility_state' => 'required|string',
+                        'feels_like_per_hour' => 'nullable|string',
                 ]);
                 
                 $job = new Job();
@@ -697,6 +715,63 @@ class RecruiterController extends Controller
                     if (isset($validatedData['call_back'])) {
                         $job->call_back = $validatedData['call_back'];
                     }
+                    // added fields from sheets
+                    if (isset($validatedData['job_location'])) {
+                        $job->job_location = $validatedData['job_location'];
+                    }
+                    if (isset($validatedData['vaccinations'])) {
+                        $job->vaccinations = $validatedData['vaccinations'];
+                    }
+                    if (isset($validatedData['number_of_references'])) {
+                        $job->number_of_references = $validatedData['number_of_references'];
+                    }
+                    if (isset($validatedData['min_title_of_reference'])) {
+                        $job->min_title_of_reference = $validatedData['min_title_of_reference'];
+                    }
+                    if (isset($validatedData['eligible_work_in_us'])) {
+                        $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
+                    }
+                    if (isset($validatedData['recency_of_reference'])) {
+                        $job->recency_of_reference = $validatedData['recency_of_reference'];
+                    }
+                    if (isset($validatedData['certificate'])) {
+                        $job->certificate = $validatedData['certificate'];
+                    }
+                    if (isset($validatedData['skills'])) {
+                        $job->skills = $validatedData['skills'];
+                    }
+                    if (isset($validatedData['urgency'])) {
+                        $job->urgency = $validatedData['urgency'];
+                    }
+                    if (isset($validatedData['facilitys_parent_system'])) {
+                        $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
+                    }
+                    if (isset($validatedData['facility_name'])) {
+                        $job->facility_name = $validatedData['facility_name'];
+                    }
+                    if (isset($validatedData['facility_location'])) {
+                        $job->facility_location = $validatedData['facility_location'];
+                    }
+                    if (isset($validatedData['nurse_classification'])) {
+                        $job->nurse_classification = $validatedData['nurse_classification'];
+                    }
+                    if (isset($validatedData['pay_frequency'])) {
+                        $job->pay_frequency = $validatedData['pay_frequency'];
+                    }
+                    if (isset($validatedData['benefits'])) {
+                        $job->benefits = $validatedData['benefits'];
+                    }
+                    if (isset($validatedData['facility_city'])) {
+                        $job->facility_city = $validatedData['facility_city'];
+                    }
+                    if (isset($validatedData['facility_state'])) {
+                        $job->facility_state = $validatedData['facility_state'];
+                    }
+                    if(isset($validatedData['feels_like_per_hour'])){
+                        $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
+                    }
+                    // end added fields from sheets
+
 
                     //return $job;
                 
@@ -726,17 +801,8 @@ class RecruiterController extends Controller
                     'preferred_work_location' => 'nullable|string',
                     'description' => 'nullable|string',
                     'terms' => 'nullable|string',
-                    
-                    
-                    
-                    
-                    
-                   
-                    
                     'start_date' => 'nullable|date',
                     'hours_shift' => 'nullable|integer',
-                    
-                    
                     'facility_shift_cancelation_policy' => 'nullable|string',
                     'traveler_distance_from_facility' => 'nullable|string',
                     'clinical_setting' => 'nullable|string',
@@ -763,6 +829,24 @@ class RecruiterController extends Controller
                     'block_scheduling'  => 'nullable|string',
                     'contract_termination_policy' => 'nullable|string', 
                     'call_back' => 'nullable|string',
+                    'job_location' => 'nullable|string',
+                    'vaccinations' => 'nullable|string',
+                    'number_of_references' => 'nullable|integer',
+                    'min_title_of_reference' => 'nullable|string',
+                    'eligible_work_in_us' => 'nullable|boolean',
+                    'recency_of_reference' => 'nullable|integer',
+                    'certificate' => 'nullable|string',
+                    'skills' => 'nullable|string',
+                    'urgency' => 'nullable|string',
+                    'facilitys_parent_system' => 'nullable|string',
+                    'facility_name' => 'nullable|string',
+                    'facility_location' => 'nullable|string',
+                    'nurse_classification' => 'nullable|string',
+                    'pay_frequency' => 'nullable|string',
+                    'benefits' => 'nullable|string',
+                    'facility_city' => 'required|string',
+                    'facility_state' => 'required|string',
+                    'feels_like_per_hour' => 'nullable|string',
                 ]);
 
                 $job = new Job();
@@ -795,7 +879,6 @@ class RecruiterController extends Controller
                 $job->holiday = $validatedData['holiday'];
                 $job->orientation_rate = $validatedData['orientation_rate'];
                 $job->on_call = $validatedData['on_call'];
-                
                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                 $job->proffesion = $validatedData['proffesion'];
                 $job->specialty = $validatedData['preferred_specialty'];
@@ -810,6 +893,68 @@ class RecruiterController extends Controller
                 $job->contract_termination_policy = $validatedData['contract_termination_policy'];
                 $job->Emr = $validatedData['Emr'];
                 $job->call_back = $validatedData['call_back'];
+                
+                // added fields from sheets
+                if (isset($validatedData['job_location'])) {
+                    $job->job_location = $validatedData['job_location'];
+                }
+                if (isset($validatedData['vaccinations'])) {
+                    $job->vaccinations = $validatedData['vaccinations'];
+                }
+                if (isset($validatedData['number_of_references'])) {
+                    $job->number_of_references = $validatedData['number_of_references'];
+                }
+                if (isset($validatedData['min_title_of_reference'])) {
+                    $job->min_title_of_reference = $validatedData['min_title_of_reference'];
+                }
+                if (isset($validatedData['eligible_work_in_us'])) {
+                    $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
+                }
+                if (isset($validatedData['recency_of_reference'])) {
+                    $job->recency_of_reference = $validatedData['recency_of_reference'];
+                }
+                if (isset($validatedData['certificate'])) {
+                    $job->certificate = $validatedData['certificate'];
+                }
+                if (isset($validatedData['skills'])) {
+                    $job->skills = $validatedData['skills'];
+                }
+                if (isset($validatedData['urgency'])) {
+                    $job->urgency = $validatedData['urgency'];
+                }
+                if (isset($validatedData['facilitys_parent_system'])) {
+                    $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
+                }
+                if (isset($validatedData['facility_name'])) {
+                    $job->facility_name = $validatedData['facility_name'];
+                }
+                if (isset($validatedData['facility_location'])) {
+                    $job->facility_location = $validatedData['facility_location'];
+                }
+
+                if (isset($validatedData['nurse_classification'])) {
+                    $job->nurse_classification = $validatedData['nurse_classification'];
+                }
+                if (isset($validatedData['pay_frequency'])) {
+                    $job->pay_frequency = $validatedData['pay_frequency'];
+                }
+                if (isset($validatedData['benefits'])) {
+                    $job->benefits = $validatedData['benefits'];
+                }
+                if (isset($validatedData['facility_city'])) {
+                    $job->facility_city = $validatedData['facility_city'];
+                }
+                if (isset($validatedData['facility_state'])) {
+                    $job->facility_state = $validatedData['facility_state'];
+                }
+                if(isset($validatedData['feels_like_per_hour'])){
+                    $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
+                }
+                // end added fields from sheets
+
+                
+
+
                 
                 $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
@@ -954,6 +1099,7 @@ class RecruiterController extends Controller
 
     
         function get_job_to_edit(Request $request){
+            
             try {
                 $validated = $request->validate([
                     'id' => 'required',
@@ -973,7 +1119,7 @@ class RecruiterController extends Controller
         }
 
         function edit_job(Request $request){
-            
+            //return $request->all();
              $created_by = Auth::guard('recruiter')->user()->id;
              // Validate the form data
  
@@ -1020,6 +1166,25 @@ class RecruiterController extends Controller
                      'block_scheduling'  => 'nullable|string',
                      'contract_termination_policy' => 'nullable|string', 
                      'call_back' => 'nullable|string',
+                     'job_location' => 'nullable|string',
+                     'vaccinations' => 'nullable|string',
+                     'number_of_references' => 'nullable|integer',
+                     'min_title_of_reference' => 'nullable|string',
+                     'eligible_work_in_us' => 'nullable|boolean',
+                     'recency_of_reference' => 'nullable|integer',
+                     'certificate' => 'nullable|string',
+                     'skills' => 'nullable|string',
+                     'urgency' => 'nullable|string',
+                     'facilitys_parent_system' => 'nullable|string',
+                     'facility_name' => 'nullable|string',
+                     'facility_location' => 'nullable|string',
+                     'nurse_classification' => 'nullable|string',
+                     'pay_frequency' => 'nullable|string',
+                     'benefits' => 'nullable|string',
+                     'facility_city' => 'required|string',
+                     'facility_state' => 'required|string',
+                     'feels_like_per_hour' => 'nullable|string',
+                        
                  ]);
  
                  $job = Job::find($request->job_id);
@@ -1027,6 +1192,7 @@ class RecruiterController extends Controller
                  if ($job === null) {
                      return response()->json(['error' => "Job not found"], 404);
                  }
+                 
                  $job->job_type = $validatedData['job_type'];
                  $job->type = $validatedData['job_type'];
                  $job->job_name = $validatedData['job_name'];
@@ -1070,6 +1236,28 @@ class RecruiterController extends Controller
                  $job->contract_termination_policy = $validatedData['contract_termination_policy'];
                  $job->Emr = $validatedData['Emr'];
                  $job->call_back = $validatedData['call_back'];
+                // added field from sheets 
+                 $job->job_location = $validatedData['job_location'];
+                 $job->vaccinations = $validatedData['vaccinations'];
+                 $job->number_of_references = $validatedData['number_of_references'];
+                 $job->min_title_of_reference = $validatedData['min_title_of_reference'];
+                 $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
+                 $job->recency_of_reference = $validatedData['recency_of_reference'];
+                 $job->certificate = $validatedData['certificate'];
+                 $job->skills = $validatedData['skills'];
+                 $job->urgency = $validatedData['urgency'];
+                 $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
+                 $job->facility_name = $validatedData['facility_name'];
+                 $job->facility_location = $validatedData['facility_location'];
+                 $job->nurse_classification = $validatedData['nurse_classification'];
+                 $job->pay_frequency = $validatedData['pay_frequency'];
+                 $job->benefits = $validatedData['benefits'];
+                 $job->facility_city = $validatedData['facility_city'];
+                 $job->facility_state = $validatedData['facility_state'];
+                 $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
+                // end added field from sheets 
+
+
                  $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
                  $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
                  $job->employer_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;

@@ -185,7 +185,7 @@ class WorkerDashboardController extends Controller
                 isset($request->rto) ? ($nurse_data['rto'] = $request->rto) : '';
                 isset($request->shift_of_day) ? ($nurse_data['worker_shift_time_of_day'] = $request->shift_of_day) : '';
                 isset($request->hours_per_week) ? ($nurse_data['worker_hours_per_week'] = $request->hours_per_week) : '';
-                isset($request->hours_shift) ? ($nurse_data['worker_hours_per_shift'] = $request->hours_shift) : '';
+                isset($request->hours_shift) ? ($nurse_data['worker_hours_shift'] = $request->hours_shift) : '';
                 isset($request->preferred_assignment_duration) ? ($nurse_data['worker_weeks_assignment'] = $request->preferred_assignment_duration) : '';
                 isset($request->weeks_shift) ? ($nurse_data['worker_shifts_week'] = $request->weeks_shift) : '';
 
@@ -311,7 +311,7 @@ class WorkerDashboardController extends Controller
 
         $progress = 0;
 
-        if (isset($nurse['specialty']) && isset($nurse['profession']) && isset($nurse['terms']) && isset($nurse['type']) && isset($nurse['block_scheduling']) && isset($nurse['float_requirement']) && isset($nurse['facility_shift_cancelation_policy']) && isset($nurse['contract_termination_policy']) && isset($nurse['distance_from_your_home']) && isset($nurse['clinical_setting_you_prefer']) && isset($nurse['worker_patient_ratio']) && isset($nurse['worker_emr']) && isset($nurse['worker_unit']) && isset($nurse['worker_scrub_color']) && isset($nurse['rto']) && isset($nurse['worker_shift_time_of_day']) && isset($nurse['worker_hours_per_week']) && isset($nurse['worker_hours_per_shift']) && isset($nurse['worker_weeks_assignment']) && isset($nurse['worker_shifts_week'])) {
+        if (isset($nurse['specialty']) && isset($nurse['profession']) && isset($nurse['terms']) && isset($nurse['type']) && isset($nurse['block_scheduling']) && isset($nurse['float_requirement']) && isset($nurse['facility_shift_cancelation_policy']) && isset($nurse['contract_termination_policy']) && isset($nurse['distance_from_your_home']) && isset($nurse['clinical_setting_you_prefer']) && isset($nurse['worker_patient_ratio']) && isset($nurse['worker_emr']) && isset($nurse['worker_unit']) && isset($nurse['worker_scrub_color']) && isset($nurse['rto']) && isset($nurse['worker_shift_time_of_day']) && isset($nurse['worker_hours_per_week']) && isset($nurse['worker_hours_shift']) && isset($nurse['worker_weeks_assignment']) && isset($nurse['worker_shifts_week'])) {
             $progress += 1;
         }
 

@@ -489,12 +489,12 @@
                                             {{-- Hours/Shift --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Shift</label>
-                                                <input id="hours_shift" type="number" name="worker_hours_per_shift"
+                                                <input id="hours_shift" type="number" name="worker_hours_shift"
                                                     placeholder="Enter Hours/Shift"
-                                                    value="{{ !empty($worker->worker_hours_per_shift) ? $worker->worker_hours_per_shift : '' }}"
+                                                    value="{{ !empty($worker->worker_hours_shift) ? $worker->worker_hours_shift : '' }}"
                                                     >
                                             </div>
-                                            <span class="help-block-worker_hours_per_shift"></span>
+                                            <span class="help-block-worker_hours_shift"></span>
                                             {{-- End Hours/Shift --}}
                                             {{-- Weeks/Assignment --}}
                                             <div class="ss-form-group col-11">
@@ -1080,7 +1080,7 @@
         const rto = document.querySelector('input[name="rto"]');
         const shift_of_day = document.querySelector('select[name="worker_shift_time_of_day"]');
         const hours_per_week = document.querySelector('input[name="worker_hours_per_week"]');
-        const hours_shift = document.querySelector('input[name="worker_hours_per_shift"]');
+        const hours_shift = document.querySelector('input[name="worker_hours_shift"]');
         const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
         const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
         // Document Management
@@ -1231,8 +1231,8 @@
                 isValid = false;
             }
             if (hours_shift.value === '') {
-                $('.help-block-worker_hours_per_shift').text('Please enter a hours per shift');
-                $('.help-block-worker_hours_per_shift').addClass('text-danger');
+                $('.help-block-worker_hours_shift').text('Please enter a hours per shift');
+                $('.help-block-worker_hours_shift').addClass('text-danger');
                 isValid = false;
             }
             if (preferred_assignment_duration.value === '') {

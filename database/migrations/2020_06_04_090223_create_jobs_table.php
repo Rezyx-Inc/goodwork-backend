@@ -122,6 +122,30 @@ class CreateJobsTable extends Migration
              $table->string('terms');
              $table->string('type')->nullable();
 
+            // Adding new columns (from docs)
+            //not required
+            $table->string('job_location')->nullable();  // done 
+            $table->string('vaccinations')->nullable(); // done 
+            $table->integer('number_of_references')->nullable(); // done
+            $table->string('min_title_of_reference')->nullable(); // done 
+            $table->boolean('eligible_work_in_us')->default(false); // done 
+            $table->integer('recency_of_reference')->nullable(); // done
+            $table->string('certificate')->nullable(); // done 
+            $table->string('skills')->nullable();  // done 
+            $table->string('urgency')->nullable(); // need to be in card job // done
+            $table->string('facilitys_parent_system')->nullable(); // done
+            $table->string('facility_name')->nullable(); // done 
+            $table->string('facility_location')->nullable(); // done 
+
+            $table->string('nurse_classification')->nullable(); // done 
+            $table->string('pay_frequency')->nullable(); // need to be in card job // done 
+            $table->string('benefits')->nullable(); // done 
+            $table->decimal('feels_like_per_hour', 8, 2)->nullable(); // done
+            // required
+            $table->string('facility_city',36); // done 
+            $table->string('facility_state',36); // done
+
+             
         });
     }
 

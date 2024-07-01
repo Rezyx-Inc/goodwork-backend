@@ -4813,7 +4813,7 @@ class RecruiterController extends Controller
                 $job_data["profession"] = isset($jobs['profession'])?$jobs['profession']:'';
                 $job_data["specialty"] = isset($jobs['preferred_specialty'])?$jobs['preferred_specialty']:'';
                 $job_data["experience"] = isset($jobs['preferred_experience'])?$jobs['preferred_experience']:'';
-                $job_data["professional_licensure"] = isset($jobs['job_location'])?$jobs['job_location']:'';
+                $job_data["job_location"] = isset($jobs['job_location'])?$jobs['job_location']:'';
                 $job_data["vaccinations"] = isset($jobs['vaccinations'])?$jobs['vaccinations']:'';
                 $job_data["number_of_references"] = isset($jobs['number_of_references'])?$jobs['number_of_references']:'';
                 $job_data["min_title_of_reference"] = isset($jobs['min_title_of_reference'])?$jobs['min_title_of_reference']:'';
@@ -4949,7 +4949,7 @@ class RecruiterController extends Controller
             $update_array["profession"] = isset($request->profession)?$request->profession:'';
             $update_array["preferred_specialty"] = isset($request->specialty)?$request->specialty:'';
             $update_array["preferred_experience"] = isset($request->experience)?$request->experience:'';
-            $update_array["job_location"] = isset($request->professional_licensure)?$request->professional_licensure:'';
+            $update_array["job_location"] = isset($request->job_location)?$request->job_location:'';
             $update_array["vaccinations"] = isset($request->vaccinations)?$request->vaccinations:'';
             $update_array["number_of_references"] = isset($request->number_of_references)?$request->number_of_references:'';
             $update_array["min_title_of_reference"] = isset($request->min_title_of_reference)?$request->min_title_of_reference:'';
@@ -6260,7 +6260,7 @@ class RecruiterController extends Controller
             $update_array["profession"] = isset($request->profession)?$request->profession:'';
             $update_array["preferred_specialty"] = isset($request->specialty)?$request->specialty:'';
             $update_array["preferred_experience"] = isset($request->experience)?$request->experience:'';
-            $update_array["job_location"] = isset($request->professional_licensure)?$request->professional_licensure:'';
+            $update_array["job_location"] = isset($request->job_location)?$request->job_location:'';
             $update_array["vaccinations"] = isset($request->vaccinations)?$request->vaccinations:'';
             $update_array["number_of_references"] = isset($request->number_of_references)?$request->number_of_references:'';
             $update_array["min_title_of_reference"] = isset($request->min_title_of_reference)?$request->min_title_of_reference:'';

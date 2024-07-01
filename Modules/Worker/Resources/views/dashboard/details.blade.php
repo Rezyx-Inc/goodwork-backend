@@ -89,9 +89,21 @@
         <li><h5>Your Information</h5></li>
     </ul>
     @php
-    $matches = $model->matchWithWorker();
+    $matches = [];
+    
+    foreach ($model->matchWithWorker() as $key => $closure) {
+        $matches[$key] = $closure();
+    }
+
+    
     @endphp
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['diploma']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+    @php
+    $userMatches = [];
+    foreach ($model->matchWithWorker() as $key => $closure) {
+        $userMatches[$key] = $closure();
+    }
+    @endphp
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['diploma']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>Diploma</span>
             <h6>College Diploma</h6>
@@ -99,7 +111,7 @@
         <li><p data-target="file" data-hidden_name="diploma_cer" data-hidden_value="Yes" data-href="{{route('info-required')}}" data-title="Did you really graduate?" data-name="diploma" onclick="open_modal(this)">Did you really graduate?</p></li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['driving_license']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['driving_license']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>drivers license</span>
             <h6>Required</h6>
@@ -107,7 +119,7 @@
         <li><p data-target="file" data-hidden_name="dl_cer" data-hidden_value="Yes" data-href="{{route('info-required')}}" data-title="Are you really allowed to drive?" data-name="driving_license" onclick="open_modal(this)">Are you really allowed to drive?</p></li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['worked_at_facility_before']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['worked_at_facility_before']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>Worked at Facility Before</span>
             <h6>In the last 18 months</h6>
@@ -115,7 +127,7 @@
         <li><p data-target="binary" data-title="Are you sure you never worked here as staff?" data-name="worked_at_facility_before" onclick="open_modal(this)">Are you sure you never worked here as staff?</p></li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['worker_ss_number']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['worker_ss_number']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>SS# or SS Card</span>
             <h6>Last 4 digits of SS#</h6>
@@ -123,15 +135,15 @@
         <li><p  data-target="input" data-title="Yes we need your SS# to submit you" data-placeholder="SS number" data-name="worker_ss_number" onclick="open_modal(this)">Yes we need your SS# to submit you</p></li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['profession']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['profession']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>Profession</span>
-            <h6>{{$model->profession}}</h6>
+            <h6>{{$model->proffesion}}</h6>
         </li>
-        <li><p data-target="dropdown" data-title="What kind of professional are you?" data-filter="Profession" data-name="highest_nursing_degree" onclick="open_modal(this)">What kind of professional are you?</p></li>
+        <li><p data-target="dropdown" data-title="What kind of professional are you?" data-filter="Profession" data-name="profession" onclick="open_modal(this)">What kind of professional are you?</p></li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['preferred_specialty']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['preferred_specialty']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>Specialty</span>
             <h6>{{str_replace(',',', ',$model->preferred_specialty)}}</h6>
@@ -139,8 +151,98 @@
         {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
         <li><p data-target="dropdown" data-title="What's your specialty?" data-filter="Speciality" data-name="specialty" onclick="open_modal(this)">What's your specialty?</p></li>
     </ul>
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_location']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+        <li>
+        <span>Professional Licensure</span>
+        <h6>{{$model->job_location}}</h6>
+        </li>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['block_scheduling']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+        <li>
+            <p  data-target="input" data-title="Where are you licensed?" data-placeholder="Where are you licensed?" data-name="nursing_license_state" onclick="open_modal(this)">Where are you licensed?</p>
+        </li>
+    </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+        <li>
+            @php
+                $vaccines = explode(',', $model->vaccinations);
+            @endphp
+            <span>Vaccinations & Immunizations</span>
+            @foreach ($vaccines as $v)
+            <h6>{{$v}} Required</h6>
+            @endforeach
+        </li>
+        <li>
+            @foreach ($vaccines as $v)
+            <p>Did you get the {{$v}} Vaccines?</p>
+            @endforeach
+
+        </li>
+    </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['number_of_references']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+        <li>
+            <span>References</span>
+            <h6>{{$model->number_of_references}}  references </h6>
+            <h6>{{$model->recency_of_reference}} months Recency</h6>
+        </li>
+        <li>
+            <p data-bs-toggle="modal" data-bs-target="#job-dtl-References">Who are your References?</p>
+        </li>
+    </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+        <li>
+            @php
+                $certificates = explode(',', $model->certificate);
+            @endphp
+            <span>Certifications</span>
+            @foreach ($certificates as $v)
+            <h6>{{$v}} Required</h6>
+            @endforeach
+        </li>
+        <li>
+            <p></p>
+            @foreach ($certificates as $v)
+            <p data-target="file" data-hidden_name="{{strtolower($v)}}_cer" data-hidden_value="Yes" data-href="{{route('certification')}}" data-title="No {{$v}}?" data-name="{{strtolower($v)}}" onclick="open_modal(this)">No {{$v}}?</p>
+            @endforeach
+        </li>
+    </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+        <li>
+        <span>Skills checklist</span>
+        <h6>{{str_replace(',', ', ',$model->skills)}} </h6>
+
+        </li>
+        <li><p>Upload your latest skills checklist</p>
+
+        </li>
+    </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['eligible_work_in_us']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+        <li>
+            <span>Eligible to work in the US</span>
+            <h6>Required</h6>
+            {{-- <h6>Flu 2022 Preferred</h6> --}}
+        </li>
+        <li>
+            <p data-target="binary" data-title="Does Congress allow you to work here?" data-name="worker_eligible_work_in_us" onclick="open_modal(this)">Does Congress allow you to work here?</p>
+        </li>
+    </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['urgency']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+        <li>
+        <span>Urgency</span>
+        <h6>{{$model->urgency}} </h6>
+
+        </li>
+        <li>
+            <p  data-target="input" data-title="How quickly you can be ready to submit?" data-placeholder="How quickly you can be ready to submit?" data-name="worker_urgency" onclick="open_modal(this)">How quickly you can be ready to submit?</p>
+        </li>
+    </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['block_scheduling']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Block Scheduling</span>
         <h6>{{$model->block_scheduling}} </h6>
@@ -149,7 +251,7 @@
             <p data-target="binary" data-title="Do you want Block Scheduling?" data-name="block_scheduling" onclick="open_modal(this)">Do you want Block Scheduling?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['float_requirement']()['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['float_requirement']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Float Requirements</span>
         <h6>{{$model->float_requirement}} </h6>
@@ -158,7 +260,7 @@
             <p data-target="binary" data-title="Are you willing float to?" data-name="float_requirement" onclick="open_modal(this)">Are you willing float to?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['facility_shift_cancelation_policy']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Facility Shift Cancellation Policy</span>
         <h6>{{$model->facility_shift_cancelation_policy}} </h6>
@@ -167,7 +269,7 @@
             <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="AssignmentDuration" data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">What terms do you prefer?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['contract_termination_policy']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Contact Termination Policy</span>
         <h6>{{$model->contract_termination_policy}} </h6>
@@ -176,7 +278,7 @@
             <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="ContractTerminationPolicy" data-name="contract_termination_policy" onclick="open_modal(this)">What terms do you prefer?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['traveler_distance_from_facility']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Traveller Distance From Facility</span>
         <h6>{{$model->traveler_distance_from_facility}} </h6>
@@ -194,17 +296,27 @@
             <p data-target="input" data-title="What Facilities have you worked at?" data-placeholder="Write Name Of Facilities" data-name="facilities_you_like_to_work_at" onclick="open_modal(this)">What Facilities have you worked at?</p>
         </li>
     </ul>
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['facilitys_parent_system']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} ">
+        <li>
+        <span>Facility's Parent System</span>
+        <h6>{{$model->facilitys_parent_system}} </h6>
+        </li>
+        <li>
+            <p data-target="input" data-title="What facilities would you like to work at?" data-placeholder="Write Name Of Facilities" data-name="worker_facilitys_parent_system" onclick="open_modal(this)">What facilities would you like to work at?</p>
+        </li>
+    </ul>
    
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['clinical_setting']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Clinical Setting</span>
         <h6>{{$model->clinical_setting}} </h6>
         </li>
         <li>
-            <p data-target="dropdown" data-title="What setting do you prefer?" data-filter="SettingType" data-name="clinical_setting_you_prefer" onclick="open_modal(this)">What setting do you prefer?</p>
+            <p data-target="dropdown" data-title="What setting do you prefer?" data-filter="ClinicalSetting" data-name="clinical_setting_you_prefer" onclick="open_modal(this)">What setting do you prefer?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['Patient_ratio']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Patient Ratio</span>
         <h6>{{$model->Patient_ratio}} </h6>
@@ -213,7 +325,7 @@
             <p data-target="input" data-title="How many patients can you handle?" data-placeholder="How many patients can you handle?" data-name="worker_patient_ratio" onclick="open_modal(this)">How many patients can you handle?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['emr']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>EMR</span>
         <h6>{{$model->Emr}} </h6>
@@ -222,7 +334,7 @@
             <p data-target="dropdown" data-title="What EMRs have you used?" data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What EMRs have you used?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['Unit']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Unit</span>
         <h6>{{$model->Unit}} </h6>
@@ -233,7 +345,7 @@
     </ul>
    
  
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['scrub_color']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Scrub Color</span>
         <h6>{{$model->scrub_color}} </h6>
@@ -242,22 +354,23 @@
             <p data-target="input" data-title="Fav scrub brand?" data-placeholder="Fav scrub brand?" data-name="worker_scrub_color" onclick="open_modal(this)">Fav scrub brand?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_city']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Facility City</span>
         <h6>{{$model->job_city}} </h6>
         </li>
         <li>
-            <p>Cities you'd like to work?</p>
+            <p data-target="dropdown" data-title="Cities you'd like to work?" data-filter="City" data-name="worker_facility_city" onclick="open_modal(this)" >Cities you'd like to work?</p>
+
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_state']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Facility State Code</span>
         <h6>{{$model->job_state}} </h6>
         </li>
         <li>
-            <p>States you'd like to work?</p>
+            <p  data-target="dropdown" data-title="States you'd like to work?" data-filter="State" data-name="worker_facility_state" onclick="open_modal(this)">States you'd like to work?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -332,7 +445,7 @@
             <p data-target="input" data-title="How many weeks?" data-placeholder="Enter prefered weeks per assignment" data-name="worker_weeks_assignment" onclick="open_modal(this)">How many weeks?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['weeks_shift']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Shifts/Week</span>
         <h6>{{$model->weeks_shift}} </h6>
@@ -609,14 +722,14 @@
                 <ul class="ss-jb-dtlpop-chck">
                     <li>
                         <label>
-                            <input type="radio" name="radio" name="" value="Yes">
+                            <input type="radio" name="radio" name="" value="1">
                             <span>Yes</span>
                         </label>
                     </li>
 
                     <li>
                         <label>
-                            <input type="radio" name="radio" name="" value="No">
+                            <input type="radio" name="radio" name="" value="0">
                             <span>No</span>
                         </label>
                     </li>
@@ -734,29 +847,35 @@
                 <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
                 <h4>Who are your References?</h4>
                 <div class="ss-form-group">
+                    <label>Reference Name</label>
                     <input type="text" name="name[]" placeholder="Name of Reference">
                     <span class="help-block"></span>
                 </div>
                 <div class="ss-form-group">
+                    <label>Phone Number</label>
                     <input type="text" name="phone[]" placeholder="Phone Number of Reference">
                     <span class="help-block"></span>
                 </div>
 
                 <div class="ss-form-group">
+                    <label>Email</label>
                     <input type="text" name="email[]" placeholder="Email of Reference">
                     <span class="help-block"></span>
                 </div>
 
                 <div class="ss-form-group">
+                    <label>Date Referred</label>
                     <input type="date" name="date_referred[]">
                     <span class="help-block"></span>
                 </div>
 
                 <div class="ss-form-group">
+                    <label>Min Title of Reference</label>
                     <input type="text" name="min_title_of_reference[]" placeholder="Min Title of Reference">
                     <span class="help-block"></span>
                 </div>
                 <div class="ss-form-group">
+                    <label>Is this from your last assignment?</label>
                     <select name="recency_of_reference[]">
                         <option value="">Select</option>
                         <option value="1">Yes</option>
@@ -766,6 +885,7 @@
                 </div>
 
                 <div class="ss-form-group fileUploadInput">
+                    <label>Upload Image</label>
                     <input type="file" name="image[]">
                     <button type="button" onclick="open_file(this)">Choose File</button>
                     <span class="help-block"></span>
@@ -903,7 +1023,13 @@
 @section('js')
 <script>
 
+
     $(document).ready(function(){
+        let matches = @json($matches);
+        console.log((matches));
+
+        let usematches = @json($userMatches);
+        console.log((usematches));
         $('input[name="phone[]"]').mask('(999) 999-9999');
     });
     function open_file(obj){

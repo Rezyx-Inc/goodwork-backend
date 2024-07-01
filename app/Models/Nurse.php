@@ -187,7 +187,14 @@ class Nurse extends Model implements HasMedia
         'routing_number_payment',
         'bank_account_payment_number',
         'phone_number_payment',
-        'rto'
+        'rto',
+        'worker_facilitys_parent_system',
+        'worker_urgency',
+        'skills_checklists',
+        'worker_vaccination',
+        'worker_certificate_name',
+        'worker_eligible_work_in_us',
+        'worker_feels_like_per_hour',
     ];
     protected static $logName = 'Nurse';
     protected static $logFillable = true;

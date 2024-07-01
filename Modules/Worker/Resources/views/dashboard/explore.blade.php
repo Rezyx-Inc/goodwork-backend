@@ -159,7 +159,7 @@
                     <p>{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
                    
                     
-                    <h4>{{$j->facility->name ?? 'NA'}}</h4>
+                    <h4>{{$j->facility_name ?? 'NA'}}</h4>
                      <!-- job details not yet implemented -->
                      <h4><a href="{{route('worker_job-details',['id'=>$j->id])}}">{{$j->job_name}}</a></h4> 
                     <h6>{{$j->job_name}}</h6>

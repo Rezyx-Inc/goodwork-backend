@@ -45,31 +45,39 @@
                             <div class="row progress-bar-item">
                                 <div class="col-3 step">
                                     <p>Job information</p>
-                                    <div class="bullet">
+                                    <div class="d-none bullet">
                                         <span>1</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
 
-                                <div class=" col-3 step">
+                                <div class=" col-2 step">
                                     <p>Preferences and Requirements</p>
-                                    <div class="bullet">
+                                    <div class="d-none bullet">
                                         <span>2</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
-                                <div class="col-3 step">
+                                <div class="col-2 step">
                                     <p>Job Details</p>
-                                    <div class="bullet">
+                                    <div class="d-none bullet">
                                         <span>3</span>
+                                    </div>
+                                    <div class="check fas fa-check"></div>
+                                </div>
+
+                                <div class="col-2 step">
+                                    <p>other information</p>
+                                    <div class="d-none bullet">
+                                        <span>4</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
 
                                 <div class="col-3 step">
                                     <p>Work Schedule & Requirements</p>
-                                    <div class="bullet">
-                                        <span>4</span>
+                                    <div class="d-none bullet">
+                                        <span>5</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
@@ -494,6 +502,209 @@
                                         </div>
                                     </div>
 
+                                    {{-- slide added from sheets --}}
+
+                                    <div class="page">
+                                        <div class="row">
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Professional Licensure</label>
+                                                <input type="text" name="job_location" id="job_location"
+                                                    placeholder="Enter professional licensure">
+                                                <span class="help-block-job_location"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Number Of References</label>
+                                                <input type="number" name="number_of_references" id="number_of_references"
+                                                    placeholder="Enter number of references">
+                                                <span class="help-block-number_of_references"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Min Title Of Reference</label>
+                                                <input type="text" name="min_title_of_reference" id="min_title_of_reference"
+                                                    placeholder="Enter min title of reference">
+                                                <span class="help-block-min_title_of_reference"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Recency Of Reference</label>
+                                                <input type="number" name="recency_of_reference" id="recency_of_reference"
+                                                    placeholder="Enter # recency of reference">
+                                                <span class="help-block-recency_of_reference"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Eligible work in us ?</label>
+                                                <select name="eligible_work_in_us" id="eligible_work_in_us">
+                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="1">Yes
+                                                    </option>
+                                                    <option value="0">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-eligible_work_in_us"></span>
+                                            </div>
+                                            
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Skills checklist</label>
+                                                <select name="skills" id="skills">
+                                                    <option value="">Select Skills Checklist</option>
+                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-skills"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Urgency</label>
+                                                <input type="text" name="urgency" id="urgency"
+                                                    placeholder="Enter urgency">
+                                                <span class="help-block-urgency"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility's Parent System</label>
+                                                <input type="text" name="facilitys_parent_system" id="facilitys_parent_system"
+                                                    placeholder="Enter facility's parent system">
+                                                <span class="help-block-facilitys_parent_system"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Name</label>
+                                                <input type="text" name="facility_name" id="facility_name"
+                                                    placeholder="Enter facility name">
+                                                <span class="help-block-facility_name"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Location</label>
+                                                <input type="text" name="facility_location" id="facility_location"
+                                                    placeholder="Enter facility location">
+                                                <span class="help-block-facility_location"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility State </label>
+                                                <select name="facility_state" id="facility_state">
+                                                    <option value="">States</option>
+                                                    @foreach ($states as $state)
+                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                            {{ $state->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                             <span class="help-block-facility_state"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility City </label>
+                                                <select name="facility_city" id="facility_city">
+                                                    <option value="">Select a state first</option>
+                                                </select>
+                                                <span class="help-block-facility_city"></span>
+                                            </div>
+
+                                                
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Nurse Classification</label>
+                                                <select name="nurse_classification" id="nurse_classification">
+                                                    <option value="">Select Nurse Classification</option>
+                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nurse_classification"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Pay Frequency</label>
+                                                <select name="pay_frequency" id="pay_frequency">
+                                                    <option value="">Select pay frequency</option>
+                                                    @foreach ($allKeywords['PayFrequency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-pay_frequency"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Benefits</label>
+                                                <select name="benefits" id="benefits">
+                                                    <option value="">Select benefits</option>
+                                                    @foreach ($allKeywords['Benefits'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-benefits"></span>
+                                            </div>
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Certifications</label>
+                                                <div class="ss-speilty-exprnc-add-list certificate-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="certificate">
+                                                                <option value="">Select Certification</option>
+                                                                @if(isset($allKeywords['Certification']))
+                                                                @foreach ($allKeywords['Certification'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="certificateAllValues" name="certificate" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addcertifications('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Vaccinations & Immunizations name</label>
+                                                <div class="ss-speilty-exprnc-add-list vaccinations-content">
+                
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="vaccinations">
+                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                @if(isset($allKeywords['Vaccinations']))
+                                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="vaccinationsAllValues" name="vaccinations" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" id="from_add" onclick="addvacc('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                           
+                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
+                                                ( The above fields are not required )
+                                            </span>
+
+                                            <div class="field btns col-12 d-flex justify-content-center">
+                                                <button class="saveDrftBtn">Save as draft</button>
+                                                <button class="prev-3 prev">Previous</button>
+                                                <button class="next-3 next">Next</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    {{-- end slide added from sheets --}}
+
+
                                     <!-- Forth form slide for adding jobs -->
 
                                     <div class="page">
@@ -563,12 +774,12 @@
                                                 </select>
                                                 <span class="help-block-vision"></span>
                                             </div>
-                                            {{-- <div class="ss-form-group col-md-4">
+                                            <div class="ss-form-group col-md-4">
                                                 <label>Feels Like $/hrs</label>
                                                 <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
                                                     placeholder="Enter Feels Like $/hrs">
                                                 <span class="help-block-feels_like_per_hour"></span>
-                                            </div> --}}
+                                            </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Call Back Hourly rate</label>
 
@@ -635,7 +846,7 @@
                                             </span>
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
-                                                <button class="prev-3 prev">Previous</button>
+                                                <button class="prev-4 prev">Previous</button>
                                                 <button class="submit">Submit</button>
                                             </div>
                                         </div>
@@ -659,7 +870,7 @@
                                     <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}">
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
-                                        <h6>Medical Solutions Recruiter</h6>
+                                        <h6>{{ $job->job_name}}</h6>
                                         <ul>
                                             <li><a href="#"><img
                                                         src=" {{ URL::asset('frontend/img/location.png') }}">
@@ -694,7 +905,7 @@
                                         id="{{ $counter }}">
                                         <p>Travel <span> {{ $applyCount[$key] }} Applied</span></p>
                                         <h4>{{ $value->proffesion }} - {{ $value->preferred_specialty }}</h4>
-                                        <h6>Medical Solutions Recruiter</h6>
+                                        <h6>{{ $value->job_name }}</h6>
                                         <ul>
                                             <li><a href="#"><img
                                                         src=" {{ URL::asset('frontend/img/location.png') }}">
@@ -729,7 +940,7 @@
                                     <div class="col-12 ss-job-prfle-sec" onclick="opportunitiesType('onhold','{{ $job->id }}','jobdetails')"
                                         id="{{ $counter }}">
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
-                                        <h6>Medical Solutions Recruiter</h6>
+                                        <h6>{{ $value->job_name }}</h6>
                                         <ul>
                                             <li><a href="#"><img
                                                         src=" {{ URL::asset('frontend/img/location.png') }}">
@@ -752,39 +963,47 @@
                         </div>
                         <!-- END ONHOLD CARDS -->
 
-                        <!-- EDITING FORM -->
+                        <!-- EDITING Draft FORM -->
                         <div class="all col-lg-7" id="details_draft">
                             <div class="bodyAll" style="width: 100%;">
                                 <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
                                     <header>Select a job from Drafts</header>
                                     <div class="row progress-bar-item">
-                                        <div class="col-3 step">
+                                        <div class="col-3 step stepDraft">
                                             <p>Job information</p>
-                                            <div class="bullet">
+                                            <div class="d-none bullet">
                                                 <span>1</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class=" col-3 step">
+                                        <div class=" col-2 step stepDraft">
                                             <p>Preferences and Requirements</p>
-                                            <div class="bullet">
+                                            <div class="d-none bullet">
                                                 <span>2</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
-                                        <div class="col-3 step">
+                                        <div class="col-2 step stepDraft">
                                             <p>Job Details</p>
-                                            <div class="bullet">
+                                            <div class="d-none bullet">
                                                 <span>3</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class="col-3 step">
-                                            <p>Work Schedule & Requirements</p>
-                                            <div class="bullet">
+                                        <div class="col-2 step stepDraft">
+                                            <p>other information</p>
+                                            <div class="d-none bullet">
                                                 <span>4</span>
+                                            </div>
+                                            <div class="check fas fa-check"></div>
+                                        </div>
+
+                                        <div class="col-3 step stepDraft">
+                                            <p>Work Schedule & Requirements</p>
+                                            <div class="d-none bullet">
+                                                <span>5</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
@@ -1138,7 +1357,207 @@
                                             </div>
                                             {{-- end third slide draft --}}
 
+                                            {{-- slide added from sheets --}}
 
+                                    <div class="page">
+                                        <div class="row">
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Professional Licensure</label>
+                                                <input type="text" name="job_location" id="job_locationDraft"
+                                                    placeholder="Enter professional licensure">
+                                                <span class="help-block-job_locationDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Number Of References</label>
+                                                <input type="number" name="number_of_references" id="number_of_referencesDraft"
+                                                    placeholder="Enter number of references">
+                                                <span class="help-block-number_of_referencesDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Min Title Of Reference</label>
+                                                <input type="text" name="min_title_of_reference" id="min_title_of_referenceDraft"
+                                                    placeholder="Enter min title of reference">
+                                                <span class="help-block-min_title_of_referenceDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Recency Of Reference</label>
+                                                <input type="number" name="recency_of_reference" id="recency_of_referenceDraft"
+                                                    placeholder="Enter # recency of reference">
+                                                <span class="help-block-recency_of_referenceDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Eligible work in us ?</label>
+                                                <select name="eligible_work_in_us" id="eligible_work_in_usDraft">
+                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="1">Yes
+                                                    </option>
+                                                    <option value="0">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-eligible_work_in_usDraft"></span>
+                                            </div>
+                                            
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Skills checklist</label>
+                                                <select name="skills" id="skillsDraft">
+                                                    <option value="">Select Skills Checklist</option>
+                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-skillsDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Urgency</label>
+                                                <input type="text" name="urgency" id="urgencyDraft"
+                                                    placeholder="Enter urgency">
+                                                <span class="help-block-urgencyDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility's Parent System</label>
+                                                <input type="text" name="facilitys_parent_system" id="facilitys_parent_systemDraft"
+                                                    placeholder="Enter facility's parent system">
+                                                <span class="help-block-facilitys_parent_systemDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Name</label>
+                                                <input type="text" name="facility_name" id="facility_nameDraft"
+                                                    placeholder="Enter facility name">
+                                                <span class="help-block-facility_nameDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Location</label>
+                                                <input type="text" name="facility_location" id="facility_locationDraft"
+                                                    placeholder="Enter facility location">
+                                                <span class="help-block-facility_locationDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility State </label>
+                                                <select name="facility_state" id="facility_stateDraft">
+                                                    <option value="">States</option>
+                                                    @foreach ($states as $state)
+                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                            {{ $state->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                             <span class="help-block-facility_stateDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility City </label>
+                                                <select name="facility_city" id="facility_cityDraft">
+                                                    <option value="">Select a state first</option>
+                                                </select>
+                                                <span class="help-block-facility_cityDraft"></span>
+                                            </div>
+
+                                                
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Nurse Classification</label>
+                                                <select name="nurse_classification" id="nurse_classificationDraft">
+                                                    <option value="">Select Nurse Classification</option>
+                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nurse_classificationDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Pay Frequency</label>
+                                                <select name="pay_frequency" id="pay_frequencyDraft">
+                                                    <option value="">Select pay frequency</option>
+                                                    @foreach ($allKeywords['PayFrequency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-pay_frequencyDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Benefits</label>
+                                                <select name="benefits" id="benefitsDraft">
+                                                    <option value="">Select benefits</option>
+                                                    @foreach ($allKeywords['Benefits'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-benefitsDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Certifications</label>
+                                                <div class="ss-speilty-exprnc-add-list certificate-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select  class="m-0" id="certificateDraft">
+                                                                <option value="">Select Certification</option>
+                                                                @if(isset($allKeywords['Certification']))
+                                                                @foreach ($allKeywords['Certification'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="certificateAllValuesDraft" name="certificate" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addcertifications('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Vaccinations & Immunizations name</label>
+                                                <div class="ss-speilty-exprnc-add-list vaccinations-content">
+                
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="vaccinationsDraft">
+                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                @if(isset($allKeywords['Vaccinations']))
+                                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="vaccinationsAllValuesDraft" name="vaccinations" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"  onclick="addvacc('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                           
+                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
+                                                ( The above fields are not required )
+                                            </span>
+
+                                            <div class="field btns col-12 d-flex justify-content-center">
+                                                <button class="saveDrftBtnDraft">Save as draft</button>
+                                                <button class="prev-3Draft prev">Previous</button>
+                                                <button class="next-3Draft next">Next</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    {{-- end slide added from sheets --}}
 
                                             <!-- Forth form slide for adding jobs -->
                                             {{-- edits forth --}}
@@ -1210,6 +1629,13 @@
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
+                                                        <label>Feels Like $/hrs</label>
+                                                        <input type="number" name="feels_like_per_hour" id="feels_like_per_hourDraft"
+                                                            placeholder="Enter Feels Like $/hrs">
+                                                        <span class="help-block-feels_like_per_hourDraft"></span>
+                                                    </div>
+
+                                                    <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
                                                         <input type="number" name="call_back" id="call_backDraft"
                                                             placeholder="Enter Call Back Hourly rate">
@@ -1253,7 +1679,7 @@
                                                     </span>
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnDraft">Save as draft</button>
-                                                        <button class="prev-3Draft prev">Previous</button>
+                                                        <button class="prev-4Draft prev">Previous</button>
                                                         <button class="submitDraft">Submit</button>
                                                     </div>
                                                 </div>
@@ -1268,7 +1694,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END EDiTING FORM -->
+                        <!-- END EDITING Draft FORM -->
 
 
 
@@ -1278,33 +1704,41 @@
                                 <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
                                     <header>Edit your selected job</header>
                                     <div class="row progress-bar-item">
-                                        <div class="col-3 step">
+                                        <div class="col-3 step stepEdit">
                                             <p>Job information</p>
-                                            <div class="bullet">
+                                            <div class="d-none bullet">
                                                 <span>1</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class=" col-3 step">
+                                        <div class=" col-2 step stepEdit">
                                             <p>Preferences and Requirements</p>
-                                            <div class="bullet">
+                                            <div class="d-none bullet">
                                                 <span>2</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
-                                        <div class="col-3 step">
+                                        <div class="col-2 step stepEdit">
                                             <p>Job Details</p>
-                                            <div class="bullet">
+                                            <div class="d-none bullet">
                                                 <span>3</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class="col-3 step">
-                                            <p>Work Schedule & Requirements</p>
-                                            <div class="bullet">
+                                        <div class="col-2 step stepEdit">
+                                            <p>other information</p>
+                                            <div class="d-none bullet">
                                                 <span>4</span>
+                                            </div>
+                                            <div class="check fas fa-check"></div>
+                                        </div>
+
+                                        <div class="col-3 step stepEdit">
+                                            <p>Work Schedule & Requirements</p>
+                                            <div class="d-none bullet">
+                                                <span>5</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
@@ -1658,7 +2092,207 @@
                                             </div>
                                             {{-- end third slide draft --}}
 
+                                            {{-- slide added from sheets --}}
 
+                                    <div class="page">
+                                        <div class="row">
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Professional Licensure</label>
+                                                <input type="text" name="job_location" id="job_locationEdit"
+                                                    placeholder="Enter professional licensure">
+                                                <span class="help-block-job_locationEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Number Of References</label>
+                                                <input type="number" name="number_of_references" id="number_of_referencesEdit"
+                                                    placeholder="Enter number of references">
+                                                <span class="help-block-number_of_referencesEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Min Title Of Reference</label>
+                                                <input type="text" name="min_title_of_reference" id="min_title_of_referenceEdit"
+                                                    placeholder="Enter min title of reference">
+                                                <span class="help-block-min_title_of_referenceEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Recency Of Reference</label>
+                                                <input type="number" name="recency_of_reference" id="recency_of_referenceEdit"
+                                                    placeholder="Enter # recency of reference">
+                                                <span class="help-block-recency_of_referenceEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Eligible work in us ?</label>
+                                                <select name="eligible_work_in_us" id="eligible_work_in_usEdit">
+                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="1">Yes
+                                                    </option>
+                                                    <option value="0">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-eligible_work_in_usEdit"></span>
+                                            </div>
+                                            
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Skills checklist</label>
+                                                <select name="skills" id="skillsEdit">
+                                                    <option value="">Select Skills Checklist</option>
+                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-skillsEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Urgency</label>
+                                                <input type="text" name="urgency" id="urgencyEdit"
+                                                    placeholder="Enter urgency">
+                                                <span class="help-block-urgencyEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility's Parent System</label>
+                                                <input type="text" name="facilitys_parent_system" id="facilitys_parent_systemEdit"
+                                                    placeholder="Enter facility's parent system">
+                                                <span class="help-block-facilitys_parent_systemEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Name</label>
+                                                <input type="text" name="facility_name" id="facility_nameEdit"
+                                                    placeholder="Enter facility name">
+                                                <span class="help-block-facility_nameEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Location</label>
+                                                <input type="text" name="facility_location" id="facility_locationEdit"
+                                                    placeholder="Enter facility location">
+                                                <span class="help-block-facility_locationEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility State </label>
+                                                <select name="facility_state" id="facility_stateEdit">
+                                                    <option value="">States</option>
+                                                    @foreach ($states as $state)
+                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                            {{ $state->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                             <span class="help-block-facility_stateEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility City </label>
+                                                <select name="facility_city" id="facility_cityEdit">
+                                                    <option value="">Select a state first</option>
+                                                </select>
+                                                <span class="help-block-facility_cityEdit"></span>
+                                            </div>
+
+                                                
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Nurse Classification</label>
+                                                <select name="nurse_classification" id="nurse_classificationEdit">
+                                                    <option value="">Select Nurse Classification</option>
+                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nurse_classificationEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Pay Frequency</label>
+                                                <select name="pay_frequency" id="pay_frequencyEdit">
+                                                    <option value="">Select pay frequency</option>
+                                                    @foreach ($allKeywords['PayFrequency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-pay_frequencyEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Benefits</label>
+                                                <select name="benefits" id="benefitsEdit">
+                                                    <option value="">Select benefits</option>
+                                                    @foreach ($allKeywords['Benefits'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-benefitsEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Certifications</label>
+                                                <div class="ss-speilty-exprnc-add-list certificate-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="certificateEdit">
+                                                                <option value="">Select Certification</option>
+                                                                @if(isset($allKeywords['Certification']))
+                                                                @foreach ($allKeywords['Certification'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="certificateAllValuesEdit" name="certificate" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addcertifications('from_Edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Vaccinations & Immunizations name</label>
+                                                <div class="ss-speilty-exprnc-add-list vaccinations-content">
+                
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select  class="m-0" id="vaccinationsEdit">
+                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                @if(isset($allKeywords['Vaccinations']))
+                                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="vaccinationsAllValuesEdit" name="vaccinations" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"  onclick="addvacc('from_Edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                           
+                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
+                                                ( The above fields are not required )
+                                            </span>
+
+                                            <div class="field btns col-12 d-flex justify-content-center">
+                                                <button class="saveDrftBtnEdit">Save as draft</button>
+                                                <button class="prev-3Edit prev">Previous</button>
+                                                <button class="next-3Edit next">Next</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    {{-- end slide added from sheets --}}
 
                                             <!-- Forth form slide for adding jobs -->
                                             {{-- edits forth --}}
@@ -1730,6 +2364,13 @@
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
+                                                        <label>Feels Like $/hrs</label>
+                                                        <input type="number" name="feels_like_per_hour" id="feels_like_per_hourEdit"
+                                                            placeholder="Enter Feels Like $/hrs">
+                                                        <span class="help-block-feels_like_per_hourEdit"></span>
+                                                    </div>
+
+                                                    <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
                                                         <input type="number" name="call_back" id="call_backEdit"
                                                             placeholder="Enter Call Back Hourly rate">
@@ -1779,7 +2420,7 @@
 
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnEdit">Save as draft</button>
-                                                        <button class="prev-3Edit prev">Previous</button>
+                                                        <button class="prev-4Edit prev">Previous</button>
                                                         <button class="submitEdit">Submit</button>
                                                     </div>
                                                 </div>
@@ -1830,6 +2471,52 @@
 
     </main>
     <script>
+        var certificateStr = '';
+        var vaccinationStr = '';
+         $(document).ready(function() {
+            $('#facility_state').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#facility_city');
+
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="">Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('#facility_stateDraft').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#facility_cityDraft');
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="">Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('#facility_stateEdit').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#facility_cityEdit');
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="">Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                });
+            });
+        });
+
+
         $(document).ready(function() {
             $('#job_state').change(function() {
                 const selectedState = $(this).find(':selected').attr('id');
@@ -1843,8 +2530,6 @@
                     });
                 });
             });
-
-
         });
 
 
@@ -2458,67 +3143,7 @@
             }
         }
     </script>
-    <script>
-        var certificate = {};
-
-        function addcertifications() {
-            if (!$('#certificate').val()) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Select the certificate please.',
-                    time: 3
-                });
-            } else {
-                if (!certificate.hasOwnProperty($('#certificate').val())) {
-                    console.log($('#certificate').val());
-
-                    var select = document.getElementById("certificate");
-                    var selectedOption = select.options[select.selectedIndex];
-                    var optionText = selectedOption.textContent;
-
-                    certificate[$('#certificate').val()] = optionText;
-                    $('#certificate').val('');
-                    list_certifications();
-                }
-            }
-        }
-
-        function list_certifications() {
-            var str = '';
-            if (window.allcertificate) {
-                certificate = Object.assign({}, certificate, window.allcertificate);
-            }
-            for (const key in certificate) {
-                let certificatename = "";
-                var select = document.getElementById("certificate");
-                console.log(select);
-                var allspcldata = [];
-                for (var i = 0; i < select.options.length; i++) {
-                    var obj = {
-                        'id': select.options[i].value,
-                        'title': select.options[i].textContent,
-                    };
-                    allspcldata.push(obj);
-                }
-
-                if (certificate.hasOwnProperty(key)) {
-                    allspcldata.forEach(function(item) {
-                        if (key == item.id) {
-                            certificatename = item.title;
-                        }
-                    });
-                    const value = certificate[key];
-                    str += '<ul>';
-                    str += '<li class="w-50">' + certificatename + '</li>';
-                    str += '<li class="w-50 text-end"><button type="button"  id="remove-certificate" data-key="' + key +
-                        '" onclick="remove_certificate(this, ' + key +
-                        ')"><img src="{{ URL::asset('frontend/img/delete-img.png') }}" /></button></li>';
-                    str += '</ul>';
-                }
-            }
-            $('.certificate-content').html(str);
-        }
-    </script>
+    
     <script>
         function askWorker(e, type, workerid, jobid) {
             let url = "{{ url('recruiter/recruiter-messages') }}";
@@ -2674,7 +3299,7 @@
 
 
 
-    if (draftJobs.length !== 0) {
+if (draftJobs.length !== 0) {
 
     let job_name = draftJobs[0].job_name;
     let job_type = draftJobs[0].job_type;
@@ -2716,6 +3341,7 @@
     let dental = draftJobs[0].dental;
     let vision = draftJobs[0].vision;
     let call_back = draftJobs[0].call_back;
+    let feels_like_per_hour = draftJobs[0].feels_like_per_hour;
     let weekly_non_taxable_amount = draftJobs[0].weekly_non_taxable_amount;
     let start_date = draftJobs[0].start_date;
     let as_soon_as = draftJobs[0].as_soon_as;
@@ -2859,7 +3485,15 @@
         document.getElementById("orientation_rateDraft").value = orientation_rate;
     }
     if (terms !== null) {
-        document.getElementById("termsDraft").value = terms;
+        var Terms = terms;
+    var select = document.getElementById('termsDraft');
+    var option = document.createElement('option');
+    option.value = Terms;
+    option.text = Terms;
+
+    select.add(option);
+    select.value = Terms;
+        
     }
     if (block_scheduling !== null) {
         document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
@@ -2900,6 +3534,9 @@
     if (vision !== null) {
         document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
 
+    }
+    if(feels_like_per_hour !== null){
+        document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
     }
     if (call_back !== null) {
         document.getElementById("call_backDraft").value = call_back;
@@ -2933,55 +3570,56 @@
         element.classList.add("active");
 
         let job_name = draftJobs[jobId].job_name;
-    let job_type = draftJobs[jobId].job_type;
-    let preferred_specialty = draftJobs[jobId].preferred_specialty;
-    let job_state = draftJobs[jobId].job_state;
-    let job_city = draftJobs[jobId].job_city;
-    let preferred_work_location = draftJobs[jobId].preferred_work_location;
-    let preferred_assignment_duration = draftJobs[jobId].preferred_assignment_duration;
-    let weekly_pay = draftJobs[jobId].weekly_pay;
-    let description = draftJobs[jobId].description;
-    let proffesion = draftJobs[jobId].proffesion;
-    let facility_shift_cancelation_policy = draftJobs[jobId].facility_shift_cancelation_policy;
-    let traveler_distance_from_facility = draftJobs[jobId].traveler_distance_from_facility;
-    let clinical_setting = draftJobs[jobId].clinical_setting;
-    let Patient_ratio = draftJobs[jobId].Patient_ratio;
-    let Unit = draftJobs[jobId].Unit;
-    let scrub_color = draftJobs[jobId].scrub_color;
-    let rto = draftJobs[jobId].rto;
-    let guaranteed_hours = draftJobs[jobId].guaranteed_hours;
-    let hours_shift = draftJobs[jobId].hours_shift;
-    let weeks_shift = draftJobs[jobId].weeks_shift;
-    let referral_bonus = draftJobs[jobId].referral_bonus;
-    let sign_on_bonus = draftJobs[jobId].sign_on_bonus;
-    let completion_bonus = draftJobs[jobId].completion_bonus;
-    let extension_bonus = draftJobs[jobId].extension_bonus;
-    let other_bonus = draftJobs[jobId].other_bonus;
-    let actual_hourly_rate = draftJobs[jobId].actual_hourly_rate;
-    let overtime = draftJobs[jobId].overtime;
-    let on_call = draftJobs[jobId].on_call;
-    let holiday = draftJobs[jobId].holiday;
-    let orientation_rate = draftJobs[jobId].orientation_rate;
-    let terms = draftJobs[jobId].terms;
-    let block_scheduling = draftJobs[jobId].block_scheduling;
-    let float_requirement = draftJobs[jobId].float_requirement;
-    let contract_termination_policy = draftJobs[jobId].contract_termination_policy;
-    let Emr = draftJobs[jobId].Emr;
-    let four_zero_one_k = draftJobs[jobId].four_zero_one_k;
-    let health_insaurance = draftJobs[jobId].health_insaurance;
-    let dental = draftJobs[jobId].dental;
-    let vision = draftJobs[jobId].vision;
-    let call_back = draftJobs[jobId].call_back;
-    let weekly_non_taxable_amount = draftJobs[jobId].weekly_non_taxable_amount;
-    let start_date = draftJobs[jobId].start_date;
-    let as_soon_as = draftJobs[jobId].as_soon_as;
+        let job_type = draftJobs[jobId].job_type;
+        let preferred_specialty = draftJobs[jobId].preferred_specialty;
+        let job_state = draftJobs[jobId].job_state;
+        let job_city = draftJobs[jobId].job_city;
+        let preferred_work_location = draftJobs[jobId].preferred_work_location;
+        let preferred_assignment_duration = draftJobs[jobId].preferred_assignment_duration;
+        let weekly_pay = draftJobs[jobId].weekly_pay;
+        let description = draftJobs[jobId].description;
+        let proffesion = draftJobs[jobId].proffesion;
+        let facility_shift_cancelation_policy = draftJobs[jobId].facility_shift_cancelation_policy;
+        let traveler_distance_from_facility = draftJobs[jobId].traveler_distance_from_facility;
+        let clinical_setting = draftJobs[jobId].clinical_setting;
+        let Patient_ratio = draftJobs[jobId].Patient_ratio;
+        let Unit = draftJobs[jobId].Unit;
+        let scrub_color = draftJobs[jobId].scrub_color;
+        let rto = draftJobs[jobId].rto;
+        let guaranteed_hours = draftJobs[jobId].guaranteed_hours;
+        let hours_shift = draftJobs[jobId].hours_shift;
+        let weeks_shift = draftJobs[jobId].weeks_shift;
+        let referral_bonus = draftJobs[jobId].referral_bonus;
+        let sign_on_bonus = draftJobs[jobId].sign_on_bonus;
+        let completion_bonus = draftJobs[jobId].completion_bonus;
+        let extension_bonus = draftJobs[jobId].extension_bonus;
+        let other_bonus = draftJobs[jobId].other_bonus;
+        let actual_hourly_rate = draftJobs[jobId].actual_hourly_rate;
+        let overtime = draftJobs[jobId].overtime;
+        let on_call = draftJobs[jobId].on_call;
+        let holiday = draftJobs[jobId].holiday;
+        let orientation_rate = draftJobs[jobId].orientation_rate;
+        let terms = draftJobs[jobId].terms;
+        let block_scheduling = draftJobs[jobId].block_scheduling;
+        let float_requirement = draftJobs[jobId].float_requirement;
+        let contract_termination_policy = draftJobs[jobId].contract_termination_policy;
+        let Emr = draftJobs[jobId].Emr;
+        let four_zero_one_k = draftJobs[jobId].four_zero_one_k;
+        let health_insaurance = draftJobs[jobId].health_insaurance;
+        let dental = draftJobs[jobId].dental;
+        let vision = draftJobs[jobId].vision;
+        let feels_like_per_hour = draftJobs[jobId].feels_like_per_hour;
+        let call_back = draftJobs[jobId].call_back;
+        let weekly_non_taxable_amount = draftJobs[jobId].weekly_non_taxable_amount;
+        let start_date = draftJobs[jobId].start_date;
+        let as_soon_as = draftJobs[jobId].as_soon_as;
 
-    if (job_name !== null) {
-        document.getElementById("job_nameDraft").value = job_name;
-    }else{
-        document.getElementById("job_nameDraft").value = '';
-    }
-    if (job_type !== null) {
+        if (job_name !== null) {
+            document.getElementById("job_nameDraft").value = job_name;
+        }else{
+            document.getElementById("job_nameDraft").value = '';
+        }
+        if (job_type !== null) {
         var jobtype = job_type;
                         var select = document.getElementById('job_typeDraft');
                         var option = document.createElement('option');
@@ -2990,10 +3628,10 @@
 
                         select.add(option);
                         select.value = jobtype;
-    }else{
-        document.getElementById("job_typeDraft").value = '';
-    }
-    if (preferred_specialty !== null) {
+        }else{
+            document.getElementById("job_typeDraft").value = '';
+        }
+        if (preferred_specialty !== null) {
         var preferredSpecialty = preferred_specialty;
                         var select = document.getElementById('preferred_specialtyDraft');
                         var option = document.createElement('option');
@@ -3002,270 +3640,275 @@
 
                         select.add(option);
                         select.value = preferredSpecialty;
-    }else{
-        document.getElementById("preferred_specialtyDraft").value = '';
-    }
-    if (job_state !== null) {
-        document.getElementById("job_stateDraft").value = job_state;
-    }else{
-        document.getElementById("job_stateDraft").value = '';
-    }
-    if (job_city !== null) {
-        var city = job_city;
-    var select = document.getElementById('job_cityDraft');
-    var option = document.createElement('option');
-    option.value = city;
-    option.text = city;
+            }else{
+                document.getElementById("preferred_specialtyDraft").value = '';
+            }
+            if (job_state !== null) {
+                document.getElementById("job_stateDraft").value = job_state;
+            }else{
+                document.getElementById("job_stateDraft").value = '';
+            }
+            if (job_city !== null) {
+                var city = job_city;
+            var select = document.getElementById('job_cityDraft');
+            var option = document.createElement('option');
+            option.value = city;
+            option.text = city;
 
-    select.add(option);
-    select.value = city;
+            select.add(option);
+            select.value = city;
 
-    }else{
-        document.getElementById("job_cityDraft").value = '';
-    }
-    if (preferred_work_location !== null) {
-        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
-    }else{
-        document.getElementById("preferred_work_locationDraft").value = '';
-    }
-    if (preferred_assignment_duration !== null) {
-        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
-    }else   {
-        document.getElementById("preferred_assignment_durationDraft").value = '';
-    }
-    if (weekly_pay !== null) {
-        document.getElementById("weekly_payDraft").value = weekly_pay;
-    }else{
-        document.getElementById("weekly_payDraft").value = '';
-    }
-    if (description !== null) {
-        document.getElementById("descriptionDraft").value = description;
-    }else{
-        document.getElementById("descriptionDraft").value = '';
-    }
-    if (proffesion !== null) {
-        var proffesionValue = proffesion;
-    var select = document.getElementById('perferred_professionDraft');
-    var option = document.createElement('option');
-    option.value = proffesionValue;
-    option.text = proffesionValue;
-
-    select.add(option);
-    select.value = proffesionValue;
-        //document.getElementById("perferred_professionDraft").value = proffesion;
-    }else{
-        document.getElementById("perferred_professionDraft").value = '';
-    }
-    if (facility_shift_cancelation_policy !== null) {
-        var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
-    var select = document.getElementById('facility_shift_cancelation_policyDraft');
-    var option = document.createElement('option');
-    option.value = facilityShiftCancelationPolicy;
-    option.text = facilityShiftCancelationPolicy;
-    select.add(option);
-    select.value = facilityShiftCancelationPolicy;
-
-    //    document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
-    }else{
-        document.getElementById("facility_shift_cancelation_policyDraft").value = '';
-    }
-    if (traveler_distance_from_facility !== null) {
-        document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
-    }else{
-        document.getElementById("traveler_distance_from_facilityDraft").value = '';
-    }
-    if (clinical_setting !== null) {
-        var ClinicalSettingValue = clinical_setting;
-    var select = document.getElementById('clinical_settingDraft');
-    var option = document.createElement('option');
-    option.value = ClinicalSettingValue;
-    option.text = ClinicalSettingValue;
-
-    select.add(option);
-    select.value = ClinicalSettingValue;
-       // document.getElementById("clinical_settingDraft").value = clinical_setting;
-    }else{
-        document.getElementById("clinical_settingDraft").value = '';
-    }
-    if (Patient_ratio !== null) {
-        document.getElementById("Patient_ratioDraft").value = Patient_ratio;
-    }else{
-        document.getElementById("Patient_ratioDraft").value = '';
-    }
-    if (Unit !== null) {
-        document.getElementById("UnitDraft").value = Unit;
-    }else{
-        document.getElementById("UnitDraft").value = '';
-    }
-    if (scrub_color !== null) {
-        document.getElementById("scrub_colorDraft").value = scrub_color;
-    }else{
-        document.getElementById("scrub_colorDraft").value = '';
-    }
-    if (rto !== null) {
-        document.getElementById("rtoDraft").value = rto;
-    }else{
-        document.getElementById("rtoDraft").value = '';
-    }
-    if (guaranteed_hours !== null) {
-        document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
-    }else{
-        document.getElementById("guaranteed_hoursDraft").value = '';
-    }
-    if (hours_shift !== null) {
-        document.getElementById("hours_shiftDraft").value = hours_shift;
-    }else{
-        document.getElementById("hours_shiftDraft").value = '';
-    }
-    if (weeks_shift !== null) {
-        document.getElementById("weeks_shiftDraft").value = weeks_shift;
-    }else{
-        document.getElementById("weeks_shiftDraft").value = '';
-    }
-    if (referral_bonus !== null) {
-        document.getElementById("referral_bonusDraft").value = referral_bonus;
-    }else{
-        document.getElementById("referral_bonusDraft").value = '';
-    }
-    if (sign_on_bonus !== null) {
-        document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
-    }else{
-        document.getElementById("sign_on_bonusDraft").value = '';
-    }
-    if (completion_bonus !== null) {
-        document.getElementById("completion_bonusDraft").value = completion_bonus;
-    }else{
-        document.getElementById("completion_bonusDraft").value = '';
-    }
-    if (extension_bonus !== null) {
-        document.getElementById("extension_bonusDraft").value = extension_bonus;
-    }else{
-        document.getElementById("extension_bonusDraft").value = '';
-    }
-    if (other_bonus !== null) {
-        document.getElementById("other_bonusDraft").value = other_bonus;
-    }else  {
-        document.getElementById("other_bonusDraft").value = '';
-    }
-    if (actual_hourly_rate !== null) {
-        document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
-    }else {
-        document.getElementById("actual_hourly_rateDraft").value = '';
-    }
-    if (overtime !== null) {
-        document.getElementById("overtimeDraft").value = overtime;
-    } else {
-        document.getElementById("overtimeDraft").value = '';
-    }
-    if (on_call !== null) {
-        document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
-
-    }else {
-        document.getElementById("on_callDraft").value = '';
-    }
-    if (holiday !== null) {
-        document.getElementById("holidayDraft").value = holiday;
-    }else {
-        document.getElementById("holidayDraft").value = '';
-    }
-    if (orientation_rate !== null) {
-        document.getElementById("orientation_rateDraft").value = orientation_rate;
-    }else {
-        document.getElementById("orientation_rateDraft").value = '';
-    }
-    if (terms !== null) {
-        var Terms = terms;
-    var select = document.getElementById('termsDraft');
-    var option = document.createElement('option');
-    option.value = Terms;
-    option.text = Terms;
-
-    select.add(option);
-    select.value = Terms;
-       // document.getElementById("termsDraft").value = terms;
-    }else {
-        document.getElementById("termsDraft").value = '';
-    }
-    if (block_scheduling !== null) {
-        document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
-
-    }else {
-        document.getElementById("block_schedulingDraft").value = '';
-    }
-    if (float_requirement !== null) {
-        document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
-
-    }else {
-        document.getElementById("float_requirementDraft").value = '';
-    }
-    if (contract_termination_policy !== null) {
-        document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
-    }else {
-        document.getElementById("contract_termination_policyDraft").value = '';
-    }
-    if (Emr !== null) {
-
-
-        var EmrValue = Emr;
-    var select = document.getElementById('emrDraft');
-    var option = document.createElement('option');
-    option.value = EmrValue;
-    option.text = EmrValue;
-
-    select.add(option);
-    select.value = EmrValue;
-
-
-
-    }else {
-        document.getElementById("emrDraft").value = '';
-    }
-    if (four_zero_one_k !== null) {
-        document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
-
-    }else {
-        document.getElementById("four_zero_one_kDraft").value = '';
-    }
-    if (health_insaurance !== null) {
+            }else{
+                document.getElementById("job_cityDraft").value = '';
+            }
+            if (preferred_work_location !== null) {
+                document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+            }else{
+                document.getElementById("preferred_work_locationDraft").value = '';
+            }
+            if (preferred_assignment_duration !== null) {
+                document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+            }else   {
+                document.getElementById("preferred_assignment_durationDraft").value = '';
+            }
+            if (weekly_pay !== null) {
+                document.getElementById("weekly_payDraft").value = weekly_pay;
+            }else{
+                document.getElementById("weekly_payDraft").value = '';
+            }
+            if (description !== null) {
+                document.getElementById("descriptionDraft").value = description;
+            }else{
+                document.getElementById("descriptionDraft").value = '';
+            }
+            if (proffesion !== null) {
+                var proffesionValue = proffesion;
+            var select = document.getElementById('perferred_professionDraft');
+            var option = document.createElement('option');
+            option.value = proffesionValue;
+            option.text = proffesionValue;
+            
+            select.add(option);
+            select.value = proffesionValue;
+                //document.getElementById("perferred_professionDraft").value = proffesion;
+            }else{
+                document.getElementById("perferred_professionDraft").value = '';
+            }
+            if (facility_shift_cancelation_policy !== null) {
+                var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
+            var select = document.getElementById('facility_shift_cancelation_policyDraft');
+            var option = document.createElement('option');
+            option.value = facilityShiftCancelationPolicy;
+            option.text = facilityShiftCancelationPolicy;
+            select.add(option);
+            select.value = facilityShiftCancelationPolicy;
+            
+            //    document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+            }else{
+                document.getElementById("facility_shift_cancelation_policyDraft").value = '';
+            }
+            if (traveler_distance_from_facility !== null) {
+                document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
+            }else{
+                document.getElementById("traveler_distance_from_facilityDraft").value = '';
+            }
+            if (clinical_setting !== null) {
+                var ClinicalSettingValue = clinical_setting;
+            var select = document.getElementById('clinical_settingDraft');
+            var option = document.createElement('option');
+            option.value = ClinicalSettingValue;
+            option.text = ClinicalSettingValue;
+            
+            select.add(option);
+            select.value = ClinicalSettingValue;
+               // document.getElementById("clinical_settingDraft").value = clinical_setting;
+            }else{
+                document.getElementById("clinical_settingDraft").value = '';
+            }
+            if (Patient_ratio !== null) {
+                document.getElementById("Patient_ratioDraft").value = Patient_ratio;
+            }else{
+                document.getElementById("Patient_ratioDraft").value = '';
+            }
+            if (Unit !== null) {
+                document.getElementById("UnitDraft").value = Unit;
+            }else{
+                document.getElementById("UnitDraft").value = '';
+            }
+            if (scrub_color !== null) {
+                document.getElementById("scrub_colorDraft").value = scrub_color;
+            }else{
+                document.getElementById("scrub_colorDraft").value = '';
+            }
+            if (rto !== null) {
+                document.getElementById("rtoDraft").value = rto;
+            }else{
+                document.getElementById("rtoDraft").value = '';
+            }
+            if (guaranteed_hours !== null) {
+                document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
+            }else{
+                document.getElementById("guaranteed_hoursDraft").value = '';
+            }
+            if (hours_shift !== null) {
+                document.getElementById("hours_shiftDraft").value = hours_shift;
+            }else{
+                document.getElementById("hours_shiftDraft").value = '';
+            }
+            if (weeks_shift !== null) {
+                document.getElementById("weeks_shiftDraft").value = weeks_shift;
+            }else{
+                document.getElementById("weeks_shiftDraft").value = '';
+            }
+            if (referral_bonus !== null) {
+                document.getElementById("referral_bonusDraft").value = referral_bonus;
+            }else{
+                document.getElementById("referral_bonusDraft").value = '';
+            }
+            if (sign_on_bonus !== null) {
+                document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
+            }else{
+                document.getElementById("sign_on_bonusDraft").value = '';
+            }
+            if (completion_bonus !== null) {
+                document.getElementById("completion_bonusDraft").value = completion_bonus;
+            }else{
+                document.getElementById("completion_bonusDraft").value = '';
+            }
+            if (extension_bonus !== null) {
+                document.getElementById("extension_bonusDraft").value = extension_bonus;
+            }else{
+                document.getElementById("extension_bonusDraft").value = '';
+            }
+            if (other_bonus !== null) {
+                document.getElementById("other_bonusDraft").value = other_bonus;
+            }else  {
+                document.getElementById("other_bonusDraft").value = '';
+            }
+            if (actual_hourly_rate !== null) {
+                document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
+            }else {
+                document.getElementById("actual_hourly_rateDraft").value = '';
+            }
+            if (overtime !== null) {
+                document.getElementById("overtimeDraft").value = overtime;
+            } else {
+                document.getElementById("overtimeDraft").value = '';
+            }
+            if (on_call !== null) {
+                document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("on_callDraft").value = '';
+            }
+            if (holiday !== null) {
+                document.getElementById("holidayDraft").value = holiday;
+            }else {
+                document.getElementById("holidayDraft").value = '';
+            }
+            if (orientation_rate !== null) {
+                document.getElementById("orientation_rateDraft").value = orientation_rate;
+            }else {
+                document.getElementById("orientation_rateDraft").value = '';
+            }
+            if (terms !== null) {
+                var Terms = terms;
+            var select = document.getElementById('termsDraft');
+            var option = document.createElement('option');
+            option.value = Terms;
+            option.text = Terms;
+            
+            select.add(option);
+            select.value = Terms;
+               // document.getElementById("termsDraft").value = terms;
+            }else {
+                document.getElementById("termsDraft").value = '';
+            }
+            if (block_scheduling !== null) {
+                document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("block_schedulingDraft").value = '';
+            }
+            if (float_requirement !== null) {
+                document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("float_requirementDraft").value = '';
+            }
+            if (contract_termination_policy !== null) {
+                document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
+            }else {
+                document.getElementById("contract_termination_policyDraft").value = '';
+            }
+            if (Emr !== null) {
+            
+            
+                var EmrValue = Emr;
+            var select = document.getElementById('emrDraft');
+            var option = document.createElement('option');
+            option.value = EmrValue;
+            option.text = EmrValue;
+            
+            select.add(option);
+            select.value = EmrValue;
+            
+            
+            
+            }else {
+                document.getElementById("emrDraft").value = '';
+            }
+            if (four_zero_one_k !== null) {
+                document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("four_zero_one_kDraft").value = '';
+            }
+            if (health_insaurance !== null) {
         document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
 
-    }else {
-        document.getElementById("health_insauranceDraft").value = '';
+            }else {
+                document.getElementById("health_insauranceDraft").value = '';
+            }
+            if (dental !== null) {
+                document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("dentalDraft").value = '';
+            }
+            if (vision !== null) {
+                document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("visionDraft").value = '';
+            }
+            if(feels_like_per_hour !== null){
+                document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
+            }else {
+                document.getElementById("feels_like_per_hourDraft").value = '';
+            }
+            if (call_back !== null) {
+                document.getElementById("call_backDraft").value = call_back;
+            }else {
+                document.getElementById("call_backDraft").value = '';
+            }
+            if (weekly_non_taxable_amount !== null) {
+                document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
+            }else {
+                document.getElementById("weekly_non_taxable_amountDraft").value = '';
+            }
+            if (start_date !== null) {
+                document.getElementById("start_dateDraft").value = start_date;
+            }else {
+                document.getElementById("start_dateDraft").value = '';
+            }
+            if (as_soon_as !== null) {
+                document.getElementById("as_soon_asDraft").checked = as_soon_as;
+            }else {
+                document.getElementById("as_soon_asDraft").checked = '';
+            }
     }
-    if (dental !== null) {
-        document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
-
-    }else {
-        document.getElementById("dentalDraft").value = '';
-    }
-    if (vision !== null) {
-        document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
-
-    }else {
-        document.getElementById("visionDraft").value = '';
-    }
-    if (call_back !== null) {
-        document.getElementById("call_backDraft").value = call_back;
-    }else {
-        document.getElementById("call_backDraft").value = '';
-    }
-    if (weekly_non_taxable_amount !== null) {
-        document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
-    }else {
-        document.getElementById("weekly_non_taxable_amountDraft").value = '';
-    }
-    if (start_date !== null) {
-        document.getElementById("start_dateDraft").value = start_date;
-    }else {
-        document.getElementById("start_dateDraft").value = '';
-    }
-    if (as_soon_as !== null) {
-        document.getElementById("as_soon_asDraft").checked = as_soon_as;
-    }else {
-        document.getElementById("as_soon_asDraft").checked = '';
-    }
-    }
-
+        
 
 
     const slidePage = document.querySelector(".slide-page");
@@ -3274,7 +3917,9 @@
     const nextBtnSec = document.querySelector(".next-1");
     const prevBtnThird = document.querySelector(".prev-2");
     const nextBtnThird = document.querySelector(".next-2");
+    const nextBtnForth = document.querySelector(".next-3");
     const prevBtnFourth = document.querySelector(".prev-3");
+    const prevBtnFifth = document.querySelector(".prev-4");
     const submitBtn = document.querySelector(".submit");
     const saveDrftBtn = document.querySelectorAll(".saveDrftBtn");
 
@@ -3624,7 +4269,7 @@
         var health_insaurance = document.getElementById("health_insaurance").value;
         var dental = document.getElementById("dental").value;
         var vision = document.getElementById("vision").value;
-        //var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
+        var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
         var call_back = document.getElementById("call_back").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
@@ -3683,13 +4328,13 @@
             $('.help-block-vision').text('');
         }
 
-        // if (feels_like_per_hour.trim() === '') {
-        //     $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
-        //     $('.help-block-feels_like_per_hour').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-feels_like_per_hour').text('');
-        // }
+        if (feels_like_per_hour.trim() === '') {
+            $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
+            $('.help-block-feels_like_per_hour').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-feels_like_per_hour').text('');
+        }
 
         if (call_back.trim() === '') {
             $('.help-block-call_back').text('Please enter the call back');
@@ -3754,11 +4399,39 @@
 
     }
 
+    function validateFifth() {
+        var access = true;
+        var facility_city = document.getElementById("facility_city").value;
+        var facility_state = document.getElementById("facility_state").value;
+        
+        if (facility_state.trim() === '') {
+            $('.help-block-facility_state').text('Please enter the facility state');
+            $('.help-block-facility_state').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_state').text('');
+        }
+
+        if (facility_city.trim() === '') {
+            $('.help-block-facility_city').text('Please enter the facility city');
+            $('.help-block-facility_city').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_city').text('');
+        }
+
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     nextBtnFirst.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateFirst()) {
-            slidePage.style.marginLeft = "-25%";
+            slidePage.style.marginLeft = "-20%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
@@ -3770,7 +4443,7 @@
     nextBtnSec.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateseconde()) {
-            slidePage.style.marginLeft = "-50%";
+            slidePage.style.marginLeft = "-40%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
@@ -3780,7 +4453,17 @@
     nextBtnThird.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateThird()) {
-            slidePage.style.marginLeft = "-75%";
+            slidePage.style.marginLeft = "-60%";
+            bullet[current - 1].classList.add("active");
+            progressCheck[current - 1].classList.add("active");
+            progressText[current - 1].classList.add("active");
+            current += 1;
+        }
+    });
+    nextBtnForth.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateThird()) {
+            slidePage.style.marginLeft = "-80%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
@@ -3790,6 +4473,16 @@
     submitBtn.addEventListener("click", function(event) {
 
         event.preventDefault();
+
+        let certif_all_values = document.getElementById("certificateAllValues");
+        if (certif_all_values) {
+            certif_all_values.value = certificateStr;
+        }
+        let vaccin_all_values = document.getElementById("vaccinationsAllValues");
+        if (vaccin_all_values) {
+            vaccin_all_values.value = vaccinationStr;
+        }
+
         if (validateForth()) {
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
@@ -3835,7 +4528,7 @@
     });
     prevBtnThird.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePage.style.marginLeft = "-25%";
+        slidePage.style.marginLeft = "-20%";
         bullet[current - 2].classList.remove("active");
         progressCheck[current - 2].classList.remove("active");
         progressText[current - 2].classList.remove("active");
@@ -3844,7 +4537,15 @@
     prevBtnFourth.addEventListener("click", function(event) {
         event.preventDefault();
 
-        slidePage.style.marginLeft = "-50%";
+        slidePage.style.marginLeft = "-40%";
+        bullet[current - 2].classList.remove("active");
+        progressCheck[current - 2].classList.remove("active");
+        progressText[current - 2].classList.remove("active");
+        current -= 1;
+    });
+    prevBtnFifth.addEventListener("click", function(event) {
+        event.preventDefault();
+        slidePage.style.marginLeft = "-60%";
         bullet[current - 2].classList.remove("active");
         progressCheck[current - 2].classList.remove("active");
         progressText[current - 2].classList.remove("active");
@@ -3859,13 +4560,15 @@
     const nextBtnSecDraft = document.querySelector(".next-1Draft");
     const prevBtnThirdDraft = document.querySelector(".prev-2Draft");
     const nextBtnThirdDraft = document.querySelector(".next-2Draft");
+    const nextBtnForthDraft = document.querySelector(".next-3Draft");
     const prevBtnFourthDraft = document.querySelector(".prev-3Draft");
+    const prevBtnFifthDraft = document.querySelector(".prev-4Draft");
     const submitBtnDraft = document.querySelector(".submitDraft");
     const saveDrftBtnDraft = document.querySelectorAll(".saveDrftBtnDraft");
     console.log(saveDrftBtnDraft);
-    const progressTextDraft = document.querySelectorAll(".step p");
-    const progressCheckDarft = document.querySelectorAll(".step .check");
-    const bulletDraft = document.querySelectorAll(".step .bullet");
+    const progressTextDraft = document.querySelectorAll(".stepDraft p");
+    const progressCheckDraft = document.querySelectorAll(".stepDraft .check");
+    const bulletDraft = document.querySelectorAll(".stepDraft .bullet");
 
     let currentDraft = 1;
 
@@ -4217,7 +4920,7 @@
         var health_insaurance = document.getElementById("health_insauranceDraft").value;
         var dental = document.getElementById("dentalDraft").value;
         var vision = document.getElementById("visionDraft").value;
-        // var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
+        var feels_like_per_hour = document.getElementById("feels_like_per_hourDraft").value;
         var call_back = document.getElementById("call_backDraft").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountDraft").value;
@@ -4276,13 +4979,13 @@
             $('.help-block-vision').text('');
         }
 
-        // if (feels_like_per_hour.trim() === '') {
-        //     $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
-        //     $('.help-block-feels_like_per_hour').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-feels_like_per_hour').text('');
-        // }
+        if (feels_like_per_hour.trim() === '') {
+            $('.help-block-feels_like_per_hourDraft').text('Please enter the feels like per hour');
+            $('.help-block-feels_like_per_hourDraft').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-feels_like_per_hourDraft').text('');
+        }
 
         if (call_back.trim() === '') {
             $('.help-block-call_back').text('Please enter the call back');
@@ -4347,12 +5050,40 @@
 
     }
 
+    function validateFifthDraft() {
+        var access = true;
+        var facility_cityDraft = document.getElementById("facility_cityDraft").value;
+        var facility_stateDraft = document.getElementById("facility_stateDraft").value;
+        
+        if (facility_stateDraft.trim() === '') {
+            $('.help-block-facility_stateDraft').text('Please enter the facility state');
+            $('.help-block-facility_stateDraft').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_stateDraft').text('');
+        }
+
+        if (facility_cityDraft.trim() === '') {
+            $('.help-block-facility_cityDraft').text('Please enter the facility city');
+            $('.help-block-facility_cityDraft').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_cityDraft').text('');
+        }
+
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     nextBtnFirstDraft.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateFirstDraft()) {
-            slidePageDraft.style.marginLeft = "-25%";
-            bulletDraft[current - 1].classList.add("active");
-            progressCheckDarft[currentDraft - 1].classList.add("active");
+            slidePageDraft.style.marginLeft = "-20%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
         }
@@ -4362,9 +5093,9 @@
     nextBtnSecDraft.addEventListener("click", function(event) {
         event.preventDefault();
         if (validatesecondeDraft()) {
-            slidePageDraft.style.marginLeft = "-50%";
-            bulletDraft[current - 1].classList.add("active");
-            progressCheck[currentDraft - 1].classList.add("active");
+            slidePageDraft.style.marginLeft = "-40%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
         }
@@ -4373,9 +5104,19 @@
     nextBtnThirdDraft.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateThirdDraft()) {
-            slidePageDraft.style.marginLeft = "-75%";
-            bulletDraft[current - 1].classList.add("active");
-            progressCheck[currentDraft - 1].classList.add("active");
+            slidePageDraft.style.marginLeft = "-60%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
+            progressTextDraft[currentDraft - 1].classList.add("active");
+            currentDraft += 1;
+        }
+    });
+    nextBtnForthDraft.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateFifthDraft()) {
+            slidePageDraft.style.marginLeft = "-80%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
         }
@@ -4384,9 +5125,19 @@
         event.preventDefault();
         document.getElementById("activeDraft").value = true;
         document.getElementById("is_openDraft").value = true;
+
+        let certif_all_values = document.getElementById("certificateAllValuesDraft");
+        if (certif_all_values) {
+            certif_all_values.value = certificateStr;
+        }
+        let vaccin_all_values = document.getElementById("vaccinationsAllValuesDraft");
+        if (vaccin_all_values) {
+            vaccin_all_values.value = vaccinationStr;
+        }
+
         if (validateForthDraft()) {
             bulletDraft[currentDraft - 1].classList.add("active");
-            progressCheckDarft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
 
@@ -4416,23 +5167,31 @@
         event.preventDefault();
         slidePageDraft.style.marginLeft = "0%";
         bulletDraft[currentDraft - 2].classList.remove("active");
-        progressCheck[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
         progressTextDraft[currentDraft - 2].classList.remove("active");
         currentDraft -= 1;
     });
     prevBtnThirdDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageDraft.style.marginLeft = "-25%";
+        slidePageDraft.style.marginLeft = "-20%";
         bulletDraft[currentDraft - 2].classList.remove("active");
-        progressCheck[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
         progressTextDraft[currentDraft - 2].classList.remove("active");
         currentDraft -= 1;
     });
     prevBtnFourthDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageDraft.style.marginLeft = "-50%";
+        slidePageDraft.style.marginLeft = "-40%";
         bulletDraft[currentDraft - 2].classList.remove("active");
-        progressCheck[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
+        progressTextDraft[currentDraft - 2].classList.remove("active");
+        currentDraft -= 1;
+    });
+    prevBtnFifthDraft.addEventListener("click", function(event) {
+        event.preventDefault();
+        slidePageDraft.style.marginLeft = "-60%";
+        bulletDraft[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
         progressTextDraft[currentDraft - 2].classList.remove("active");
         currentDraft -= 1;
     });
@@ -4440,18 +5199,20 @@
 
 // for job editing
 
-const slidePageEdit = document.querySelector(".slide-pageEdit");
+    const slidePageEdit = document.querySelector(".slide-pageEdit");
     const nextBtnFirstEdit = document.querySelector(".firstNextEdit");
     const prevBtnSecEdit = document.querySelector(".prev-1Edit");
     const nextBtnSecEdit = document.querySelector(".next-1Edit");
     const prevBtnThirdEdit = document.querySelector(".prev-2Edit");
     const nextBtnThirdEdit = document.querySelector(".next-2Edit");
+    const nextBtnForthEdit = document.querySelector(".next-3Edit");
     const prevBtnFourthEdit = document.querySelector(".prev-3Edit");
+    const prevBtnFifthEdit = document.querySelector(".prev-4Edit");
     const submitBtnEdit = document.querySelector(".submitEdit");
     const saveDrftBtnEdit = document.querySelectorAll(".saveDrftBtnEdit");
-    const progressTextEdit = document.querySelectorAll(".step p");
-    const progressCheckEdit = document.querySelectorAll(".step .check");
-    const bulletEdit = document.querySelectorAll(".step .bullet");
+    const progressTextEdit = document.querySelectorAll(".stepEdit p");
+    const progressCheckEdit = document.querySelectorAll(".stepEdit .check");
+    const bulletEdit = document.querySelectorAll(".stepEdit .bullet");
 
     let currentEdit = 1;
 
@@ -4802,7 +5563,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         var health_insaurance = document.getElementById("health_insauranceEdit").value;
         var dental = document.getElementById("dentalEdit").value;
         var vision = document.getElementById("visionEdit").value;
-        // var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
+         var feels_like_per_hour = document.getElementById("feels_like_per_hourEdit").value;
         var call_back = document.getElementById("call_backEdit").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountEdit").value;
@@ -4861,6 +5622,14 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
             $('.help-block-vision').text('');
         }
 
+        if (feels_like_per_hour.trim() === '') {
+            $('.help-block-feels_like_per_hourEdit').text('Please enter the feels like per hour');
+            $('.help-block-feels_like_per_hourEdit').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-feels_like_per_hour').text('');
+        }
+
 
 
         if (call_back.trim() === '') {
@@ -4914,13 +5683,43 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
 
     }
 
+    function validateFifthEdit() {
+        var access = true;
+        var facility_cityEdit = document.getElementById("facility_cityEdit").value;
+        var facility_stateEdit = document.getElementById("facility_stateEdit").value;
+        
+        
+        if (facility_stateEdit.trim() === '') {
+            $('.help-block-facility_stateEdit').text('Please enter the facility state');
+            $('.help-block-facility_stateEdit').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_stateEdit').text('');
+        }
+
+        if (facility_cityEdit.trim() === '') {
+            $('.help-block-facility_cityEdit').text('Please enter the facility city');
+            $('.help-block-facility_cityEdit').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_cityEdit').text('');
+        }
+
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     nextBtnFirstEdit.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateFirstEdit()) {
-            slidePageEdit.style.marginLeft = "-25%";
-            bulletEdit[current - 1].classList.add("active");
-            progressCheckDarft[currentEdit - 1].classList.add("active");
+            slidePageEdit.style.marginLeft = "-20%";
+            bulletEdit[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
         }
@@ -4930,9 +5729,9 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     nextBtnSecEdit.addEventListener("click", function(event) {
         event.preventDefault();
         if (validatesecondeEdit()) {
-            slidePageEdit.style.marginLeft = "-50%";
-            bulletEdit[current - 1].classList.add("active");
-            progressCheck[currentEdit - 1].classList.add("active");
+            slidePageEdit.style.marginLeft = "-40%";
+            bulletEdit[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
         }
@@ -4941,20 +5740,39 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     nextBtnThirdEdit.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateThirdEdit()) {
-            slidePageEdit.style.marginLeft = "-75%";
+            slidePageEdit.style.marginLeft = "-60%";
             bulletEdit[current - 1].classList.add("active");
             progressCheck[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
         }
     });
+    nextBtnForthEdit.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateFifthEdit()) {
+            slidePageEdit.style.marginLeft = "-80%";
+            bulletEdit[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
+            progressTextEdit[currentEdit - 1].classList.add("active");
+            currentEdit += 1;
+        }
+    });
     submitBtnEdit.addEventListener("click", function(event) {
         event.preventDefault();
+        let certif_all_values = document.getElementById("certificateAllValuesEdit");
+        if (certif_all_values) {
+            certif_all_values.value = certificateStr;
+        }
+        let vaccin_all_values = document.getElementById("vaccinationsAllValuesEdit");
+        if (vaccin_all_values) {
+            vaccin_all_values.value = vaccinationStr;
+        }
         document.getElementById("activeEdit").value = true;
         document.getElementById("is_openEdit").value = true;
+
         if (validateForthEdit()) {
             bulletEdit[currentEdit - 1].classList.add("active");
-            progressCheckDarft[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
             event.target.form.submit();
@@ -4983,23 +5801,31 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         event.preventDefault();
         slidePageEdit.style.marginLeft = "0%";
         bulletEdit[currentEdit - 2].classList.remove("active");
-        progressCheck[currentEdit - 2].classList.remove("active");
+        progressCheckEdit[currentEdit - 2].classList.remove("active");
         progressTextEdit[currentEdit - 2].classList.remove("active");
         currentEdit -= 1;
     });
     prevBtnThirdEdit.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageEdit.style.marginLeft = "-25%";
+        slidePageEdit.style.marginLeft = "-20%";
         bulletEdit[currentEdit - 2].classList.remove("active");
-        progressCheck[currentEdit - 2].classList.remove("active");
+        progressCheckEdit[currentEdit - 2].classList.remove("active");
         progressTextEdit[currentEdit - 2].classList.remove("active");
         currentEdit -= 1;
     });
     prevBtnFourthEdit.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageEdit.style.marginLeft = "-50%";
+        slidePageEdit.style.marginLeft = "-40%";
         bulletEdit[currentEdit - 2].classList.remove("active");
         progressCheck[currentEdit - 2].classList.remove("active");
+        progressTextEdit[currentEdit - 2].classList.remove("active");
+        currentEdit -= 1;
+    });
+    prevBtnFifthEdit.addEventListener("click", function(event) {
+        event.preventDefault();
+        slidePageEdit.style.marginLeft = "-60%";
+        bulletEdit[currentEdit - 2].classList.remove("active");
+        progressCheckEdit[currentEdit - 2].classList.remove("active");
         progressTextEdit[currentEdit - 2].classList.remove("active");
         currentEdit -= 1;
     });
@@ -5134,6 +5960,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                         document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
                         document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';
                         document.getElementById("visionEdit").value = (result.vision == 0) ? 'No' : 'Yes';
+                        document.getElementById("feels_like_per_hourEdit").value = result.feels_like_per_hour;
                         document.getElementById("call_backEdit").value = result.call_back;
                         document.getElementById("weekly_non_taxable_amountEdit").value = result.weekly_non_taxable_amount;
                         document.getElementById("hours_shiftEdit").value = result.hours_shift;
@@ -5153,6 +5980,200 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         }
 
 
+</script>
+
+{{-- script managing certifs  --}}
+
+<script>
+    var certificate = {};
+   
+    function addcertifications(type){
+        var id;
+        var idtitle;
+        if (type == 'from_add') {
+            id  = $('#certificate');
+            idtitle = "certificate";
+        }else if (type == 'from_draft'){
+           id = $('#certificateDraft');
+           idtitle = "certificateDraft";
+        }else{
+            id = $('#certificateEdit');
+            idtitle = "certificateEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the certificate please.',
+                time: 3
+            });
+        } else {
+            if (!certificate.hasOwnProperty(id.val())) {
+                
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                certificate[id.val()] = optionText; 
+                
+        certificateStr = Object.values(certificate).join(', '); 
+        // console.log(certificate);
+               id.val('');
+                list_certifications();
+            }
+        }
+
+    }
+
+    function list_certifications() {
+        var str = '';
+        // let certificatename = "";
+        // certificatename = Object.values(certificate).join(', ');
+        // console.log(certificatename);
+        // document.getElementById("certificateEdit").value = certificatename;
+        // console.log(certificate);
+
+        for (const key in certificate) {
+            console.log(certificate);
+
+            let certificatename = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['Certification']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (certificate.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        certificatename = item.title;
+                    }
+                });
+                const value = certificate[key];
+                str += '<ul>';
+                str += '<li class="w-50">' + certificatename + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-certificate" data-key="' + key + '" onclick="remove_certificate(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.certificate-content').html(str);
+    }
+
+function remove_certificate(obj, key) {
+    if (certificate.hasOwnProperty(key)) {
+        delete certificate[key];
+
+         // to dlete the removed certificate from the hidden input
+         certificateStr = Object.values(certificate).join(', ');
+
+        list_certifications(); // Refresh the list to reflect the deletion
+        notie.alert({
+            type: 'success',
+            text: '<i class="fa fa-check"></i> Certificate removed successfully.',
+            time: 3
+        });
+    } else {
+        notie.alert({
+            type: 'error',
+            text: '<i class="fa fa-times"></i> Certificate not found.',
+            time: 3
+        });
+    }
+}
+
+
+</script>
+
+{{-- script managing vaccinations  --}}
+<script>
+    var vaccinations = {};
+
+    function addvacc(type) {
+        let id ;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#vaccinations');
+            idtitle = "vaccinations";
+        }else if (type == 'from_draft'){
+            id = $('#vaccinationsDraft');
+            idtitle = "vaccinationsDraft";
+        }else{
+            id = $('#vaccinationsEdit');
+            idtitle = "vaccinationsEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the vaccinations please.',
+                time: 3
+            });
+        } else {
+            if (!vaccinations.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                vaccinations[id.val()] = optionText; 
+                vaccinationStr = Object.values(vaccinations).join(', ');
+                id.val('');
+                list_vaccinations();
+            }
+        }
+    }
+
+    function list_vaccinations() {
+        var str = '';
+        console.log(vaccinations);
+
+        for (const key in vaccinations) {
+            console.log(vaccinations);
+
+            let vaccinationsname = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['Vaccinations']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (vaccinations.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        vaccinationsname = item.title;
+                    }
+                });
+                const value = vaccinations[key];
+                str += '<ul>';
+                str += '<li>' + vaccinationsname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-vaccinations" data-key="' + key + '" onclick="remove_vaccinations(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.vaccinations-content').html(str);
+    }
+
+    function remove_vaccinations(obj, key) {
+    if (vaccinations.hasOwnProperty(key)) {
+        delete vaccinations[key]; // Remove the vaccination from the object
+        vaccinationStr = Object.values(vaccinations).join(', '); // Update the hidden input value
+        list_vaccinations(); // Refresh the list to reflect the deletion
+        notie.alert({
+            type: 'success',
+            text: '<i class="fa fa-check"></i> Vaccination removed successfully.',
+            time: 3
+        });
+    } else {
+        notie.alert({
+            type: 'error',
+            text: '<i class="fa fa-times"></i> Vaccination not found.',
+            time: 3
+        });
+    }
+}
 </script>
 
 <style>
@@ -5209,11 +6230,11 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
 
     .container .form-outer form {
         display: flex;
-        width: 400%;
+        width: 500%;
     }
 
     .form-outer form .page {
-        width: 25%;
+        width: 20%;
         transition: margin-left 0.3s ease-in-out;
     }
 
