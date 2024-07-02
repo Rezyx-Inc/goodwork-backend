@@ -453,11 +453,14 @@
                                             {{-- End Scrub Color --}}
                                             {{-- RTO --}}
                                             <div class="ss-form-group col-11">
-                                                <label>RTO</label>
-                                                <input id="rto" type="text" name="rto"
-                                                    placeholder="Enter RTO"
-                                                    value=" {{ !empty($worker->rto) ? $worker->rto : '' }}"
-                                                    >
+                                                <label>Rto</label>
+                                                        <select name="rto" id="rto">
+                                                            <option value="{{ !empty($worker->rto) ? $worker->rto : '' }}">{{ !empty($worker->rto) ? $worker->rto : 'Select Rto' }} </option>
+                                                            <option value="allowed">Allowed
+                                                            </option>
+                                                            <option value="not allowed">Not Allowed
+                                                            </option>
+                                                        </select>
                                             </div>
                                             <span class="help-block-rto"></span>
                                             {{-- End RTO --}}

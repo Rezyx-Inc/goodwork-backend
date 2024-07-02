@@ -245,7 +245,9 @@
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['block_scheduling']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Block Scheduling</span>
-        <h6>{{$model->block_scheduling}} </h6>
+
+       
+        <h6>{{$model->block_scheduling == '1' ? 'Yes' : 'No'}} </h6>
         </li>
         <li>
             <p data-target="binary" data-title="Do you want Block Scheduling?" data-name="block_scheduling" onclick="open_modal(this)">Do you want Block Scheduling?</p>
@@ -254,7 +256,8 @@
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['float_requirement']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Float Requirements</span>
-        <h6>{{$model->float_requirement}} </h6>
+        <h6>{{$model->float_requirement == '1' ? 'Yes' : 'No'}} </h6>
+       
         </li>
         <li>
             <p data-target="binary" data-title="Are you willing float to?" data-name="float_requirement" onclick="open_modal(this)">Are you willing float to?</p>
@@ -373,31 +376,27 @@
             <p  data-target="dropdown" data-title="States you'd like to work?" data-filter="State" data-name="worker_facility_state" onclick="open_modal(this)">States you'd like to work?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Interview dates</span>
-        <h6>IInterview dates </h6>
-        </li>
-        <li>
-            <p>Any days you're not available?</p>
-        </li>
-    </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($model->as_soon_as) ? (($matches['as_soon_as']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') : (($matches['start_date']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') }}">
         <li>
         <span>Start date</span>
         <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
         </li>
         <li>
-            <p>When can you start?</p>
+            @if($model->as_soon_as)
+            <p data-target="binary" data-title="Can you start as soon as possible?" data-name="worker_as_soon_as" onclick="open_modal(this)">Can you start as soon as possible?</p>
+            @else
+            <p  data-target="date" data-title="When can you start?" data-name="worker_start_date" onclick="open_modal(this)">When can you start?</p>
+            @endif
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['rto']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>RTO</span>
         <h6>{{$model->rto}} </h6>
         </li>
         <li>
-            <p>Any time off?</p>
+            <p data-target="input" data-title="Any time off?" data-placeholder="Any time off?" data-name="rto" onclick="open_modal(this)">Any time off?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -409,7 +408,7 @@
             <p data-target="dropdown" data-title="Fav shift?" data-filter="shift_time_of_day" data-name="worker_shift_time_of_day" onclick="open_modal(this)">Fav shift?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['hours_per_week']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Hours/Week</span>
         <h6>{{$model->hours_per_week}} </h6>
@@ -418,7 +417,7 @@
             <p data-target="input" data-title="Ideal hours per week?" data-placeholder="Enter number Of Hours/Week" data-name="worker_hours_per_week" onclick="open_modal(this)">Ideal hours per week?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['guaranteed_hours']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Guaranteed Hours</span>
         <h6>{{$model->guaranteed_hours}} </h6>
@@ -427,7 +426,7 @@
             <p data-target="input" data-title="Open to jobs with no guaranteed hours?" data-placeholder="Enter Guaranteed Hours" data-name="worker_guaranteed_hours" onclick="open_modal(this)">Open to jobs with no guaranteed hours?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['hours_shift']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Hours/Shift</span>
         <h6>{{$model->hours_shift}} </h6>
@@ -436,7 +435,7 @@
             <p data-target="input" data-title="Preferred hours per shift" data-placeholder="Enter number Of Hours/Shift" data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours per shift</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['preferred_assignment_duration']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Weeks/Assignment</span>
         <h6>{{$model->preferred_assignment_duration}} </h6>
@@ -454,7 +453,7 @@
             <p data-target="input" data-title="Ideal shifts per week" data-placeholder="Enter ideal shift per week" data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per week</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['referral_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Referral Bonus</span>
         <h6>{{$model->referral_bonus}} </h6>
@@ -463,7 +462,7 @@
             <p data-target="input" data-title="# of people you have referred?" data-placeholder="# of people you have referred?" data-name="worker_referral_bonus" onclick="open_modal(this)"># of people you have referred?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['sign_on_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Sign-On Bonus</span>
         <h6>${{$model->sign_on_bonus}} </h6>
@@ -472,16 +471,16 @@
             <p data-target="input" data-title="What kind of bonus do you expect?" data-placeholder="What kind of bonus do you expect?" data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of bonus do you expect?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['completion_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Completion Bonus</span>
         <h6>${{$model->completion_bonus}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="What kind of bonus do you deserve?" data-placeholder="What kind of bonus do you deserve?" data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of bonus do you deserve?</p>
+            <p data-target="input" data-title="What kind of bonus do you deserve?" data-placeholder="What kind of bonus do you deserve?" data-name="worker_completion_bonus" onclick="open_modal(this)">What kind of bonus do you deserve?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['extension_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Extension Bonus</span>
         <h6>${{$model->extension_bonus}} </h6>
@@ -490,7 +489,7 @@
             <p data-target="input" data-title="What are you comparing this to?" data-placeholder="What are you comparing this to?" data-name="worker_extension_bonus" onclick="open_modal(this)">What are you comparing this to?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['other_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Other Bonus</span>
         <h6>${{$model->other_bonus}} </h6>
@@ -499,95 +498,117 @@
             <p data-target="input" data-title="Other bonuses you want?" data-placeholder="Other bonuses you want?" data-name="worker_other_bonus" onclick="open_modal(this)">Other bonuses you want?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['four_zero_one_k']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>401K</span>
-        <h6>{{$model->four_zero_one_k}} </h6>
+        
+        <h6>{{$model->four_zero_one_k == '1' ? 'Yes' : 'No'}} </h6>
+        
         </li>
         <li>
-            <p data-target="dropdown" data-title="How much do you want this?" data-filter="401k" data-name="how_much_k" onclick="open_modal(this)">How much do you want this?</p>
+            <p data-target="binary" data-placeholder="How much do you want this?" data-title="How much do you want this?"  data-name="worker_four_zero_one_k" onclick="open_modal(this)">How much do you want this?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['health_insaurance']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Health Insurance</span>
-        <h6>{{$model->health_insaurance}} </h6>
+        
+        <h6> {{$model->health_insaurance == '1' ? 'Yes' : 'No'}} </h6>
         </li>
         <li>
-            <p data-target="dropdown" data-title="How much do you want this?" data-filter="HealthInsurance" data-name="worker_health_insurance" onclick="open_modal(this)">How much do you want this?</p>
+            <p data-target="binary" data-title="How much do you want this?" data-name="worker_health_insurance" data-placeholder="How much do you want this?" onclick="open_modal(this)">How much do you want this?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['dental']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Dental</span>
-        <h6>{{$model->dental}} </h6>
+        <h6> {{$model->dental == '1' ? 'Yes' : 'No'}} </h6>
         </li>
-        <li>
-            <p data-target="dropdown" data-title="How much do you want this?" data-filter="Dental" data-name="worker_dental" onclick="open_modal(this)">How much do you want this?</p>
+        <li> 
+            <p data-target="binary" data-title="How much do you want this?" data-placeholder="" data-name="worker_dental" onclick="open_modal(this)">How much do you want this?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['vision']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Vision</span>
-        <h6>{{$model->vision}} </h6>
+        <h6> {{$model->vision == '1' ? 'Yes' : 'No'}} </h6>
         </li>
         <li>
-            <p data-target="dropdown" data-title="How much do you want this?" data-filter="Vision" data-name="worker_vision" onclick="open_modal(this)">How much do you want this?</p>
+             
+            <p data-target="binary" data-title="How much do you want this?" data-placeholder="How much do you want this?" data-name="worker_vision" onclick="open_modal(this)">How much do you want this?</p>
+          
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['actual_hourly_rate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Actual Hourly Rate</span>
         <h6>${{$model->actual_hourly_rate}} </h6>
         </li>
         <li>
-            <p>What rate is fair?</p>
+            <p data-target="input" data-title="What rate is fair?" data-placeholder="What rate is fair?" data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What rate is fair?</p>
+            
+        </li>
+    </ul>
+    
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['feels_like_per_hour']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
+        <li>
+        <span>Feels Like $/Hr</span>
+        <h6>${{$model->feels_like_per_hour}} </h6>
+        
+        </li>
+        <li>
+            <p data-target="binary" data-title="Does this seem fair based on the market?" data-placeholder="Does this seem fair based on the market?" data-name="worker_feels_like_per_hour_check" onclick="open_modal(this)">Does this seem fair based on the market?</p>
+            
         </li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['overtime']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Overtime</span>
         <h6>{{$model->overtime}} </h6>
         </li>
         <li>
-            <p>Would you work more overtime for higher OT rate?</p>
+            
+            <p data-target="binary" data-title="Would you work more overtime for higher OT rate?" data-name="worker_overtime_check" onclick="open_modal(this)">Would you work more overtime for higher OT rate?</p> 
+
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['holiday']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Holiday</span>
         <h6>{{$model->holiday}} </h6>
         </li>
         <li>
-            <p>Any holiday you refuse to work?</p>
+            <p data-target="date" data-title="Any holiday you refuse to work?" data-name="worker_holiday_check" onclick="open_modal(this)">Any holiday you refuse to work?</p>
+            
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['on_call']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>On call</span>
         <h6>{{$model->on_call}} </h6>
         </li>
         <li>
-            <p data-target="binary" data-title="Will you do call?" data-name="worker_on_call" onclick="open_modal(this)">Will you do call?</p>
+            <p data-target="binary" data-title="Will you do call?" data-name="worker_on_call_check" onclick="open_modal(this)">Will you do call?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['call_back']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Call Back</span>
         <h6>{{$model->call_back}} </h6>
         </li>
         <li>
-            <p data-target="binary" data-title="Is this rate reasonable?" data-name="worker_call_back" onclick="open_modal(this)">Is this rate reasonable?</p>
+            <p data-target="binary" data-title="Is this rate reasonable?" data-name="worker_call_back_check" onclick="open_modal(this)">Is this rate reasonable?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['orientation_rate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Orientation Rate</span>
         <h6>{{$model->orientation_rate}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Is this rate reasonable?" data-placeholder="-" data-name="worker_orientation_rate" onclick="open_modal(this)">Is this rate reasonable?</p>
+            <p data-target="binary" data-title="Is this rate reasonable?" data-placeholder="-" data-name="worker_orientation_rate_check" onclick="open_modal(this)">Is this rate reasonable?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -599,7 +620,7 @@
             <p>?</p>
         </li> --}}
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['employer_weekly_amount']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Employer Weekly Amount</span>
         <h6>${{$model->employer_weekly_amount}} </h6>
@@ -608,13 +629,13 @@
             <p data-target="input" data-title="What range is reasonable?" data-placeholder="What range is reasonable?" data-name="worker_employer_weekly_amount" onclick="open_modal(this)">What range is reasonable?</p>
         </li>
     </ul>
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['weekly_non_taxable_amount']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Weekly Non-Taxable Amount</span>
         <h6>${{$model->weekly_non_taxable_amount}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Are you going to duplicate expenses?" data-placeholder="Weekly non-taxable amount" data-name="worker_weekly_non_taxable_amount" onclick="open_modal(this)">Are you going to duplicate expenses?</p>
+            <p data-target="binary" data-title="Are you going to duplicate expenses?" data-placeholder="Weekly non-taxable amount" data-name="worker_weekly_non_taxable_amount_check" onclick="open_modal(this)">Are you going to duplicate expenses?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -623,7 +644,8 @@
         <h6>${{$model->weekly_taxable_amount}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p>
+            <h6> You have 5 days left before your rate drops form 5% to 2%</h6>
+            {{-- <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p> --}}
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -771,6 +793,34 @@
     </div>
   </div>
 </div>
+
+{{-- date modal --}}
+
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="date_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="ss-pop-cls-vbtn">
+          <button type="button" class="btn-close" data-target="#date_modal" onclick="close_modal(this)" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="ss-job-dtl-pop-form">
+              <form method="post" action="{{route('my-profile.store')}}" id="date_modal_form" class="modal-form">
+                  @csrf
+                  <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
+                  <h4></h4>
+                  <div class="ss-form-group">
+                      <input type="date" name="" placeholder="">
+                      <span class="help-block
+                        "></span>
+                    </div>
+                    <button type="submit" class="ss-job-dtl-pop-sv-btn">Save</button>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
 
 
 <!-----------What's your specialty?------------>
@@ -1065,6 +1115,9 @@
             case 'dropdown':
                 $(form).find('select').attr('name',name);
                 get_dropdown(obj);
+                break;
+            case 'date':
+                $(form).find('input[type="date"]').attr('name',name);
                 break;
             default:
                 break;

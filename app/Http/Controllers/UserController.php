@@ -219,7 +219,6 @@ class UserController extends Controller
     public function post_references(Request $request)
     {
 
-        if ($request->ajax()) {
             $user = auth()->guard('frontend')->user();
             $id = $user->nurse->id;
             if ($request->has('old_ids')) {
@@ -294,7 +293,7 @@ class UserController extends Controller
             // Nurse::findOrFail($id)->update(['worker_number_of_references'=>$request->worker_number_of_references]);
             $response = array('success'=>true,'msg'=>'Updated Successfully!');
             return $response;
-        }
+        
     }
 
     public function vaccination_submit(Request $request)
@@ -422,177 +421,246 @@ class UserController extends Controller
 
     }
 
-    public function certification_submit(Request $request)
-    {
-        return $request->all();
-        $user = auth()->guard('frontend')->user();
-        $id = $user->nurse->id;
-        $worker = NURSE::findOrFail($id);
-        // BLS
-        if ($request->bls_cer == 'Yes') {
-            if ($request->hasFile('bls'))
-            {
-                NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
-                if (!empty($worker->BLS)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->BLS);
-                    }
-                }
-                $file = $request->file('bls');
-                $bls_name = $file->getClientOriginalName();
-                $bls_ext = $file->getClientOriginalExtension();
-                $bls = $bls_name.'_'.time().'.'.$bls_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $file->move(public_path($destinationPath), $bls);
+    // public function certification_submit(Request $request)
+    // {
+    //     $user = auth()->guard('frontend')->user();
+    //     $id = $user->nurse->id;
+    //     $worker = NURSE::findOrFail($id);
+    //     // BLS
+    //     if ($request->bls_cer == 'Yes') {
+    //         if ($request->hasFile('bls'))
+    //         {
+    //             NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
+    //             if (!empty($worker->BLS)) {
+    //                 if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
+    //                 {
+    //                     File::delete(public_path('images/nurses/certificate/').$worker->BLS);
+    //                 }
+    //             }
+    //             $file = $request->file('bls');
+    //             $bls_name = $file->getClientOriginalName();
+    //             $bls_ext = $file->getClientOriginalExtension();
+    //             $bls = $bls_name.'_'.time().'.'.$bls_ext;
+    //             $destinationPath = 'images/nurses/certificate';
+    //             $file->move(public_path($destinationPath), $bls);
 
-                // write image name in worker table
-                $worker->BLS = $bls;
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'name' => $bls,
-                    'filter' => 'BLS'
-                ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
-            if (!empty($worker->BLS)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->BLS);
-                }
-            }
-            $worker->BLS = '';
+    //             // write image name in worker table
+    //             $worker->BLS = $bls;
+    //             NurseAsset::create([
+    //                 'nurse_id' => $id,
+    //                 'name' => $bls,
+    //                 'filter' => 'BLS'
+    //             ]);
+    //         }
+    //     }else{
+    //         NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
+    //         if (!empty($worker->BLS)) {
+    //             if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
+    //             {
+    //                 File::delete(public_path('images/nurses/certificate/').$worker->BLS);
+    //             }
+    //         }
+    //         $worker->BLS = '';
+    //     }
+
+    //     // ACLS
+    //     if ($request->acls_cer == 'Yes') {
+    //         if ($request->hasFile('acls'))
+    //         {
+    //             NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
+    //             if (!empty($worker->ACLS)) {
+    //                 if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
+    //                 {
+    //                     File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
+    //                 }
+    //             }
+
+    //             $acls_name_full = $request->file('acls')->getClientOriginalName();
+    //             $acls_name = pathinfo($acls_name_full, PATHINFO_FILENAME);
+    //             $acls_ext = $request->file('acls')->getClientOriginalExtension();
+    //             $acls = $acls_name.'_'.time().'.'.$acls_ext;
+    //             $destinationPath = 'images/nurses/certificate';
+    //             $request->file('acls')->move(public_path($destinationPath), $acls);
+
+    //             // write image name in worker table
+    //             $worker->ACLS = $acls;
+    //             NurseAsset::create([
+    //                 'nurse_id' => $id,
+    //                 'name' => $acls,
+    //                 'filter' => 'ACLS'
+    //             ]);
+    //         }
+    //     }else{
+    //         NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
+    //         if (!empty($worker->ACLS)) {
+    //             if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
+    //             {
+    //                 File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
+    //             }
+    //         }
+    //         $worker->ACLS = '';
+    //     }
+
+    //     // PALS
+    //     if ($request->pals_cer == 'Yes') {
+    //         if ($request->hasFile('pals'))
+    //         {
+    //             NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
+    //             if (!empty($worker->PALS)) {
+    //                 if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
+    //                 {
+    //                     File::delete(public_path('images/nurses/certificate/').$worker->PALS);
+    //                 }
+    //             }
+
+    //             $pals_name_full = $request->file('pals')->getClientOriginalName();
+    //             $pals_name = pathinfo($pals_name_full, PATHINFO_FILENAME);
+    //             $pals_ext = $request->file('pals')->getClientOriginalExtension();
+    //             $pals = $pals_name.'_'.time().'.'.$pals_ext;
+    //             $destinationPath = 'images/nurses/certificate';
+    //             $request->file('pals')->move(public_path($destinationPath), $pals);
+
+    //             // write image name in worker table
+    //             $worker->PALS = $pals;
+    //             NurseAsset::create([
+    //                 'nurse_id' => $id,
+    //                 'name' => $pals,
+    //                 'filter' => 'PALS'
+    //             ]);
+    //         }
+    //     }else{
+    //         NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
+    //         if (!empty($worker->PALS)) {
+    //             if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
+    //             {
+    //                 File::delete(public_path('images/nurses/certificate/').$worker->PALS);
+    //             }
+    //         }
+    //         $worker->PALS = '';
+    //     }
+
+    //     // OTHER
+    //     if (!empty($request->other_certificate_name)) {
+    //         if ($request->hasFile('other'))
+    //         {
+
+    //             NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
+    //             if (!empty($worker->other)) {
+    //                 if(file_exists(public_path('images/nurses/certificate/').$worker->other))
+    //                 {
+    //                     File::delete(public_path('images/nurses/certificate/').$worker->other);
+    //                 }
+    //             }
+
+    //             $other_name_full = $request->file('other')->getClientOriginalName();
+    //             $other_name = pathinfo($other_name_full, PATHINFO_FILENAME);
+    //             $other_ext = $request->file('other')->getClientOriginalExtension();
+    //             $other = $other_name.'_'.time().'.'.$other_ext;
+    //             $destinationPath = 'images/nurses/certificate';
+    //             $request->file('other')->move(public_path($destinationPath), $other);
+
+    //             // write image name in worker table
+    //             $worker->other = $other;
+    //             $worker->other_certificate_name = isset($request->other_certificate_name)?$request->other_certificate_name:$worker->other_certificate_name;
+    //             NurseAsset::create([
+    //                 'nurse_id' => $id,
+    //                 'name' => $other,
+    //                 'filter' => 'Other'
+    //             ]);
+    //         }
+    //     }else{
+    //         NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
+    //         if (!empty($worker->other)) {
+    //             if(file_exists(public_path('images/nurses/certificate/').$worker->other))
+    //             {
+    //                 File::delete(public_path('images/nurses/certificate/').$worker->other);
+    //             }
+    //         }
+    //         $worker->other = '';
+    //     }
+
+
+    //     // NURSE::where(['id' => $worker->id])
+    //     //     ->update([
+    //     //         'BLS' => $worker->BLS,
+    //     //         'ACLS' => $worker->ACLS,
+    //     //         'PALS' => $worker->PALS,
+    //     //         'other' => $worker->other,
+    //     //         'other_certificate_name' => $request->other_certificate_name
+    //     //     ]);
+    //     $response = array('success'=>true,'msg'=>'Updated Successfully!');
+    //     return $response;
+    // }
+
+public function certification_submit(Request $request)
+{
+    $user = auth()->guard('frontend')->user();
+    $id = $user->nurse->id;
+    
+    $worker = NURSE::findOrFail($id);
+    $destinationPath = 'images/nurses/certificate';
+
+    // Define all certificate types
+    $certificates = [
+        'BLS', 'ACLS', 'PALS', 'NRP', 'NIHSS', 'TNCC', 'AWHONN', 'STABLE', 'LA Fire Card', 'CMA', 'CNA', 'ARDMS', 'CPI', 'NBRC', 'RCIS', 
+        'Management of Assaultive Behavior', 'IV Therapy', 'Chemotherapy', 'R.R.A', 'R.T', 'R.T.(MR)(ARRT)', 'R.T.(N)(ARRT)', 'R.T.(R)(ARRT)', 
+        'R.T.(R)(CT)(ARRT)', 'R.T.(R)(CT)(MR)(ARRT)', 'R.T.(R)(M)(ARRT)', 'R.T.(R)(M)(CT)(ARRT)', 'R.T.(R)(MR)(ARRT)', 'R.T.(R)(N)(ARRT)', 
+        'R.T.(R)(T)(ARRT)', 'R.T.(S)(ARRT)', 'R.T.(T)(ARRT)', 'R.T.(VS)(ARRT)', 'R.T.(R)(BD)(ARRT)', 'R.T.(R)(CI)(ARRT)', 'R.T.(CT)(ARRT)', 
+        'R.T.(R)(CV)(ARRT)', 'R.T.(R)(M)(BS)(ARRT)', 'R.T.(R)(M)(QM)(ARRT)', 'R.T.(R)(VI)(ARRT)', 'R.T.(R)(N)(CT)(ARRT)', 'R.T.(R)(T)(CT)(ARRT)'
+    ];
+
+    foreach ($certificates as $certificate) {
+        $cert_field = strtolower(str_replace(['.', '(', ')', ' '], '', $certificate)); // Normalize certificate field name
+        $cert_file = $cert_field; // Assuming the file field name follows a similar pattern
+        $cert_flag = $cert_field . '_cer'; // Assuming the flag field name follows a pattern
+
+        
+if ($request->$cert_flag == 'Yes' && $request->hasFile($cert_file)) {
+    // Delete old certificate
+    $old_cer = NurseAsset::where('nurse_id', $id)->where('filter', $certificate)->first();
+    if (!empty($old_cer)) {
+        $old_cer->delete(); // Delete the specific record
+        $oldFilePath = public_path($destinationPath.'/'.$old_cer->name); // Use the exact filename from the record
+        if (file_exists($oldFilePath)) {
+            File::delete($oldFilePath);
         }
-
-        // ACLS
-        if ($request->acls_cer == 'Yes') {
-            if ($request->hasFile('acls'))
-            {
-                NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
-                if (!empty($worker->ACLS)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
-                    }
-                }
-
-                $acls_name_full = $request->file('acls')->getClientOriginalName();
-                $acls_name = pathinfo($acls_name_full, PATHINFO_FILENAME);
-                $acls_ext = $request->file('acls')->getClientOriginalExtension();
-                $acls = $acls_name.'_'.time().'.'.$acls_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $request->file('acls')->move(public_path($destinationPath), $acls);
-
-                // write image name in worker table
-                $worker->ACLS = $acls;
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'name' => $acls,
-                    'filter' => 'ACLS'
-                ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
-            if (!empty($worker->ACLS)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
-                }
-            }
-            $worker->ACLS = '';
-        }
-
-        // PALS
-        if ($request->pals_cer == 'Yes') {
-            if ($request->hasFile('pals'))
-            {
-                NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
-                if (!empty($worker->PALS)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->PALS);
-                    }
-                }
-
-                $pals_name_full = $request->file('pals')->getClientOriginalName();
-                $pals_name = pathinfo($pals_name_full, PATHINFO_FILENAME);
-                $pals_ext = $request->file('pals')->getClientOriginalExtension();
-                $pals = $pals_name.'_'.time().'.'.$pals_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $request->file('pals')->move(public_path($destinationPath), $pals);
-
-                // write image name in worker table
-                $worker->PALS = $pals;
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'name' => $pals,
-                    'filter' => 'PALS'
-                ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
-            if (!empty($worker->PALS)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->PALS);
-                }
-            }
-            $worker->PALS = '';
-        }
-
-        // OTHER
-        if (!empty($request->other_certificate_name)) {
-            if ($request->hasFile('other'))
-            {
-
-                NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
-                if (!empty($worker->other)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->other))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->other);
-                    }
-                }
-
-                $other_name_full = $request->file('other')->getClientOriginalName();
-                $other_name = pathinfo($other_name_full, PATHINFO_FILENAME);
-                $other_ext = $request->file('other')->getClientOriginalExtension();
-                $other = $other_name.'_'.time().'.'.$other_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $request->file('other')->move(public_path($destinationPath), $other);
-
-                // write image name in worker table
-                $worker->other = $other;
-                $worker->other_certificate_name = isset($request->other_certificate_name)?$request->other_certificate_name:$worker->other_certificate_name;
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'name' => $other,
-                    'filter' => 'Other'
-                ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
-            if (!empty($worker->other)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->other))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->other);
-                }
-            }
-            $worker->other = '';
-        }
-
-
-        // NURSE::where(['id' => $worker->id])
-        //     ->update([
-        //         'BLS' => $worker->BLS,
-        //         'ACLS' => $worker->ACLS,
-        //         'PALS' => $worker->PALS,
-        //         'other' => $worker->other,
-        //         'other_certificate_name' => $request->other_certificate_name
-        //     ]);
-        $response = array('success'=>true,'msg'=>'Updated Successfully!');
-        return $response;
     }
+
+    // Handle file upload
+    $file = $request->file($cert_file);
+    $filename = $file->getClientOriginalName().'_'.time().'.'.$file->getClientOriginalExtension();
+    $file->move(public_path($destinationPath), $filename);
+
+    NurseAsset::create([
+        'nurse_id' => $id,
+        'name' => $filename,
+        'filter' => $certificate
+    ]);
+    $response = ['success' => true, 'msg' => 'Updated Successfully!'];
+    return $response;
+
+} else {
+    // Handle certificate removal if applicable
+    $old_cer = NurseAsset::where('nurse_id', $id)->where('filter', $certificate)->first();
+    if (!empty($old_cer)) {
+        $old_cer->forceDelete(); // Delete the specific record
+        $oldFilePath = public_path($destinationPath.'/'.$old_cer->name); // Use the exact filename from the record
+        if (file_exists($oldFilePath)) {
+            File::delete($oldFilePath);
+        }
+    }
+    // Handle file upload
+
+    $response = ['success' => true, 'msg' => 'Updated Successfully!'];
+    return $response;
+}
+    }
+
+
+    
+}
+
+
 
     public function skills_submit(Request $request)
     {

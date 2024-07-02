@@ -270,8 +270,13 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Rto</label>
-                                                <input type="text" name="rto" id="rto"
-                                                    placeholder="Enter rto">
+                                                        <select name="rto" id="rto">
+                                                            <option value="">Select Rto</option>
+                                                            <option value="allowed">Allowed
+                                                            </option>
+                                                            <option value="not allowed">Not Allowed
+                                                            </option>
+                                                        </select>
                                                 <span class="help-block-rto"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -413,7 +418,7 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Holidy hourly rate</label>
-                                                <input type="number" name="holiday" id="holiday"
+                                                <input type="date" name="holiday" id="holiday"
                                                     placeholder="Enter Holidy hourly rate">
                                                 <span class="help-block-holiday"></span>
                                             </div>
@@ -1194,9 +1199,14 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Rto</label>
-                                                        <input type="text" name="rto" id="rtoDraft"
-                                                            placeholder="Enter rto">
-                                                        <span class="help-block-rto"></span>
+                                                        <select name="rto" id="rtoDraft">
+                                                            <option value="">Select Rto</option>
+                                                            <option value="allowed">Allowed
+                                                            </option>
+                                                            <option value="not allowed">Not Allowed
+                                                            </option>
+                                                        </select>
+                                                <span class="help-block-rto"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Guaranteed Hours per week</label>
@@ -1296,7 +1306,7 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Holidy hourly rate</label>
-                                                        <input type="NUMBER" name="holiday" id="holidayDraft"
+                                                        <input type="date" name="holiday" id="holidayDraft"
                                                             placeholder="Enter Holidy hourly rate">
                                                         <span class="help-block-holiday"></span>
                                                     </div>
@@ -1929,9 +1939,14 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Rto</label>
-                                                        <input type="text" name="rto" id="rtoEdit"
-                                                            placeholder="Enter rto">
-                                                        <span class="help-block-rto"></span>
+                                                        <select name="rto" id="rtoEdit">
+                                                            <option value="">Select Rto</option>
+                                                            <option value="allowed">Allowed
+                                                            </option>
+                                                            <option value="not allowed">Not Allowed
+                                                            </option>
+                                                        </select>
+                                                <span class="help-block-rto"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Guaranteed Hours per week</label>
@@ -2031,7 +2046,7 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Holidy hourly rate</label>
-                                                        <input type="NUMBER" name="holiday" id="holidayEdit"
+                                                        <input type="date" name="holiday" id="holidayEdit"
                                                             placeholder="Enter Holidy hourly rate">
                                                         <span class="help-block-holiday"></span>
                                                     </div>
@@ -4462,7 +4477,7 @@ if (draftJobs.length !== 0) {
     });
     nextBtnForth.addEventListener("click", function(event) {
         event.preventDefault();
-        if (validateThird()) {
+        if (validateFifth()) {
             slidePage.style.marginLeft = "-80%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");

@@ -126,7 +126,7 @@ class CreateNurseTable extends Migration
             $table->boolean('worker_vision')->nullable();
             $table->decimal('worker_actual_hourly_rate',8,2)->nullable();
             $table->decimal('worker_overtime',8,2)->nullable();
-            $table->decimal('worker_holiday',8,2)->nullable();
+            $table->dateTime('worker_holiday')->nullable();
             $table->decimal('worker_on_call',8,2)->nullable();
             $table->decimal('worker_call_back',8,2)->nullable();
             $table->decimal('worker_orientation_rate',8,2)->nullable();
@@ -159,8 +159,18 @@ class CreateNurseTable extends Migration
             $table->string('worker_certificate_name')->nullable();
             $table->boolean('worker_eligible_work_in_us')->default(false);
             $table->decimal('worker_feels_like_per_hour', 8, 2)->nullable(); // done
+            
             $table->string('worker_facility_city',36)->nullable(); // done
             $table->string('worker_facfacility_state',36)->nullable(); // done
+            $table->boolean('worker_feels_like_per_hour_check')->defauls(false); // done
+            $table->boolean('worker_overtime_check')->defauls(false); // done
+            $table->boolean('worker_on_call_check')->defauls(false); // done
+            $table->boolean('worker_orientation_rate_check')->defauls(false); // done
+            $table->decimal('worker_weekly_non_taxable_amount_check', 8, 2)->nullable(); // done
+            $table->boolean('worker_call_back_check')->defauls(false); // done
+            
+
+
             
 
 

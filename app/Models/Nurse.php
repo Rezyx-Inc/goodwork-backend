@@ -195,6 +195,16 @@ class Nurse extends Model implements HasMedia
         'worker_certificate_name',
         'worker_eligible_work_in_us',
         'worker_feels_like_per_hour',
+        'worker_four_zero_one_k',
+        // check recruiter/employer conditions
+        'worker_feels_like_per_hour_check',
+        'worker_overtime_check',
+        'worker_on_call_check',
+        'worker_orientation_rate_check',
+        'worker_weekly_non_taxable_amount_check',
+        'worker_call_back_check',
+        
+
     ];
     protected static $logName = 'Nurse';
     protected static $logFillable = true;
