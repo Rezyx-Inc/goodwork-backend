@@ -266,6 +266,9 @@ $('.modal-form').submit(function (event) {
                      time: 3
                  });
                  form[0].reset();
+                    setTimeout(function(){
+                        location.reload();
+                    },2000);
             }else{
                 notie.alert({
                     type: 'error',

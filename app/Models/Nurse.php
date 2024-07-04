@@ -121,6 +121,7 @@ class Nurse extends Model implements HasMedia
         'worker_trauma_level',
         'worker_scrub_color',
         'worker_facility_city',
+        'worker_facility_state',
         'worker_facility_state_code',
         'worker_interview_dates',
         'worker_start_date',

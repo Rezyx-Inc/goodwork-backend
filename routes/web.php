@@ -68,9 +68,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('my-profile', ['uses' => 'UserController@edit', 'as' => 'my-profile']);
             Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile.store']);
             Route::get('vaccination', ['uses' => 'UserController@edit', 'as' => 'vaccination']);
-            Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination.store']);
+            //Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination.store']);
             Route::get('certification', ['uses' => 'UserController@edit', 'as' => 'certification']);
-            Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification.store']);
+            //Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification.store']);
             Route::get('references', ['uses' => 'UserController@edit', 'as' => 'references']);
             Route::post('references', ['uses' => 'UserController@post_references', 'as' => 'references.store']);
             Route::get('info-required', ['uses' => 'UserController@edit', 'as' => 'info-required']);

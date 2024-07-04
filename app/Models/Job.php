@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use DB;
 use App\Models\Nurse;
+use App\Models\NurseAsset;
 
 class Job extends Model
 {
@@ -264,7 +265,7 @@ class Job extends Model
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
             'worked_at_facility_before'=> function () use ($nurse){
-                $match = (!empty($nurse->worked_at_facility_before) && $nurse->worked_at_facility_before=='Yes') ? true: false ;
+                $match = ($nurse->worked_at_facility_before=='1') ;
                 $value = $nurse->worked_at_facility_before;
                 $type = 'dropdown';
                 $name = 'worked_at_facility_before';
@@ -324,28 +325,26 @@ class Job extends Model
 
             'vaccinations'=> function () use ($job, $nurse){
                 $vaccninations = explode(',', $job->vaccinations);
-                $worker_vaccination = json_decode($nurse->worker_vaccination);
-                $worker_vaccination = explode(',', $nurse->worker_vaccination);
-                $data = [];
-                $return_data = [];
-                // $worker_certificate_name = json_decode($job_data['worker_certificate_name']);
+                $worker_vaccination =  NurseAsset::where('nurse_id', $nurse->id)->where('active', '1')->where('filter','vaccination')->pluck('name')->toArray();
+                //$worker_vaccination = explode(',', $nurse->worker_vaccination);
+                
                 foreach($vaccninations as $k=>$v){
                     if (!empty($worker_vaccination[$k])) {
-                        $data['match'] = true;
-                        $data['name'] = 'worker_vaccination';
-                    $data['type'] = 'file';
-                    $data['value'] = $worker_vaccination[$k];
-                    $return_data[] = $data;
+                        $match = true;
+                        $name = 'worker_vaccination';
+                    $type = 'file';
+                    $value = $worker_vaccination[$k];
+                    
                     }else{
-                        $data['match'] = false;
-                        $data['name'] = 'worker_vaccination';
-                    $data['type'] = 'file';
-                    $data['value'] = null;
-                    $return_data[] = $data;
+                        $match = false;
+                        $name = 'worker_vaccination';
+                    $type = 'file';
+                    $value = null;
+                    return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
                     }
                     
                 }
-                return $return_data;
+                return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
 
 
@@ -382,28 +381,27 @@ class Job extends Model
             'certificate'=> function () use ($job, $nurse){
                 $certifications = explode(',', $job->certificate);
                 $worker_certificate_name = json_decode($nurse->worker_certificate_name);
-                $worker_certificate_name = explode(',', $nurse->worker_certificate_name);
-                $data = [];
-                $return_data = [];
+                $worker_certificate_name = NurseAsset::where('nurse_id', $nurse->id)->where('active', '1')->where('filter','certificate')->pluck('name')->toArray();
+               
                 // $worker_certificate_name = json_decode($job_data['worker_certificate_name']);
                 foreach($certifications as $k=>$v){
                     if (!empty($worker_certificate_name[$k])) {
-                        $data['match'] = true;
-                        $data['name'] = 'worker_certificate';
-                    $data['type'] = 'file';
-                    $data['value'] = $worker_certificate_name[$k];
-                    $return_data[] = $data;
-
+                        $match = true;
+                        $name = 'worker_certificate';
+                    $type = 'file';
+                    $value = $worker_certificate_name[$k];
+                    
                     }else{
-                        $data['match'] = false;
-                        $data['name'] = 'worker_certificate';
-                    $data['type'] = 'file';
-                    $data['value'] = null;
-                    $return_data[] = $data;
+                        $match = false;
+                        $name = 'worker_certificate';
+                    $type = 'file';
+                    $value = null;
+                    
+                    return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
                     }
                     
                 }
-                return $return_data;
+                return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
 
             'skills'=> function () use ($job, $nurse){
@@ -439,18 +437,18 @@ class Job extends Model
             // },
 
             'job_state'=> function () use ($job, $nurse){
-                $match = ($job->job_state == $nurse->worker_job_state);
-                $value = $nurse->worker_job_state;
+                $match = ($job->job_state == $nurse->worker_facility_state);
+                $value = $nurse->worker_facility_state;
                 $type = 'input';
-                $name = 'worker_job_state';
+                $name = 'worker_facility_state';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
 
             'job_city'=> function () use ($job, $nurse){
-                $match = ($job->job_city == $nurse->worker_job_city);
-                $value = $nurse->worker_job_city;
+                $match = ($job->job_city == $nurse->worker_facility_city);
+                $value = $nurse->worker_facility_city;
                 $type = 'input';
-                $name = 'worker_job_city';
+                $name = 'worker_facility_city';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
             // 'facility_id'=> function () use ($job, $nurse){

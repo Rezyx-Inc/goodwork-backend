@@ -20,6 +20,7 @@ class CreateAssetsTables extends Migration
                 ->references('id')->on('nurses');
             $table->string('name')->nullable();
             $table->string('filter',100)->nullable();
+            $table->string('file_name')->nullable();
             $table->boolean('active')->default(true);
             $table->softDeletes();
             $table->timestamps();

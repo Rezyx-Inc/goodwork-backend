@@ -162,7 +162,7 @@
         </li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['vaccinations']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             @php
                 $vaccines = explode(',', $model->vaccinations);
@@ -174,11 +174,12 @@
         </li>
         <li>
             @foreach ($vaccines as $v)
-            <p>Did you get the {{$v}} Vaccines?</p>
+            <p data-target="file" data-hidden_name="{{strtolower($v)}}_vac" data-hidden_value="Yes" data-hidden_type="{{$v}}" data-href="{{route('worker.vaccination')}}" data-title="No {{$v}}?" data-name="{{strtolower($v)}}" onclick="open_modal(this)">No {{$v}}?</p>
             @endforeach
 
         </li>
     </ul>
+
 
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['number_of_references']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
@@ -191,7 +192,7 @@
         </li>
     </ul>
 
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['certificate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             @php
                 $certificates = explode(',', $model->certificate);
@@ -204,7 +205,7 @@
         <li>
             <p></p>
             @foreach ($certificates as $v)
-            <p data-target="file" data-hidden_name="{{strtolower($v)}}_cer" data-hidden_value="Yes" data-href="{{route('certification')}}" data-title="No {{$v}}?" data-name="{{strtolower($v)}}" onclick="open_modal(this)">No {{$v}}?</p>
+            <p data-target="file" data-hidden_name="{{strtolower($v)}}_cer" data-hidden_value="Yes" data-hidden_type="{{$v}}" data-href="{{route('worker.certification')}}" data-title="No {{$v}}?" data-name="{{strtolower($v)}}" onclick="open_modal(this)">No {{$v}}?</p>
             @endforeach
         </li>
     </ul>
@@ -396,7 +397,7 @@
         <h6>{{$model->rto}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Any time off?" data-placeholder="Any time off?" data-name="rto" onclick="open_modal(this)">Any time off?</p>
+            <p data-target="rto" data-title="Any time off?" data-placeholder="Any time off?" data-name="rto" onclick="open_modal(this)">Any time off?</p>
         </li>
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
@@ -765,6 +766,46 @@
   </div>
 </div>
 
+{{-- rto modal  --}}
+<!-----------Are you sure you never worked here as staff?------------>
+<!-- Modal -->
+
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="rto_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="ss-pop-cls-vbtn">
+          <button type="button" class="btn-close"  data-target="#rto_modal" onclick="close_modal(this)" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="ss-job-dtl-pop-form">
+              <form method="post" action="{{route('my-profile.store')}}" id="rto_modal_form" class="modal-form">
+                  @csrf
+                  <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
+                  <h4></h4>
+                  <ul class="ss-jb-dtlpop-chck">
+                      <li>
+                          <label>
+                              <input type="radio" name="radio" name="" value="allowed">
+                              <span>Allowed</span>
+                          </label>
+                      </li>
+  
+                      <li>
+                          <label>
+                              <input type="radio" name="radio" name="" value="not allowed">
+                              <span>Not Allowed</span>
+                          </label>
+                      </li>
+                  </ul>
+               <button class="ss-job-dtl-pop-sv-btn">Save</button>
+              </form>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
 
 <!-----------Yes we need your SS# to submit you------------>
 <!-- Modal -->
@@ -1103,6 +1144,7 @@
                 $(form).find('input[type="hidden"]').attr('name',$(obj).data('hidden_name'));
                 $(form).find('input[type="hidden"]').val($(obj).data('hidden_value'));
                 $(form).attr('action', $(obj).data('href'));
+                $(form).append(`<input type="hidden" name="type" value="${$(obj).data('hidden_type')}">`);
                 $(form).append('<input type="hidden" name="_token" value="{{ csrf_token() }}">');
                 break;
             case 'input':
@@ -1110,6 +1152,9 @@
                 $(form).find('input[type="text"]').attr('placeholder',$(obj).data('placeholder'));
                 break;
             case 'binary':
+                $(form).find('input[type="radio"]').attr('name',name);
+                break;
+            case 'rto':
                 $(form).find('input[type="radio"]').attr('name',name);
                 break;
             case 'dropdown':

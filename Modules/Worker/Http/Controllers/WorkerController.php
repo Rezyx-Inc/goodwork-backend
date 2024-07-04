@@ -1027,6 +1027,120 @@ public function deleteDoc(Request $request)
 }
 
 
+public function vaccination_submit(Request $request)
+{
+    $user = auth()->guard('frontend')->user();
+    $id = $user->nurse->id;
+    $destinationPath = 'images/nurses/vaccination';
+
+    // Vaccination type
+    $type = $request->type;
+    $vacc_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
+    $vacc_file = $vacc_field;
+    $vacc_flag = $vacc_field . '_vac';
+
+    if ($request->$vacc_flag == 'Yes' && $request->hasFile($vacc_file)) {
+        // Delete old vaccination record
+        $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+        if ($old_vac) {
+            $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+            if (file_exists($oldFilePath)) {
+                File::delete($oldFilePath);
+            }
+            $old_vac->forceDelete();
+        }
+
+        // Handle file upload
+        $file = $request->file($vacc_file);
+        $filename = $type.'_'.$id.'_vaccination.'.$file->getClientOriginalExtension();
+        $file->move(public_path($destinationPath), $filename);
+
+        NurseAsset::create([
+            'nurse_id' => $id,
+            'file_name' => $filename,
+            'name' => $type,
+            'filter' => 'vaccination'
+        ]);
+
+        $response = array('success'=>true, 'msg'=> $type . ' Updated Successfully!');
+        return $response;
+    } else {
+        // Check and handle vaccination record removal if applicable
+        $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+        if ($old_vac) {
+            $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+            if (file_exists($oldFilePath)) {
+                File::delete($oldFilePath);
+            }
+            $old_vac->forceDelete();
+            $response = array('success'=>true, 'msg'=>$type . ' Removed Successfully!');
+            return $response;
+        }
+    }
+
+    $response = array('success'=>false, 'msg'=>'No vaccination record selected!');
+    return $response; // Return the response
+}
+
+
+public function certification_submit(Request $request)
+{
+    $user = auth()->guard('frontend')->user();
+    $id = $user->nurse->id;
+    $destinationPath = 'images/nurses/certificate';
+
+    // certif type
+    $type = $request->type;
+        $cert_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
+        $cert_file = $cert_field;
+        $cert_flag = $cert_field . '_cer';
+
+        if ($request->$cert_flag == 'Yes' && $request->hasFile($cert_file)) {
+            // Delete old certificate
+            $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_cer) {
+                $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
+                }
+                $old_cer->forceDelete();
+            }
+
+            // Handle file upload
+            $file = $request->file($cert_file);
+            $filename = $type.'_'.$id.'_certificate.'.$file->getClientOriginalExtension();
+            $file->move(public_path($destinationPath), $filename);
+
+            NurseAsset::create([
+                'nurse_id' => $id,
+                'file_name' => $filename,
+                'name' => $type,
+                'filter' => 'certificate'
+            ]);
+
+            //$responses[] = ['success' => true, 'msg' => $certificate . ' Updated Successfully!'];
+            $response = array('success'=>true,'msg'=> $type . ' Updated Successfully!');
+            return $response;
+        } else {
+            // Check and handle certificate removal if applicable
+            $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_cer) {
+                $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
+                }
+                $old_cer->forceDelete();
+                $response = array('success'=>true,'msg'=>$type . ' Removed Successfully!');
+                return $response;
+            }
+        }
+    
+    $response = array('success'=>false,'msg'=>'No certificate selected!');
+    return $responses; // Return all responses after processing all certificates
+}
+
+
+
 
 
 

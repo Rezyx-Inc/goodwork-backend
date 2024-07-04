@@ -161,7 +161,7 @@ class CreateNurseTable extends Migration
             $table->decimal('worker_feels_like_per_hour', 8, 2)->nullable(); // done
             
             $table->string('worker_facility_city',36)->nullable(); // done
-            $table->string('worker_facfacility_state',36)->nullable(); // done
+            $table->string('worker_facility_state',36)->nullable(); // done
             $table->boolean('worker_feels_like_per_hour_check')->defauls(false); // done
             $table->boolean('worker_overtime_check')->defauls(false); // done
             $table->boolean('worker_on_call_check')->defauls(false); // done

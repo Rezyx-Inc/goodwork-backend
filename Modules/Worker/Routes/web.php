@@ -120,6 +120,9 @@ Route::prefix('worker')->group(function() {
         // update worker profile picture
         Route::post('update-worker-profile-picture', ['uses' => 'WorkerDashboardController@update_worker_profile_picture', 'as' => 'update-worker-profile-picture']);
 
+        Route::post('certification', ['uses' => 'WorkerController@certification_submit', 'as' => 'worker.certification']);
+        Route::post('vaccination', ['uses' => 'WorkerController@vaccination_submit', 'as' => 'worker.vaccination']);
+
     }
 
     );
