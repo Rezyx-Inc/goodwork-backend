@@ -2671,7 +2671,7 @@
                         xhr.withCredentials = true;
                     },
                     data: {
-                        'token': csrfToken,
+                        "_token": "{{ csrf_token() }}",
                         'type': type,
                         'id': id,
                         'formtype': formtype,
@@ -2728,6 +2728,7 @@
                         xhr.withCredentials = true;
                     },
                     data: {
+                        "_token": "{{ csrf_token() }}",
                         'id': id,
                         'formtype': formtype
                     },
