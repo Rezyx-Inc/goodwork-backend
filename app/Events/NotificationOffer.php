@@ -10,18 +10,15 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-
-class NotificationJob implements ShouldBroadcast
+class NotificationOffer implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-
     public $receiver;
     public $jobId;
     public $type;
@@ -30,8 +27,9 @@ class NotificationJob implements ShouldBroadcast
     public $createdAt;
     public $full_name;
     public $job_name;
+    public $offerId;
     
-    public function __construct($type,$seen,$createdAt,$receiver,$sender,$full_name,$jobId,$job_name)
+    public function __construct($type,$seen,$createdAt,$receiver,$sender,$full_name,$jobId,$job_name, $offerId)
     {
         $this->receiver = $receiver;
         $this->jobId = $jobId;
@@ -41,8 +39,11 @@ class NotificationJob implements ShouldBroadcast
         $this->createdAt = $createdAt;
         $this->full_name = $full_name;
         $this->job_name = $job_name;
+        $this->offerId = $offerId;
+
 
     }
+    
 
     /**
      * Get the channels the event should broadcast on.
@@ -51,7 +52,7 @@ class NotificationJob implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('private-job-notification.'.$this->receiver);
+        return new PrivateChannel('private-offer-notification.'.$this->receiver);
     }
 
     

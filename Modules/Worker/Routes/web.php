@@ -108,6 +108,8 @@ Route::prefix('worker')->group(function() {
         // reading message notification
         Route::post('read-message-notification', ['uses' => 'WorkerController@read_message_notification', 'as' => 'read-message-notification']);
 
+        //reading offer notification
+        Route::post('read-offer-notification', ['uses' => 'WorkerController@read_offer_notification', 'as' => 'read-offer-notification']);
         // add doc
          Route::post('add-docs', ['uses' => 'WorkerController@addDocuments', 'as' => 'add-docs']);
 

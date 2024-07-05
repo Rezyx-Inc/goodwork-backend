@@ -74,6 +74,70 @@ $user = auth()->guard('recruiter')->user();
 
 <script>
 
+
+var offerNotificationMessages = @json($offersNotificationMessages);
+
+function handleOfferNotificationClick(event) {
+    event.preventDefault(); 
+    const offerId = event.target.id;
+    const senderId = event.target.getAttribute('snd'); 
+
+    const data = {
+        offerId : offerId,
+        senderId: senderId,
+        _token: $('meta[name="csrf-token"]').attr('content') 
+    };
+
+    
+    $.ajax({
+        url: '{{route("read-recruiter-offer-notification")}}', 
+        type: 'POST',
+        data: data,
+        success: function(response) {
+            console.log('Success:', response);
+            window.location.href = '{{ route("recruiter-application") }}';
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+$(document).ready (function () {
+  console.log('{{ $unreadOffersNotificationsCount }}');
+
+  console.log('Offer Notification Messages :' , offerNotificationMessages );
+  console.log(offerNotificationMessages)
+
+  if('{{ $unreadOffersNotificationsCount }}' > 0){
+    
+    document.getElementById('none_notification').classList.add('d-none');
+    let count = document.getElementById('notifications_counter');
+                    // count.innerHTML = parseInt(count.innerHTML) + 1;
+                    count.classList.remove('d-none');
+                    let list_of_notifications = document.getElementById('list_of_notifications');
+    list_of_notifications.innerHTML = '';
+    offerNotificationMessages.forEach(notification => {
+      let status = notification.type;
+    let message = notification.full_name +' ' + offer_status_messages[status] + ' "' + notification.job_name + '"';
+    let li = document.createElement('li');
+    let a = document.createElement('a');
+    a.id = notification.offer_id;
+    a.classList.add('dropdown-item');
+    a.href = "{{route('recruiter-application')}}";
+    a.innerHTML = message;
+    
+    a.setAttribute('snd', notification.sender); 
+    a.setAttribute('onclick', 'handleOfferNotificationClick(event)');
+    li.appendChild(a);
+    list_of_notifications.appendChild(li);
+  });
+  }
+});
+
+
+
+
 function handleNotificationClick(event) {
     event.preventDefault(); // Prevent the default link behavior
 
@@ -134,6 +198,8 @@ function handleJobNotificationClick(event , senderId){
       }
   });
 }
+
+
 
   $(document).ready(function(){
     console.log('{{ $unreadNotificationsCount }}');
@@ -275,7 +341,7 @@ function handleJobNotificationClick(event , senderId){
 });
 
 window.Echo.private('private-job-notification.' + '{{ $user->id }}')
-    .listen('NotificationJob', (e) => {
+.listen('NotificationJob', (e) => {
         console.log('Notification Message :', e);
         let count = document.getElementById('notifications_counter');
                     
@@ -296,8 +362,72 @@ window.Echo.private('private-job-notification.' + '{{ $user->id }}')
         li.appendChild(a);
         list_of_notifications.appendChild(li);
     });
-  
-  </script>
+
+
+    var offer_status_messages = {
+    "Offered": "Counter your offer for the job",
+    "Rejected": "rejected your offer for the job",
+    "Hold": "accept your offer for the job"
+};
+
+window.Echo.private('private-offer-notification.' + '{{ $user->id }}')
+.listen('NotificationOffer', (e) => {
+  // remove none notification message if there is any
+  let none_notification = document.getElementById('none_notification');
+                  if(none_notification){
+                    none_notification.classList.add('d-none');
+                  }
+
+                  let new_offer_notification = {
+                                            "id": e.sender,
+                                            "type": e.type,
+                                            "sender": e.sender,
+                                            "full_name": e.full_name,
+                                            "job_name": e.job_name,
+                                            "offer_id": e.offer_id
+                                        };
+                    
+                    // this is for checking if a notification of a specefic sender is already there
+                  offerNotificationMessages.forEach(notification => {
+                    if(notification.offer_id == e.offerId){
+                      // delete the notification
+                      let element = document.getElementById(notification.offer_id);
+                          if (element) {
+                            let parent_li = element.parentElement;
+                            if (parent_li) {
+                              parent_li.remove();
+                            }else{
+                              console.log('Parent Element not found:', notification.offer_id);
+                            }
+                          } else {
+                              console.log('Element not found:', notification.offer_id);
+                          }
+                     
+                    }
+                  });
+
+    console.log('Offer Notification Message :', e);
+    let status = e.type;
+    let message = e.full_name +' ' + offer_status_messages[status] + ' "' + e.job_name + '"';
+    console.log(message);
+    let count = document.getElementById('notifications_counter');
+    count.classList.remove('d-none');
+    let list_of_notifications = document.getElementById('list_of_notifications');
+    let li = document.createElement('li');
+    let a = document.createElement('a');
+    a.id = e.offerId;
+    a.classList.add('dropdown-item');
+    a.href = "{{route('recruiter-application')}}";
+    a.innerHTML = message;
+    a.setAttribute('snd', e.sender); // Add the 'snd' attribute with the value of notification.sender
+    a.setAttribute('onclick', 'handleOfferNotificationClick(event)');
+    li.appendChild(a);
+    list_of_notifications.appendChild(li);
+    console.log(list_of_notifications);
+    console.log(count);
+
+});
+</script>
   
 <style>
   span.badge.rounded-pill.badge-notification.bg-danger{

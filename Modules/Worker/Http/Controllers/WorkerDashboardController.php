@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\support;
 use Illuminate\Support\Facades\Http;
 use App\Events\NotificationJob;
+use App\Events\NotificationOffer;
 
 /* *********** Requests *********** */
 use App\Http\Requests\{UserEditProfile, ChangePasswordRequest, ShippingRequest, BillingRequest};
@@ -933,6 +934,8 @@ public function store_counter_offer(Request $request)
 {
 
     $user = auth()->guard('frontend')->user();
+    
+    $full_name = $user->first_name . ' ' . $user->last_name;
     $nurse = Nurse::where('user_id', $user->id)->first();
     $job_data = Job::where('id', $request->jobid)->first();
     $offer = Offer::where('id', $request->offer_id)->first();
@@ -1039,6 +1042,17 @@ public function store_counter_offer(Request $request)
 
         ]);
     }
+    
+          // event offer notification
+          $id = $offerexist->id;
+          $jobid = $offerexist->job_id;
+          $nurse_id = $nurse->id; 
+          $time = now()->toDateTimeString();
+          $receiver = $offerexist->recruiter_id;
+          $job_name = Job::where('id', $jobid)->first()->job_name;
+
+          event(new NotificationOffer('Offered',false,$time,$receiver,$nurse_id,$full_name,$jobid,$job_name, $id));
+
     return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
 }
 

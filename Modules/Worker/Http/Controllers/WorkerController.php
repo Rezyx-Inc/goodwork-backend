@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Events\NewPrivateMessage;
 use App\Events\NotificationMessage;
 use App\Events\NotificationJob;
+use App\Events\NotificationOffer;
 use Illuminate\Support\Facades\Http;
 
 
@@ -21,7 +22,7 @@ use DB;
 use Exception;
 
 use App\Models\{User, Worker,Follows, NurseReference,Job,Offer, NurseAsset,
-    Keyword, Facility, Availability, Countries, States, Cities, JobSaved,Nurse};
+    Keyword, Facility, Availability, Countries, States, Cities, JobSaved,Nurse,NotificationOfferModel};
 
 use App\Models\NotificationMessage as NotificationMessageModel;
 
@@ -728,7 +729,6 @@ class WorkerController extends Controller
 
     public function fetch_job_content(Request $request)
     {
-
         try {
             
                 $request->validate([
@@ -824,9 +824,9 @@ class WorkerController extends Controller
 
     // check stripe account onboarding
 
-    public function checkPaymentMethod($nurse_id) {
+    public function checkPaymentMethod($user_id) {
         $url = 'http://localhost:' . config('app.file_api_port') . '/payments/onboarding-status';
-        $stripe_id = User::where('id', $nurse_id)->first()->stripeAccountId;
+        $stripe_id = User::where('id', $user_id)->first()->stripeAccountId;
         $data = ['stripeId' => $stripe_id];
         $response = Http::get($url, $data);
 
@@ -841,8 +841,13 @@ class WorkerController extends Controller
     {
 
         // check first stripe account onboarding
-        $nurse_id = Auth::guard('frontend')->user()->id;
-        if (!$this->checkPaymentMethod($nurse_id)) {
+        $user = Auth::guard('frontend')->user();
+        $user_id = $user->id;
+        $nurse_id = $user->nurse->id;
+        $full_name = $user->first_name . ' ' . $user->last_name;
+        $offer_id = $request->offer_id;
+
+        if (!$this->checkPaymentMethod($user_id)) {
             return response()->json(['success' => false, 'message' => 'Please complete your payment method onboarding first']);
         }
 
@@ -854,7 +859,7 @@ class WorkerController extends Controller
                 'offer_id'=>'required',
             ]);
 
-            $offer = Offer::where('id',$request->offer_id)->first();
+            $offer = Offer::where('id',$offer_id)->first();
             if(!$offer){
                 return response()->json(['success' => false, 'message' => 'Offer not found']);
             }
@@ -868,13 +873,14 @@ class WorkerController extends Controller
                 $update_array['is_counter'] = '0';
                 $update_array['is_draft'] = '0';
                 $update_array['status'] = 'Hold';
-                $offer = DB::table('offers')
-                    ->where(['id' => $request->offer_id])
+                $is_offer_update = DB::table('offers')
+                    ->where(['id' => $offer_id])
                     ->update($update_array);
                 $user_id = $job->created_by;
                 $user = User::where('id',$user_id)->first();
+                
                 $data = [
-                    'offerId' => $request->offer_id,
+                    'offerId' => $offer_id,
                     'amount' => '1',
                     'stripeId' =>$user->stripeAccountId,
                     'fullName' => $user->first_name . ' ' . $user->last_name,
@@ -898,17 +904,30 @@ class WorkerController extends Controller
                 }
 
 
+            // event offer notification
+           
+            $id = $offer_id;
+            $jobid = $offer->job_id;
 
+            $time = now()->toDateTimeString();
+            $receiver = $offer->recruiter_id;
+            $job_name = Job::where('id', $jobid)->first()->job_name;
+
+            event(new NotificationOffer('Hold',false,$time,$receiver,$nurse_id,$full_name,$jobid,$job_name, $id));
             return response()->json(['msg'=>'offer accepted successfully','success' => true]);
 
         } catch (\Exception $e) {
-           // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
-           return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
+            return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+           //return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
         }
     }
 
-    public function reject_offer(Request $request){
-
+    public function reject_offer(Request $request)
+    {
+        $user = Auth::guard('frontend')->user();
+        
+        $full_name = $user->first_name . ' ' . $user->last_name;
+        $nurse_id = $user->nurse->id;
         try{
             $request->validate([
                 'offer_id'=>'required',
@@ -931,6 +950,15 @@ class WorkerController extends Controller
             ]);
 
             if ($updated) {
+                  // event offer notification
+            $id = $offer->id;
+            $jobid = $offer->job_id;
+
+            $time = now()->toDateTimeString();
+            $receiver = $offer->recruiter_id;
+            $job_name = Job::where('id', $jobid)->first()->job_name;
+
+            event(new NotificationOffer('Rejected',false,$time,$receiver,$nurse_id,$full_name,$jobid,$job_name, $id));
                 return response()->json(['msg'=>'Offer rejected successfully','success' => true]);
             } else {
                 return response()->json(['msg'=>'offer not rejected', 'success' => false]);
@@ -977,6 +1005,46 @@ public function read_message_notification(Request $request)
             } catch (\Exception $e) {
                 return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
             }
+}
+
+
+
+public function read_offer_notification(Request $request)
+{
+    $sender = $request->senderId;
+    $offerId = $request->offerId; 
+    $user = Auth::guard('frontend')->user();
+    $receiver = $user->nurse->id;
+
+    try {
+        $updateResult = NotificationOfferModel::raw()->updateMany(
+            [
+                'receiver' => $receiver,
+                'all_offers_notifs.sender' => $sender,
+                'all_offers_notifs.notifs_of_one_sender.offer_id' => $offerId, 
+                'all_offers_notifs.notifs_of_one_sender.seen' => false 
+            ],
+            [
+                '$set' => [
+                    'all_offers_notifs.$[].notifs_of_one_sender.$[notif].seen' => true
+                ]
+            ],
+            [
+                'arrayFilters' => [
+                    ['notif.offer_id' => $offerId, 'notif.seen' => false]
+                ],
+                'multi' => true
+            ]
+        );
+
+        if ($updateResult->getModifiedCount() > 0) {
+            return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No notifications to update']);
+        }
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+    }
 }
 
 public function addDocuments(Request $request)

@@ -2,47 +2,45 @@
 
 namespace App\Listeners;
 
-use App\Events\NotificationJob;
+use App\Events\NotificationOffer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\NotificationJobModel;
+use App\Models\NotificationOfferModel;
 
-
-
-class NotificationJobListener
+class NotificationOfferListener
 {
     /**
      * Handle the event.
      *
-     * @param  NotificationJob  $event
+     * @param  NotificationOffer  $event
      * @return void
      */
-    public function handle(NotificationJob $event)
+    public function handle(NotificationOffer $event)
     {
         $newContent = [
             'id' => uniqid(),
             'jobId' => $event->jobId,
+            'offer_id' => $event->offerId,
             'createdAt' => $event->createdAt,
+            'job_name' => $event->job_name,
+            'full_name' => $event->full_name,
             'seen' => $event->seen,
             'type' => $event->type,
-            'sender' => $event->sender,
-            'full_name' => $event->full_name,
-            'job_name' => $event->job_name,
+            'createdAt' => $event->createdAt,
         ];
 
         $receiver = $event->receiver;
 
-        // Attempt to add the new notification for an existing receiver
-        $updateResult = NotificationJobModel::raw()->updateOne(
+        $updateResult = NotificationOfferModel::raw()->updateOne(
             // the condition 
-            ['receiver' => $receiver, 'all_jobs_notifs.sender' => $event->sender],
+            ['receiver' => $receiver, 'all_offers_notifs.sender' => $event->sender],
             // the update (adding new notif)
             [
                 '$push' => [
-                    'all_jobs_notifs.$.notifs_of_one_sender' => [
+                    'all_offers_notifs.$.notifs_of_one_sender' => [
                         '$each' => [$newContent],
                         '$position' => 0,
-                        '$slice' => 100 // Adjust the slice value as needed
+                        '$slice' => 1 
                     ]
                 ]
             ]
@@ -50,13 +48,13 @@ class NotificationJobListener
 
         // If the receiver does not exist in any document, add a new receiver with the notification
         if ($updateResult->getModifiedCount() == 0) {
-            NotificationJobModel::raw()->updateOne(
-                // the condtion
+            NotificationOfferModel::raw()->updateOne(
+                // the condition
                 ['receiver' => $receiver],
+                // the update (adding new receiver with the notification)
                 [
-                    // the update (adding new receiver with the notification)
                     '$push' => [
-                        'all_jobs_notifs' => [
+                        'all_offers_notifs' => [
                             'id' => uniqid(),
                             'sender' => $event->sender,
                             'notifs_of_one_sender' => [$newContent]
@@ -66,7 +64,5 @@ class NotificationJobListener
                 ['upsert' => true]
             );
         }
-        
     }
 }
-

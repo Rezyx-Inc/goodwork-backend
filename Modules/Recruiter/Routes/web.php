@@ -190,6 +190,9 @@ Route::prefix('recruiter')->group(function () {
         // reading job notification
         Route::post('read-recruiter-job-notification', ['uses' => 'RecruiterController@read_recruiter_job_notification', 'as' => 'read-recruiter-job-notification']);
 
+        // reading offer notification
+        Route::post('read-recruiter-offer-notification', ['uses' => 'RecruiterController@read_recruiter_offer_notification', 'as' => 'read-recruiter-offer-notification']);
+
         // update-recruiter-profile-image
 
         Route::post('update-recruiter-profile-image', ['uses' => 'RecruiterDashboardController@update_recruiter_profile_image', 'as' => 'update-recruiter-profile-image']);

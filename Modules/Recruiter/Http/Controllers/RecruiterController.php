@@ -18,6 +18,7 @@ use App\Models\User;
 use App\Models\Nurse;
 use App\Models\NotificationMessage as NotificationMessageModel;
 use App\Models\NotificationJobModel;
+use App\Models\NotificationOfferModel;
 
 class RecruiterController extends Controller
 {
@@ -1278,6 +1279,45 @@ class RecruiterController extends Controller
                  return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
              }
          }
+
+
+public function read_recruiter_offer_notification(Request $request)
+{
+    $sender = $request->senderId;
+    $offerId = $request->offerId; 
+    $user = Auth::guard('recruiter')->user();
+    $receiver = $user->id;
+
+    try {
+        $updateResult = NotificationOfferModel::raw()->updateMany(
+            [
+                'receiver' => $receiver,
+                'all_offers_notifs.sender' => $sender,
+                'all_offers_notifs.notifs_of_one_sender.offer_id' => $offerId, 
+                'all_offers_notifs.notifs_of_one_sender.seen' => false 
+            ],
+            [
+                '$set' => [
+                    'all_offers_notifs.$[].notifs_of_one_sender.$[notif].seen' => true
+                ]
+            ],
+            [
+                'arrayFilters' => [
+                    ['notif.offer_id' => $offerId, 'notif.seen' => false]
+                ],
+                'multi' => true
+            ]
+        );
+
+        if ($updateResult->getModifiedCount() > 0) {
+            return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No notifications to update']);
+        }
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+    }
+}
 
         public function read_recruiter_message_notification(Request $request)
         {

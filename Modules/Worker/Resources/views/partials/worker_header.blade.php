@@ -72,38 +72,8 @@ $user = auth()->guard('frontend')->user();
 
 <script>
 
-// $(document).ready(function() {
-//     // Select all <a> tags within the <ul> with the ID 'list_of_notifications'
-//     $('#list_of_notifications').on('click','li a', function(event) {
-//         // Prevent the default link behavior
-//         event.preventDefault();
+var offerNotificationMessages = @json($offersNotificationMessages);
 
-//         // Extract the ID of the clicked <a>
-//         const senderId = this.id; // Assuming the ID you want to send is stored in the 'id' attribute of the <a> tag
-
-//         // Prepare the data to be sent
-//         const data = {
-//             sender: senderId,
-//             _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token for Laravel
-//         };
-
-//         // Send the ID to your reading route using jQuery's $.ajax
-//         $.ajax({
-//             url: 'read-message-notification', // Replace '/your-reading-route' with the actual path to your route
-//             type: 'POST',
-//             data: data,
-//             success: function(response) {
-//                 console.log('Success:', response);
-//                 // Handle success response
-//             },
-//             error: function(xhr, status, error) {
-//                 console.error('Error:', error);
-//                 // Handle errors here
-//             }
-//         });
-//          window.location = '{{ route('worker.messages') }}';
-//     });
-// });
 
 function handleNotificationClick(event) {
     event.preventDefault(); // Prevent the default link behavior
@@ -119,7 +89,7 @@ function handleNotificationClick(event) {
 
     // Send the ID to your reading route using jQuery's $.ajax
     $.ajax({
-        url: '{{route("read-message-notification")}}', // Replace 'read-message-notification' with the actual path to your route
+        url: '{{route("read-message-notification")}}',
         type: 'POST',
         data: data,
         success: function(response) {
@@ -134,6 +104,66 @@ function handleNotificationClick(event) {
         }
     });
 }
+
+function handleOfferNotificationClick(event) {
+    event.preventDefault(); 
+    const offerId = event.target.id;
+    const senderId = event.target.getAttribute('snd'); 
+
+    const data = {
+        offerId : offerId,
+        senderId: senderId,
+        _token: $('meta[name="csrf-token"]').attr('content') 
+    };
+
+    
+    $.ajax({
+        url: '{{route("read-offer-notification")}}', 
+        type: 'POST',
+        data: data,
+        success: function(response) {
+            console.log('Success:', response);
+            window.location.href = '{{ route("applied-jobs") }}';
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+$(document).ready (function () {
+  console.log('{{ $unreadOffersNotificationsCount }}');
+
+  console.log('Offer Notification Messages :' , offerNotificationMessages );
+  console.log(offerNotificationMessages)
+
+  if('{{ $unreadOffersNotificationsCount }}' > 0){
+    
+    document.getElementById('none_notification').classList.add('d-none');
+    let count = document.getElementById('notifications_counter');
+                    // count.innerHTML = parseInt(count.innerHTML) + 1;
+                    count.classList.remove('d-none');
+                    let list_of_notifications = document.getElementById('list_of_notifications');
+    list_of_notifications.innerHTML = '';
+    offerNotificationMessages.forEach(notification => {
+      let status = notification.type;
+    let message = notification.full_name +' ' + offer_status_messages[status] + ' "' + notification.job_name + '"';
+    let li = document.createElement('li');
+    let a = document.createElement('a');
+    a.id = notification.offer_id;
+    a.classList.add('dropdown-item');
+    a.href = "{{route('applied-jobs')}}";
+    a.innerHTML = message;
+    
+    a.setAttribute('snd', notification.sender); 
+    a.setAttribute('onclick', 'handleOfferNotificationClick(event)');
+    li.appendChild(a);
+    list_of_notifications.appendChild(li);
+  });
+  }
+});
+
+
 
 
 $(document).ready(function(){
@@ -151,8 +181,8 @@ $(document).ready(function(){
                     // count.innerHTML = parseInt(count.innerHTML) + 1;
                     count.classList.remove('d-none');
                     let list_of_notifications = document.getElementById('list_of_notifications');
-  list_of_notifications.innerHTML = '';
-  notificationMessages.forEach(notification => {
+    list_of_notifications.innerHTML = '';
+    notificationMessages.forEach(notification => {
     let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
     let li = document.createElement('li');
     let a = document.createElement('a');
@@ -240,6 +270,81 @@ $(document).ready(function(){
                     console.log(count);
                 });
 });
+
+
+var offer_status_messages = {
+    "Apply": "changed the offer status to applied for the job",
+    "Screening": "is screening your application for the job",
+    "Submitted": "submitted your application for the job",
+    "Offered": "offered you the job",
+    "Done": "marked the job as done",
+    "Onboarding": "started your onboarding for the job",
+    "Working": "marked you as working on the job",
+    "Rejected": "rejected your application for the job",
+    "Blocked": "blocked your application for the job",
+    "Hold": "put your application on hold for the job"
+};
+
+window.Echo.private('private-offer-notification.' + '{{ $user->nurse->id }}')
+.listen('NotificationOffer', (e) => {
+  // remove none notification message if there is any
+  let none_notification = document.getElementById('none_notification');
+                  if(none_notification){
+                    none_notification.classList.add('d-none');
+                  }
+
+                  let new_offer_notification = {
+                                            "id": e.sender,
+                                            "type": e.type,
+                                            "sender": e.sender,
+                                            "full_name": e.full_name,
+                                            "job_name": e.job_name,
+                                            "offer_id": e.offer_id
+                                        };
+                    
+                    // this is for checking if a notification of a specefic sender is already there
+                  offerNotificationMessages.forEach(notification => {
+                    if(notification.offer_id == e.offerId){
+                      // delete the notification
+                      let element = document.getElementById(notification.offer_id);
+                          if (element) {
+                            let parent_li = element.parentElement;
+                            if (parent_li) {
+                              parent_li.remove();
+                            }else{
+                              console.log('Parent Element not found:', notification.offer_id);
+                            }
+                          } else {
+                              console.log('Element not found:', notification.offer_id);
+                          }
+                     
+                    }
+                  });
+
+    console.log('Offer Notification Message :', e);
+    let status = e.type;
+    let message = e.full_name +' ' + offer_status_messages[status] + ' "' + e.job_name + '"';
+    console.log(message);
+    let count = document.getElementById('notifications_counter');
+    count.classList.remove('d-none');
+    let list_of_notifications = document.getElementById('list_of_notifications');
+    let li = document.createElement('li');
+    let a = document.createElement('a');
+    a.id = e.offerId;
+    a.classList.add('dropdown-item');
+    a.href = "{{route('applied-jobs')}}";
+    a.innerHTML = message;
+    a.setAttribute('snd', e.sender); // Add the 'snd' attribute with the value of notification.sender
+    a.setAttribute('onclick', 'handleOfferNotificationClick(event)');
+    li.appendChild(a);
+    list_of_notifications.appendChild(li);
+    console.log(list_of_notifications);
+    console.log(count);
+
+});
+
+
+
 
 
 
