@@ -2667,6 +2667,9 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     url: "{{ url('recruiter/get-job-listing') }}",
+                    beforeSend:function(xhr){
+                        xhr.withCredentials = true;
+                    },
                     data: {
                         'token': csrfToken,
                         'type': type,
@@ -2721,6 +2724,9 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     url: "{{ url('recruiter/get-job-listing') }}",
+                    beforeSend:function(xhr){
+                        xhr.withCredentials = true;
+                    },
                     data: {
                         'id': id,
                         'formtype': formtype
