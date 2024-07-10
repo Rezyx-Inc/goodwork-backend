@@ -31,6 +31,19 @@
     @yield('css')
 </head>
 <body>
+    <script>$(document).ready(function() {
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            },
+            beforeSend: function(xhr) {
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                }
+            }
+        });
+    });</script>
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <!--Main Navigation-->
