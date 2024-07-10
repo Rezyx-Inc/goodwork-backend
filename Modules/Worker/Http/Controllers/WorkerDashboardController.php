@@ -616,7 +616,8 @@ class WorkerDashboardController extends Controller
 
             return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
         }catch (\Exception $e) {
-            return redirect()->route('worker.dashboard')->with('error', $e->getmessage());
+            //return redirect()->route('worker.dashboard')->with('error', $e->getmessage());
+            return response()->json(["message"=>$e->getmessage()]);
         }
 
     }
