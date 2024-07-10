@@ -532,88 +532,93 @@ class WorkerDashboardController extends Controller
 
     public function apply_on_jobs(Request $request)
     {
-        $request->validate([
-            'jid' => 'required',
-        ]);
-        $response = [];
-        $user = auth()->guard('frontend')->user();
-        $job = Job::findOrFail($request->jid);
-        //return response()->json(['data'=>$job], 200);
-        $rec = Offer::where(['worker_user_id' => $user->nurse->id, 'job_id' => $request->jid])
-            ->whereNull('deleted_at')
-            ->first();
-        $input = [
-            'job_id' => $request->jid,
-            'created_by' => $job->created_by,
-            'worker_user_id' => $user->nurse->id,
-            'job_name' => $request->job_name,
-            'job_name' => $job->job_name,
-            'type' => $job->job_type,
-            'terms' => $job->terms,
-            'proffesion' => $job->proffesion,
-            'block_scheduling' => $job->block_scheduling,
-            'float_requirement' => $job->float_requirement,
-            'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
-            'contract_termination_policy' => $job->contract_termination_policy,
-            'traveler_distance_from_facility' => $job->traveler_distance_from_facility,
-            'clinical_setting' => $job->clinical_setting,
-            'Patient_ratio' => $job->Patient_ratio,
-            'Emr' => $job->Emr,
-            'Unit' => $job->Unit,
-            'scrub_color' => $job->scrub_color,
-            'start_date' => $job->start_date,
-            'rto' => $job->rto,
-            'hours_per_week' => $job->hours_per_week,
-            'guaranteed_hours' => $job->guaranteed_hours,
-            'hours_shift' => $job->hours_shift,
-            'weeks_shift' => $job->weeks_shift,
-            'preferred_assignment_duration' => $job->preferred_assignment_duration,
-            'referral_bonus' => $job->referral_bonus,
-            'sign_on_bonus' => $job->sign_on_bonus,
-            'completion_bonus' => $job->completion_bonus,
-            'extension_bonus' => $job->extension_bonus,
-            'other_bonus' => $job->other_bonus,
-            'four_zero_one_k' => $job->four_zero_one_k,
-            'health_insaurance' => $job->health_insaurance,
-            'dental' => $job->dental,
-            'vision' => $job->vision,
-            'actual_hourly_rate' => $job->actual_hourly_rate,
-            'overtime' => $job->overtime,
-            'holiday' => $job->holiday,
-            'on_call' => $job->on_call,
-            'orientation_rate' => $job->orientation_rate,
-            'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
-            'description' => $job->description,
-            'hours_shift' => $job->hours_shift,
-            'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
-            'weekly_taxable_amount' => $job->weekly_taxable_amount,
-            'employer_weekly_amount' => $job->employer_weekly_amount,
-            'total_employer_amount' => $job->total_employer_amount,
-            'weekly_pay' => $job->weekly_pay,
-            'tax_status' => $job->tax_status,
-            'status' => 'Apply',
-            'recruiter_id' => $job->created_by,
-        ];
-        if (empty($rec)) {
-            offer::create($input);
-            $message = 'Job saved successfully.';
-            $saved = JobSaved::where(['nurse_id' => $user->id, 'job_id' => $request->jid, 'is_delete' => '0', 'is_save' => '1'])->first();
+        try{
+            $request->validate([
+                'jid' => 'required',
+            ]);
+            $response = [];
+            $user = auth()->guard('frontend')->user();
+            $job = Job::findOrFail($request->jid);
+            //return response()->json(['data'=>$job], 200);
+            $rec = Offer::where(['worker_user_id' => $user->nurse->id, 'job_id' => $request->jid])
+                ->whereNull('deleted_at')
+                ->first();
+            $input = [
+                'job_id' => $request->jid,
+                'created_by' => $job->created_by,
+                'worker_user_id' => $user->nurse->id,
+                'job_name' => $request->job_name,
+                'job_name' => $job->job_name,
+                'type' => $job->job_type,
+                'terms' => $job->terms,
+                'proffesion' => $job->proffesion,
+                'block_scheduling' => $job->block_scheduling,
+                'float_requirement' => $job->float_requirement,
+                'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
+                'contract_termination_policy' => $job->contract_termination_policy,
+                'traveler_distance_from_facility' => $job->traveler_distance_from_facility,
+                'clinical_setting' => $job->clinical_setting,
+                'Patient_ratio' => $job->Patient_ratio,
+                'Emr' => $job->Emr,
+                'Unit' => $job->Unit,
+                'scrub_color' => $job->scrub_color,
+                'start_date' => $job->start_date,
+                'rto' => $job->rto,
+                'hours_per_week' => $job->hours_per_week,
+                'guaranteed_hours' => $job->guaranteed_hours,
+                'hours_shift' => $job->hours_shift,
+                'weeks_shift' => $job->weeks_shift,
+                'preferred_assignment_duration' => $job->preferred_assignment_duration,
+                'referral_bonus' => $job->referral_bonus,
+                'sign_on_bonus' => $job->sign_on_bonus,
+                'completion_bonus' => $job->completion_bonus,
+                'extension_bonus' => $job->extension_bonus,
+                'other_bonus' => $job->other_bonus,
+                'four_zero_one_k' => $job->four_zero_one_k,
+                'health_insaurance' => $job->health_insaurance,
+                'dental' => $job->dental,
+                'vision' => $job->vision,
+                'actual_hourly_rate' => $job->actual_hourly_rate,
+                'overtime' => $job->overtime,
+                'holiday' => $job->holiday,
+                'on_call' => $job->on_call,
+                'orientation_rate' => $job->orientation_rate,
+                'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
+                'description' => $job->description,
+                'hours_shift' => $job->hours_shift,
+                'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
+                'weekly_taxable_amount' => $job->weekly_taxable_amount,
+                'employer_weekly_amount' => $job->employer_weekly_amount,
+                'total_employer_amount' => $job->total_employer_amount,
+                'weekly_pay' => $job->weekly_pay,
+                'tax_status' => $job->tax_status,
+                'status' => 'Apply',
+                'recruiter_id' => $job->created_by,
+            ];
             if (empty($rec)) {
-                // $saved->delete();
+                offer::create($input);
+                $message = 'Job saved successfully.';
+                $saved = JobSaved::where(['nurse_id' => $user->id, 'job_id' => $request->jid, 'is_delete' => '0', 'is_save' => '1'])->first();
+                if (empty($rec)) {
+                    // $saved->delete();
+                }
+            } else {
+                // if ($rec->is_save == '1') {
+                //     $message = 'Job unsaved successfully.';
+                // }else{
+                //     $message = 'Job saved successfully.';
+                // }
+                $rec->update($input);
             }
-        } else {
-            // if ($rec->is_save == '1') {
-            //     $message = 'Job unsaved successfully.';
-            // }else{
-            //     $message = 'Job saved successfully.';
-            // }
-            $rec->update($input);
+
+            $time = now()->toDateTimeString();
+            event(new NotificationJob('Apply',false,$time,$job->created_by,$user->id,$user->full_name,$request->jid,$job->job_name));
+
+            return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
+        }catch (\Exception $e) {
+            return redirect()->route('worker.dashboard')->with('error', $e->getmessage());
         }
 
-        $time = now()->toDateTimeString();
-        event(new NotificationJob('Apply',false,$time,$job->created_by,$user->id,$user->full_name,$request->jid,$job->job_name));
-
-        return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
     }
 
     public function my_work_journey()

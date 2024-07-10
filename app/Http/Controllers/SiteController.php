@@ -558,4 +558,11 @@ class SiteController extends Controller {
         Artisan::call('view:clear');
         return "Cache,View is cleared";
     }
+
+    public function authenticate(Request $request) {
+        $isAuthenticated = true; if ($isAuthenticated) { return response()->json('OK', 200); } else { return response()->json('Forbidden', 403); } }
+       
+
+
+
 }

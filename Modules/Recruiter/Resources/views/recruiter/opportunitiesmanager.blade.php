@@ -45,7 +45,7 @@
                             <div class="row progress-bar-item">
                                 <div class="col-3 step">
                                     <p>Job information</p>
-                                    <div class="d-none bullet">
+                                    <div class="bullet">
                                         <span>1</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
@@ -53,14 +53,14 @@
 
                                 <div class=" col-2 step">
                                     <p>Preferences and Requirements</p>
-                                    <div class="d-none bullet">
+                                    <div class="bullet">
                                         <span>2</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
                                 <div class="col-2 step">
                                     <p>Job Details</p>
-                                    <div class="d-none bullet">
+                                    <div class="bullet">
                                         <span>3</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
@@ -68,7 +68,7 @@
 
                                 <div class="col-2 step">
                                     <p>other information</p>
-                                    <div class="d-none bullet">
+                                    <div class="bullet">
                                         <span>4</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
@@ -76,7 +76,7 @@
 
                                 <div class="col-3 step">
                                     <p>Work Schedule & Requirements</p>
-                                    <div class="d-none bullet">
+                                    <div class="bullet">
                                         <span>5</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
@@ -417,7 +417,7 @@
                                                 <span class="help-block-on_call"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Holidy hourly rate</label>
+                                                <label>Holidy date</label>
                                                 <input type="date" name="holiday" id="holiday"
                                                     placeholder="Enter Holidy hourly rate">
                                                 <span class="help-block-holiday"></span>
@@ -692,10 +692,6 @@
                                             </div>
 
 
-                                           
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                ( The above fields are not required )
-                                            </span>
 
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
@@ -976,7 +972,7 @@
                                     <div class="row progress-bar-item">
                                         <div class="col-3 step stepDraft">
                                             <p>Job information</p>
-                                            <div class="d-none bullet">
+                                            <div class="bullet">
                                                 <span>1</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
@@ -984,14 +980,14 @@
 
                                         <div class=" col-2 step stepDraft">
                                             <p>Preferences and Requirements</p>
-                                            <div class="d-none bullet">
+                                            <div class="bullet">
                                                 <span>2</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
                                         <div class="col-2 step stepDraft">
                                             <p>Job Details</p>
-                                            <div class="d-none bullet">
+                                            <div class="bullet">
                                                 <span>3</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
@@ -999,7 +995,7 @@
 
                                         <div class="col-2 step stepDraft">
                                             <p>other information</p>
-                                            <div class="d-none bullet">
+                                            <div class="bullet">
                                                 <span>4</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
@@ -1007,7 +1003,7 @@
 
                                         <div class="col-3 step stepDraft">
                                             <p>Work Schedule & Requirements</p>
-                                            <div class="d-none bullet">
+                                            <div class="bullet">
                                                 <span>5</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
@@ -1305,7 +1301,7 @@
                                                         <span class="help-block-on_call"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Holidy hourly rate</label>
+                                                        <label>Holidy date</label>
                                                         <input type="date" name="holiday" id="holidayDraft"
                                                             placeholder="Enter Holidy hourly rate">
                                                         <span class="help-block-holiday"></span>
@@ -1553,9 +1549,7 @@
 
 
                                            
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                ( The above fields are not required )
-                                            </span>
+                                            
 
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtnDraft">Save as draft</button>
@@ -2045,7 +2039,7 @@
                                                         <span class="help-block-on_call"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Holidy hourly rate</label>
+                                                        <label>Holidy date</label>
                                                         <input type="date" name="holiday" id="holidayEdit"
                                                             placeholder="Enter Holidy hourly rate">
                                                         <span class="help-block-holiday"></span>
@@ -2293,9 +2287,6 @@
 
 
                                            
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                ( The above fields are not required )
-                                            </span>
 
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtnEdit">Save as draft</button>

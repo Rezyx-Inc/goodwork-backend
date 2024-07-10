@@ -18,6 +18,11 @@ try {
 // ..and assign to window the ones that need it
 window.$ = window.jQuery  = jQuery;
 
+
+
+// solution of firefox csrf problem
+$.ajaxSetup({xhrFields: { withCredentials: true } }); 
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

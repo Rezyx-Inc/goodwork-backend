@@ -43,12 +43,12 @@ Route::prefix('worker')->group(function() {
 
       //  Route::get('worker-messages/{idEmployer}', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
        // Route::get('worker-messages', ['uses' => 'WorkerController@get_messages', 'as' => 'worker-messages']);
-        Route::get('/getMessages', ['uses'=>'WorkerController@get_private_messages', 'as'=>'getPrivateMessages']);
+        Route::get('/getMessages', ['uses'=>'WorkerController@get_private_messages', 'as'=>'WorkergetPrivateMessages']);
         Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'worker.my-work-journey']);
 
 
         //Route::get('my-work-journey', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'my-work-journey']);
-        Route::post('fetch-job-content', ['uses' => 'WorkerController@fetch_job_content', 'as' => 'fetch-job-content']);
+        Route::post('fetch-job-content', ['uses' => 'WorkerController@fetch_job_content', 'as' => 'worker-fetch-job-content']);
 
         Route::get('jobs/applied', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'applied-jobs']);
         Route::get('jobs/saved', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'saved-jobs']);
@@ -57,10 +57,10 @@ Route::prefix('worker')->group(function() {
         Route::get('jobs/past', ['uses' => 'WorkerController@get_my_work_journey', 'as' => 'past-jobs']);
 
         Route::post('/send-message', ['uses' => 'WorkerController@sendMessages', 'as' => 'send.message']);
-        Route::get('/get-messages', ['uses' => 'WorkerController@getMessages', 'as' => 'GetMessages']);
+        Route::get('/get-messages', ['uses' => 'WorkerController@getMessages', 'as' => 'worker-GetMessages']);
 
         // still in use ???
-        Route::get('/get-rooms', ['uses' => 'WorkerController@get_rooms', 'as' => 'GetRooms']);
+        Route::get('/get-rooms', ['uses' => 'WorkerController@get_rooms', 'as' => 'worker-GetRooms']);
         Route::get('job/{id}/details', ['uses' => 'WorkerController@details', 'as' => 'worker_job-details']);
 
         // accept offer
@@ -84,10 +84,10 @@ Route::prefix('worker')->group(function() {
         Route::post('add-worker-payment',['uses' => 'WorkerDashboardController@add_worker_payment', 'as' => 'add_worker_payment']);
 
         // sending support tickets
-        Route::post('send-support-ticket',['uses' => 'WorkerDashboardController@send_support_ticket', 'as' => 'send_support_ticket']);
+        Route::post('send-support-ticket',['uses' => 'WorkerDashboardController@send_support_ticket', 'as' => 'worker-send_support_ticket']);
 
         // disactivate account
-        Route::post('disactivate-account',['uses' => 'WorkerDashboardController@disactivate_account', 'as' => 'disactivate_account']);
+        Route::post('disactivate-account',['uses' => 'WorkerDashboardController@disactivate_account', 'as' => 'worker-disactivate_account']);
 
         // add stripe account
         Route::post('add-stripe-account',['uses'=>'WorkerDashboardController@add_stripe_account','as'=>'add_stripe_account']);
@@ -100,7 +100,7 @@ Route::prefix('worker')->group(function() {
         Route::post('login-to-stripe-account',['uses'=>'WorkerDashboardController@login_to_stripe_account','as'=>'login_to_stripe_account']);
 
         // add saved job
-        Route::post('add-save-jobs', ['uses' => 'WorkerDashboardController@add_save_jobs', 'as' => 'add-save-jobs']);
+        Route::post('add-save-jobs', ['uses' => 'WorkerDashboardController@add_save_jobs', 'as' => 'worker-add-save-jobs']);
 
         // apply on job
         Route::post('apply-on-job', ['uses' => 'WorkerDashboardController@apply_on_jobs', 'as' => 'apply-on-job']);

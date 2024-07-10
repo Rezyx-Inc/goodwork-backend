@@ -154,10 +154,10 @@ Route::prefix('recruiter')->group(function () {
         * If the job offer is still a draft, it updates the job offer with the data in the update array. If the update is successful, it returns a success response. If the update fails, it returns an error response.
         */
 
-        Route::get('/getMessages', ['uses'=>'RecruiterController@get_private_messages', 'as'=>'getPrivateMessages']);
+        Route::get('/getMessages', ['uses'=>'RecruiterController@get_private_messages', 'as'=>'RecruitergetPrivateMessages']);
         Route::get('recruiter-messages', ['uses' => 'RecruiterController@get_messages', 'as' => 'recruiter-messages']);
 
-        Route::post('/send-message', ['uses' => 'RecruiterController@sendMessages', 'as' => 'SendMessage']);
+        Route::post('/send-message', ['uses' => 'RecruiterController@sendMessages', 'as' => 'RecruiterSendMessage']);
 
         Route::get('add-job', ['uses' => 'RecruiterController@addJob', 'as' => 'add-job']);
         Route::post('add-job', ['uses' => 'RecruiterController@addJobStore', 'as' => 'addJob.store']);
