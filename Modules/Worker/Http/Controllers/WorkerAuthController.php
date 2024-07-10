@@ -80,7 +80,7 @@ class WorkerAuthController extends Controller
             
                 } else {                
                     $data = [];              
-                    $data['msg'] ='Wrong login information.';                
+                    $data['msg'] ='Wrong login information. Have you created an account ?';                
                     $data['success'] = false;                
                     return response()->json($data);            
                 }        
