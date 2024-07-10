@@ -48,10 +48,10 @@ class CreateOffersTable extends Migration
             $table->decimal('completion_bonus', 8, 2)->nullable();
             $table->decimal('extension_bonus', 8, 2)->nullable();
             $table->decimal('other_bonus', 8, 2)->nullable();
-            $table->boolean('four_zero_one_k')->nullable();
-            $table->boolean('health_insaurance')->nullable();
-            $table->boolean('dental')->nullable();
-            $table->boolean('vision')->nullable();
+            $table->boolean('four_zero_one_k')->nullable()->default(false);
+            $table->boolean('health_insaurance')->nullable()->default(false);
+            $table->boolean('dental')->nullable()->default(false);
+            $table->boolean('vision')->nullable()->default(false);
             $table->decimal('actual_hourly_rate', 8, 2)->nullable();
             $table->decimal('overtime', 8, 2)->nullable();
             $table->decimal('holiday', 8, 2)->nullable();
@@ -66,8 +66,8 @@ class CreateOffersTable extends Migration
             $table->decimal('total_goodwork_amount', 8, 2)->nullable();
             $table->decimal('total_contract_amount', 8, 2)->nullable();
             $table->decimal('weekly_pay', 8, 2)->nullable();
-            $table->boolean('is_draft')->nullable();
-            $table->boolean('is_counter')->nullable();
+            $table->boolean('is_draft')->nullable()->default(false);
+            $table->boolean('is_counter')->nullable()->default(false);
             $table->string('created_by', 36)->nullable();
             $table->string('tax_status', 36)->nullable();
             $table->foreign('worker_user_id')->references('id')->on('nurses')->onDelete('cascade');
