@@ -536,7 +536,7 @@ class SiteController extends Controller {
 
     public function get_dorpdown(Request $request)
     {
-        if ($request->ajax()) {
+        try{
             if ($request->has('filter')) {
                 $keywords = Keyword::where(['active'=>'1','filter'=>$request->filter])->get();
                 $content = '<option value="">Select</option>';
@@ -551,7 +551,12 @@ class SiteController extends Controller {
                 $response = array('success'=>true ,'content'=>$content);
                 return $response;
             }
+
+        }catch(\Exception $e){
+            return response()->json(["message"=>$e->getmessage()]);
         }
+
+        
     }
     public function clear_cache() {
         Artisan::call('cache:clear');

@@ -465,6 +465,9 @@ function get_dropdown(obj)
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        xhrFields: {
+            withCredentials: true
         }
     });
     $.ajax({
