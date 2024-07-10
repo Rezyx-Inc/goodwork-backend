@@ -26,7 +26,7 @@ use App\Models\{User, Worker,Follows, NurseReference,Job,Offer, NurseAsset,
 
 use App\Models\NotificationMessage as NotificationMessageModel;
 
-define('USER_IMG', asset('public/frontend/img/profile-pic-big.png'));
+define('USER_IMG', asset('frontend/img/profile-pic-big.png'));
 
 class WorkerController extends Controller
 {
