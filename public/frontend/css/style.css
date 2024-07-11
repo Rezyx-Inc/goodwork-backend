@@ -183,7 +183,13 @@ body{
   main {
     padding-left: 230px;
     padding-right: 30px;
+    padding-bottom: 130px;
   }
+}
+
+.main_home{
+    padding-top: 170px;
+    padding-bottom: 130px;
 }
 
 p{
@@ -1209,6 +1215,7 @@ button.ss-fliter-btn {
     border-radius: 10px;
     position: relative;
     background: #fff;
+    cursor: pointer;
 }
 /*.ss-job-prfle-sec:after {
     content: "";

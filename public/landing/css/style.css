@@ -835,6 +835,7 @@ ul.ss-ban-top-map-txt2 {
     margin-top: 30px;
     border-radius: 10px;
     position: relative;
+    cursor: pointer;
 }
 .ss-job-prfle-sec:after {
     content: "";

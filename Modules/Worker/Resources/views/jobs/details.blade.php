@@ -674,7 +674,7 @@
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Weekly Taxable Amount</span>
+        <span>Est. Weekly Taxable Amount</span>
         <h6>${{$model->weekly_taxable_amount}} </h6>
         </li>
         {{-- <li>
@@ -683,7 +683,7 @@
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Employer Weekly Amount</span>
+        <span>Est. Employer Weekly Amount</span>
         <h6>${{$model->employer_weekly_amount}} </h6>
         </li>
         <li>
@@ -692,7 +692,7 @@
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Weekly Non-Taxable Amount</span>
+        <span>Est. Weekly Non-Taxable Amount</span>
         <h6>${{$model->weekly_non_taxable_amount}} </h6>
         </li>
         <li>
@@ -701,7 +701,7 @@
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Goodwork Weekly Amount</span>
+        <span>Est. Goodwork Weekly Amount</span>
         <h6>${{$model->goodwork_weekly_amount}} </h6>
         </li>
         <li>
@@ -710,7 +710,7 @@
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Total Employer Amount</span>
+        <span>Est. Total Employer Amount</span>
         <h6>${{$model->total_employer_amount}} </h6>
         </li>
         {{-- <li>
@@ -719,7 +719,7 @@
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Total Goodwork Amount</span>
+        <span>Est. Total Goodwork Amount</span>
         <h6>${{$model->total_goodwork_amount}} </h6>
         </li>
         {{-- <li>
@@ -728,7 +728,7 @@
     </ul>
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Total Contract Amount</span>
+        <span>Est. Total Contract Amount</span>
         <h6>${{$model->total_contract_amount}} </h6>
         </li>
         {{-- <li>

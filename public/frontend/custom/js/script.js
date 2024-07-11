@@ -550,7 +550,7 @@ function save_jobs(obj, reload_page=false)
 }
 
 
-function apply_on_jobs(obj, reload_page = false)
+function apply_on_jobs(obj, reload_page = true)
 {
     $.confirm({
         title: 'Apply on the Job',

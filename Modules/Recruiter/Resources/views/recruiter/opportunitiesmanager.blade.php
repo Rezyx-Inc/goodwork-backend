@@ -285,12 +285,12 @@
                                                     placeholder="Enter Guaranteed Hours per week">
                                                 <span class="help-block-guaranteed_hours"></span>
                                             </div>
-                                            {{-- <div class="ss-form-group col-md-4">
+                                            <div class="ss-form-group col-md-4">
                                                 <label>Hours Per Week</label>
                                                 <input type="number" name="hours_per_week" id="hours_per_week"
                                                     placeholder="Enter hours per week">
                                                 <span class="help-block-hours_per_week"></span>
-                                            </div> --}}
+                                            </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Hours Per Shift</label>
                                                 <input type="number" name="hours_shift" id="hours_shift"
@@ -866,9 +866,10 @@
                         <div class="col-lg-5 d-none" id="draftCards">
                             <div class="ss-account-form-lft-1">
                                 <h5 class="mb-4 text-capitalize">Draft</h5>
+                                
                                 @php $counter = 0 @endphp
                                 @foreach ($draftJobs as $job)
-                                    <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
+                                    <div style="" class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}">
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
                                         <h6>{{ $job->job_name}}</h6>
@@ -888,7 +889,7 @@
                                     </div>
                                     @php $counter++ @endphp
                                 @endforeach
-                                <div id="job-list">
+                                <div id="job-list-draft">
                                 </div>
                             </div>
                         </div>
@@ -958,8 +959,11 @@
                                     </div>
                                     @php $counter++ @endphp
                                 @endforeach
-                                <div id="job-list">
-                                </div>
+                                @if (count($onholdJobs) == 0)
+                                    <div id="job-list-onhold">
+                                    </div>
+                                @endif
+                               
                             </div>
                         </div>
                         <!-- END ONHOLD CARDS -->
@@ -967,7 +971,7 @@
                         <!-- EDITING Draft FORM -->
                         <div class="all col-lg-7" id="details_draft">
                             <div class="bodyAll" style="width: 100%;">
-                                <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
+                                <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;" id="details_info">
                                     <header>Select a job from Drafts</header>
                                     <div class="row progress-bar-item">
                                         <div class="col-3 step stepDraft">
@@ -1210,6 +1214,13 @@
                                                             id="guaranteed_hoursDraft"
                                                             placeholder="Enter Guaranteed Hours per week">
                                                         <span class="help-block-guaranteed_hours"></span>
+                                                    </div>
+
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Hours Per Week</label>
+                                                        <input type="number" name="hours_per_week" id="hours_per_weekDraft"
+                                                            placeholder="Enter hours per week">
+                                                        <span class="help-block-hours_per_weekDraft"></span>
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
@@ -1951,6 +1962,13 @@
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
+                                                        <label>Hours Per Week</label>
+                                                        <input type="number" name="hours_per_week" id="hours_per_weekEdit"
+                                                            placeholder="Enter hours per week">
+                                                        <span class="help-block-hours_per_weekEdit"></span>
+                                                    </div>
+
+                                                    <div class="ss-form-group col-md-4">
                                                         <label>
                                                             Hours Per Shift
                                                         </label>
@@ -2468,6 +2486,20 @@
                         </div>
                         <!-- onhold details end-->
 
+                        <!-- draft details start-->
+                       <div class="col-lg-7 d-none" id="details_draft_none">
+                        <div class="ss-journy-svd-jbdtl-dv">
+                            <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
+                                <div class="row" id="application-details-apply-draft">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- draft details end-->
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -2477,6 +2509,283 @@
 
     </main>
     <script>
+
+const myForm = document.getElementById('create_job_form');
+    const draftJobs = @json($draftJobs);
+    const publishedJobs = @json($publishedJobs);
+    const onholdJobs = @json($onholdJobs);
+
+    if (publishedJobs == 0){
+        $("#application-details-apply").html('<div class="text-center"><span>Data Not found</span></div>');
+                                $("#job-list-published").html('<div class="text-center"><span>No Job</span></div>');
+    }
+
+    if (onholdJobs == 0){
+        $("#application-details-apply-onhold").html('<div class="text-center"><span>Data Not found</span></div>');
+        $("#job-list-onhold").html('<div class="text-center"><span>No Job</span></div>');
+    }
+
+
+if (draftJobs.length !== 0) {
+
+    let job_name = draftJobs[0].job_name;
+    let job_type = draftJobs[0].job_type;
+    let preferred_specialty = draftJobs[0].preferred_specialty;
+    let job_state = draftJobs[0].job_state;
+    let job_city = draftJobs[0].job_city;
+    let preferred_work_location = draftJobs[0].preferred_work_location;
+    let preferred_assignment_duration = draftJobs[0].preferred_assignment_duration;
+    let weekly_pay = draftJobs[0].weekly_pay;
+    let description = draftJobs[0].description;
+    let proffesion = draftJobs[0].proffesion;
+    let facility_shift_cancelation_policy = draftJobs[0].facility_shift_cancelation_policy;
+    let traveler_distance_from_facility = draftJobs[0].traveler_distance_from_facility;
+    let clinical_setting = draftJobs[0].clinical_setting;
+    let Patient_ratio = draftJobs[0].Patient_ratio;
+    let Unit = draftJobs[0].Unit;
+    let scrub_color = draftJobs[0].scrub_color;
+    let rto = draftJobs[0].rto;
+    let guaranteed_hours = draftJobs[0].guaranteed_hours;
+    let hours_shift = draftJobs[0].hours_shift;
+    let weeks_shift = draftJobs[0].weeks_shift;
+    let referral_bonus = draftJobs[0].referral_bonus;
+    let sign_on_bonus = draftJobs[0].sign_on_bonus;
+    let completion_bonus = draftJobs[0].completion_bonus;
+    let extension_bonus = draftJobs[0].extension_bonus;
+    let other_bonus = draftJobs[0].other_bonus;
+    let actual_hourly_rate = draftJobs[0].actual_hourly_rate;
+    let overtime = draftJobs[0].overtime;
+    let on_call = draftJobs[0].on_call;
+    let holiday = draftJobs[0].holiday;
+    let orientation_rate = draftJobs[0].orientation_rate;
+    let terms = draftJobs[0].terms;
+    let block_scheduling = draftJobs[0].block_scheduling;
+    let float_requirement = draftJobs[0].float_requirement;
+    let contract_termination_policy = draftJobs[0].contract_termination_policy;
+    let Emr = draftJobs[0].Emr;
+    let four_zero_one_k = draftJobs[0].four_zero_one_k;
+    let health_insaurance = draftJobs[0].health_insaurance;
+    let dental = draftJobs[0].dental;
+    let vision = draftJobs[0].vision;
+    let call_back = draftJobs[0].call_back;
+    let feels_like_per_hour = draftJobs[0].feels_like_per_hour;
+    let weekly_non_taxable_amount = draftJobs[0].weekly_non_taxable_amount;
+    let start_date = draftJobs[0].start_date;
+    let as_soon_as = draftJobs[0].as_soon_as;
+
+    if (job_name !== null) {
+        document.getElementById("job_nameDraft").value = job_name;
+    }
+    if (job_type !== null) {
+        var jobtype = job_type;
+                        var select = document.getElementById('job_typeDraft');
+                        var option = document.createElement('option');
+                        option.value = jobtype;
+                        option.text = jobtype;
+
+                        select.add(option);
+                        select.value = jobtype;
+    }
+    if (preferred_specialty !== null) {
+        var preferredSpecialty = preferred_specialty;
+                        var select = document.getElementById('preferred_specialtyDraft');
+                        var option = document.createElement('option');
+                        option.value = preferredSpecialty;
+                        option.text = preferredSpecialty;
+
+                        select.add(option);
+                        select.value = preferredSpecialty;
+    }
+    if (job_state !== null) {
+        document.getElementById("job_stateDraft").value = job_state;
+    }
+    if (job_city !== null) {
+        var city = job_city;
+    var select = document.getElementById('job_cityDraft');
+    var option = document.createElement('option');
+    option.value = city;
+    option.text = city;
+
+    select.add(option);
+    select.value = city;
+
+    }
+    if (preferred_work_location !== null) {
+        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+    }
+    if (preferred_assignment_duration !== null) {
+        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+    }
+    if (weekly_pay !== null) {
+        document.getElementById("weekly_payDraft").value = weekly_pay;
+    }
+    if (description !== null) {
+        document.getElementById("descriptionDraft").value = description;
+    }
+    if (proffesion !== null) {
+        var proffesionValue = proffesion;
+    var select = document.getElementById('perferred_professionDraft');
+    var option = document.createElement('option');
+    option.value = proffesionValue;
+    option.text = proffesionValue;
+
+    select.add(option);
+    select.value = proffesionValue;
+        //document.getElementById("perferred_professionDraft").value = proffesion;
+    }
+    if (facility_shift_cancelation_policy !== null) {
+        var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
+    var select = document.getElementById('facility_shift_cancelation_policyDraft');
+    var option = document.createElement('option');
+    option.value = facilityShiftCancelationPolicy;
+    option.text = facilityShiftCancelationPolicy;
+
+    select.add(option);
+    select.value = facilityShiftCancelationPolicy;
+        //document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+    }
+    if (traveler_distance_from_facility !== null) {
+        document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
+    }
+    if (clinical_setting !== null) {
+        var ClinicalSettingValue = clinical_setting;
+    var select = document.getElementById('clinical_settingDraft');
+    var option = document.createElement('option');
+    option.value = ClinicalSettingValue;
+    option.text = ClinicalSettingValue;
+
+    select.add(option);
+    select.value = ClinicalSettingValue;
+
+       // document.getElementById("clinical_settingDraft").value = clinical_setting;
+    }
+    if (Patient_ratio !== null) {
+        document.getElementById("Patient_ratioDraft").value = Patient_ratio;
+    }
+    if (Unit !== null) {
+        document.getElementById("UnitDraft").value = Unit;
+    }
+    if (scrub_color !== null) {
+        document.getElementById("scrub_colorDraft").value = scrub_color;
+    }
+    if (rto !== null) {
+        document.getElementById("rtoDraft").value = rto;
+    }
+    if (guaranteed_hours !== null) {
+        document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
+    }
+    if (hours_shift !== null) {
+        document.getElementById("hours_shiftDraft").value = hours_shift;
+    }
+    if (weeks_shift !== null) {
+        document.getElementById("weeks_shiftDraft").value = weeks_shift;
+    }
+    if (referral_bonus !== null) {
+        document.getElementById("referral_bonusDraft").value = referral_bonus;
+    }
+    if (sign_on_bonus !== null) {
+        document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
+    }
+    if (completion_bonus !== null) {
+        document.getElementById("completion_bonusDraft").value = completion_bonus;
+    }
+    if (extension_bonus !== null) {
+        document.getElementById("extension_bonusDraft").value = extension_bonus;
+    }
+    if (other_bonus !== null) {
+        document.getElementById("other_bonusDraft").value = other_bonus;
+    }
+    if (actual_hourly_rate !== null) {
+        document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
+    }
+    if (overtime !== null) {
+        document.getElementById("overtimeDraft").value = overtime;
+    }
+    if (on_call !== null) {
+        document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
+
+    }
+    if (holiday !== null) {
+        document.getElementById("holidayDraft").value = holiday;
+    }
+    if (orientation_rate !== null) {
+        document.getElementById("orientation_rateDraft").value = orientation_rate;
+    }
+    if (terms !== null) {
+        var Terms = terms;
+    var select = document.getElementById('termsDraft');
+    var option = document.createElement('option');
+    option.value = Terms;
+    option.text = Terms;
+
+    select.add(option);
+    select.value = Terms;
+        
+    }
+    if (block_scheduling !== null) {
+        document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
+
+    }
+    if (float_requirement !== null) {
+        document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
+
+    }
+    if (contract_termination_policy !== null) {
+        document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
+    }
+    if (Emr !== null) {
+
+        var EmrValue = Emr;
+    var select = document.getElementById('emrDraft');
+    var option = document.createElement('option');
+    option.value = EmrValue;
+    option.text = EmrValue;
+
+    select.add(option);
+    select.value = EmrValue;
+
+
+    }
+    if (four_zero_one_k !== null) {
+        document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
+
+    }
+    if (health_insaurance !== null) {
+        document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
+
+    }
+    if (dental !== null) {
+        document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
+
+    }
+    if (vision !== null) {
+        document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
+
+    }
+    if(feels_like_per_hour !== null){
+        document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
+    }
+    if (call_back !== null) {
+        document.getElementById("call_backDraft").value = call_back;
+    }
+    if (weekly_non_taxable_amount !== null) {
+        document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
+    }
+    if (start_date !== null) {
+        document.getElementById("start_dateDraft").value = start_date;
+    }
+    if (as_soon_as !== null) {
+        document.getElementById("as_soon_asDraft").checked = as_soon_as;
+    }
+}else{
+    document.getElementById('details_info').innerHTML = '<div class="text-center"><span>Data Not found</span></div>';
+    $("#job-list-draft").html('<div class="text-center"><span>No Job</span></div>');
+    
+}
+
+
+
+
         var certificateStr = '';
         var vaccinationStr = '';
          $(document).ready(function() {
@@ -2597,6 +2906,9 @@
                 document.getElementById("details_onhold").classList.add("d-none");
                 document.getElementById('published-job-details').classList.remove('d-none');
                 document.getElementById("create_job_request_form").classList.add("d-none");
+
+                
+
             } else if (type == "published") {
                 document.getElementById("onholdCards").classList.add('d-none');
                 document.getElementById("draftCards").classList.add('d-none');
@@ -2670,6 +2982,8 @@
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
+                       console.log(result);
+
                         // $("#job-list").html(result.joblisting);
                         // $("#job-details").html(result.jobdetails);
 
@@ -2681,15 +2995,18 @@
                         list_certifications();
 
                         if (result.joblisting != "") {
-                            document.getElementById("published-job-details").classList.remove("d-none");
-                            document.getElementById("no-job-posted").classList.add("d-none");
-                            $("#application-details-apply").html(result.jobdetails);
-                            if (type == "onhold") {
+                            if(type == "published"){
+                                document.getElementById("published-job-details").classList.remove("d-none");
+                                document.getElementById("no-job-posted").classList.add("d-none");
+                                $("#application-details-apply").html(result.jobdetails);
+                                $("#job-list-published").html(result.joblisting);
+                            } else if(type == "onhold"){
+                                document.getElementById("published-job-details").classList.remove("d-none");
+                                document.getElementById("no-job-posted").classList.add("d-none");
                                 $("#application-details-apply-onhold").html(result.jobdetails);
+                                $("#job-list-onhold").html(result.joblisting);
                             }
-
-                            //console.log(type);
-                             $("#job-list-published").html(result.joblisting);
+                           
                         }
                     },
                     error: function(error) {
@@ -3305,266 +3622,7 @@
     </script>
 @stop
 <script type="text/javascript">
-    const myForm = document.getElementById('create_job_form');
-    const draftJobs = @json($draftJobs);
-    const publishedJobs = @json($publishedJobs);
-    const onholdJobs = @json($onholdJobs);
-
-
-
-if (draftJobs.length !== 0) {
-
-    let job_name = draftJobs[0].job_name;
-    let job_type = draftJobs[0].job_type;
-    let preferred_specialty = draftJobs[0].preferred_specialty;
-    let job_state = draftJobs[0].job_state;
-    let job_city = draftJobs[0].job_city;
-    let preferred_work_location = draftJobs[0].preferred_work_location;
-    let preferred_assignment_duration = draftJobs[0].preferred_assignment_duration;
-    let weekly_pay = draftJobs[0].weekly_pay;
-    let description = draftJobs[0].description;
-    let proffesion = draftJobs[0].proffesion;
-    let facility_shift_cancelation_policy = draftJobs[0].facility_shift_cancelation_policy;
-    let traveler_distance_from_facility = draftJobs[0].traveler_distance_from_facility;
-    let clinical_setting = draftJobs[0].clinical_setting;
-    let Patient_ratio = draftJobs[0].Patient_ratio;
-    let Unit = draftJobs[0].Unit;
-    let scrub_color = draftJobs[0].scrub_color;
-    let rto = draftJobs[0].rto;
-    let guaranteed_hours = draftJobs[0].guaranteed_hours;
-    let hours_shift = draftJobs[0].hours_shift;
-    let weeks_shift = draftJobs[0].weeks_shift;
-    let referral_bonus = draftJobs[0].referral_bonus;
-    let sign_on_bonus = draftJobs[0].sign_on_bonus;
-    let completion_bonus = draftJobs[0].completion_bonus;
-    let extension_bonus = draftJobs[0].extension_bonus;
-    let other_bonus = draftJobs[0].other_bonus;
-    let actual_hourly_rate = draftJobs[0].actual_hourly_rate;
-    let overtime = draftJobs[0].overtime;
-    let on_call = draftJobs[0].on_call;
-    let holiday = draftJobs[0].holiday;
-    let orientation_rate = draftJobs[0].orientation_rate;
-    let terms = draftJobs[0].terms;
-    let block_scheduling = draftJobs[0].block_scheduling;
-    let float_requirement = draftJobs[0].float_requirement;
-    let contract_termination_policy = draftJobs[0].contract_termination_policy;
-    let Emr = draftJobs[0].Emr;
-    let four_zero_one_k = draftJobs[0].four_zero_one_k;
-    let health_insaurance = draftJobs[0].health_insaurance;
-    let dental = draftJobs[0].dental;
-    let vision = draftJobs[0].vision;
-    let call_back = draftJobs[0].call_back;
-    let feels_like_per_hour = draftJobs[0].feels_like_per_hour;
-    let weekly_non_taxable_amount = draftJobs[0].weekly_non_taxable_amount;
-    let start_date = draftJobs[0].start_date;
-    let as_soon_as = draftJobs[0].as_soon_as;
-
-    if (job_name !== null) {
-        document.getElementById("job_nameDraft").value = job_name;
-    }
-    if (job_type !== null) {
-        var jobtype = job_type;
-                        var select = document.getElementById('job_typeDraft');
-                        var option = document.createElement('option');
-                        option.value = jobtype;
-                        option.text = jobtype;
-
-                        select.add(option);
-                        select.value = jobtype;
-    }
-    if (preferred_specialty !== null) {
-        var preferredSpecialty = preferred_specialty;
-                        var select = document.getElementById('preferred_specialtyDraft');
-                        var option = document.createElement('option');
-                        option.value = preferredSpecialty;
-                        option.text = preferredSpecialty;
-
-                        select.add(option);
-                        select.value = preferredSpecialty;
-    }
-    if (job_state !== null) {
-        document.getElementById("job_stateDraft").value = job_state;
-    }
-    if (job_city !== null) {
-        var city = job_city;
-    var select = document.getElementById('job_cityDraft');
-    var option = document.createElement('option');
-    option.value = city;
-    option.text = city;
-
-    select.add(option);
-    select.value = city;
-
-    }
-    if (preferred_work_location !== null) {
-        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
-    }
-    if (preferred_assignment_duration !== null) {
-        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
-    }
-    if (weekly_pay !== null) {
-        document.getElementById("weekly_payDraft").value = weekly_pay;
-    }
-    if (description !== null) {
-        document.getElementById("descriptionDraft").value = description;
-    }
-    if (proffesion !== null) {
-        var proffesionValue = proffesion;
-    var select = document.getElementById('perferred_professionDraft');
-    var option = document.createElement('option');
-    option.value = proffesionValue;
-    option.text = proffesionValue;
-
-    select.add(option);
-    select.value = proffesionValue;
-        //document.getElementById("perferred_professionDraft").value = proffesion;
-    }
-    if (facility_shift_cancelation_policy !== null) {
-        var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
-    var select = document.getElementById('facility_shift_cancelation_policyDraft');
-    var option = document.createElement('option');
-    option.value = facilityShiftCancelationPolicy;
-    option.text = facilityShiftCancelationPolicy;
-
-    select.add(option);
-    select.value = facilityShiftCancelationPolicy;
-        //document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
-    }
-    if (traveler_distance_from_facility !== null) {
-        document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
-    }
-    if (clinical_setting !== null) {
-        var ClinicalSettingValue = clinical_setting;
-    var select = document.getElementById('clinical_settingDraft');
-    var option = document.createElement('option');
-    option.value = ClinicalSettingValue;
-    option.text = ClinicalSettingValue;
-
-    select.add(option);
-    select.value = ClinicalSettingValue;
-
-       // document.getElementById("clinical_settingDraft").value = clinical_setting;
-    }
-    if (Patient_ratio !== null) {
-        document.getElementById("Patient_ratioDraft").value = Patient_ratio;
-    }
-    if (Unit !== null) {
-        document.getElementById("UnitDraft").value = Unit;
-    }
-    if (scrub_color !== null) {
-        document.getElementById("scrub_colorDraft").value = scrub_color;
-    }
-    if (rto !== null) {
-        document.getElementById("rtoDraft").value = rto;
-    }
-    if (guaranteed_hours !== null) {
-        document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
-    }
-    if (hours_shift !== null) {
-        document.getElementById("hours_shiftDraft").value = hours_shift;
-    }
-    if (weeks_shift !== null) {
-        document.getElementById("weeks_shiftDraft").value = weeks_shift;
-    }
-    if (referral_bonus !== null) {
-        document.getElementById("referral_bonusDraft").value = referral_bonus;
-    }
-    if (sign_on_bonus !== null) {
-        document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
-    }
-    if (completion_bonus !== null) {
-        document.getElementById("completion_bonusDraft").value = completion_bonus;
-    }
-    if (extension_bonus !== null) {
-        document.getElementById("extension_bonusDraft").value = extension_bonus;
-    }
-    if (other_bonus !== null) {
-        document.getElementById("other_bonusDraft").value = other_bonus;
-    }
-    if (actual_hourly_rate !== null) {
-        document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
-    }
-    if (overtime !== null) {
-        document.getElementById("overtimeDraft").value = overtime;
-    }
-    if (on_call !== null) {
-        document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
-
-    }
-    if (holiday !== null) {
-        document.getElementById("holidayDraft").value = holiday;
-    }
-    if (orientation_rate !== null) {
-        document.getElementById("orientation_rateDraft").value = orientation_rate;
-    }
-    if (terms !== null) {
-        var Terms = terms;
-    var select = document.getElementById('termsDraft');
-    var option = document.createElement('option');
-    option.value = Terms;
-    option.text = Terms;
-
-    select.add(option);
-    select.value = Terms;
-        
-    }
-    if (block_scheduling !== null) {
-        document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
-
-    }
-    if (float_requirement !== null) {
-        document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
-
-    }
-    if (contract_termination_policy !== null) {
-        document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
-    }
-    if (Emr !== null) {
-
-        var EmrValue = Emr;
-    var select = document.getElementById('emrDraft');
-    var option = document.createElement('option');
-    option.value = EmrValue;
-    option.text = EmrValue;
-
-    select.add(option);
-    select.value = EmrValue;
-
-
-    }
-    if (four_zero_one_k !== null) {
-        document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
-
-    }
-    if (health_insaurance !== null) {
-        document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
-
-    }
-    if (dental !== null) {
-        document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
-
-    }
-    if (vision !== null) {
-        document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
-
-    }
-    if(feels_like_per_hour !== null){
-        document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
-    }
-    if (call_back !== null) {
-        document.getElementById("call_backDraft").value = call_back;
-    }
-    if (weekly_non_taxable_amount !== null) {
-        document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
-    }
-    if (start_date !== null) {
-        document.getElementById("start_dateDraft").value = start_date;
-    }
-    if (as_soon_as !== null) {
-        document.getElementById("as_soon_asDraft").checked = as_soon_as;
-    }
-}
-
+    
 
 
 
@@ -4690,7 +4748,7 @@ if (draftJobs.length !== 0) {
         var scrub_color = document.getElementById("scrub_colorDraft").value;
         var rto = document.getElementById("rtoDraft").value;
         var guaranteed_hours = document.getElementById("guaranteed_hoursDraft").value;
-        // var hours_per_week = document.getElementById("hours_per_weekDraft").value;
+        var hours_per_week = document.getElementById("hours_per_weekDraft").value;
         var hours_shift = document.getElementById("hours_shiftDraft").value;
         var weeks_shift = document.getElementById("weeks_shiftDraft").value;
 
@@ -4764,13 +4822,13 @@ if (draftJobs.length !== 0) {
             $('.help-block-guaranteed_hours').text('');
         }
 
-        // if (hours_per_week.trim() === '') {
-        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
-        //     $('.help-block-hours_per_week').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-hours_per_week').text('');
-        // }
+        if (hours_per_week.trim() === '') {
+            $('.help-block-hours_per_week').text('Please enter the hours per week');
+            $('.help-block-hours_per_week').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_per_week').text('');
+        }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -5333,7 +5391,7 @@ if (draftJobs.length !== 0) {
         var scrub_color = document.getElementById("scrub_colorEdit").value;
         var rto = document.getElementById("rtoEdit").value;
         var guaranteed_hours = document.getElementById("guaranteed_hoursEdit").value;
-        // var hours_per_week = document.getElementById("hours_per_weekEdit").value;
+        var hours_per_week = document.getElementById("hours_per_weekEdit").value;
         var hours_shift = document.getElementById("hours_shiftEdit").value;
         var weeks_shift = document.getElementById("weeks_shiftEdit").value;
 
@@ -5407,13 +5465,13 @@ if (draftJobs.length !== 0) {
             $('.help-block-guaranteed_hours').text('');
         }
 
-        // if (hours_per_week.trim() === '') {
-        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
-        //     $('.help-block-hours_per_week').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-hours_per_week').text('');
-        // }
+        if (hours_per_week.trim() === '') {
+            $('.help-block-hours_per_week').text('Please enter the hours per week');
+            $('.help-block-hours_per_week').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_per_week').text('');
+        }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -6482,6 +6540,12 @@ function remove_certificate(obj, key) {
         color: #000;
         font-size: 16px;
         font-weight: 500;
+    }
+    .saveDrftBtnEdit{
+        margin-right: 3px;
+    }
+    .saveDrftBtnDraft{
+        margin-right: 3px;
     }
 </style>
 @endsection

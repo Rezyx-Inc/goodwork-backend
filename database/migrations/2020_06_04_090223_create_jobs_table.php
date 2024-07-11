@@ -107,7 +107,7 @@ class CreateJobsTable extends Migration
              $table->boolean('vision')->default(false);
              $table->decimal('actual_hourly_rate', 8, 2)->nullable();
              $table->decimal('overtime', 8, 2)->nullable();
-             $table->dateTime('holiday')->nullable();
+             $table->date('holiday')->nullable();
              $table->decimal('on_call', 8, 2)->nullable();
              $table->decimal('call_back', 8, 2)->nullable();
              $table->decimal('orientation_rate', 8, 2)->nullable();
