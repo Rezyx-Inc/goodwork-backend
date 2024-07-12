@@ -232,6 +232,7 @@
         </li>
     </ul>
 
+    @if (isset($model->urgency))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['urgency']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Urgency</span>
@@ -242,7 +243,9 @@
             <p  data-target="input" data-title="How quickly you can be ready to submit?" data-placeholder="How quickly you can be ready to submit?" data-name="worker_urgency" onclick="open_modal(this)">How quickly you can be ready to submit?</p>
         </li>
     </ul>
+    @endif
 
+    @if (isset($model->block_scheduling))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['block_scheduling']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Block Scheduling</span>
@@ -254,6 +257,9 @@
             <p data-target="binary" data-title="Do you want Block Scheduling?" data-name="block_scheduling" onclick="open_modal(this)">Do you want Block Scheduling?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->float_requirement))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['float_requirement']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Float Requirements</span>
@@ -264,6 +270,9 @@
             <p data-target="binary" data-title="Are you willing float to?" data-name="float_requirement" onclick="open_modal(this)">Are you willing float to?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->facility_shift_cancelation_policy))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['facility_shift_cancelation_policy']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Facility Shift Cancellation Policy</span>
@@ -273,6 +282,9 @@
             <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="AssignmentDuration" data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">What terms do you prefer?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->contract_termination_policy))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['contract_termination_policy']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Contact Termination Policy</span>
@@ -282,15 +294,22 @@
             <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="ContractTerminationPolicy" data-name="contract_termination_policy" onclick="open_modal(this)">What terms do you prefer?</p>
         </li>
     </ul>
+    @endif
+
+
+    @if (isset($model->traveler_distance_from_facility))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['traveler_distance_from_facility']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Traveller Distance From Facility</span>
         <h6>{{$model->traveler_distance_from_facility}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Where does the IRS think you live?" data-placeholder="Where does the IRS think you live?" data-name="distance_from_your_home" onclick="open_modal(this)">Where does the IRS think you live?</p>
+            <p data-target="input_number" data-title="Where does the IRS think you live?" data-placeholder="Where does the IRS think you live?" data-name="distance_from_your_home" onclick="open_modal(this)">Where does the IRS think you live?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->facility_id))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>Facility</span>
@@ -300,7 +319,9 @@
             <p data-target="input" data-title="What Facilities have you worked at?" data-placeholder="Write Name Of Facilities" data-name="facilities_you_like_to_work_at" onclick="open_modal(this)">What Facilities have you worked at?</p>
         </li>
     </ul>
+    @endif
 
+   @if (isset($model->facilitys_parent_system) )
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['facilitys_parent_system']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} ">
         <li>
         <span>Facility's Parent System</span>
@@ -310,7 +331,10 @@
             <p data-target="input" data-title="What facilities would you like to work at?" data-placeholder="Write Name Of Facilities" data-name="worker_facilitys_parent_system" onclick="open_modal(this)">What facilities would you like to work at?</p>
         </li>
     </ul>
+    @endif
    
+    
+    @if (isset($model->clinical_setting))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['clinical_setting']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Clinical Setting</span>
@@ -320,15 +344,21 @@
             <p data-target="dropdown" data-title="What setting do you prefer?" data-filter="ClinicalSetting" data-name="clinical_setting_you_prefer" onclick="open_modal(this)">What setting do you prefer?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->Patient_ratio))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['Patient_ratio']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Patient Ratio</span>
         <h6>{{$model->Patient_ratio}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="How many patients can you handle?" data-placeholder="How many patients can you handle?" data-name="worker_patient_ratio" onclick="open_modal(this)">How many patients can you handle?</p>
+            <p data-target="input_number" data-title="How many patients can you handle?" data-placeholder="How many patients can you handle?" data-name="worker_patient_ratio" onclick="open_modal(this)">How many patients can you handle?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->Emr))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['emr']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>EMR</span>
@@ -338,6 +368,9 @@
             <p data-target="dropdown" data-title="What EMRs have you used?" data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What EMRs have you used?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->Unit))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['Unit']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Unit</span>
@@ -347,8 +380,10 @@
             <p data-target="input" data-title="Fav Unit?" data-placeholder="Fav Unit?" data-name="worker_unit" onclick="open_modal(this)">Fav Unit?</p>
         </li>
     </ul>
+    @endif
    
  
+    @if (isset($model->scrub_color))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['scrub_color']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Scrub Color</span>
@@ -358,6 +393,9 @@
             <p data-target="input" data-title="Fav scrub brand?" data-placeholder="Fav scrub brand?" data-name="worker_scrub_color" onclick="open_modal(this)">Fav scrub brand?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->job_city))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_city']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Facility City</span>
@@ -368,6 +406,9 @@
 
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->job_state))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_state']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Facility State Code</span>
@@ -377,7 +418,9 @@
             <p  data-target="dropdown" data-title="States you'd like to work?" data-filter="State" data-name="worker_facility_state" onclick="open_modal(this)">States you'd like to work?</p>
         </li>
     </ul>
-    
+    @endif
+
+    @if (isset($model->as_soon_as) || isset($model->start_date))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($model->as_soon_as) ? (($matches['as_soon_as']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') : (($matches['start_date']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') }}">
         <li>
         <span>Start date</span>
@@ -391,6 +434,9 @@
             @endif
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->rto))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['rto']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>RTO</span>
@@ -400,6 +446,9 @@
             <p data-target="rto" data-title="Any time off?" data-placeholder="Any time off?" data-name="rto" onclick="open_modal(this)">Any time off?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->preferred_shift))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>Shift Time Of Day</span>
@@ -409,96 +458,129 @@
             <p data-target="dropdown" data-title="Fav shift?" data-filter="shift_time_of_day" data-name="worker_shift_time_of_day" onclick="open_modal(this)">Fav shift?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->hours_per_week))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['hours_per_week']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
         <span>Hours/Week</span>
         <h6>{{$model->hours_per_week}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Ideal hours per week?" data-placeholder="Enter number Of Hours/Week" data-name="worker_hours_per_week" onclick="open_modal(this)">Ideal hours per week?</p>
+            <p data-target="input_number" data-title="Ideal hours per week?" data-placeholder="Enter number Of Hours/Week" data-name="worker_hours_per_week" onclick="open_modal(this)">Ideal hours per week?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->guaranteed_hours))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['guaranteed_hours']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Guaranteed Hours</span>
         <h6>{{$model->guaranteed_hours}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Open to jobs with no guaranteed hours?" data-placeholder="Enter Guaranteed Hours" data-name="worker_guaranteed_hours" onclick="open_modal(this)">Open to jobs with no guaranteed hours?</p>
+            <p data-target="input_number" data-title="Open to jobs with no guaranteed hours?" data-placeholder="Enter Guaranteed Hours" data-name="worker_guaranteed_hours" onclick="open_modal(this)">Open to jobs with no guaranteed hours?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->hours_shift))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['hours_shift']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Hours/Shift</span>
         <h6>{{$model->hours_shift}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Preferred hours per shift" data-placeholder="Enter number Of Hours/Shift" data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours per shift</p>
+            <p data-target="input_number" data-title="Preferred hours per shift" data-placeholder="Enter number Of Hours/Shift" data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours per shift</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->preferred_assignment_duration))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['preferred_assignment_duration']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Weeks/Assignment</span>
         <h6>{{$model->preferred_assignment_duration}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="How many weeks?" data-placeholder="Enter prefered weeks per assignment" data-name="worker_weeks_assignment" onclick="open_modal(this)">How many weeks?</p>
+            <p data-target="input_number" data-title="How many weeks?" data-placeholder="Enter prefered weeks per assignment" data-name="worker_weeks_assignment" onclick="open_modal(this)">How many weeks?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->weeks_shift))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['weeks_shift']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Shifts/Week</span>
         <h6>{{$model->weeks_shift}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Ideal shifts per week" data-placeholder="Enter ideal shift per week" data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per week</p>
+            <p data-target="input_number" data-title="Ideal shifts per week" data-placeholder="Enter ideal shift per week" data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per week</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->referral_bonus))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['referral_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Referral Bonus</span>
         <h6>{{$model->referral_bonus}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="# of people you have referred?" data-placeholder="# of people you have referred?" data-name="worker_referral_bonus" onclick="open_modal(this)"># of people you have referred?</p>
+            <p data-target="input_number" data-title="# of people you have referred?" data-placeholder="# of people you have referred?" data-name="worker_referral_bonus" onclick="open_modal(this)"># of people you have referred?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->sign_on_bonus))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['sign_on_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Sign-On Bonus</span>
         <h6>${{$model->sign_on_bonus}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="What kind of bonus do you expect?" data-placeholder="What kind of bonus do you expect?" data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of bonus do you expect?</p>
+            <p data-target="input_number" data-title="What kind of bonus do you expect?" data-placeholder="What kind of bonus do you expect?" data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of bonus do you expect?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->completion_bonus))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['completion_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Completion Bonus</span>
         <h6>${{$model->completion_bonus}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="What kind of bonus do you deserve?" data-placeholder="What kind of bonus do you deserve?" data-name="worker_completion_bonus" onclick="open_modal(this)">What kind of bonus do you deserve?</p>
+            <p data-target="input_number" data-title="What kind of bonus do you deserve?" data-placeholder="What kind of bonus do you deserve?" data-name="worker_completion_bonus" onclick="open_modal(this)">What kind of bonus do you deserve?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->extension_bonus))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['extension_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Extension Bonus</span>
         <h6>${{$model->extension_bonus}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="What are you comparing this to?" data-placeholder="What are you comparing this to?" data-name="worker_extension_bonus" onclick="open_modal(this)">What are you comparing this to?</p>
+            <p data-target="input_number" data-title="What are you comparing this to?" data-placeholder="What are you comparing this to?" data-name="worker_extension_bonus" onclick="open_modal(this)">What are you comparing this to?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->other_bonus))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['other_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Other Bonus</span>
         <h6>${{$model->other_bonus}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="Other bonuses you want?" data-placeholder="Other bonuses you want?" data-name="worker_other_bonus" onclick="open_modal(this)">Other bonuses you want?</p>
+            <p data-target="input_number" data-title="Other bonuses you want?" data-placeholder="Other bonuses you want?" data-name="worker_other_bonus" onclick="open_modal(this)">Other bonuses you want?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->four_zero_one_k))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['four_zero_one_k']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>401K</span>
@@ -510,6 +592,9 @@
             <p data-target="binary" data-placeholder="How much do you want this?" data-title="How much do you want this?"  data-name="worker_four_zero_one_k" onclick="open_modal(this)">How much do you want this?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->health_insaurance))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['health_insaurance']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Health Insurance</span>
@@ -520,6 +605,9 @@
             <p data-target="binary" data-title="How much do you want this?" data-name="worker_health_insurance" data-placeholder="How much do you want this?" onclick="open_modal(this)">How much do you want this?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->dental))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['dental']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Dental</span>
@@ -529,6 +617,9 @@
             <p data-target="binary" data-title="How much do you want this?" data-placeholder="" data-name="worker_dental" onclick="open_modal(this)">How much do you want this?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->vision))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['vision']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Vision</span>
@@ -540,18 +631,23 @@
           
         </li>
     </ul>
+    @endif
 
+
+    @if (isset($model->actual_hourly_rate))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['actual_hourly_rate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Actual Hourly Rate</span>
         <h6>${{$model->actual_hourly_rate}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="What rate is fair?" data-placeholder="What rate is fair?" data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What rate is fair?</p>
+            <p data-target="input_number" data-title="What rate is fair?" data-placeholder="What rate is fair?" data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What rate is fair?</p>
             
         </li>
     </ul>
+    @endif
     
+    @if (isset($model->feels_like_per_hour))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['feels_like_per_hour']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Feels Like $/Hr</span>
@@ -563,7 +659,9 @@
             
         </li>
     </ul>
+    @endif
 
+    @if (isset($model->overtime))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['overtime']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Overtime</span>
@@ -575,6 +673,9 @@
 
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->holiday))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['holiday']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Holiday</span>
@@ -585,15 +686,21 @@
             
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->on_call))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['on_call']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>On call</span>
-        <h6>{{$model->on_call}} </h6>
+        <h6>{{$model->on_call == '1' ? 'Yes' : 'No'}} </h6>
         </li>
         <li>
             <p data-target="binary" data-title="Will you do call?" data-name="worker_on_call_check" onclick="open_modal(this)">Will you do call?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->call_back))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['call_back']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Call Back</span>
@@ -603,6 +710,9 @@
             <p data-target="binary" data-title="Is this rate reasonable?" data-name="worker_call_back_check" onclick="open_modal(this)">Is this rate reasonable?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->orientation_rate))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['orientation_rate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Orientation Rate</span>
@@ -612,36 +722,48 @@
             <p data-target="binary" data-title="Is this rate reasonable?" data-placeholder="-" data-name="worker_orientation_rate_check" onclick="open_modal(this)">Is this rate reasonable?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->weekly_taxable_amount))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Weekly Taxable Amount</span>
+        <span>Est. Weekly Taxable Amount</span>
         <h6>${{$model->weekly_taxable_amount}} </h6>
         </li>
         {{-- <li>
             <p>?</p>
         </li> --}}
     </ul>
+    @endif
+
+    @if (isset($model->employer_weekly_amount))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['employer_weekly_amount']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
-        <span>Employer Weekly Amount</span>
+        <span>Est. Employer Weekly Amount</span>
         <h6>${{$model->employer_weekly_amount}} </h6>
         </li>
         <li>
-            <p data-target="input" data-title="What range is reasonable?" data-placeholder="What range is reasonable?" data-name="worker_employer_weekly_amount" onclick="open_modal(this)">What range is reasonable?</p>
+            <p data-target="input_number" data-title="What range is reasonable?" data-placeholder="What range is reasonable?" data-name="worker_employer_weekly_amount" onclick="open_modal(this)">What range is reasonable?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->weekly_non_taxable_amount))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['weekly_non_taxable_amount']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
-        <span>Weekly Non-Taxable Amount</span>
+        <span>Est. Weekly Non-Taxable Amount</span>
         <h6>${{$model->weekly_non_taxable_amount}} </h6>
         </li>
         <li>
             <p data-target="binary" data-title="Are you going to duplicate expenses?" data-placeholder="Weekly non-taxable amount" data-name="worker_weekly_non_taxable_amount_check" onclick="open_modal(this)">Are you going to duplicate expenses?</p>
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->weekly_taxable_amount))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Goodwork Weekly Amount</span>
+        <span>Est. Goodwork Weekly Amount</span>
         <h6>${{$model->weekly_taxable_amount}} </h6>
         </li>
         <li>
@@ -649,33 +771,43 @@
             {{-- <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p> --}}
         </li>
     </ul>
+    @endif
+
+    @if (isset($model->total_employer_amount))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Total Employer Amount</span>
+        <span>Est. Total Employer Amount</span>
         <h6>${{$model->total_employer_amount}} </h6>
         </li>
         {{-- <li>
             <p>?</p>
         </li> --}}
     </ul>
+    @endif
+
+    @if (isset($model->total_goodwork_amount))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Total Goodwork Amount</span>
+        <span>Est. Total Goodwork Amount</span>
         <h6>${{$model->total_goodwork_amount}} </h6>
         </li>
         {{-- <li>
             <p>?</p>
         </li> --}}
     </ul>
+    @endif
+
+    @if (isset($model->total_contract_amount))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
-        <span>Total Contract Amount</span>
+        <span>Est. Total Contract Amount</span>
         <h6>${{$model->total_contract_amount}} </h6>
         </li>
         {{-- <li>
             <p>?</p>
         </li> --}}
     </ul>
+    @endif
 
   <div class="ss-job-apl-on-app-btn">
     @if(!$model->checkIfApplied())
@@ -697,7 +829,7 @@
 <!----------------job-detls popup form----------->
 
 <!-----------Did you really graduate?------------>
-<!-- Modal -->
+<!-- Text Modal -->
 
 <div class="modal fade ss-jb-dtl-pops-mn-dv" id="file_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm modal-dialog-centered">
@@ -724,6 +856,35 @@
     </div>
   </div>
 </div>
+
+
+{{-- number model --}}
+
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="input_number_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="ss-pop-cls-vbtn">
+          <button type="button" class="btn-close" data-target="#input_number_modal" onclick="close_modal(this)" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="ss-job-dtl-pop-form">
+              <form method="post" action="{{route('my-profile.store')}}" id="input_number_modal_form" class="modal-form">
+                  <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
+                  <h4></h4>
+                  <div class="ss-form-group">
+                      <input type="number" name="" placeholder="">
+                      <span class="help-block"></span>
+                  </div>
+                  <button type="submit" class="ss-job-dtl-pop-sv-btn">Save</button>
+              </form>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+{{-- end number model --}}
 
 
 
@@ -1133,7 +1294,7 @@
         name = $(obj).data('name');
         title = $(obj).data('title');
         target = $(obj).data('target');
-
+        
         modal = '#'+target+'_modal';
         form = modal+'_form';
         $(form).find('h4').html(title);
@@ -1150,6 +1311,10 @@
             case 'input':
                 $(form).find('input[type="text"]').attr('name',name);
                 $(form).find('input[type="text"]').attr('placeholder',$(obj).data('placeholder'));
+                break;
+            case 'input_number':
+                $(form).find('input[type="number"]').attr('name',name);
+                $(form).find('input[type="number"]').attr('placeholder',$(obj).data('placeholder'));
                 break;
             case 'binary':
                 $(form).find('input[type="radio"]').attr('name',name);
