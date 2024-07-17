@@ -7,6 +7,7 @@
     @endphp
     <!--Main layout-->
 
+
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
         <div class="container">
             <div class="ss-my-profile--basic-mn-sec">
@@ -25,12 +26,13 @@
                             <div class="ss-my-profil-img-div">
                                 <div class="profile-pic">
                                     <label class="-label" for="file">
-                                      <span class="glyphicon glyphicon-camera"></span>
-                                      <span>Change Image</span>
+                                        <span class="glyphicon glyphicon-camera"></span>
+                                        <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" onchange="loadFile(event)"/>
-                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
-                                  </div>
+                                    <input id="file" type="file" onchange="loadFile(event)" />
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
+                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
+                                </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $worker->id }}</p>
                             </div>
@@ -40,10 +42,18 @@
                                 <div class="row d-flex justify-content-center align-items-center ">
                                     {{-- <li><img src="{{ URL::asset('frontend/img/progress.png') }}" /></li> --}}
                                     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
-                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
-                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2" stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0"></circle>
-                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3" stroke-width="16px" stroke-linecap="round" fill="transparent" stroke-dasharray="565.48px" stroke-dashoffset="{{ 565.48 * (1 - $progress_percentage / 100) }}px"></circle>
-                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
+                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                            style="transform:rotate(-90deg)">
+                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2"
+                                                stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0">
+                                            </circle>
+                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3"
+                                                stroke-width="16px" stroke-linecap="round" fill="transparent"
+                                                stroke-dasharray="565.48px"
+                                                stroke-dashoffset="{{ 565.48 * (1 - $progress_percentage / 100) }}px">
+                                            </circle>
+                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold"
+                                                style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
                                         </svg>
                                     </div>
                                     {{-- if the profile is not complete --}}
@@ -192,8 +202,7 @@
                                                 <label>First Name</label>
                                                 <input type="text" name="first_name"
                                                     placeholder="Please enter your first name"
-                                                    value="{{ isset($user->first_name) ? $user->first_name : '' }}"
-                                                    >
+                                                    value="{{ isset($user->first_name) ? $user->first_name : '' }}">
                                             </div>
                                             <span class="help-block-first_name"></span>
                                             {{-- Last Name --}}
@@ -227,7 +236,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>State</label>
                                                 <select name="state" id="job_state">
-                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}">{{ !empty($worker->state) ? $worker->state : 'What State are you located in?' }} </option>
+                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}">
+                                                        {{ !empty($worker->state) ? $worker->state : 'What State are you located in?' }}
+                                                    </option>
                                                     @foreach ($states as $state)
                                                         <option id="{{ $state->id }}" value="{{ $state->name }}">
                                                             {{ $state->name }}
@@ -240,7 +251,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>City</label>
                                                 <select name="city" id="job_city">
-                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}">{{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }} </option>
+                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}">
+                                                        {{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }}
+                                                    </option>
 
                                                 </select>
                                             </div>
@@ -274,7 +287,10 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Profession</label>
                                                 <select name="profession" id="profession">
-                                                    <option value="{{ !empty($worker->profession) ? $worker->profession : '' }}">{{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->profession) ? $worker->profession : '' }}">
+                                                        {{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }}
+                                                    </option>
                                                     @foreach ($proffesions as $proffesion)
                                                         <option value="{{ $proffesion->full_name }}">
                                                             {{ $proffesion->full_name }}
@@ -287,7 +303,10 @@
                                             <div class="ss-form-group  col-11">
                                                 <label>Specialty</label>
                                                 <select name="specialty" id="specialty">
-                                                    <option value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">{{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">
+                                                        {{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }}
+                                                    </option>
 
                                                     @foreach ($specialities as $specialty)
                                                         <option value="{{ $specialty->full_name }}">
@@ -301,7 +320,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Terms</label>
                                                 <select name="terms" id="term">
-                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">{{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }} </option>
+                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">
+                                                        {{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }}
+                                                    </option>
 
                                                     @if (isset($allKeywords['Terms']))
                                                         @foreach ($allKeywords['Terms'] as $value)
@@ -317,7 +338,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Type</label>
                                                 <select name="type" id="type">
-                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}">{{ !empty($worker->type) ? $worker->type : 'Select Type' }} </option>
+                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}">
+                                                        {{ !empty($worker->type) ? $worker->type : 'Select Type' }}
+                                                    </option>
 
                                                     @if (isset($allKeywords['Type']))
                                                         @foreach ($allKeywords['Type'] as $value)
@@ -346,7 +369,10 @@
 
                                                 <select name="float_requirement" class="float_requirement mb-3"
                                                     id="float_requirement" value="">
-                                                    <option value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">{{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">
+                                                        {{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }}
+                                                    </option>
 
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
@@ -360,7 +386,10 @@
                                                 <select name="facility_shift_cancelation_policy"
                                                     class="facility_shift_cancelation_policy mb-3"
                                                     id="facility_shift_cancelation_policy" value="">
-                                                    <option value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">
+                                                        {{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }}
+                                                    </option>
 
                                                     @if (isset($allKeywords['AssignmentDuration']))
                                                         @foreach ($allKeywords['AssignmentDuration'] as $value)
@@ -379,7 +408,7 @@
                                                     name="contract_termination_policy"
                                                     placeholder="Enter Contract Termination Policy"
                                                     value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
-                                                    >
+                                                >
                                             </div>
                                             <span class="help-block-contract_termination_policy"></span>
                                             {{-- end Contract Termination Policy --}}
@@ -389,8 +418,7 @@
                                                 <input type="number" id="traveler_distance_from_facility"
                                                     name="distance_from_your_home"
                                                     placeholder="Enter Traveler Distance From Facility"
-                                                    value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}">
                                             </div>
                                             <span class="help-block-traveler_distance_from_facility"></span>
                                             {{-- end Traveler Distance From Facility  --}}
@@ -400,8 +428,7 @@
                                                 <input type="text" id="clinical_setting"
                                                     name="clinical_setting_you_prefer"
                                                     placeholder="Enter clinical setting"
-                                                    value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}">
                                             </div>
                                             <span class="help-block-clinical_setting_you_prefer"></span>
                                             {{-- End Clinical Setting --}}
@@ -410,8 +437,7 @@
                                                 <label>Patient ratio</label>
                                                 <input type="number" id="Patient_ratio" name="worker_patient_ratio"
                                                     placeholder="How many patients can you handle?"
-                                                    value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}">
                                             </div>
                                             <span class="help-block-worker_patient_ratio"></span>
                                             {{-- End Patient ratio --}}
@@ -419,7 +445,10 @@
                                             <div class="ss-form-group col-11">
                                                 <label>EMR</label>
                                                 <select name="worker_emr" class="emr mb-3" id="emr">
-                                                    <option value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">{{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">
+                                                        {{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }}
+                                                    </option>
 
                                                     @if (isset($allKeywords['EMR']))
                                                         @foreach ($allKeywords['EMR'] as $value)
@@ -436,8 +465,7 @@
                                                 <label>Unit</label>
                                                 <input id="Unit" type="text" name="worker_unit"
                                                     placeholder="Enter Unit"
-                                                    value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}">
                                             </div>
                                             <span class="help-block-worker_unit"></span>
                                             {{-- End Unit --}}
@@ -446,21 +474,21 @@
                                                 <label>Scrub Color</label>
                                                 <input id="scrub_color" type="text" name="worker_scrub_color"
                                                     placeholder="Enter Scrub Color"
-                                                    value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}">
                                             </div>
                                             <span class="help-block-worker_scrub_color"></span>
                                             {{-- End Scrub Color --}}
                                             {{-- RTO --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Rto</label>
-                                                        <select name="rto" id="rto">
-                                                            <option value="{{ !empty($worker->rto) ? $worker->rto : '' }}">{{ !empty($worker->rto) ? $worker->rto : 'Select Rto' }} </option>
-                                                            <option value="allowed">Allowed
-                                                            </option>
-                                                            <option value="not allowed">Not Allowed
-                                                            </option>
-                                                        </select>
+                                                <select name="rto" id="rto">
+                                                    <option value="{{ !empty($worker->rto) ? $worker->rto : '' }}">
+                                                        {{ !empty($worker->rto) ? $worker->rto : 'Select Rto' }} </option>
+                                                    <option value="allowed">Allowed
+                                                    </option>
+                                                    <option value="not allowed">Not Allowed
+                                                    </option>
+                                                </select>
                                             </div>
                                             <span class="help-block-rto"></span>
                                             {{-- End RTO --}}
@@ -468,7 +496,10 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Shift Time of Day</label>
                                                 <select name="worker_shift_time_of_day" id="shift-of-day">
-                                                    <option value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}">{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}">
+                                                        {{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }}
+                                                    </option>
                                                     @if (isset($allKeywords['PreferredShift']))
                                                         @foreach ($allKeywords['PreferredShift'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -484,8 +515,7 @@
                                                 <label>Hours/Week</label>
                                                 <input id="hours_per_week" type="number" name="worker_hours_per_week"
                                                     placeholder="Enter Hours/Week"
-                                                    value="{{ !empty($worker->worker_hours_per_week) ? $worker->worker_hours_per_week : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_hours_per_week) ? $worker->worker_hours_per_week : '' }}">
                                             </div>
                                             <span class="help-block-worker_hours_per_week"></span>
                                             {{-- End Hours/Week --}}
@@ -494,8 +524,7 @@
                                                 <label>Hours/Shift</label>
                                                 <input id="hours_shift" type="number" name="worker_hours_shift"
                                                     placeholder="Enter Hours/Shift"
-                                                    value="{{ !empty($worker->worker_hours_shift) ? $worker->worker_hours_shift : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_hours_shift) ? $worker->worker_hours_shift : '' }}">
                                             </div>
                                             <span class="help-block-worker_hours_shift"></span>
                                             {{-- End Hours/Shift --}}
@@ -504,8 +533,7 @@
                                                 <label>Weeks/Assignment</label>
                                                 <input id="preferred_assignment_duration" type="number"
                                                     name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment"
-                                                    value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}">
                                             </div>
                                             <span class="help-block-worker_weeks_assignment"></span>
                                             {{-- End Weeks/Assignment --}}
@@ -514,8 +542,7 @@
                                                 <label>Shifts/Week</label>
                                                 <input id="weeks_shift" type="number" name="worker_shifts_week"
                                                     placeholder="Enter Shifts/Week"
-                                                    value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}">
                                             </div>
                                             <span class="help-block-worker_shifts_week"></span>
                                             {{-- End Shifts/Week --}}
@@ -545,19 +572,49 @@
                                     <div class="page slide-page ">
                                         <div class="row justify-content-center">
                                             {{-- Upload Document --}}
-                                            <div class="ss-form-group">
+                                            {{-- <div class="ss-form-group">
                                                 <label>Upload Document</label>
                                                 <input type="file" id="document_file" name="files" multiple
                                                     required><br><br>
                                                 <label class="mt-2" for="file">Choose a file</label>
                                             </div>
-                                            <span class="help-block-file"></span>
+                                            <span class="help-block-file"></span> --}}
+                                            <div class="ss-form-group "
+                                                style="
+                                                display: flex;
+                                                justify-content: right;
+                                                align-items: center;
+                                            ">
+                                                <span style="margin:0px; margin-right:20px;">Add your documents here
+                                                    !</span>
+                                                <a href="#" onclick="open_modal(this)" class="ss-opr-mngr-plus-sec"
+                                                    style="
+                                                    background: #3d2c39;
+                                                    width: 40px;
+                                                    height: 40px;
+                                                    line-height: 40px;
+                                                    text-align: center;
+                                                    border-radius: 100px;
+                                                    color: #52DEC1 !important;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    "
+                                                    data-bs-toggle="modal" data-bs-target="#job-dtl-Dcouments"><i
+                                                        class="fas fa-plus"></i></a>
+
+
+                                                <br><br>
+
+                                            </div>
                                             {{-- manage file table --}}
-                                            <table style="font-size: 16px;" class="table">
+                                            <table style="font-size: 16px;" class="table row">
                                                 <thead>
-                                                    <tr>
-                                                        <th scope="col">Document Name</th>
-                                                        <th scope="col">Delete</th>
+                                                    <tr class="row">
+                                                        <th class="col-3" >Document Name</th>
+                                                        <th class="col-3">Type</th>
+                                                        <th class="col-3">View</th>
+                                                        <th class="col-3">Delete</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -798,7 +855,8 @@
                                 </form> --}}
                                 <p style="
                                 margin-top: 20px;
-                            ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+                            ">
+                                    Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
 
                             </div>
 
@@ -808,7 +866,7 @@
 
                     {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll disable_account d-none">
-                        <div class="ss-pers-info-form-mn-dv" style="width:100%" >
+                        <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img
                                             src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Disactivate
@@ -846,10 +904,496 @@
                     </div>
                     {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                 </div>
+
+                {{-- uploading documents modal --}}
+                <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-Dcouments" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="ss-pop-cls-vbtn">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                    id="Dcouments-modal-form-btn"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
+                                        <div class="ss-job-dtl-pop-frm-sml-dv">
+                                            <div></div>
+                                        </div>
+                                        <h4>Add Your Dcouments?</h4>
+                                        <div class="ss-form-group">
+                                            <label>Document Name</label>
+                                            <input type="text" name="name[]" placeholder="Name of Document">
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="ss-form-group">
+                                            <label>Document Type</label>
+                                            <select name="type_documents" onChange="controlInputsFiles(this)">
+                                                <option value="">Select</option>
+                                                <option value="skills_checklists">Skills checklist</option>
+                                                <option value="certificate">Certificate</option>
+                                                <option value="driving_license">Drivers License</option>
+                                                <option value="ss_number">Ss Document</option>
+                                                <option value="other">Others</option>
+                                                <option value="vaccinations">Vaccinations</option>
+                                                <option value="references">References</option>
+                                                <option value="diploma">Diploma</option>
+                                                <option value="professional_license">Professional License</option>
+                                            </select>
+                                            <span class="help-block"></span>
+                                        </div>
+                                        {{-- documents forms --}}
+                                        {{-- skills --}}
+                                        <div class="container-multiselect d-none" id="skills_checklists">
+                                            <div class="select-btn">
+                                                <span class="btn-text">Select Skills</span>
+                                                <span class="arrow-dwn">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </span>
+                                            </div>
+                                            <ul class="list-items">
+                                                @if (isset($allKeywords['Skills']))
+                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                        <li class="item" value="{{ $value->title }}">
+                                                            <span class="checkbox">
+                                                                <i class="fa-solid fa-check check-icon"></i>
+                                                            </span>
+                                                            <span class="item-text">{{ $value->title }}</span>
+                                                        </li>
+                                                        <input displayName="{{ $value->title }}" type="file" id="upload-{{ $loop->index }}"
+                                                            class="files-upload" style="display: none;" />
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                        </div>
+
+                                        {{-- certification --}}
+                                        <div class="container-multiselect d-none" id="certificate">
+                                            <div class="select-btn">
+                                                <span class="btn-text">Select Certification</span>
+                                                <span class="arrow-dwn">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </span>
+                                            </div>
+                                            <ul class="list-items">
+                                                @if (isset($allKeywords['Certification']))
+                                                    @foreach ($allKeywords['Certification'] as $value)
+                                                        <li class="item" value="{{ $value->title }}">
+                                                            <span class="checkbox">
+                                                                <i class="fa-solid fa-check check-icon"></i>
+                                                            </span>
+                                                            <span class="item-text">{{ $value->title }}</span>
+                                                        </li>
+                                                        <input displayName="{{ $value->title }}" type="file" id="upload-{{ $loop->index }}"
+                                                            class="files-upload" style="display: none;" />
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                            <button class="ss-job-dtl-pop-sv-btn"
+                                                onclick="sendMultipleFiles('certification')">Save</button>
+                                        </div>
+
+                                        {{-- driving license --}}
+                                        <div class="d-none" id="driving_license">
+                                            <label>Upload Driving License</label>
+                                            <div class="container-multiselect">
+                                                <div class="ss-form-group fileUploadInput"
+                                                    style="
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                        ">
+                                                    <input displayName="Driving Licence" type="file" class="files-upload">
+                                                    <div class="list-items">
+                                                        <input hidden type="text" name="type" value="driving licence" class="item">
+                                                    </div>
+                                                    <button type="button" onclick="open_file(this)">Choose File</button>
+                                                    <span class="help-block"></span>
+                                                </div>
+                                            </div>
+                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                        </div>
+                                        {{-- ss number --}}
+                                        <div class="d-none" id="ss_number">
+                                            <label>Upload SS Document</label>
+                                            <div class="container-multiselect">
+                                                <div class="ss-form-group fileUploadInput"
+                                                    style="
+                                                                        display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                    ">
+                                                     <input displayName="Ss number file" type="file" class="files-upload">
+                                                     <div class="list-items">
+                                                         <input hidden type="text" name="type" value="ss number file" class="item">
+                                                     </div>
+                                                    <button type="button" onclick="open_file(this)">Choose File</button>
+                                                    <span class="help-block"></span>
+                                                </div>
+                                            </div>
+                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                        </div>
+
+                                        {{-- other --}}
+                                        <div class="d-none" id="other">
+                                            <label>Upload Other Document</label>
+                                            <div class="container-multiselect">
+                                                <div class="ss-form-group fileUploadInput"
+                                                    style="
+                                                                        display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                    ">
+                                                     <input displayName="Other" type="file" class="files-upload">
+                                                     <div class="list-items">
+                                                         <input hidden type="text" name="type" value="other" class="item">
+                                                     </div>
+                                                    <button type="button" onclick="open_file(this)">Choose File</button>
+                                                    <span class="help-block"></span>
+                                                </div>
+                                            </div>
+                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                        </div>
+
+                                        {{-- vaccinations --}}
+                                        <div class="container-multiselect d-none" id="vaccinations">
+                                            <div class="select-btn">
+                                                <span class="btn-text">Select Vaccinations</span>
+                                                <span class="arrow-dwn">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </span>
+                                            </div>
+                                            <ul class="list-items">
+                                                @if (isset($allKeywords['Vaccinations']))
+                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                        <li class="item" value="{{ $value->title }}">
+                                                            <span class="checkbox">
+                                                                <i class="fa-solid fa-check check-icon"></i>
+                                                            </span>
+                                                            <span class="item-text">{{ $value->title }}</span>
+                                                        </li>
+                                                        <input displayName="{{ $value->title }}" type="file" 
+                                                            class="files-upload" style="display: none;" />
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                            <button class="ss-job-dtl-pop-sv-btn"
+                                                onclick="sendMultipleFiles('vaccination')">Save</button>
+                                        </div>
+
+                                        {{-- references --}}
+
+                                        <div class="container-multiselect d-none" id="references">
+                                            <h4>Who are your References?</h4>
+                                            <div class="ss-form-group">
+                                                <label>Reference Name</label>
+                                                <input type="text" name="name[]" placeholder="Name of Reference">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="ss-form-group">
+                                                <label>Phone Number</label>
+                                                <input type="text" name="phone[]"
+                                                    placeholder="Phone Number of Reference">
+                                                <span class="help-block"></span>
+                                            </div>
+
+                                            <div class="ss-form-group">
+                                                <label>Email</label>
+                                                <input type="text" name="email[]" placeholder="Email of Reference">
+                                                <span class="help-block"></span>
+                                            </div>
+
+                                            <div class="ss-form-group">
+                                                <label>Date Referred</label>
+                                                <input type="date" name="date_referred[]">
+                                                <span class="help-block"></span>
+                                            </div>
+
+                                            <div class="ss-form-group">
+                                                <label>Min Title of Reference</label>
+                                                <input type="text" name="min_title_of_reference[]"
+                                                    placeholder="Min Title of Reference">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="ss-form-group">
+                                                <label>Is this from your last assignment?</label>
+                                                <select name="recency_of_reference[]">
+                                                    <option value="">Select</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                                <span class="help-block"></span>
+                                            </div>
+
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                        ">
+                                                <label>Upload Image</label>
+                                                <input type="file" name="image[]">
+                                                <button type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                        </div>
+
+                                        {{-- diploma --}}
+                                        <div class="d-none" id="diploma">
+                                            <label>Upload a Diploma</label>
+                                            <div class="container-multiselect">
+                                                <div class="ss-form-group fileUploadInput"
+                                                    style="
+                                                                        display: flex !important;
+                                                                        justify-content: center !important;
+                                                                        align-items: center !important;
+                                                                    ">
+                                                    <input displayName="Diploma" type="file" class="files-upload">
+                                                    <div class="list-items">
+                                                        <input hidden type="text" name="type" value="diploma" class="item">
+                                                    </div>
+                                                    <button type="button" onclick="open_file(this)">Choose File</button>
+                                                    <span class="help-block"></span>
+                                                </div>
+                                            </div>
+                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('diploma')">Save</button>
+                                        </div>
+
+                                        {{-- professional license --}}
+                                        <div class="d-none" id="diploma">
+                                            <label>Upload a Diploma</label>
+                                            <div class="container-multiselect">
+                                                <div class="ss-form-group fileUploadInput"
+                                                    style="
+                                                                        display: flex !important;
+                                                                        justify-content: center !important;
+                                                                        align-items: center !important;
+                                                                    ">
+                                                    <input displayName="Professional License" type="file" class="files-upload">
+                                                    <div class="list-items">
+                                                        <input hidden type="text" name="type" value="Professional License" class="item">
+                                                    </div>
+                                                    <button type="button" onclick="open_file(this)">Choose File</button>
+                                                    <span class="help-block"></span>
+                                                </div>
+                                            </div>
+                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('professional_license')">Save</button>
+                                        </div>
+                                        
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{-- end uploading documents modal --}}
     </main>
 @stop
 
 @section('js')
+
+    {{-- js for multiselect --}}
+    <script>
+        var selectedFiles = [];
+        var selectedValues = []; 
+
+        function open_file(obj) {
+            $(obj).parent().find('input[type="file"]').click();
+        }
+
+        function open_modal(obj) {
+            let name, title, modal, form, target;
+
+            name = $(obj).data('name');
+            title = $(obj).data('title');
+            target = $(obj).data('target');
+
+            modal = '#' + target + '_modal';
+            form = modal + '_form';
+            $(form).find('h4').html(title);
+
+            $(modal).modal('show');
+        }
+
+        function controlInputsFiles(obj) {
+            HideAllInputsModal();
+            const inputsId = obj.value;
+            //removing d-none class
+            document.getElementById(inputsId).classList.remove('d-none');
+        }
+
+        function HideAllInputsModal() {
+            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'ss_number', 'other',
+                'vaccinations',
+                'references',
+                'diploma', 'professional_license'
+            ];
+            allInputsDivs.forEach((InputsDiv) => {
+                // adding d-none class
+                if (document.getElementById(InputsDiv) != null)
+                    document.getElementById(InputsDiv).classList.add('d-none');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.list-items .item');
+            //store selected file values
+
+            items.forEach((item, index) => {
+                item.addEventListener('click', (event) => {
+                    if (event.target.closest('.checkbox')) {
+                        return;
+                    }
+                    const uploadInput = item.nextElementSibling;
+                    if (uploadInput) {
+                        // class 'checked' check
+                        if (item.classList.contains('checked')) {
+                            uploadInput.click();
+                            uploadInput.addEventListener('change', function() {
+                                if (this.files.length > 0) {
+                                    // Handling file selection
+                                    const file = this.files[0];
+                                    selectedFiles.push(file.name);
+                                    console.log(selectedFiles);
+                                }
+                            }, {
+                                once: true //avoid multiple registrations
+                            }); 
+                        } else {
+                            const index = selectedFiles.indexOf(uploadInput.files[0].name);
+                            if (index > -1) {
+                                selectedFiles.splice(index, 1);
+                            }
+                            console.log(selectedFiles);
+
+                        }
+                    }
+                });
+            });
+
+
+        });
+        
+        function sendMultipleFiles(type) {
+
+
+            const fileInputs = document.querySelectorAll('.files-upload'); 
+            console.log(fileInputs);
+            const fileReadPromises = [];
+
+            let worker_id = '{!! $worker->id !!}';
+            console.log(worker_id);
+            var workerId = worker_id;
+
+            fileInputs.forEach((input,index) => {
+           let displayName = input.getAttribute("displayName");
+                if (input.files[0]) { 
+                    const file = input.files[0];
+                    const readerPromise = new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            resolve({
+                                name: file.name,
+                                path: file.name,
+                                type: type,
+                                content: event.target.result, // Base64 encoded content
+                                displayName: displayName || file.name,   
+                            });
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                    fileReadPromises.push(readerPromise);
+                }
+            });
+
+            Promise.all(fileReadPromises).then(files => {
+                console.log(files); 
+                var body = {
+                    workerId: workerId,
+                    files: files
+                };
+                fetch('/worker/add-docs', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                'content')
+                        },
+                        body: JSON.stringify({
+                            workerId: workerId,
+                            files: files
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data); // Handle success
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i>' + data.message,
+                            time: 3
+                        });
+
+                        // reload the page
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                        
+                    })
+                    .catch(error => {
+                        console.error('Error:', error); // Handle errors
+                    });
+            }).catch(error => {
+                console.error('Error reading files:', error); // Handle file read errors
+            });
+            // clear files inputs 
+            fileInputs.forEach((input) => {
+                input.value = '';
+            });
+            selectedFiles = [];
+            
+        }
+        
+        const selectBtn = document.querySelectorAll(".select-btn"),
+
+        items = document.querySelectorAll(".item");
+        
+
+        selectBtn.forEach(selectBtn => {
+            selectBtn.addEventListener("click", () => {
+                selectBtn.classList.toggle("open");
+            });
+        });
+
+        items.forEach(item => {
+            item.addEventListener("click", () => {
+                const value = item.getAttribute('value');
+                item.classList.toggle("checked");
+
+                if (item.classList.contains("checked")) {
+                    // add item
+                    selectedValues.push(value);
+                    console.log(selectedValues);
+                } else {
+                    // remove item
+                    const index = selectedValues.indexOf(value);
+                    if (index > -1) {
+                        selectedValues.splice(index, 1);
+                        console.log(selectedValues);
+                    }
+                }
+                let btnText = document.querySelector(".btn-text");
+                if (selectedValues.length > 0) {
+                    btnText.innerText = `${selectedValues.length} Selected`;
+                } else {
+                    btnText.innerText = "Select Language";
+                }
+            });
+        })
+    </script>
+    {{-- end js for multiselect --}}
+
     <script type="text/javascript">
         // loding states cities docs on page load
 
@@ -904,17 +1448,17 @@
             // end loading cities according to the selected state
 
             // append each uploaded file to the table
-            $('#document_file').change(function() {
-                var file = this.files[0]; // get the selected file
-                var tbody = $('.table tbody');
-                // tbody.empty(); // remove existing rows
-                var row = $('<tr>');
-                row.append($('<td>').text(file.name)); // display the file name
-                var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id',
-                    file.id).prop('disabled', true); // disable the delete button
-                row.append($('<td>').append(deleteButton));
-                tbody.append(row);
-            });
+            // $('#document_file').change(function() {
+            //     var file = this.files[0]; // get the selected file
+            //     var tbody = $('.table tbody');
+            //     // tbody.empty(); // remove existing rows
+            //     var row = $('<tr>');
+            //     row.append($('<td>').text(file.name)); // display the file name
+            //     var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id',
+            //         file.id).prop('disabled', true); // disable the delete button
+            //     row.append($('<td>').append(deleteButton));
+            //     tbody.append(row);
+            // });
             // end loding uploading file
 
             // loding docs list and dispatch them on the table (consume api : /list-docs)
@@ -965,7 +1509,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '{{route("list-docs")}}',
+                url: '{{ route('list-docs') }}',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -976,6 +1520,7 @@
                     try {
                         // Try to manually parse the response as JSON
                         data = JSON.parse(resp);
+                        console.log(data);
                     } catch (e) {
                         // If parsing fails, assume resp is already a JavaScript object
                         data = resp;
@@ -985,36 +1530,76 @@
                     tbody.empty();
                     data.forEach(function(file) {
                         var row = $('<tr>');
-                        row.append($('<td>').text(file.name));
+                        row.attr('class', 'row');
+                        row.append($('<td class="col-3 td-table">').text(file.displayName));
+                        
+                        row.append($('<td class="col-3 td-table">').text(file.type));
                         console.log(file.id);
-                        var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id', file.id);
-                        deleteButton.click(function() {
+                        var deleteButton = $('<button>').text('Delete Document').addClass(
+                            'delete').attr('data-id', file.id);
+                        deleteButton.click(function(event) {
+                            event.preventDefault();
                             $.ajax({
                                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                                url: '{{route("del-doc")}}',
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('del-doc') }}',
                                 method: 'POST',
                                 contentType: 'application/json',
                                 data: JSON.stringify({
                                     bsonId: file.id
                                 }),
                                 success: function() {
-                        row.remove();
-                    },
-                    error: function(resp) {
-                        console.log('Error:', resp);
-                    }
-                });
-            });
-            row.append($('<td>').append(deleteButton));
-            tbody.append(row);
-        });
-    },
-    error: function(resp) {
-        console.log('Error:', resp);
-    }
+                                    row.remove();
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+                        var viewFile = $('<button>').text('View Document').addClass('delete').attr('data-id', file.id);
+                            viewFile.click(function(event) {
+                        event.preventDefault();
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: '{{ route('get-doc') }}',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                bsonId: file.id
+                            }),
+                            success: function(resp) {
+                                const respToJson = JSON.parse(resp);
+                                console.log(respToJson);
+                                const binaryData = respToJson.content.data;
+                                const byteArray = new Uint8Array(binaryData);
+                                const fileBlob = new Blob([byteArray], {type: "application/octet-stream"}); 
+                                const blobUrl = URL.createObjectURL(fileBlob);
+                                const downloadLink = document.createElement('a');
+                                downloadLink.href = blobUrl;
+                                downloadLink.setAttribute('download', respToJson.name); 
+                                document.body.appendChild(downloadLink);
+                                downloadLink.click();
+                                document.body.removeChild(downloadLink);
+                            },
+                            error: function(resp) {
+                                console.log('Error:', resp);
+                            }
+                        });
 });
+                        row.append($('<td class="col-3 td-table">').append(viewFile));
+                        row.append($('<td class="col-3 td-table">').append(deleteButton));
+                        
+                        tbody.append(row);
+                    });
+                },
+                error: function(resp) {
+                    console.log('Error:', resp);
+                }
+            });
 
             $.ajax({
                 headers: {
@@ -1276,7 +1861,7 @@
                     'Full name can only contain letters and spaces, and cannot be longer than 255 characters');
                 $('.help-block-full_name_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-full_name_payment').text('');
             }
 
@@ -1285,17 +1870,18 @@
                 $('.help-block-address_payment').text('Please enter your address');
                 $('.help-block-address_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-address_payment').text('');
             }
 
             const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($('input[name="email_payment"]').val() ))) {
+            if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($(
+                    'input[name="email_payment"]').val()))) {
                 console.log(email_payment.value);
                 $('.help-block-email_payment').text('Please enter a valid email');
                 $('.help-block-email_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-email_payment').text('');
             }
 
@@ -1303,7 +1889,7 @@
                 $('.help-block-bank_name_payment').text('Please enter your bank name');
                 $('.help-block-bank_name_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-bank_name_payment').text('');
             }
 
@@ -1311,7 +1897,7 @@
                 $('.help-block-routing_number_payment').text('Please enter your routing number');
                 $('.help-block-routing_number_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-routing_number_payment').text('');
             }
 
@@ -1319,7 +1905,7 @@
                 $('.help-block-bank_account_payment_number').text('Please enter your bank account number');
                 $('.help-block-bank_account_payment_number').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-bank_account_payment_number').text('');
             }
 
@@ -1329,7 +1915,7 @@
                 $('.help-block-phone_number_payment').text('Please enter a valid phone number');
                 $('.help-block-phone_number_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-phone_number_payment').text('');
             }
 
@@ -1393,7 +1979,7 @@
                 data: formData,
                 contentType: false,
                 cache: false,
-                processData:false,
+                processData: false,
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -1404,8 +1990,8 @@
                         });
 
                         setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                            location.reload();
+                        }, 2000);
 
                     }
 
@@ -1471,8 +2057,8 @@
                             time: 5
                         });
                         setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                            location.reload();
+                        }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1521,8 +2107,8 @@
                             time: 5
                         });
                         setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                            location.reload();
+                        }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1668,7 +2254,7 @@
                         $('#loading_disableOption').addClass('d-none');
                         $('#disactivate_account').removeClass('d-none');
                         console.log(resp);
-                         window.location.href = resp.account_link;
+                        window.location.href = resp.account_link;
                     }
                 },
                 error: function(resp) {
@@ -1776,15 +2362,13 @@
             if (!validateDocumentManagement()) {
                 return;
             }
-            @php
-                $worker_id_json = $worker->id;
-            @endphp
-            let worker_id = '{!! $worker_id_json !!}';
+
             console.log(worker_id);
             var workerId = worker_id;
             var filesInput = document.getElementById('document_file');
             var files = Array.from(filesInput.files);
 
+            var workerId = '{!! $worker->id !!}';
             Promise.all(files.map(file => {
                 return new Promise((resolve, reject) => {
                     var reader = new FileReader();
@@ -2004,50 +2588,49 @@
             $('.disable_account').removeClass('d-none');
         }
 
-        var loadFile = function (event) {
-  var image = document.getElementById("output");
-  image.src = URL.createObjectURL(event.target.files[0]);
+        var loadFile = function(event) {
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
 
-  // seding the image to server
-    var formData = new FormData();
-    formData.append('profile_pic', $('#file')[0].files[0]);
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: '/worker/update-worker-profile-picture',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        cache: false,
-        processData:false,
-        success: function(resp) {
-            console.log(resp);
-            if (resp.status) {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> Profile picture updated successfully.',
-                    time: 5
-                });
+            // seding the image to server
+            var formData = new FormData();
+            formData.append('profile_pic', $('#file')[0].files[0]);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/worker/update-worker-profile-picture',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Profile picture updated successfully.',
+                            time: 5
+                        });
 
-                setTimeout(function() {
-                location.reload();
-            }, 2000);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
 
-            }
+                    }
 
-        },
-        error: function(resp) {
-            notie.alert({
-                type: 'error',
-                text: '<i class="fa fa-check"></i>' + resp.message,
-                time: 5
+                },
+                error: function(resp) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i>' + resp.message,
+                        time: 5
+                    });
+                }
             });
-        }
-    });
-};
+        };
     </script>
-
 @stop
 
 <style>
@@ -2134,7 +2717,7 @@
         border-radius: 57px;
         border: 1px solid var(--border, #111011);
         background: var(--light-bg-purple, #FFF8FD);
-        width: 170px;
+        width:fit-content;
         height: 32px;
         color: var(--darkpurple, #3D2C39);
         text-align: center;
@@ -2421,53 +3004,177 @@
         color: #fff;
     }
 
-     /* for the image  */
+    /* for the image  */
 
-     .profile-pic {
-  color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: all .3s ease;
-}
+    .profile-pic {
+        color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: all .3s ease;
+    }
 
-.profile-pic input {
-  display: none;
-}
+    .profile-pic input {
+        display: none;
+    }
 
-.profile-pic img {
-  position: absolute;
-  object-fit: cover;
-  width: 165px;
-  height: 165px;
-  box-shadow: 0 0 10px 0 rgba(255,255,255,.35);
-  border-radius: 100px;
-  z-index: 0;
-}
+    .profile-pic img {
+        position: absolute;
+        object-fit: cover;
+        width: 165px;
+        height: 165px;
+        box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+        border-radius: 100px;
+        z-index: 0;
+    }
 
-.profile-pic .-label {
-  cursor: pointer;
-  height: 165px;
-  width: 165px;
-}
+    .profile-pic .-label {
+        cursor: pointer;
+        height: 165px;
+        width: 165px;
+    }
 
-.profile-pic:hover .-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0,0,0,.8);
-  z-index: 10000;
-  color: rgb(250,250,250);
-  transition: background-color .2s ease-in-out;
-  border-radius: 100px;
-  margin-bottom: 0;
-}
+    .profile-pic:hover .-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, .8);
+        z-index: 10000;
+        color: rgb(250, 250, 250);
+        transition: background-color .2s ease-in-out;
+        border-radius: 100px;
+        margin-bottom: 0;
+    }
 
-.profile-pic span {
-  display: inline-flex;
-  padding: .2em;
-  height: 2em;
-}
+    .profile-pic span {
+        display: inline-flex;
+        padding: .2em;
+        height: 2em;
+    }
+    .td-table{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+</style>
 
+{{-- style for multi-select --}}
+
+<style>
+    /* Google Fonts - Poppins*/
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+
+    .container-multiselect {
+        position: relative;
+        max-width: 320px;
+        width: 100%;
+        margin: 30px auto 30px;
+    }
+
+    .select-btn {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .select-btn .btn-text {
+        font-size: 17px;
+        font-weight: 400;
+        color: #333;
+    }
+
+    .select-btn .arrow-dwn {
+        display: flex;
+        height: 21px;
+        width: 21px;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 50%;
+        background: #3d2c39;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+
+    .select-btn.open .arrow-dwn {
+        transform: rotate(-180deg);
+    }
+
+    .list-items {
+        position: relative;
+        margin-top: 15px;
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        max-height: 500px;
+        scroll-behavior: auto;
+        overflow: auto;
+
+    }
+
+    .select-btn.open~.list-items {
+        display: block;
+    }
+
+    .list-items .item {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        height: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        padding: 0 15px;
+        border-radius: 8px;
+    }
+
+    .list-items .item:hover {
+        background-color: #e7edfe;
+    }
+
+    .item .item-text {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+    }
+
+    .item .checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 16px;
+        width: 16px;
+        border-radius: 4px;
+        margin-right: 12px;
+        border: 1.5px solid #c0c0c0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .item.checked .checkbox {
+        background-color: #3d2c39;
+        border-color: #3d2c39;
+    }
+
+    .checkbox .check-icon {
+        color: #fff;
+        font-size: 11px;
+        transform: scale(0);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .item.checked .check-icon {
+        transform: scale(1);
+    }
+
+    .ss-job-dtl-pop-sv-btn {
+        margin-top: 30px !important;
+    }
 </style>

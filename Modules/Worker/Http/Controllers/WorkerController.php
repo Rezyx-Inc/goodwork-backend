@@ -1050,17 +1050,14 @@ public function read_offer_notification(Request $request)
 
 public function addDocuments(Request $request)
     {
+        try{
         $body = $request->getContent();
-
         $bodyArray = json_decode($body, true);
-
-
+        //return response()->json(['body' => $bodyArray]);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-
         ])->post('http://localhost:4545/documents/add-docs', $bodyArray);
-
-
+           // return response()->json(['response' => $response]);
         if ($response->successful()) {
             return response()->json([
                 'ok' => true,
@@ -1069,18 +1066,41 @@ public function addDocuments(Request $request)
         } else {
             return response()->json([
                 'ok' => false,
-                'message' => 'Error! Please try again later.',
+                'message' => 'Failed to upload files',
             ], $response->status());
+        }
+        }catch(\Exception $e){
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
 public function listDocs(Request $request)
 {
+    try{
     $workerId = $request->WorkerId;
     //return response()->json(['workerId' => $workerId]);
 
     $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
     return $response->body(); // Return the response from the external API
+
+    }catch(\Exception $e){
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    }
+}
+
+public function getDoc(Request $request){
+    try{
+
+    $bsonId = $request->input('bsonId');
+    $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+    
+
+    // return the data to download 
+    return $response->body();
+
+    }catch(\Exception $e){
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    }
 }
 
 public function deleteDoc(Request $request)

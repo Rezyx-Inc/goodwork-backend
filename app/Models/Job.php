@@ -379,9 +379,12 @@ class Job extends Model
 
 
             'certificate'=> function () use ($job, $nurse){
-                $certifications = explode(',', $job->certificate);
+
+                // here we will compare the certificates of the job with the certificates of the worker comming from the mongodb database
+                $certifications = explode(',', $job->certificate); 
                 $worker_certificate_name = json_decode($nurse->worker_certificate_name);
-                $worker_certificate_name = NurseAsset::where('nurse_id', $nurse->id)->where('active', '1')->where('filter','certificate')->pluck('name')->toArray();
+                $worker_certificate_name = NurseAsset::where('nurse_id', $nurse->id)->where('active', '1')->where('filter','certificate')->pluck('name')->toArray(); // this call will be replace with the file name comming from the mongodb database
+                
                
                 // $worker_certificate_name = json_decode($job_data['worker_certificate_name']);
                 foreach($certifications as $k=>$v){

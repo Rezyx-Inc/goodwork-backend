@@ -28,6 +28,9 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
     <!-- Custom styles -->
     <link rel="stylesheet" href="{{URL::asset('frontend/css/style.css')}}" />
+    
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     @yield('css')
 </head>
 <body>

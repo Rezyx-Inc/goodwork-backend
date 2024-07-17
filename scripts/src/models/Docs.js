@@ -12,8 +12,10 @@ const DocsSchema = mongoose.Schema({
             name: {type: String, required: true },
             uploaded: {type: Date, required: true, default: Date.now },
             modified: {type: Date, required: true, default: Date.now },
-            content: {type: Buffer, required: false },
-            path: {type: String, required: false}
+            content: {type: Buffer, required: false }, 
+            path: {type: String, required: false}, // Path to the file in the file system
+            type: {type: String, required: true},  // vaccination, certification, driver's license, diploma, SS Card, reference, skill checklist, other.
+            displayName : {type: String, required: false, default: null}, // Display name of the file
         }
     ]
 });

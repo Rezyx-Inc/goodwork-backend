@@ -135,6 +135,7 @@
         <li><p  data-target="input" data-title="Yes we need your SS# to submit you" data-placeholder="SS number" data-name="worker_ss_number" onclick="open_modal(this)">Yes we need your SS# to submit you</p></li>
     </ul>
 
+    @if(isset($model->proffesion))
     <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['profession']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>Profession</span>
@@ -142,7 +143,9 @@
         </li>
         <li><p data-target="dropdown" data-title="What kind of professional are you?" data-filter="Profession" data-name="profession" onclick="open_modal(this)">What kind of professional are you?</p></li>
     </ul>
+    @endif
 
+    @if(isset($model->preferred_specialty))
     <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['preferred_specialty']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>Specialty</span>
@@ -151,6 +154,9 @@
         {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
         <li><p data-target="dropdown" data-title="What's your specialty?" data-filter="Speciality" data-name="specialty" onclick="open_modal(this)">What's your specialty?</p></li>
     </ul>
+    @endif
+
+    @if(isset($model->job_location))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_location']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
         <span>Professional Licensure</span>
@@ -158,10 +164,12 @@
         </li>
 
         <li>
-            <p  data-target="input" data-title="Where are you licensed?" data-placeholder="Where are you licensed?" data-name="nursing_license_state" onclick="open_modal(this)">Where are you licensed?</p>
+            <p  data-target="dropdown" data-title="Where are you licensed?" data-filter="StateCode" data-placeholder="Where are you licensed?" data-name="nursing_license_state" onclick="open_modal(this)">Where are you licensed?</p>
         </li>
     </ul>
+    @endif
 
+    @if(isset($model->vaccinations))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['vaccinations']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             @php
@@ -179,8 +187,10 @@
 
         </li>
     </ul>
+    @endif
 
 
+    @if(isset($model->number_of_references) && isset($model->recency_of_reference))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['number_of_references']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             <span>References</span>
@@ -191,7 +201,9 @@
             <p data-bs-toggle="modal" data-bs-target="#job-dtl-References">Who are your References?</p>
         </li>
     </ul>
+    @endif
 
+    @if(isset($model->certificate))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['certificate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
             @php
@@ -209,7 +221,9 @@
             @endforeach
         </li>
     </ul>
+    @endif
 
+    @if(isset($model->skills))
     <ul class="ss-s-jb-apl-on-inf-txt-ul">
         <li>
         <span>Skills checklist</span>
@@ -220,6 +234,7 @@
 
         </li>
     </ul>
+    @endif
 
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['eligible_work_in_us']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
         <li>
@@ -300,11 +315,11 @@
     @if (isset($model->traveler_distance_from_facility))
     <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['traveler_distance_from_facility']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
         <li>
-        <span>Traveller Distance From Facility</span>
+        <span>Distance from your home</span>
         <h6>{{$model->traveler_distance_from_facility}} </h6>
         </li>
         <li>
-            <p data-target="input_number" data-title="Where does the IRS think you live?" data-placeholder="Where does the IRS think you live?" data-name="distance_from_your_home" onclick="open_modal(this)">Where does the IRS think you live?</p>
+            <p data-target="input_number" data-title="Where does the IRS think you live?" data-placeholder="What's your google validated address ?" data-name="distance_from_your_home" onclick="open_modal(this)">Where does the IRS think you live?</p>
         </li>
     </ul>
     @endif

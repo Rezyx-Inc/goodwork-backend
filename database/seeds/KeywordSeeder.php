@@ -40,14 +40,11 @@ class KeywordSeeder extends Seeder
     {
         return [
             'AssignmentDuration' => [
-                '4 Week',
-                '6 Week',
-                '8 Week',
-                '10 Week',
-                '12 Week',
-                '18 Week',
-                '24 Week',
-                '26 Week'
+                '1 shift/wk',
+                '1 shift/2wks',
+                '3 shifts/13wks',
+                'no shift cancelations',
+                'no preference',
             ],
             'FacilityType' => [
                 'Acute Care Hospital',
@@ -523,10 +520,12 @@ class KeywordSeeder extends Seeder
                 'Non-Clinical',
             ],
             'Terms'=>[
-                'Contract',
+                'Contract (Travel or Local)',
                 'Perm',
-                'Shift', 
-                'Contract to Perm '
+                'Shift',
+                'Contract to Perm',
+                'Contract (Travel only)',
+                'Contract (Local only)'
             ],
             'EMR'=>[
                 'EPIC',
@@ -589,9 +588,11 @@ class KeywordSeeder extends Seeder
             ],
             // random values (real value needed in docs)
             'Skills'=>[
-                'Skill 1',
-                'Skill 2',
-                'Skill 3',
+                'Peds',
+                'CVICU',
+                'RN',
+                'Skills',
+                'checklist'
             ],
             'NurseClassification'=>[
                 'W-2',
@@ -613,7 +614,14 @@ class KeywordSeeder extends Seeder
                 'Medical',
                 'Therapy'
             ],
+            'ContractTerminationPolicy' => [
+                '2 weeks notice',
+                '30 days notice',
+                'same terms as facility',
+                'no preference'
+            ], 
             'State'=>State::all()->pluck('name')->toArray(),
+            'StateCode'=>State::all()->pluck('iso2')->toArray(),
             'City'=> Cities::all()->pluck('name')->toArray(),
         ];
     }

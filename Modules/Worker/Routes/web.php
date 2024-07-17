@@ -110,7 +110,8 @@ Route::prefix('worker')->group(function() {
 
         //reading offer notification
         Route::post('read-offer-notification', ['uses' => 'WorkerController@read_offer_notification', 'as' => 'read-offer-notification']);
-        // add doc
+
+        // add documents
          Route::post('add-docs', ['uses' => 'WorkerController@addDocuments', 'as' => 'add-docs']);
 
         // delete doc
@@ -118,6 +119,9 @@ Route::prefix('worker')->group(function() {
 
         // list docs
         Route::post('list-docs', ['uses' => 'WorkerController@listDocs', 'as' => 'list-docs']);
+
+        // get one doc 
+        Route::post('get-doc', ['uses' => 'WorkerController@getDoc', 'as' => 'get-doc']);
 
         // update worker profile picture
         Route::post('update-worker-profile-picture', ['uses' => 'WorkerDashboardController@update_worker_profile_picture', 'as' => 'update-worker-profile-picture']);

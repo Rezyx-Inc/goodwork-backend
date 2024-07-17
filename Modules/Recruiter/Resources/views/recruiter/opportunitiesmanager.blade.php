@@ -232,7 +232,7 @@
                                                 <span class="help-block-facility_shift_cancelation_policy"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Traveler distance from facility</label>
+                                                <label>Min distance from facility</label>
                                                 <input type="number" name="traveler_distance_from_facility"
                                                     id="traveler_distance_from_facility"
                                                     placeholder="Enter travel distance">
@@ -513,8 +513,13 @@
                                         <div class="row">
                                             <div class="ss-form-group col-md-4">
                                                 <label>Professional Licensure</label>
-                                                <input type="text" name="job_location" id="job_location"
-                                                    placeholder="Enter professional licensure">
+                                                <select name="job_location" id="job_location">
+                                                    <option value="">Select a Professional Licensure</option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-job_location"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -712,9 +717,13 @@
                                         <div class="row">
                                             <div class="ss-form-group col-md-4">
                                                 <label>Contract Termination Policy</label>
-                                                <input type="text" name="contract_termination_policy"
-                                                    id="contract_termination_policy"
-                                                    placeholder="Enter Contract Termination Policy">
+                                                <select name="contract_termination_policy" id="contract_termination_policy">
+                                                    <option value="">Select a policy</option>
+                                                    @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-contract_termination_policy"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -1160,7 +1169,7 @@
                                                         <span class="help-block-facility_shift_cancelation_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Traveler distance from facility</label>
+                                                        <label>Min distance from facility</label>
                                                         <input type="number" name="traveler_distance_from_facility"
                                                             id="traveler_distance_from_facilityDraft"
                                                             placeholder="Enter travel distance">
@@ -1380,8 +1389,13 @@
                                         <div class="row">
                                             <div class="ss-form-group col-md-4">
                                                 <label>Professional Licensure</label>
-                                                <input type="text" name="job_location" id="job_locationDraft"
-                                                    placeholder="Enter professional licensure">
+                                                <select name="job_location" id="job_locationDraft">
+                                                    <option value="">Select a Professional Licensure</option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-job_locationDraft"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -1580,9 +1594,13 @@
                                                 <div class="row">
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Contract Termination Policy</label>
-                                                        <input type="text" name="contract_termination_policy"
-                                                            id="contract_termination_policyDraft"
-                                                            placeholder="Enter Contract Termination Policy">
+                                                        <select name="contract_termination_policy" id="contract_termination_policyDraft">
+                                                            <option value="">Select a policy</option>
+                                                            @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
+                                                                <option value="{{ $value->title }}">{{ $value->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                         <span class="help-block-contract_termination_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1893,7 +1911,7 @@
                                                 <div class="row">
                                                     {{-- edits --}}
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Facility shift</label>
+                                                        <label>Facility Shift Cancellation Policy</label>
                                                         <select name="facility_shift_cancelation_policy"
                                                             id="facility_shift_cancelation_policyEdit">
                                                             <option value="">facility shift</option>
@@ -1905,7 +1923,7 @@
                                                         <span class="help-block-facility_shift_cancelation_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Traveler distance from facility</label>
+                                                        <label>Min distance from facility</label>
                                                         <input type="number" name="traveler_distance_from_facility"
                                                             id="traveler_distance_from_facilityEdit"
                                                             placeholder="Enter travel distance">
@@ -2125,8 +2143,13 @@
                                         <div class="row">
                                             <div class="ss-form-group col-md-4">
                                                 <label>Professional Licensure</label>
-                                                <input type="text" name="job_location" id="job_locationEdit"
-                                                    placeholder="Enter professional licensure">
+                                                <select name="job_location" id="job_locationEdit">
+                                                    <option value="">Select a Professional Licensure</option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-job_locationEdit"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -2324,9 +2347,13 @@
                                                 <div class="row">
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Contract Termination Policy</label>
-                                                        <input type="text" name="contract_termination_policy"
-                                                            id="contract_termination_policyEdit"
-                                                            placeholder="Enter Contract Termination Policy">
+                                                        <select name="contract_termination_policy" id="contract_termination_policyEdit">
+                                                            <option value="">Select a policy</option>
+                                                            @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
+                                                                <option value="{{ $value->title }}">{{ $value->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                         <span class="help-block-contract_termination_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -4118,7 +4145,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the traveler distance from facility');
+            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
             $('.help-block-traveler_distance_from_facility').addClass('text-danger');
             access = false;
         } else {
@@ -4764,7 +4791,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the traveler distance from facility');
+            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
             $('.help-block-traveler_distance_from_facility').addClass('text-danger');
             access = false;
         } else {
@@ -5407,7 +5434,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the traveler distance from facility');
+            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
             $('.help-block-traveler_distance_from_facility').addClass('text-danger');
             access = false;
         } else {
