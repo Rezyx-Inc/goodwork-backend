@@ -921,11 +921,6 @@
                                         </div>
                                         <h4>Add Your Dcouments?</h4>
                                         <div class="ss-form-group">
-                                            <label>Document Name</label>
-                                            <input type="text" name="name[]" placeholder="Name of Document">
-                                            <span class="help-block"></span>
-                                        </div>
-                                        <div class="ss-form-group">
                                             <label>Document Type</label>
                                             <select name="type_documents" onChange="controlInputsFiles(this)">
                                                 <option value="">Select</option>
@@ -1087,37 +1082,37 @@
                                             <h4>Who are your References?</h4>
                                             <div class="ss-form-group">
                                                 <label>Reference Name</label>
-                                                <input type="text" name="name[]" placeholder="Name of Reference">
+                                                <input type="text" name="name" placeholder="Name of Reference">
                                                 <span class="help-block"></span>
                                             </div>
                                             <div class="ss-form-group">
                                                 <label>Phone Number</label>
-                                                <input type="text" name="phone[]"
+                                                <input type="text" name="phone"
                                                     placeholder="Phone Number of Reference">
                                                 <span class="help-block"></span>
                                             </div>
 
                                             <div class="ss-form-group">
                                                 <label>Email</label>
-                                                <input type="text" name="email[]" placeholder="Email of Reference">
+                                                <input type="text" name="reference_email" placeholder="Email of Reference">
                                                 <span class="help-block"></span>
                                             </div>
 
                                             <div class="ss-form-group">
                                                 <label>Date Referred</label>
-                                                <input type="date" name="date_referred[]">
+                                                <input type="date" name="date_referred">
                                                 <span class="help-block"></span>
                                             </div>
 
                                             <div class="ss-form-group">
                                                 <label>Min Title of Reference</label>
-                                                <input type="text" name="min_title_of_reference[]"
+                                                <input type="text" name="min_title_of_reference"
                                                     placeholder="Min Title of Reference">
                                                 <span class="help-block"></span>
                                             </div>
                                             <div class="ss-form-group">
                                                 <label>Is this from your last assignment?</label>
-                                                <select name="recency_of_reference[]">
+                                                <select name="recency_of_reference">
                                                     <option value="">Select</option>
                                                     <option value="1">Yes</option>
                                                     <option value="0">No</option>
@@ -1131,11 +1126,11 @@
                                                                         align-items: center;
                                                                         ">
                                                 <label>Upload Image</label>
-                                                <input type="file" name="image[]">
+                                                <input type="file" name="image">
                                                 <button type="button" onclick="open_file(this)">Choose File</button>
                                                 <span class="help-block"></span>
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('references')">Save</button>
                                         </div>
 
                                         {{-- diploma --}}
@@ -1276,17 +1271,50 @@
         });
         
         function sendMultipleFiles(type) {
-
-
             const fileInputs = document.querySelectorAll('.files-upload'); 
             console.log(fileInputs);
             const fileReadPromises = [];
-
             let worker_id = '{!! $worker->id !!}';
             console.log(worker_id);
             var workerId = worker_id;
 
-            fileInputs.forEach((input,index) => {
+            if (type == 'references'){
+                let referenceName = document.querySelector('input[name="name"]').value;
+                let referencePhone = document.querySelector('input[name="phone"]').value;
+                let referenceEmail = document.querySelector('input[name="reference_email"]').value;
+                let referenceDate = document.querySelector('input[name="date_referred"]').value;
+                let referenceMinTitle = document.querySelector('input[name="min_title_of_reference"]').value;
+                let referenceRecency = document.querySelector('select[name="recency_of_reference"]').value;
+                let referenceImage = document.querySelector('input[name="image"]').files[0];
+
+                var referenceInfo = {
+                    referenceName: referenceName,
+                    phoneNumber: referencePhone,
+                    email: referenceEmail,
+                    dateReferred: referenceDate,
+                    minTitle: referenceMinTitle,
+                    isLastAssignment: referenceRecency == 1 ? true : false
+                }
+                console.log(referenceInfo);
+                let readerPromise = new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        resolve({
+                            name: referenceImage.name,
+                            path : referenceImage.name,
+                            type: type,
+                            content: event.target.result, // Base64 encoded content
+                            displayName: referenceImage.name,
+                            ReferenceInformation: referenceInfo
+                        } );
+                    };
+
+                    reader.onerror = reject;
+                    reader.readAsDataURL(referenceImage);
+                });
+                fileReadPromises.push(readerPromise);
+            }else{
+                fileInputs.forEach((input,index) => {
            let displayName = input.getAttribute("displayName");
                 if (input.files[0]) { 
                     const file = input.files[0];
@@ -1307,6 +1335,8 @@
                     fileReadPromises.push(readerPromise);
                 }
             });
+            }
+            
 
             Promise.all(fileReadPromises).then(files => {
                 console.log(files); 
@@ -1589,7 +1619,7 @@
                                 console.log('Error:', resp);
                             }
                         });
-});
+                  });
                         row.append($('<td class="col-3 td-table">').append(viewFile));
                         row.append($('<td class="col-3 td-table">').append(deleteButton));
                         
@@ -3055,6 +3085,10 @@
     .td-table{
         padding-left: 0px !important;
         padding-right: 0px !important;
+    }
+
+    .modal-content{
+        box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
     }
 </style>
 

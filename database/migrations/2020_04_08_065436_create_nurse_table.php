@@ -140,7 +140,7 @@ class CreateNurseTable extends Migration
             $table->unsignedTinyInteger('account_tier')->default(0);
             // add missing fields for the profile nurses (workers)
             $table->string('terms')->deault('');
-            $table->string('type')->deault('');
+            $table->string('worker_job_type')->deault('');
             $table->decimal('worker_hours_shift', 8, 2);
             // payment information
             $table->string('full_name_payment',100)->nullable();

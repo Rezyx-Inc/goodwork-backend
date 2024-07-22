@@ -120,6 +120,7 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        return $request->all();
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
         

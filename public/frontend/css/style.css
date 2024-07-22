@@ -3099,6 +3099,9 @@ ul.ss-jb-dtlpop-chck {
 }
 ul.ss-jb-dtlpop-chck li {
     width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ss-job-dtl-pop-frm-sml-dv {

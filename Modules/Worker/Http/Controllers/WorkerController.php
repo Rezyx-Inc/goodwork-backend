@@ -108,6 +108,13 @@ class WorkerController extends Controller
     {
         $data = [];
         $data['model'] = Job::findOrFail($id);
+        $distinctFilters = Keyword::distinct()->pluck('filter');
+        $allKeywords = [];
+        foreach ($distinctFilters as $filter) {
+            $keywords = Keyword::where('filter', $filter)->get();
+            $allKeywords[$filter] = $keywords;
+        }
+        $data['allKeywords'] = $allKeywords;
         // $user = auth()->guard('frontend')->user();
         // dd($user->nurse->id);
         $data['jobSaved'] = new JobSaved();
@@ -1081,7 +1088,12 @@ public function listDocs(Request $request)
     //return response()->json(['workerId' => $workerId]);
 
     $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
-    return $response->body(); // Return the response from the external API
+    if ($response->successful()) {
+        return $response->body();
+    } else {
+        return response()->json(['success' => false], $response->status());
+    }
+   
 
     }catch(\Exception $e){
         return response()->json(['success' => false, 'message' => $e->getMessage()]);

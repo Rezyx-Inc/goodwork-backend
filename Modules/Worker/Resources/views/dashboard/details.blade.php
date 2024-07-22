@@ -3,1284 +3,1634 @@
 @section('css')
 @stop
 @section('content')
-<!--Main layout-->
-<main style="padding-top: 130px" class="ss-main-body-sec">
-    <div class="container">
-  <!-------------------applay-on jobs--------->
-
-      <div class="ss-apply-on-jb-mmn-dv">
-        <div class="row">
-          <div class="col-lg-12">
-        <h2>Explore</h2>
-
-        <!------------->
-        <div class="ss-apply-on-jb-mmn-dv-box-divs">
-        <div class="ss-job-prfle-sec">
-            <p>{{$model->job_type}} <span>+50 Applied</span></p>
-            <h4>{{$model->job_name}}</h4>
-            <h6>{{ $model->facility->name ?? 'NA' }}</h6>
-            <ul>
-              <li><a href="javascript:void(0)"><img src="{{URL::asset('frontend/img/location.png')}}"> {{$model->job_city}}, {{$model->job_state}}</a></li>
-              <li><a href="javascript:void(0)"><img src="{{URL::asset('frontend/img/calendar.png')}}">  {{$model->preferred_assignment_duration}} wks</a></li>
-              <li><a href="javascript:void(0)"><img src="{{URL::asset('frontend/img/dollarcircle.png')}}">  {{$model->weekly_pay}}/wk</a></li>
-            </ul>
-            <h5>Recently Added</h5>
-            <a href="javascript:void(0)" data-id="{{$model->id}}" onclick="save_jobs(this)" class="ss-jb-prfl-save-ico">
-                @if($jobSaved->check_if_saved($model->id))
-                <img src="{{URL::asset('frontend/img/bookmark.png')}}" />
-                @else
-                <img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" />
-                @endif
-            </a>
-          </div>
-
-  </div>
-  <!----------------jobs applay view details--------------->
-
-  <div class="ss-job-apply-on-view-detls-mn-dv">
-    <div class="ss-job-apply-on-tx-bx-hed-dv">
-      <ul>
-      <li><p>Recruiter</p></li>
-      {{-- <li><img src="{{URL::asset('images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li> --}}
-    </ul>
-
-    <ul>
-      <li>
-        <span>{{$model->id}}</span>
-        <h6>{{$model->getOfferCount()}} Applied</h6>
-      </li>
-    </ul>
-    </div>
-
-  <div class="ss-jb-aap-on-txt-abt-dv">
-    <h5>About job</h5>
-    <ul>
-      <li>
-        <h6>Employer Name</h6>
-        {{-- <p>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</p> --}}
-      </li>
-       <li>
-        <h6>Date Posted</h6>
-        <p>{{Carbon\Carbon::parse($model->created_at)->format('M d')}}</p>
-      </li>
-       <li>
-        <h6>Type</h6>
-        <p>{{$model->job_type}}</p>
-      </li>
-       <li>
-        <h6>Terms</h6>
-        <p>{{$model->terms}}</p>
-      </li>
-
-    </ul>
-  </div>
-
-
-  <div class="ss-jb-apply-on-disc-txt">
-    <h5>Description</h5>
-    <p>{{$model->description}}<a href="#">Read More</a></p>
-</div>
-
-
-<!-------Work Information------->
-<div class="ss-jb-apl-oninfrm-mn-dv">
-    <ul class="ss-jb-apply-on-inf-hed">
-        <li><h5>Work Information</h5></li>
-        <li><h5>Your Information</h5></li>
-    </ul>
-    @php
-    $matches = [];
-    
-    foreach ($model->matchWithWorker() as $key => $closure) {
-        $matches[$key] = $closure();
-    }
-
-    
-    @endphp
-    @php
-    $userMatches = [];
-    foreach ($model->matchWithWorker() as $key => $closure) {
-        $userMatches[$key] = $closure();
-    }
-    @endphp
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['diploma']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>Diploma</span>
-            <h6>College Diploma</h6>
-        </li>
-        <li><p data-target="file" data-hidden_name="diploma_cer" data-hidden_value="Yes" data-href="{{route('info-required')}}" data-title="Did you really graduate?" data-name="diploma" onclick="open_modal(this)">Did you really graduate?</p></li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['driving_license']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>drivers license</span>
-            <h6>Required</h6>
-        </li>
-        <li><p data-target="file" data-hidden_name="dl_cer" data-hidden_value="Yes" data-href="{{route('info-required')}}" data-title="Are you really allowed to drive?" data-name="driving_license" onclick="open_modal(this)">Are you really allowed to drive?</p></li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['worked_at_facility_before']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>Worked at Facility Before</span>
-            <h6>In the last 18 months</h6>
-        </li>
-        <li><p data-target="binary" data-title="Are you sure you never worked here as staff?" data-name="worked_at_facility_before" onclick="open_modal(this)">Are you sure you never worked here as staff?</p></li>
-    </ul>
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['worker_ss_number']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>SS# or SS Card</span>
-            <h6>Last 4 digits of SS#</h6>
-        </li>
-        <li><p  data-target="input" data-title="Yes we need your SS# to submit you" data-placeholder="SS number" data-name="worker_ss_number" onclick="open_modal(this)">Yes we need your SS# to submit you</p></li>
-    </ul>
-
-    @if(isset($model->proffesion))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['profession']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>Profession</span>
-            <h6>{{$model->proffesion}}</h6>
-        </li>
-        <li><p data-target="dropdown" data-title="What kind of professional are you?" data-filter="Profession" data-name="profession" onclick="open_modal(this)">What kind of professional are you?</p></li>
-    </ul>
-    @endif
-
-    @if(isset($model->preferred_specialty))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul  {{ ($matches['preferred_specialty']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>Specialty</span>
-            <h6>{{str_replace(',',', ',$model->preferred_specialty)}}</h6>
-        </li>
-        {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
-        <li><p data-target="dropdown" data-title="What's your specialty?" data-filter="Speciality" data-name="specialty" onclick="open_modal(this)">What's your specialty?</p></li>
-    </ul>
-    @endif
-
-    @if(isset($model->job_location))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_location']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Professional Licensure</span>
-        <h6>{{$model->job_location}}</h6>
-        </li>
-
-        <li>
-            <p  data-target="dropdown" data-title="Where are you licensed?" data-filter="StateCode" data-placeholder="Where are you licensed?" data-name="nursing_license_state" onclick="open_modal(this)">Where are you licensed?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if(isset($model->vaccinations))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['vaccinations']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            @php
-                $vaccines = explode(',', $model->vaccinations);
-            @endphp
-            <span>Vaccinations & Immunizations</span>
-            @foreach ($vaccines as $v)
-            <h6>{{$v}} Required</h6>
-            @endforeach
-        </li>
-        <li>
-            @foreach ($vaccines as $v)
-            <p data-target="file" data-hidden_name="{{strtolower($v)}}_vac" data-hidden_value="Yes" data-hidden_type="{{$v}}" data-href="{{route('worker.vaccination')}}" data-title="No {{$v}}?" data-name="{{strtolower($v)}}" onclick="open_modal(this)">No {{$v}}?</p>
-            @endforeach
-
-        </li>
-    </ul>
-    @endif
-
-
-    @if(isset($model->number_of_references) && isset($model->recency_of_reference))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['number_of_references']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>References</span>
-            <h6>{{$model->number_of_references}}  references </h6>
-            <h6>{{$model->recency_of_reference}} months Recency</h6>
-        </li>
-        <li>
-            <p data-bs-toggle="modal" data-bs-target="#job-dtl-References">Who are your References?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if(isset($model->certificate))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['certificate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            @php
-                $certificates = explode(',', $model->certificate);
-            @endphp
-            <span>Certifications</span>
-            @foreach ($certificates as $v)
-            <h6>{{$v}} Required</h6>
-            @endforeach
-        </li>
-        <li>
-            <p></p>
-            @foreach ($certificates as $v)
-            <p data-target="file" data-hidden_name="{{strtolower($v)}}_cer" data-hidden_value="Yes" data-hidden_type="{{$v}}" data-href="{{route('worker.certification')}}" data-title="No {{$v}}?" data-name="{{strtolower($v)}}" onclick="open_modal(this)">No {{$v}}?</p>
-            @endforeach
-        </li>
-    </ul>
-    @endif
-
-    @if(isset($model->skills))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Skills checklist</span>
-        <h6>{{str_replace(',', ', ',$model->skills)}} </h6>
-
-        </li>
-        <li><p>Upload your latest skills checklist</p>
-
-        </li>
-    </ul>
-    @endif
-
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['eligible_work_in_us']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-            <span>Eligible to work in the US</span>
-            <h6>Required</h6>
-            {{-- <h6>Flu 2022 Preferred</h6> --}}
-        </li>
-        <li>
-            <p data-target="binary" data-title="Does Congress allow you to work here?" data-name="worker_eligible_work_in_us" onclick="open_modal(this)">Does Congress allow you to work here?</p>
-        </li>
-    </ul>
-
-    @if (isset($model->urgency))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['urgency']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Urgency</span>
-        <h6>{{$model->urgency}} </h6>
-
-        </li>
-        <li>
-            <p  data-target="input" data-title="How quickly you can be ready to submit?" data-placeholder="How quickly you can be ready to submit?" data-name="worker_urgency" onclick="open_modal(this)">How quickly you can be ready to submit?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->block_scheduling))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['block_scheduling']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Block Scheduling</span>
-
-       
-        <h6>{{$model->block_scheduling == '1' ? 'Yes' : 'No'}} </h6>
-        </li>
-        <li>
-            <p data-target="binary" data-title="Do you want Block Scheduling?" data-name="block_scheduling" onclick="open_modal(this)">Do you want Block Scheduling?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->float_requirement))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['float_requirement']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Float Requirements</span>
-        <h6>{{$model->float_requirement == '1' ? 'Yes' : 'No'}} </h6>
-       
-        </li>
-        <li>
-            <p data-target="binary" data-title="Are you willing float to?" data-name="float_requirement" onclick="open_modal(this)">Are you willing float to?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->facility_shift_cancelation_policy))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['facility_shift_cancelation_policy']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Facility Shift Cancellation Policy</span>
-        <h6>{{$model->facility_shift_cancelation_policy}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="AssignmentDuration" data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">What terms do you prefer?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->contract_termination_policy))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['contract_termination_policy']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Contact Termination Policy</span>
-        <h6>{{$model->contract_termination_policy}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="What terms do you prefer?" data-filter="ContractTerminationPolicy" data-name="contract_termination_policy" onclick="open_modal(this)">What terms do you prefer?</p>
-        </li>
-    </ul>
-    @endif
-
-
-    @if (isset($model->traveler_distance_from_facility))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['traveler_distance_from_facility']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Distance from your home</span>
-        <h6>{{$model->traveler_distance_from_facility}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="Where does the IRS think you live?" data-placeholder="What's your google validated address ?" data-name="distance_from_your_home" onclick="open_modal(this)">Where does the IRS think you live?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->facility_id))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Facility</span>
-        <h6>{{$model->facility_id}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="What Facilities have you worked at?" data-placeholder="Write Name Of Facilities" data-name="facilities_you_like_to_work_at" onclick="open_modal(this)">What Facilities have you worked at?</p>
-        </li>
-    </ul>
-    @endif
-
-   @if (isset($model->facilitys_parent_system) )
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['facilitys_parent_system']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} ">
-        <li>
-        <span>Facility's Parent System</span>
-        <h6>{{$model->facilitys_parent_system}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="What facilities would you like to work at?" data-placeholder="Write Name Of Facilities" data-name="worker_facilitys_parent_system" onclick="open_modal(this)">What facilities would you like to work at?</p>
-        </li>
-    </ul>
-    @endif
-   
-    
-    @if (isset($model->clinical_setting))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['clinical_setting']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Clinical Setting</span>
-        <h6>{{$model->clinical_setting}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="What setting do you prefer?" data-filter="ClinicalSetting" data-name="clinical_setting_you_prefer" onclick="open_modal(this)">What setting do you prefer?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->Patient_ratio))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['Patient_ratio']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Patient Ratio</span>
-        <h6>{{$model->Patient_ratio}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="How many patients can you handle?" data-placeholder="How many patients can you handle?" data-name="worker_patient_ratio" onclick="open_modal(this)">How many patients can you handle?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->Emr))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['emr']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>EMR</span>
-        <h6>{{$model->Emr}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="What EMRs have you used?" data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What EMRs have you used?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->Unit))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['Unit']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Unit</span>
-        <h6>{{$model->Unit}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="Fav Unit?" data-placeholder="Fav Unit?" data-name="worker_unit" onclick="open_modal(this)">Fav Unit?</p>
-        </li>
-    </ul>
-    @endif
-   
- 
-    @if (isset($model->scrub_color))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['scrub_color']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Scrub Color</span>
-        <h6>{{$model->scrub_color}} </h6>
-        </li>
-        <li>
-            <p data-target="input" data-title="Fav scrub brand?" data-placeholder="Fav scrub brand?" data-name="worker_scrub_color" onclick="open_modal(this)">Fav scrub brand?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->job_city))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_city']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Facility City</span>
-        <h6>{{$model->job_city}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="Cities you'd like to work?" data-filter="City" data-name="worker_facility_city" onclick="open_modal(this)" >Cities you'd like to work?</p>
-
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->job_state))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['job_state']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Facility State Code</span>
-        <h6>{{$model->job_state}} </h6>
-        </li>
-        <li>
-            <p  data-target="dropdown" data-title="States you'd like to work?" data-filter="State" data-name="worker_facility_state" onclick="open_modal(this)">States you'd like to work?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->as_soon_as) || isset($model->start_date))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($model->as_soon_as) ? (($matches['as_soon_as']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') : (($matches['start_date']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') }}">
-        <li>
-        <span>Start date</span>
-        <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
-        </li>
-        <li>
-            @if($model->as_soon_as)
-            <p data-target="binary" data-title="Can you start as soon as possible?" data-name="worker_as_soon_as" onclick="open_modal(this)">Can you start as soon as possible?</p>
-            @else
-            <p  data-target="date" data-title="When can you start?" data-name="worker_start_date" onclick="open_modal(this)">When can you start?</p>
-            @endif
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->rto))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['rto']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>RTO</span>
-        <h6>{{$model->rto}} </h6>
-        </li>
-        <li>
-            <p data-target="rto" data-title="Any time off?" data-placeholder="Any time off?" data-name="rto" onclick="open_modal(this)">Any time off?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->preferred_shift))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Shift Time Of Day</span>
-        <h6>{{$model->preferred_shift}} </h6>
-        </li>
-        <li>
-            <p data-target="dropdown" data-title="Fav shift?" data-filter="shift_time_of_day" data-name="worker_shift_time_of_day" onclick="open_modal(this)">Fav shift?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->hours_per_week))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['hours_per_week']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-        <li>
-        <span>Hours/Week</span>
-        <h6>{{$model->hours_per_week}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="Ideal hours per week?" data-placeholder="Enter number Of Hours/Week" data-name="worker_hours_per_week" onclick="open_modal(this)">Ideal hours per week?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->guaranteed_hours))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['guaranteed_hours']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Guaranteed Hours</span>
-        <h6>{{$model->guaranteed_hours}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="Open to jobs with no guaranteed hours?" data-placeholder="Enter Guaranteed Hours" data-name="worker_guaranteed_hours" onclick="open_modal(this)">Open to jobs with no guaranteed hours?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->hours_shift))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['hours_shift']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Hours/Shift</span>
-        <h6>{{$model->hours_shift}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="Preferred hours per shift" data-placeholder="Enter number Of Hours/Shift" data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours per shift</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->preferred_assignment_duration))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['preferred_assignment_duration']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Weeks/Assignment</span>
-        <h6>{{$model->preferred_assignment_duration}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="How many weeks?" data-placeholder="Enter prefered weeks per assignment" data-name="worker_weeks_assignment" onclick="open_modal(this)">How many weeks?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->weeks_shift))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['weeks_shift']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Shifts/Week</span>
-        <h6>{{$model->weeks_shift}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="Ideal shifts per week" data-placeholder="Enter ideal shift per week" data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per week</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->referral_bonus))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['referral_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Referral Bonus</span>
-        <h6>{{$model->referral_bonus}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="# of people you have referred?" data-placeholder="# of people you have referred?" data-name="worker_referral_bonus" onclick="open_modal(this)"># of people you have referred?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->sign_on_bonus))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['sign_on_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Sign-On Bonus</span>
-        <h6>${{$model->sign_on_bonus}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="What kind of bonus do you expect?" data-placeholder="What kind of bonus do you expect?" data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of bonus do you expect?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->completion_bonus))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['completion_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Completion Bonus</span>
-        <h6>${{$model->completion_bonus}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="What kind of bonus do you deserve?" data-placeholder="What kind of bonus do you deserve?" data-name="worker_completion_bonus" onclick="open_modal(this)">What kind of bonus do you deserve?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->extension_bonus))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['extension_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Extension Bonus</span>
-        <h6>${{$model->extension_bonus}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="What are you comparing this to?" data-placeholder="What are you comparing this to?" data-name="worker_extension_bonus" onclick="open_modal(this)">What are you comparing this to?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->other_bonus))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['other_bonus']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Other Bonus</span>
-        <h6>${{$model->other_bonus}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="Other bonuses you want?" data-placeholder="Other bonuses you want?" data-name="worker_other_bonus" onclick="open_modal(this)">Other bonuses you want?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->four_zero_one_k))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['four_zero_one_k']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>401K</span>
-        
-        <h6>{{$model->four_zero_one_k == '1' ? 'Yes' : 'No'}} </h6>
-        
-        </li>
-        <li>
-            <p data-target="binary" data-placeholder="How much do you want this?" data-title="How much do you want this?"  data-name="worker_four_zero_one_k" onclick="open_modal(this)">How much do you want this?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->health_insaurance))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['health_insaurance']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Health Insurance</span>
-        
-        <h6> {{$model->health_insaurance == '1' ? 'Yes' : 'No'}} </h6>
-        </li>
-        <li>
-            <p data-target="binary" data-title="How much do you want this?" data-name="worker_health_insurance" data-placeholder="How much do you want this?" onclick="open_modal(this)">How much do you want this?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->dental))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['dental']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Dental</span>
-        <h6> {{$model->dental == '1' ? 'Yes' : 'No'}} </h6>
-        </li>
-        <li> 
-            <p data-target="binary" data-title="How much do you want this?" data-placeholder="" data-name="worker_dental" onclick="open_modal(this)">How much do you want this?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->vision))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['vision']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Vision</span>
-        <h6> {{$model->vision == '1' ? 'Yes' : 'No'}} </h6>
-        </li>
-        <li>
-             
-            <p data-target="binary" data-title="How much do you want this?" data-placeholder="How much do you want this?" data-name="worker_vision" onclick="open_modal(this)">How much do you want this?</p>
-          
-        </li>
-    </ul>
-    @endif
-
-
-    @if (isset($model->actual_hourly_rate))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['actual_hourly_rate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Actual Hourly Rate</span>
-        <h6>${{$model->actual_hourly_rate}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="What rate is fair?" data-placeholder="What rate is fair?" data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What rate is fair?</p>
-            
-        </li>
-    </ul>
-    @endif
-    
-    @if (isset($model->feels_like_per_hour))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['feels_like_per_hour']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Feels Like $/Hr</span>
-        <h6>${{$model->feels_like_per_hour}} </h6>
-        
-        </li>
-        <li>
-            <p data-target="binary" data-title="Does this seem fair based on the market?" data-placeholder="Does this seem fair based on the market?" data-name="worker_feels_like_per_hour_check" onclick="open_modal(this)">Does this seem fair based on the market?</p>
-            
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->overtime))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['overtime']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Overtime</span>
-        <h6>{{$model->overtime}} </h6>
-        </li>
-        <li>
-            
-            <p data-target="binary" data-title="Would you work more overtime for higher OT rate?" data-name="worker_overtime_check" onclick="open_modal(this)">Would you work more overtime for higher OT rate?</p> 
-
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->holiday))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['holiday']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Holiday</span>
-        <h6>{{$model->holiday}} </h6>
-        </li>
-        <li>
-            <p data-target="date" data-title="Any holiday you refuse to work?" data-name="worker_holiday_check" onclick="open_modal(this)">Any holiday you refuse to work?</p>
-            
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->on_call))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['on_call']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>On call</span>
-        <h6>{{$model->on_call == '1' ? 'Yes' : 'No'}} </h6>
-        </li>
-        <li>
-            <p data-target="binary" data-title="Will you do call?" data-name="worker_on_call_check" onclick="open_modal(this)">Will you do call?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->call_back))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['call_back']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Call Back</span>
-        <h6>{{$model->call_back}} </h6>
-        </li>
-        <li>
-            <p data-target="binary" data-title="Is this rate reasonable?" data-name="worker_call_back_check" onclick="open_modal(this)">Is this rate reasonable?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->orientation_rate))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['orientation_rate']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Orientation Rate</span>
-        <h6>{{$model->orientation_rate}} </h6>
-        </li>
-        <li>
-            <p data-target="binary" data-title="Is this rate reasonable?" data-placeholder="-" data-name="worker_orientation_rate_check" onclick="open_modal(this)">Is this rate reasonable?</p>
-        </li>
-    </ul>
-    @endif
-
-    @if (isset($model->weekly_taxable_amount))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Est. Weekly Taxable Amount</span>
-        <h6>${{$model->weekly_taxable_amount}} </h6>
-        </li>
-        {{-- <li>
+    <!--Main layout-->
+    <main style="padding-top: 130px" class="ss-main-body-sec">
+        <div class="container">
+            <!-------------------applay-on jobs--------->
+
+            <div class="ss-apply-on-jb-mmn-dv">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Explore</h2>
+
+                        <!------------->
+                        <div class="ss-apply-on-jb-mmn-dv-box-divs">
+                            <div class="ss-job-prfle-sec">
+                                <p>{{ $model->job_type }} <span>+50 Applied</span></p>
+                                <h4>{{ $model->job_name }}</h4>
+                                <h6>{{ $model->facility->name ?? 'NA' }}</h6>
+                                <ul>
+                                    <li><a href="javascript:void(0)"><img src="{{ URL::asset('frontend/img/location.png') }}">
+                                            {{ $model->job_city }}, {{ $model->job_state }}</a></li>
+                                    <li><a href="javascript:void(0)"><img
+                                                src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                            {{ $model->preferred_assignment_duration }} wks</a></li>
+                                    <li><a href="javascript:void(0)"><img
+                                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                            {{ $model->weekly_pay }}/wk</a></li>
+                                </ul>
+                                <h5>Recently Added</h5>
+                                <a href="javascript:void(0)" data-id="{{ $model->id }}" onclick="save_jobs(this)"
+                                    class="ss-jb-prfl-save-ico">
+                                    @if ($jobSaved->check_if_saved($model->id))
+                                        <img src="{{ URL::asset('frontend/img/bookmark.png') }}" />
+                                    @else
+                                        <img src="{{ URL::asset('frontend/img/job-icon-bx-Vector.png') }}" />
+                                    @endif
+                                </a>
+                            </div>
+
+                        </div>
+                        <!----------------jobs applay view details--------------->
+
+                        <div class="ss-job-apply-on-view-detls-mn-dv">
+                            <div class="ss-job-apply-on-tx-bx-hed-dv">
+                                <ul>
+                                    <li>
+                                        <p>Recruiter</p>
+                                    </li>
+                                    {{-- <li><img src="{{URL::asset('images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li> --}}
+                                </ul>
+
+                                <ul>
+                                    <li>
+                                        <span>{{ $model->id }}</span>
+                                        <h6>{{ $model->getOfferCount() }} Applied</h6>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="ss-jb-aap-on-txt-abt-dv">
+                                <h5>About job</h5>
+                                <ul>
+                                    <li>
+                                        <h6>Employer Name</h6>
+                                        {{-- <p>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</p> --}}
+                                    </li>
+                                    <li>
+                                        <h6>Date Posted</h6>
+                                        <p>{{ Carbon\Carbon::parse($model->created_at)->format('M d') }}</p>
+                                    </li>
+                                    <li>
+                                        <h6>Type</h6>
+                                        <p>{{ $model->job_type }}</p>
+                                    </li>
+                                    <li>
+                                        <h6>Terms</h6>
+                                        <p>{{ $model->terms }}</p>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+
+                            <div class="ss-jb-apply-on-disc-txt">
+                                <h5>Description</h5>
+                                <p>{{ $model->description }}<a href="#">Read More</a></p>
+                            </div>
+
+
+                            <!-------Work Information------->
+                            <div class="ss-jb-apl-oninfrm-mn-dv">
+                                <ul class="ss-jb-apply-on-inf-hed">
+                                    <li>
+                                        <h5>Work Information</h5>
+                                    </li>
+                                    <li>
+                                        <h5>Your Information</h5>
+                                    </li>
+                                </ul>
+                                @php
+                                    $matches = [];
+
+                                    foreach ($model->matchWithWorker() as $key => $closure) {
+                                        $matches[$key] = $closure();
+                                    }
+
+                                @endphp
+                                @php
+                                    $userMatches = [];
+                                    foreach ($model->matchWithWorker() as $key => $closure) {
+                                        $userMatches[$key] = $closure();
+                                    }
+                                @endphp
+                                <ul
+                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['diploma']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    <li>
+                                        <span>Diploma</span>
+                                        <h6>College Diploma</h6>
+                                    </li>
+                                    <li>
+                                        <p data-target="file" data-hidden_name="diploma_cer" data-hidden_value="Yes"
+                                            data-href="{{ route('info-required') }}" data-title="Did you really graduate?"
+                                            data-name="diploma" onclick="open_modal(this)">Did you really graduate?</p>
+                                    </li>
+                                </ul>
+
+                                <ul id="driving_license"
+                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['driving_license']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    <li>
+                                        <span>drivers license</span>
+                                        <h6>Required</h6>
+                                    </li>
+                                    <li>
+                                        <p data-target="file" data-hidden_name="dl_cer" data-hidden_value="Yes"
+                                            data-href="{{ route('info-required') }}"
+                                            data-title="Are you really allowed to drive?" data-name="driving_license"
+                                            onclick="open_modal(this)">Are you really allowed to drive?</p>
+                                    </li>
+                                </ul>
+
+                                <ul id="worked_at_facility_before"
+                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worked_at_facility_before']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    <li>
+                                        <span>Worked at Facility Before</span>
+                                        <h6>In the last 18 months</h6>
+                                    </li>
+                                    <li>
+                                        <p data-target="binary" data-title="Are you sure you never worked here as staff?"
+                                            data-name="worked_at_facility_before" onclick="open_modal(this)">Are you sure
+                                            you never worked here as staff?</p>
+                                    </li>
+                                </ul>
+
+                                <ul id="worker_ss_number"
+                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worker_ss_number']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    <li>
+                                        <span>SS# or SS Card</span>
+                                        <h6>Last 4 digits of SS#</h6>
+                                    </li>
+                                    <li>
+                                        <p data-target="input" data-title="Yes we need your SS# to submit you"
+                                            data-placeholder="SS number" data-name="worker_ss_number"
+                                            onclick="open_modal(this)">Yes we need your SS# to submit you</p>
+                                    </li>
+                                </ul>
+
+                                @if (isset($model->proffesion))
+                                    <ul id="profession"
+                                        class="ss-s-jb-apl-on-inf-txt-ul  {{ $matches['profession']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Profession</span>
+                                            <h6>{{ $model->proffesion }}</h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="What kind of professional are you?"
+                                                data-filter="Profession" data-name="profession" onclick="open_modal(this)">
+                                                What kind of professional are you?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->preferred_specialty))
+                                    <ul id="specialty"
+                                        class="ss-s-jb-apl-on-inf-txt-ul  {{ $matches['preferred_specialty']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Specialty</span>
+                                            <h6>{{ str_replace(',', ', ', $model->preferred_specialty) }}</h6>
+                                        </li>
+                                        {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
+                                        <li>
+                                            <p data-target="dropdown" data-title="What's your specialty?"
+                                                data-filter="Speciality" data-name="specialty" onclick="open_modal(this)">
+                                                What's your specialty?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->job_location))
+                                    <ul id="nursing_license_state"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['job_location']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Professional Licensure</span>
+                                            <h6>{{ $model->job_location }}</h6>
+                                        </li>
+
+                                        <li>
+                                            <p data-target="dropdown" data-title="Where are you licensed?"
+                                                data-filter="StateCode" data-placeholder="Where are you licensed?"
+                                                data-name="nursing_license_state" onclick="open_modal(this)">Where are you
+                                                licensed?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->vaccinations))
+                                    <ul id="vaccination"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['vaccinations']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            @php
+                                                $vaccines = explode(',', $model->vaccinations);
+                                            @endphp
+                                            <span>Vaccinations & Immunizations</span>
+                                            @foreach ($vaccines as $v)
+                                                <h6>{{ $v }} Required</h6>
+                                            @endforeach
+                                        </li>
+                                        <li>
+                                            @foreach ($vaccines as $v)
+                                                <p data-target="vaccination_file"
+                                                    data-hidden_name="{{ strtolower($v) }}_vac" data-hidden_value="Yes"
+                                                    data-hidden_type="{{ $v }}"
+                                                    data-href="{{ route('worker.vaccination') }}"
+                                                    data-title="No {{ $v }}?" data-name="{{ strtolower($v) }}"
+                                                    onclick="open_modal(this)">No {{ $v }}?</p>
+                                            @endforeach
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+
+                                @if (isset($model->number_of_references) && isset($model->recency_of_reference))
+                                    <ul
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['number_of_references']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>References</span>
+                                            <h6>{{ $model->number_of_references }} references </h6>
+                                            <h6>{{ $model->recency_of_reference }} months Recency</h6>
+                                        </li>
+                                        <li>
+                                            <p data-bs-toggle="modal" data-bs-target="#job-dtl-References">Who are your
+                                                References?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->certificate))
+                                    <ul id="certification"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['certificate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            @php
+                                                $certificates = explode(',', $model->certificate);
+                                            @endphp
+                                            <span>Certifications</span>
+                                            @foreach ($certificates as $v)
+                                                <h6>{{ $v }} Required</h6>
+                                            @endforeach
+                                        </li>
+                                        <li>
+                                            <p></p>
+                                            @foreach ($certificates as $v)
+                                                <p data-target="certification_file"
+                                                    data-hidden_name="{{ strtolower($v) }}_cer" data-hidden_value="Yes"
+                                                    data-hidden_type="{{ $v }}"
+                                                    data-href="{{ route('worker.certification') }}"
+                                                    data-title="No {{ $v }}?" data-name="{{ strtolower($v) }}"
+                                                    onclick="open_modal(this)">No {{ $v }}?</p>
+                                            @endforeach
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->skills))
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Skills checklist</span>
+                                            <h6>{{ str_replace(',', ', ', $model->skills) }} </h6>
+
+                                        </li>
+                                        <li>
+                                            <p>Upload your latest skills checklist</p>
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                <ul id="worker_eligible_work_in_us"
+                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['eligible_work_in_us']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    <li>
+                                        <span>Eligible to work in the US</span>
+                                        <h6>Required</h6>
+                                        {{-- <h6>Flu 2022 Preferred</h6> --}}
+                                    </li>
+                                    <li>
+                                        <p data-target="binary" data-title="Does Congress allow you to work here?"
+                                            data-name="worker_eligible_work_in_us" onclick="open_modal(this)">Does
+                                            Congress allow you to work here?</p>
+                                    </li>
+                                </ul>
+
+                                @if (isset($model->urgency))
+                                    <ul id="worker_urgency"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['urgency']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Urgency</span>
+                                            <h6>{{ $model->urgency }} </h6>
+
+                                        </li>
+                                        <li>
+                                            <p data-target="input" data-title="How quickly you can be ready to submit?"
+                                                data-placeholder="How quickly you can be ready to submit?"
+                                                data-name="worker_urgency" onclick="open_modal(this)">How quickly you can
+                                                be ready to submit?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->block_scheduling))
+                                    <ul id="block_scheduling"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['block_scheduling']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Block Scheduling</span>
+
+
+                                            <h6>{{ $model->block_scheduling == '1' ? 'Yes' : 'No' }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Do you want Block Scheduling?"
+                                                data-name="block_scheduling" onclick="open_modal(this)">Do you want Block
+                                                Scheduling?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->float_requirement))
+                                    <ul id="float_requirement"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['float_requirement']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Float Requirements</span>
+                                            <h6>{{ $model->float_requirement == '1' ? 'Yes' : 'No' }} </h6>
+
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Are you willing float to?"
+                                                data-name="float_requirement" onclick="open_modal(this)">Are you willing
+                                                float to?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->facility_shift_cancelation_policy))
+                                    <ul id="facility_shift_cancelation_policy"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['facility_shift_cancelation_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Facility Shift Cancellation Policy</span>
+                                            <h6>{{ $model->facility_shift_cancelation_policy }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="What terms do you prefer?"
+                                                data-filter="AssignmentDuration"
+                                                data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">
+                                                What terms do you prefer?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->contract_termination_policy))
+                                    <ul id="contract_termination_policy"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['contract_termination_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Contact Termination Policy</span>
+                                            <h6>{{ $model->contract_termination_policy }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="What terms do you prefer?"
+                                                data-filter="ContractTerminationPolicy"
+                                                data-name="contract_termination_policy" onclick="open_modal(this)">What
+                                                terms do you prefer?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+
+                                @if (isset($model->traveler_distance_from_facility))
+                                    <ul id="distance_from_your_home"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['traveler_distance_from_facility']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Distance from your home</span>
+                                            <h6>{{ $model->traveler_distance_from_facility }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="Where does the IRS think you live?"
+                                                data-placeholder="What's your google validated address ?"
+                                                data-name="distance_from_your_home" onclick="open_modal(this)">Where does
+                                                the IRS think you live?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->facility_id))
+                                    <ul id="facilities_you_like_to_work_at" class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Facility</span>
+                                            <h6>{{ $model->facility_id }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input" data-title="What Facilities have you worked at?"
+                                                data-placeholder="Write Name Of Facilities"
+                                                data-name="facilities_you_like_to_work_at" onclick="open_modal(this)">What
+                                                Facilities have you worked at?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->facilitys_parent_system))
+                                    <ul id="worker_facilitys_parent_system"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['facilitys_parent_system']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} ">
+                                        <li>
+                                            <span>Facility's Parent System</span>
+                                            <h6>{{ $model->facilitys_parent_system }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input" data-title="What facilities would you like to work at?"
+                                                data-placeholder="Write Name Of Facilities"
+                                                data-name="worker_facilitys_parent_system" onclick="open_modal(this)">What
+                                                facilities would you like to work at?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+
+                                @if (isset($model->clinical_setting))
+                                    <ul id="clinical_setting_you_prefer"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['clinical_setting']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Clinical Setting</span>
+                                            <h6>{{ $model->clinical_setting }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="What setting do you prefer?"
+                                                data-filter="ClinicalSetting" data-name="clinical_setting_you_prefer"
+                                                onclick="open_modal(this)">What setting do you prefer?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->Patient_ratio))
+                                    <ul id="worker_patient_ratio"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['Patient_ratio']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Patient Ratio</span>
+                                            <h6>{{ $model->Patient_ratio }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="How many patients can you handle?"
+                                                data-placeholder="How many patients can you handle?"
+                                                data-name="worker_patient_ratio" onclick="open_modal(this)">How many
+                                                patients can you handle?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->Emr))
+                                    <ul id="worker_emr"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['emr']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>EMR</span>
+                                            <h6>{{ $model->Emr }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="What EMRs have you used?"
+                                                data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What
+                                                EMRs have you used?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->Unit))
+                                    <ul id="worker_unit"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['Unit']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Unit</span>
+                                            <h6>{{ $model->Unit }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input" data-title="Fav Unit?" data-placeholder="Fav Unit?"
+                                                data-name="worker_unit" onclick="open_modal(this)">Fav Unit?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+
+                                @if (isset($model->scrub_color))
+                                    <ul id="worker_scrub_color"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['scrub_color']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Scrub Color</span>
+                                            <h6>{{ $model->scrub_color }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input" data-title="Fav scrub brand?"
+                                                data-placeholder="Fav scrub brand?" data-name="worker_scrub_color"
+                                                onclick="open_modal(this)">Fav scrub brand?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->job_city))
+                                    <ul id="worker_facility_city"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['job_city']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Facility City</span>
+                                            <h6>{{ $model->job_city }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="Cities you'd like to work?"
+                                                data-filter="City" data-name="worker_facility_city"
+                                                onclick="open_modal(this)">Cities you'd like to work?</p>
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->job_state))
+                                    <ul id="worker_facility_state"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['job_state']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Facility State Code</span>
+                                            <h6>{{ $model->job_state }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="States you'd like to work?"
+                                                data-filter="State" data-name="worker_facility_state"
+                                                onclick="open_modal(this)">States you'd like to work?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->as_soon_as))
+                                    <ul id="worker_as_soon_as"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['as_soon_as']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Start date</span>
+                                            <h6>As soon as possible</h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Can you start as soon as possible?"
+                                                data-name="worker_as_soon_as" onclick="open_modal(this)">Can you start as
+                                                soon as possible?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->start_date))
+                                    <ul id="worker_start_date"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['start_date']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Start date</span>
+                                            <h6>{{ $model->start_date }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="date" data-title="When can you start?"
+                                                data-name="worker_start_date" onclick="open_modal(this)">When can you
+                                                start?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->rto))
+                                    <ul id="rto"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['rto']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>RTO</span>
+                                            <h6>{{ $model->rto }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="rto" data-title="Any time off?"
+                                                data-placeholder="Any time off?" data-name="rto"
+                                                onclick="open_modal(this)">Any time off?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->preferred_shift))
+                                    <ul id="worker_shift_time_of_day" class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Shift Time Of Day</span>
+                                            <h6>{{ $model->preferred_shift }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="dropdown" data-title="Fav shift?"
+                                                data-filter="shift_time_of_day" data-name="worker_shift_time_of_day"
+                                                onclick="open_modal(this)">Fav shift?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->hours_per_week))
+                                    <ul id="worker_hours_per_week"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['hours_per_week']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Hours/Week</span>
+                                            <h6>{{ $model->hours_per_week }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="Ideal hours per week?"
+                                                data-placeholder="Enter number Of Hours/Week"
+                                                data-name="worker_hours_per_week" onclick="open_modal(this)">Ideal hours
+                                                per week?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->guaranteed_hours))
+                                    <ul id="worker_guaranteed_hours"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['guaranteed_hours']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Guaranteed Hours</span>
+                                            <h6>{{ $model->guaranteed_hours }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number"
+                                                data-title="Open to jobs with no guaranteed hours?"
+                                                data-placeholder="Enter Guaranteed Hours"
+                                                data-name="worker_guaranteed_hours" onclick="open_modal(this)">Open to
+                                                jobs with no guaranteed hours?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->hours_shift))
+                                    <ul id="worker_hours_shift"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['hours_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Hours/Shift</span>
+                                            <h6>{{ $model->hours_shift }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="Preferred hours per shift"
+                                                data-placeholder="Enter number Of Hours/Shift"
+                                                data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours
+                                                per shift</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->preferred_assignment_duration))
+                                    <ul id="worker_weeks_assignment"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['preferred_assignment_duration']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Weeks/Assignment</span>
+                                            <h6>{{ $model->preferred_assignment_duration }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="How many weeks?"
+                                                data-placeholder="Enter prefered weeks per assignment"
+                                                data-name="worker_weeks_assignment" onclick="open_modal(this)">How many
+                                                weeks?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->weeks_shift))
+                                    <ul id="worker_shifts_week"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['weeks_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Shifts/Week</span>
+                                            <h6>{{ $model->weeks_shift }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="Ideal shifts per week"
+                                                data-placeholder="Enter ideal shift per week"
+                                                data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per
+                                                week</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->referral_bonus))
+                                    <ul id="worker_referral_bonus"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['referral_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Referral Bonus</span>
+                                            <h6>{{ $model->referral_bonus }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="# of people you have referred?"
+                                                data-placeholder="# of people you have referred?"
+                                                data-name="worker_referral_bonus" onclick="open_modal(this)"># of people
+                                                you have referred?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->sign_on_bonus))
+                                    <ul id="worker_sign_on_bonus"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['sign_on_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Sign-On Bonus</span>
+                                            <h6>${{ $model->sign_on_bonus }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="What kind of bonus do you expect?"
+                                                data-placeholder="What kind of bonus do you expect?"
+                                                data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of
+                                                bonus do you expect?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->completion_bonus))
+                                    <ul id="worker_completion_bonus"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['completion_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Completion Bonus</span>
+                                            <h6>${{ $model->completion_bonus }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="What kind of bonus do you deserve?"
+                                                data-placeholder="What kind of bonus do you deserve?"
+                                                data-name="worker_completion_bonus" onclick="open_modal(this)">What kind
+                                                of bonus do you deserve?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->extension_bonus))
+                                    <ul id="worker_extension_bonus"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['extension_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Extension Bonus</span>
+                                            <h6>${{ $model->extension_bonus }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="What are you comparing this to?"
+                                                data-placeholder="What are you comparing this to?"
+                                                data-name="worker_extension_bonus" onclick="open_modal(this)">What are you
+                                                comparing this to?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->other_bonus))
+                                    <ul id="worker_other_bonus"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['other_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Other Bonus</span>
+                                            <h6>${{ $model->other_bonus }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="Other bonuses you want?"
+                                                data-placeholder="Other bonuses you want?" data-name="worker_other_bonus"
+                                                onclick="open_modal(this)">Other bonuses you want?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->four_zero_one_k))
+                                    <ul id="worker_four_zero_one_k"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['four_zero_one_k']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>401K</span>
+
+                                            <h6>{{ $model->four_zero_one_k == '1' ? 'Yes' : 'No' }} </h6>
+
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-placeholder="How much do you want this?"
+                                                data-title="How much do you want this?" data-name="worker_four_zero_one_k"
+                                                onclick="open_modal(this)">How much do you want this?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->health_insaurance))
+                                    <ul id="worker_health_insurance"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['health_insaurance']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Health Insurance</span>
+
+                                            <h6> {{ $model->health_insaurance == '1' ? 'Yes' : 'No' }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="How much do you want this?"
+                                                data-name="worker_health_insurance"
+                                                data-placeholder="How much do you want this?" onclick="open_modal(this)">
+                                                How much do you want this?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->dental))
+                                    <ul id="worker_dental"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['dental']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Dental</span>
+                                            <h6> {{ $model->dental == '1' ? 'Yes' : 'No' }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="How much do you want this?"
+                                                data-placeholder="" data-name="worker_dental" onclick="open_modal(this)">
+                                                How much do you want this?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->vision))
+                                    <ul id="worker_vision"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['vision']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Vision</span>
+                                            <h6> {{ $model->vision == '1' ? 'Yes' : 'No' }} </h6>
+                                        </li>
+                                        <li>
+
+                                            <p data-target="binary" data-title="How much do you want this?"
+                                                data-placeholder="How much do you want this?" data-name="worker_vision"
+                                                onclick="open_modal(this)">How much do you want this?</p>
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+
+                                @if (isset($model->actual_hourly_rate))
+                                    <ul id="worker_actual_hourly_rate"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Actual Hourly Rate</span>
+                                            <h6>${{ $model->actual_hourly_rate }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="What rate is fair?"
+                                                data-placeholder="What rate is fair?"
+                                                data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What rate
+                                                is fair?</p>
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->feels_like_per_hour))
+                                    <ul id="worker_feels_like_per_hour_check"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['feels_like_per_hour']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Feels Like $/Hr</span>
+                                            <h6>${{ $model->feels_like_per_hour }} </h6>
+
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Does this seem fair based on the market?"
+                                                data-placeholder="Does this seem fair based on the market?"
+                                                data-name="worker_feels_like_per_hour_check" onclick="open_modal(this)">
+                                                Does this seem fair based on the market?</p>
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->overtime))
+                                    <ul id="worker_overtime_check"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['overtime']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Overtime</span>
+                                            <h6>{{ $model->overtime }} </h6>
+                                        </li>
+                                        <li>
+
+                                            <p data-target="binary"
+                                                data-title="Would you work more overtime for higher OT rate?"
+                                                data-name="worker_overtime_check" onclick="open_modal(this)">Would you
+                                                work more overtime for higher OT rate?</p>
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->holiday))
+                                    <ul id="worker_holiday_check"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['holiday']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Holiday</span>
+                                            <h6>{{ $model->holiday }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="date" data-title="Any holiday you refuse to work?"
+                                                data-name="worker_holiday_check" onclick="open_modal(this)">Any holiday
+                                                you refuse to work?</p>
+
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->on_call))
+                                    <ul id="worker_on_call_check"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['on_call']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>On call</span>
+                                            <h6>{{ $model->on_call == '1' ? 'Yes' : 'No' }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Will you do call?"
+                                                data-name="worker_on_call_check" onclick="open_modal(this)">Will you do
+                                                call?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->call_back))
+                                    <ul id="worker_call_back_check"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['call_back']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Call Back</span>
+                                            <h6>{{ $model->call_back }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Is this rate reasonable?"
+                                                data-name="worker_call_back_check" onclick="open_modal(this)">Is this rate
+                                                reasonable?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->orientation_rate))
+                                    <ul id="worker_orientation_rate_check"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['orientation_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Orientation Rate</span>
+                                            <h6>{{ $model->orientation_rate }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Is this rate reasonable?"
+                                                data-placeholder="-" data-name="worker_orientation_rate_check"
+                                                onclick="open_modal(this)">Is this rate reasonable?</p>
+                                        </li>
+                                    </ul>
+                                @endif
+
+                                @if (isset($model->weekly_taxable_amount))
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Est. Weekly Taxable Amount</span>
+                                            <h6>${{ $model->weekly_taxable_amount }} </h6>
+                                        </li>
+                                        {{-- <li>
             <p>?</p>
         </li> --}}
-    </ul>
-    @endif
+                                    </ul>
+                                @endif
 
-    @if (isset($model->employer_weekly_amount))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['employer_weekly_amount']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Est. Employer Weekly Amount</span>
-        <h6>${{$model->employer_weekly_amount}} </h6>
-        </li>
-        <li>
-            <p data-target="input_number" data-title="What range is reasonable?" data-placeholder="What range is reasonable?" data-name="worker_employer_weekly_amount" onclick="open_modal(this)">What range is reasonable?</p>
-        </li>
-    </ul>
-    @endif
+                                @if (isset($model->employer_weekly_amount))
+                                    <ul id="worker_employer_weekly_amount"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['employer_weekly_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Est. Employer Weekly Amount</span>
+                                            <h6>${{ $model->employer_weekly_amount }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="input_number" data-title="What range is reasonable?"
+                                                data-placeholder="What range is reasonable?"
+                                                data-name="worker_employer_weekly_amount" onclick="open_modal(this)">What
+                                                range is reasonable?</p>
+                                        </li>
+                                    </ul>
+                                @endif
 
-    @if (isset($model->weekly_non_taxable_amount))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul {{ ($matches['weekly_non_taxable_amount']['match']) ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink'}}">
-        <li>
-        <span>Est. Weekly Non-Taxable Amount</span>
-        <h6>${{$model->weekly_non_taxable_amount}} </h6>
-        </li>
-        <li>
-            <p data-target="binary" data-title="Are you going to duplicate expenses?" data-placeholder="Weekly non-taxable amount" data-name="worker_weekly_non_taxable_amount_check" onclick="open_modal(this)">Are you going to duplicate expenses?</p>
-        </li>
-    </ul>
-    @endif
+                                @if (isset($model->weekly_non_taxable_amount))
+                                    <ul id="worker_weekly_non_taxable_amount_check"
+                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['weekly_non_taxable_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                        <li>
+                                            <span>Est. Weekly Non-Taxable Amount</span>
+                                            <h6>${{ $model->weekly_non_taxable_amount }} </h6>
+                                        </li>
+                                        <li>
+                                            <p data-target="binary" data-title="Are you going to duplicate expenses?"
+                                                data-placeholder="Weekly non-taxable amount"
+                                                data-name="worker_weekly_non_taxable_amount_check"
+                                                onclick="open_modal(this)">Are you going to duplicate expenses?</p>
+                                        </li>
+                                    </ul>
+                                @endif
 
-    @if (isset($model->weekly_taxable_amount))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Est. Goodwork Weekly Amount</span>
-        <h6>${{$model->weekly_taxable_amount}} </h6>
-        </li>
-        <li>
-            <h6> You have 5 days left before your rate drops form 5% to 2%</h6>
-            {{-- <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p> --}}
-        </li>
-    </ul>
-    @endif
+                                @if (isset($model->weekly_taxable_amount))
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Est. Goodwork Weekly Amount</span>
+                                            <h6>${{ $model->weekly_taxable_amount }} </h6>
+                                        </li>
+                                        <li>
+                                            <h6> You have 5 days left before your rate drops form 5% to 2%</h6>
+                                            {{-- <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p> --}}
+                                        </li>
+                                    </ul>
+                                @endif
 
-    @if (isset($model->total_employer_amount))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Est. Total Employer Amount</span>
-        <h6>${{$model->total_employer_amount}} </h6>
-        </li>
-        {{-- <li>
+                                @if (isset($model->total_employer_amount))
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Est. Total Employer Amount</span>
+                                            <h6>${{ $model->total_employer_amount }} </h6>
+                                        </li>
+                                        {{-- <li>
             <p>?</p>
         </li> --}}
-    </ul>
-    @endif
+                                    </ul>
+                                @endif
 
-    @if (isset($model->total_goodwork_amount))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Est. Total Goodwork Amount</span>
-        <h6>${{$model->total_goodwork_amount}} </h6>
-        </li>
-        {{-- <li>
+                                @if (isset($model->total_goodwork_amount))
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Est. Total Goodwork Amount</span>
+                                            <h6>${{ $model->total_goodwork_amount }} </h6>
+                                        </li>
+                                        {{-- <li>
             <p>?</p>
         </li> --}}
-    </ul>
-    @endif
+                                    </ul>
+                                @endif
 
-    @if (isset($model->total_contract_amount))
-    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-        <li>
-        <span>Est. Total Contract Amount</span>
-        <h6>${{$model->total_contract_amount}} </h6>
-        </li>
-        {{-- <li>
+                                @if (isset($model->total_contract_amount))
+                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                        <li>
+                                            <span>Est. Total Contract Amount</span>
+                                            <h6>${{ $model->total_contract_amount }} </h6>
+                                        </li>
+                                        {{-- <li>
             <p>?</p>
         </li> --}}
-    </ul>
-    @endif
+                                    </ul>
+                                @endif
 
-  <div class="ss-job-apl-on-app-btn">
-    @if(!$model->checkIfApplied())
-    <button data-id="{{$model->id}}" onclick="apply_on_jobs(this)">Apply Now</button>
-    @endif
-  </div>
+                                <div class="ss-job-apl-on-app-btn">
+                                    @if (!$model->checkIfApplied())
+                                        <button data-id="{{ $model->id }}" onclick="apply_on_jobs(this)">Apply
+                                            Now</button>
+                                    @endif
+                                </div>
 
-  </div>
+                            </div>
 
-  </div>
+                        </div>
 
-  </div>
-  </div>
-      </div>
-
-
-
-
-<!----------------job-detls popup form----------->
-
-<!-----------Did you really graduate?------------>
-<!-- Text Modal -->
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="file_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="ss-pop-cls-vbtn">
-        <button type="button" class="btn-close" data-target="#file_modal" onclick="close_modal(this)" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
-            <form method="post" action="{{route('worker-upload-files')}}" id="file_modal_form" class="modal-form" enctype="multipart/form-data">
-                @csrf
-                <div class="ss-job-dtl-pop-frm-sml-dv"></div>
-                <h4></h4>
-                <div class="ss-form-group fileUploadInput">
-                    <input type="file" name="">
-                    <input type="hidden" name="" value="">
-                    <button type="button" onclick="open_file(this)">Choose File</button>
-                </div>
-             <button class="ss-job-dtl-pop-sv-btn">Save</button>
-            </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-{{-- number model --}}
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="input_number_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="ss-pop-cls-vbtn">
-          <button type="button" class="btn-close" data-target="#input_number_modal" onclick="close_modal(this)" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="ss-job-dtl-pop-form">
-              <form method="post" action="{{route('my-profile.store')}}" id="input_number_modal_form" class="modal-form">
-                  <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                  <h4></h4>
-                  <div class="ss-form-group">
-                      <input type="number" name="" placeholder="">
-                      <span class="help-block"></span>
-                  </div>
-                  <button type="submit" class="ss-job-dtl-pop-sv-btn">Save</button>
-              </form>
-          </div>
-        </div>
-  
-      </div>
-    </div>
-  </div>
-
-{{-- end number model --}}
-
-
-
-<!-----------Are you sure you never worked here as staff?------------>
-<!-- Modal -->
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="binary_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="ss-pop-cls-vbtn">
-        <button type="button" class="btn-close"  data-target="#binary_modal" onclick="close_modal(this)" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="ss-job-dtl-pop-form">
-            <form method="post" action="{{route('my-profile.store')}}" id="binary_modal_form" class="modal-form">
-                @csrf
-                <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                <h4></h4>
-                <ul class="ss-jb-dtlpop-chck">
-                    <li>
-                        <label>
-                            <input type="radio" name="radio" name="" value="1">
-                            <span>Yes</span>
-                        </label>
-                    </li>
-
-                    <li>
-                        <label>
-                            <input type="radio" name="radio" name="" value="0">
-                            <span>No</span>
-                        </label>
-                    </li>
-                </ul>
-             <button class="ss-job-dtl-pop-sv-btn">Save</button>
-            </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-{{-- rto modal  --}}
-<!-----------Are you sure you never worked here as staff?------------>
-<!-- Modal -->
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="rto_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="ss-pop-cls-vbtn">
-          <button type="button" class="btn-close"  data-target="#rto_modal" onclick="close_modal(this)" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="ss-job-dtl-pop-form">
-              <form method="post" action="{{route('my-profile.store')}}" id="rto_modal_form" class="modal-form">
-                  @csrf
-                  <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                  <h4></h4>
-                  <ul class="ss-jb-dtlpop-chck">
-                      <li>
-                          <label>
-                              <input type="radio" name="radio" name="" value="allowed">
-                              <span>Allowed</span>
-                          </label>
-                      </li>
-  
-                      <li>
-                          <label>
-                              <input type="radio" name="radio" name="" value="not allowed">
-                              <span>Not Allowed</span>
-                          </label>
-                      </li>
-                  </ul>
-               <button class="ss-job-dtl-pop-sv-btn">Save</button>
-              </form>
-          </div>
-        </div>
-  
-      </div>
-    </div>
-  </div>
-
-
-<!-----------Yes we need your SS# to submit you------------>
-<!-- Modal -->
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="input_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="ss-pop-cls-vbtn">
-        <button type="button" class="btn-close" data-target="#input_modal" onclick="close_modal(this)" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="ss-job-dtl-pop-form">
-            <form method="post" action="{{route('my-profile.store')}}" id="input_modal_form" class="modal-form">
-                @csrf
-                <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                <h4></h4>
-                <div class="ss-form-group">
-                    <input type="text" name="" placeholder="">
-                    <span class="help-block"></span>
-                </div>
-                <button type="submit" class="ss-job-dtl-pop-sv-btn">Save</button>
-            </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-{{-- date modal --}}
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="date_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="ss-pop-cls-vbtn">
-          <button type="button" class="btn-close" data-target="#date_modal" onclick="close_modal(this)" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="ss-job-dtl-pop-form">
-              <form method="post" action="{{route('my-profile.store')}}" id="date_modal_form" class="modal-form">
-                  @csrf
-                  <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                  <h4></h4>
-                  <div class="ss-form-group">
-                      <input type="date" name="" placeholder="">
-                      <span class="help-block
-                        "></span>
                     </div>
-                    <button type="submit" class="ss-job-dtl-pop-sv-btn">Save</button>
-                </form>
+                </div>
             </div>
-        </div>
-        </div>
-    </div>
-</div>
 
 
 
-<!-----------What's your specialty?------------>
-<!-- Modal -->
 
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-specialty" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="ss-pop-cls-vbtn">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="ss-job-dtl-pop-form">
-            <form>
-                @csrf
-                <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                <h4>Yes we need your SS# to submit you</h4>
-                <div class="ss-form-group">
-                    <select name="cars"></select>
-                </div>
-                <div class="ss-jb-dtl-pop-check"><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-<label for="vehicle1"> This is a compact license</label></div>
-             <button class="ss-job-dtl-pop-sv-btn">Save</button>
-            </form>
-        </div>
-      </div>
+            <!----------------job-detls popup form----------->
 
-    </div>
-  </div>
-</div>
+            <!-----------Did you really graduate?------------>
+            <!-- Certification  Modal -->
 
-{{-- Dropdown modal --}}
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="dropdown_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-      <div class="modal-content">
-        <div class="ss-pop-cls-vbtn">
-          <button type="button" class="btn-close" data-target="#dropdown_modal" onclick="close_modal(this)" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="ss-job-dtl-pop-form">
-                <form method="post"  action="{{route('my-profile.store')}}" id="dropdown_modal_form" class="modal-form">
-                    @csrf
-                    <h4></h4>
-                    <div class="ss-form-group">
-                        <select name=""></select>
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="certification_file_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#certification_file_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                                <form name="certification" method="post" action="{{ route('worker-upload-files') }}"
+                                    id="certification_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                                    <h4></h4>
+                                    {{-- certification --}}
+                                    <div class="container-multiselect" id="certificate">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Certification</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Certification']))
+                                                @foreach ($allKeywords['Certification'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input name="certification" displayName="{{ $value->title }}"
+                                                        type="file" id="upload-{{ $loop->index }}"
+                                                        class="files-upload" style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="collect_data(event,'file')">Save</button>
+                                    </div>
+                                    {{-- <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button> --}}
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
-                    {{-- <div class="ss-jb-dtl-pop-check"><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                </div>
+            </div>
+
+
+            <!-- Vaccination  Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="vaccination_file_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#vaccination_file_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                                <form name="vaccination" method="post" action="{{ route('worker-upload-files') }}"
+                                    id="vaccination_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                                    <h4></h4>
+                                    {{-- vaccination --}}
+                                    <div class="container-multiselect" id="vaccinations">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Vaccinations</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Vaccinations']))
+                                                @foreach ($allKeywords['Vaccinations'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input name="vaccination" displayName="{{ $value->title }}"
+                                                        type="file" class="files-upload" style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="collect_data(event,'file')">Save</button>
+                                    </div>
+                                    {{-- <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button> --}}
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            {{-- number model --}}
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="input_number_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#input_number_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form method="post" action="{{ route('my-profile.store') }}"
+                                    id="input_number_modal_form" class="modal-form">
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4></h4>
+                                    <div class="ss-form-group">
+                                        <input type="number" name="" placeholder="">
+                                        <span class="help-block"></span>
+                                    </div>
+                                    <button type="submit" class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'input_number')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- end number model --}}
+
+
+
+            <!-----------Are you sure you never worked here as staff?------------>
+            <!-- Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="binary_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#binary_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form method="post" action="{{ route('my-profile.store') }}" id="binary_modal_form"
+                                    class="modal-form">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4></h4>
+                                    <ul class="ss-jb-dtlpop-chck">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="radio" name="" value="1">
+                                                <span>Yes</span>
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="radio" name="" value="0">
+                                                <span>No</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <button class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'binary')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- rto modal  --}}
+            <!-----------Are you sure you never worked here as staff?------------>
+            <!-- Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="rto_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#rto_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form method="post" action="{{ route('my-profile.store') }}" id="rto_modal_form"
+                                    class="modal-form">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4></h4>
+                                    <ul class="ss-jb-dtlpop-chck">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="radio" name="" value="allowed">
+                                                <span>Allowed</span>
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="radio" name="" value="not allowed">
+                                                <span>Not Allowed</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <button class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'rto')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-----------Yes we need your SS# to submit you------------>
+            <!-- Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="input_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#input_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form method="post" action="{{ route('my-profile.store') }}" id="input_modal_form"
+                                    class="modal-form">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4></h4>
+                                    <div class="ss-form-group">
+                                        <input type="text" name="" placeholder="">
+                                        <span class="help-block"></span>
+                                    </div>
+                                    <button type="submit" class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'input')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- date modal --}}
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="date_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#date_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form method="post" action="{{ route('my-profile.store') }}" id="date_modal_form"
+                                    class="modal-form">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4></h4>
+                                    <div class="ss-form-group">
+                                        <input type="date" name="" placeholder="">
+                                        <span class="help-block
+                        "></span>
+                                    </div>
+                                    <button type="submit" class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'date')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-----------What's your specialty?------------>
+            <!-- Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-specialty" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form>
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4>Yes we need your SS# to submit you</h4>
+                                    <div class="ss-form-group">
+                                        <select name="cars"></select>
+                                    </div>
+                                    <div class="ss-jb-dtl-pop-check"><input type="checkbox" id="vehicle1"
+                                            name="vehicle1" value="Bike">
+                                        <label for="vehicle1"> This is a compact license</label>
+                                    </div>
+                                    <button class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'input')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- Dropdown modal --}}
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="dropdown_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#dropdown_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form method="post" action="{{ route('my-profile.store') }}" id="dropdown_modal_form"
+                                    class="modal-form">
+                                    @csrf
+                                    <h4></h4>
+                                    <div class="ss-form-group">
+                                        <select name=""></select>
+                                    </div>
+                                    {{-- <div class="ss-jb-dtl-pop-check"><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
                         <label for="vehicle1"> This is a compact license</label>
                     </div> --}}
-                    <button class="ss-job-dtl-pop-sv-btn">Save</button>
-                </form>
-            </div>
-        </div>
+                                    <button class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'dropdown')">Save</button>
+                                </form>
+                            </div>
+                        </div>
 
-      </div>
-    </div>
-</div>
-
-
-
-<!-----------What's your specialty?------------>
-<!-- Modal -->
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-References" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="ss-pop-cls-vbtn">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="references-modal-form-btn"></button>
-      </div>
-      <div class="modal-body">
-        <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
-            <form method="post" action="{{route('references.store')}}" id="ref-modal-form" enctype="multipart/form-data">
-                @csrf
-                <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                <h4>Who are your References?</h4>
-                <div class="ss-form-group">
-                    <label>Reference Name</label>
-                    <input type="text" name="name[]" placeholder="Name of Reference">
-                    <span class="help-block"></span>
+                    </div>
                 </div>
-                <div class="ss-form-group">
-                    <label>Phone Number</label>
-                    <input type="text" name="phone[]" placeholder="Phone Number of Reference">
-                    <span class="help-block"></span>
-                </div>
-
-                <div class="ss-form-group">
-                    <label>Email</label>
-                    <input type="text" name="email[]" placeholder="Email of Reference">
-                    <span class="help-block"></span>
-                </div>
-
-                <div class="ss-form-group">
-                    <label>Date Referred</label>
-                    <input type="date" name="date_referred[]">
-                    <span class="help-block"></span>
-                </div>
-
-                <div class="ss-form-group">
-                    <label>Min Title of Reference</label>
-                    <input type="text" name="min_title_of_reference[]" placeholder="Min Title of Reference">
-                    <span class="help-block"></span>
-                </div>
-                <div class="ss-form-group">
-                    <label>Is this from your last assignment?</label>
-                    <select name="recency_of_reference[]">
-                        <option value="">Select</option>
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
-                    <span class="help-block"></span>
-                </div>
-
-                <div class="ss-form-group fileUploadInput">
-                    <label>Upload Image</label>
-                    <input type="file" name="image[]">
-                    <button type="button" onclick="open_file(this)">Choose File</button>
-                    <span class="help-block"></span>
-                </div>
-
-                <button class="ss-job-dtl-pop-sv-btn">Save</button>
-            </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-<!-----------Upload your latest skills checklist------------>
-<!-- Modal -->
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-checklist" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="ss-pop-cls-vbtn">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
-            <form>
-                @csrf
-                <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                <h4>Upload your latest skills checklist</h4>
-                <div class="ss-form-group">
-                    <label>Skills Name</label>
-                    <input type="text" name="Name of Reference" placeholder="Phone Number of Reference">
-                </div>
-
-
-                <div class="ss-form-group">
-                    <label>Completion Date</label>
-                    <input type="date" id="birthday" name="birthday">
-                </div>
-
-
-                <div class="ss-form-group fileUploadInput">
-                    <label>Completion Date</label>
-              <input type="file">
-              <button>Choose File</button>
             </div>
 
-           <div class="ss-add-more-se"><a href="#">Add More</a></div>
-             <button class="ss-job-dtl-pop-sv-btn">Save</button>
-            </form>
+
+
+            <!-----------What's your specialty?------------>
+            <!-- Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-References" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                id="references-modal-form-btn"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
+                                <form method="post" action="{{ route('references.store') }}" id="ref-modal-form"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4>Who are your References?</h4>
+                                    <div class="ss-form-group">
+                                        <label>Reference Name</label>
+                                        <input type="text" name="name[]" placeholder="Name of Reference">
+                                        <span class="help-block"></span>
+                                    </div>
+                                    <div class="ss-form-group">
+                                        <label>Phone Number</label>
+                                        <input type="text" name="phone[]" placeholder="Phone Number of Reference">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                    <div class="ss-form-group">
+                                        <label>Email</label>
+                                        <input type="text" name="email[]" placeholder="Email of Reference">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                    <div class="ss-form-group">
+                                        <label>Date Referred</label>
+                                        <input type="date" name="date_referred[]">
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                    <div class="ss-form-group">
+                                        <label>Min Title of Reference</label>
+                                        <input type="text" name="min_title_of_reference[]"
+                                            placeholder="Min Title of Reference">
+                                        <span class="help-block"></span>
+                                    </div>
+                                    <div class="ss-form-group">
+                                        <label>Is this from your last assignment?</label>
+                                        <select name="recency_of_reference[]">
+                                            <option value="">Select</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                    <div class="ss-form-group fileUploadInput">
+                                        <label>Upload Image</label>
+                                        <input type="file" name="image[]">
+                                        <button type="button" onclick="open_file(this)">Choose File</button>
+                                        <span class="help-block"></span>
+                                    </div>
+
+                                    <button class="ss-job-dtl-pop-sv-btn"
+                                        onclick="collect_data(event,'file')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-----------Upload your latest skills checklist------------>
+            <!-- Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-checklist" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
+                                <form>
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4>Upload your latest skills checklist</h4>
+                                    <div class="ss-form-group">
+                                        <label>Skills Name</label>
+                                        <input type="text" name="Name of Reference"
+                                            placeholder="Phone Number of Reference">
+                                    </div>
+
+
+                                    <div class="ss-form-group">
+                                        <label>Completion Date</label>
+                                        <input type="date" id="birthday" name="birthday">
+                                    </div>
+
+
+                                    <div class="ss-form-group fileUploadInput">
+                                        <label>Completion Date</label>
+                                        <input type="file">
+                                        <button>Choose File</button>
+                                    </div>
+
+                                    <div class="ss-add-more-se"><a href="#">Add More</a></div>
+                                    <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event)">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-----------Upload your latest skills checklist------------>
+            <!-- Modal -->
+
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-pop-cale" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
+                                <form>
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4>Upload your latest skills checklist</h4>
+
+                                    <div class="container-calendar">
+                                        <h3 id="monthAndYear"></h3>
+
+                                        <div class="button-container-calendar">
+                                            <button id="previous" onclick="previous()">&#8249;</button>
+                                            <button id="next" onclick="next()">&#8250;</button>
+                                        </div>
+
+                                        <table class="table-calendar" id="calendar" data-lang="en">
+                                            <thead id="thead-month"></thead>
+                                            <tbody id="calendar-body"></tbody>
+                                        </table>
+
+                                        <div class="footer-container-calendar">
+                                            <label for="month">Jump To: </label>
+                                            <select id="month" onchange="jump()">
+                                                <option value=0>Jan</option>
+                                                <option value=1>Feb</option>
+                                                <option value=2>Mar</option>
+                                                <option value=3>Apr</option>
+                                                <option value=4>May</option>
+                                                <option value=5>Jun</option>
+                                                <option value=6>Jul</option>
+                                                <option value=7>Aug</option>
+                                                <option value=8>Sep</option>
+                                                <option value=9>Oct</option>
+                                                <option value=10>Nov</option>
+                                                <option value=11>Dec</option>
+                                            </select>
+                                            <select id="year" onchange="jump()"></select>
+                                        </div>
+
+                                    </div>
+                                    <p>Add More</p>
+                                    <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
-      </div>
 
-    </div>
-  </div>
-</div>
-
-
-
-
-<!-----------Upload your latest skills checklist------------>
-<!-- Modal -->
-
-<div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-pop-cale" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-dialog-centered">
-    <div class="modal-content">
-      <div class="ss-pop-cls-vbtn">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
-            <form>
-                @csrf
-                <div class="ss-job-dtl-pop-frm-sml-dv"><div></div></div>
-                <h4>Upload your latest skills checklist</h4>
-
-                <div class="container-calendar">
-        <h3 id="monthAndYear"></h3>
-
-        <div class="button-container-calendar">
-            <button id="previous" onclick="previous()">&#8249;</button>
-            <button id="next" onclick="next()">&#8250;</button>
-        </div>
-
-        <table class="table-calendar" id="calendar" data-lang="en">
-            <thead id="thead-month"></thead>
-            <tbody id="calendar-body"></tbody>
-        </table>
-
-        <div class="footer-container-calendar">
-             <label for="month">Jump To: </label>
-             <select id="month" onchange="jump()">
-                 <option value=0>Jan</option>
-                 <option value=1>Feb</option>
-                 <option value=2>Mar</option>
-                 <option value=3>Apr</option>
-                 <option value=4>May</option>
-                 <option value=5>Jun</option>
-                 <option value=6>Jul</option>
-                 <option value=7>Aug</option>
-                 <option value=8>Sep</option>
-                 <option value=9>Oct</option>
-                 <option value=10>Nov</option>
-                 <option value=11>Dec</option>
-             </select>
-             <select id="year" onchange="jump()"></select>
-        </div>
-
-    </div>
-
-
-
-            <p>Add More</p>
-             <button class="ss-job-dtl-pop-sv-btn">Save</button>
-            </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-    </div>
-
-</main>
+    </main>
 
 
 
@@ -1288,73 +1638,817 @@
 @stop
 
 @section('js')
-<script>
+    <script>
+        var worker_files_displayname_by_type = [];
+        // certification
+        var job_certification = "{!! $model->certificate !!}";
+        var job_certification_displayname = job_certification.split(',');
+        console.log('certifications : ', job_certification_displayname);
+
+        // vaccination
+        var job_vaccination = "{!! $model->vaccinations !!}";
+        var job_vaccination_displayname = job_vaccination.split(',');
+        console.log('vaccinations : ', job_vaccination_displayname);
 
 
-    $(document).ready(function(){
-        let matches = @json($matches);
-        console.log((matches));
 
-        let usematches = @json($userMatches);
-        console.log((usematches));
-        $('input[name="phone[]"]').mask('(999) 999-9999');
-    });
-    function open_file(obj){
-        $(obj).parent().find('input[type="file"]').click();
-    }
 
-    function open_modal(obj){
-        let name, title, modal, form, target;
 
-        name = $(obj).data('name');
-        title = $(obj).data('title');
-        target = $(obj).data('target');
-        
-        modal = '#'+target+'_modal';
-        form = modal+'_form';
-        $(form).find('h4').html(title);
-        switch(target)
-        {
-            case 'file':
-                $(form).find('input[type="file"]').attr('name',name);
-                $(form).find('input[type="hidden"]').attr('name',$(obj).data('hidden_name'));
-                $(form).find('input[type="hidden"]').val($(obj).data('hidden_value'));
-                $(form).attr('action', $(obj).data('href'));
-                $(form).append(`<input type="hidden" name="type" value="${$(obj).data('hidden_type')}">`);
-                $(form).append('<input type="hidden" name="_token" value="{{ csrf_token() }}">');
-                break;
-            case 'input':
-                $(form).find('input[type="text"]').attr('name',name);
-                $(form).find('input[type="text"]').attr('placeholder',$(obj).data('placeholder'));
-                break;
-            case 'input_number':
-                $(form).find('input[type="number"]').attr('name',name);
-                $(form).find('input[type="number"]').attr('placeholder',$(obj).data('placeholder'));
-                break;
-            case 'binary':
-                $(form).find('input[type="radio"]').attr('name',name);
-                break;
-            case 'rto':
-                $(form).find('input[type="radio"]').attr('name',name);
-                break;
-            case 'dropdown':
-                $(form).find('select').attr('name',name);
-                get_dropdown(obj);
-                break;
-            case 'date':
-                $(form).find('input[type="date"]').attr('name',name);
-                break;
-            default:
-                break;
+
+        var worker_id = "{!! auth()->guard('frontend')->user()->id !!}";
+
+        function get_all_files(type) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: '{{ route('list-docs') }}',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        WorkerId: worker_id
+                    }),
+                    success: function(resp) {
+                        console.log('Success:', resp);
+                        
+                        let jsonResp = JSON.parse(resp);
+                        // filter files by type 
+                        let files = jsonResp.filter(file => file.type == type);
+                        let displayNames = files.map(file => file.displayName);
+                        worker_files_displayname_by_type = displayNames;
+                        console.log(worker_files_displayname_by_type);
+                        resolve(
+                        worker_files_displayname_by_type); // Resolve the promise with the display names
+                    },
+                    error: function(resp) {
+                        console.log('Error:', resp);
+                        reject(resp); // Reject the promise with the error response
+                    }
+                });
+            });
+        }
+        // file types we have : ['professional_license', 'diploma', 'references', 'vaccination', 'certification'
+        // ];
+        // get_all_files('certification');
+
+        var selectedFiles = [];
+        var selectedValues = [];
+        var selectedCertificates = [];
+        var selectedVaccinations = [];
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.list-items .item');
+            //store selected file values
+
+            items.forEach((item, index) => {
+                item.addEventListener('click', (event) => {
+                    if (event.target.closest('.checkbox')) {
+                        return;
+                    }
+                    const uploadInput = item.nextElementSibling;
+                    if (uploadInput) {
+                        // class 'checked' check
+                        if (item.classList.contains('checked')) {
+                            uploadInput.click();
+                            uploadInput.addEventListener('change', function() {
+                                if (this.files.length > 0) {
+                                    // Handling file selection
+                                    const file = this.files[0];
+                                    selectedFiles.push(file.name);
+                                    console.log(selectedFiles);
+                                }
+                            }, {
+                                once: true //avoid multiple registrations
+                            });
+                        } else {
+                            const index = selectedFiles.indexOf(uploadInput.files[0].name);
+                            if (index > -1) {
+                                selectedFiles.splice(index, 1);
+                            }
+                            console.log(selectedFiles);
+
+                        }
+                    }
+                });
+            });
+
+
+        });
+
+        const selectBtn = document.querySelectorAll(".select-btn"),
+
+            items = document.querySelectorAll(".item");
+
+
+        selectBtn.forEach(selectBtn => {
+            selectBtn.addEventListener("click", () => {
+                selectBtn.classList.toggle("open");
+            });
+        });
+
+        items.forEach(item => {
+            item.addEventListener("click", () => {
+                const value = item.getAttribute('value');
+                item.classList.toggle("checked");
+
+                if (item.classList.contains("checked")) {
+                    // add item
+                    selectedValues.push(value);
+                    console.log(selectedValues);
+                } else {
+                    // remove item
+                    const index = selectedValues.indexOf(value);
+                    if (index > -1) {
+                        selectedValues.splice(index, 1);
+                        console.log(selectedValues);
+                    }
+                }
+                let btnText = document.querySelector(".btn-text");
+                if (selectedValues.length > 0) {
+                    btnText.innerText = `${selectedValues.length} Selected`;
+                } else {
+                    btnText.innerText = "Select Language";
+                }
+            });
+        })
+
+        function sendMultipleFiles(type) {
+
+            const fileInputs = document.querySelectorAll('.files-upload');
+            console.log(fileInputs);
+            const fileReadPromises = [];
+            console.log(worker_id);
+            var workerId = worker_id;
+
+            if (type == 'references') {
+                let referenceName = document.querySelector('input[name="name"]').value;
+                let referencePhone = document.querySelector('input[name="phone"]').value;
+                let referenceEmail = document.querySelector('input[name="reference_email"]').value;
+                let referenceDate = document.querySelector('input[name="date_referred"]').value;
+                let referenceMinTitle = document.querySelector('input[name="min_title_of_reference"]').value;
+                let referenceRecency = document.querySelector('select[name="recency_of_reference"]').value;
+                let referenceImage = document.querySelector('input[name="image"]').files[0];
+
+                var referenceInfo = {
+                    referenceName: referenceName,
+                    phoneNumber: referencePhone,
+                    email: referenceEmail,
+                    dateReferred: referenceDate,
+                    minTitle: referenceMinTitle,
+                    isLastAssignment: referenceRecency == 1 ? true : false
+                }
+                console.log(referenceInfo);
+                let readerPromise = new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        resolve({
+                            name: referenceImage.name,
+                            path: referenceImage.name,
+                            type: type,
+                            content: event.target.result, // Base64 encoded content
+                            displayName: referenceImage.name,
+                            ReferenceInformation: referenceInfo
+                        });
+                    };
+
+                    reader.onerror = reject;
+                    reader.readAsDataURL(referenceImage);
+                });
+                fileReadPromises.push(readerPromise);
+            } else {
+                fileInputs.forEach((input, index) => {
+                    let displayName = input.getAttribute("displayName");
+                    if (input.files[0]) {
+                        const file = input.files[0];
+                        const readerPromise = new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                resolve({
+                                    name: file.name,
+                                    path: file.name,
+                                    type: type,
+                                    content: event.target.result, // Base64 encoded content
+                                    displayName: displayName || file.name,
+                                });
+                            };
+                            reader.onerror = reject;
+                            reader.readAsDataURL(file);
+                        });
+                        fileReadPromises.push(readerPromise);
+                    }
+                });
+            }
+
+
+            Promise.all(fileReadPromises).then(files => {
+                console.log(files);
+                var body = {
+                    workerId: workerId,
+                    files: files
+                };
+                fetch('/worker/add-docs', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                'content')
+                        },
+                        body: JSON.stringify({
+                            workerId: workerId,
+                            files: files
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data); // Handle success
+
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i>' + data.message,
+                            time: 3
+                        });
+                        selectedValues = [];
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error); // Handle errors
+                    });
+            }).catch(error => {
+                console.error('Error reading files:', error); // Handle file read errors
+            });
+            // clear files inputs 
+            fileInputs.forEach((input) => {
+                input.value = '';
+            });
+            selectedFiles = [];
+
+        }
+    </script>
+    <script>
+        var dataToSend = {};
+
+
+        function matchWithWorker(workerField, InsertedValue) {
+            let match = false;
+            var job = @json($model);
+
+            switch (workerField) {
+                case 'worker_ss_number':
+                    if (job['ss_number'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                    // case 'diploma':
+                    //     // Complete logic for diploma
+                    //     break;
+                    // case 'driving_license':
+                    //     // Complete logic for driving_license
+                    //     break;
+                    // case 'worked_at_facility_before':
+                    //     // Complete logic for worked_at_facility_before
+                    //     break;
+                case 'profession':
+                    if (job['proffesion'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'specialty':
+                    if (job['preferred_specialty'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'nursing_license_state':
+                    if (job['job_location'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'experience':
+                    if (job['preferred_experience'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                    // case 'vaccinations':
+                    //     // Complete logic for vaccinations
+                    //     break;
+                    // case 'number_of_references':
+                    //    // Complete logic for min_title_of_reference
+                    //     break;
+                    // case 'min_title_of_reference':
+                    //     // Complete logic for min_title_of_reference
+                    //     break;
+                    // case 'recency_of_reference':
+                    //     // Complete logic for recency_of_reference
+                    //     break;
+                case 'certificate':
+                    // Complete logic for certificate
+                    break;
+                    // case 'skills':
+                    //      // Complete logic for skills
+                    //     break;
+                case 'worker_eligible_work_in_us':
+                    if (InsertedValue == '1') {
+                        match = true;
+                    }
+                    break;
+                case 'worker_urgency':
+                    if (job['urgency'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_facility_state':
+                    if (job['job_state'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_facility_city':
+                    if (job['job_city'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_weeks_assignment':
+                    if (job['preferred_assignment_duration'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_start_date':
+                    if (job['start_date'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_as_soon_as':
+                    if (job['as_soon_as'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'distance_from_your_home':
+                    if (job['traveler_distance_from_facility'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'clinical_setting_you_prefer':
+                    if (job['clinical_setting'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_scrub_color':
+                    if (job['scrub_color'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_emr':
+                    if (job['Emr'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'rto':
+                    if (job['rto'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_hours_per_week':
+                    if (job['hours_per_week'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_guaranteed_hours':
+                    if (job['guaranteed_hours'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_hours_shift':
+                    if (job['hours_shift'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_shifts_week':
+                    if (job['weeks_shift'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_referral_bonus':
+                    if (job['referral_bonus'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_sign_on_bonus':
+                    if (job['sign_on_bonus'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_completion_bonus':
+                    if (job['completion_bonus'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_extension_bonus':
+                    if (job['extension_bonus'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_other_bonus':
+                    if (job['other_bonus'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_four_zero_one_k':
+                    if (job['four_zero_one_k'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_actual_hourly_rate':
+                    if (job['actual_hourly_rate'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_health_insurance':
+                    if (job['health_insaurance'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_dental':
+                    if (job['dental'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_vision':
+                    if (job['vision'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_feels_like_per_hour_check':
+                    if (InsertedValue == '1') {
+                        match = true;
+                    }
+                    break;
+                case 'worker_overtime_check':
+                    if (InsertedValue == '1') {
+                        match = true;
+                    }
+                    break;
+                case 'worker_holiday':
+                    if (job['holiday'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_on_call_check':
+                    if (InsertedValue == true) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_call_back_check':
+                    if (InsertedValue == '1') {
+                        match = true;
+                    }
+                    break;
+                case 'worker_orientation_rate_check':
+                    if (InsertedValue == '1') {
+                        match = true;
+                    }
+                    break;
+                case 'worker_weekly_non_taxable_amount_check':
+                    if (InsertedValue == '1') {
+                        match = true;
+                    }
+                    break;
+                case 'worker_employer_weekly_amount':
+                    if (job['employer_weekly_amount'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_patient_ratio':
+                    if (job['Patient_ratio'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_unit':
+                    if (job['Unit'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_job_type':
+                    if (job['job_type'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'MSP':
+                    if (job['msp'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'VMS':
+                    if (job['vms'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'block_scheduling':
+                    if (job['block_scheduling'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'float_requirement':
+                    if (job['float_requirement'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'facility_shift_cancelation_policy':
+                    if (job['facility_shift_cancelation_policy'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'worker_facilitys_parent_system':
+                    if (job['facilitys_parent_system'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                case 'contract_termination_policy':
+                    if (job['contract_termination_policy'] == InsertedValue) {
+                        match = true;
+                    }
+                    break;
+                default:
+                    match = undefined;
+            }
+
+            return match;
         }
 
-        $(modal).modal('show');
+        async function collect_data(event, type) {
+            event.preventDefault();
+            // targiting the input form and collectiong data
+            let button = $(event.target);
+            var form = button.closest('form');
+            let formData = new FormData(form[0]);
+            let data = Object.fromEntries(formData.entries());
+            dataToSend = {
+                ...dataToSend,
+                ...data
+            };
+            var inputName = '';
+            if (type == 'binary') {
+                inputName = form.find('input[type="radio"]').attr('name');
+            } else if (type == 'input') {
+                inputName = form.find('input[type="text"]').attr('name');
+            } else if (type == 'input_number') {
+                inputName = form.find('input[type="number"]').attr('name');
+            } else if (type == 'file') {
+                inputName = form.attr('name');;
+            } else if (type == 'rto') {
+                inputName = form.find('input[type="radio"]').attr('name');
+            } else if (type == 'dropdown') {
+                inputName = form.find('select').attr('name');
+            } else if (type == 'date') {
+                inputName = form.find('input[type="date"]').attr('name');
+            }
+
+            let job = @json($model);
+            console.log('input name :', inputName);
+            console.log('its value :', dataToSend[inputName]);
+
+
+            // matching job / worker infromation 
+
+            if (matchWithWorker(inputName, dataToSend[inputName]) != undefined) {
+                if (matchWithWorker(inputName, dataToSend[inputName])) {
+                    let areaDiv = document.getElementById(inputName);
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                } else {
+                    let areaDiv = document.getElementById(inputName);
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                }
+            } else if (dataToSend[inputName] == '1') {
+                console.log('here');
+                let areaDiv = document.getElementById(inputName);
+                areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                console.log(areaDiv);
+            } else if (type == 'file') {
+                let worker_files_displayname_by_type = [];
+
+                try {
+                    worker_files_displayname_by_type = await get_all_files(inputName);
+                    console.log('Files:', worker_files_displayname_by_type);
+                } catch (error) {
+                    console.error('Failed to get files:', error);
+                }
+                
+                let areaDiv = document.getElementById(inputName);
+                let check = false;
+                if (inputName == 'certification') {
+                    selectedCertificates = [...selectedValues];
+                    const is_selected_file_exist_in_worker_files = selectedCertificates.every(element =>
+                        worker_files_displayname_by_type.includes(element));
+                    const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
+                        worker_files_displayname_by_type.includes(element));
+                    if (is_selected_file_exist_in_worker_files || is_job_certif_exist_in_worker_files) {
+                        check = true;
+                    }
+                } else if (inputName == 'vaccination') {
+                    selectedVaccinations = [...selectedValues];
+                    const is_selected_file_exist_in_worker_files = selectedVaccinations.every(element =>
+                        worker_files_displayname_by_type.includes(element));
+                    const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
+                        worker_files_displayname_by_type.includes(element));
+                    if (is_selected_file_exist_in_worker_files || is_job_vaccin_exist_in_worker_files) {
+                        check = true;
+                    }
+                }
+                if (check) {
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                } else {
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                }
+                sendMultipleFiles(inputName);
+            } else {
+                let areaDiv = document.getElementById(inputName);
+                areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+            }
+
+            closeModal();
+        }
+
+        function closeModal() {
+            let buttons = document.querySelectorAll('.btn-close');
+            buttons.forEach(button => {
+                button.click();
+            });
+        }
+
+        $(document).ready(function() {
+            let matches = @json($matches);
+            console.log((matches));
+
+            let usematches = @json($userMatches);
+            console.log((usematches));
+            $('input[name="phone[]"]').mask('(999) 999-9999');
+        });
+
+        function open_file(obj) {
+            $(obj).parent().find('input[type="file"]').click();
+        }
+
+        function open_modal(obj) {
+            let name, title, modal, form, target;
+
+            name = $(obj).data('name');
+            title = $(obj).data('title');
+            target = $(obj).data('target');
+
+            modal = '#' + target + '_modal';
+            form = modal + '_form';
+            $(form).find('h4').html(title);
+            switch (target) {
+                case 'input':
+                    $(form).find('input[type="text"]').attr('name', name);
+                    $(form).find('input[type="text"]').attr('placeholder', $(obj).data('placeholder'));
+                    break;
+                case 'input_number':
+                    $(form).find('input[type="number"]').attr('name', name);
+                    $(form).find('input[type="number"]').attr('placeholder', $(obj).data('placeholder'));
+                    break;
+                case 'binary':
+                    $(form).find('input[type="radio"]').attr('name', name);
+                    break;
+                case 'rto':
+                    $(form).find('input[type="radio"]').attr('name', name);
+                    break;
+                case 'dropdown':
+                    $(form).find('select').attr('name', name);
+                    get_dropdown(obj);
+                    break;
+                case 'date':
+                    $(form).find('input[type="date"]').attr('name', name);
+                    break;
+                default:
+                    break;
+            }
+
+            $(modal).modal('show');
+        }
+
+        function close_modal(obj) {
+            let target = $(obj).data('target');
+            $(target).modal('hide');
+        }
+    </script>
+@stop
+
+
+<style>
+    /* Google Fonts - Poppins*/
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+
+    .container-multiselect {
+        position: relative;
+        max-width: 320px;
+        width: 100%;
+        margin: 30px auto 30px;
     }
 
-    function close_modal(obj){
-        let target = $(obj).data('target');
-        $(target).modal('hide');
+    .select-btn {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     }
-    
-</script>
-@stop
+
+    .select-btn .btn-text {
+        font-size: 17px;
+        font-weight: 400;
+        color: #333;
+    }
+
+    .select-btn .arrow-dwn {
+        display: flex;
+        height: 21px;
+        width: 21px;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 50%;
+        background: #3d2c39;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+
+    .select-btn.open .arrow-dwn {
+        transform: rotate(-180deg);
+    }
+
+    .list-items {
+        position: relative;
+        margin-top: 15px;
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        max-height: 500px;
+        scroll-behavior: auto;
+        overflow: auto;
+
+    }
+
+    .select-btn.open~.list-items {
+        display: block;
+    }
+
+    .list-items .item {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        height: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        padding: 0 15px;
+        border-radius: 8px;
+    }
+
+    .list-items .item:hover {
+        background-color: #e7edfe;
+    }
+
+    .item .item-text {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+    }
+
+    .item .checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 16px;
+        width: 16px;
+        border-radius: 4px;
+        margin-right: 12px;
+        border: 1.5px solid #c0c0c0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .item.checked .checkbox {
+        background-color: #3d2c39;
+        border-color: #3d2c39;
+    }
+
+    .checkbox .check-icon {
+        color: #fff;
+        font-size: 11px;
+        transform: scale(0);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .item.checked .check-icon {
+        transform: scale(1);
+    }
+</style>

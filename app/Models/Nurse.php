@@ -179,7 +179,7 @@ class Nurse extends Model implements HasMedia
         'worked_at_facility_before',
         'account_tier',
         'terms',
-        'type',
+        'worker_job_type',
         'profession',
         'full_name_payment' ,
         'address_payment',

@@ -431,14 +431,6 @@ class Job extends Model
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
 
-            // 'job_state'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-
             'job_state'=> function () use ($job, $nurse){
                 $match = ($job->job_state == $nurse->worker_facility_state);
                 $value = $nurse->worker_facility_state;
@@ -446,7 +438,6 @@ class Job extends Model
                 $name = 'worker_facility_state';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-
             'job_city'=> function () use ($job, $nurse){
                 $match = ($job->job_city == $nurse->worker_facility_city);
                 $value = $nurse->worker_facility_city;
@@ -454,27 +445,6 @@ class Job extends Model
                 $name = 'worker_facility_city';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'facility_id'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'facility'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'profession'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
             'preferred_assignment_duration'=> function () use ($job, $nurse){
                 $match = ($job->preferred_assignment_duration == $nurse->worker_weeks_assignment);
                 $value = $nurse->worker_weeks_assignment;
@@ -482,55 +452,6 @@ class Job extends Model
                 $name = 'worker_weeks_assignment';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'preferred_shift'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'preferred_shift_duration'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'preferred_work_location'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'preferred_work_area'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'preferred_days_of_the_week'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'preferred_hourly_pay_rate'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'description'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
             'start_date'=> function () use ($job, $nurse){
                 $match = ($job->start_date == $nurse->worker_start_date);
                 $value = $nurse->worker_start_date;
@@ -545,90 +466,6 @@ class Job extends Model
                 $name = 'worker_as_soon_as';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'end_date'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'job_video'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'job_photos'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'seniority_level'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'job_function'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'responsibilities'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'qualifications'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'job_cerner_exp'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'job_meditech_exp'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'job_epic_exp'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'job_other_exp'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'license_type'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
             'traveler_distance_from_facility'=> function () use ($job, $nurse){
                 $match = ($job->traveler_distance_from_facility == $nurse->distance_from_your_home);
                 $value = $nurse->distance_from_your_home;
@@ -664,20 +501,7 @@ class Job extends Model
                 $name = 'rto';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'call_coverage'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'weekly_pay'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
+           
             'hours_per_week'=> function () use ($job, $nurse){
                 $match = ($job->hours_per_week == $nurse->worker_hours_per_week);
                 $value = $nurse->worker_hours_per_week;
@@ -818,13 +642,7 @@ class Job extends Model
                 $name = 'worker_orientation_rate_check';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'weekly_taxable_amount'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
+            
             'weekly_non_taxable_amount'=> function () use ($job, $nurse){
                 $match = ($nurse->worker_weekly_non_taxable_amount_check == '1');
                 $value = $nurse->worker_weekly_non_taxable_amount_check;
@@ -839,34 +657,7 @@ class Job extends Model
                 $name = 'worker_employer_weekly_amount';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'goodwork_weekly_amount'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'total_employer_amount'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'total_goodwork_amount'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'total_contract_amount'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
+            
             'Patient_ratio'=> function () use ($job, $nurse){
                 $match = ($job->Patient_ratio == $nurse->worker_patient_ratio);
                 $value = $nurse->worker_patient_ratio;
@@ -881,55 +672,15 @@ class Job extends Model
                 $name = 'worker_field';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'Department'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'Bed_Size'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'Trauma_Level'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'goodwork_number'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'recruiter_id'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
+            
             'job_type'=> function () use ($job, $nurse){
-                $match = ($job->field == $nurse->worker_field);
-                $value = $nurse->worker_field;
+                $match = ($job->field == $nurse->worker_job_type);
+                $value = $nurse->worker_job_type;
                 $type = 'input';
-                $name = 'worker_field';
+                $name = 'worker_job_type';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'position_available'=> function () use ($job, $nurse){
-            //     $match = empty($nurse->available_position) ? false : true;
-            //     $value = $nurse->available_position;
-            //     $type = 'input';
-            //     $name = 'available_position';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
+            
             'msp'=> function () use ($job, $nurse){
                 $match = (!empty($nurse->MSP) && $job->msp==$nurse->MSP) ? true: false ;
                 $value = $nurse->MSP;
@@ -944,13 +695,7 @@ class Job extends Model
                 $name = 'VMS';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'submission_of_vms'=> function () use ($nurse){
-            //     $match = empty( $nurse->worker_field) ? false: true ;
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
+            
             'block_scheduling'=> function () use ($job, $nurse){
                 $match = ($job->block_scheduling == $nurse->block_scheduling);
                 $value = $nurse->block_scheduling;
@@ -979,35 +724,14 @@ class Job extends Model
                 $name = 'worker_facilitys_parent_system';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'facility_average_rating'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'recruiter_average_rating'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
-            // 'employer_average_rating'=> function () use ($job, $nurse){
-            //     $match = ($job->field == $nurse->worker_field);
-            //     $value = $nurse->worker_field;
-            //     $type = 'input';
-            //     $name = 'worker_field';
-            //     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            // },
             'contract_termination_policy'=> function () use ($job, $nurse){
-                $match = ($job->field == $nurse->worker_field);
-                $value = $nurse->worker_field;
+                $match = ($job->field == $nurse->contract_termination_policy);
+                $value = $nurse->contract_termination_policy;
                 $type = 'input';
-                $name = 'worker_field';
+                $name = 'contract_termination_policy';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            // 'msp'=> ['match'=> ($this->field == $nurse->worker_field), 'value'=>$nurse->worker_field, 'name'=>$nurse->worker_field, 'type'=>'text']
+            
         ];
 
         

@@ -552,6 +552,8 @@ function save_jobs(obj, reload_page=false)
 
 function apply_on_jobs(obj, reload_page = true)
 {
+    console.log($(obj));
+    return;
     $.confirm({
         title: 'Apply on the Job',
         content: 'Are you sure?',

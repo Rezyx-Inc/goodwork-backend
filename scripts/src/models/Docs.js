@@ -16,7 +16,15 @@ const DocsSchema = mongoose.Schema({
             path: {type: String, required: false}, // Path to the file in the file system
             type: {type: String, required: true},  // vaccination, certification, driver's license, diploma, SS Card, reference, skill checklist, other.
             displayName : {type: String, required: false, default: null}, // Display name of the file
-        }
+            ReferenceInformation: {
+                referenceName: { type: String, required: false },
+                phoneNumber: { type: String, required: false },
+                email: { type: String, required: false },
+                dateReferred: { type: Date, required: false },
+                minTitle: { type: String, required: false },
+                isLastAssignment: { type: Boolean, required: false }
+            }
+            }
     ]
 });
 
