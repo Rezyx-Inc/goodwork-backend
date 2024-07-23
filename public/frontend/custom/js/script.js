@@ -550,10 +550,11 @@ function save_jobs(obj, reload_page=false)
 }
 
 
-function apply_on_jobs(obj, reload_page = true)
+function apply_on_jobs(obj,worked_at_facility_before,reload_page = true)
 {
-    console.log($(obj));
-    return;
+    console.log($(obj).data('id'));
+    
+    
     $.confirm({
         title: 'Apply on the Job',
         content: 'Are you sure?',
@@ -571,16 +572,74 @@ function apply_on_jobs(obj, reload_page = true)
                         }
                     });
 
+                            $.ajax({
+                                url: full_path + 'worker/apply-on-job',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    jid: $(obj).data('id'),
+                                    worked_at_facility_before: worked_at_facility_before,
+                                },
+                                success: function (resp) {
+                                    console.log(resp);
+                                    ajaxindicatorstop();
+                                    if (resp.success) {
+                                        notie.alert({
+                                            type: 'success',
+                                            text: '<i class="fa fa-check"></i> ' + resp.msg,
+                                            time: 3
+                                        });
+                                        if (reload_page) {
+                                            setTimeout(() => {
+                                                location.reload();
+                                            }, 3000);
+                                        }else{
+                                            $(obj).remove();
+                                        }
+                                    }
+                                },
+                                error: function (resp) {
+                                    console.log(resp);
+                                    ajaxindicatorstop();
+                                }
+                            });
                     
+                   
+                }
+            },
+            cancel: function () {}
+        }
+    })
+}
+
+
+function match_worker_with_jobs_update(data_to_send)
+{
+    
+    console.log(data_to_send);
+    
+    $.confirm({
+        title: 'Save Your Information',
+        content: 'Are you sure?',
+        type: 'green',
+        typeAnimated: true,
+        buttons: {
+            confirm: {
+                text: '<i class="fa fa-check" aria-hidden="true"></i> Confirm',
+                btnClass: 'btn-green',
+                action: function () {
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
                     $.ajax({
-                        url: full_path + 'worker/apply-on-job',
+                        url: full_path + 'worker/match-worker-job',
                         type: 'POST',
                         dataType: 'json',
-                        // processData: false,
-                        // contentType: false,
-                        data: {
-                            jid: $(obj).data('id')
-                        },
+                        data: data_to_send,
                         success: function (resp) {
                             console.log(resp);
                             ajaxindicatorstop();
@@ -590,20 +649,15 @@ function apply_on_jobs(obj, reload_page = true)
                                     text: '<i class="fa fa-check"></i> ' + resp.msg,
                                     time: 3
                                 });
-                                if (reload_page) {
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 3000);
-                                }else{
-                                    $(obj).remove();
-                                }
                             }
                         },
                         error: function (resp) {
                             console.log(resp);
                             ajaxindicatorstop();
                         }
-                    });
+                    })
+                    
+                   
                 }
             },
             cancel: function () {}

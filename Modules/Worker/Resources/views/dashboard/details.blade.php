@@ -114,14 +114,14 @@
                                         $userMatches[$key] = $closure();
                                     }
                                 @endphp
-                                <ul
+                                <ul id="diploma"
                                     class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['diploma']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                     <li>
                                         <span>Diploma</span>
                                         <h6>College Diploma</h6>
                                     </li>
                                     <li>
-                                        <p data-target="file" data-hidden_name="diploma_cer" data-hidden_value="Yes"
+                                        <p data-target="diploma_file" data-hidden_name="diploma_cer" data-hidden_value="Yes"
                                             data-href="{{ route('info-required') }}" data-title="Did you really graduate?"
                                             data-name="diploma" onclick="open_modal(this)">Did you really graduate?</p>
                                     </li>
@@ -134,12 +134,29 @@
                                         <h6>Required</h6>
                                     </li>
                                     <li>
-                                        <p data-target="file" data-hidden_name="dl_cer" data-hidden_value="Yes"
+                                        <p  data-target="driving_license_file" data-hidden_name="dl_cer" data-hidden_value="Yes"
                                             data-href="{{ route('info-required') }}"
-                                            data-title="Are you really allowed to drive?" data-name="driving_license"
+                                            data-title="Are you really allowed to drive?" 
+                                            data-name="driving_license"
                                             onclick="open_modal(this)">Are you really allowed to drive?</p>
                                     </li>
                                 </ul>
+
+                                @if(isset($model->preferred_experience))
+                                <ul id="worker_experience"
+                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['preferred_experience']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    <li>
+                                        <span>Experience</span>
+                                        <h6>{{ $model->preferred_experience }} Years Required</h6>
+                                    </li>
+                                    <li>
+                                        <p data-target="input_number" data-hidden_name="dl_cer" data-hidden_value="Yes"
+                                            data-href="{{ route('info-required') }}"
+                                            data-title="How long have you done this?" data-name="worker_experience"
+                                            onclick="open_modal(this)">How long have you done this?</p>
+                                    </li>
+                                </ul>
+                                @endif
 
                                 <ul id="worked_at_facility_before"
                                     class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worked_at_facility_before']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
@@ -154,15 +171,15 @@
                                     </li>
                                 </ul>
 
-                                <ul id="worker_ss_number"
+                                <ul id="ss_number"
                                     class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worker_ss_number']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                     <li>
                                         <span>SS# or SS Card</span>
                                         <h6>Last 4 digits of SS#</h6>
                                     </li>
                                     <li>
-                                        <p data-target="input" data-title="Yes we need your SS# to submit you"
-                                            data-placeholder="SS number" data-name="worker_ss_number"
+                                        <p data-target="ss_number_file" data-title="Yes we need your SS# to submit you"
+                                            data-placeholder="SS number" data-name="ss_number"
                                             onclick="open_modal(this)">Yes we need your SS# to submit you</p>
                                     </li>
                                 </ul>
@@ -242,16 +259,16 @@
                                 @endif
 
 
-                                @if (isset($model->number_of_references) && isset($model->recency_of_reference))
+                                @if (isset($model->number_of_references))
                                     <ul
+                                        id="references"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['number_of_references']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
-                                            <span>References</span>
+                                            <span>Numnber of references</span>
                                             <h6>{{ $model->number_of_references }} references </h6>
-                                            <h6>{{ $model->recency_of_reference }} months Recency</h6>
                                         </li>
                                         <li>
-                                            <p data-bs-toggle="modal" data-bs-target="#job-dtl-References">Who are your
+                                            <p data-target="reference_file" onclick="open_modal(this)">Who are your
                                                 References?</p>
                                         </li>
                                     </ul>
@@ -284,14 +301,13 @@
                                 @endif
 
                                 @if (isset($model->skills))
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                    <ul id="skills" class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
                                         <li>
                                             <span>Skills checklist</span>
                                             <h6>{{ str_replace(',', ', ', $model->skills) }} </h6>
-
                                         </li>
                                         <li>
-                                            <p>Upload your latest skills checklist</p>
+                                            <p data-target="skills_file" data-title="Upload your latest skills checklist" onclick="open_modal(this)" >Upload your latest skills checklist</p>
 
                                         </li>
                                     </ul>
@@ -320,7 +336,8 @@
 
                                         </li>
                                         <li>
-                                            <p data-target="input" data-title="How quickly you can be ready to submit?"
+                                            <p data-target="dropdown" data-title="How quickly you can be ready to submit?"
+                                            data-filter="Urgency"
                                                 data-placeholder="How quickly you can be ready to submit?"
                                                 data-name="worker_urgency" onclick="open_modal(this)">How quickly you can
                                                 be ready to submit?</p>
@@ -889,7 +906,7 @@
                                 @endif
 
                                 @if (isset($model->holiday))
-                                    <ul id="worker_holiday_check"
+                                    <ul id="worker_holiday"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['holiday']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Holiday</span>
@@ -897,7 +914,7 @@
                                         </li>
                                         <li>
                                             <p data-target="date" data-title="Any holiday you refuse to work?"
-                                                data-name="worker_holiday_check" onclick="open_modal(this)">Any holiday
+                                                data-name="worker_holiday" onclick="open_modal(this)">Any holiday
                                                 you refuse to work?</p>
 
                                         </li>
@@ -1043,9 +1060,11 @@
                                 @endif
 
                                 <div class="ss-job-apl-on-app-btn">
+                                    <button id="applyButton"  data-id="{{ $model->id }}" onclick="match_worker_with_jobs_update(dataToSend)">Save
+                                        </button>
                                     @if (!$model->checkIfApplied())
-                                        <button data-id="{{ $model->id }}" onclick="apply_on_jobs(this)">Apply
-                                            Now</button>
+                                        <button id="applyButton"  data-id="{{ $model->id }}" onclick="check_required_files_before_sent(this)">Apply
+                                        Now</button>
                                     @endif
                                 </div>
 
@@ -1133,7 +1152,6 @@
                                     @csrf
                                     <div class="ss-job-dtl-pop-frm-sml-dv"></div>
                                     <h4></h4>
-                                    {{-- vaccination --}}
                                     <div class="container-multiselect" id="vaccinations">
                                         <div class="select-btn">
                                             <span class="btn-text">Select Vaccinations</span>
@@ -1166,6 +1184,279 @@
                     </div>
                 </div>
             </div>
+
+            {{-- References Modal --}}
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="reference_file_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#reference_file_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                                <form name="references" method="post" action="{{ route('worker-upload-files') }}"
+                                    id="reference_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                                    @csrf
+                                    {{-- reference --}}
+                                    <div class="container-multiselect" id="references">
+                                        <h4>Who are your References?</h4>
+                                        <div class="ss-form-group">
+                                            <label>Reference Name</label>
+                                            <input type="text" name="name" placeholder="Name of Reference">
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="ss-form-group">
+                                            <label>Phone Number</label>
+                                            <input type="text" name="phone"
+                                                placeholder="Phone Number of Reference">
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group">
+                                            <label>Email</label>
+                                            <input type="text" name="reference_email" placeholder="Email of Reference">
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group">
+                                            <label>Date Referred</label>
+                                            <input type="date" name="date_referred">
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group">
+                                            <label>Min Title of Reference</label>
+                                                <select name="min_title_of_reference">
+                                                    <option value="">Select a min title</option>
+                                                    @if (isset($allKeywords['MinTitleOfReference']))
+                                                        @foreach ($allKeywords['MinTitleOfReference'] as $value)
+                                                            <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="ss-form-group">
+                                            <label>Is this from your last assignment?</label>
+                                            <select name="recency_of_reference">
+                                                <option value="">Select a recency period</option>
+                                                @if (isset($allKeywords['RecencyOfReference']))
+                                                    @foreach ($allKeywords['RecencyOfReference'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group fileUploadInput"
+                                            style="display: flex;
+                                                                    justify-content: center;
+                                                                    align-items: center;
+                                                                    ">
+                                            <label>Upload Image</label>
+                                            <input type="file" name="image">
+                                            <button type="button" onclick="open_file(this)">Choose File</button>
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button>
+                                    </div>
+                                    {{-- <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button> --}}
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- Skills Modal --}}
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="skills_file_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#skills_file_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                                <form name="skills" method="post" action="{{ route('worker-upload-files') }}"
+                                    id="skills_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                                    <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                                    <h4></h4>
+                                    @csrf
+                                    {{-- skills --}}
+                                    <div class="container-multiselect" id="skills_checklists">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Skills</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Speciality']))
+                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input name="skills" displayName="{{ $value->title }}" type="file" id="upload-{{ $loop->index }}"
+                                                        class="files-upload" style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button onclick="collect_data(event,'file')" class="ss-job-dtl-pop-sv-btn">Save</button>
+                                    </div>
+                                    {{-- <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button> --}}
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- driving_licence Modal --}}
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="driving_license_file_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#driving_license_file_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                                <form name="driving_license" method="post" action="{{ route('worker-upload-files') }}"
+                                    id="driving_license_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                                    <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                                    <h4></h4>
+                                    @csrf
+                                    {{-- driving license --}}
+                                    <div id="driving_license">
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                    ">
+                                                <input name="driving_license" displayName="Driving Licence" type="file" class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="driving licence" class="item">
+                                                </div>
+                                                <button type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <button onclick="collect_data(event,'file')" class="ss-job-dtl-pop-sv-btn">Save</button>
+                                    </div>
+                                    {{-- <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button> --}}
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+             {{-- driving_licence Modal --}}
+             <div class="modal fade ss-jb-dtl-pops-mn-dv" id="ss_number_file_modal" data-bs-backdrop="static"
+             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+             <div class="modal-dialog modal-sm modal-dialog-centered">
+                 <div class="modal-content">
+                     <div class="ss-pop-cls-vbtn">
+                         <button type="button" class="btn-close" data-target="#ss_number_file_modal"
+                             onclick="close_modal(this)" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                         <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                             <form name="ss_number" method="post" action="{{ route('worker-upload-files') }}"
+                                 id="ss_number_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                                 <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                                 <h4></h4>
+                                 @csrf
+                                 {{-- ss number --}}
+                                 <div  id="ss_number">
+                                    <label>Upload SS Document</label>
+                                    <div class="container-multiselect">
+                                        <div class="ss-form-group fileUploadInput"
+                                            style="
+                                                                display: flex;
+                                                                justify-content: center;
+                                                                align-items: center;
+                                                            ">
+                                             <input name="ss_number" displayName="Ss number file" type="file" class="files-upload">
+                                             <div class="list-items">
+                                                 <input hidden type="text" name="type" value="ss number file" class="item">
+                                             </div>
+                                            <button type="button" onclick="open_file(this)">Choose File</button>
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button>
+                                </div>
+                                 {{-- <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button> --}}
+                             </form>
+                         </div>
+                     </div>
+
+                 </div>
+             </div>
+         </div>
+
+             {{-- diploma Modal --}}
+             <div class="modal fade ss-jb-dtl-pops-mn-dv" id="diploma_file_modal" data-bs-backdrop="static"
+             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+             <div class="modal-dialog modal-sm modal-dialog-centered">
+                 <div class="modal-content">
+                     <div class="ss-pop-cls-vbtn">
+                         <button type="button" class="btn-close" data-target="#diploma_file_modal"
+                             onclick="close_modal(this)" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                         <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                             <form name="diploma" method="post" action="{{ route('worker-upload-files') }}"
+                                 id="diploma_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                                 <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                                 <h4></h4>
+                                 @csrf
+                                 {{-- driving license --}}
+                                 <div id="diploma">
+                                    
+                                    <div class="container-multiselect">
+                                        <div class="ss-form-group fileUploadInput"
+                                            style="
+                                                                display: flex !important;
+                                                                justify-content: center !important;
+                                                                align-items: center !important;
+                                                            ">
+                                            <input name="diploma" displayName="Diploma" type="file" class="files-upload">
+                                            <div class="list-items">
+                                                <input hidden type="text" name="type" value="diploma" class="item">
+                                            </div>
+                                            <button type="button" onclick="open_file(this)">Choose File</button>
+                                            <span class="help-block"></span>
+                                        </div>
+                                    </div>
+                                    <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button>
+                                </div>
+                                 {{-- <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button> --}}
+                             </form>
+                         </div>
+                     </div>
+
+                 </div>
+             </div>
+         </div>
 
 
 
@@ -1351,7 +1642,8 @@
                                     </div>
                                     <h4></h4>
                                     <div class="ss-form-group">
-                                        <input type="date" name="" placeholder="">
+                                        {{-- date format "yyyy-mm-dd" --}}
+                                        <input  type="date" name="" placeholder="yyyy/mm/dd">
                                         <span class="help-block
                         "></span>
                                     </div>
@@ -1438,7 +1730,7 @@
             <!-----------What's your specialty?------------>
             <!-- Modal -->
 
-            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-References" data-bs-backdrop="static"
+            {{-- <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-References" data-bs-backdrop="static"
                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm modal-dialog-centered">
                     <div class="modal-content">
@@ -1448,7 +1740,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
-                                <form method="post" action="{{ route('references.store') }}" id="ref-modal-form"
+                                <form name="" method="post" action="{{ route('references.store') }}" id="ref-modal-form"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="ss-job-dtl-pop-frm-sml-dv">
@@ -1509,7 +1801,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
             <!-----------Upload your latest skills checklist------------>
@@ -1640,24 +1932,35 @@
 @section('js')
     <script>
         var worker_files_displayname_by_type = [];
+        var worker_files = [];
         // certification
         var job_certification = "{!! $model->certificate !!}";
-        var job_certification_displayname = job_certification.split(',');
+        var job_certification_displayname = job_certification.split(',').map(function(item) {
+            return item.trim();
+        });
         console.log('certifications : ', job_certification_displayname);
 
         // vaccination
         var job_vaccination = "{!! $model->vaccinations !!}";
-        var job_vaccination_displayname = job_vaccination.split(',');
+        var job_vaccination_displayname = job_vaccination.split(',').map(function(item) {
+            return item.trim();
+        });
         console.log('vaccinations : ', job_vaccination_displayname);
 
+        // references
+        var number_of_references = "{!! $model->number_of_references !!}";
 
-
-
+        // skills 
+        var job_skills = "{!! $model->skills !!}";
+        var job_skills_displayname = job_skills.split(',').map(function(item) {
+            return item.trim();
+        });
+        console.log('skills : ', job_skills_displayname);
 
 
         var worker_id = "{!! auth()->guard('frontend')->user()->id !!}";
 
-        function get_all_files(type) {
+        function get_all_files() {
             return new Promise((resolve, reject) => {
                 $.ajax({
                     headers: {
@@ -1671,15 +1974,12 @@
                     }),
                     success: function(resp) {
                         console.log('Success:', resp);
-                        
+
                         let jsonResp = JSON.parse(resp);
-                        // filter files by type 
-                        let files = jsonResp.filter(file => file.type == type);
-                        let displayNames = files.map(file => file.displayName);
-                        worker_files_displayname_by_type = displayNames;
-                        console.log(worker_files_displayname_by_type);
+                        files = jsonResp;
                         resolve(
-                        worker_files_displayname_by_type); // Resolve the promise with the display names
+                            files
+                            ); // Resolve the promise with the display names
                     },
                     error: function(resp) {
                         console.log('Error:', resp);
@@ -1772,8 +2072,7 @@
             });
         })
 
-        function sendMultipleFiles(type) {
-
+        async function sendMultipleFiles(type) {
             const fileInputs = document.querySelectorAll('.files-upload');
             console.log(fileInputs);
             const fileReadPromises = [];
@@ -1796,7 +2095,7 @@
                     dateReferred: referenceDate,
                     minTitle: referenceMinTitle,
                     isLastAssignment: referenceRecency == 1 ? true : false
-                }
+                };
                 console.log(referenceInfo);
                 let readerPromise = new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -1839,49 +2138,37 @@
                 });
             }
 
-
-            Promise.all(fileReadPromises).then(files => {
+            try {
+                const files = await Promise.all(fileReadPromises);
                 console.log(files);
-                var body = {
-                    workerId: workerId,
-                    files: files
-                };
-                fetch('/worker/add-docs', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                                'content')
-                        },
-                        body: JSON.stringify({
-                            workerId: workerId,
-                            files: files
-                        })
+                const response = await fetch('/worker/add-docs', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
+                    },
+                    body: JSON.stringify({
+                        workerId: workerId,
+                        files: files
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data); // Handle success
+                });
+                const data = await response.json();
+                console.log(data); // Handle success
+                notie.alert({
+                    type: 'success',
+                    text: '<i class="fa fa-check"></i>' + data.message,
+                    time: 3
+                });
+            } catch (error) {
+                console.error('Error:', error); // Handle errors
+            }
 
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i>' + data.message,
-                            time: 3
-                        });
-                        selectedValues = [];
-
-                    })
-                    .catch(error => {
-                        console.error('Error:', error); // Handle errors
-                    });
-            }).catch(error => {
-                console.error('Error reading files:', error); // Handle file read errors
-            });
             // clear files inputs 
             fileInputs.forEach((input) => {
                 input.value = '';
             });
             selectedFiles = [];
-
         }
     </script>
     <script>
@@ -1922,7 +2209,7 @@
                         match = true;
                     }
                     break;
-                case 'experience':
+                case 'worker_experience':
                     if (job['preferred_experience'] == InsertedValue) {
                         match = true;
                     }
@@ -2091,7 +2378,8 @@
                     }
                     break;
                 case 'worker_on_call_check':
-                    if (InsertedValue == true) {
+                    job['on_call'] = job['on_call'] == 'Yes' ? '1' : '0';
+                    if (job['on_call'] == InsertedValue){
                         match = true;
                     }
                     break;
@@ -2175,14 +2463,17 @@
         async function collect_data(event, type) {
             event.preventDefault();
             // targiting the input form and collectiong data
-            let button = $(event.target);
-            var form = button.closest('form');
-            let formData = new FormData(form[0]);
-            let data = Object.fromEntries(formData.entries());
-            dataToSend = {
-                ...dataToSend,
-                ...data
-            };
+            
+                let button = $(event.target);
+                var form = button.closest('form');
+                let formData = new FormData(form[0]);
+                let data = Object.fromEntries(formData.entries());
+                dataToSend = {
+                    ...dataToSend,
+                    ...data
+                };
+            
+
             var inputName = '';
             if (type == 'binary') {
                 inputName = form.find('input[type="radio"]').attr('name');
@@ -2224,33 +2515,71 @@
                 areaDiv.classList.add('ss-s-jb-apl-bg-blue');
                 console.log(areaDiv);
             } else if (type == 'file') {
-                let worker_files_displayname_by_type = [];
-
                 try {
-                    worker_files_displayname_by_type = await get_all_files(inputName);
+                    await sendMultipleFiles(inputName);
+                } catch (error) {
+                    console.error('Failed to send files:', error)
+                }
+                worker_files = await get_all_files();
+                await checkFileMatch(inputName);
+            } 
+            closeModal();
+        }
+
+        async function checkFileMatch(inputName){
+            console.log('Checking files for:', inputName);
+            let worker_files_displayname_by_type = [];
+                try {
+                    worker_files_displayname_by_type = await get_all_files_displayName_by_type(inputName);
                     console.log('Files:', worker_files_displayname_by_type);
                 } catch (error) {
                     console.error('Failed to get files:', error);
                 }
-                
+
                 let areaDiv = document.getElementById(inputName);
                 let check = false;
                 if (inputName == 'certification') {
-                    selectedCertificates = [...selectedValues];
-                    const is_selected_file_exist_in_worker_files = selectedCertificates.every(element =>
-                        worker_files_displayname_by_type.includes(element));
                     const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
                         worker_files_displayname_by_type.includes(element));
-                    if (is_selected_file_exist_in_worker_files || is_job_certif_exist_in_worker_files) {
+                    console.log('job certification job name :', job_certification_displayname)
+                    console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
+                    console.log('is_job_certif_exist_in_worker_files', is_job_certif_exist_in_worker_files);
+                    if (is_job_certif_exist_in_worker_files) {
                         check = true;
                     }
                 } else if (inputName == 'vaccination') {
-                    selectedVaccinations = [...selectedValues];
-                    const is_selected_file_exist_in_worker_files = selectedVaccinations.every(element =>
-                        worker_files_displayname_by_type.includes(element));
                     const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
                         worker_files_displayname_by_type.includes(element));
-                    if (is_selected_file_exist_in_worker_files || is_job_vaccin_exist_in_worker_files) {
+                    console.log('job vaccination job name :', job_vaccination_displayname)
+                    console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
+                    console.log('is_job_vaccin_exist_in_worker_files', is_job_vaccin_exist_in_worker_files);
+
+                    if (is_job_vaccin_exist_in_worker_files) {
+                        check = true;
+                    }
+                } else if (inputName == 'references') {
+                    if (number_of_references <= worker_files_displayname_by_type.length) {
+                        check = true;
+                    }
+                } else if (inputName == 'skills'){
+                    const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element =>
+                        worker_files_displayname_by_type.includes(element));
+                        // console.log('job skills job name :', job_skills_displayname)
+                        // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
+                        // console.log('is_job_skill_exist_in_worker_files', is_job_skill_exist_in_worker_files);
+                        if (is_job_skill_exist_in_worker_files) {
+                            check = true;
+                        }
+                } else if (inputName == 'driving_license'){
+                    if (worker_files_displayname_by_type.length > 0) {
+                        check = true;
+                    }
+                } else if (inputName == 'diploma'){
+                    if (worker_files_displayname_by_type.length > 0) {
+                        check = true;
+                    }
+                } else if ( inputName == 'ss_number'){
+                    if (worker_files_displayname_by_type.length > 0) {
                         check = true;
                     }
                 }
@@ -2261,14 +2590,8 @@
                     areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
                     areaDiv.classList.add('ss-s-jb-apl-bg-pink');
                 }
-                sendMultipleFiles(inputName);
-            } else {
-                let areaDiv = document.getElementById(inputName);
-                areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
-                areaDiv.classList.add('ss-s-jb-apl-bg-pink');
-            }
 
-            closeModal();
+           
         }
 
         function closeModal() {
@@ -2278,7 +2601,62 @@
             });
         }
 
-        $(document).ready(function() {
+        async function get_all_files_displayName_by_type(type){
+            let files = worker_files.filter(file => file.type == type);
+            let displayNames = files.map(file => file.displayName);
+            worker_files_displayname_by_type = displayNames;
+            return displayNames;
+        }
+
+
+        async function check_required_files_before_sent(obj){
+            let diploma = [];
+            let driving_license = [];
+            let ss_number = [];
+            let worked_bfore = dataToSend['worked_at_facility_before'];
+
+                try {
+                    diploma = await get_all_files_displayName_by_type('diploma');
+                   
+                } catch (error) {
+                    console.error('Failed to get files:', error);
+                }
+                try {
+                    driving_license = await get_all_files_displayName_by_type('driving_license');
+                    
+                } catch (error) {
+                    console.error('Failed to get files:', error);
+                }
+                try {
+                    ss_number = await get_all_files_displayName_by_type('ss_number');
+                   
+                } catch (error) {
+                    console.error('Failed to get files:', error);
+                }
+
+            if ( diploma.length == 0 || driving_license.length == 0 || ss_number.length == 0 || worked_bfore == null) {
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
+                    time: 3
+                });
+                return false;
+            } else {
+                apply_on_jobs(obj,worked_bfore);
+            }
+
+        }
+
+        $(document).ready(async function() {
+            worker_files = await get_all_files();
+            console.log('Worker files:', worker_files);
+            checkFileMatch('certification');
+            checkFileMatch('vaccination');
+            checkFileMatch('references');
+            checkFileMatch('skills');
+            checkFileMatch('driving_license');
+            checkFileMatch('ss_number');
+            checkFileMatch('diploma');
             let matches = @json($matches);
             console.log((matches));
 
@@ -2450,5 +2828,13 @@
 
     .item.checked .check-icon {
         transform: scale(1);
+    }
+
+    .container-multiselect .ss-form-group{
+        margin-top: 30px !important;
+    }
+
+    .ss-job-dtl-pop-sv-btn {
+        margin-top: 30px !important;
     }
 </style>

@@ -451,9 +451,9 @@ class KeywordSeeder extends Seeder
                 '12-hour'
             ],
             'PreferredShift' => [
-                'Day',
-                'Night',
-                'Day & Night'
+                '3x12 Nights or Days',
+                '4x10 Days',
+                '5x8 Days',
             ],
             'DaisyCategory' => [
                 'Extraordinary Nurse',
@@ -483,6 +483,39 @@ class KeywordSeeder extends Seeder
                 'Taylor Hardin Secure Medical Facility',
                 'University of South Alabama Medical Center',
                 'Other'
+            ],
+            'ClinicalProfession' => [
+                'RN',
+                'CNA',
+                'CMA',
+                'Tech / Assist',
+                'Therapy',
+                'Physicians',
+                'PA',
+                'CRNA',
+                'NP',
+                'LPN / LVN',
+                'Social Work',
+                'Other Clinician',		
+            ],
+            'Non-ClinicalProfession' => [
+                'Academic',
+                'Accounting',
+                'Clerical',
+                'Engineering',
+                'Executive',
+                'Food Service',
+                'Health Sciences',
+                'Hr/Payroll',
+                'Information Technology',
+                'Janitorial',
+                'Light Industrial',
+                'Management',
+                'Medical Coding',
+                'Medical Filing and Records Management',
+                'Medical Laboratory',
+                'Mid-Revenue Cycle Solutions',
+                'Security',		
             ],
             'Profession' => [
                 'Academic',
@@ -623,6 +656,21 @@ class KeywordSeeder extends Seeder
             'State'=>State::all()->pluck('name')->toArray(),
             'StateCode'=>State::all()->pluck('iso2')->toArray(),
             'City'=> Cities::all()->pluck('name')->toArray(),
+            'Urgency'=> [
+                'Auto Offer',
+                'no Auto Offer'
+            ],
+            'RecencyOfReference'=>[
+                '3 months',
+                '6 months',
+                '1 year',
+                '2 years',
+                'More than 2 years',
+            ],
+            'MinTitleOfReference' => [
+                'Charge',
+                 'Manager' 
+            ]
         ];
     }
 }

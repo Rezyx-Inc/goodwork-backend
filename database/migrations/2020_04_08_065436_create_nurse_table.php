@@ -162,12 +162,15 @@ class CreateNurseTable extends Migration
             
             $table->string('worker_facility_city',36)->nullable(); // done
             $table->string('worker_facility_state',36)->nullable(); // done
-            $table->boolean('worker_feels_like_per_hour_check')->defauls(false); // done
-            $table->boolean('worker_overtime_check')->defauls(false); // done
-            $table->boolean('worker_on_call_check')->defauls(false); // done
-            $table->boolean('worker_orientation_rate_check')->defauls(false); // done
+            $table->boolean('worker_feels_like_per_hour_check')->default(false); // done
+            $table->boolean('worker_overtime_check')->default(false); // done
+            $table->boolean('worker_on_call_check')->default(false); // done
+            $table->boolean('worker_orientation_rate_check')->default(false); // done
             $table->decimal('worker_weekly_non_taxable_amount_check', 8, 2)->nullable(); // done
-            $table->boolean('worker_call_back_check')->defauls(false); // done
+            $table->boolean('worker_call_back_check')->default(false); // done
+
+            // Experience
+            $table->integer('worker_experience')->nullable();
             
 
 

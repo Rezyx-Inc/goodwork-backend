@@ -946,8 +946,8 @@
                                                 </span>
                                             </div>
                                             <ul class="list-items">
-                                                @if (isset($allKeywords['Skills']))
-                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                @if (isset($allKeywords['Speciality']))
+                                                    @foreach ($allKeywords['Speciality'] as $value)
                                                         <li class="item" value="{{ $value->title }}">
                                                             <span class="checkbox">
                                                                 <i class="fa-solid fa-check check-icon"></i>
@@ -1006,7 +1006,7 @@
                                                     <span class="help-block"></span>
                                                 </div>
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('driving_license')">Save</button>
                                         </div>
                                         {{-- ss number --}}
                                         <div class="d-none" id="ss_number">
@@ -1026,7 +1026,7 @@
                                                     <span class="help-block"></span>
                                                 </div>
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('ss_number')">Save</button>
                                         </div>
 
                                         {{-- other --}}
@@ -1104,21 +1104,33 @@
                                                 <span class="help-block"></span>
                                             </div>
 
-                                            <div class="ss-form-group">
-                                                <label>Min Title of Reference</label>
-                                                <input type="text" name="min_title_of_reference"
-                                                    placeholder="Min Title of Reference">
-                                                <span class="help-block"></span>
-                                            </div>
-                                            <div class="ss-form-group">
-                                                <label>Is this from your last assignment?</label>
-                                                <select name="recency_of_reference">
-                                                    <option value="">Select</option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="0">No</option>
+                                            
+                                        <div class="ss-form-group">
+                                            <label>Min Title of Reference</label>
+                                                <select name="min_title_of_reference">
+                                                    <option value="">Select a min title</option>
+                                                    @if (isset($allKeywords['MinTitleOfReference']))
+                                                        @foreach ($allKeywords['MinTitleOfReference'] as $value)
+                                                            <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
-                                                <span class="help-block"></span>
-                                            </div>
+
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group">
+                                            <label>Is this from your last assignment?</label>
+                                            <select name="recency_of_reference">
+                                                <option value="">Select a recency period</option>
+                                                @if (isset($allKeywords['RecencyOfReference']))
+                                                    @foreach ($allKeywords['RecencyOfReference'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="help-block"></span>
+                                        </div>
 
                                             <div class="ss-form-group fileUploadInput"
                                                 style="display: flex;

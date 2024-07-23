@@ -68,6 +68,7 @@ class CreateOffersTable extends Migration
             $table->decimal('weekly_pay', 8, 2)->nullable();
             $table->boolean('is_draft')->nullable()->default(false);
             $table->boolean('is_counter')->nullable()->default(false);
+            $table->boolean('worked_at_facility_before')->nullable()->default(false);
             $table->string('created_by', 36)->nullable();
             $table->string('tax_status', 36)->nullable();
             $table->foreign('worker_user_id')->references('id')->on('nurses')->onDelete('cascade');

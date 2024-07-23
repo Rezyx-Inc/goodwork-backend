@@ -16,7 +16,7 @@ use App\Events\NotificationMessage;
 use App\Events\NotificationJob;
 use App\Events\NotificationOffer;
 use Illuminate\Support\Facades\Http;
-
+use Carbon\Carbon;
 
 use DB;
 use Exception;
@@ -1241,7 +1241,25 @@ public function certification_submit(Request $request)
 }
 
 
+public function match_worker_job(Request $request)
+{
+        
+        // dd($request->input());
+        $user = auth()->guard('frontend')->user();
+        
+        $id = $user->id;
+        $model = Nurse::where('user_id',$id)->first();
+        $inputFields = collect($request->all())->filter(function ($value) {
+            return $value !== null;
+        });
 
+        $inputFields->put('updated_at', Carbon::now());
+        // dd($inputFields);
+        $model->fill($inputFields->all());
+        $model->save();
+        return new JsonResponse(['success' => true, 'msg'=>'Updated successfully.'], 200);
+
+}
 
 
 

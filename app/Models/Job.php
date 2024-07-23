@@ -264,12 +264,21 @@ class Job extends Model
                 $name = 'driving_license';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            'worked_at_facility_before'=> function () use ($nurse){
-                $match = ($nurse->worked_at_facility_before=='1') ;
-                $value = $nurse->worked_at_facility_before;
+            'worked_at_facility_before'=> function () use ($job,$nurse){
+                $offer = Offer::where('job_id', $job->id)->where('worker_user_id', $nurse->id)->first();
+                if (empty($offer)) {
+                    $match = false;
+                    $value = '';
+                    $type = 'dropdown';
+                    $name = 'worked_at_facility_before';
+                    return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
+                }else{
+                $match = ($offer->worked_at_facility_before=='1') ;
+                $value = $offer->worked_at_facility_before;
                 $type = 'dropdown';
                 $name = 'worked_at_facility_before';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
+                }
             },
             'worker_ss_number'=> function () use ($nurse){
                 $match = empty($nurse->worker_ss_number) ? false : true;
@@ -311,14 +320,14 @@ class Job extends Model
             },
 
             'preferred_experience'=> function () use ($job, $nurse){
-                if(!empty($nurse->experience) && $job->preferred_experience==$nurse->experience){
+                if(!empty($nurse->worker_experience) && $job->preferred_experience==$nurse->worker_experience){
                     $match = true;
                 }else{
                     $match = false;
                 }
-                $value = $nurse->experience;
+                $value = $nurse->worker_experience;
                 $type = 'dorpdown';
-                $name = 'experience';
+                $name = 'worker_experience';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
 

@@ -128,14 +128,14 @@
                                                 </select>
                                                 <span class="help-block-preferred_specialty"></span>
                                             </div>
+
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Preferred Profession</label>
                                                 <select name="proffesion" id="perferred_profession">
                                                     <option value="">Profession</option>
-                                                    @foreach ($proffesions as $proffesion)
-
-                                                        <option value="{{ $proffesion->full_name }}">
-                                                            {{ $proffesion->full_name }}
+                                                    @foreach ($allKeywords['Profession'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -205,6 +205,32 @@
                                                 <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                                     (Description not required)
                                                 </span>
+                                            </div>
+
+                                            
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Shift Time of Day</label>
+                                                <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="shifttimeofday">
+                                                                <option value="">Select Shift Time of Day</option>
+                                                                @if(isset($allKeywords['PreferredShift']))
+                                                                @foreach ($allKeywords['PreferredShift'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="shifttimeofdayAllValues" name="preferred_shift_duration" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addshifttimeofday('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
                                             </div>
 
                                             <div class="field btns col-12 d-flex justify-content-center">
@@ -306,6 +332,8 @@
                                                 <span class="help-block-weeks_shift"></span>
                                             </div>
 
+                                            
+
 
 
 
@@ -318,7 +346,7 @@
                                         </div>
                                         <div class="ss-form-group col-md-4">
                                             <label>Preferred Experience</label>
-                                            <input type="text" name="preferred_experience" id="preferred_experience"
+                                            <input type="number" name="preferred_experience" id="preferred_experience"
                                                 placeholder="Enter Preferred Experience">
                                         </div>
 
@@ -528,7 +556,10 @@
                                                     placeholder="Enter number of references">
                                                 <span class="help-block-number_of_references"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+
+                                            
+
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Min Title Of Reference</label>
                                                 <input type="text" name="min_title_of_reference" id="min_title_of_reference"
                                                     placeholder="Enter min title of reference">
@@ -539,7 +570,7 @@
                                                 <input type="number" name="recency_of_reference" id="recency_of_reference"
                                                     placeholder="Enter # recency of reference">
                                                 <span class="help-block-recency_of_reference"></span>
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
                                                 <label>Eligible work in us ?</label>
                                                 <select name="eligible_work_in_us" id="eligible_work_in_us">
@@ -552,7 +583,7 @@
                                                 <span class="help-block-eligible_work_in_us"></span>
                                             </div>
                                             
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Skills checklist</label>
                                                 <select name="skills" id="skills">
                                                     <option value="">Select Skills Checklist</option>
@@ -562,14 +593,25 @@
                                                     @endforeach
                                                 </select>
                                                 <span class="help-block-skills"></span>
-                                            </div>
+                                            </div> --}}
+
+
+                                            
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Urgency</label>
-                                                <input type="text" name="urgency" id="urgency"
-                                                    placeholder="Enter urgency">
+                                                <select name="urgency" id="urgency">
+                                                    <option value="">Select Urgency</option>
+                                                    @foreach ($allKeywords['Urgency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-urgency"></span>
                                             </div>
+
+                                            
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Facility's Parent System</label>
@@ -613,9 +655,9 @@
                                                 
 
                                             <div class="ss-form-group col-md-4">
-                                                <label>Nurse Classification</label>
+                                                <label>Worker Classification</label>
                                                 <select name="nurse_classification" id="nurse_classification">
-                                                    <option value="">Select Nurse Classification</option>
+                                                    <option value="">Select Worker Classification</option>
                                                     @foreach ($allKeywords['NurseClassification'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -646,6 +688,13 @@
                                                     @endforeach
                                                 </select>
                                                 <span class="help-block-benefits"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Preferred Experience</label>
+                                                <input type="number" name="preferred_experience" id="preferred_experience"
+                                                    placeholder="Enter Preferred Experience">
+                                                    <span class="help-block-preferred_experience"></span>
                                             </div>
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -692,6 +741,30 @@
                                                     </li>
                                                     <li>
                                                         <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" id="from_add" onclick="addvacc('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Skills checklist</label>
+                                                <div class="ss-speilty-exprnc-add-list skills-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="skills">
+                                                                <option value="">Select Skills</option>
+                                                                @if(isset($allKeywords['Speciality']))
+                                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                                <option value="{{$value->title}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="skillsAllValues" name="skills" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addskills('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -1142,6 +1215,30 @@
                                                         </span>
                                                     </div>
 
+                                                    <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                        <label>Shift Time of Day</label>
+                                                        <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
+                                                        </div>
+                                                        <ul>
+                                                            <li class="row w-100 p-0 m-0">
+                                                                <div class="ps-0">
+                                                                    <select class="m-0" id="shifttimeofdayDraft">
+                                                                        <option value="">Select Shift Time of Day</option>
+                                                                        @if(isset($allKeywords['PreferredShift']))
+                                                                        @foreach ($allKeywords['PreferredShift'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                        @endforeach
+                                                                        @endif
+                                                                    </select>
+                                                                    <input type="hidden" id="shifttimeofdayAllValuesDraft" name="preferred_shift_duration" >
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addshifttimeofday('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnDraft">Save as draft</button>
                                                         <button class="firstNextDraft next">Next</button>
@@ -1246,6 +1343,8 @@
                                                             placeholder="Enter Shift Per Weeks">
                                                         <span class="help-block-weeks_shift"></span>
                                                     </div>
+
+                                                    
 
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
@@ -1404,7 +1503,7 @@
                                                     placeholder="Enter number of references">
                                                 <span class="help-block-number_of_referencesDraft"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Min Title Of Reference</label>
                                                 <input type="text" name="min_title_of_reference" id="min_title_of_referenceDraft"
                                                     placeholder="Enter min title of reference">
@@ -1415,7 +1514,7 @@
                                                 <input type="number" name="recency_of_reference" id="recency_of_referenceDraft"
                                                     placeholder="Enter # recency of reference">
                                                 <span class="help-block-recency_of_referenceDraft"></span>
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
                                                 <label>Eligible work in us ?</label>
                                                 <select name="eligible_work_in_us" id="eligible_work_in_usDraft">
@@ -1428,7 +1527,7 @@
                                                 <span class="help-block-eligible_work_in_usDraft"></span>
                                             </div>
                                             
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Skills checklist</label>
                                                 <select name="skills" id="skillsDraft">
                                                     <option value="">Select Skills Checklist</option>
@@ -1438,12 +1537,19 @@
                                                     @endforeach
                                                 </select>
                                                 <span class="help-block-skillsDraft"></span>
-                                            </div>
+                                            </div> --}}
+
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Urgency</label>
-                                                <input type="text" name="urgency" id="urgencyDraft"
-                                                    placeholder="Enter urgency">
+                                                <select name="urgency" id="urgencyDraft">
+                                                    <option value="">Select Urgency</option>
+                                                    @foreach ($allKeywords['Urgency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-urgencyDraft"></span>
                                             </div>
 
@@ -1489,9 +1595,9 @@
                                                 
 
                                             <div class="ss-form-group col-md-4">
-                                                <label>Nurse Classification</label>
+                                                <label>Worker Classification</label>
                                                 <select name="nurse_classification" id="nurse_classificationDraft">
-                                                    <option value="">Select Nurse Classification</option>
+                                                    <option value="">Select Worker Classification</option>
                                                     @foreach ($allKeywords['NurseClassification'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -1522,6 +1628,13 @@
                                                     @endforeach
                                                 </select>
                                                 <span class="help-block-benefitsDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Preferred Experience</label>
+                                                <input type="number" name="preferred_experience" id="preferred_experienceDraft"
+                                                    placeholder="Enter Preferred Experience">
+                                                    <span class="help-block-preferred_experienceDraft"></span>
                                             </div>
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -1568,6 +1681,31 @@
                                                     </li>
                                                     <li>
                                                         <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"  onclick="addvacc('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Skills checklist</label>
+                                                <div class="ss-speilty-exprnc-add-list skills-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="skillsDraft">
+                                                                <option value="">Select Skills</option>
+                                                                @if(isset($allKeywords['Speciality']))
+                                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                                <option value="{{$value->title}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="skillsAllValuesDraft" name="skills" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addskills('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -1896,6 +2034,30 @@
                                                         </span>
                                                     </div>
 
+                                                    <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                        <label>Shift Time of Day</label>
+                                                        <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
+                                                        </div>
+                                                        <ul>
+                                                            <li class="row w-100 p-0 m-0">
+                                                                <div class="ps-0">
+                                                                    <select class="m-0" id="shifttimeofdayEdit">
+                                                                        <option value="">Select Shift Time of Day</option>
+                                                                        @if(isset($allKeywords['PreferredShift']))
+                                                                        @foreach ($allKeywords['PreferredShift'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                        @endforeach
+                                                                        @endif
+                                                                    </select>
+                                                                    <input type="hidden" id="shifttimeofdayAllValuesEdit" name="preferred_shift_duration" >
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addshifttimeofday('from_edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnEdit">Save as draft</button>
                                                         <button class="firstNextEdit next">Next</button>
@@ -2000,6 +2162,8 @@
                                                             placeholder="Enter Shift Per Weeks">
                                                         <span class="help-block-weeks_shift"></span>
                                                     </div>
+
+                                                    
 
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
@@ -2158,7 +2322,7 @@
                                                     placeholder="Enter number of references">
                                                 <span class="help-block-number_of_referencesEdit"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Min Title Of Reference</label>
                                                 <input type="text" name="min_title_of_reference" id="min_title_of_referenceEdit"
                                                     placeholder="Enter min title of reference">
@@ -2169,7 +2333,7 @@
                                                 <input type="number" name="recency_of_reference" id="recency_of_referenceEdit"
                                                     placeholder="Enter # recency of reference">
                                                 <span class="help-block-recency_of_referenceEdit"></span>
-                                            </div>
+                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
                                                 <label>Eligible work in us ?</label>
                                                 <select name="eligible_work_in_us" id="eligible_work_in_usEdit">
@@ -2182,22 +2346,17 @@
                                                 <span class="help-block-eligible_work_in_usEdit"></span>
                                             </div>
                                             
+
+
                                             <div class="ss-form-group col-md-4">
-                                                <label>Skills checklist</label>
-                                                <select name="skills" id="skillsEdit">
-                                                    <option value="">Select Skills Checklist</option>
-                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                <label>Urgency</label>
+                                                <select name="urgency" id="urgencyEdit">
+                                                    <option value="">Select Urgency</option>
+                                                    @foreach ($allKeywords['Urgency'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                <span class="help-block-skillsEdit"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Urgency</label>
-                                                <input type="text" name="urgency" id="urgencyEdit"
-                                                    placeholder="Enter urgency">
                                                 <span class="help-block-urgencyEdit"></span>
                                             </div>
 
@@ -2243,9 +2402,9 @@
                                                 
 
                                             <div class="ss-form-group col-md-4">
-                                                <label>Nurse Classification</label>
+                                                <label>Worker Classification</label>
                                                 <select name="nurse_classification" id="nurse_classificationEdit">
-                                                    <option value="">Select Nurse Classification</option>
+                                                    <option value="">Select Worker Classification</option>
                                                     @foreach ($allKeywords['NurseClassification'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -2276,6 +2435,13 @@
                                                     @endforeach
                                                 </select>
                                                 <span class="help-block-benefitsEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Preferred Experience</label>
+                                                <input type="number" name="preferred_experience" id="preferred_experienceEdit"
+                                                    placeholder="Enter Preferred Experience">
+                                                    <span class="help-block-preferred_experienceEdit"></span>
                                             </div>
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -2322,6 +2488,32 @@
                                                     </li>
                                                     <li>
                                                         <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"  onclick="addvacc('from_Edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Skills checklist</label>
+                                                <div class="ss-speilty-exprnc-add-list skills-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="skillsEdit">
+                                                                <option value="">Select Skills</option>
+                                                                @if(isset($allKeywords['Speciality']))
+                                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                                <option value="{{$value->title}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="skillsAllValuesEdit" name="skills" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addskills('from_Edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -2535,9 +2727,38 @@
 
 
     </main>
+    
     <script>
+        // conditional clinical/non profession
 
-const myForm = document.getElementById('create_job_form');
+    document.addEventListener('DOMContentLoaded', function () {
+        const jobTypeSelect = document.getElementById('job_type');
+        const professionSelect = document.getElementById('perferred_profession');
+
+        jobTypeSelect.addEventListener('change', function () {
+        const selectedJobType = this.value;
+        let professions = [];
+        if (selectedJobType === 'Clinical') {
+            professions = @json($allKeywords['ClinicalProfession']);
+        } else if (selectedJobType === 'Non-Clinical') {
+            professions = @json($allKeywords['Non-ClinicalProfession']);
+        } else {
+            professions = @json($allKeywords['Profession']);
+        }
+
+        professionSelect.innerHTML = '<option value="">Profession</option>';
+
+        professions.forEach(function (profession) {
+            const option = document.createElement('option');
+            option.value = profession.title;
+            option.textContent = profession.title;
+            professionSelect.appendChild(option);
+                });
+            });
+    });
+
+
+    const myForm = document.getElementById('create_job_form');
     const draftJobs = @json($draftJobs);
     const publishedJobs = @json($publishedJobs);
     const onholdJobs = @json($onholdJobs);
@@ -2815,6 +3036,9 @@ if (draftJobs.length !== 0) {
 
         var certificateStr = '';
         var vaccinationStr = '';
+        var skillsStr = '';
+        var shifttimeofdayStr = '';
+        
          $(document).ready(function() {
             $('#facility_state').change(function() {
                 const selectedState = $(this).find(':selected').attr('id');
@@ -4580,6 +4804,15 @@ if (draftJobs.length !== 0) {
         if (vaccin_all_values) {
             vaccin_all_values.value = vaccinationStr;
         }
+        let skills_all_values = document.getElementById("skillsAllValues");
+        if (skills_all_values) {
+            skills_all_values.value = skillsStr;
+        }
+
+        let shifttimeofday_all_values = document.getElementById("shifttimeofdayAllValues");
+        if (shifttimeofday_all_values) {
+            shifttimeofday_all_values.value = shifttimeofdayStr;
+        }
 
         if (validateForth()) {
             bullet[current - 1].classList.add("active");
@@ -5232,6 +5465,15 @@ if (draftJobs.length !== 0) {
         if (vaccin_all_values) {
             vaccin_all_values.value = vaccinationStr;
         }
+        let skills_all_values = document.getElementById("skillsAllValuesDraft");
+        if (skills_all_values) {
+            skills_all_values.value = skillsStr;
+        }
+        let shifttimeofday_all_values = document.getElementById("shifttimeofdayAllValuesDraft");
+        if (shifttimeofday_all_values) {
+            shifttimeofday_all_values.value = shifttimeofdayStr;
+        }
+
 
         if (validateForthDraft()) {
             bulletDraft[currentDraft - 1].classList.add("active");
@@ -5865,6 +6107,14 @@ if (draftJobs.length !== 0) {
         if (vaccin_all_values) {
             vaccin_all_values.value = vaccinationStr;
         }
+        let skills_all_values = document.getElementById("skillsAllValuesEdit");
+        if (skills_all_values) {
+            skills_all_values.value = skillsStr;
+        }
+        let shifttimeofday_all_values = document.getElementById("shifttimeofdayAllValuesEdit");
+        if (shifttimeofday_all_values) {
+            shifttimeofday_all_values.value = shifttimeofdayStr;
+        }
         document.getElementById("activeEdit").value = true;
         document.getElementById("is_openEdit").value = true;
 
@@ -6273,6 +6523,190 @@ function remove_certificate(obj, key) {
     }
 }
 </script>
+
+{{-- script managing skills --}}
+
+<script>
+    var skills = {};
+
+    function addskills(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#skills');
+            idtitle = "skills";
+        } else if (type == 'from_draft') {
+            id = $('#skillsDraft');
+            idtitle = "skillsDraft";
+        } else {
+            id = $('#skillsEdit');
+            idtitle = "skillsEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the skills please.',
+                time: 3
+            });
+        } else {
+            if (!skills.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                skills[id.val()] = optionText;
+                skillsStr = Object.values(skills).join(', ');
+                id.val('');
+                list_skills();
+            }
+        }
+    }
+
+    function list_skills() {
+        var str = '';
+        console.log(skills);
+
+        for (const key in skills) {
+            console.log('skills',skills);
+            
+
+            let skillsname = "";
+            let allspcldata = @json($allKeywords['Speciality']);
+
+            console.log('allspcldata',allspcldata);
+
+            if (skills.hasOwnProperty(key)) {
+                var data = allspcldata;
+
+                data.forEach(function(item) {
+                    if (key == item.title) {
+                        skillsname = item.title;
+                    }
+                });
+                const value = skills[key];
+                str += '<ul>';
+                str += '<li>' + skillsname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-skills" data-key="' + key + '" onclick="remove_skills(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.skills-content').html(str);
+    }
+
+    function remove_skills(obj, key) {
+        if (skills.hasOwnProperty(key)) {
+            delete skills[key]; // Remove the skill from the object
+            skillsStr = Object.values(skills).join(', '); // Update the hidden input value
+            list_skills(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Skill removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Skill not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
+{{-- script managing shifttimeofday --}}
+<script>
+    var shifttimeofday = {};
+
+    function addshifttimeofday(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#shifttimeofday');
+            idtitle = "shifttimeofday";
+        } else if (type == 'from_draft') {
+            id = $('#shifttimeofdayDraft');
+            idtitle = "shifttimeofdayDraft";
+        } else {
+            id = $('#shifttimeofdayEdit');
+            idtitle = "shifttimeofdayEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the shifttimeofday please.',
+                time: 3
+            });
+        } else {
+            if (!shifttimeofday.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                shifttimeofday[id.val()] = optionText;
+                shifttimeofdayStr = Object.values(shifttimeofday).join(', ');
+                console.log('shifttimeofdayStr',shifttimeofdayStr);
+                id.val('');
+                list_shifttimeofday();
+            }
+        }
+    }
+
+    function list_shifttimeofday() {
+        var str = '';
+        console.log(shifttimeofday);
+
+        for (const key in shifttimeofday) {
+            console.log(shifttimeofday);
+
+            let shifttimeofdayname = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['PreferredShift']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (shifttimeofday.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        shifttimeofdayname = item.title;
+                    }
+                });
+                const value = shifttimeofday[key];
+                str += '<ul>';
+                str += '<li>' + shifttimeofdayname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-shifttimeofday" data-key="' + key + '" onclick="remove_shifttimeofday(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.shifttimeofday-content').html(str);
+    }
+
+    function remove_shifttimeofday(obj, key) {
+        if (shifttimeofday.hasOwnProperty(key)) {
+            delete shifttimeofday[key]; // Remove the shifttimeofday from the object
+            shifttimeofdayStr = Object.values(shifttimeofday).join(', '); // Update the hidden input value
+            list_shifttimeofday(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Shift Time Of Day not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');

@@ -545,6 +545,7 @@ class WorkerDashboardController extends Controller
                 ->first();
             $input = [
                 'job_id' => $request->jid,
+                'worked_at_facility_before' => $request->worked_at_facility_before,
                 'created_by' => $job->created_by,
                 'worker_user_id' => $user->nurse->id,
                 'job_name' => $request->job_name,

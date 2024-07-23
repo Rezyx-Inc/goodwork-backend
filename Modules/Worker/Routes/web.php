@@ -129,6 +129,11 @@ Route::prefix('worker')->group(function() {
         Route::post('certification', ['uses' => 'WorkerController@certification_submit', 'as' => 'worker.certification']);
         Route::post('vaccination', ['uses' => 'WorkerController@vaccination_submit', 'as' => 'worker.vaccination']);
 
+        // matching worker information with job information
+
+        Route::post('match-worker-job', ['uses' => 'WorkerController@match_worker_job', 'as' => 'match-worker-job']);
+        // Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile.store']);
+
     }
 
     );

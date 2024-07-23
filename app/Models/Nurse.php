@@ -204,7 +204,7 @@ class Nurse extends Model implements HasMedia
         'worker_orientation_rate_check',
         'worker_weekly_non_taxable_amount_check',
         'worker_call_back_check',
-        
+        'worker_experience'
 
     ];
     protected static $logName = 'Nurse';

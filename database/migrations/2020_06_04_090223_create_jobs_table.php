@@ -21,7 +21,7 @@ class CreateJobsTable extends Migration
             $table->string('preferred_specialty')->nullable();
             $table->string('import_id')->nullable();
             $table->unsignedBigInteger('preferred_assignment_duration')->nullable();
-            $table->unsignedBigInteger('preferred_shift_duration')->nullable();
+            $table->string('preferred_shift_duration')->nullable();
             $table->string('preferred_work_location')->nullable();
             $table->unsignedBigInteger('preferred_work_area')->nullable();
             $table->string("preferred_days_of_the_week")->nullable();

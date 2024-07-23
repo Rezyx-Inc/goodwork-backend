@@ -526,7 +526,7 @@ class RecruiterController extends Controller
                     'start_date' => 'nullable|date',
                     'hours_shift' => 'nullable|integer',
                     'hours_per_week' => 'nullable|integer',
-                    
+                    'preferred_experience' => 'nullable|integer',
                     'facility_shift_cancelation_policy' => 'nullable|string',
                     'traveler_distance_from_facility' => 'nullable|string',
                     'clinical_setting' => 'nullable|string',
@@ -573,6 +573,7 @@ class RecruiterController extends Controller
                         'facility_city' => 'nullable|string',
                         'facility_state' => 'nullable|string',
                         'feels_like_per_hour' => 'nullable|string',
+                        'preferred_shift_duration' => 'nullable|string'
                 ]);
                 
                 $job = new Job();
@@ -614,6 +615,9 @@ class RecruiterController extends Controller
                     }
                     if (isset($validatedData['hours_per_week'])) {
                         $job->hours_per_week = $validatedData['hours_per_week'];
+                    }
+                    if (isset($validatedData['preferred_experience'])) {
+                        $job->preferred_experience = $validatedData['preferred_experience'];
                     }
                     if (isset($validatedData['facility_shift_cancelation_policy'])) {
                         $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
@@ -678,7 +682,6 @@ class RecruiterController extends Controller
                     if (isset($validatedData['on_call'])) {
                         $job->on_call = $validatedData['on_call'];
                     }
-                   
                     if (isset($validatedData['weekly_non_taxable_amount'])) {
                         $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                     }
@@ -730,6 +733,9 @@ class RecruiterController extends Controller
                     }
                     if (isset($validatedData['certificate'])) {
                         $job->certificate = $validatedData['certificate'];
+                    }
+                    if (isset($validatedData['preferred_shift_duration'])) {
+                        $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
                     }
                     if (isset($validatedData['skills'])) {
                         $job->skills = $validatedData['skills'];
@@ -793,6 +799,7 @@ class RecruiterController extends Controller
                     'weekly_pay' => 'required|numeric',
                     'preferred_specialty' => 'required|string',
                     'preferred_work_location' => 'nullable|string',
+                    'preferred_experience' => 'nullable|integer',
                     'description' => 'nullable|string',
                     'terms' => 'nullable|string',
                     'start_date' => 'nullable|date',
@@ -830,6 +837,7 @@ class RecruiterController extends Controller
                     'eligible_work_in_us' => 'nullable|boolean',
                     'recency_of_reference' => 'nullable|integer',
                     'certificate' => 'nullable|string',
+                    'preferred_shift_duration' => 'nullable|string',
                     'skills' => 'nullable|string',
                     'urgency' => 'nullable|string',
                     'facilitys_parent_system' => 'nullable|string',
@@ -854,6 +862,7 @@ class RecruiterController extends Controller
                 $job->description = $validatedData['description'];
                 $job->start_date = $validatedData['start_date'];
                 $job->hours_shift = $validatedData['hours_shift'];
+                $job->preferred_experience = $validatedData['preferred_experience'];
                 $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
                 $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
                 $job->clinical_setting = $validatedData['clinical_setting'];
@@ -909,6 +918,9 @@ class RecruiterController extends Controller
                 }
                 if (isset($validatedData['certificate'])) {
                     $job->certificate = $validatedData['certificate'];
+                }
+                if (isset($validatedData['preferred_shift_duration'])) {
+                    $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
                 }
                 if (isset($validatedData['skills'])) {
                     $job->skills = $validatedData['skills'];
@@ -1017,7 +1029,7 @@ class RecruiterController extends Controller
                 'preferred_work_area' => 'nullable|string',
                 'preferred_days_of_the_week' => 'nullable|string',
                 'preferred_hourly_pay_rate' => 'nullable|string',
-                'preferred_experience' => 'nullable|string',
+                'preferred_experience' => 'nullable|integer',
                 'preferred_shift' => 'nullable|string',
                 'job_function' => 'nullable|string',
                 'job_cerner_exp' => 'nullable|string',
@@ -1140,6 +1152,7 @@ class RecruiterController extends Controller
                      'Patient_ratio' => 'nullable|string',
                      'Unit' => 'nullable|string',
                      'scrub_color' => 'nullable|string',
+                     'preferred_experience' => 'nullable|integer',
                      'rto' => 'nullable|string',
                      'guaranteed_hours' => 'nullable|string',   
                      'weeks_shift' => 'nullable|string',
@@ -1167,6 +1180,7 @@ class RecruiterController extends Controller
                      'eligible_work_in_us' => 'nullable|boolean',
                      'recency_of_reference' => 'nullable|integer',
                      'certificate' => 'nullable|string',
+                     'preferred_shift_duration' => 'nullable|string',
                      'skills' => 'nullable|string',
                      'urgency' => 'nullable|string',
                      'facilitys_parent_system' => 'nullable|string',
@@ -1193,6 +1207,7 @@ class RecruiterController extends Controller
                  $job->job_city = $validatedData['job_city'];
                  $job->job_state = $validatedData['job_state'];
                  $job->weekly_pay = $validatedData['weekly_pay'];
+                 $job->preferred_experience = $validatedData['preferred_experience'];
                  $job->preferred_specialty = $validatedData['preferred_specialty'];
                  $job->description = $validatedData['description'];
                  $job->start_date = $validatedData['start_date'];
@@ -1238,6 +1253,7 @@ class RecruiterController extends Controller
                  $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
                  $job->recency_of_reference = $validatedData['recency_of_reference'];
                  $job->certificate = $validatedData['certificate'];
+                 $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
                  $job->skills = $validatedData['skills'];
                  $job->urgency = $validatedData['urgency'];
                  $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
