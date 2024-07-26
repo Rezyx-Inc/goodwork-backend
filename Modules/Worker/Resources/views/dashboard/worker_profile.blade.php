@@ -611,7 +611,7 @@
                                             <table style="font-size: 16px;" class="table row">
                                                 <thead>
                                                     <tr class="row">
-                                                        <th class="col-3" >Document Name</th>
+                                                        <th class="col-3">Document Name</th>
                                                         <th class="col-3">Type</th>
                                                         <th class="col-3">View</th>
                                                         <th class="col-3">Delete</th>
@@ -916,205 +916,223 @@
                             </div>
                             <div class="modal-body">
                                 <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
-                                        <div class="ss-job-dtl-pop-frm-sml-dv">
-                                            <div></div>
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4>Add Your Dcouments?</h4>
+                                    <div class="ss-form-group">
+                                        <label>Document Type</label>
+                                        <select name="type_documents" onChange="controlInputsFiles(this)">
+                                            <option value="">Select</option>
+                                            <option value="skills_checklists">Skills checklist</option>
+                                            <option value="certificate">Certificate</option>
+                                            <option value="driving_license">Drivers License</option>
+                                            <option value="ss_number">Ss Document</option>
+                                            <option value="other">Others</option>
+                                            <option value="vaccinations">Vaccinations</option>
+                                            <option value="references">References</option>
+                                            <option value="diploma">Diploma</option>
+                                            <option value="professional_license">Professional License</option>
+                                        </select>
+                                        <span class="help-block"></span>
+                                    </div>
+                                    {{-- documents forms --}}
+                                    {{-- skills --}}
+                                    <div class="container-multiselect d-none" id="skills_checklists">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Skills</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
                                         </div>
-                                        <h4>Add Your Dcouments?</h4>
-                                        <div class="ss-form-group">
-                                            <label>Document Type</label>
-                                            <select name="type_documents" onChange="controlInputsFiles(this)">
-                                                <option value="">Select</option>
-                                                <option value="skills_checklists">Skills checklist</option>
-                                                <option value="certificate">Certificate</option>
-                                                <option value="driving_license">Drivers License</option>
-                                                <option value="ss_number">Ss Document</option>
-                                                <option value="other">Others</option>
-                                                <option value="vaccinations">Vaccinations</option>
-                                                <option value="references">References</option>
-                                                <option value="diploma">Diploma</option>
-                                                <option value="professional_license">Professional License</option>
-                                            </select>
-                                            <span class="help-block"></span>
-                                        </div>
-                                        {{-- documents forms --}}
-                                        {{-- skills --}}
-                                        <div class="container-multiselect d-none" id="skills_checklists">
-                                            <div class="select-btn">
-                                                <span class="btn-text">Select Skills</span>
-                                                <span class="arrow-dwn">
-                                                    <i class="fa-solid fa-chevron-down"></i>
-                                                </span>
-                                            </div>
-                                            <ul class="list-items">
-                                                @if (isset($allKeywords['Speciality']))
-                                                    @foreach ($allKeywords['Speciality'] as $value)
-                                                        <li class="item" value="{{ $value->title }}">
-                                                            <span class="checkbox">
-                                                                <i class="fa-solid fa-check check-icon"></i>
-                                                            </span>
-                                                            <span class="item-text">{{ $value->title }}</span>
-                                                        </li>
-                                                        <input displayName="{{ $value->title }}" type="file" id="upload-{{ $loop->index }}"
-                                                            class="files-upload" style="display: none;" />
-                                                    @endforeach
-                                                @endif
-                                            </ul>
-                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
-                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Speciality']))
+                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        id="upload-{{ $loop->index }}" class="files-upload"
+                                                        style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                    </div>
 
-                                        {{-- certification --}}
-                                        <div class="container-multiselect d-none" id="certificate">
-                                            <div class="select-btn">
-                                                <span class="btn-text">Select Certification</span>
-                                                <span class="arrow-dwn">
-                                                    <i class="fa-solid fa-chevron-down"></i>
-                                                </span>
-                                            </div>
-                                            <ul class="list-items">
-                                                @if (isset($allKeywords['Certification']))
-                                                    @foreach ($allKeywords['Certification'] as $value)
-                                                        <li class="item" value="{{ $value->title }}">
-                                                            <span class="checkbox">
-                                                                <i class="fa-solid fa-check check-icon"></i>
-                                                            </span>
-                                                            <span class="item-text">{{ $value->title }}</span>
-                                                        </li>
-                                                        <input displayName="{{ $value->title }}" type="file" id="upload-{{ $loop->index }}"
-                                                            class="files-upload" style="display: none;" />
-                                                    @endforeach
-                                                @endif
-                                            </ul>
-                                            <button class="ss-job-dtl-pop-sv-btn"
-                                                onclick="sendMultipleFiles('certification')">Save</button>
+                                    {{-- certification --}}
+                                    <div class="container-multiselect d-none" id="certificate">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Certification</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
                                         </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Certification']))
+                                                @foreach ($allKeywords['Certification'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        id="upload-{{ $loop->index }}" class="files-upload"
+                                                        style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('certification')">Save</button>
+                                    </div>
 
-                                        {{-- driving license --}}
-                                        <div class="d-none" id="driving_license">
-                                            <label>Upload Driving License</label>
-                                            <div class="container-multiselect">
-                                                <div class="ss-form-group fileUploadInput"
-                                                    style="
+                                    {{-- driving license --}}
+                                    <div class="d-none" id="driving_license">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
                                             display: flex;
                                             justify-content: center;
                                             align-items: center;
                                         ">
-                                                    <input displayName="Driving Licence" type="file" class="files-upload">
-                                                    <div class="list-items">
-                                                        <input hidden type="text" name="type" value="driving licence" class="item">
-                                                    </div>
-                                                    <button type="button" onclick="open_file(this)">Choose File</button>
-                                                    <span class="help-block"></span>
+                                                <input hidden displayName="Driving Licence" type="file"
+                                                    class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="driving licence"
+                                                        class="item">
                                                 </div>
+
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
+                                                <span class="help-block"></span>
+
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('driving_license')">Save</button>
                                         </div>
-                                        {{-- ss number --}}
-                                        <div class="d-none" id="ss_number">
-                                            <label>Upload SS Document</label>
-                                            <div class="container-multiselect">
-                                                <div class="ss-form-group fileUploadInput"
-                                                    style="
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('driving_license')">Save</button>
+                                    </div>
+                                    {{-- ss number --}}
+                                    <div class="d-none" id="ss_number">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
                                                                         display: flex;
                                                                         justify-content: center;
                                                                         align-items: center;
                                                                     ">
-                                                     <input displayName="Ss number file" type="file" class="files-upload">
-                                                     <div class="list-items">
-                                                         <input hidden type="text" name="type" value="ss number file" class="item">
-                                                     </div>
-                                                    <button type="button" onclick="open_file(this)">Choose File</button>
-                                                    <span class="help-block"></span>
+                                                <input hidden displayName="Ss number file" type="file" class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="ss number file"
+                                                        class="item">
                                                 </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('ss_number')">Save</button>
                                         </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('ss_number')">Save</button>
+                                    </div>
 
-                                        {{-- other --}}
-                                        <div class="d-none" id="other">
-                                            <label>Upload Other Document</label>
-                                            <div class="container-multiselect">
-                                                <div class="ss-form-group fileUploadInput"
-                                                    style="
+                                    {{-- other --}}
+                                    <div class="d-none" id="other">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
                                                                         display: flex;
                                                                         justify-content: center;
                                                                         align-items: center;
                                                                     ">
-                                                     <input displayName="Other" type="file" class="files-upload">
-                                                     <div class="list-items">
-                                                         <input hidden type="text" name="type" value="other" class="item">
-                                                     </div>
-                                                    <button type="button" onclick="open_file(this)">Choose File</button>
-                                                    <span class="help-block"></span>
+                                                <input hidden displayName="Other" type="file" class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="other"
+                                                        class="item">
                                                 </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                    </div>
+
+                                    {{-- vaccinations --}}
+                                    <div class="d-none" id="vaccinations">
+                                        <div class="container-multiselect">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Vaccinations</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Vaccinations']))
+                                                @foreach ($allKeywords['Vaccinations'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        class="files-upload" style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('vaccination')">Save</button>
+                                    </div>
+
+                                    {{-- references --}}
+
+                                    <div class="container-multiselect d-none" id="references">
+                                        <h4>Who are your References?</h4>
+                                        <div class="ss-form-group">
+                                            <label>Reference Name</label>
+                                            <input type="text" name="name" placeholder="Name of Reference">
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="ss-form-group">
+                                            <label>Phone Number</label>
+                                            <input type="text" name="phone" placeholder="Phone Number of Reference">
+                                            <span class="help-block"></span>
                                         </div>
 
-                                        {{-- vaccinations --}}
-                                        <div class="container-multiselect d-none" id="vaccinations">
-                                            <div class="select-btn">
-                                                <span class="btn-text">Select Vaccinations</span>
-                                                <span class="arrow-dwn">
-                                                    <i class="fa-solid fa-chevron-down"></i>
-                                                </span>
-                                            </div>
-                                            <ul class="list-items">
-                                                @if (isset($allKeywords['Vaccinations']))
-                                                    @foreach ($allKeywords['Vaccinations'] as $value)
-                                                        <li class="item" value="{{ $value->title }}">
-                                                            <span class="checkbox">
-                                                                <i class="fa-solid fa-check check-icon"></i>
-                                                            </span>
-                                                            <span class="item-text">{{ $value->title }}</span>
-                                                        </li>
-                                                        <input displayName="{{ $value->title }}" type="file" 
-                                                            class="files-upload" style="display: none;" />
-                                                    @endforeach
-                                                @endif
-                                            </ul>
-                                            <button class="ss-job-dtl-pop-sv-btn"
-                                                onclick="sendMultipleFiles('vaccination')">Save</button>
+                                        <div class="ss-form-group">
+                                            <label>Email</label>
+                                            <input type="text" name="reference_email"
+                                                placeholder="Email of Reference">
+                                            <span class="help-block"></span>
                                         </div>
 
-                                        {{-- references --}}
+                                        <div class="ss-form-group">
+                                            <label>Date Referred</label>
+                                            <input type="date" name="date_referred">
+                                            <span class="help-block"></span>
+                                        </div>
 
-                                        <div class="container-multiselect d-none" id="references">
-                                            <h4>Who are your References?</h4>
-                                            <div class="ss-form-group">
-                                                <label>Reference Name</label>
-                                                <input type="text" name="name" placeholder="Name of Reference">
-                                                <span class="help-block"></span>
-                                            </div>
-                                            <div class="ss-form-group">
-                                                <label>Phone Number</label>
-                                                <input type="text" name="phone"
-                                                    placeholder="Phone Number of Reference">
-                                                <span class="help-block"></span>
-                                            </div>
 
-                                            <div class="ss-form-group">
-                                                <label>Email</label>
-                                                <input type="text" name="reference_email" placeholder="Email of Reference">
-                                                <span class="help-block"></span>
-                                            </div>
-
-                                            <div class="ss-form-group">
-                                                <label>Date Referred</label>
-                                                <input type="date" name="date_referred">
-                                                <span class="help-block"></span>
-                                            </div>
-
-                                            
                                         <div class="ss-form-group">
                                             <label>Min Title of Reference</label>
-                                                <select name="min_title_of_reference">
-                                                    <option value="">Select a min title</option>
-                                                    @if (isset($allKeywords['MinTitleOfReference']))
-                                                        @foreach ($allKeywords['MinTitleOfReference'] as $value)
-                                                            <option value="{{ $value->title }}">{{ $value->title }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
+                                            <select name="min_title_of_reference">
+                                                <option value="">Select a min title</option>
+                                                @if (isset($allKeywords['MinTitleOfReference']))
+                                                    @foreach ($allKeywords['MinTitleOfReference'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
 
                                             <span class="help-block"></span>
                                         </div>
@@ -1132,61 +1150,71 @@
                                             <span class="help-block"></span>
                                         </div>
 
-                                            <div class="ss-form-group fileUploadInput"
-                                                style="display: flex;
+                                        <div class="ss-form-group fileUploadInput"
+                                            style="display: flex;
                                                                         justify-content: center;
                                                                         align-items: center;
                                                                         ">
-                                                <label>Upload Image</label>
-                                                <input type="file" name="image">
-                                                <button type="button" onclick="open_file(this)">Choose File</button>
+                                            <label>Upload Image</label>
+                                            <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                            </div>
+                                            <input type="file" name="image">
+                                            <button type="button" onclick="open_file(this)">Choose File</button>
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('references')">Save</button>
+                                    </div>
+
+                                    {{-- diploma --}}
+                                    <div class="d-none" id="diploma">
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                                                        display: flex !important;
+                                                                        justify-content: center !important;
+                                                                        align-items: center !important;
+                                                                    ">
+                                                <input hidden displayName="Diploma" type="file" class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="diploma"
+                                                        class="item">
+                                                </div>
+                                                <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                                </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
                                                 <span class="help-block"></span>
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('references')">Save</button>
                                         </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('diploma')">Save</button>
+                                    </div>
 
-                                        {{-- diploma --}}
-                                        <div class="d-none" id="diploma">
-                                            <label>Upload a Diploma</label>
-                                            <div class="container-multiselect">
-                                                <div class="ss-form-group fileUploadInput"
-                                                    style="
+                                    {{-- professional license --}}
+                                    <div class="d-none" id="professional_license">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
                                                                         display: flex !important;
                                                                         justify-content: center !important;
                                                                         align-items: center !important;
                                                                     ">
-                                                    <input displayName="Diploma" type="file" class="files-upload">
-                                                    <div class="list-items">
-                                                        <input hidden type="text" name="type" value="diploma" class="item">
-                                                    </div>
-                                                    <button type="button" onclick="open_file(this)">Choose File</button>
-                                                    <span class="help-block"></span>
+                                                <input hidden displayName="Professional License" type="file"
+                                                    class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type"
+                                                        value="Professional License" class="item">
                                                 </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
                                             </div>
-                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('diploma')">Save</button>
                                         </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('professional_license')">Save</button>
+                                    </div>
 
-                                        {{-- professional license --}}
-                                        <div class="d-none" id="diploma">
-                                            <label>Upload a Diploma</label>
-                                            <div class="container-multiselect">
-                                                <div class="ss-form-group fileUploadInput"
-                                                    style="
-                                                                        display: flex !important;
-                                                                        justify-content: center !important;
-                                                                        align-items: center !important;
-                                                                    ">
-                                                    <input displayName="Professional License" type="file" class="files-upload">
-                                                    <div class="list-items">
-                                                        <input hidden type="text" name="type" value="Professional License" class="item">
-                                                    </div>
-                                                    <button type="button" onclick="open_file(this)">Choose File</button>
-                                                    <span class="help-block"></span>
-                                                </div>
-                                            </div>
-                                            <button class="ss-job-dtl-pop-sv-btn" onclick="sendMultipleFiles('professional_license')">Save</button>
-                                        </div>
-                                        
 
                                 </div>
                             </div>
@@ -1203,7 +1231,8 @@
     {{-- js for multiselect --}}
     <script>
         var selectedFiles = [];
-        var selectedValues = []; 
+        var selectedValues = [];
+        var selectedTypeFile = '';
 
         function open_file(obj) {
             $(obj).parent().find('input[type="file"]').click();
@@ -1224,8 +1253,20 @@
         }
 
         function controlInputsFiles(obj) {
+            let filesSelected = document.querySelectorAll('.files-upload');
+            filesSelected.forEach((fileInput) => {
+                fileInput.value = '';
+            });
+
+            let fileNameDiv = document.querySelectorAll('.file-name');
+            fileNameDiv.forEach((fileDiv) => {
+                fileDiv.remove();
+            });
+            
             HideAllInputsModal();
+            removeAllCheckBox();
             const inputsId = obj.value;
+            selectedTypeFile = inputsId;
             //removing d-none class
             document.getElementById(inputsId).classList.remove('d-none');
         }
@@ -1242,17 +1283,63 @@
                     document.getElementById(InputsDiv).classList.add('d-none');
             });
         }
-
+        function closeModal() {
+            let buttons = document.querySelectorAll('.btn-close');
+            buttons.forEach(button => {
+                button.click();
+            });
+        }
         document.addEventListener('DOMContentLoaded', function() {
+
+            // options from the combobox
+            const filesSelected = document.querySelectorAll('.files-upload');
+
+            // give hight to filesNamesArea
+            const types = ['vaccinations', 'certificate', 'skills_checklists'];
+
+            
+            filesSelected.forEach((fileInput) => {
+                fileInput.addEventListener('change', function() {
+                    if(!types.includes(selectedTypeFile)){
+                    if (this.files.length > 0) {
+                        const file = this.files[0];
+                        var fileName = file.name;
+                        if (fileName.length > 20) {
+                            fileName = fileName.substring(0, 20) + '...';
+                        } 
+                        const fileDiv = document.createElement('div');
+                        fileDiv.classList.add('file-name', 'row', 'col-12');
+                        const fileSpan = document.createElement('span');
+                        fileSpan.classList.add('col-11');
+                        const fileText = document.createTextNode(fileName);
+                        fileSpan.appendChild(fileText);
+                        fileDiv.appendChild(fileSpan);
+                        const removeIcon = document.createElement('i');
+                        removeIcon.classList.add('fa', 'fa-times', 'remove-file', 'col-1');
+                        removeIcon.addEventListener('click', function() {
+                            fileDiv.remove();
+                            fileInput.value = '';
+                        });
+                        fileDiv.appendChild(removeIcon);
+
+                        const filesNamesArea = this.closest('.container-multiselect');
+
+                        filesNamesArea.appendChild(fileDiv);
+                    }
+                }
+                });
+                
+            });
+       
+
             const items = document.querySelectorAll('.list-items .item');
             //store selected file values
 
             items.forEach((item, index) => {
                 item.addEventListener('click', (event) => {
-                    if (event.target.closest('.checkbox')) {
-                        return;
-                    }
+                    
                     const uploadInput = item.nextElementSibling;
+                    console.log('this is the next sibling : ',uploadInput)
                     if (uploadInput) {
                         // class 'checked' check
                         if (item.classList.contains('checked')) {
@@ -1266,7 +1353,7 @@
                                 }
                             }, {
                                 once: true //avoid multiple registrations
-                            }); 
+                            });
                         } else {
                             const index = selectedFiles.indexOf(uploadInput.files[0].name);
                             if (index > -1) {
@@ -1281,16 +1368,25 @@
 
 
         });
-        
+
+        function removeAllCheckBox(){
+            const items = document.querySelectorAll('.list-items .item');
+            items.forEach((item, index) => {
+                item.classList.remove('checked');
+            });
+        }
+
         function sendMultipleFiles(type) {
-            const fileInputs = document.querySelectorAll('.files-upload'); 
-            console.log(fileInputs);
+           
+            const fileInputs = document.querySelectorAll('.files-upload');
+            console.log('this is my file inputs values',fileInputs);
+            
             const fileReadPromises = [];
             let worker_id = '{!! $worker->id !!}';
             console.log(worker_id);
             var workerId = worker_id;
 
-            if (type == 'references'){
+            if (type == 'references') {
                 let referenceName = document.querySelector('input[name="name"]').value;
                 let referencePhone = document.querySelector('input[name="phone"]').value;
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
@@ -1308,50 +1404,68 @@
                     isLastAssignment: referenceRecency == 1 ? true : false
                 }
                 console.log(referenceInfo);
+                if (referenceInfo == null) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-times"></i> Please fill all the fields',
+                        time: 3
+                    });
+                    return;
+                }
                 let readerPromise = new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         resolve({
                             name: referenceImage.name,
-                            path : referenceImage.name,
+                            path: referenceImage.name,
                             type: type,
                             content: event.target.result, // Base64 encoded content
                             displayName: referenceImage.name,
                             ReferenceInformation: referenceInfo
-                        } );
+                        });
                     };
 
                     reader.onerror = reject;
                     reader.readAsDataURL(referenceImage);
                 });
                 fileReadPromises.push(readerPromise);
-            }else{
-                fileInputs.forEach((input,index) => {
-           let displayName = input.getAttribute("displayName");
-                if (input.files[0]) { 
-                    const file = input.files[0];
-                    const readerPromise = new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            resolve({
-                                name: file.name,
-                                path: file.name,
-                                type: type,
-                                content: event.target.result, // Base64 encoded content
-                                displayName: displayName || file.name,   
-                            });
-                        };
-                        reader.onerror = reject;
-                        reader.readAsDataURL(file);
-                    });
-                    fileReadPromises.push(readerPromise);
-                }
-            });
+                removeAllCheckBox();
+
+            } else {
+                fileInputs.forEach((input, index) => {
+                    let displayName = input.getAttribute("displayName");
+                    if (input.files[0]) {
+                        const file = input.files[0];
+                        const readerPromise = new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                resolve({
+                                    name: file.name,
+                                    path: file.name,
+                                    type: type,
+                                    content: event.target.result, // Base64 encoded content
+                                    displayName: displayName || file.name,
+                                });
+                            };
+                            reader.onerror = reject;
+                            reader.readAsDataURL(file);
+                        });
+                        fileReadPromises.push(readerPromise);
+                    }
+                });
             }
-            
+            if (fileReadPromises.length == 0) {
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-times"></i> Please select a file',
+                    time: 3
+                });
+                return;
+            }
+
 
             Promise.all(fileReadPromises).then(files => {
-                console.log(files); 
+                console.log(files);
                 var body = {
                     workerId: workerId,
                     files: files
@@ -1376,12 +1490,11 @@
                             text: '<i class="fa fa-check"></i>' + data.message,
                             time: 3
                         });
-
+                        closeModal();
                         // reload the page
-                        setTimeout(() => {
-                            location.reload();
-                        }, 2000);
-                        
+                        // setTimeout(() => {
+                        //     location.reload();
+                        // }, 2000);
                     })
                     .catch(error => {
                         console.error('Error:', error); // Handle errors
@@ -1394,13 +1507,14 @@
                 input.value = '';
             });
             selectedFiles = [];
-            
+            removeAllCheckBox();
+
         }
-        
+
         const selectBtn = document.querySelectorAll(".select-btn"),
 
-        items = document.querySelectorAll(".item");
-        
+            items = document.querySelectorAll(".item");
+
 
         selectBtn.forEach(selectBtn => {
             selectBtn.addEventListener("click", () => {
@@ -1574,7 +1688,7 @@
                         var row = $('<tr>');
                         row.attr('class', 'row');
                         row.append($('<td class="col-3 td-table">').text(file.displayName));
-                        
+
                         row.append($('<td class="col-3 td-table">').text(file.type));
                         console.log(file.id);
                         var deleteButton = $('<button>').text('Delete Document').addClass(
@@ -1600,41 +1714,50 @@
                                 }
                             });
                         });
-                        var viewFile = $('<button>').text('View Document').addClass('delete').attr('data-id', file.id);
-                            viewFile.click(function(event) {
-                        event.preventDefault();
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url: '{{ route('get-doc') }}',
-                            method: 'POST',
-                            contentType: 'application/json',
-                            data: JSON.stringify({
-                                bsonId: file.id
-                            }),
-                            success: function(resp) {
-                                const respToJson = JSON.parse(resp);
-                                console.log(respToJson);
-                                const binaryData = respToJson.content.data;
-                                const byteArray = new Uint8Array(binaryData);
-                                const fileBlob = new Blob([byteArray], {type: "application/octet-stream"}); 
-                                const blobUrl = URL.createObjectURL(fileBlob);
-                                const downloadLink = document.createElement('a');
-                                downloadLink.href = blobUrl;
-                                downloadLink.setAttribute('download', respToJson.name); 
-                                document.body.appendChild(downloadLink);
-                                downloadLink.click();
-                                document.body.removeChild(downloadLink);
-                            },
-                            error: function(resp) {
-                                console.log('Error:', resp);
-                            }
+                        var viewFile = $('<button>').text('View Document').addClass('delete')
+                            .attr('data-id', file.id);
+                        viewFile.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('get-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function(resp) {
+                                    const respToJson = JSON.parse(resp);
+                                    console.log(respToJson);
+                                    const binaryData = respToJson.content
+                                        .data;
+                                    const byteArray = new Uint8Array(
+                                        binaryData);
+                                    const fileBlob = new Blob([byteArray], {
+                                        type: "application/octet-stream"
+                                    });
+                                    const blobUrl = URL.createObjectURL(
+                                        fileBlob);
+                                    const downloadLink = document
+                                        .createElement('a');
+                                    downloadLink.href = blobUrl;
+                                    downloadLink.setAttribute('download',
+                                        respToJson.name);
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(downloadLink);
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
                         });
-                  });
                         row.append($('<td class="col-3 td-table">').append(viewFile));
                         row.append($('<td class="col-3 td-table">').append(deleteButton));
-                        
+
                         tbody.append(row);
                     });
                 },
@@ -2676,6 +2799,14 @@
 @stop
 
 <style>
+    .file-name {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
     .add {
         border: 1px solid #3D2C39 !important;
         color: #fff !important;
@@ -2759,7 +2890,7 @@
         border-radius: 57px;
         border: 1px solid var(--border, #111011);
         background: var(--light-bg-purple, #FFF8FD);
-        width:fit-content;
+        width: fit-content;
         height: 32px;
         color: var(--darkpurple, #3D2C39);
         text-align: center;
@@ -2793,7 +2924,8 @@
 
     ::selection {
         color: #fff;
-        background: #b5649e;
+        background: #
+        ;
     }
 
     .container {
@@ -3094,13 +3226,14 @@
         padding: .2em;
         height: 2em;
     }
-    .td-table{
+
+    .td-table {
         padding-left: 0px !important;
         padding-right: 0px !important;
     }
 
-    .modal-content{
-        box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
+    .modal-content {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
     }
 </style>
 
@@ -3222,5 +3355,17 @@
 
     .ss-job-dtl-pop-sv-btn {
         margin-top: 30px !important;
+    }
+    .remove-file{
+        cursor:pointer;
+        color:white;
+        background-color: #3d2c39;
+        border-radius: 8px;
+        padding:0px !important;
+        font-size:12px;
+    }
+    .file-name{
+        margin-top: 10px;
+        padding:0px;
     }
 </style>

@@ -86,7 +86,7 @@
 
                             <div class="ss-jb-apply-on-disc-txt">
                                 <h5>Description</h5>
-                                <p>{{ $model->description }}<a href="#">Read More</a></p>
+                            <p id="job_description">{{ $model->description }} </p>
                             </div>
 
 
@@ -856,7 +856,7 @@
                                     <ul id="worker_actual_hourly_rate"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
-                                            <span>Actual Hourly Rate</span>
+                                            <span>Est. Texable Hourly Rate</span>
                                             <h6>${{ $model->actual_hourly_rate }} </h6>
                                         </li>
                                         <li>
@@ -869,7 +869,7 @@
                                     </ul>
                                 @endif
 
-                                @if (isset($model->feels_like_per_hour))
+                                {{-- @if (isset($model->feels_like_per_hour))
                                     <ul id="worker_feels_like_per_hour_check"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['feels_like_per_hour']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
@@ -885,7 +885,7 @@
 
                                         </li>
                                     </ul>
-                                @endif
+                                @endif --}}
 
                                 @if (isset($model->overtime))
                                     <ul id="worker_overtime_check"
@@ -1254,9 +1254,9 @@
 
                                         <div class="ss-form-group fileUploadInput"
                                             style="display: flex;
-                                                                    justify-content: center;
-                                                                    align-items: center;
-                                                                    ">
+                                            justify-content: center;
+                                            align-items: center;
+                                            ">
                                             <label>Upload Image</label>
                                             <input type="file" name="image">
                                             <button type="button" onclick="open_file(this)">Choose File</button>
@@ -1958,7 +1958,7 @@
         console.log('skills : ', job_skills_displayname);
 
 
-        var worker_id = "{!! auth()->guard('frontend')->user()->id !!}";
+        var worker_id = "{!! auth()->guard('frontend')->user()->nurse->id !!}";
 
         function get_all_files() {
             return new Promise((resolve, reject) => {
@@ -1997,6 +1997,28 @@
         var selectedCertificates = [];
         var selectedVaccinations = [];
         document.addEventListener('DOMContentLoaded', function() {
+
+            // trim description control 
+
+            let description = document.getElementById('job_description');
+            
+            if (description) {
+                let descriptionText = description.innerText;
+                if (descriptionText.length > 100) {
+                    description.innerText = descriptionText.substring(0, 100) + '...';
+                    let readMore = document.createElement('a');
+                    readMore.id = 'read-more';
+                    readMore.innerText = ' Read More';
+                    readMore.href = 'javascript:void(0)';
+                    // add a function to onclick
+                    readMore.onclick = readMoreDescreption;
+                    description.appendChild(readMore);
+                }
+            }
+
+
+            // end trim description control
+
             const items = document.querySelectorAll('.list-items .item');
             //store selected file values
 
@@ -2169,6 +2191,57 @@
                 input.value = '';
             });
             selectedFiles = [];
+        }
+
+        function readMoreDescreption(){     
+            var description = document.getElementById('job_description');
+            
+            
+            if (description) {
+                var descriptionText = description.innerText;
+                if (descriptionText.length > 100) {
+                    description.innerText =  '{!! $model->description !!}';
+                    var readMore = document.getElementById('read-more');
+                    var readLess = document.getElementById('read-less');
+                    
+                    if(readLess){
+                        console.log(readLess);
+                        readMore.classList.add('d-none');
+                        readLess.classList.remove('d-none');
+                    }else{
+                        console.log('readLess is not null')
+                        
+                        var readLess = document.createElement('a');
+                        readLess.id = 'read-less';
+                        readLess.innerText = ' Read Less';
+                        readLess.href = 'javascript:void(0)';
+                        // add a function to onclick
+                        readLess.onclick = readLessDescreption;
+                        description.appendChild(readLess);
+                    }   
+                }
+            }
+        }
+
+        function readLessDescreption(){
+            let description = document.getElementById('job_description');
+            let readMore = document.getElementById('read-more');
+            let readLess = document.getElementById('read-less');
+            if (description) {
+                let descriptionText = description.innerText;
+                if (descriptionText.length > 100) {
+                    description.innerText = descriptionText.substring(0, 100) + '...';
+                    readLess.classList.add('d-none');
+                    let readMore = document.createElement('a');
+                    readMore.id = 'read-more';
+                    readMore.innerText = ' Read More';
+                    readMore.href = 'javascript:void(0)';
+                    // add a function to onclick
+                    readMore.onclick = readMoreDescreption;
+                    description.appendChild(readMore);
+
+                }
+            }
         }
     </script>
     <script>
@@ -2362,11 +2435,11 @@
                         match = true;
                     }
                     break;
-                case 'worker_feels_like_per_hour_check':
-                    if (InsertedValue == '1') {
-                        match = true;
-                    }
-                    break;
+                // case 'worker_feels_like_per_hour_check':
+                //     if (InsertedValue == '1') {
+                //         match = true;
+                //     }
+                //     break;
                 case 'worker_overtime_check':
                     if (InsertedValue == '1') {
                         match = true;
@@ -2837,4 +2910,6 @@
     .ss-job-dtl-pop-sv-btn {
         margin-top: 30px !important;
     }
+
+    
 </style>

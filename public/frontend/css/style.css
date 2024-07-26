@@ -2148,35 +2148,15 @@ border-radius: 100px;
   z-index: 1;
 }
 
-.fileUploadInput input {
-  position: relative;
-  z-index: 1;
-  padding: 0 gap(m);
-  width: 100%;
-  height: 50px;
-  border: 1px solid #323262;
-  border-radius: 3px;
-  font-family: arial, sans-serif;
-  font-size: 1rem;
-  font-weight: regular;
-}
-.fileUploadInput input[type=file] {
-  padding: 0 gap(m);
-  padding: 0 !important;
-}
-.fileUploadInput input[type=file]::-webkit-file-upload-button {
-  visibility: hidden;
-  margin-left: 10px;
-  padding: 0;
-  height: 50px;
-  width: 0px;
-}
+
+
+
 .fileUploadInput button {
   position: absolute;
   right: 0;
   bottom: 0;
   height: 50px;
-  width: 116px;
+  width: 100%;
   line-height: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2187,12 +2167,10 @@ border-radius: 100px;
   border-radius: 0 3px 3px 0;
   font-size: 14px;
   font-weight: 500;
-  border-radius: 0px 12px 12px 0px;
+  border-radius: 12px 12px 12px 12px;
 }
 @-moz-document url-prefix() {
-  .fileUploadInput button {
-    display: none;
-  }
+  
 }
 
 
@@ -3168,3 +3146,4 @@ ul.ss-jb-dtlpop-chck li {
     align-items: center !important;
     justify-content: center !important;
 }
+

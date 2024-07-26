@@ -421,7 +421,7 @@
                                                 <span class="help-block-other_bonus"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Taxable Regular Hourly rate</label>
+                                                <label>Est. Taxable Hourly rate</label>
                                                 <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
                                                     placeholder="Enter Taxable Regular Hourly rate">
                                                 <span class="help-block-actual_hourly_rate"></span>
@@ -1395,7 +1395,7 @@
                                                         <span class="help-block-other_bonus"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Taxable Regular Hourly rate</label>
+                                                        <label>Est. Texable Hourly Rate</label>
                                                         <input type="number" name="actual_hourly_rate"
                                                             id="actual_hourly_rateDraft"
                                                             placeholder="Enter taxable regular hourly rate">
@@ -2214,7 +2214,7 @@
                                                         <span class="help-block-other_bonus"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Taxable Regular Hourly rate</label>
+                                                        <label>Est. Texable Hourly Rate</label>
                                                         <input type="number" name="actual_hourly_rate"
                                                             id="actual_hourly_rateEdit"
                                                             placeholder="Enter taxable regular hourly rate">
