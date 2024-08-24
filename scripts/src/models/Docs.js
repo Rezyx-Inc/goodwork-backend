@@ -9,12 +9,12 @@ const DocsSchema = mongoose.Schema({
     // Files is a subdocument of documents uploaded by the workers
     files: [
         {
-            name: {type: String, required: true },
+            name: {type: String, required: false },
             uploaded: {type: Date, required: true, default: Date.now },
             modified: {type: Date, required: true, default: Date.now },
             content: {type: Buffer, required: false }, 
             path: {type: String, required: false}, // Path to the file in the file system
-            type: {type: String, required: true},  // vaccination, certification, driver's license, diploma, SS Card, reference, skill checklist, other.
+            type: {type: String, required: false},  // vaccination, certification, driver's license, diploma, SS Card, reference, skill checklist, other.
             displayName : {type: String, required: false, default: null}, // Display name of the file
             ReferenceInformation: {
                 referenceName: { type: String, required: false },

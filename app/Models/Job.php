@@ -128,7 +128,9 @@ class Job extends Model
         'overtime',
         'holiday',
         'on_call',
-        'call_back',
+        'on_call_rate',
+        'on_call_back',
+        'call_back_rate',
         'orientation_rate',
         'weekly_taxable_amount',
         'weekly_non_taxable_amount',
@@ -616,11 +618,18 @@ class Job extends Model
                 $name = 'worker_feels_like_per_hour_check';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            'overtime'=> function () use ($job, $nurse){
-                $match = ($nurse->worker_overtime_check == '1');
-                $value = $nurse->worker_overtime_check;
+            'benefits' => function () use ($job, $nurse){
+                $match = ($nurse->worker_benefits == '1');
+                $value = $nurse->worker_benefits;
                 $type = 'input';
-                $name = 'worker_overtime_check';
+                $name = 'worker_benefits';
+                return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
+            },
+            'overtime'=> function () use ($job, $nurse){
+                $match = ($nurse->worker_overtime_rate == $job->overtime_rate);
+                $value = $nurse->worker_overtime_rate;
+                $type = 'input';
+                $name = 'worker_overtime_rate';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
             'holiday'=> function () use ($job, $nurse){
@@ -637,18 +646,32 @@ class Job extends Model
                 $name = 'worker_on_call_check';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            'call_back'=> function () use ($job, $nurse){
-                $match = ($nurse->worker_call_back_check == '1');
-                $value = $nurse->worker_call_back_check;
+            'on_call_rate'=> function () use ($job, $nurse){
+                $match = ($job->on_call_rate == $nurse->worker_on_call_rate);
+                $value = $nurse->worker_on_call_rate;
                 $type = 'input';
-                $name = 'worker_call_back_check';
+                $name = 'worker_on_call_rate';
+                return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
+            },
+            'on_call_back'=> function () use ($job, $nurse){
+                $match = ($nurse->worker_on_call_back_check == '1');
+                $value = $nurse->worker_on_call_back_check;
+                $type = 'input';
+                $name = 'worker_on_call_back_check';
+                return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
+            },
+            'call_back_rate'=> function () use ($job, $nurse){
+                $match = ($nurse->worker_call_back_rate == $job->call_back_rate);
+                $value = $nurse->worker_call_back_rate;
+                $type = 'input';
+                $name = 'worker_call_back_rate';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
             'orientation_rate'=> function () use ($job, $nurse){
-                $match = ($nurse->worker_orientation_rate_check == '1');
-                $value = $nurse->worker_orientation_rate_check;
+                $match = ($nurse->worker_orientation_rate == $job->orientation_rate);
+                $value = $nurse->worker_orientation_rate;
                 $type = 'input';
-                $name = 'worker_orientation_rate_check';
+                $name = 'worker_orientation_rate';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
             

@@ -354,14 +354,21 @@
                                             {{-- end Type --}}
 
                                             {{-- Block scheduling --}}
-                                            <div class="ss-form-group row justify-content-center align-items-center col-11"
-                                                style="margin-top:36px;">
-                                                <label class="col-lg-6 col-sm-8 col-xs-8 col-md-8">Block scheduling</label>
-                                                <input style="box-shadow:none; width: auto;"
-                                                    class="col-lg-6 col-sm-2 col-xs-2 col-md-2" type="radio"
-                                                    id="option1" name="block_scheduling" value="1"
-                                                    autocompleted="" disabled>
+                                            <div class="ss-form-group col-11">
+                                                <label>Block scheduling</label>
+
+                                                <select name="block_scheduling" class="block_scheduling mb-3"
+                                                    id="block_scheduling" value="">
+                                                    <option
+                                                        value="{{ !empty($worker->block_scheduling) ? $worker->block_scheduling : '' }}">
+                                                        {{ !empty($worker->block_scheduling) ? $worker->block_scheduling : 'Select Block scheduling' }}
+                                                    </option>
+
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
                                             </div>
+                                            <span class="help-block-block_scheduling"></span>
                                             {{-- end scheduling --}}
                                             {{-- Float requirements --}}
                                             <div class="ss-form-group col-11">
@@ -414,10 +421,10 @@
                                             {{-- end Contract Termination Policy --}}
                                             {{-- Traveler Distance From Facility --}}
                                             <div class="ss-form-group col-11">
-                                                <label>Traveler Distance From Facility</label>
+                                                <label>Distance from your home</label>
                                                 <input type="number" id="traveler_distance_from_facility"
                                                     name="distance_from_your_home"
-                                                    placeholder="Enter Traveler Distance From Facility"
+                                                    placeholder="Enter the distance from your home."
                                                     value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}">
                                             </div>
                                             <span class="help-block-traveler_distance_from_facility"></span>
@@ -492,6 +499,7 @@
                                             </div>
                                             <span class="help-block-rto"></span>
                                             {{-- End RTO --}}
+                                             
                                             {{-- Shift Time of Day --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Shift Time of Day</label>
@@ -510,15 +518,7 @@
                                             </div>
                                             <span class="help-block-worker_shift_time_of_day"></span>
                                             {{-- End Shift Time of Day --}}
-                                            {{-- Hours/Week --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Hours/Week</label>
-                                                <input id="hours_per_week" type="number" name="worker_hours_per_week"
-                                                    placeholder="Enter Hours/Week"
-                                                    value="{{ !empty($worker->worker_hours_per_week) ? $worker->worker_hours_per_week : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_hours_per_week"></span>
-                                            {{-- End Hours/Week --}}
+                                            
                                             {{-- Hours/Shift --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Shift</label>
@@ -546,6 +546,314 @@
                                             </div>
                                             <span class="help-block-worker_shifts_week"></span>
                                             {{-- End Shifts/Week --}}
+                                            {{-- added fields to match job details in explore jobs --}}
+                                            {{-- Experience  --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Experience</label>
+                                                <input id="worker_experience" type="number" name="worker_experience"
+                                                    placeholder="Enter your experience"
+                                                    value="{{ !empty($worker->worker_experience) ? $worker->worker_experience : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_experience"></span>
+                                             {{-- End Experience --}}
+                                             {{-- worker_ss_number --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>SS Number</label>
+                                                <input id="worker_ss_number" type="text" name="worker_ss_number"
+                                                    placeholder="Enter your SS Number"
+                                                    value="{{ !empty($worker->worker_ss_number) ? $worker->worker_ss_number : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_ss_number"></span>
+                                            {{-- End worker_ss_number --}}
+
+                                            {{-- nursing_license_state --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Where are you licensed?</label>
+                                                <select name="nursing_license_state" id="nursing_license_state">
+                                                    <option value="{{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : '' }}">
+                                                        {{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : 'Select a State' }}
+                                                    </option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nursing_license_state"></span>
+                                            </div>
+                                            {{-- End nursing_license_state --}}
+                                            {{-- worker_eligible_work_in_us --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Eligible to work in the US</label>
+                                                <select name="worker_eligible_work_in_us" id="worker_eligible_work_in_us">
+                                                    <option value="{{ !empty($worker->worker_eligible_work_in_us) ? (($worker->worker_eligible_work_in_us == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_eligible_work_in_us) ? (($worker->worker_eligible_work_in_us == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_eligible_work_in_us"></span>
+                                            </div>
+                                           
+                                            {{-- End worker_eligible_work_in_us --}}
+                                            {{-- worker_facility_city --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>City you'd like to work?</label>
+                                                <select name="worker_facility_city" id="worker_facility_city">
+                                                    <option value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}">
+                                                        {{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : 'Select a City' }}
+                                                    </option>
+                                                    @foreach ($allKeywords['City'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-worker_facility_city"></span>
+                                            </div>
+                                            {{-- End worker_facility_city  --}}
+
+                                            {{-- worker_facility_state --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>State you'd like to work?</label>
+                                                <select name="worker_facility_state" id="worker_facility_state">
+                                                    <option value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}">
+                                                        {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
+                                                    </option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-worker_facility_state"></span>
+                                            </div>
+                                            {{-- End worker_facility_state  --}}
+
+                                            {{-- worker_start_date --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>When can you start?</label>
+                                                <input id="worker_start_date" type="date" name="worker_start_date"
+                                                    placeholder="Enter your start date"
+                                                    value="{{ !empty($worker->worker_start_date) ? $worker->worker_start_date : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_start_date"></span>
+                                            {{-- End worker_start_date  --}}
+
+                                            {{-- worker_guaranteed_hours --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Guaranteed Hours</label>
+                                                <input id="worker_guaranteed_hours" type="number" name="worker_guaranteed_hours"
+                                                    placeholder="Enter your guaranteed hours"
+                                                    value="{{ !empty($worker->worker_guaranteed_hours) ? $worker->worker_guaranteed_hours : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_guaranteed_hours"></span>
+                                            {{-- End worker_guaranteed_hours  --}}
+
+                                            {{-- worker_sign_on_bonus --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Sign on Bonus</label>
+                                                <input id="worker_sign_on_bonus" type="number" name="worker_sign_on_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_sign_on_bonus) ? $worker->worker_sign_on_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_sign_on_bonus"></span>
+                                            {{-- End worker_sign_on_bonus  --}}
+
+                                            {{-- worker_completion_bonus --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Completion Bonus</label>
+                                                <input id="worker_completion_bonus" type="number"
+                                                    name="worker_completion_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_completion_bonus) ? $worker->worker_completion_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_completion_bonus"></span>
+                                            {{-- End worker_completion_bonus  --}}
+
+                                            {{-- worker_extension_bonus --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Extension Bonus</label>
+                                                <input id="worker_extension_bonus" type="number" name="worker_extension_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_extension_bonus) ? $worker->worker_extension_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_extension_bonus"></span>
+                                            {{-- End worker_extension_bonus  --}}
+
+                                            {{-- worker_other_bonus --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Other Bonus</label>
+                                                <input id="worker_other_bonus" type="number" name="worker_other_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_other_bonus) ? $worker->worker_other_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_other_bonus"></span>
+                                            {{-- End worker_other_bonus  --}}
+
+                                            {{-- worker_four_zero_one_k --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>401K</label>
+                                                <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
+                                                    <option value="{{ !empty($worker->worker_four_zero_one_k) ? (($worker->worker_four_zero_one_k == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_four_zero_one_k) ? (($worker->worker_four_zero_one_k == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_four_zero_one_k"></span>
+                                            </div>
+                                            {{-- End worker_four_zero_one_k  --}}
+
+                                            {{-- worker_health_insurance --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Health Insurance</label>
+                                                <select name="worker_health_insurance" id="worker_health_insurance">
+                                                    <option value="{{ !empty($worker->worker_health_insurance) ? (($worker->worker_health_insurance == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_health_insurance) ? (($worker->worker_health_insurance == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_health_insurance"></span>
+                                            </div>
+                                            {{-- End worker_health_insurance  --}}
+
+                                            {{-- worker_dental --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Dental</label>
+                                                <select name="worker_dental" id="worker_dental">
+                                                    <option value="{{ !empty($worker->worker_dental) ? (($worker->worker_dental == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_dental) ? (($worker->worker_dental == 1) ? 'Yes' : 'No') : 'Do you want this ?' }}
+                                                    </option>
+                                                    <option value="">do you want this ?</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_dental"></span>
+                                            </div>
+                                            {{-- End worker_dental  --}}
+
+                                            {{-- worker_vision --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Vision</label>
+                                                <select name="worker_vision" id="worker_vision">
+                                                    <option value="{{ !empty($worker->worker_vision) ? (($worker->worker_vision == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_vision) ? (($worker->worker_vision == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">do you want this ?</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_vision"></span>
+                                            </div>
+                                            {{-- End worker_vision  --}}
+
+                                            {{-- worker_overtime_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Overtime Rate</label>
+                                                <input id="worker_overtime_rate" type="number" name="worker_overtime_rate"
+                                                    placeholder="What rate is fair?"
+                                                    value="{{ !empty($worker->worker_overtime_rate) ? $worker->worker_overtime_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_overtime_rate"></span>
+                                            {{-- End worker_overtime_rate  --}}
+
+                                            {{-- worker_holiday its a date  --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Holiday</label>
+                                                <input id="worker_holiday" type="date" name="worker_holiday"
+                                                    placeholder="Any holiday you refuse to work?"
+                                                    value="{{ !empty($worker->worker_holiday) ? $worker->worker_holiday : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_holiday"></span>
+                                            {{-- End worker_holiday  --}}
+
+                                            {{-- worker_on_call_check --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call</label>
+                                                <select name="worker_on_call_check" id="worker_on_call_check">
+                                                    <option value="{{ !empty($worker->worker_on_call_check) ? (($worker->worker_on_call_check == 1) ? 'Yes' : 'No') : 'Will you do call?' }}">
+                                                        {{ !empty($worker->worker_on_call_check) ? (($worker->worker_on_call_check == 1) ? 'Yes' : 'No') : 'Will you do call?' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_on_call_check"></span>
+                                            </div>
+                                            {{-- End worker_on_call_check  --}}
+
+                                            {{-- worker_on_call_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call Rate</label>
+                                                <input id="worker_on_call_rate" type="number" name="worker_on_call_rate"
+                                                    placeholder="What rate is fair?"
+                                                    value="{{ !empty($worker->worker_on_call_rate) ? $worker->worker_on_call_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_on_call_rate"></span>
+                                            {{-- End worker_on_call_rate  --}}
+
+                                            {{-- worker_on_call_back_check --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call Back</label>
+                                                <select name="worker_on_call_back_check" id="worker_on_call_back_check">
+                                                    <option value="{{ !empty($worker->worker_on_call_back_check) ? (($worker->worker_on_call_back_check == 1) ? 'Yes' : 'No') : 'Will you do call back?' }}">
+                                                        {{ !empty($worker->worker_on_call_back_check) ? (($worker->worker_on_call_back_check == 1) ? 'Yes' : 'No') : 'Will you do call back?' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_on_call_back_check"></span>
+                                            </div>
+                                            {{-- End worker_on_call_back_check  --}}
+
+                                            {{-- worker_on_call_back_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call Back Rate</label>
+                                                <input id="worker_on_call_back_rate" type="number"
+                                                    name="worker_on_call_back_rate" placeholder="What rate is fair?"
+                                                    value="{{ !empty($worker->worker_on_call_back_rate) ? $worker->worker_on_call_back_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_on_call_back_rate"></span>
+                                            {{-- End worker_on_call_back_rate  --}}
+
+                                            {{-- worker_orientation_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Orientation Rate</label>
+                                                <input id="worker_orientation_rate" type="number"
+                                                    name="worker_orientation_rate" placeholder="Is this rate reasonable?"
+                                                    value="{{ !empty($worker->worker_orientation_rate) ? $worker->worker_orientation_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_orientation_rate"></span>
+                                            {{-- End worker_orientation_rate  --}}
+
+                                            {{-- worker_benefits --}}
+
+                                             <div class="ss-form-group col-11">
+                                                <label>Worker benefits</label>
+                                                <select name="worker_benefits" class="worker_benefits mb-3"
+                                                    id="worker_benefits" value="">
+                                                    <option
+                                                        value="{{ !empty($worker->worker_benefits) ? $worker->worker_benefits : '' }}">
+                                                        {{ !empty($worker->worker_benefits) ? $worker->worker_benefits : 'Select your benefits choice' }}
+                                                    </option>
+                                                    <option value="1">Yes, Please</option>
+                                                    <option value="2">Preferable</option>
+                                                    <option value="0">No, Thanks</option>
+                                                </select>
+                                            </div>
+                                            <span class="help-block-worker_benefits"></span>
+                                            
+                                            {{-- end worker benefits --}}
+
                                             {{-- Skip && Save --}}
                                             <div class="ss-prsn-form-btn-sec row col-11" style="gap:0px;">
                                                 <div class="col-4">
@@ -1819,7 +2127,7 @@
         const specialty = document.querySelector('select[name="specialty"]');
         const terms = document.querySelector('select[name="terms"]');
         const type = document.querySelector('select[name="type"]');
-        const block_scheduling = document.querySelector('input[name="block_scheduling"]');
+        const block_scheduling = document.querySelector('select[name="block_scheduling"]');
         const float_requirement = document.querySelector('select[name="float_requirement"]');
         const facility_shift_cancelation_policy = document.querySelector(
             'select[name="facility_shift_cancelation_policy"]');
@@ -1830,12 +2138,39 @@
         const emr = document.querySelector('select[name="worker_emr"]');
         const Unit = document.querySelector('input[name="worker_unit"]');
         const scrub_color = document.querySelector('input[name="worker_scrub_color"]');
-        const rto = document.querySelector('input[name="rto"]');
+        const rto = document.querySelector('select[name="rto"]');
         const shift_of_day = document.querySelector('select[name="worker_shift_time_of_day"]');
-        const hours_per_week = document.querySelector('input[name="worker_hours_per_week"]');
         const hours_shift = document.querySelector('input[name="worker_hours_shift"]');
         const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
         const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
+        const worker_experience = document.querySelector('input[name="worker_experience"]');
+        const worker_ss_number = document.querySelector('input[name="worker_ss_number"]');
+        const worker_eligible_work_in_us = document.querySelector('select[name="worker_eligible_work_in_us"]');
+        const nursing_license_state = document.querySelector('select[name="nursing_license_state"]');
+        const worker_facility_city = document.querySelector('select[name="worker_facility_city"]');
+        const worker_facility_state = document.querySelector('select[name="worker_facility_state"]');
+        const worker_start_date = document.querySelector('input[name="worker_start_date"]');
+        const worker_guaranteed_hours = document.querySelector('input[name="worker_guaranteed_hours"]');
+        const worker_sign_on_bonus = document.querySelector('input[name="worker_sign_on_bonus"]');
+        const worker_completion_bonus = document.querySelector('input[name="worker_completion_bonus"]');
+        const worker_extension_bonus = document.querySelector('input[name="worker_extension_bonus"]');
+        const worker_other_bonus = document.querySelector('input[name="worker_other_bonus"]');
+        const worker_four_zero_one_k = document.querySelector('select[name="worker_four_zero_one_k"]');
+        const worker_health_insurance = document.querySelector('select[name="worker_health_insurance"]');
+        const worker_dental = document.querySelector('select[name="worker_dental"]');
+        const worker_vision = document.querySelector('select[name="worker_vision"]');
+        const worker_overtime_rate = document.querySelector('input[name="worker_overtime_rate"]');
+        const worker_holiday = document.querySelector('input[name="worker_holiday"]');
+        const worker_on_call_check = document.querySelector('select[name="worker_on_call_check"]');
+        const worker_on_call_rate = document.querySelector('input[name="worker_on_call_rate"]');
+        const worker_on_call_back_check = document.querySelector('select[name="worker_on_call_back_check"]');
+        const worker_on_call_back_rate = document.querySelector('input[name="worker_on_call_back_rate"]');
+        const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
+        const worker_benefits = document.querySelector('select[name="worker_benefits"]');
+         
+
+
+
         // Document Management
         //const file = document.querySelector('input[type="file"]');
         const file = document.getElementById('document_file');
@@ -1923,11 +2258,17 @@
                 $('.help-block-type').addClass('text-danger');
                 isValid = false;
             }
+            if (block_scheduling.value === '') {
+                $('.help-block-block_scheduling').text('Please enter a block scheduling');
+                $('.help-block-block_scheduling').addClass('text-danger');
+                isValid = false;
+            }
             if (float_requirement.value === '') {
                 $('.help-block-float_requirement').text('Please enter a float requirement');
                 $('.help-block-float_requirement').addClass('text-danger');
                 isValid = false;
             }
+
             if (facility_shift_cancelation_policy.value === '') {
                 $('.help-block-facility_shift_cancelation_policy').text('Please enter a facility shift cancelation policy');
                 $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
@@ -1939,7 +2280,7 @@
                 isValid = false;
             }
             if (traveler_distance_from_facility.value === '') {
-                $('.help-block-traveler_distance_from_facility').text('Please enter a traveler distance from facility');
+                $('.help-block-traveler_distance_from_facility').text('Please enter the Distance from your home');
                 $('.help-block-traveler_distance_from_facility').addClass('text-danger');
                 isValid = false;
             }
@@ -1978,11 +2319,6 @@
                 $('.help-block-worker_shift_time_of_day').addClass('text-danger');
                 isValid = false;
             }
-            if (hours_per_week.value === '') {
-                $('.help-block-worker_hours_per_week').text('Please enter a hours per week');
-                $('.help-block-worker_hours_per_week').addClass('text-danger');
-                isValid = false;
-            }
             if (hours_shift.value === '') {
                 $('.help-block-worker_hours_shift').text('Please enter a hours per shift');
                 $('.help-block-worker_hours_shift').addClass('text-danger');
@@ -1998,6 +2334,127 @@
                 $('.help-block-worker_shifts_week').addClass('text-danger');
                 isValid = false;
             }
+            if (worker_experience.value === '') {
+                $('.help-block-worker_experience').text('Please enter a worker experience');
+                $('.help-block-worker_experience').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_ss_number.value === '') {
+                $('.help-block-worker_ss_number').text('Please enter a worker SS number');
+                $('.help-block-worker_ss_number').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_eligible_work_in_us.value === '') {
+                $('.help-block-worker_eligible_work_in_us').text('Please enter a worker eligible work in us');
+                $('.help-block-worker_eligible_work_in_us').addClass('text-danger');
+                isValid = false;
+            }
+            if (nursing_license_state.value === '') {
+                $('.help-block-nursing_license_state').text('Please enter a nursing license state');
+                $('.help-block-nursing_license_state').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_facility_city.value === '') {
+                $('.help-block-worker_facility_city').text('Please enter a worker facility city');
+                $('.help-block-worker_facility_city').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_facility_state.value === '') {
+                $('.help-block-worker_facility_state').text('Please enter a worker facility state');
+                $('.help-block-worker_facility_state').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_start_date.value === '') {
+                $('.help-block-worker_start_date').text('Please enter a worker start date');
+                $('.help-block-worker_start_date').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_guaranteed_hours.value === '') {
+                $('.help-block-worker_guaranteed_hours').text('Please enter a worker guaranteed hours');
+                $('.help-block-worker_guaranteed_hours').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_sign_on_bonus.value === '') {
+                $('.help-block-worker_sign_on_bonus').text('Please enter a worker sign on bonus');
+                $('.help-block-worker_sign_on_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_completion_bonus.value === '') {
+                $('.help-block-worker_completion_bonus').text('Please enter a worker completion bonus');
+                $('.help-block-worker_completion_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_extension_bonus.value === '') {
+                $('.help-block-worker_extension_bonus').text('Please enter a worker extension bonus');
+                $('.help-block-worker_extension_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_other_bonus.value === '') {
+                $('.help-block-worker_other_bonus').text('Please enter a worker other bonus');
+                $('.help-block-worker_other_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_four_zero_one_k.value === '') {
+                $('.help-block-worker_four_zero_one_k').text('Please enter a worker four zero one k');
+                $('.help-block-worker_four_zero_one_k').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_health_insurance.value === '') {
+                $('.help-block-worker_health_insurance').text('Please enter a worker health insurance');
+                $('.help-block-worker_health_insurance').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_dental.value === '') {
+                $('.help-block-worker_dental').text('Please enter a worker dental');
+                $('.help-block-worker_dental').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_vision.value === '') {
+                $('.help-block-worker_vision').text('Please enter a worker vision');
+                $('.help-block-worker_vision').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_overtime_rate.value === '') {
+                $('.help-block-worker_overtime_rate').text('Please enter a worker overtime rate');
+                $('.help-block-worker_overtime_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_holiday.value === '') {
+                $('.help-block-worker_holiday').text('Please enter a worker holiday');
+                $('.help-block-worker_holiday').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_check.value === '') {
+                $('.help-block-worker_on_call_check').text('Please enter a worker on call check');
+                $('.help-block-worker_on_call_check').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_rate.value === '') {
+                $('.help-block-worker_on_call_rate').text('Please enter a worker on call rate');
+                $('.help-block-worker_on_call_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_back_check.value === '') {
+                $('.help-block-worker_on_call_back_check').text('Please enter a worker on call back check');
+                $('.help-block-worker_on_call_back_check').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_back_rate.value === '') {
+                $('.help-block-worker_on_call_back_rate').text('Please enter a worker on call back rate');
+                $('.help-block-worker_on_call_back_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_orientation_rate.value === '') {
+                $('.help-block-worker_orientation_rate').text('Please enter a worker orientation rate');
+                $('.help-block-worker_orientation_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_benefits.value === '') {
+                $('.help-block-worker_benefits').text('Please enter a worker benefits');
+                $('.help-block-worker_benefits').addClass('text-danger');
+                isValid = false;
+            }
+
             return isValid;
         }
         // end validation professional information
@@ -2207,10 +2664,34 @@
                     scrub_color: scrub_color.value,
                     rto: rto.value,
                     shift_of_day: shift_of_day.value,
-                    hours_per_week: hours_per_week.value,
                     hours_shift: hours_shift.value,
                     preferred_assignment_duration: preferred_assignment_duration.value,
                     weeks_shift: weeks_shift.value,
+                    worker_experience: worker_experience.value,
+                    worker_ss_number: worker_ss_number.value,
+                    worker_eligible_work_in_us: worker_eligible_work_in_us.value,
+                    nursing_license_state: nursing_license_state.value,
+                    worker_facility_city: worker_facility_city.value,
+                    worker_facility_state: worker_facility_state.value,
+                    worker_start_date: worker_start_date.value,
+                    worker_guaranteed_hours: worker_guaranteed_hours.value,
+                    worker_sign_on_bonus: worker_sign_on_bonus.value,
+                    worker_completion_bonus: worker_completion_bonus.value,
+                    worker_extension_bonus: worker_extension_bonus.value,
+                    worker_other_bonus: worker_other_bonus.value,
+                    worker_four_zero_one_k: worker_four_zero_one_k.value,
+                    worker_health_insurance: worker_health_insurance.value,
+                    worker_dental: worker_dental.value,
+                    worker_vision: worker_vision.value,
+                    worker_overtime_rate: worker_overtime_rate.value,
+                    worker_holiday: worker_holiday.value,
+                    worker_on_call_check: worker_on_call_check.value,
+                    worker_on_call_rate: worker_on_call_rate.value,
+                    worker_on_call_back_check: worker_on_call_back_check.value,
+                    worker_on_call_back_rate: worker_on_call_back_rate.value,
+                    worker_orientation_rate: worker_orientation_rate.value,
+                    worker_benefits: worker_benefits.value,
+
                     InfoType: "ProfessionalInformation"
                 }),
                 success: function(resp) {

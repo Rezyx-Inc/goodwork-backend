@@ -1057,9 +1057,11 @@ public function read_offer_notification(Request $request)
 
 public function addDocuments(Request $request)
     {
+
         try{
         $body = $request->getContent();
         $bodyArray = json_decode($body, true);
+        
         //return response()->json(['body' => $bodyArray]);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
@@ -1073,7 +1075,7 @@ public function addDocuments(Request $request)
         } else {
             return response()->json([
                 'ok' => false,
-                'message' => 'Failed to upload files',
+                'message' => $response->body(),
             ], $response->status());
         }
         }catch(\Exception $e){

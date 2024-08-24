@@ -108,8 +108,12 @@ class CreateJobsTable extends Migration
              $table->decimal('actual_hourly_rate', 8, 2)->nullable();
              $table->decimal('overtime', 8, 2)->nullable();
              $table->date('holiday')->nullable();
-             $table->decimal('on_call', 8, 2)->nullable();
-             $table->decimal('call_back', 8, 2)->nullable();
+             // call backs
+             $table->boolean('on_call')->default(false);
+             $table->decimal('on_call_rate', 8, 2)->nullable();
+             $table->boolean('on_call_back')->default(false);
+             $table->decimal('call_back_rate', 8, 2)->nullable();
+             // end call backs
              $table->decimal('orientation_rate', 8, 2)->nullable();
              $table->decimal('weekly_taxable_amount', 8, 2)->nullable();
              $table->decimal('employer_weekly_amount', 8, 2)->nullable();
@@ -121,7 +125,6 @@ class CreateJobsTable extends Migration
              $table->string('tax_status', 36);
              $table->string('terms');
              $table->string('type')->nullable();
-
             // Adding new columns (from docs)
             //not required
             $table->string('job_location')->nullable();  // done 

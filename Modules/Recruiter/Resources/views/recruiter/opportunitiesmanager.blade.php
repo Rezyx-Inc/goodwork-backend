@@ -434,7 +434,7 @@
                                                 <span class="help-block-overtime"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>On Call Hourly rate</label>
+                                                <label>On Call</label>
                                                 <select name="on_call" id="on_call">
                                                     <option value="">On call</option>
                                                     <option value="Yes">Yes
@@ -443,6 +443,12 @@
                                                     </option>
                                                 </select>
                                                 <span class="help-block-on_call"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>On Call Rate</label>
+                                                <input type="number" name="on_call_rate" id="on_call_rate"
+                                                placeholder="Enter a call back hourly rate">
+                                                <span class="help-block-on_call_rate"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Holidy date</label>
@@ -863,14 +869,27 @@
                                                     placeholder="Enter Feels Like $/hrs">
                                                 <span class="help-block-feels_like_per_hour"></span>
                                             </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>On Call Back</label>
+                                                <select name="on_call_back" id="on_call_back">
+                                                    <option value="">On call back</option>
+                                                    <option value="Yes">Yes
+                                                    </option>
+                                                    <option value="No">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-on_call_back"></span>
+                                            </div>
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Call Back Hourly rate</label>
-
-                                                <input type="number" name="call_back" id="call_back"
+                                                <input type="number" name="call_back_rate" id="call_back_rate"
                                                     placeholder="Enter Call Back Hourly rate">
-                                                <span class="help-block-call_back"></span>
-                                                <span class="help-block-call_back"></span>
+                                                <span class="help-block-call_back_rate"></span>
+                                                <span class="help-block-call_back_rate"></span>
                                             </div>
+
                                             {{-- <div class="ss-form-group col-md-4">
                                                 <label>Est. Weekly Taxable amount</label>
                                                 <input type="number" name="weekly_taxable_amount"
@@ -1409,7 +1428,7 @@
                                                         <span class="help-block-overtime"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>On Call Hourly rate</label>
+                                                        <label>On Call</label>
                                                         <select name="on_call" id="on_callDraft">
                                                             <option value="">On call</option>
                                                             <option value="Yes">Yes
@@ -1418,6 +1437,12 @@
                                                             </option>
                                                         </select>
                                                         <span class="help-block-on_call"></span>
+                                                    </div>
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>On Call Rate</label>
+                                                        <input type="number" name="on_call_rate" id="on_call_rateDraft"
+                                                        placeholder="Enter a call back hourly rate">
+                                                        <span class="help-block-on_call_rate"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Holidy date</label>
@@ -1807,10 +1832,22 @@
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
+                                                        <label>On Call Back</label>
+                                                        <select name="on_call_back" id="on_call_backDraft">
+                                                            <option value="">On call back</option>
+                                                            <option value="Yes">Yes
+                                                            </option>
+                                                            <option value="No">No
+                                                            </option>
+                                                        </select>
+                                                        <span class="help-block-on_call_back"></span>
+                                                    </div>
+
+                                                    <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
-                                                        <input type="number" name="call_back" id="call_backDraft"
+                                                        <input type="number" name="call_back_rate" id="call_back_rateDraft"
                                                             placeholder="Enter Call Back Hourly rate">
-                                                        <span class="help-block-call_back"></span>
+                                                        <span class="help-block-call_back_rate"></span>
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
@@ -2228,7 +2265,7 @@
                                                         <span class="help-block-overtime"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>On Call Hourly rate</label>
+                                                        <label>On Call</label>
                                                         <select name="on_call" id="on_callEdit">
                                                             <option value="">On call</option>
                                                             <option value="Yes">Yes
@@ -2237,6 +2274,12 @@
                                                             </option>
                                                         </select>
                                                         <span class="help-block-on_call"></span>
+                                                    </div>
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>On Call Rate</label>
+                                                        <input type="number" name="on_call_rate" id="on_call_rateEdit"
+                                                        placeholder="Enter a call back hourly rate">
+                                                        <span class="help-block-on_call_rate"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Holidy date</label>
@@ -2614,10 +2657,23 @@
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
+                                                        <label>On Call Back</label>
+                                                        <select name="on_call_back" id="on_call_backEdit">
+                                                            <option value="">On call back</option>
+                                                            <option value="Yes">Yes
+                                                            </option>
+                                                            <option value="No">No
+                                                            </option>
+                                                        </select>
+                                                        <span class="help-block-on_call_back"></span>
+                                                    </div>
+
+
+                                                    <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
-                                                        <input type="number" name="call_back" id="call_backEdit"
+                                                        <input type="number" name="call_back_rate" id="call_back_rateEdit"
                                                             placeholder="Enter Call Back Hourly rate">
-                                                        <span class="help-block-call_back"></span>
+                                                        <span class="help-block-call_back_rate"></span>
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
@@ -2804,6 +2860,7 @@ if (draftJobs.length !== 0) {
     let actual_hourly_rate = draftJobs[0].actual_hourly_rate;
     let overtime = draftJobs[0].overtime;
     let on_call = draftJobs[0].on_call;
+    let on_call_rate = draftJobs[0].on_call_rate;
     let holiday = draftJobs[0].holiday;
     let orientation_rate = draftJobs[0].orientation_rate;
     let terms = draftJobs[0].terms;
@@ -2815,7 +2872,8 @@ if (draftJobs.length !== 0) {
     let health_insaurance = draftJobs[0].health_insaurance;
     let dental = draftJobs[0].dental;
     let vision = draftJobs[0].vision;
-    let call_back = draftJobs[0].call_back;
+    let call_back_rate = draftJobs[0].call_back_rate;
+    let on_call_back = draftJobs[0].on_call_back;
     let feels_like_per_hour = draftJobs[0].feels_like_per_hour;
     let weekly_non_taxable_amount = draftJobs[0].weekly_non_taxable_amount;
     let start_date = draftJobs[0].start_date;
@@ -2953,6 +3011,9 @@ if (draftJobs.length !== 0) {
         document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
 
     }
+    if (on_call_rate !== null) {
+        document.getElementById("on_call_rateDraft").value = on_call_rate;
+    }
     if (holiday !== null) {
         document.getElementById("holidayDraft").value = holiday;
     }
@@ -3013,8 +3074,11 @@ if (draftJobs.length !== 0) {
     if(feels_like_per_hour !== null){
         document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
     }
-    if (call_back !== null) {
-        document.getElementById("call_backDraft").value = call_back;
+    if (call_back_rate !== null) {
+        document.getElementById("call_back_rateDraft").value = call_back_rate;
+    }
+    if (on_call_back !== null) {
+        document.getElementById("on_call_backDraft").value = (on_call_back == 0) ? 'No' : 'Yes';
     }
     if (weekly_non_taxable_amount !== null) {
         document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
@@ -3919,6 +3983,7 @@ if (draftJobs.length !== 0) {
         let actual_hourly_rate = draftJobs[jobId].actual_hourly_rate;
         let overtime = draftJobs[jobId].overtime;
         let on_call = draftJobs[jobId].on_call;
+        let on_call_rate = draftJobs[jobId].on_call_rate;
         let holiday = draftJobs[jobId].holiday;
         let orientation_rate = draftJobs[jobId].orientation_rate;
         let terms = draftJobs[jobId].terms;
@@ -3931,7 +3996,8 @@ if (draftJobs.length !== 0) {
         let dental = draftJobs[jobId].dental;
         let vision = draftJobs[jobId].vision;
         let feels_like_per_hour = draftJobs[jobId].feels_like_per_hour;
-        let call_back = draftJobs[jobId].call_back;
+        let call_back_rate = draftJobs[jobId].call_back_rate;
+        let on_call_back = draftJobs[jobId].on_call_back;
         let weekly_non_taxable_amount = draftJobs[jobId].weekly_non_taxable_amount;
         let start_date = draftJobs[jobId].start_date;
         let as_soon_as = draftJobs[jobId].as_soon_as;
@@ -4209,10 +4275,15 @@ if (draftJobs.length !== 0) {
             }else {
                 document.getElementById("feels_like_per_hourDraft").value = '';
             }
-            if (call_back !== null) {
-                document.getElementById("call_backDraft").value = call_back;
+            if (call_back_rate !== null) {
+                document.getElementById("call_back_rateDraft").value = call_back_rate;
             }else {
-                document.getElementById("call_backDraft").value = '';
+                document.getElementById("call_back_rateDraft").value = '';
+            }
+            if (on_call_back !== null) {
+                document.getElementById("on_call_backDraft").value = (on_call_back == 0) ? 'No' : 'Yes';
+            }else {
+                document.getElementById("on_call_backDraft").value = '';
             }
             if (weekly_non_taxable_amount !== null) {
                 document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
@@ -4465,6 +4536,7 @@ if (draftJobs.length !== 0) {
         var holiday = document.getElementById("holiday").value;
         var orientation_rate = document.getElementById("orientation_rate").value;
         var on_call = document.getElementById("on_call").value;
+        var on_call_rate = document.getElementById("on_call_rate").value;
         var block_scheduling = document.getElementById("block_scheduling").value;
         var terms = document.getElementById("terms").value;
         var float_requirement = document.getElementById("float_requirement").value;
@@ -4549,6 +4621,16 @@ if (draftJobs.length !== 0) {
             $('.help-block-on_call').text('');
         }
 
+        if (on_call_rate.trim() === '') {
+            $('.help-block-on_call_rate').text('Please enter the on call rate');
+            $('.help-block-on_call_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_rate').text('');
+        }
+
+
+
         if (block_scheduling.trim() === '') {
             $('.help-block-block_scheduling').text('Please enter the block scheduling');
             $('.help-block-block_scheduling').addClass('text-danger');
@@ -4592,7 +4674,8 @@ if (draftJobs.length !== 0) {
         var dental = document.getElementById("dental").value;
         var vision = document.getElementById("vision").value;
         var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
-        var call_back = document.getElementById("call_back").value;
+        var call_back_rate = document.getElementById("call_back_rate").value;
+        var on_call_back = document.getElementById("on_call_back").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -4658,12 +4741,20 @@ if (draftJobs.length !== 0) {
             $('.help-block-feels_like_per_hour').text('');
         }
 
-        if (call_back.trim() === '') {
-            $('.help-block-call_back').text('Please enter the call back');
-            $('.help-block-call_back').addClass('text-danger');
+        if (call_back_rate.trim() === '') {
+            $('.help-block-call_back_rate').text('Please enter the call back');
+            $('.help-block-call_back_rate').addClass('text-danger');
             access = false;
         } else {
-            $('.help-block-call_back').text('');
+            $('.help-block-call_back_rate').text('');
+        }
+
+        if (on_call_back.trim() === '') {
+            $('.help-block-on_call_back').text('Please enter the on call back');
+            $('.help-block-on_call_back').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_back').text('');
         }
 
         // if (weekly_taxable_amount.trim() === '') {
@@ -5125,6 +5216,7 @@ if (draftJobs.length !== 0) {
         var holiday = document.getElementById("holidayDraft").value;
         var orientation_rate = document.getElementById("orientation_rateDraft").value;
         var on_call = document.getElementById("on_callDraft").value;
+        var on_call_rate = document.getElementById("on_call_rateDraft").value;
         var block_scheduling = document.getElementById("block_schedulingDraft").value;
         var terms = document.getElementById("termsDraft").value;
         var float_requirement = document.getElementById("float_requirementDraft").value;
@@ -5209,6 +5301,14 @@ if (draftJobs.length !== 0) {
             $('.help-block-on_call').text('');
         }
 
+        if (on_call_rate.trim() === '') {
+            $('.help-block-on_call_rate').text('Please enter the on call rate');
+            $('.help-block-on_call_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_rate').text('');
+        }
+
         if (block_scheduling.trim() === '') {
             $('.help-block-block_scheduling').text('Please enter the block scheduling');
             $('.help-block-block_scheduling').addClass('text-danger');
@@ -5252,7 +5352,8 @@ if (draftJobs.length !== 0) {
         var dental = document.getElementById("dentalDraft").value;
         var vision = document.getElementById("visionDraft").value;
         var feels_like_per_hour = document.getElementById("feels_like_per_hourDraft").value;
-        var call_back = document.getElementById("call_backDraft").value;
+        var call_back_rate = document.getElementById("call_back_rateDraft").value;
+        var on_call_back = document.getElementById("on_call_backDraft").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountDraft").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -5318,12 +5419,20 @@ if (draftJobs.length !== 0) {
             $('.help-block-feels_like_per_hourDraft').text('');
         }
 
-        if (call_back.trim() === '') {
-            $('.help-block-call_back').text('Please enter the call back');
-            $('.help-block-call_back').addClass('text-danger');
+        if (call_back_rate.trim() === '') {
+            $('.help-block-call_back_rate').text('Please enter the call back');
+            $('.help-block-call_back_rate').addClass('text-danger');
             access = false;
         } else {
-            $('.help-block-call_back').text('');
+            $('.help-block-call_back_rate').text('');
+        }
+
+        if (on_call_back.trim() === '') {
+            $('.help-block-on_call_back').text('Please enter the on call back');
+            $('.help-block-on_call_back').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_back').text('');
         }
 
         // if (weekly_taxable_amount.trim() === '') {
@@ -5777,6 +5886,7 @@ if (draftJobs.length !== 0) {
         var holiday = document.getElementById("holidayEdit").value;
         var orientation_rate = document.getElementById("orientation_rateEdit").value;
         var on_call = document.getElementById("on_callEdit").value;
+        var on_call_rate = document.getElementById("on_call_rateEdit").value;
         var block_scheduling = document.getElementById("block_schedulingEdit").value;
         var terms = document.getElementById("termsEdit").value;
         var float_requirement = document.getElementById("float_requirementEdit").value;
@@ -5860,6 +5970,15 @@ if (draftJobs.length !== 0) {
         } else {
             $('.help-block-on_call').text('');
         }
+        if(on_call_rate.trim() === '') {
+            $('.help-block-on_call_rate').text('Please enter the on call rate');
+            $('.help-block-on_call_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_rate').text('');
+        }
+
+        
 
         if (block_scheduling.trim() === '') {
             $('.help-block-block_scheduling').text('Please enter the block scheduling');
@@ -5904,7 +6023,8 @@ if (draftJobs.length !== 0) {
         var dental = document.getElementById("dentalEdit").value;
         var vision = document.getElementById("visionEdit").value;
          var feels_like_per_hour = document.getElementById("feels_like_per_hourEdit").value;
-        var call_back = document.getElementById("call_backEdit").value;
+        var call_back_rate = document.getElementById("call_back_rateEdit").value;
+        var on_call_back = document.getElementById("on_call_backEdit").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountEdit").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -5972,12 +6092,20 @@ if (draftJobs.length !== 0) {
 
 
 
-        if (call_back.trim() === '') {
-            $('.help-block-call_back').text('Please enter the call back');
-            $('.help-block-call_back').addClass('text-danger');
+        if (call_back_rate.trim() === '') {
+            $('.help-block-call_back_rate').text('Please enter the call back');
+            $('.help-block-call_back_rate').addClass('text-danger');
             access = false;
         } else {
-            $('.help-block-call_back').text('');
+            $('.help-block-call_back_rate').text('');
+        }
+
+        if (on_call_back.trim() === '') {
+            $('.help-block-on_call_back').text('Please enter the on call back');
+            $('.help-block-on_call_back').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_back').text('');
         }
 
 
@@ -6282,6 +6410,7 @@ if (draftJobs.length !== 0) {
                         document.getElementById("holidayEdit").value = result.holiday;
                         document.getElementById("orientation_rateEdit").value = result.orientation_rate;
                         document.getElementById("on_callEdit").value = (result.on_call == 0) ? 'No' : 'Yes';
+                        document.getElementById("on_call_rateEdit").value = result.on_call_rate;
                         document.getElementById("block_schedulingEdit").value = (result.block_scheduling == 0) ? 'No' : 'Yes';
                         var Terms = result.terms;
     var select = document.getElementById('termsEdit');
@@ -6309,7 +6438,8 @@ if (draftJobs.length !== 0) {
                         document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';
                         document.getElementById("visionEdit").value = (result.vision == 0) ? 'No' : 'Yes';
                         document.getElementById("feels_like_per_hourEdit").value = result.feels_like_per_hour;
-                        document.getElementById("call_backEdit").value = result.call_back;
+                        document.getElementById("call_back_rateEdit").value = result.call_back_rate;
+                        document.getElementById("on_call_backEdit").value = (result.on_call_back == 0) ? 'No' : 'Yes';
                         document.getElementById("weekly_non_taxable_amountEdit").value = result.weekly_non_taxable_amount;
                         document.getElementById("hours_shiftEdit").value = result.hours_shift;
                         document.getElementById("start_dateEdit").value = result.start_date;

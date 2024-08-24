@@ -61,12 +61,12 @@ router.post('/add-docs', async (req, res) => {
 	        })
 	        .catch((e) => {
 	          console.log("Unable to save document.", e);
-	          return res.status(400).send(e);
+	          return res.status(400).send(e.message);
 	        })
         })
         .catch(e => {
             console.log("Unexpected error", e)
-            res.status(400).send("Unexpected error.")
+            res.status(400).send(e)
         });
 });
 
