@@ -165,7 +165,6 @@ class CreateNurseTable extends Migration
             $table->boolean('worker_feels_like_per_hour_check')->default(false); // done
             $table->string('worker_overtime_rate',36)->nullable(); // done
             $table->boolean('worker_on_call_check')->default(false); // done
-            $table->string('worker_orientation_rate')->nullable(); // done
             $table->decimal('worker_weekly_non_taxable_amount_check', 8, 2)->nullable(); // done
             $table->boolean('worker_call_back_check')->default(false); // done
 

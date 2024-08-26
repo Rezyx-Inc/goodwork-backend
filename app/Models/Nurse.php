@@ -201,7 +201,7 @@ class Nurse extends Model implements HasMedia
         'worker_feels_like_per_hour_check',
         'worker_overtime_rate',
        
-        'worker_orientation_rate',
+        
         'worker_weekly_non_taxable_amount_check',
         'worker_call_back_rate',
         'worker_on_call_rate',
