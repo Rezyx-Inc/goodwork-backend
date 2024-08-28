@@ -12,15 +12,21 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Builder;
 use App\Events\NewPrivateMessage;
+use App\Events\NotificationMessage;
+use App\Events\NotificationJob;
+use App\Events\NotificationOffer;
 use Illuminate\Support\Facades\Http;
-
+use Carbon\Carbon;
 
 use DB;
 use Exception;
 
 use App\Models\{User, Worker,Follows, NurseReference,Job,Offer, NurseAsset,
-    Keyword, Facility, Availability, Countries, States, Cities, JobSaved};
+    Keyword, Facility, Availability, Countries, States, Cities, JobSaved,Nurse,NotificationOfferModel};
 
+use App\Models\NotificationMessage as NotificationMessageModel;
+
+define('USER_IMG', asset('frontend/img/profile-pic-big.png'));
 
 class WorkerController extends Controller
 {
@@ -102,6 +108,13 @@ class WorkerController extends Controller
     {
         $data = [];
         $data['model'] = Job::findOrFail($id);
+        $distinctFilters = Keyword::distinct()->pluck('filter');
+        $allKeywords = [];
+        foreach ($distinctFilters as $filter) {
+            $keywords = Keyword::where('filter', $filter)->get();
+            $allKeywords[$filter] = $keywords;
+        }
+        $data['allKeywords'] = $allKeywords;
         // $user = auth()->guard('frontend')->user();
         // dd($user->nurse->id);
         $data['jobSaved'] = new JobSaved();
@@ -119,11 +132,15 @@ class WorkerController extends Controller
         $idRecruiter = $request->idRecruiter;
         $type = $request->type;
         $fileName = $request->fileName;
-       
+
+        $full_name = $user->first_name . ' ' . $user->last_name;
+
+
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message , $idEmployer,$idRecruiter, $id, 'WORKER',$time,$type,$fileName));
-        
-        
+        event(new NotificationMessage($message,false,$time,$idRecruiter,$id,$full_name));
+
+
         return [$id, $idEmployer];
     }
 
@@ -132,9 +149,9 @@ class WorkerController extends Controller
         $idRecruiter = $request->query('recruiterId');
         $idEmployer = $request->query('employerId');
         $page = $request->query('page', 1);
-        
+
         $idWorker = Auth::guard('frontend')->user()->id;
-       
+
         // Calculate the number of messages to skip
         $skip = ($page - 1) * 10;
 
@@ -170,15 +187,15 @@ class WorkerController extends Controller
     public function get_rooms(Request $request){
 
         $idWorker = Auth::guard('frontend')->user()->id;
-    
+
         $rooms = DB::connection('mongodb')->collection('chat')
         ->raw(function($collection) use ($idWorker) {
             return $collection->aggregate([
                 [
                     '$match' => [
-                        
+
                         'workerId' => $idWorker,
-                        
+
                     ]
                 ],
                 [
@@ -198,8 +215,8 @@ class WorkerController extends Controller
                 ]
             ])->toArray();
         });
-    
-       
+
+
         $users = [];
         $data = [];
         foreach($rooms as $room){
@@ -220,18 +237,18 @@ class WorkerController extends Controller
             $data_User['recruiterId'] = $room->recruiterId;
             $data_User['isActive'] = $room->isActive;
             $data_User['messages'] = $room->messages;
-        
+
             array_push($data, $data_User);
-            
+
         }
-    
-        
+
+
          return response()->json($data);
     }
-    
+
 
     public function get_messages(){
-        
+
         $id = Auth::guard('frontend')->user()->id;
 
         $rooms = DB::connection('mongodb')->collection('chat')
@@ -258,18 +275,18 @@ class WorkerController extends Controller
                         'messagesLength'=> [
                             '$cond' =>
                             [
-                                'if' => 
-                                    [ 
-                                        '$isArray' => '$messages' 
-                                    ], 
-                                'then' => 
-                                    [ 
-                                        '$size' => '$messages' 
-                                    ], 
+                                'if' =>
+                                    [
+                                        '$isArray' => '$messages'
+                                    ],
+                                'then' =>
+                                    [
+                                        '$size' => '$messages'
+                                    ],
                                 'else' => 'NA'
                             ]
                         ]
-                        
+
                     ]
                 ]
             ])->toArray();
@@ -389,7 +406,8 @@ class WorkerController extends Controller
 
     public function get_my_work_journey()
     {
-        $user = auth()->guard('frontend')->user();
+        $front_end_user = Auth::guard('frontend')->user();
+        $user = Nurse::where('user_id', $front_end_user->id)->first();
         $whereCond = [
             'jobs.is_open' => "1",
             'jobs.is_closed' => "0",
@@ -398,7 +416,9 @@ class WorkerController extends Controller
         ];
 
         $data = [];
-        
+
+        //return request()->route()->getName();
+
         switch(request()->route()->getName())
         {
             case 'worker.my-work-journey':
@@ -424,7 +444,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Apply', 'Screening', 'Submitted'])
-                        ->where('offers.worker_user_id', '=', $user->nurse->id);
+                        ->where('offers.worker_user_id', '=', $user->id);
                     });
                 })
                 ->where($whereCond)
@@ -440,7 +460,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Onboarding', 'Working'])
-                        ->where('offers.worker_user_id', '=', $user->nurse->id);
+                        ->where('offers.worker_user_id', '=', $user->id);
                     });
                 })
                 ->where($whereCond)
@@ -456,7 +476,7 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->whereIn('offers.status', ['Offered', 'Hold'])
-                        ->where('offers.worker_user_id', '=', $user->nurse->id)
+                        ->where('offers.worker_user_id', '=', $user->id)
                         ;
                     });
                 })
@@ -474,13 +494,28 @@ class WorkerController extends Controller
                     $join->on('offers.job_id', '=', 'jobs.id')
                     ->where(function ($query) use ($user) {
                         $query->where('offers.status', '=', 'Done')
-                        ->where('offers.worker_user_id', '=', $user->nurse->id);
+                        ->where('offers.worker_user_id', '=', $user->id);
                     });
                 })
                 ->where($whereCond)
                 ->orderBy('offers.created_at', 'DESC')
                 ->get();
                 $data['type'] = 'past';
+                break;
+            case 'saved-jobs':
+                $jobs = Job::select("jobs.*")
+                ->join('job_saved', function ($join) use ($user){
+                    $join->on('job_saved.job_id', '=', 'jobs.id')
+                    ->where(function ($query) use ($user) {
+                        $query->where('job_saved.is_delete', '=', '0')
+                        ->where('job_saved.is_save', '=', '1')
+                        ->where('job_saved.nurse_id', '=', $user->id);
+                    });
+                })
+                ->where($whereCond)
+                ->orderBy('job_saved.created_at', 'DESC')
+                ->get();
+                $data['type'] = 'saved';
                 break;
             default:
                 return redirect()->back();
@@ -670,7 +705,7 @@ class WorkerController extends Controller
 
             return view('jobs.explore', $data);
             //return response()->json(['message' =>  $data['jobs']]);
-        
+
         } catch (\Exception $e) {
             // Handle other exceptions
 
@@ -682,118 +717,145 @@ class WorkerController extends Controller
     }
 
     public function my_profile() {
-        
+
         $data = [];
         $id = Auth::guard('frontend')->user()->id;
         $data['model'] = User::findOrFail($id);
-        
+
         if ($data['model']->type_id === '2') {
             $data['managers'] = User::select('id', 'first_name', 'last_name')->where(['type_id' => '3', 'status' => '1'])->get();
         }
-        
+
         if (!Cache::has('statetbl')) {
             $states = States::select('id', 'name', 'abbrev', 'is_restrict')->where('is_restrict', '=', '0')->get();
             Cache::put('statetbl', $states);
         }
-        
+
         $data['states'] = Cache::get('statetbl');
         return view('user.edit-profile', $data);
     }
 
     public function fetch_job_content(Request $request)
     {
-        if ($request->ajax()) {
-            $request->validate([
-                'jid'=>'required',
+        try {
+            
+                $request->validate([
+                    'jid' => 'required',
+                    'type' => 'required',
+                ]);
+                $response = [];
+                $response['success'] = true;
+                $data = [];
+                $job = Job::findOrFail($request->jid);
+                $recruiter_id = $job->created_by;
+                $recruiter = User::findOrFail($recruiter_id);
+                $data['recruiter'] = $recruiter;
 
-                'type'=>'required'
-            ]);
-            $response = [];
-            $response['success'] = true;
-            $data = [];
-            $job = Job::findOrFail($request->jid);
-            $id = Auth::guard('frontend')->user()->id;
-            return response()->json(['msg'=>$id]);
-            switch($request->type)
-            {
-                case 'saved':
-                    // $jobs = $jobCOntent;
-                    $view = 'saved';
-                    break;
-                case 'applied':
-                    // $jobs = $jobCOntent;
-                    $view = 'applied';
-                    break;
-                case 'hired':
-                    // $jobs = $jobCOntent;
-                    $view = 'hired';
-                    break;
-                case 'offered':
-                    // $jobs = $jobCOntent;
-                    $view = 'offered';
-                    break;
-                case 'past':
-                    // $jobs = $jobCOntent;
-                    $view = 'past';
-                    break;
-                case 'counter':
-                    // $jobs = $jobCOntent;
+                $id = Auth::guard('frontend')->user()->id;
+                $worker_id = Nurse::where('user_id', $id)->first();
+                $offer_id = Offer::where('worker_user_id', $worker_id->id)
+                    ->where('job_id', $job->id)
+                    ->first();
+                $data['worker_id'] = $worker_id->id;
+                $data['model'] = $job;
+                $data['offer_id'] = $offer_id->id;
 
-                    $distinctFilters = Keyword::distinct()->pluck('filter');
-                    $keywords = [];
+                switch ($request->type) {
+                    case 'saved':
+                        // $jobs = $jobCOntent;
+                        $view = 'saved';
+                        break;
+                    case 'applied':
+                        // $jobs = $jobCOntent;
+                        $view = 'applied';
+                        break;
+                    case 'hired':
+                        // $jobs = $jobCOntent;
+                        $view = 'hired';
+                        break;
+                    case 'offered':
+                        // $jobs = $jobCOntent;
+                        $offerdetails = Offer::where('id', $offer_id->id)->first();
+                        $jobdetails = Job::where('id', $job->id)->first();
+                        $nursedetails = Nurse::where('id', $worker_id->id)->first();
+                        $recruiter = User::where('id', $jobdetails->created_by)->first();
+                        $data['offerdetails'] = $offerdetails;
+                        $data['jobdetails'] = $jobdetails;
+                        $data['nursedetails'] = $nursedetails;
+                        $data['recruiter'] = $recruiter;
+                        // return $data;
+                        $response['content'] = view('ajax.counter_details', $data)->render();
+                return new JsonResponse($response, 200);
+                        $view = 'offered';
+                        break;
+                    case 'past':
+                        // $jobs = $jobCOntent;
+                        $view = 'past';
+                        break;
+                    case 'counter':
+                        // $jobs = $jobCOntent;
+                        try {
+                            $distinctFilters = Keyword::distinct()->pluck('filter');
+                            $keywords = [];
 
-                    foreach ($distinctFilters as $filter) {
-                        $keyword = Keyword::where('filter', $filter)->get();
-                        $keywords[$filter] = $keyword;
-                    }
+                            foreach ($distinctFilters as $filter) {
+                                $keyword = Keyword::where('filter', $filter)->get();
+                                $keywords[$filter] = $keyword;
+                            }
 
-                    $data['keywords'] = $keywords;
-                    $data['countries'] = Countries::where('flag','1')
-                    ->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")
-                    ->orderBy('name','ASC')->get();
-                    $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
-                    $data['us_states'] = States::where('country_id', $usa->id)->get();
-                    $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
-                    $view = 'counter_offer';
+                            $data['keywords'] = $keywords;
+                            $data['countries'] = Countries::where('flag', '1')->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")->orderBy('name', 'ASC')->get();
+                            $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
+                            $data['us_states'] = States::where('country_id', $usa->id)->get();
+                            $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+                            $offerdetails = Offer::where('id', $offer_id->id)->first();
+                            $data['model'] = $offerdetails;
+                            $view = 'counter_offer';
+                        } catch (\Exception $e) {
+                            return response()->json(['success' => false, 'message' => 'here']);
+                        }
 
-                    break;
-                default:
-                    return new JsonResponse(['success'=>false, 'msg'=>'Oops! something went wrong.'], 400);
-                    break;
-            }
+                        break;
+                    default:
+                        return new JsonResponse(['success' => false, 'msg' => 'Oops! something went wrong.'], 400);
+                        break;
+                }
 
+                $response['content'] = view('ajax.' . $view . '_job', $data)->render();
+                return new JsonResponse($response, 200);
 
-
-
-            $data['model'] = $job;
-            // this will return one of the ajax views in the public resources 
-            $response['content'] = view('ajax.'.$view.'_job', $data)->render();
-            return new JsonResponse($response, 200);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
 
     // check stripe account onboarding
 
-    public function checkPaymentMethod($nurse_id) {
+    public function checkPaymentMethod($user_id) {
         $url = 'http://localhost:' . config('app.file_api_port') . '/payments/onboarding-status';
-        $stripe_id = User::where('id', $nurse_id)->first()->stripeAccountId;
+        $stripe_id = User::where('id', $user_id)->first()->stripeAccountId;
         $data = ['stripeId' => $stripe_id];
         $response = Http::get($url, $data);
-        
+
         if ($stripe_id == null ||  $response->json()['status'] == false) {
             return false;
         }
         return true;
     }
-    
+
 
     public function accept_offer(Request $request)
     {
 
         // check first stripe account onboarding
-        $nurse_id = Auth::guard('frontend')->user()->id;
-        if (!$this->checkPaymentMethod($nurse_id)) {
+        $user = Auth::guard('frontend')->user();
+        $user_id = $user->id;
+        $nurse_id = $user->nurse->id;
+        $full_name = $user->first_name . ' ' . $user->last_name;
+        $offer_id = $request->offer_id;
+
+        if (!$this->checkPaymentMethod($user_id)) {
             return response()->json(['success' => false, 'message' => 'Please complete your payment method onboarding first']);
         }
 
@@ -805,28 +867,29 @@ class WorkerController extends Controller
                 'offer_id'=>'required',
             ]);
 
-            $offer = Offer::where('id',$request->offer_id)->first();
+            $offer = Offer::where('id',$offer_id)->first();
             if(!$offer){
                 return response()->json(['success' => false, 'message' => 'Offer not found']);
             }
-    
+
             $job = Job::where('id',$offer->job_id)->first();
             if(!$job){
                 return response()->json(['success' => false, 'message' => 'Job not found']);
             }
-    
-            
+
+
                 $update_array['is_counter'] = '0';
                 $update_array['is_draft'] = '0';
                 $update_array['status'] = 'Hold';
-                $offer = DB::table('offers')
-                    ->where(['id' => $request->offer_id])
+                $is_offer_update = DB::table('offers')
+                    ->where(['id' => $offer_id])
                     ->update($update_array);
-                $user_id = $job->created_by;   
+                $user_id = $job->created_by;
                 $user = User::where('id',$user_id)->first();
+                
                 $data = [
-                    'offerId' => $request->offer_id,
-                    'amount' => '1', 
+                    'offerId' => $offer_id,
+                    'amount' => '1',
                     'stripeId' =>$user->stripeAccountId,
                     'fullName' => $user->first_name . ' ' . $user->last_name,
                 ];
@@ -834,9 +897,9 @@ class WorkerController extends Controller
                 //return response()->json(['message'=>$data]);
 
                 $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
-                    
-                // return response()->json(['data'=>$data , 'url' => $url]);   
-                    
+
+                // return response()->json(['data'=>$data , 'url' => $url]);
+
                 // Make the request
                 $responseInvoice = Http::post($url, $data);
                 // return response()->json(['message'=>$responseInvoice->json()]);
@@ -847,19 +910,32 @@ class WorkerController extends Controller
                         'message' => $responseInvoice->json()['message'],
                     ];
                 }
-            
 
-    
+
+            // event offer notification
+           
+            $id = $offer_id;
+            $jobid = $offer->job_id;
+
+            $time = now()->toDateTimeString();
+            $receiver = $offer->recruiter_id;
+            $job_name = Job::where('id', $jobid)->first()->job_name;
+
+            event(new NotificationOffer('Hold',false,$time,$receiver,$nurse_id,$full_name,$jobid,$job_name, $id));
             return response()->json(['msg'=>'offer accepted successfully','success' => true]);
-    
+
         } catch (\Exception $e) {
-           // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
-           return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
+            return response()->json(['success' => false, 'message' =>  $e->getMessage()]);
+           //return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
         }
     }
 
-    public function reject_offer(Request $request){
-
+    public function reject_offer(Request $request)
+    {
+        $user = Auth::guard('frontend')->user();
+        
+        $full_name = $user->first_name . ' ' . $user->last_name;
+        $nurse_id = $user->nurse->id;
         try{
             $request->validate([
                 'offer_id'=>'required',
@@ -869,31 +945,324 @@ class WorkerController extends Controller
             if(!$offer){
                 return response()->json(['success' => false, 'message' => 'Offer not found']);
             }
-    
+
             $job = Job::where('id',$offer->job_id)->first();
             if(!$job){
                 return response()->json(['success' => false, 'message' => 'Job not found']);
             }
-    
+
             $updated = $offer->update([
                 'status' => 'Rejected',
                 'is_draft' => '0',
                 'is_counter' => '0'
             ]);
-    
+
             if ($updated) {
+                  // event offer notification
+            $id = $offer->id;
+            $jobid = $offer->job_id;
+
+            $time = now()->toDateTimeString();
+            $receiver = $offer->recruiter_id;
+            $job_name = Job::where('id', $jobid)->first()->job_name;
+
+            event(new NotificationOffer('Rejected',false,$time,$receiver,$nurse_id,$full_name,$jobid,$job_name, $id));
                 return response()->json(['msg'=>'Offer rejected successfully','success' => true]);
             } else {
                 return response()->json(['msg'=>'offer not rejected', 'success' => false]);
             }
-            
-    
+
+
         } catch (\Exception $e) {
            // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
            return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
         }
     }
 
+
+public function read_message_notification(Request $request)
+{
+    $sender = $request->sender;
+    $receiver = Auth::guard('frontend')->user()->id;
+
+    try {
+
+
+        $updateResult = NotificationMessageModel::raw()->updateMany(
+            [
+                'receiver' => $receiver,
+                'all_messages_notifs.sender' => $sender
+            ],
+            [
+                '$set' => [
+                    'all_messages_notifs.$[elem].notifs_of_one_sender.$[].seen' => true
+                ]
+            ],
+            [
+                'arrayFilters' => [
+                    ['elem.sender' => $sender]
+                ]
+            ]
+        );
+
+                if ($updateResult->getModifiedCount() > 0) {
+                    return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+                } else {
+                    return response()->json(['success' => false, 'message' => 'No notifications to update']);
+                }
+            } catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+            }
+}
+
+
+
+public function read_offer_notification(Request $request)
+{
+    $sender = $request->senderId;
+    $offerId = $request->offerId; 
+    $user = Auth::guard('frontend')->user();
+    $receiver = $user->nurse->id;
+
+    try {
+        $updateResult = NotificationOfferModel::raw()->updateMany(
+            [
+                'receiver' => $receiver,
+                'all_offers_notifs.sender' => $sender,
+                'all_offers_notifs.notifs_of_one_sender.offer_id' => $offerId, 
+                'all_offers_notifs.notifs_of_one_sender.seen' => false 
+            ],
+            [
+                '$set' => [
+                    'all_offers_notifs.$[].notifs_of_one_sender.$[notif].seen' => true
+                ]
+            ],
+            [
+                'arrayFilters' => [
+                    ['notif.offer_id' => $offerId, 'notif.seen' => false]
+                ],
+                'multi' => true
+            ]
+        );
+
+        if ($updateResult->getModifiedCount() > 0) {
+            return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No notifications to update']);
+        }
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+    }
+}
+
+public function addDocuments(Request $request)
+    {
+
+        try{
+        $body = $request->getContent();
+        $bodyArray = json_decode($body, true);
+        
+        //return response()->json(['body' => $bodyArray]);
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post('http://localhost:4545/documents/add-docs', $bodyArray);
+           // return response()->json(['response' => $response]);
+        if ($response->successful()) {
+            return response()->json([
+                'ok' => true,
+                'message' => 'Files uploaded successfully',
+            ]);
+        } else {
+            return response()->json([
+                'ok' => false,
+                'message' => $response->body(),
+            ], $response->status());
+        }
+        }catch(\Exception $e){
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+public function listDocs(Request $request)
+{
+    try{
+    $workerId = $request->WorkerId;
+    //return response()->json(['workerId' => $workerId]);
+
+    $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+    if ($response->successful()) {
+        return $response->body();
+    } else {
+        return response()->json(['success' => false], $response->status());
+    }
    
+
+    }catch(\Exception $e){
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    }
+}
+
+public function getDoc(Request $request){
+    try{
+
+    $bsonId = $request->input('bsonId');
+    $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+    
+
+    // return the data to download 
+    return $response->body();
+
+    }catch(\Exception $e){
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    }
+}
+
+public function deleteDoc(Request $request)
+{
+    $bsonId = $request->input('bsonId');
+
+    $response = Http::post('http://localhost:4545/documents/del-doc', ['bsonId' => $bsonId]);
+    if ($response->successful()) {
+        return response()->json(['success' => true]);
+    } else {
+        return response()->json(['success' => false], $response->status());
+    }
+}
+
+
+public function vaccination_submit(Request $request)
+{
+    $user = auth()->guard('frontend')->user();
+    $id = $user->nurse->id;
+    $destinationPath = 'images/nurses/vaccination';
+
+    // Vaccination type
+    $type = $request->type;
+    $vacc_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
+    $vacc_file = $vacc_field;
+    $vacc_flag = $vacc_field . '_vac';
+
+    if ($request->$vacc_flag == 'Yes' && $request->hasFile($vacc_file)) {
+        // Delete old vaccination record
+        $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+        if ($old_vac) {
+            $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+            if (file_exists($oldFilePath)) {
+                File::delete($oldFilePath);
+            }
+            $old_vac->forceDelete();
+        }
+
+        // Handle file upload
+        $file = $request->file($vacc_file);
+        $filename = $type.'_'.$id.'_vaccination.'.$file->getClientOriginalExtension();
+        $file->move(public_path($destinationPath), $filename);
+
+        NurseAsset::create([
+            'nurse_id' => $id,
+            'file_name' => $filename,
+            'name' => $type,
+            'filter' => 'vaccination'
+        ]);
+
+        $response = array('success'=>true, 'msg'=> $type . ' Updated Successfully!');
+        return $response;
+    } else {
+        // Check and handle vaccination record removal if applicable
+        $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+        if ($old_vac) {
+            $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+            if (file_exists($oldFilePath)) {
+                File::delete($oldFilePath);
+            }
+            $old_vac->forceDelete();
+            $response = array('success'=>true, 'msg'=>$type . ' Removed Successfully!');
+            return $response;
+        }
+    }
+
+    $response = array('success'=>false, 'msg'=>'No vaccination record selected!');
+    return $response; // Return the response
+}
+
+
+public function certification_submit(Request $request)
+{
+    $user = auth()->guard('frontend')->user();
+    $id = $user->nurse->id;
+    $destinationPath = 'images/nurses/certificate';
+
+    // certif type
+    $type = $request->type;
+        $cert_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
+        $cert_file = $cert_field;
+        $cert_flag = $cert_field . '_cer';
+
+        if ($request->$cert_flag == 'Yes' && $request->hasFile($cert_file)) {
+            // Delete old certificate
+            $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_cer) {
+                $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
+                }
+                $old_cer->forceDelete();
+            }
+
+            // Handle file upload
+            $file = $request->file($cert_file);
+            $filename = $type.'_'.$id.'_certificate.'.$file->getClientOriginalExtension();
+            $file->move(public_path($destinationPath), $filename);
+
+            NurseAsset::create([
+                'nurse_id' => $id,
+                'file_name' => $filename,
+                'name' => $type,
+                'filter' => 'certificate'
+            ]);
+
+            //$responses[] = ['success' => true, 'msg' => $certificate . ' Updated Successfully!'];
+            $response = array('success'=>true,'msg'=> $type . ' Updated Successfully!');
+            return $response;
+        } else {
+            // Check and handle certificate removal if applicable
+            $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_cer) {
+                $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
+                }
+                $old_cer->forceDelete();
+                $response = array('success'=>true,'msg'=>$type . ' Removed Successfully!');
+                return $response;
+            }
+        }
+    
+    $response = array('success'=>false,'msg'=>'No certificate selected!');
+    return $responses; // Return all responses after processing all certificates
+}
+
+
+public function match_worker_job(Request $request)
+{
+        
+        // dd($request->input());
+        $user = auth()->guard('frontend')->user();
+        
+        $id = $user->id;
+        $model = Nurse::where('user_id',$id)->first();
+        $inputFields = collect($request->all())->filter(function ($value) {
+            return $value !== null;
+        });
+
+        $inputFields->put('updated_at', Carbon::now());
+        // dd($inputFields);
+        $model->fill($inputFields->all());
+        $model->save();
+        return new JsonResponse(['success' => true, 'msg'=>'Updated successfully.'], 200);
+
+}
+
+
 
 }

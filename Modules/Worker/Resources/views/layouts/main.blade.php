@@ -14,7 +14,7 @@
      <!-- Bootstrap CSS -->
      <!-- <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
      <link href="{{URL::asset('landing/css/bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
-
+     <link rel="stylesheet" href="{{URL::asset('frontend/css/mdb.min.css')}}" />
     {{-- <link rel="stylesheet" href="{{URL::asset('frontend/css/fontawesome_all.css')}}" /> --}}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
     <!-- Google Fonts Roboto -->
@@ -28,14 +28,32 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('backend/vendors/notie/dist/notie.css') }}">
     <!-- Custom styles -->
     <link rel="stylesheet" href="{{URL::asset('frontend/css/style.css')}}" />
+    
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     @yield('css')
 </head>
 <body>
+    <script>$(document).ready(function() {
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            },
+            beforeSend: function(xhr) {
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                }
+            }
+        });
+    });</script>
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <!--Main Navigation-->
     <header>
         @include('worker::partials.worker_sidebar')
         @include('worker::partials.worker_header')
+        
     </header>
 <!--Main Navigation-->
 
@@ -60,6 +78,7 @@
     <script type="text/javascript" src="{{URL::asset('frontend/js/nav-bar-script.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/profile.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('frontend/custom/js/script.js')}}"></script>
+    
     @yield('js')
     @include('partials.flashMsg')
 

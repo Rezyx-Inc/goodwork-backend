@@ -6,6 +6,7 @@ var { report } = require('../set.js')
 //laboredge.seed(999);
 
 //report("Hello from cron")
+laboredge.update();
 
 if(process.env.ENABLE_CRON){
     console.log("Starting integrations cron jobs.")
@@ -18,13 +19,13 @@ if(process.env.ENABLE_CRON){
 
     // Check updates every hour
     cron.schedule('0 * * * *', () => {
-        console.log('Checking new integrations');
+        console.log('Checking job updates');
         laboredge.update();
     });
 
     // Check other updates every day at 1 am
     cron.schedule('0 1 * * *', () => {
-        console.log('Checking new integrations');
+        console.log('Checking other updates');
         laboredge.updateOthers();
     });
 

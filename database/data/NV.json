@@ -1,0 +1,1454 @@
+[
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.90856,
+      "longitude": -116.75923
+    },
+    "cityId": 5550561,
+    "name": "Beatty",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1010,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "1CWHhqhYEO",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.78421,
+      "longitude": -119.34425
+    },
+    "cityId": 7261797,
+    "name": "Smith Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1603,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.733Z",
+    "updatedAt": "2019-12-11T12:42:07.733Z",
+    "objectId": "1GoJ8nUb2S",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.58053,
+      "longitude": -114.47026
+    },
+    "cityId": 5508473,
+    "name": "Moapa Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 6924,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "1HvKYh35NE",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.63602,
+      "longitude": -119.84325
+    },
+    "cityId": 5507103,
+    "name": "Lemmon Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 5040,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "1cgiJ3MQBK",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.21108,
+      "longitude": -115.07306
+    },
+    "cityId": 5513343,
+    "name": "Sunrise Manor",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 189372,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "22yltKP2Hf",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.06716,
+      "longitude": -117.23008
+    },
+    "cityId": 5513795,
+    "name": "Tonopah",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 2478,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "2AUisWr28Y",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.41547,
+      "longitude": -119.22461
+    },
+    "cityId": 5512373,
+    "name": "Silver Springs",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 5296,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "4U55ic7DJO",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.5138,
+      "longitude": -119.92603
+    },
+    "cityId": 5508487,
+    "name": "Mogul",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1290,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "5FfMxi8TxA",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.11159,
+      "longitude": -114.96449
+    },
+    "cityId": 5709967,
+    "name": "Wells",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1261,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "7HkvC8vQlE",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.64908,
+      "longitude": -119.70741
+    },
+    "cityId": 5512827,
+    "name": "Spanish Springs",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 15064,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "A0ZH8HlnWP",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.30963,
+      "longitude": -119.64962
+    },
+    "cityId": 5514428,
+    "name": "Virginia City",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 855,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "AecUpG1jmC",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.47353,
+      "longitude": -118.77737
+    },
+    "cityId": 5503914,
+    "name": "Fallon",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 8458,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "An7CvAxoej",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.09719,
+      "longitude": -115.14666
+    },
+    "cityId": 5509952,
+    "name": "Paradise",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 223167,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "Aq4GDKSYDY",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.97713,
+      "longitude": -119.90685
+    },
+    "cityId": 5506726,
+    "name": "Kingsbury",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 2152,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "BMYIGxIJ1n",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.12997,
+      "longitude": -115.11889
+    },
+    "cityId": 5515345,
+    "name": "Winchester",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 27978,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "BaphmFjynT",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.73565,
+      "longitude": -119.50079
+    },
+    "cityId": 7315290,
+    "name": "Topaz Ranch Estates",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1501,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.733Z",
+    "updatedAt": "2019-12-11T12:42:07.733Z",
+    "objectId": "DKmEPStbs4",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 40.83242,
+      "longitude": -115.76312
+    },
+    "cityId": 5703670,
+    "name": "Elko",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 20279,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "DcQYVQde9F",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.04796,
+      "longitude": -119.72212
+    },
+    "cityId": 5506353,
+    "name": "Johnson Lane",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 6490,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.818Z",
+    "updatedAt": "2019-12-11T12:42:06.818Z",
+    "objectId": "ESsF4pKuqh",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.0397,
+      "longitude": -114.98194
+    },
+    "cityId": 5505411,
+    "name": "Henderson",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 285667,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.818Z",
+    "updatedAt": "2019-12-11T12:42:06.818Z",
+    "objectId": "El7CFBhkur",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.97859,
+      "longitude": -114.83249
+    },
+    "cityId": 5500539,
+    "name": "Boulder City",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 15551,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "FltJXeJCuE",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.98575,
+      "longitude": -119.16293
+    },
+    "cityId": 5515507,
+    "name": "Yerington",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 3064,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "G2hHXkjafS",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 41.98324,
+      "longitude": -114.67476
+    },
+    "cityId": 5705218,
+    "name": "Jackpot",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1195,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "GICZlbX4NE",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.80553,
+      "longitude": -114.06719
+    },
+    "cityId": 5508180,
+    "name": "Mesquite",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 17496,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "GINOJDj85B",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.11708,
+      "longitude": -115.33001
+    },
+    "cityId": 7262622,
+    "name": "Summerlin South",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 24085,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.733Z",
+    "updatedAt": "2019-12-11T12:42:07.733Z",
+    "objectId": "HNm7KM3vDH",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.88824,
+      "longitude": -119.74129
+    },
+    "cityId": 5504473,
+    "name": "Gardnerville Ranchos",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 11312,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "JmKY8YlEfU",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.10803,
+      "longitude": -115.245
+    },
+    "cityId": 5512909,
+    "name": "Spring Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 178395,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "JvLgmYR5Tv",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 37.36496,
+      "longitude": -115.16446
+    },
+    "cityId": 5499105,
+    "name": "Alamo",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1080,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "KN3hnjhGK9",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.51824,
+      "longitude": -119.98881
+    },
+    "cityId": 5514359,
+    "name": "Verdi",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1415,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "L1G9kAcEZg",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.5963,
+      "longitude": -119.77602
+    },
+    "cityId": 5513307,
+    "name": "Sun Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 19299,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "LW9lSeSaMN",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.19886,
+      "longitude": -115.1175
+    },
+    "cityId": 5509403,
+    "name": "North Las Vegas",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 234807,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "MX6Ann5dG1",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.16778,
+      "longitude": -114.57302
+    },
+    "cityId": 5507016,
+    "name": "Laughlin",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 7323,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "N1ByOWI1P7",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.24607,
+      "longitude": -115.05721
+    },
+    "cityId": 7261960,
+    "name": "Nellis Air Force Base",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 3187,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.733Z",
+    "updatedAt": "2019-12-11T12:42:07.733Z",
+    "objectId": "NhFOSG7vO7",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.51271,
+      "longitude": -115.96061
+    },
+    "cityId": 5503804,
+    "name": "Eureka",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 610,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "P8XtC06KT7",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.3738,
+      "longitude": -119.37406
+    },
+    "cityId": 5512985,
+    "name": "Stagecoach",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1874,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "P9bGIO3Lw5",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.60797,
+      "longitude": -119.25183
+    },
+    "cityId": 5504003,
+    "name": "Fernley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 19418,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "Q2F1lnCRZu",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.20829,
+      "longitude": -115.98391
+    },
+    "cityId": 5509851,
+    "name": "Pahrump",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 36441,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "Rjk2WeJEkk",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 35.81692,
+      "longitude": -115.63223
+    },
+    "cityId": 5511806,
+    "name": "Sandy Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 2051,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "UFpbgmwBqs",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.61547,
+      "longitude": -119.82658
+    },
+    "cityId": 5504802,
+    "name": "Golden Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1556,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "UPUyfOOQQx",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 37.92969,
+      "longitude": -114.45221
+    },
+    "cityId": 5510323,
+    "name": "Pioche",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 1002,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "V0TwX2yI6A",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.52963,
+      "longitude": -119.8138
+    },
+    "cityId": 5511077,
+    "name": "Reno",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 241445,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "XaMS8voF3Q",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 40.7391,
+      "longitude": -114.07335
+    },
+    "cityId": 5710035,
+    "name": "West Wendover",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 4294,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "YfvQT3BZHg",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.9413,
+      "longitude": -119.74962
+    },
+    "cityId": 5504468,
+    "name": "Gardnerville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 5656,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "ZZoJhJrzk5",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.2513,
+      "longitude": -119.97297
+    },
+    "cityId": 5505963,
+    "name": "Incline Village",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 8777,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.818Z",
+    "updatedAt": "2019-12-11T12:42:06.818Z",
+    "objectId": "aZldqI7ksk",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 40.17935,
+      "longitude": -118.47348
+    },
+    "cityId": 5705957,
+    "name": "Lovelock",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 1878,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "aikATd8zp0",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.08602,
+      "longitude": -119.78407
+    },
+    "cityId": 5550579,
+    "name": "Indian Hills",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 5627,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "bH6WAjmRDB",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 40.71381,
+      "longitude": -116.10397
+    },
+    "cityId": 5702255,
+    "name": "Carlin",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 2302,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "bP2mzY25Qu",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 40.64213,
+      "longitude": -116.93427
+    },
+    "cityId": 5701361,
+    "name": "Battle Mountain",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 3635,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "bVtqIE21wX",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.09831,
+      "longitude": -115.0363
+    },
+    "cityId": 5515110,
+    "name": "Whitney",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 38585,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "cTb1OsVLgl",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.40494,
+      "longitude": -114.77863
+    },
+    "cityId": 5508030,
+    "name": "McGill",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1148,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "cuQ4bpgLQP",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.53491,
+      "longitude": -119.75269
+    },
+    "cityId": 5512862,
+    "name": "Sparks",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 96094,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "dJNeU9pDeZ",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.9434,
+      "longitude": -119.69923
+    },
+    "cityId": 7315287,
+    "name": "East Valley",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1474,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.733Z",
+    "updatedAt": "2019-12-11T12:42:07.733Z",
+    "objectId": "dkFoRXoMVD",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.52464,
+      "longitude": -118.62458
+    },
+    "cityId": 5505321,
+    "name": "Hawthorne",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 3269,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.818Z",
+    "updatedAt": "2019-12-11T12:42:06.818Z",
+    "objectId": "fIWooURQEl",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.68219,
+      "longitude": -114.59416
+    },
+    "cityId": 5508470,
+    "name": "Moapa Town",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1025,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "i2XDYmrWZF",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 37.70854,
+      "longitude": -117.23563
+    },
+    "cityId": 5504812,
+    "name": "Goldfield",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 268,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.818Z",
+    "updatedAt": "2019-12-11T12:42:06.818Z",
+    "objectId": "jbRXuTUQ9b",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 37.61496,
+      "longitude": -114.51194
+    },
+    "cityId": 5501155,
+    "name": "Caliente",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1109,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "kDdErkZ2rI",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.23714,
+      "longitude": -119.59295
+    },
+    "cityId": 5502732,
+    "name": "Dayton",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 8964,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "kZDgDkgNDE",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.68019,
+      "longitude": -119.97659
+    },
+    "cityId": 5502015,
+    "name": "Cold Springs",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 8544,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "mWfHrcp2XD",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.24744,
+      "longitude": -114.88863
+    },
+    "cityId": 5503694,
+    "name": "Ely",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 4134,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "n1Bz2jm0ZJ",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 40.97296,
+      "longitude": -117.73568
+    },
+    "cityId": 5710360,
+    "name": "Winnemucca",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 7887,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.733Z",
+    "updatedAt": "2019-12-11T12:42:07.733Z",
+    "objectId": "nuCAS1UqGY",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.77303,
+      "longitude": -114.12802
+    },
+    "cityId": 5500947,
+    "name": "Bunkerville",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1303,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "rdoc6HxEFu",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 39.1638,
+      "longitude": -119.7674
+    },
+    "cityId": 5501344,
+    "name": "Carson City",
+    "country": "US",
+    "featureCode": "PPLA",
+    "adminCode": "NV",
+    "population": 54521,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "swa2WwGREl",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.95407,
+      "longitude": -119.76573
+    },
+    "cityId": 5508379,
+    "name": "Minden",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 3001,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "v3ipZKCrwm",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 40.72659,
+      "longitude": -115.5859
+    },
+    "cityId": 5708894,
+    "name": "Spring Creek",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 12361,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.501Z",
+    "updatedAt": "2019-12-11T12:42:07.501Z",
+    "objectId": "vMuOhwCGy9",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 38.80047,
+      "longitude": -119.32738
+    },
+    "cityId": 5512520,
+    "name": "Smith",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 1033,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "w9Mw2VhBVz",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.17497,
+      "longitude": -115.13722
+    },
+    "cityId": 5506956,
+    "name": "Las Vegas",
+    "country": "US",
+    "featureCode": "PPLA2",
+    "adminCode": "NV",
+    "population": 623747,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:07.228Z",
+    "updatedAt": "2019-12-11T12:42:07.228Z",
+    "objectId": "wid45zHAzs",
+    "className": "NV"
+  },
+  {
+    "location": {
+      "__type": "GeoPoint",
+      "latitude": 36.02525,
+      "longitude": -115.24194
+    },
+    "cityId": 5503766,
+    "name": "Enterprise",
+    "country": "US",
+    "featureCode": "PPL",
+    "adminCode": "NV",
+    "population": 108481,
+    "containingState": {
+      "__type": "Pointer",
+      "className": "States",
+      "objectId": "sgelvO1GOc"
+    },
+    "createdAt": "2019-12-11T12:42:06.817Z",
+    "updatedAt": "2019-12-11T12:42:06.817Z",
+    "objectId": "yVe0NvA4j7",
+    "className": "NV"
+  }
+]

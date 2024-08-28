@@ -136,7 +136,7 @@ class JobController extends AdminController
                 $input["profession"] = isset($request->profession)?$request->profession:'';
                 $input["preferred_specialty"] = $request->specialty;
                 $input["preferred_experience"] = $request->experience;
-                $input["job_location"] = isset($request->professional_licensure)?$request->professional_licensure:'';
+                $input["job_location"] = isset($request->job_location)?$request->job_location:'';
                 $input["vaccinations"] = $request->vaccinations;
                 /*
                 $input["number_of_references"] = isset($request->number_of_references)?$request->number_of_references:'';

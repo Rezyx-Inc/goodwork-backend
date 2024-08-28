@@ -3,6 +3,7 @@
 @section('content')
     @php
         $user = auth()->guard('recruiter')->user();
+
     @endphp
     <!--Main layout-->
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
@@ -35,7 +36,7 @@
                                 <p>{{ $user->about_me }}</p>
                             </div>
 
-                            
+
 
 
                             <div class="ss-my-presnl-btn-mn">
@@ -309,10 +310,10 @@
                             <div class="form-outer">
                                 {{-- <form method="post">
                                     @csrf
-                                    
+
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
-                                            
+
                                             <div class="ss-form-group col-11">
                                                 <label>Subject</label>
                                                 <select name="support_subject" id="support_subject">
@@ -324,18 +325,18 @@
 
                                             </div>
                                             <span class="help-block-support_subject"></span>
-                                            
+
                                             <div class="ss-form-group col-11">
                                                 <label>Issue</label>
                                                 <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
                                             </div>
                                             <span class="help-block-support_subject_issue"></span>
-                                            
+
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveSupportTicket">
-                                                    
+
                                                     <span id="loading" class="d-none">
                                                         <span id="loadSpan" class="spinner-border spinner-border-sm"
                                                             role="status" aria-hidden="true"></span>
@@ -405,6 +406,15 @@
 
         $(document).ready(function() {
 
+            if (@json($type == 'profile')) {
+                document.getElementById('option-1').checked = true;
+                ProfileIinformationDisplay();
+
+            } else {
+                document.getElementById('option-2').checked = true;
+                AccountSettingDisplay();
+            }
+
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
 
@@ -426,7 +436,7 @@
         const support_subject_issue = document.querySelector('textarea[name="support_subject_issue"]');
         const support_subject = document.querySelector('select[name="support_subject"]');
 
-        // send amount inputs 
+        // send amount inputs
         const amount = document.querySelector('input[name="amount"]');
         const email_payment = document.querySelector('input[name="email_payment"]');
         const AddStripe = document.getElementById("AddStripe");
@@ -438,7 +448,9 @@
 
         // validation basic information -ELH-
         function validateBasicInfo() {
+
             let isValid = true;
+
             if (first_name.value === '') {
                 $('.help-block-first_name').text('Please enter a first name');
                 $('.help-block-first_name').addClass('text-danger');
@@ -450,10 +462,16 @@
                 isValid = false;
             }
 
-            if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
+            if ( mobile.value === '' ) {
+
+                // don't do anything
+
+            }else if ( !regexPhone.test(mobile) && mobile.value !== '' ) {
+
                 $('.help-block-mobile').text('Please enter a mobile number');
                 $('.help-block-mobile').addClass('text-danger');
                 isValid = false;
+
             }
 
             if (about_me.value === '') {
@@ -467,13 +485,13 @@
         // end validation basic information
 
 
-        // validation amount transfer 
+        // validation amount transfer
 
 
 
 
 
-        // validation bonus 
+        // validation bonus
 
         function validateBonusInfo() {
             let isValid = true;
@@ -532,7 +550,7 @@
 
         // end bonus validation
 
-        // validation 
+        // validation
 
         function validateSupportForm() {
             let isValid = true;
@@ -556,15 +574,17 @@
 
         // end validation
 
-        // Save Basic Information 
+        // Save Basic Information
         const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
 
         SaveBaiscInformation.addEventListener("click", function(event) {
+
             event.preventDefault();
+
             if (!validateBasicInfo()) {
                 return;
             }
-            console.log(first_name.value);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -576,7 +596,7 @@
             formData.append('last_name', last_name.value);
             formData.append('mobile', mobile.value);
             formData.append('about_me', about_me.value);
-            formData.append('profile_pic', $('#file')[0].files[0]); 
+            formData.append('profile_pic', $('#file')[0].files[0]);
 
 
 
@@ -584,9 +604,9 @@
                 url: '/recruiter/update-recruiter-profile',
                 type: 'POST',
                 data: formData,
-                contentType: false, 
-                cache: false, 
-                processData:false, 
+                contentType: false,
+                cache: false,
+                processData:false,
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -771,7 +791,7 @@
         //const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
-        // account setting validation here 
+        // account setting validation here
 
         function validateAccountSettingInformation() {
             $('.help-block-new_mobile').text('');
@@ -828,7 +848,7 @@
         // end account setting validation
 
 
-        // send request to update here 
+        // send request to update here
         const SaveAccountInformation = document.getElementById('SaveAccountInformation');
         SaveAccountInformation.addEventListener("click", function(event) {
             event.preventDefault();
@@ -927,6 +947,42 @@
         var loadFile = function (event) {
   var image = document.getElementById("output");
   image.src = URL.createObjectURL(event.target.files[0]);
+
+  // sending image to server
+
+    var formData = new FormData();
+    formData.append('profile_pic', $('#file')[0].files[0]);
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: '/recruiter/update-recruiter-profile-image',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (resp) {
+            console.log(resp);
+            if (resp.status) {
+                notie.alert({
+                    type: 'success',
+                    text: '<i class="fa fa-check"></i> Account Information saved successfully',
+                    time: 5
+                });
+
+            }
+        },
+        error: function (resp) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i>' + resp.message,
+                time: 5
+            });
+        }
+    });
+
 };
 
     </script>
@@ -1355,6 +1411,6 @@
 
 
 
-    
+
 </style>
 

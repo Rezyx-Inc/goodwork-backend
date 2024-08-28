@@ -25,7 +25,7 @@ class RecruiterDashboardController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    
+
 public function index()
 {
     $id = Auth::guard('recruiter')->user()->id;
@@ -114,10 +114,11 @@ public function index()
         //
     }
 
-    public function profile()
+    public function profile( Request $request)
     {
         $id = Auth::guard('recruiter')->user()->id;
         // facility_id qualities about_me are been added in user table
+        $type = $request->route('type');
 
         $user = User::select('first_name', 'last_name', 'image', 'user_name', 'email', 'date_of_birth', 'mobile', 'about_me', 'qualities', 'facility_id')->find($id);
         $data = [];
@@ -134,6 +135,7 @@ public function index()
         }
         $data['states'] = State::select('id', 'name')->get();
         $data['allKeywords'] = $allKeywords;
+        $data['type'] = $type;
 
         return view('recruiter::recruiter/recruiter_profile', $data);
     }
@@ -322,7 +324,7 @@ public function index()
             $request->validate([
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
-                'mobile' => 'required|string',
+                'mobile' => 'nullable|string',
                 'about_me' => 'required|string',
             ]);
             $user_data = [];
@@ -430,6 +432,28 @@ public function index()
             }
 
             return response()->json(['status' => true, 'message' => 'working on it !', 'portal_link' => $portal_link]);
+        } catch (ValidationException $e) {
+            return response()->json(['status' => false, 'message' => $e->errors()]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function update_recruiter_profile_image(Request $request)
+    {
+        try {
+            $user = Auth::guard('recruiter')->user();
+
+
+            if ($request->hasFile('profile_pic')) {
+                $file = $request->file('profile_pic');
+                $filename = time() . $user->id . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads'), $filename);
+                $user->image = $filename;
+                $user->save();
+            }
+
+            return response()->json(['status' => true, 'message' => 'Profile image updated successfully']);
         } catch (ValidationException $e) {
             return response()->json(['status' => false, 'message' => $e->errors()]);
         } catch (\Exception $e) {

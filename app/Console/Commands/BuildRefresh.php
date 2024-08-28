@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use DB;
 
 class BuildRefresh extends Command
 {
@@ -32,10 +33,25 @@ class BuildRefresh extends Command
         // Create symbolic link for storage
         Artisan::call('storage:link');
 
-        // Paasport key
+        // Passport key
         Artisan::call('passport:install');
 
+        // Clear MongoDB database
+        $this->clearMongoDB();
 
         $this->info('Application refreshed successfully.');
+    }
+
+    protected function clearMongoDB()
+    {
+        // Clear the chats MongoDB database
+    $mongoDB = DB::connection('mongodb');
+    $mongoDB->getMongoDB()->drop();
+    $this->info('Chat MongoDB database cleared.');
+
+    // Clear the notifications MongoDB database
+    $mongoDBNotification = DB::connection('mongodb_notification');
+    $mongoDBNotification->getMongoDB()->drop();
+    $this->info('Notifications MongoDB database cleared.');
     }
 }

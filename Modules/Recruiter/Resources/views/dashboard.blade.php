@@ -15,10 +15,10 @@
             </div>
             <div class="col-md-8">
             </div>
-            <div class="col-md-4">
+            <div onclick="window.location='{{ route('recruiter-opportunities-manager') }}';" style="cursor: pointer;" class="col-md-4">
                 <div class="ss-rec-start-rec-div-sec">
-                    <h6>Start Posting Your Job Request</h6>
-                    <a href="{{ route('recruiter-application') }}"><img src="{{URL::asset('recruiter/assets/images/plus-icon.png')}}" /></a>
+                    <h6>Post a job</h6>
+                    <a><img src="{{URL::asset('recruiter/assets/images/plus-icon.png')}}" /></a>
                 </div>
             </div>
         </div>
@@ -28,7 +28,6 @@
 </main>
 <script>
     let values = <?php echo json_encode($statusCounts); ?>;
-    console.log(values);
     
     let yValues = values;
     const ctx = document.getElementById('recruiterStats');
@@ -63,7 +62,6 @@
             }
         }
     });
-
     
 </script>
 @endsection

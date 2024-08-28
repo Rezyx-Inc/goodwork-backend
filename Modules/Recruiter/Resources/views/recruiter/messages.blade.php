@@ -9,6 +9,35 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
+        $(document).ready(function() {
+            
+            let id = @json($id);
+            var PrivateChannelNotification = 'private-notification.' + id;
+            // Listen for Message Notification messages event 
+            window.Echo.private(PrivateChannelNotification)
+                .listen('NotificationMessage', (event) => {
+                    console.log('from the messages blade:', event);
+                    let room_last_messages = document.getElementById('room_' + event.sender);
+                    if(room_last_messages){
+                        if (event.content.length > 16){
+                            room_last_messages.innerHTML = event.content.substring(0, 16) + ' ...';
+                        } else { 
+                            room_last_messages.innerHTML = event.content;
+                        }
+                    }
+                    let lastMessage = document.getElementById('lastMessage_' + event.sender);
+                    if(lastMessage){
+                        lastMessage.innerHTML = 'Just now';
+                    }
+                   
+
+                    let messagesN = document.getElementById('messagesN_' + event.sender);
+                    if(messagesN){
+                        messagesN.classList.remove("d-none");
+                        messagesN.innerHTML = parseInt(messagesN.innerHTML) + 1;
+                    }
+                });
+        });
         var idWorker_Global = '';
         var idEmployer_Global = '';
 
@@ -16,6 +45,35 @@
         var PrivateChannel = '';
         var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
         function getPrivateMessages(idWorker, fullName, idEmployer) {
+
+            // Leave the current channel
+            window.Echo.leave(PrivateChannel);
+
+
+            const data = {
+                sender: idWorker,
+                _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token for Laravel
+            };
+
+            $.ajax({
+                        url: 'read-recruiter-message-notification', // Replace 'read-message-notification' with the actual path to your route
+                        type: 'POST',
+                        data: data,
+                        success: function(response) {
+                        console.log('Success:', response);
+                        // Handle success response
+                        // Navigate to a new page after the AJAX call is successful
+                        let messagesN = document.getElementById('messagesN_' + idWorker);
+                        if(messagesN){
+                            messagesN.classList.add("d-none");
+                            messagesN.innerHTML = 0;
+                        }
+                        },          
+                        error: function(xhr, status, error) {
+                            console.error('Error:', error);
+                            // Handle errors here
+                        }
+             });
 
             document.getElementById('fullName').innerHTML = fullName;
 
@@ -353,9 +411,9 @@
                                             <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
-<p>
+<p id="room_{{$room['workerId']}}">
     @if(isset($room['messages'][0]))
-        {{ $room['messages'][0]['type'] === 'file' ? $room['messages'][0]['fileName'] : $room['messages'][0]['content'] }}
+    {{ $room['messages'][0]['type'] === 'file' ? (strlen($room['messages'][0]['fileName']) < 16 ? $room['messages'][0]['fileName'] : substr($room['messages'][0]['fileName'], 0, 16) .' ...') : (strlen($room['messages'][0]['content']) < 16 ? $room['messages'][0]['content'] : substr($room['messages'][0]['content'], 0, 16) . ' ...')}}
     @else
         No messages yet.
     @endif
@@ -365,9 +423,17 @@
 
                                         <ul style="width:100%" class="ss-msg-notifi-sec">
                                             <li>
-                                                <p>{{ $room['lastMessage'] }}</p>
+                                                <p id="lastMessage_{{$room['workerId']}}">{{ $room['lastMessage'] }}</p>
                                             </li><br>
-                                            <li><span>3</span></li>
+                                            @if($notificationMessages)
+                                            @foreach($notificationMessages as $notificationMessage)
+                                                @if($notificationMessage['sender'] == $room['workerId'])
+                                                    <li><span id="messagesN_{{$room['workerId']}}">{{$notificationMessage['numOfMessagesStr']}}</span></li>
+                                                @endif
+                                            @endforeach
+                                            @else
+                                            <li><span class="d-none" id="messagesN_{{$room['workerId']}}">0</span></li>
+                                            @endif
                                         </ul>
                                     </div>
                                 @endforeach
@@ -382,7 +448,7 @@
 
                     <div class="col-lg-7 ">
                         <div id="empty_room" class="ss-msg-rply-mn-div ">
-                            <h5 class="empty_room">no chat was choosen</h5>
+                            <h5 class="empty_room">no chat was chosen</h5>
                         </div>
                         <div id="body_room" class="d-none ss-msg-rply-mn-div messages-area parentMessages">
                             <div class="ss-msg-rply-profile-sec">

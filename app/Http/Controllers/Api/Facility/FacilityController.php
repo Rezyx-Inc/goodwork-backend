@@ -2098,7 +2098,7 @@ class FacilityController extends Controller
             $data['name'] = 'Shift Hours';
             $data['update_key'] = 'worker_hours_shift';
             $data['type'] = 'input';
-            $data['worker_title'] = 'Prefered hours per shift?';
+            $data['worker_title'] = 'Preferred hours per shift';
             $data['job_title'] = !empty($data['job'])?$data['job']:'Hours/Shift';
             $worker_info[] = $data;
 
@@ -2120,7 +2120,7 @@ class FacilityController extends Controller
             $data['name'] = 'Shift Week';
             $data['update_key'] = 'worker_shifts_week';
             $data['type'] = 'input';
-            $data['worker_title'] = 'ideal shifts per week?';
+            $data['worker_title'] = 'ideal shifts per week';
             $data['job_title'] = !empty($data['job'])?$data['job']:'Shifts/Week';
             $worker_info[] = $data;
 

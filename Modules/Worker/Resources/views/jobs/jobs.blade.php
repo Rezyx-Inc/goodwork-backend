@@ -15,7 +15,7 @@
         <div class="ss-my-work-tab-div">
             {{-- <ul onclick="myFunction(event)" id='navList'> --}}
             <ul>
-                <li><a href="{{route('my-work-journey')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'my-work-journey' ) ? 'active' :'' }}">Saved</a></li>
+                  <li><a href="{{route('saved-jobs')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'saved-jobs' ) ? 'active' :'' }}">Saved</a></li>
                 <li><a href="{{route('applied-jobs')}}" class="ss-applied-btn {{ ( request()->route()->getName() == 'applied-jobs' ) ? 'active' :'' }}">Applied</a></li>
                 <li><a href="{{route('offered-jobs')}}" class="ss-offered-btn {{ ( request()->route()->getName() == 'offered-jobs' ) ? 'active' :'' }}">Offered</a></li>
                 <li><a href="{{route('hired-jobs')}}" class="ss-hired-btn {{ ( request()->route()->getName() == 'hired-jobs' ) ? 'active' :'' }}">Hired</a></li>
@@ -57,7 +57,7 @@
                     @empty
                     @endforelse
 
-                    
+
 
                 </div>
             </div>
@@ -90,7 +90,7 @@
 
                         <div
                         class="ss-prsn-form-btn-sec row col-12 d-flex justify-content-center align-items-center">
-                        
+
                         <button type="text" class="ss-prsnl-save-btn" id="AddStripe">
                             Add Stripe
                         </button>
@@ -166,8 +166,8 @@ AddStripe.addEventListener("click", function(event) {
             name = 'stripe';
             title = 'add payment method';
             modal = '#stripe_modal';
-            
-           
+
+
 
             $(modal).modal('show');
         }
@@ -199,7 +199,7 @@ AddStripe.addEventListener("click", function(event) {
                 }
             });
             $.ajax({
-                url: full_path + 'fetch-job-content',
+                url: full_path + 'worker/fetch-job-content',
                 type: 'POST',
                 dataType: 'json',
                 // processData: false,
@@ -226,7 +226,7 @@ AddStripe.addEventListener("click", function(event) {
     }
 
     function accept_job_offer(obj){
-       
+
             ajaxindicatorstart();
             $.ajaxSetup({
                     headers: {
@@ -297,7 +297,7 @@ AddStripe.addEventListener("click", function(event) {
                             setTimeout(() => {
                                 location.reload();
                             }, 2000);
-                        
+
                     },
                     error: function (resp) {
                         console.log(resp);

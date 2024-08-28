@@ -19,7 +19,7 @@ const laboredgeSchema = mongoose.Schema({
         default: Date.now
     },
     updated: {
-        type: Date,
+        type: String,
         required: false
     },
     professions: [

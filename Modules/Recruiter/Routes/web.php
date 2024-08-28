@@ -24,13 +24,14 @@ Route::prefix('recruiter')->group(function () {
         Route::post('recruiter-otp', ['uses' => 'RecruiterAuthController@submit_otp', 'as' => 'recruiter.otp']);
         Route::get('/signup', ['uses' => 'RecruiterAuthController@get_signup', 'as' => 'recruiter-signup']);
         Route::post('signup', ['uses' => 'RecruiterAuthController@post_signup', 'as' => 'recruiter.signup']);
+        Route::get('resend-otp', ['uses' => 'RecruiterAuthController@resend_otp', 'as' => 'recruiter.resend-otp']);
 
     });
     Route::middleware(['recruiter_logged_in'])->group(function () {
         /** Dashboard routes */
         Route::get('recruiter-dashboard', ['uses' => 'RecruiterDashboardController@index', 'as' => 'recruiter-dashboard']);
         //Route::post('recruiter-messages', ['uses' => 'RecruiterDashboardController@communication', 'as' => 'recruiter-messages']);
-        Route::get('recruiter-profile', ['uses' => 'RecruiterDashboardController@profile', 'as' => 'recruiter-profile']);
+        Route::get('recruiter-profile/{type}', ['uses' => 'RecruiterDashboardController@profile', 'as' => 'recruiter-profile']);
         Route::post('help-and-support', ['uses' => 'RecruiterDashboardController@helpAndSupport', 'as' => 'help-and-support']);
         Route::post('recruiter-update-profile', ['uses' => 'RecruiterDashboardController@updateProfile', 'as' => 'recruiter-update-profile']);
         Route::post('recruiter-remove-qualities', ['uses' => 'RecruiterDashboardController@recruiterRemoveQualities', 'as' => 'recruiter-remove-qualities']);
@@ -52,7 +53,7 @@ Route::prefix('recruiter')->group(function () {
         */
 
         Route::post('get-application-listing', ['uses' => 'ApplicationController@getApplicationListing', 'as' => 'get-application-listing']);
-        
+
         // getApplicationListing in ApplicationController.php need to be (optimized / rebuild) it return large views and data
 
         /**
@@ -153,10 +154,10 @@ Route::prefix('recruiter')->group(function () {
         * If the job offer is still a draft, it updates the job offer with the data in the update array. If the update is successful, it returns a success response. If the update fails, it returns an error response.
         */
 
-        Route::get('/getMessages', ['uses'=>'RecruiterController@get_private_messages', 'as'=>'getPrivateMessages']);
+        Route::get('/getMessages', ['uses'=>'RecruiterController@get_private_messages', 'as'=>'RecruitergetPrivateMessages']);
         Route::get('recruiter-messages', ['uses' => 'RecruiterController@get_messages', 'as' => 'recruiter-messages']);
 
-        Route::post('/send-message', ['uses' => 'RecruiterController@sendMessages', 'as' => 'SendMessage']);
+        Route::post('/send-message', ['uses' => 'RecruiterController@sendMessages', 'as' => 'RecruiterSendMessage']);
 
         Route::get('add-job', ['uses' => 'RecruiterController@addJob', 'as' => 'add-job']);
         Route::post('add-job', ['uses' => 'RecruiterController@addJobStore', 'as' => 'addJob.store']);
@@ -171,17 +172,30 @@ Route::prefix('recruiter')->group(function () {
         // new post route for account setting updating
         Route::post('update-recruiter-account-setting',['uses' => 'RecruiterDashboardController@update_recruiter_account_setting', 'as' => 'update-recruiter-account-setting']);
 
-        // sending support tickets 
+        // sending support tickets
         Route::post('send-support-ticket',['uses' => 'RecruiterDashboardController@send_support_ticket', 'as' => 'send_support_ticket']);
 
         // Send amount
 
         Route::post('send-amount-transfer',['uses' => 'RecruiterDashboardController@send_amount', 'as' => 'send_amount']);
 
-        //edit job 
+        //edit job
         Route::post('get-job-to-edit', ['uses' => 'RecruiterController@get_job_to_edit', 'as' => 'get_job_to_edit']);
 
         Route::post('edit-job', ['uses' => 'RecruiterController@edit_job', 'as' => 'edit_job']);
+
+        // reading message notification
+        Route::post('read-recruiter-message-notification', ['uses' => 'RecruiterController@read_recruiter_message_notification', 'as' => 'read-recruiter-message-notification']);
+
+        // reading job notification
+        Route::post('read-recruiter-job-notification', ['uses' => 'RecruiterController@read_recruiter_job_notification', 'as' => 'read-recruiter-job-notification']);
+
+        // reading offer notification
+        Route::post('read-recruiter-offer-notification', ['uses' => 'RecruiterController@read_recruiter_offer_notification', 'as' => 'read-recruiter-offer-notification']);
+
+        // update-recruiter-profile-image
+
+        Route::post('update-recruiter-profile-image', ['uses' => 'RecruiterDashboardController@update_recruiter_profile_image', 'as' => 'update-recruiter-profile-image']);
 
     });
 });

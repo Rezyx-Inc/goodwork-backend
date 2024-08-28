@@ -340,6 +340,9 @@ $('#vaccination-form').on('submit', function (event) {
                 setTimeout(() => {
                     location.reload();
                 }, 3000);
+                
+                
+
             }
         },
         error: function (resp) {

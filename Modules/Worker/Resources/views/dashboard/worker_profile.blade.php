@@ -3,9 +3,11 @@
 @section('content')
     @php
         $user = auth()->guard('frontend')->user();
-       
+
     @endphp
     <!--Main layout-->
+
+
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
         <div class="container">
             <div class="ss-my-profile--basic-mn-sec">
@@ -24,12 +26,13 @@
                             <div class="ss-my-profil-img-div">
                                 <div class="profile-pic">
                                     <label class="-label" for="file">
-                                      <span class="glyphicon glyphicon-camera"></span>
-                                      <span>Change Image</span>
+                                        <span class="glyphicon glyphicon-camera"></span>
+                                        <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" onchange="loadFile(event)"/>
-                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
-                                  </div>
+                                    <input id="file" type="file" onchange="loadFile(event)" />
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
+                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
+                                </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $worker->id }}</p>
                             </div>
@@ -39,10 +42,18 @@
                                 <div class="row d-flex justify-content-center align-items-center ">
                                     {{-- <li><img src="{{ URL::asset('frontend/img/progress.png') }}" /></li> --}}
                                     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
-                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(-90deg)">
-                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2" stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0"></circle>
-                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3" stroke-width="16px" stroke-linecap="round" fill="transparent" stroke-dasharray="565.48px" stroke-dashoffset="{{ 565.48 * (1 - $progress_percentage / 100) }}px"></circle>
-                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold" style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
+                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                            style="transform:rotate(-90deg)">
+                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2"
+                                                stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0">
+                                            </circle>
+                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3"
+                                                stroke-width="16px" stroke-linecap="round" fill="transparent"
+                                                stroke-dasharray="565.48px"
+                                                stroke-dashoffset="{{ 565.48 * (1 - $progress_percentage / 100) }}px">
+                                            </circle>
+                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold"
+                                                style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
                                         </svg>
                                     </div>
                                     {{-- if the profile is not complete --}}
@@ -191,8 +202,7 @@
                                                 <label>First Name</label>
                                                 <input type="text" name="first_name"
                                                     placeholder="Please enter your first name"
-                                                    value="{{ isset($user->first_name) ? $user->first_name : '' }}"
-                                                    >
+                                                    value="{{ isset($user->first_name) ? $user->first_name : '' }}">
                                             </div>
                                             <span class="help-block-first_name"></span>
                                             {{-- Last Name --}}
@@ -201,7 +211,7 @@
                                                 <input type="text" name="last_name"
                                                     placeholder="Please enter your last name"
                                                     value="{{ isset($user->last_name) ? $user->last_name : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-last_name"></span>
                                             {{-- Phone Number --}}
@@ -210,7 +220,7 @@
                                                 <input id="contact_number" type="text" name="mobile"
                                                     placeholder="Please enter your phone number"
                                                     value="{{ isset($user->mobile) ? $user->mobile : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-mobile"></span>
                                             {{-- Address Information --}}
@@ -219,14 +229,16 @@
                                                 <input type="text" name="address"
                                                     placeholder="Please enter your address"
                                                     value="{{ isset($worker->address) ? $worker->address : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-address"></span>
                                             {{-- State Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>State</label>
                                                 <select name="state" id="job_state">
-                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}">{{ !empty($worker->state) ? $worker->state : 'What State are you located in?' }} </option>
+                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}">
+                                                        {{ !empty($worker->state) ? $worker->state : 'What State are you located in?' }}
+                                                    </option>
                                                     @foreach ($states as $state)
                                                         <option id="{{ $state->id }}" value="{{ $state->name }}">
                                                             {{ $state->name }}
@@ -239,8 +251,10 @@
                                             <div class="ss-form-group col-11">
                                                 <label>City</label>
                                                 <select name="city" id="job_city">
-                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}">{{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }} </option>
-                                                    
+                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}">
+                                                        {{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }}
+                                                    </option>
+
                                                 </select>
                                             </div>
                                             <span class="help-block-city"></span>
@@ -251,7 +265,7 @@
                                                 <input type="number" name="zip_code"
                                                     placeholder="Please enter your Zip Code"
                                                     value="{{ isset($user->zip_code) ? $user->zip_code : '' }}">
-                                                    
+
                                             </div>
                                             <span class="help-block-zip_code"></span>
                                             {{-- Skip && Save --}}
@@ -273,7 +287,10 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Profession</label>
                                                 <select name="profession" id="profession">
-                                                    <option value="{{ !empty($worker->profession) ? $worker->profession : '' }}">{{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->profession) ? $worker->profession : '' }}">
+                                                        {{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }}
+                                                    </option>
                                                     @foreach ($proffesions as $proffesion)
                                                         <option value="{{ $proffesion->full_name }}">
                                                             {{ $proffesion->full_name }}
@@ -286,8 +303,11 @@
                                             <div class="ss-form-group  col-11">
                                                 <label>Specialty</label>
                                                 <select name="specialty" id="specialty">
-                                                    <option value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">{{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }} </option>
-                                                    
+                                                    <option
+                                                        value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">
+                                                        {{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }}
+                                                    </option>
+
                                                     @foreach ($specialities as $specialty)
                                                         <option value="{{ $specialty->full_name }}">
                                                             {{ $specialty->full_name }}
@@ -300,8 +320,10 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Terms</label>
                                                 <select name="terms" id="term">
-                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">{{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }} </option>
-                                                    
+                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">
+                                                        {{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }}
+                                                    </option>
+
                                                     @if (isset($allKeywords['Terms']))
                                                         @foreach ($allKeywords['Terms'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -316,8 +338,10 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Type</label>
                                                 <select name="type" id="type">
-                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}">{{ !empty($worker->type) ? $worker->type : 'Select Type' }} </option>
-                                                   
+                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}">
+                                                        {{ !empty($worker->type) ? $worker->type : 'Select Type' }}
+                                                    </option>
+
                                                     @if (isset($allKeywords['Type']))
                                                         @foreach ($allKeywords['Type'] as $value)
                                                             <option value="{{ $value->title }}">{{ $value->title }}
@@ -330,14 +354,21 @@
                                             {{-- end Type --}}
 
                                             {{-- Block scheduling --}}
-                                            <div class="ss-form-group row justify-content-center align-items-center col-11"
-                                                style="margin-top:36px;">
-                                                <label class="col-lg-6 col-sm-8 col-xs-8 col-md-8">Block scheduling</label>
-                                                <input style="box-shadow:none; width: auto;"
-                                                    class="col-lg-6 col-sm-2 col-xs-2 col-md-2" type="radio"
-                                                    id="option1" name="block_scheduling" value="1"
-                                                    autocompleted="" disabled>
+                                            <div class="ss-form-group col-11">
+                                                <label>Block scheduling</label>
+
+                                                <select name="block_scheduling" class="block_scheduling mb-3"
+                                                    id="block_scheduling" value="">
+                                                    <option
+                                                        value="{{ !empty($worker->block_scheduling) ? $worker->block_scheduling : '' }}">
+                                                        {{ !empty($worker->block_scheduling) ? $worker->block_scheduling : 'Select Block scheduling' }}
+                                                    </option>
+
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
                                             </div>
+                                            <span class="help-block-block_scheduling"></span>
                                             {{-- end scheduling --}}
                                             {{-- Float requirements --}}
                                             <div class="ss-form-group col-11">
@@ -345,8 +376,11 @@
 
                                                 <select name="float_requirement" class="float_requirement mb-3"
                                                     id="float_requirement" value="">
-                                                    <option value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">{{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }} </option>
-                                                    
+                                                    <option
+                                                        value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">
+                                                        {{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }}
+                                                    </option>
+
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select>
@@ -359,8 +393,11 @@
                                                 <select name="facility_shift_cancelation_policy"
                                                     class="facility_shift_cancelation_policy mb-3"
                                                     id="facility_shift_cancelation_policy" value="">
-                                                    <option value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }} </option>
-                                                    
+                                                    <option
+                                                        value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">
+                                                        {{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }}
+                                                    </option>
+
                                                     @if (isset($allKeywords['AssignmentDuration']))
                                                         @foreach ($allKeywords['AssignmentDuration'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -378,18 +415,17 @@
                                                     name="contract_termination_policy"
                                                     placeholder="Enter Contract Termination Policy"
                                                     value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
-                                                    >
+                                                >
                                             </div>
                                             <span class="help-block-contract_termination_policy"></span>
                                             {{-- end Contract Termination Policy --}}
                                             {{-- Traveler Distance From Facility --}}
                                             <div class="ss-form-group col-11">
-                                                <label>Traveler Distance From Facility</label>
+                                                <label>Distance from your home</label>
                                                 <input type="number" id="traveler_distance_from_facility"
                                                     name="distance_from_your_home"
-                                                    placeholder="Enter Traveler Distance From Facility"
-                                                    value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}"
-                                                    >
+                                                    placeholder="Enter the distance from your home."
+                                                    value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}">
                                             </div>
                                             <span class="help-block-traveler_distance_from_facility"></span>
                                             {{-- end Traveler Distance From Facility  --}}
@@ -399,8 +435,7 @@
                                                 <input type="text" id="clinical_setting"
                                                     name="clinical_setting_you_prefer"
                                                     placeholder="Enter clinical setting"
-                                                    value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}">
                                             </div>
                                             <span class="help-block-clinical_setting_you_prefer"></span>
                                             {{-- End Clinical Setting --}}
@@ -409,8 +444,7 @@
                                                 <label>Patient ratio</label>
                                                 <input type="number" id="Patient_ratio" name="worker_patient_ratio"
                                                     placeholder="How many patients can you handle?"
-                                                    value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}">
                                             </div>
                                             <span class="help-block-worker_patient_ratio"></span>
                                             {{-- End Patient ratio --}}
@@ -418,8 +452,11 @@
                                             <div class="ss-form-group col-11">
                                                 <label>EMR</label>
                                                 <select name="worker_emr" class="emr mb-3" id="emr">
-                                                    <option value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">{{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }} </option>
-                                                    
+                                                    <option
+                                                        value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">
+                                                        {{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }}
+                                                    </option>
+
                                                     @if (isset($allKeywords['EMR']))
                                                         @foreach ($allKeywords['EMR'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -435,8 +472,7 @@
                                                 <label>Unit</label>
                                                 <input id="Unit" type="text" name="worker_unit"
                                                     placeholder="Enter Unit"
-                                                    value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}">
                                             </div>
                                             <span class="help-block-worker_unit"></span>
                                             {{-- End Unit --}}
@@ -445,26 +481,33 @@
                                                 <label>Scrub Color</label>
                                                 <input id="scrub_color" type="text" name="worker_scrub_color"
                                                     placeholder="Enter Scrub Color"
-                                                    value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}">
                                             </div>
                                             <span class="help-block-worker_scrub_color"></span>
                                             {{-- End Scrub Color --}}
                                             {{-- RTO --}}
                                             <div class="ss-form-group col-11">
-                                                <label>RTO</label>
-                                                <input id="rto" type="text" name="rto"
-                                                    placeholder="Enter RTO"
-                                                    value=" {{ !empty($worker->rto) ? $worker->rto : '' }}"
-                                                    >
+                                                <label>Rto</label>
+                                                <select name="rto" id="rto">
+                                                    <option value="{{ !empty($worker->rto) ? $worker->rto : '' }}">
+                                                        {{ !empty($worker->rto) ? $worker->rto : 'Select Rto' }} </option>
+                                                    <option value="allowed">Allowed
+                                                    </option>
+                                                    <option value="not allowed">Not Allowed
+                                                    </option>
+                                                </select>
                                             </div>
                                             <span class="help-block-rto"></span>
                                             {{-- End RTO --}}
+                                             
                                             {{-- Shift Time of Day --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Shift Time of Day</label>
                                                 <select name="worker_shift_time_of_day" id="shift-of-day">
-                                                    <option value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}">{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }} </option>
+                                                    <option
+                                                        value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}">
+                                                        {{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }}
+                                                    </option>
                                                     @if (isset($allKeywords['PreferredShift']))
                                                         @foreach ($allKeywords['PreferredShift'] as $value)
                                                             <option value="{{ $value->id }}">{{ $value->title }}
@@ -475,33 +518,22 @@
                                             </div>
                                             <span class="help-block-worker_shift_time_of_day"></span>
                                             {{-- End Shift Time of Day --}}
-                                            {{-- Hours/Week --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Hours/Week</label>
-                                                <input id="hours_per_week" type="number" name="worker_hours_per_week"
-                                                    placeholder="Enter Hours/Week"
-                                                    value="{{ !empty($worker->worker_hours_per_week) ? $worker->worker_hours_per_week : '' }}"
-                                                    >
-                                            </div>
-                                            <span class="help-block-worker_hours_per_week"></span>
-                                            {{-- End Hours/Week --}}
+                                            
                                             {{-- Hours/Shift --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Shift</label>
-                                                <input id="hours_shift" type="number" name="worker_hours_per_shift"
+                                                <input id="hours_shift" type="number" name="worker_hours_shift"
                                                     placeholder="Enter Hours/Shift"
-                                                    value="{{ !empty($worker->worker_hours_per_shift) ? $worker->worker_hours_per_shift : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_hours_shift) ? $worker->worker_hours_shift : '' }}">
                                             </div>
-                                            <span class="help-block-worker_hours_per_shift"></span>
+                                            <span class="help-block-worker_hours_shift"></span>
                                             {{-- End Hours/Shift --}}
                                             {{-- Weeks/Assignment --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Weeks/Assignment</label>
                                                 <input id="preferred_assignment_duration" type="number"
                                                     name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment"
-                                                    value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}">
                                             </div>
                                             <span class="help-block-worker_weeks_assignment"></span>
                                             {{-- End Weeks/Assignment --}}
@@ -510,11 +542,318 @@
                                                 <label>Shifts/Week</label>
                                                 <input id="weeks_shift" type="number" name="worker_shifts_week"
                                                     placeholder="Enter Shifts/Week"
-                                                    value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}"
-                                                    >
+                                                    value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}">
                                             </div>
                                             <span class="help-block-worker_shifts_week"></span>
                                             {{-- End Shifts/Week --}}
+                                            {{-- added fields to match job details in explore jobs --}}
+                                            {{-- Experience  --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Experience</label>
+                                                <input id="worker_experience" type="number" name="worker_experience"
+                                                    placeholder="Enter your experience"
+                                                    value="{{ !empty($worker->worker_experience) ? $worker->worker_experience : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_experience"></span>
+                                             {{-- End Experience --}}
+                                             {{-- worker_ss_number --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>SS Number</label>
+                                                <input id="worker_ss_number" type="text" name="worker_ss_number"
+                                                    placeholder="Enter your SS Number"
+                                                    value="{{ !empty($worker->worker_ss_number) ? $worker->worker_ss_number : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_ss_number"></span>
+                                            {{-- End worker_ss_number --}}
+
+                                            {{-- nursing_license_state --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Where are you licensed?</label>
+                                                <select name="nursing_license_state" id="nursing_license_state">
+                                                    <option value="{{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : '' }}">
+                                                        {{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : 'Select a State' }}
+                                                    </option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nursing_license_state"></span>
+                                            </div>
+                                            {{-- End nursing_license_state --}}
+                                            {{-- worker_eligible_work_in_us --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Eligible to work in the US</label>
+                                                <select name="worker_eligible_work_in_us" id="worker_eligible_work_in_us">
+                                                    <option value="{{ !empty($worker->worker_eligible_work_in_us) ? (($worker->worker_eligible_work_in_us == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_eligible_work_in_us) ? (($worker->worker_eligible_work_in_us == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_eligible_work_in_us"></span>
+                                            </div>
+                                           
+                                            {{-- End worker_eligible_work_in_us --}}
+                                            {{-- worker_facility_city --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>City you'd like to work?</label>
+                                                <select name="worker_facility_city" id="worker_facility_city">
+                                                    <option value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}">
+                                                        {{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : 'Select a City' }}
+                                                    </option>
+                                                    @foreach ($allKeywords['City'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-worker_facility_city"></span>
+                                            </div>
+                                            {{-- End worker_facility_city  --}}
+
+                                            {{-- worker_facility_state --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>State you'd like to work?</label>
+                                                <select name="worker_facility_state" id="worker_facility_state">
+                                                    <option value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}">
+                                                        {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
+                                                    </option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-worker_facility_state"></span>
+                                            </div>
+                                            {{-- End worker_facility_state  --}}
+
+                                            {{-- worker_start_date --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>When can you start?</label>
+                                                <input id="worker_start_date" type="date" name="worker_start_date"
+                                                    placeholder="Enter your start date"
+                                                    value="{{ !empty($worker->worker_start_date) ? $worker->worker_start_date : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_start_date"></span>
+                                            {{-- End worker_start_date  --}}
+
+                                            {{-- worker_guaranteed_hours --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Guaranteed Hours</label>
+                                                <input id="worker_guaranteed_hours" type="number" name="worker_guaranteed_hours"
+                                                    placeholder="Enter your guaranteed hours"
+                                                    value="{{ !empty($worker->worker_guaranteed_hours) ? $worker->worker_guaranteed_hours : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_guaranteed_hours"></span>
+                                            {{-- End worker_guaranteed_hours  --}}
+
+                                            {{-- worker_sign_on_bonus --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Sign on Bonus</label>
+                                                <input id="worker_sign_on_bonus" type="number" name="worker_sign_on_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_sign_on_bonus) ? $worker->worker_sign_on_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_sign_on_bonus"></span>
+                                            {{-- End worker_sign_on_bonus  --}}
+
+                                            {{-- worker_completion_bonus --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Completion Bonus</label>
+                                                <input id="worker_completion_bonus" type="number"
+                                                    name="worker_completion_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_completion_bonus) ? $worker->worker_completion_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_completion_bonus"></span>
+                                            {{-- End worker_completion_bonus  --}}
+
+                                            {{-- worker_extension_bonus --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Extension Bonus</label>
+                                                <input id="worker_extension_bonus" type="number" name="worker_extension_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_extension_bonus) ? $worker->worker_extension_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_extension_bonus"></span>
+                                            {{-- End worker_extension_bonus  --}}
+
+                                            {{-- worker_other_bonus --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Other Bonus</label>
+                                                <input id="worker_other_bonus" type="number" name="worker_other_bonus"
+                                                    placeholder="What rate is fair ? "
+                                                    value="{{ !empty($worker->worker_other_bonus) ? $worker->worker_other_bonus : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_other_bonus"></span>
+                                            {{-- End worker_other_bonus  --}}
+
+                                            {{-- worker_four_zero_one_k --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>401K</label>
+                                                <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
+                                                    <option value="{{ !empty($worker->worker_four_zero_one_k) ? (($worker->worker_four_zero_one_k == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_four_zero_one_k) ? (($worker->worker_four_zero_one_k == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_four_zero_one_k"></span>
+                                            </div>
+                                            {{-- End worker_four_zero_one_k  --}}
+
+                                            {{-- worker_health_insurance --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Health Insurance</label>
+                                                <select name="worker_health_insurance" id="worker_health_insurance">
+                                                    <option value="{{ !empty($worker->worker_health_insurance) ? (($worker->worker_health_insurance == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_health_insurance) ? (($worker->worker_health_insurance == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_health_insurance"></span>
+                                            </div>
+                                            {{-- End worker_health_insurance  --}}
+
+                                            {{-- worker_dental --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Dental</label>
+                                                <select name="worker_dental" id="worker_dental">
+                                                    <option value="{{ !empty($worker->worker_dental) ? (($worker->worker_dental == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_dental) ? (($worker->worker_dental == 1) ? 'Yes' : 'No') : 'Do you want this ?' }}
+                                                    </option>
+                                                    <option value="">do you want this ?</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_dental"></span>
+                                            </div>
+                                            {{-- End worker_dental  --}}
+
+                                            {{-- worker_vision --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>Vision</label>
+                                                <select name="worker_vision" id="worker_vision">
+                                                    <option value="{{ !empty($worker->worker_vision) ? (($worker->worker_vision == 1) ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_vision) ? (($worker->worker_vision == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    </option>
+                                                    <option value="">do you want this ?</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_vision"></span>
+                                            </div>
+                                            {{-- End worker_vision  --}}
+
+                                            {{-- worker_overtime_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Overtime Rate</label>
+                                                <input id="worker_overtime_rate" type="number" name="worker_overtime_rate"
+                                                    placeholder="What rate is fair?"
+                                                    value="{{ !empty($worker->worker_overtime_rate) ? $worker->worker_overtime_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_overtime_rate"></span>
+                                            {{-- End worker_overtime_rate  --}}
+
+                                            {{-- worker_holiday its a date  --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Holiday</label>
+                                                <input id="worker_holiday" type="date" name="worker_holiday"
+                                                    placeholder="Any holiday you refuse to work?"
+                                                    value="{{ !empty($worker->worker_holiday) ? $worker->worker_holiday : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_holiday"></span>
+                                            {{-- End worker_holiday  --}}
+
+                                            {{-- worker_on_call_check --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call</label>
+                                                <select name="worker_on_call_check" id="worker_on_call_check">
+                                                    <option value="{{ !empty($worker->worker_on_call_check) ? (($worker->worker_on_call_check == 1) ? 'Yes' : 'No') : 'Will you do call?' }}">
+                                                        {{ !empty($worker->worker_on_call_check) ? (($worker->worker_on_call_check == 1) ? 'Yes' : 'No') : 'Will you do call?' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_on_call_check"></span>
+                                            </div>
+                                            {{-- End worker_on_call_check  --}}
+
+                                            {{-- worker_on_call_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call Rate</label>
+                                                <input id="worker_on_call_rate" type="number" name="worker_on_call_rate"
+                                                    placeholder="What rate is fair?"
+                                                    value="{{ !empty($worker->worker_on_call_rate) ? $worker->worker_on_call_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_on_call_rate"></span>
+                                            {{-- End worker_on_call_rate  --}}
+
+                                            {{-- worker_on_call_back_check --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call Back</label>
+                                                <select name="worker_on_call_back_check" id="worker_on_call_back_check">
+                                                    <option value="{{ !empty($worker->worker_on_call_back_check) ? (($worker->worker_on_call_back_check == 1) ? 'Yes' : 'No') : 'Will you do call back?' }}">
+                                                        {{ !empty($worker->worker_on_call_back_check) ? (($worker->worker_on_call_back_check == 1) ? 'Yes' : 'No') : 'Will you do call back?' }}
+                                                    </option>
+                                                    <option value="">Select an option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                                <span class="help-block-worker_on_call_back_check"></span>
+                                            </div>
+                                            {{-- End worker_on_call_back_check  --}}
+
+                                            {{-- worker_on_call_back_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>On Call Back Rate</label>
+                                                <input id="worker_on_call_back_rate" type="number"
+                                                    name="worker_on_call_back_rate" placeholder="What rate is fair?"
+                                                    value="{{ !empty($worker->worker_on_call_back_rate) ? $worker->worker_on_call_back_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_on_call_back_rate"></span>
+                                            {{-- End worker_on_call_back_rate  --}}
+
+                                            {{-- worker_orientation_rate --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Orientation Rate</label>
+                                                <input id="worker_orientation_rate" type="number"
+                                                    name="worker_orientation_rate" placeholder="Is this rate reasonable?"
+                                                    value="{{ !empty($worker->worker_orientation_rate) ? $worker->worker_orientation_rate : '' }}">
+                                            </div>
+                                            <span class="help-block-worker_orientation_rate"></span>
+                                            {{-- End worker_orientation_rate  --}}
+
+                                            {{-- worker_benefits --}}
+
+                                             <div class="ss-form-group col-11">
+                                                <label>Worker benefits</label>
+                                                <select name="worker_benefits" class="worker_benefits mb-3"
+                                                    id="worker_benefits" value="">
+                                                    <option
+                                                        value="{{ !empty($worker->worker_benefits) ? $worker->worker_benefits : '' }}">
+                                                        {{ !empty($worker->worker_benefits) ? $worker->worker_benefits : 'Select your benefits choice' }}
+                                                    </option>
+                                                    <option value="1">Yes, Please</option>
+                                                    <option value="2">Preferable</option>
+                                                    <option value="0">No, Thanks</option>
+                                                </select>
+                                            </div>
+                                            <span class="help-block-worker_benefits"></span>
+                                            
+                                            {{-- end worker benefits --}}
+
                                             {{-- Skip && Save --}}
                                             <div class="ss-prsn-form-btn-sec row col-11" style="gap:0px;">
                                                 <div class="col-4">
@@ -541,19 +880,49 @@
                                     <div class="page slide-page ">
                                         <div class="row justify-content-center">
                                             {{-- Upload Document --}}
-                                            <div class="ss-form-group">
+                                            {{-- <div class="ss-form-group">
                                                 <label>Upload Document</label>
                                                 <input type="file" id="document_file" name="files" multiple
                                                     required><br><br>
                                                 <label class="mt-2" for="file">Choose a file</label>
                                             </div>
-                                            <span class="help-block-file"></span>
+                                            <span class="help-block-file"></span> --}}
+                                            <div class="ss-form-group "
+                                                style="
+                                                display: flex;
+                                                justify-content: right;
+                                                align-items: center;
+                                            ">
+                                                <span style="margin:0px; margin-right:20px;">Add your documents here
+                                                    !</span>
+                                                <a href="#" onclick="open_modal(this)" class="ss-opr-mngr-plus-sec"
+                                                    style="
+                                                    background: #3d2c39;
+                                                    width: 40px;
+                                                    height: 40px;
+                                                    line-height: 40px;
+                                                    text-align: center;
+                                                    border-radius: 100px;
+                                                    color: #52DEC1 !important;
+                                                    display: flex;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    "
+                                                    data-bs-toggle="modal" data-bs-target="#job-dtl-Dcouments"><i
+                                                        class="fas fa-plus"></i></a>
+
+
+                                                <br><br>
+
+                                            </div>
                                             {{-- manage file table --}}
-                                            <table style="font-size: 16px;" class="table">
+                                            <table style="font-size: 16px;" class="table row">
                                                 <thead>
-                                                    <tr>
-                                                        <th scope="col">Document Name</th>
-                                                        <th scope="col">Delete</th>
+                                                    <tr class="row">
+                                                        <th class="col-3">Document Name</th>
+                                                        <th class="col-3">Type</th>
+                                                        <th class="col-3">View</th>
+                                                        <th class="col-3">Delete</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -754,10 +1123,10 @@
                             <div class="form-outer">
                                 {{-- <form method="post">
                                     @csrf
-                                 
+
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
-                                            
+
                                             <div class="ss-form-group col-11">
                                                 <label>Subject</label>
                                                 <select name="support_subject" id="support_subject">
@@ -769,18 +1138,18 @@
 
                                             </div>
                                             <span class="help-block-support_subject"></span>
-                                            
+
                                             <div class="ss-form-group col-11">
                                                 <label>Issue</label>
                                                 <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
                                             </div>
                                             <span class="help-block-support_subject_issue"></span>
-                                            
+
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveSupportTicket">
-                                                  
+
                                                     <span id="loading" class="d-none">
                                                         <span id="loadSpan" class="spinner-border spinner-border-sm"
                                                             role="status" aria-hidden="true"></span>
@@ -794,8 +1163,9 @@
                                 </form> --}}
                                 <p style="
                                 margin-top: 20px;
-                            ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
-                           
+                            ">
+                                    Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+
                             </div>
 
                         </div>
@@ -804,7 +1174,7 @@
 
                     {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll disable_account d-none">
-                        <div class="ss-pers-info-form-mn-dv" style="width:100%" >
+                        <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img
                                             src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Disactivate
@@ -842,14 +1212,664 @@
                     </div>
                     {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
                 </div>
+
+                {{-- uploading documents modal --}}
+                <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-Dcouments" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="ss-pop-cls-vbtn">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                    id="Dcouments-modal-form-btn"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4>Add Your Dcouments?</h4>
+                                    <div class="ss-form-group">
+                                        <label>Document Type</label>
+                                        <select name="type_documents" onChange="controlInputsFiles(this)">
+                                            <option value="">Select</option>
+                                            <option value="skills_checklists">Skills checklist</option>
+                                            <option value="certificate">Certificate</option>
+                                            <option value="driving_license">Drivers License</option>
+                                            <option value="ss_number">Ss Document</option>
+                                            <option value="other">Others</option>
+                                            <option value="vaccinations">Vaccinations</option>
+                                            <option value="references">References</option>
+                                            <option value="diploma">Diploma</option>
+                                            <option value="professional_license">Professional License</option>
+                                        </select>
+                                        <span class="help-block"></span>
+                                    </div>
+                                    {{-- documents forms --}}
+                                    {{-- skills --}}
+                                    <div class="container-multiselect d-none" id="skills_checklists">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Skills</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Speciality']))
+                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        id="upload-{{ $loop->index }}" class="files-upload"
+                                                        style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                    </div>
+
+                                    {{-- certification --}}
+                                    <div class="container-multiselect d-none" id="certificate">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Certification</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Certification']))
+                                                @foreach ($allKeywords['Certification'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        id="upload-{{ $loop->index }}" class="files-upload"
+                                                        style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('certification')">Save</button>
+                                    </div>
+
+                                    {{-- driving license --}}
+                                    <div class="d-none" id="driving_license">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                        ">
+                                                <input hidden displayName="Driving Licence" type="file"
+                                                    class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="driving licence"
+                                                        class="item">
+                                                </div>
+
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
+                                                <span class="help-block"></span>
+
+                                            </div>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('driving_license')">Save</button>
+                                    </div>
+                                    {{-- ss number --}}
+                                    <div class="d-none" id="ss_number">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                                                        display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                    ">
+                                                <input hidden displayName="Ss number file" type="file" class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="ss number file"
+                                                        class="item">
+                                                </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('ss_number')">Save</button>
+                                    </div>
+
+                                    {{-- other --}}
+                                    <div class="d-none" id="other">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                                                        display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                    ">
+                                                <input hidden displayName="Other" type="file" class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="other"
+                                                        class="item">
+                                                </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                                    </div>
+
+                                    {{-- vaccinations --}}
+                                    <div class="d-none" id="vaccinations">
+                                        <div class="container-multiselect">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Vaccinations</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['Vaccinations']))
+                                                @foreach ($allKeywords['Vaccinations'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        class="files-upload" style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('vaccination')">Save</button>
+                                    </div>
+
+                                    {{-- references --}}
+
+                                    <div class="container-multiselect d-none" id="references">
+                                        <h4>Who are your References?</h4>
+                                        <div class="ss-form-group">
+                                            <label>Reference Name</label>
+                                            <input type="text" name="name" placeholder="Name of Reference">
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="ss-form-group">
+                                            <label>Phone Number</label>
+                                            <input type="text" name="phone" placeholder="Phone Number of Reference">
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group">
+                                            <label>Email</label>
+                                            <input type="text" name="reference_email"
+                                                placeholder="Email of Reference">
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group">
+                                            <label>Date Referred</label>
+                                            <input type="date" name="date_referred">
+                                            <span class="help-block"></span>
+                                        </div>
+
+
+                                        <div class="ss-form-group">
+                                            <label>Min Title of Reference</label>
+                                            <select name="min_title_of_reference">
+                                                <option value="">Select a min title</option>
+                                                @if (isset($allKeywords['MinTitleOfReference']))
+                                                    @foreach ($allKeywords['MinTitleOfReference'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group">
+                                            <label>Is this from your last assignment?</label>
+                                            <select name="recency_of_reference">
+                                                <option value="">Select a recency period</option>
+                                                @if (isset($allKeywords['RecencyOfReference']))
+                                                    @foreach ($allKeywords['RecencyOfReference'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="ss-form-group fileUploadInput"
+                                            style="display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                        ">
+                                            <label>Upload Image</label>
+                                            <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                            </div>
+                                            <input type="file" name="image">
+                                            <button type="button" onclick="open_file(this)">Choose File</button>
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('references')">Save</button>
+                                    </div>
+
+                                    {{-- diploma --}}
+                                    <div class="d-none" id="diploma">
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                                                        display: flex !important;
+                                                                        justify-content: center !important;
+                                                                        align-items: center !important;
+                                                                    ">
+                                                <input hidden displayName="Diploma" type="file" class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type" value="diploma"
+                                                        class="item">
+                                                </div>
+                                                <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                                </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('diploma')">Save</button>
+                                    </div>
+
+                                    {{-- professional license --}}
+                                    <div class="d-none" id="professional_license">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                                                        display: flex !important;
+                                                                        justify-content: center !important;
+                                                                        align-items: center !important;
+                                                                    ">
+                                                <input hidden displayName="Professional License" type="file"
+                                                    class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type"
+                                                        value="Professional License" class="item">
+                                                </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('professional_license')">Save</button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{-- end uploading documents modal --}}
     </main>
 @stop
 
 @section('js')
+
+    {{-- js for multiselect --}}
+    <script>
+        var selectedFiles = [];
+        var selectedValues = [];
+        var selectedTypeFile = '';
+
+        function open_file(obj) {
+            $(obj).parent().find('input[type="file"]').click();
+        }
+
+        function open_modal(obj) {
+            let name, title, modal, form, target;
+
+            name = $(obj).data('name');
+            title = $(obj).data('title');
+            target = $(obj).data('target');
+
+            modal = '#' + target + '_modal';
+            form = modal + '_form';
+            $(form).find('h4').html(title);
+
+            $(modal).modal('show');
+        }
+
+        function controlInputsFiles(obj) {
+            let filesSelected = document.querySelectorAll('.files-upload');
+            filesSelected.forEach((fileInput) => {
+                fileInput.value = '';
+            });
+
+            let fileNameDiv = document.querySelectorAll('.file-name');
+            fileNameDiv.forEach((fileDiv) => {
+                fileDiv.remove();
+            });
+            
+            HideAllInputsModal();
+            removeAllCheckBox();
+            const inputsId = obj.value;
+            selectedTypeFile = inputsId;
+            //removing d-none class
+            document.getElementById(inputsId).classList.remove('d-none');
+        }
+
+        function HideAllInputsModal() {
+            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'ss_number', 'other',
+                'vaccinations',
+                'references',
+                'diploma', 'professional_license'
+            ];
+            allInputsDivs.forEach((InputsDiv) => {
+                // adding d-none class
+                if (document.getElementById(InputsDiv) != null)
+                    document.getElementById(InputsDiv).classList.add('d-none');
+            });
+        }
+        function closeModal() {
+            let buttons = document.querySelectorAll('.btn-close');
+            buttons.forEach(button => {
+                button.click();
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // options from the combobox
+            const filesSelected = document.querySelectorAll('.files-upload');
+
+            // give hight to filesNamesArea
+            const types = ['vaccinations', 'certificate', 'skills_checklists'];
+
+            
+            filesSelected.forEach((fileInput) => {
+                fileInput.addEventListener('change', function() {
+                    if(!types.includes(selectedTypeFile)){
+                    if (this.files.length > 0) {
+                        const file = this.files[0];
+                        var fileName = file.name;
+                        if (fileName.length > 20) {
+                            fileName = fileName.substring(0, 20) + '...';
+                        } 
+                        const fileDiv = document.createElement('div');
+                        fileDiv.classList.add('file-name', 'row', 'col-12');
+                        const fileSpan = document.createElement('span');
+                        fileSpan.classList.add('col-11');
+                        const fileText = document.createTextNode(fileName);
+                        fileSpan.appendChild(fileText);
+                        fileDiv.appendChild(fileSpan);
+                        const removeIcon = document.createElement('i');
+                        removeIcon.classList.add('fa', 'fa-times', 'remove-file', 'col-1');
+                        removeIcon.addEventListener('click', function() {
+                            fileDiv.remove();
+                            fileInput.value = '';
+                        });
+                        fileDiv.appendChild(removeIcon);
+
+                        const filesNamesArea = this.closest('.container-multiselect');
+
+                        filesNamesArea.appendChild(fileDiv);
+                    }
+                }
+                });
+                
+            });
+       
+
+            const items = document.querySelectorAll('.list-items .item');
+            //store selected file values
+
+            items.forEach((item, index) => {
+                item.addEventListener('click', (event) => {
+                    
+                    const uploadInput = item.nextElementSibling;
+                    console.log('this is the next sibling : ',uploadInput)
+                    if (uploadInput) {
+                        // class 'checked' check
+                        if (item.classList.contains('checked')) {
+                            uploadInput.click();
+                            uploadInput.addEventListener('change', function() {
+                                if (this.files.length > 0) {
+                                    // Handling file selection
+                                    const file = this.files[0];
+                                    selectedFiles.push(file.name);
+                                    console.log(selectedFiles);
+                                }
+                            }, {
+                                once: true //avoid multiple registrations
+                            });
+                        } else {
+                            const index = selectedFiles.indexOf(uploadInput.files[0].name);
+                            if (index > -1) {
+                                selectedFiles.splice(index, 1);
+                            }
+                            console.log(selectedFiles);
+
+                        }
+                    }
+                });
+            });
+
+
+        });
+
+        function removeAllCheckBox(){
+            const items = document.querySelectorAll('.list-items .item');
+            items.forEach((item, index) => {
+                item.classList.remove('checked');
+            });
+        }
+
+        function sendMultipleFiles(type) {
+           
+            const fileInputs = document.querySelectorAll('.files-upload');
+            console.log('this is my file inputs values',fileInputs);
+            
+            const fileReadPromises = [];
+            let worker_id = '{!! $worker->id !!}';
+            console.log(worker_id);
+            var workerId = worker_id;
+
+            if (type == 'references') {
+                let referenceName = document.querySelector('input[name="name"]').value;
+                let referencePhone = document.querySelector('input[name="phone"]').value;
+                let referenceEmail = document.querySelector('input[name="reference_email"]').value;
+                let referenceDate = document.querySelector('input[name="date_referred"]').value;
+                let referenceMinTitle = document.querySelector('input[name="min_title_of_reference"]').value;
+                let referenceRecency = document.querySelector('select[name="recency_of_reference"]').value;
+                let referenceImage = document.querySelector('input[name="image"]').files[0];
+
+                var referenceInfo = {
+                    referenceName: referenceName,
+                    phoneNumber: referencePhone,
+                    email: referenceEmail,
+                    dateReferred: referenceDate,
+                    minTitle: referenceMinTitle,
+                    isLastAssignment: referenceRecency == 1 ? true : false
+                }
+                console.log(referenceInfo);
+                if (referenceInfo == null) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-times"></i> Please fill all the fields',
+                        time: 3
+                    });
+                    return;
+                }
+                let readerPromise = new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        resolve({
+                            name: referenceImage.name,
+                            path: referenceImage.name,
+                            type: type,
+                            content: event.target.result, // Base64 encoded content
+                            displayName: referenceImage.name,
+                            ReferenceInformation: referenceInfo
+                        });
+                    };
+
+                    reader.onerror = reject;
+                    reader.readAsDataURL(referenceImage);
+                });
+                fileReadPromises.push(readerPromise);
+                removeAllCheckBox();
+
+            } else {
+                fileInputs.forEach((input, index) => {
+                    let displayName = input.getAttribute("displayName");
+                    if (input.files[0]) {
+                        const file = input.files[0];
+                        const readerPromise = new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                resolve({
+                                    name: file.name,
+                                    path: file.name,
+                                    type: type,
+                                    content: event.target.result, // Base64 encoded content
+                                    displayName: displayName || file.name,
+                                });
+                            };
+                            reader.onerror = reject;
+                            reader.readAsDataURL(file);
+                        });
+                        fileReadPromises.push(readerPromise);
+                    }
+                });
+            }
+            if (fileReadPromises.length == 0) {
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-times"></i> Please select a file',
+                    time: 3
+                });
+                return;
+            }
+
+
+            Promise.all(fileReadPromises).then(files => {
+                console.log(files);
+                var body = {
+                    workerId: workerId,
+                    files: files
+                };
+                fetch('/worker/add-docs', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                                'content')
+                        },
+                        body: JSON.stringify({
+                            workerId: workerId,
+                            files: files
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data); // Handle success
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i>' + data.message,
+                            time: 3
+                        });
+                        closeModal();
+                        // reload the page
+                        // setTimeout(() => {
+                        //     location.reload();
+                        // }, 2000);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error); // Handle errors
+                    });
+            }).catch(error => {
+                console.error('Error reading files:', error); // Handle file read errors
+            });
+            // clear files inputs 
+            fileInputs.forEach((input) => {
+                input.value = '';
+            });
+            selectedFiles = [];
+            removeAllCheckBox();
+
+        }
+
+        const selectBtn = document.querySelectorAll(".select-btn"),
+
+            items = document.querySelectorAll(".item");
+
+
+        selectBtn.forEach(selectBtn => {
+            selectBtn.addEventListener("click", () => {
+                selectBtn.classList.toggle("open");
+            });
+        });
+
+        items.forEach(item => {
+            item.addEventListener("click", () => {
+                const value = item.getAttribute('value');
+                item.classList.toggle("checked");
+
+                if (item.classList.contains("checked")) {
+                    // add item
+                    selectedValues.push(value);
+                    console.log(selectedValues);
+                } else {
+                    // remove item
+                    const index = selectedValues.indexOf(value);
+                    if (index > -1) {
+                        selectedValues.splice(index, 1);
+                        console.log(selectedValues);
+                    }
+                }
+                let btnText = document.querySelector(".btn-text");
+                if (selectedValues.length > 0) {
+                    btnText.innerText = `${selectedValues.length} Selected`;
+                } else {
+                    btnText.innerText = "Select Language";
+                }
+            });
+        })
+    </script>
+    {{-- end js for multiselect --}}
+
     <script type="text/javascript">
         // loding states cities docs on page load
 
         $(document).ready(function() {
+            if (@json($type == 'profile')) {
+                document.getElementById('option-1').checked = true;
+                ProfileIinformationDisplay();
+
+            } else {
+                document.getElementById('option-2').checked = true;
+                AccountSettingDisplay();
+            }
             const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
             const AddStripeAccount = document.getElementById('AddStripeAccount');
 
@@ -858,7 +1878,7 @@
             $('#phone_number_payment').mask('+1 (999) 999-9999');
             $('#routing_number_payment').mask('999-999-999');
             $('#bank_account_payment_number').mask('9999-9999-9999');
-            // solution of the case that we got - when we type a caracter : 
+            // solution of the case that we got - when we type a caracter :
             // $('#bank_account_payment_number').on('input', function() {
             // var inputValue = $(this).val();
             // var numericValue = inputValue.replace(/[^0-9]/g, '');
@@ -892,17 +1912,17 @@
             // end loading cities according to the selected state
 
             // append each uploaded file to the table
-            $('#document_file').change(function() {
-                var file = this.files[0]; // get the selected file
-                var tbody = $('.table tbody');
-                // tbody.empty(); // remove existing rows
-                var row = $('<tr>');
-                row.append($('<td>').text(file.name)); // display the file name
-                var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id',
-                    file.id).prop('disabled', true); // disable the delete button
-                row.append($('<td>').append(deleteButton));
-                tbody.append(row);
-            });
+            // $('#document_file').change(function() {
+            //     var file = this.files[0]; // get the selected file
+            //     var tbody = $('.table tbody');
+            //     // tbody.empty(); // remove existing rows
+            //     var row = $('<tr>');
+            //     row.append($('<td>').text(file.name)); // display the file name
+            //     var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id',
+            //         file.id).prop('disabled', true); // disable the delete button
+            //     row.append($('<td>').append(deleteButton));
+            //     tbody.append(row);
+            // });
             // end loding uploading file
 
             // loding docs list and dispatch them on the table (consume api : /list-docs)
@@ -910,37 +1930,142 @@
                 $worker_id = $worker->id;
             @endphp
             const worker_id = '{!! $worker_id !!}';
+            // $.ajax({
+            //     url: 'http://localhost:4545/documents/list-docs?workerId=' +
+            //         worker_id, // replace workerId with the actual workerId
+            //     method: 'GET',
+            //     success: function(resp) {
+            //         var tbody = $('.table tbody');
+            //         tbody.empty(); // remove existing rows
+            //         resp.forEach(function(file) {
+            //             var row = $('<tr>');
+            //             row.append($('<td>').text(file.name));
+            //             console.log(file.id);
+            //             var deleteButton = $('<button>').text('Delete Document').addClass(
+            //                 'delete').attr('data-id', file.id);
+            //             deleteButton.click(function() {
+            //                 $.ajax({
+            //                     url: 'http://localhost:4545/documents/del-doc',
+            //                     method: 'POST',
+            //                     data: JSON.stringify({
+            //                         bsonId: file.id
+            //                     }),
+            //                     contentType: 'application/json',
+            //                     success: function() {
+            //                         row
+            //                             .remove(); // remove the row from the table
+            //                     },
+            //                     error: function(resp) {
+            //                         console.log('Error:', resp);
+            //                     }
+            //                 });
+            //             });
+            //             row.append($('<td>').append(deleteButton));
+            //             tbody.append(row);
+            //         });
+            //     },
+            //     error: function(resp) {
+            //         console.log('Error:', resp);
+            //     }
+            // });
+
             $.ajax({
-                url: 'http://localhost:4545/documents/list-docs?workerId=' +
-                    worker_id, // replace workerId with the actual workerId
-                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('list-docs') }}',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    WorkerId: worker_id
+                }),
                 success: function(resp) {
+                    var data;
+                    try {
+                        // Try to manually parse the response as JSON
+                        data = JSON.parse(resp);
+                        console.log(data);
+                    } catch (e) {
+                        // If parsing fails, assume resp is already a JavaScript object
+                        data = resp;
+                    }
+
                     var tbody = $('.table tbody');
-                    tbody.empty(); // remove existing rows
-                    resp.forEach(function(file) {
+                    tbody.empty();
+                    data.forEach(function(file) {
                         var row = $('<tr>');
-                        row.append($('<td>').text(file.name));
+                        row.attr('class', 'row');
+                        row.append($('<td class="col-3 td-table">').text(file.displayName));
+
+                        row.append($('<td class="col-3 td-table">').text(file.type));
                         console.log(file.id);
                         var deleteButton = $('<button>').text('Delete Document').addClass(
                             'delete').attr('data-id', file.id);
-                        deleteButton.click(function() {
+                        deleteButton.click(function(event) {
+                            event.preventDefault();
                             $.ajax({
-                                url: 'http://localhost:4545/documents/del-doc',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('del-doc') }}',
                                 method: 'POST',
+                                contentType: 'application/json',
                                 data: JSON.stringify({
                                     bsonId: file.id
                                 }),
-                                contentType: 'application/json',
                                 success: function() {
-                                    row
-                                        .remove(); // remove the row from the table
+                                    row.remove();
                                 },
                                 error: function(resp) {
                                     console.log('Error:', resp);
                                 }
                             });
                         });
-                        row.append($('<td>').append(deleteButton));
+                        var viewFile = $('<button>').text('View Document').addClass('delete')
+                            .attr('data-id', file.id);
+                        viewFile.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('get-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function(resp) {
+                                    const respToJson = JSON.parse(resp);
+                                    console.log(respToJson);
+                                    const binaryData = respToJson.content
+                                        .data;
+                                    const byteArray = new Uint8Array(
+                                        binaryData);
+                                    const fileBlob = new Blob([byteArray], {
+                                        type: "application/octet-stream"
+                                    });
+                                    const blobUrl = URL.createObjectURL(
+                                        fileBlob);
+                                    const downloadLink = document
+                                        .createElement('a');
+                                    downloadLink.href = blobUrl;
+                                    downloadLink.setAttribute('download',
+                                        respToJson.name);
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(downloadLink);
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+                        row.append($('<td class="col-3 td-table">').append(viewFile));
+                        row.append($('<td class="col-3 td-table">').append(deleteButton));
+
                         tbody.append(row);
                     });
                 },
@@ -948,8 +2073,6 @@
                     console.log('Error:', resp);
                 }
             });
-
-
 
             $.ajax({
                 headers: {
@@ -1004,7 +2127,7 @@
         const specialty = document.querySelector('select[name="specialty"]');
         const terms = document.querySelector('select[name="terms"]');
         const type = document.querySelector('select[name="type"]');
-        const block_scheduling = document.querySelector('input[name="block_scheduling"]');
+        const block_scheduling = document.querySelector('select[name="block_scheduling"]');
         const float_requirement = document.querySelector('select[name="float_requirement"]');
         const facility_shift_cancelation_policy = document.querySelector(
             'select[name="facility_shift_cancelation_policy"]');
@@ -1015,16 +2138,43 @@
         const emr = document.querySelector('select[name="worker_emr"]');
         const Unit = document.querySelector('input[name="worker_unit"]');
         const scrub_color = document.querySelector('input[name="worker_scrub_color"]');
-        const rto = document.querySelector('input[name="rto"]');
+        const rto = document.querySelector('select[name="rto"]');
         const shift_of_day = document.querySelector('select[name="worker_shift_time_of_day"]');
-        const hours_per_week = document.querySelector('input[name="worker_hours_per_week"]');
-        const hours_shift = document.querySelector('input[name="worker_hours_per_shift"]');
+        const hours_shift = document.querySelector('input[name="worker_hours_shift"]');
         const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
         const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
+        const worker_experience = document.querySelector('input[name="worker_experience"]');
+        const worker_ss_number = document.querySelector('input[name="worker_ss_number"]');
+        const worker_eligible_work_in_us = document.querySelector('select[name="worker_eligible_work_in_us"]');
+        const nursing_license_state = document.querySelector('select[name="nursing_license_state"]');
+        const worker_facility_city = document.querySelector('select[name="worker_facility_city"]');
+        const worker_facility_state = document.querySelector('select[name="worker_facility_state"]');
+        const worker_start_date = document.querySelector('input[name="worker_start_date"]');
+        const worker_guaranteed_hours = document.querySelector('input[name="worker_guaranteed_hours"]');
+        const worker_sign_on_bonus = document.querySelector('input[name="worker_sign_on_bonus"]');
+        const worker_completion_bonus = document.querySelector('input[name="worker_completion_bonus"]');
+        const worker_extension_bonus = document.querySelector('input[name="worker_extension_bonus"]');
+        const worker_other_bonus = document.querySelector('input[name="worker_other_bonus"]');
+        const worker_four_zero_one_k = document.querySelector('select[name="worker_four_zero_one_k"]');
+        const worker_health_insurance = document.querySelector('select[name="worker_health_insurance"]');
+        const worker_dental = document.querySelector('select[name="worker_dental"]');
+        const worker_vision = document.querySelector('select[name="worker_vision"]');
+        const worker_overtime_rate = document.querySelector('input[name="worker_overtime_rate"]');
+        const worker_holiday = document.querySelector('input[name="worker_holiday"]');
+        const worker_on_call_check = document.querySelector('select[name="worker_on_call_check"]');
+        const worker_on_call_rate = document.querySelector('input[name="worker_on_call_rate"]');
+        const worker_on_call_back_check = document.querySelector('select[name="worker_on_call_back_check"]');
+        const worker_on_call_back_rate = document.querySelector('input[name="worker_on_call_back_rate"]');
+        const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
+        const worker_benefits = document.querySelector('select[name="worker_benefits"]');
+         
+
+
+
         // Document Management
         //const file = document.querySelector('input[type="file"]');
         const file = document.getElementById('document_file');
-        // bonus transfer 
+        // bonus transfer
         const full_name_payment = document.querySelector('input[name="full_name_payment"]');
         const address_payment = document.querySelector('input[name="address_payment"]');
         const email_payment = document.querySelector('input[name="email_payment"]');
@@ -1108,11 +2258,17 @@
                 $('.help-block-type').addClass('text-danger');
                 isValid = false;
             }
+            if (block_scheduling.value === '') {
+                $('.help-block-block_scheduling').text('Please enter a block scheduling');
+                $('.help-block-block_scheduling').addClass('text-danger');
+                isValid = false;
+            }
             if (float_requirement.value === '') {
                 $('.help-block-float_requirement').text('Please enter a float requirement');
                 $('.help-block-float_requirement').addClass('text-danger');
                 isValid = false;
             }
+
             if (facility_shift_cancelation_policy.value === '') {
                 $('.help-block-facility_shift_cancelation_policy').text('Please enter a facility shift cancelation policy');
                 $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
@@ -1124,7 +2280,7 @@
                 isValid = false;
             }
             if (traveler_distance_from_facility.value === '') {
-                $('.help-block-traveler_distance_from_facility').text('Please enter a traveler distance from facility');
+                $('.help-block-traveler_distance_from_facility').text('Please enter the Distance from your home');
                 $('.help-block-traveler_distance_from_facility').addClass('text-danger');
                 isValid = false;
             }
@@ -1163,14 +2319,9 @@
                 $('.help-block-worker_shift_time_of_day').addClass('text-danger');
                 isValid = false;
             }
-            if (hours_per_week.value === '') {
-                $('.help-block-worker_hours_per_week').text('Please enter a hours per week');
-                $('.help-block-worker_hours_per_week').addClass('text-danger');
-                isValid = false;
-            }
             if (hours_shift.value === '') {
-                $('.help-block-worker_hours_per_shift').text('Please enter a hours per shift');
-                $('.help-block-worker_hours_per_shift').addClass('text-danger');
+                $('.help-block-worker_hours_shift').text('Please enter a hours per shift');
+                $('.help-block-worker_hours_shift').addClass('text-danger');
                 isValid = false;
             }
             if (preferred_assignment_duration.value === '') {
@@ -1183,6 +2334,127 @@
                 $('.help-block-worker_shifts_week').addClass('text-danger');
                 isValid = false;
             }
+            if (worker_experience.value === '') {
+                $('.help-block-worker_experience').text('Please enter a worker experience');
+                $('.help-block-worker_experience').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_ss_number.value === '') {
+                $('.help-block-worker_ss_number').text('Please enter a worker SS number');
+                $('.help-block-worker_ss_number').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_eligible_work_in_us.value === '') {
+                $('.help-block-worker_eligible_work_in_us').text('Please enter a worker eligible work in us');
+                $('.help-block-worker_eligible_work_in_us').addClass('text-danger');
+                isValid = false;
+            }
+            if (nursing_license_state.value === '') {
+                $('.help-block-nursing_license_state').text('Please enter a nursing license state');
+                $('.help-block-nursing_license_state').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_facility_city.value === '') {
+                $('.help-block-worker_facility_city').text('Please enter a worker facility city');
+                $('.help-block-worker_facility_city').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_facility_state.value === '') {
+                $('.help-block-worker_facility_state').text('Please enter a worker facility state');
+                $('.help-block-worker_facility_state').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_start_date.value === '') {
+                $('.help-block-worker_start_date').text('Please enter a worker start date');
+                $('.help-block-worker_start_date').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_guaranteed_hours.value === '') {
+                $('.help-block-worker_guaranteed_hours').text('Please enter a worker guaranteed hours');
+                $('.help-block-worker_guaranteed_hours').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_sign_on_bonus.value === '') {
+                $('.help-block-worker_sign_on_bonus').text('Please enter a worker sign on bonus');
+                $('.help-block-worker_sign_on_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_completion_bonus.value === '') {
+                $('.help-block-worker_completion_bonus').text('Please enter a worker completion bonus');
+                $('.help-block-worker_completion_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_extension_bonus.value === '') {
+                $('.help-block-worker_extension_bonus').text('Please enter a worker extension bonus');
+                $('.help-block-worker_extension_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_other_bonus.value === '') {
+                $('.help-block-worker_other_bonus').text('Please enter a worker other bonus');
+                $('.help-block-worker_other_bonus').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_four_zero_one_k.value === '') {
+                $('.help-block-worker_four_zero_one_k').text('Please enter a worker four zero one k');
+                $('.help-block-worker_four_zero_one_k').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_health_insurance.value === '') {
+                $('.help-block-worker_health_insurance').text('Please enter a worker health insurance');
+                $('.help-block-worker_health_insurance').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_dental.value === '') {
+                $('.help-block-worker_dental').text('Please enter a worker dental');
+                $('.help-block-worker_dental').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_vision.value === '') {
+                $('.help-block-worker_vision').text('Please enter a worker vision');
+                $('.help-block-worker_vision').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_overtime_rate.value === '') {
+                $('.help-block-worker_overtime_rate').text('Please enter a worker overtime rate');
+                $('.help-block-worker_overtime_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_holiday.value === '') {
+                $('.help-block-worker_holiday').text('Please enter a worker holiday');
+                $('.help-block-worker_holiday').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_check.value === '') {
+                $('.help-block-worker_on_call_check').text('Please enter a worker on call check');
+                $('.help-block-worker_on_call_check').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_rate.value === '') {
+                $('.help-block-worker_on_call_rate').text('Please enter a worker on call rate');
+                $('.help-block-worker_on_call_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_back_check.value === '') {
+                $('.help-block-worker_on_call_back_check').text('Please enter a worker on call back check');
+                $('.help-block-worker_on_call_back_check').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_on_call_back_rate.value === '') {
+                $('.help-block-worker_on_call_back_rate').text('Please enter a worker on call back rate');
+                $('.help-block-worker_on_call_back_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_orientation_rate.value === '') {
+                $('.help-block-worker_orientation_rate').text('Please enter a worker orientation rate');
+                $('.help-block-worker_orientation_rate').addClass('text-danger');
+                isValid = false;
+            }
+            if (worker_benefits.value === '') {
+                $('.help-block-worker_benefits').text('Please enter a worker benefits');
+                $('.help-block-worker_benefits').addClass('text-danger');
+                isValid = false;
+            }
+
             return isValid;
         }
         // end validation professional information
@@ -1198,7 +2470,7 @@
         }
         // end validation document management
 
-        // validation bonus 
+        // validation bonus
 
         function validateBonusInfo() {
             let isValid = true;
@@ -1211,7 +2483,7 @@
                     'Full name can only contain letters and spaces, and cannot be longer than 255 characters');
                 $('.help-block-full_name_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-full_name_payment').text('');
             }
 
@@ -1220,17 +2492,18 @@
                 $('.help-block-address_payment').text('Please enter your address');
                 $('.help-block-address_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-address_payment').text('');
             }
 
             const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($('input[name="email_payment"]').val() ))) {
+            if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($(
+                    'input[name="email_payment"]').val()))) {
                 console.log(email_payment.value);
                 $('.help-block-email_payment').text('Please enter a valid email');
                 $('.help-block-email_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-email_payment').text('');
             }
 
@@ -1238,7 +2511,7 @@
                 $('.help-block-bank_name_payment').text('Please enter your bank name');
                 $('.help-block-bank_name_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-bank_name_payment').text('');
             }
 
@@ -1246,7 +2519,7 @@
                 $('.help-block-routing_number_payment').text('Please enter your routing number');
                 $('.help-block-routing_number_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-routing_number_payment').text('');
             }
 
@@ -1254,7 +2527,7 @@
                 $('.help-block-bank_account_payment_number').text('Please enter your bank account number');
                 $('.help-block-bank_account_payment_number').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-bank_account_payment_number').text('');
             }
 
@@ -1264,16 +2537,16 @@
                 $('.help-block-phone_number_payment').text('Please enter a valid phone number');
                 $('.help-block-phone_number_payment').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-phone_number_payment').text('');
-            }   
+            }
 
             return isValid;
         }
 
         // end bonus validation
 
-        // validation 
+        // validation
 
         // function validateSupportForm() {
         //     let isValid = true;
@@ -1295,7 +2568,7 @@
 
         // end validation
 
-        // Save Basic Information 
+        // Save Basic Information
         const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
 
         SaveBaiscInformation.addEventListener("click", function(event) {
@@ -1319,16 +2592,16 @@
             formData.append('state', state.value);
             formData.append('zip_code', zip_code.value);
             formData.append('InfoType', "BasicInformation");
-            formData.append('profile_pic', $('#file')[0].files[0]); 
+            formData.append('profile_pic', $('#file')[0].files[0]);
 
 
             $.ajax({
                 url: '/worker/update-worker-profile',
                 type: 'POST',
                 data: formData,
-                contentType: false, 
-                cache: false, 
-                processData:false,
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -1339,11 +2612,11 @@
                         });
 
                         setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                            location.reload();
+                        }, 2000);
 
                     }
-                  
+
                 },
                 error: function(resp) {
                     notie.alert({
@@ -1391,10 +2664,34 @@
                     scrub_color: scrub_color.value,
                     rto: rto.value,
                     shift_of_day: shift_of_day.value,
-                    hours_per_week: hours_per_week.value,
                     hours_shift: hours_shift.value,
                     preferred_assignment_duration: preferred_assignment_duration.value,
                     weeks_shift: weeks_shift.value,
+                    worker_experience: worker_experience.value,
+                    worker_ss_number: worker_ss_number.value,
+                    worker_eligible_work_in_us: worker_eligible_work_in_us.value,
+                    nursing_license_state: nursing_license_state.value,
+                    worker_facility_city: worker_facility_city.value,
+                    worker_facility_state: worker_facility_state.value,
+                    worker_start_date: worker_start_date.value,
+                    worker_guaranteed_hours: worker_guaranteed_hours.value,
+                    worker_sign_on_bonus: worker_sign_on_bonus.value,
+                    worker_completion_bonus: worker_completion_bonus.value,
+                    worker_extension_bonus: worker_extension_bonus.value,
+                    worker_other_bonus: worker_other_bonus.value,
+                    worker_four_zero_one_k: worker_four_zero_one_k.value,
+                    worker_health_insurance: worker_health_insurance.value,
+                    worker_dental: worker_dental.value,
+                    worker_vision: worker_vision.value,
+                    worker_overtime_rate: worker_overtime_rate.value,
+                    worker_holiday: worker_holiday.value,
+                    worker_on_call_check: worker_on_call_check.value,
+                    worker_on_call_rate: worker_on_call_rate.value,
+                    worker_on_call_back_check: worker_on_call_back_check.value,
+                    worker_on_call_back_rate: worker_on_call_back_rate.value,
+                    worker_orientation_rate: worker_orientation_rate.value,
+                    worker_benefits: worker_benefits.value,
+
                     InfoType: "ProfessionalInformation"
                 }),
                 success: function(resp) {
@@ -1406,8 +2703,8 @@
                             time: 5
                         });
                         setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                            location.reload();
+                        }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1421,7 +2718,7 @@
         });
         // end Saving Professional Information
 
-        // Save Bonus Transfer 
+        // Save Bonus Transfer
         const SaveBonusInformation = document.getElementById("SaveBonusInformation");
         SaveBonusInformation.addEventListener("click", function(event) {
             event.preventDefault();
@@ -1456,8 +2753,8 @@
                             time: 5
                         });
                         setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                            location.reload();
+                        }, 2000);
                     }
                 },
                 error: function(resp) {
@@ -1558,7 +2855,7 @@
                         $('#disactivate_account').removeClass('d-none');
                         window.location.href = "/";
                     }
-                    
+
                 },
                 error: function(resp) {
                     console.log(resp);
@@ -1573,7 +2870,7 @@
 
         // end account disactivating
 
-        // creating a stripe account 
+        // creating a stripe account
 
         AddStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
@@ -1603,7 +2900,7 @@
                         $('#loading_disableOption').addClass('d-none');
                         $('#disactivate_account').removeClass('d-none');
                         console.log(resp);
-                         window.location.href = resp.account_link;
+                        window.location.href = resp.account_link;
                     }
                 },
                 error: function(resp) {
@@ -1711,15 +3008,13 @@
             if (!validateDocumentManagement()) {
                 return;
             }
-            @php
-                $worker_id_json = $worker->id;
-            @endphp
-            let worker_id = '{!! $worker_id_json !!}';
+
             console.log(worker_id);
             var workerId = worker_id;
             var filesInput = document.getElementById('document_file');
             var files = Array.from(filesInput.files);
 
+            var workerId = '{!! $worker->id !!}';
             Promise.all(files.map(file => {
                 return new Promise((resolve, reject) => {
                     var reader = new FileReader();
@@ -1744,7 +3039,7 @@
                     }
                 });
                 $.ajax({
-                    url: 'http://localhost:4545/documents/add-docs',
+                    url: '/worker/add-docs',
                     type: 'POST',
                     dataType: 'json',
                     contentType: 'application/json',
@@ -1786,7 +3081,7 @@
         const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
-        // account setting validation here 
+        // account setting validation here
 
         function validateAccountSettingInformation() {
             $('.help-block-new_mobile').text('');
@@ -1843,7 +3138,7 @@
         // end account setting validation
 
 
-        // send request to update here 
+        // send request to update here
         const SaveAccountInformation = document.getElementById('SaveAccountInformation');
         SaveAccountInformation.addEventListener("click", function(event) {
             event.preventDefault();
@@ -1939,15 +3234,60 @@
             $('.disable_account').removeClass('d-none');
         }
 
-        var loadFile = function (event) {
-  var image = document.getElementById("output");
-  image.src = URL.createObjectURL(event.target.files[0]);
-};
-    </script>
+        var loadFile = function(event) {
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
 
+            // seding the image to server
+            var formData = new FormData();
+            formData.append('profile_pic', $('#file')[0].files[0]);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/worker/update-worker-profile-picture',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Profile picture updated successfully.',
+                            time: 5
+                        });
+
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+
+                    }
+
+                },
+                error: function(resp) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i>' + resp.message,
+                        time: 5
+                    });
+                }
+            });
+        };
+    </script>
 @stop
 
 <style>
+    .file-name {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
     .add {
         border: 1px solid #3D2C39 !important;
         color: #fff !important;
@@ -2031,7 +3371,7 @@
         border-radius: 57px;
         border: 1px solid var(--border, #111011);
         background: var(--light-bg-purple, #FFF8FD);
-        width: 170px;
+        width: fit-content;
         height: 32px;
         color: var(--darkpurple, #3D2C39);
         text-align: center;
@@ -2065,7 +3405,8 @@
 
     ::selection {
         color: #fff;
-        background: #b5649e;
+        background: #
+        ;
     }
 
     .container {
@@ -2318,53 +3659,194 @@
         color: #fff;
     }
 
-     /* for the image  */
+    /* for the image  */
 
-     .profile-pic {
-  color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: all .3s ease;
-}
+    .profile-pic {
+        color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: all .3s ease;
+    }
 
-.profile-pic input {
-  display: none;
-}
+    .profile-pic input {
+        display: none;
+    }
 
-.profile-pic img {
-  position: absolute;
-  object-fit: cover;
-  width: 165px;
-  height: 165px;
-  box-shadow: 0 0 10px 0 rgba(255,255,255,.35);
-  border-radius: 100px;
-  z-index: 0;
-}
+    .profile-pic img {
+        position: absolute;
+        object-fit: cover;
+        width: 165px;
+        height: 165px;
+        box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+        border-radius: 100px;
+        z-index: 0;
+    }
 
-.profile-pic .-label {
-  cursor: pointer;
-  height: 165px;
-  width: 165px;
-}
+    .profile-pic .-label {
+        cursor: pointer;
+        height: 165px;
+        width: 165px;
+    }
 
-.profile-pic:hover .-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0,0,0,.8);
-  z-index: 10000;
-  color: rgb(250,250,250);
-  transition: background-color .2s ease-in-out;
-  border-radius: 100px;
-  margin-bottom: 0;
-}
+    .profile-pic:hover .-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, .8);
+        z-index: 10000;
+        color: rgb(250, 250, 250);
+        transition: background-color .2s ease-in-out;
+        border-radius: 100px;
+        margin-bottom: 0;
+    }
 
-.profile-pic span {
-  display: inline-flex;
-  padding: .2em;
-  height: 2em;
-}
+    .profile-pic span {
+        display: inline-flex;
+        padding: .2em;
+        height: 2em;
+    }
 
+    .td-table {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .modal-content {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+    }
+</style>
+
+{{-- style for multi-select --}}
+
+<style>
+    /* Google Fonts - Poppins*/
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+
+    .container-multiselect {
+        position: relative;
+        max-width: 320px;
+        width: 100%;
+        margin: 30px auto 30px;
+    }
+
+    .select-btn {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .select-btn .btn-text {
+        font-size: 17px;
+        font-weight: 400;
+        color: #333;
+    }
+
+    .select-btn .arrow-dwn {
+        display: flex;
+        height: 21px;
+        width: 21px;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 50%;
+        background: #3d2c39;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+
+    .select-btn.open .arrow-dwn {
+        transform: rotate(-180deg);
+    }
+
+    .list-items {
+        position: relative;
+        margin-top: 15px;
+        border-radius: 8px;
+        padding: 16px;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        max-height: 500px;
+        scroll-behavior: auto;
+        overflow: auto;
+
+    }
+
+    .select-btn.open~.list-items {
+        display: block;
+    }
+
+    .list-items .item {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        height: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        padding: 0 15px;
+        border-radius: 8px;
+    }
+
+    .list-items .item:hover {
+        background-color: #e7edfe;
+    }
+
+    .item .item-text {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+    }
+
+    .item .checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 16px;
+        width: 16px;
+        border-radius: 4px;
+        margin-right: 12px;
+        border: 1.5px solid #c0c0c0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .item.checked .checkbox {
+        background-color: #3d2c39;
+        border-color: #3d2c39;
+    }
+
+    .checkbox .check-icon {
+        color: #fff;
+        font-size: 11px;
+        transform: scale(0);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .item.checked .check-icon {
+        transform: scale(1);
+    }
+
+    .ss-job-dtl-pop-sv-btn {
+        margin-top: 30px !important;
+    }
+    .remove-file{
+        cursor:pointer;
+        color:white;
+        background-color: #3d2c39;
+        border-radius: 8px;
+        padding:0px !important;
+        font-size:12px;
+    }
+    .file-name{
+        margin-top: 10px;
+        padding:0px;
+    }
 </style>

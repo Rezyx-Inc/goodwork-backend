@@ -166,7 +166,8 @@ class Offer extends Model
         'weekly_pay',
         'is_draft',
         'is_counter',
-        'created_by'
+        'created_by',
+        'worked_at_facility_before'
     ];
 
     /**

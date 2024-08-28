@@ -23,8 +23,22 @@
 </head>
 
 <body>
+    <script>$(document).ready(function() {
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            },
+            beforeSend: function(xhr) {
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                }
+            }
+        });
+    });</script>
 
     <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <header>
         @include('recruiter::partials.sidebar')
         @include('recruiter::partials.header')
@@ -50,6 +64,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     @yield('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script>$(document).ready(function() {
+        $.ajaxSetup({
+            xhrFields: {
+                withCredentials: true
+            },
+            beforeSend: function(xhr) {
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (csrfToken) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                }
+            }
+        });
+    });</script>
 </body>
 
 </html>

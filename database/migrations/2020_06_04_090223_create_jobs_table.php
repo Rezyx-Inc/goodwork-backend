@@ -19,8 +19,9 @@ class CreateJobsTable extends Migration
             $table->uuid('id')->primary();
             // type of speciallity changed from unsignedBigInteger to string since we have no relation between specialities and jobs table and we need the name of speciality in jobs table
             $table->string('preferred_specialty')->nullable();
+            $table->string('import_id')->nullable();
             $table->unsignedBigInteger('preferred_assignment_duration')->nullable();
-            $table->unsignedBigInteger('preferred_shift_duration')->nullable();
+            $table->string('preferred_shift_duration')->nullable();
             $table->string('preferred_work_location')->nullable();
             $table->unsignedBigInteger('preferred_work_area')->nullable();
             $table->string("preferred_days_of_the_week")->nullable();
@@ -29,31 +30,29 @@ class CreateJobsTable extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
             $table->uuid('created_by')->nullable();
-            $table->foreign('created_by')
-                ->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('users');
             $table->softDeletes();
             $table->text('slug')->nullable();
             $table->boolean('active')->default(true);
             $table->uuid('facility_id')->nullable();
-            $table->foreign('facility_id')
-                ->references('id')->on('facilities');
-                $table->string('job_video')->nullable();
-                $table->unsignedBigInteger('seniority_level')->nullable();
-                $table->unsignedBigInteger('job_function')->nullable();
-                $table->text('description')->nullable()->change();
-                $table->text('responsibilities')->nullable();
-                $table->text('qualifications')->nullable();
-                $table->unsignedBigInteger('job_cerner_exp')->nullable();
-                $table->unsignedBigInteger('job_meditech_exp')->nullable();
-                $table->unsignedBigInteger('job_epic_exp')->nullable();
-                $table->string('job_other_exp',100)->nullable();
-                $table->text('job_photos')->nullable();
-                $table->string('video_embed_url')->nullable();
-                $table->boolean('is_open')->default(true);
-                $table->uuid('recruiter_id')->nullable();
-                $table->string('job_name', 36);
+            $table->foreign('facility_id')->references('id')->on('facilities');
+            $table->string('job_video')->nullable();
+            $table->unsignedBigInteger('seniority_level')->nullable();
+            $table->unsignedBigInteger('job_function')->nullable();
+            $table->text('description')->nullable()->change();
+            $table->text('responsibilities')->nullable();
+            $table->text('qualifications')->nullable();
+            $table->unsignedBigInteger('job_cerner_exp')->nullable();
+            $table->unsignedBigInteger('job_meditech_exp')->nullable();
+            $table->unsignedBigInteger('job_epic_exp')->nullable();
+            $table->string('job_other_exp',100)->nullable();
+            $table->text('job_photos')->nullable();
+            $table->string('video_embed_url')->nullable();
+            $table->boolean('is_open')->default(true);
+            $table->uuid('recruiter_id')->nullable();
+            $table->string('job_name', 36);
 
-                // Adding string columns as nullable
+            // Adding string columns as nullable
             $table->string('proffesion')->nullable(); // Column for job profession
             $table->string('preferred_shift')->nullable(); // Column for preferred shift
             $table->string('job_city')->nullable(); // Column for job city
@@ -108,9 +107,13 @@ class CreateJobsTable extends Migration
              $table->boolean('vision')->default(false);
              $table->decimal('actual_hourly_rate', 8, 2)->nullable();
              $table->decimal('overtime', 8, 2)->nullable();
-             $table->decimal('holiday', 8, 2)->nullable();
-             $table->decimal('on_call', 8, 2)->nullable();
-             $table->decimal('call_back', 8, 2)->nullable();
+             $table->date('holiday')->nullable();
+             // call backs
+             $table->boolean('on_call')->default(false);
+             $table->decimal('on_call_rate', 8, 2)->nullable();
+             $table->boolean('on_call_back')->default(false);
+             $table->decimal('call_back_rate', 8, 2)->nullable();
+             // end call backs
              $table->decimal('orientation_rate', 8, 2)->nullable();
              $table->decimal('weekly_taxable_amount', 8, 2)->nullable();
              $table->decimal('employer_weekly_amount', 8, 2)->nullable();
@@ -122,7 +125,30 @@ class CreateJobsTable extends Migration
              $table->string('tax_status', 36);
              $table->string('terms');
              $table->string('type')->nullable();
+            // Adding new columns (from docs)
+            //not required
+            $table->string('job_location')->nullable();  // done 
+            $table->string('vaccinations')->nullable(); // done 
+            $table->integer('number_of_references')->nullable(); // done
+            $table->string('min_title_of_reference')->nullable(); // done 
+            $table->boolean('eligible_work_in_us')->default(false); // done 
+            $table->integer('recency_of_reference')->nullable(); // done
+            $table->string('certificate')->nullable(); // done 
+            $table->string('skills')->nullable();  // done 
+            $table->string('urgency')->nullable(); // need to be in card job // done
+            $table->string('facilitys_parent_system')->nullable(); // done
+            $table->string('facility_name')->nullable(); // done 
+            $table->string('facility_location')->nullable(); // done 
 
+            $table->string('nurse_classification')->nullable(); // done 
+            $table->string('pay_frequency')->nullable(); // need to be in card job // done 
+            $table->string('benefits')->nullable(); // done 
+            $table->decimal('feels_like_per_hour', 8, 2)->nullable(); // done
+            // required
+            $table->string('facility_city',36); // done 
+            $table->string('facility_state',36); // done
+
+             
         });
     }
 

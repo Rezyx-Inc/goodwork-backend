@@ -13,7 +13,8 @@ class NurseAsset extends UuidModel
         'name',
         'filter',
         'using_date',
-        'active'
+        'active',
+        'file_name'
     ];
 
     /**

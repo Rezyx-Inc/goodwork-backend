@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\ServiceProvider;
 
+
 class BroadcastServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +20,22 @@ class BroadcastServiceProvider extends ServiceProvider
             // Replace this with your actual authorization logic
             return $user->id === $receiverId;
         });
+
+        Broadcast::channel('private-notification.{receiverId}', function ($user, $receiverId) {
+            
+            return $user->id === $receiverId;
+        });
+
+        Broadcast::channel('private-job-notification.{receiverId}', function ($user, $receiverId) {
+           
+            return $user->id === $receiverId;
+        });
+
+        Broadcast::channel('private-offer-notification.{receiverId}', function ($user, $receiverId) {
+            
+            return $user->id === $receiverId;
+        });
+
 
         require base_path('routes/channels.php');
     }

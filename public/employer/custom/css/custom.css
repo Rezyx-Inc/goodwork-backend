@@ -183,6 +183,7 @@ body{
   main {
     padding-left: 230px;
     padding-right: 30px;
+    padding-bottom: 130px;
   }
 }
 
@@ -957,6 +958,7 @@ ul.ss-expl-applicion-ul2 {
     margin-top: 6px;
     border-radius: 10px;
     position: relative;
+    cursor: pointer;
 }
 .ss-job-prfle-sec:after {
     content: "";
@@ -3488,6 +3490,7 @@ color:#3D2C39;
 
 .main_home{
 padding-top: 170px;
+padding-bottom: 130px;
 }
 
 .app_info_home1{

@@ -61,12 +61,12 @@ router.post('/add-docs', async (req, res) => {
 	        })
 	        .catch((e) => {
 	          console.log("Unable to save document.", e);
-	          return res.status(400).send("Unable to save document.");
+	          return res.status(400).send(e.message);
 	        })
         })
         .catch(e => {
             console.log("Unexpected error", e)
-            res.status(400).send("Unexpected error.")
+            res.status(400).send(e)
         });
 });
 
@@ -152,7 +152,7 @@ router.get('/list-docs', async (req, res) => {
             
             var list = [];
             for(let file of docs.files){
-                list.push({name: file.name, id: file._id});
+                list.push({name: file.name, id: file._id, type: file.type, displayName: file.displayName});
             }
 
             return res.status(200).json(list)

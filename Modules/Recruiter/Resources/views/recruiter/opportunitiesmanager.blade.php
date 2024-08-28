@@ -15,7 +15,7 @@
                                         class="ss-darfts-sec-draft-btn">Drafts</button></li>
                                 <li><button id="published" onclick="opportunitiesType('published')"
                                         class="ss-darfts-sec-publsh-btn">Published</button></li>
-                                <li class="d-none"><button id="onhold" onclick="opportunitiesType('onhold')"
+                                <li ><button id="onhold" onclick="opportunitiesType('onhold')"
                                         class="ss-darfts-sec-publsh-btn">On Hold</button></li>
 
                                 <li><a href="#" onclick="request_job_form_appear()" class="ss-opr-mngr-plus-sec"><i
@@ -51,14 +51,14 @@
                                     <div class="check fas fa-check"></div>
                                 </div>
 
-                                <div class=" col-3 step">
+                                <div class=" col-2 step">
                                     <p>Preferences and Requirements</p>
                                     <div class="bullet">
                                         <span>2</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
-                                <div class="col-3 step">
+                                <div class="col-2 step">
                                     <p>Job Details</p>
                                     <div class="bullet">
                                         <span>3</span>
@@ -66,10 +66,18 @@
                                     <div class="check fas fa-check"></div>
                                 </div>
 
+                                <div class="col-2 step">
+                                    <p>other information</p>
+                                    <div class="bullet">
+                                        <span>4</span>
+                                    </div>
+                                    <div class="check fas fa-check"></div>
+                                </div>
+
                                 <div class="col-3 step">
                                     <p>Work Schedule & Requirements</p>
                                     <div class="bullet">
-                                        <span>4</span>
+                                        <span>5</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
@@ -120,13 +128,14 @@
                                                 </select>
                                                 <span class="help-block-preferred_specialty"></span>
                                             </div>
+
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Preferred Profession</label>
                                                 <select name="proffesion" id="perferred_profession">
                                                     <option value="">Profession</option>
-                                                    @foreach ($proffesions as $proffesion)
-                                                        <option value="{{ $proffesion->full_name }}">
-                                                            {{ $proffesion->full_name }}
+                                                    @foreach ($allKeywords['Profession'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -198,6 +207,32 @@
                                                 </span>
                                             </div>
 
+                                            
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Shift Time of Day</label>
+                                                <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="shifttimeofday">
+                                                                <option value="">Select Shift Time of Day</option>
+                                                                @if(isset($allKeywords['PreferredShift']))
+                                                                @foreach ($allKeywords['PreferredShift'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="shifttimeofdayAllValues" name="preferred_shift_duration" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addshifttimeofday('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
                                                 <button class="firstNext next">Next</button>
@@ -223,7 +258,7 @@
                                                 <span class="help-block-facility_shift_cancelation_policy"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Traveler distance from facility</label>
+                                                <label>Min distance from facility</label>
                                                 <input type="number" name="traveler_distance_from_facility"
                                                     id="traveler_distance_from_facility"
                                                     placeholder="Enter travel distance">
@@ -231,8 +266,14 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Clinical Setting</label>
-                                                <input type="text" name="clinical_setting" id="clinical_setting"
-                                                    placeholder="Enter clinical setting">
+                                                <select name="clinical_setting"
+                                                    id="clinical_setting">
+                                                    <option value="">Select Clinical Setting</option>
+                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-clinical_setting"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -255,8 +296,13 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Rto</label>
-                                                <input type="text" name="rto" id="rto"
-                                                    placeholder="Enter rto">
+                                                        <select name="rto" id="rto">
+                                                            <option value="">Select Rto</option>
+                                                            <option value="allowed">Allowed
+                                                            </option>
+                                                            <option value="not allowed">Not Allowed
+                                                            </option>
+                                                        </select>
                                                 <span class="help-block-rto"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -265,12 +311,12 @@
                                                     placeholder="Enter Guaranteed Hours per week">
                                                 <span class="help-block-guaranteed_hours"></span>
                                             </div>
-                                            {{-- <div class="ss-form-group col-md-4">
+                                            <div class="ss-form-group col-md-4">
                                                 <label>Hours Per Week</label>
                                                 <input type="number" name="hours_per_week" id="hours_per_week"
                                                     placeholder="Enter hours per week">
                                                 <span class="help-block-hours_per_week"></span>
-                                            </div> --}}
+                                            </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Hours Per Shift</label>
                                                 <input type="number" name="hours_shift" id="hours_shift"
@@ -286,6 +332,8 @@
                                                 <span class="help-block-weeks_shift"></span>
                                             </div>
 
+                                            
+
 
 
 
@@ -298,7 +346,7 @@
                                         </div>
                                         <div class="ss-form-group col-md-4">
                                             <label>Preferred Experience</label>
-                                            <input type="text" name="preferred_experience" id="preferred_experience"
+                                            <input type="number" name="preferred_experience" id="preferred_experience"
                                                 placeholder="Enter Preferred Experience">
                                         </div>
 
@@ -373,9 +421,9 @@
                                                 <span class="help-block-other_bonus"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Actual Regular Hourly rate</label>
+                                                <label>Est. Taxable Hourly rate</label>
                                                 <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
-                                                    placeholder="Enter actual Actual Regular Hourly rate">
+                                                    placeholder="Enter Taxable Regular Hourly rate">
                                                 <span class="help-block-actual_hourly_rate"></span>
                                             </div>
 
@@ -386,7 +434,7 @@
                                                 <span class="help-block-overtime"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>On Call Hourly rate</label>
+                                                <label>On Call</label>
                                                 <select name="on_call" id="on_call">
                                                     <option value="">On call</option>
                                                     <option value="Yes">Yes
@@ -397,8 +445,14 @@
                                                 <span class="help-block-on_call"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Holidy hourly rate</label>
-                                                <input type="number" name="holiday" id="holiday"
+                                                <label>On Call Rate</label>
+                                                <input type="number" name="on_call_rate" id="on_call_rate"
+                                                placeholder="Enter a call back hourly rate">
+                                                <span class="help-block-on_call_rate"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Holidy date</label>
+                                                <input type="date" name="holiday" id="holiday"
                                                     placeholder="Enter Holidy hourly rate">
                                                 <span class="help-block-holiday"></span>
                                             </div>
@@ -487,21 +541,282 @@
                                         </div>
                                     </div>
 
+                                    {{-- slide added from sheets --}}
+
+                                    <div class="page">
+                                        <div class="row">
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Professional Licensure</label>
+                                                <select name="job_location" id="job_location">
+                                                    <option value="">Select a Professional Licensure</option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-job_location"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Number Of References</label>
+                                                <input type="number" name="number_of_references" id="number_of_references"
+                                                    placeholder="Enter number of references">
+                                                <span class="help-block-number_of_references"></span>
+                                            </div>
+
+                                            
+
+                                            {{-- <div class="ss-form-group col-md-4">
+                                                <label>Min Title Of Reference</label>
+                                                <input type="text" name="min_title_of_reference" id="min_title_of_reference"
+                                                    placeholder="Enter min title of reference">
+                                                <span class="help-block-min_title_of_reference"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Recency Of Reference</label>
+                                                <input type="number" name="recency_of_reference" id="recency_of_reference"
+                                                    placeholder="Enter # recency of reference">
+                                                <span class="help-block-recency_of_reference"></span>
+                                            </div> --}}
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Eligible work in us ?</label>
+                                                <select name="eligible_work_in_us" id="eligible_work_in_us">
+                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="1">Yes
+                                                    </option>
+                                                    <option value="0">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-eligible_work_in_us"></span>
+                                            </div>
+                                            
+                                            {{-- <div class="ss-form-group col-md-4">
+                                                <label>Skills checklist</label>
+                                                <select name="skills" id="skills">
+                                                    <option value="">Select Skills Checklist</option>
+                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-skills"></span>
+                                            </div> --}}
+
+
+                                            
+
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Urgency</label>
+                                                <select name="urgency" id="urgency">
+                                                    <option value="">Select Urgency</option>
+                                                    @foreach ($allKeywords['Urgency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-urgency"></span>
+                                            </div>
+
+                                            
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility's Parent System</label>
+                                                <input type="text" name="facilitys_parent_system" id="facilitys_parent_system"
+                                                    placeholder="Enter facility's parent system">
+                                                <span class="help-block-facilitys_parent_system"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Name</label>
+                                                <input type="text" name="facility_name" id="facility_name"
+                                                    placeholder="Enter facility name">
+                                                <span class="help-block-facility_name"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Location</label>
+                                                <input type="text" name="facility_location" id="facility_location"
+                                                    placeholder="Enter facility location">
+                                                <span class="help-block-facility_location"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility State </label>
+                                                <select name="facility_state" id="facility_state">
+                                                    <option value="">States</option>
+                                                    @foreach ($states as $state)
+                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                            {{ $state->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                             <span class="help-block-facility_state"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility City </label>
+                                                <select name="facility_city" id="facility_city">
+                                                    <option value="">Select a state first</option>
+                                                </select>
+                                                <span class="help-block-facility_city"></span>
+                                            </div>
+
+                                                
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Worker Classification</label>
+                                                <select name="nurse_classification" id="nurse_classification">
+                                                    <option value="">Select Worker Classification</option>
+                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nurse_classification"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Pay Frequency</label>
+                                                <select name="pay_frequency" id="pay_frequency">
+                                                    <option value="">Select pay frequency</option>
+                                                    @foreach ($allKeywords['PayFrequency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-pay_frequency"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Benefits</label>
+                                                <select name="benefits" id="benefits">
+                                                    <option value="">Select benefits</option>
+                                                    @foreach ($allKeywords['Benefits'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-benefits"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Preferred Experience</label>
+                                                <input type="number" name="preferred_experience" id="preferred_experience"
+                                                    placeholder="Enter Preferred Experience">
+                                                    <span class="help-block-preferred_experience"></span>
+                                            </div>
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Certifications</label>
+                                                <div class="ss-speilty-exprnc-add-list certificate-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="certificate">
+                                                                <option value="">Select Certification</option>
+                                                                @if(isset($allKeywords['Certification']))
+                                                                @foreach ($allKeywords['Certification'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="certificateAllValues" name="certificate" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addcertifications('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Vaccinations & Immunizations name</label>
+                                                <div class="ss-speilty-exprnc-add-list vaccinations-content">
+                
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="vaccinations">
+                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                @if(isset($allKeywords['Vaccinations']))
+                                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="vaccinationsAllValues" name="vaccinations" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" id="from_add" onclick="addvacc('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Skills checklist</label>
+                                                <div class="ss-speilty-exprnc-add-list skills-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="skills">
+                                                                <option value="">Select Skills</option>
+                                                                @if(isset($allKeywords['Speciality']))
+                                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                                <option value="{{$value->title}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="skillsAllValues" name="skills" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addskills('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+
+                                            <div class="field btns col-12 d-flex justify-content-center">
+                                                <button class="saveDrftBtn">Save as draft</button>
+                                                <button class="prev-3 prev">Previous</button>
+                                                <button class="next-3 next">Next</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    {{-- end slide added from sheets --}}
+
+
                                     <!-- Forth form slide for adding jobs -->
 
                                     <div class="page">
                                         <div class="row">
                                             <div class="ss-form-group col-md-4">
                                                 <label>Contract Termination Policy</label>
-                                                <input type="text" name="contract_termination_policy"
-                                                    id="contract_termination_policy"
-                                                    placeholder="Enter Contract Termination Policy">
+                                                <select name="contract_termination_policy" id="contract_termination_policy">
+                                                    <option value="">Select a policy</option>
+                                                    @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-contract_termination_policy"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>EMR</label>
-                                                <input type="text" name="Emr" id="emr"
-                                                    placeholder="Enter EMR">
+
+
+                                                <select name="Emr"
+                                                    id="emr">
+                                                    <option value="">Select EMR</option>
+                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="help-block-emr"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -548,20 +863,33 @@
                                                 </select>
                                                 <span class="help-block-vision"></span>
                                             </div>
-                                            {{-- <div class="ss-form-group col-md-4">
+                                            <div class="ss-form-group col-md-4">
                                                 <label>Feels Like $/hrs</label>
                                                 <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
                                                     placeholder="Enter Feels Like $/hrs">
                                                 <span class="help-block-feels_like_per_hour"></span>
-                                            </div> --}}
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>On Call Back</label>
+                                                <select name="on_call_back" id="on_call_back">
+                                                    <option value="">On call back</option>
+                                                    <option value="Yes">Yes
+                                                    </option>
+                                                    <option value="No">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-on_call_back"></span>
+                                            </div>
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Call Back Hourly rate</label>
-
-                                                <input type="number" name="call_back" id="call_back"
+                                                <input type="number" name="call_back_rate" id="call_back_rate"
                                                     placeholder="Enter Call Back Hourly rate">
-                                                <span class="help-block-call_back"></span>
-                                                <span class="help-block-call_back"></span>
+                                                <span class="help-block-call_back_rate"></span>
+                                                <span class="help-block-call_back_rate"></span>
                                             </div>
+
                                             {{-- <div class="ss-form-group col-md-4">
                                                 <label>Est. Weekly Taxable amount</label>
                                                 <input type="number" name="weekly_taxable_amount"
@@ -620,7 +948,7 @@
                                             </span>
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
-                                                <button class="prev-3 prev">Previous</button>
+                                                <button class="prev-4 prev">Previous</button>
                                                 <button class="submit">Submit</button>
                                             </div>
                                         </div>
@@ -639,13 +967,13 @@
                         <div class="col-lg-5 d-none" id="draftCards">
                             <div class="ss-account-form-lft-1">
                                 <h5 class="mb-4 text-capitalize">Draft</h5>
+                                
                                 @php $counter = 0 @endphp
                                 @foreach ($draftJobs as $job)
-                                    <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
+                                    <div style="" class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}">
-                                        <p>Travel <span>+50 Applied</span></p>
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
-                                        <h6>Medical Solutions Recruiter</h6>
+                                        <h6>{{ $job->job_name}}</h6>
                                         <ul>
                                             <li><a href="#"><img
                                                         src=" {{ URL::asset('frontend/img/location.png') }}">
@@ -662,7 +990,7 @@
                                     </div>
                                     @php $counter++ @endphp
                                 @endforeach
-                                <div id="job-list">
+                                <div id="job-list-draft">
                                 </div>
                             </div>
                         </div>
@@ -672,26 +1000,26 @@
                             <div class="ss-account-form-lft-1">
                                 <h5 class="mb-4 text-capitalize">Published</h5>
                                 @php $counter = 0 @endphp
-                                @foreach ($publishedJobs as $job)
+                                @foreach ($publishedJobs as $key => $value)
                                     {{-- <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}"> --}}
                                     <div class="col-12 ss-job-prfle-sec"
-                                        onclick="opportunitiesType('published','{{ $job->id }}','jobdetails')"
+                                        onclick="opportunitiesType('published','{{ $value->id }}','jobdetails')"
                                         id="{{ $counter }}">
-                                        <p>Travel <span>+50 Applied</span></p>
-                                        <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
-                                        <h6>Medical Solutions Recruiter</h6>
+                                        <p>Travel <span> {{ $applyCount[$key] }} Applied</span></p>
+                                        <h4>{{ $value->proffesion }} - {{ $value->preferred_specialty }}</h4>
+                                        <h6>{{ $value->job_name }}</h6>
                                         <ul>
                                             <li><a href="#"><img
                                                         src=" {{ URL::asset('frontend/img/location.png') }}">
-                                                    {{ $job->job_city }}, {{ $job->job_state }}</a></li>
+                                                    {{ $value->job_city }}, {{ $value->job_state }}</a></li>
                                             <li><a href="#"><img
                                                         src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                                    {{ $job->preferred_assignment_duration }}
+                                                    {{ $value->preferred_assignment_duration }}
                                                     wks</a></li>
                                             <li><a href="#"><img
                                                         src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                    {{ $job->weekly_pay }}/wk</a></li>
+                                                    {{ $value->weekly_pay }}/wk</a></li>
                                         </ul>
 
                                     </div>
@@ -711,11 +1039,11 @@
                                 <h5 class="mb-4 text-capitalize">On Hold</h5>
                                 @php $counter = 0 @endphp
                                 @foreach ($onholdJobs as $job)
-                                    <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
+
+                                    <div class="col-12 ss-job-prfle-sec" onclick="opportunitiesType('onhold','{{ $job->id }}','jobdetails')"
                                         id="{{ $counter }}">
-                                        <p>Travel <span>+50 Applied</span></p>
                                         <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
-                                        <h6>Medical Solutions Recruiter</h6>
+                                        <h6>{{ $value->job_name }}</h6>
                                         <ul>
                                             <li><a href="#"><img
                                                         src=" {{ URL::asset('frontend/img/location.png') }}">
@@ -732,19 +1060,22 @@
                                     </div>
                                     @php $counter++ @endphp
                                 @endforeach
-                                <div id="job-list">
-                                </div>
+                                @if (count($onholdJobs) == 0)
+                                    <div id="job-list-onhold">
+                                    </div>
+                                @endif
+                               
                             </div>
                         </div>
                         <!-- END ONHOLD CARDS -->
 
-                        <!-- EDITING FORM -->
+                        <!-- EDITING Draft FORM -->
                         <div class="all col-lg-7" id="details_draft">
                             <div class="bodyAll" style="width: 100%;">
-                                <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
+                                <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;" id="details_info">
                                     <header>Select a job from Drafts</header>
                                     <div class="row progress-bar-item">
-                                        <div class="col-3 step">
+                                        <div class="col-3 step stepDraft">
                                             <p>Job information</p>
                                             <div class="bullet">
                                                 <span>1</span>
@@ -752,25 +1083,33 @@
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class=" col-3 step">
+                                        <div class=" col-2 step stepDraft">
                                             <p>Preferences and Requirements</p>
                                             <div class="bullet">
-                                                <span>1</span>
+                                                <span>2</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
-                                        <div class="col-3 step">
+                                        <div class="col-2 step stepDraft">
                                             <p>Job Details</p>
                                             <div class="bullet">
-                                                <span>1</span>
+                                                <span>3</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class="col-3 step">
-                                            <p>Work Schedule & Requirements</p>
+                                        <div class="col-2 step stepDraft">
+                                            <p>other information</p>
                                             <div class="bullet">
                                                 <span>4</span>
+                                            </div>
+                                            <div class="check fas fa-check"></div>
+                                        </div>
+
+                                        <div class="col-3 step stepDraft">
+                                            <p>Work Schedule & Requirements</p>
+                                            <div class="bullet">
+                                                <span>5</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
@@ -895,6 +1234,30 @@
                                                         </span>
                                                     </div>
 
+                                                    <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                        <label>Shift Time of Day</label>
+                                                        <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
+                                                        </div>
+                                                        <ul>
+                                                            <li class="row w-100 p-0 m-0">
+                                                                <div class="ps-0">
+                                                                    <select class="m-0" id="shifttimeofdayDraft">
+                                                                        <option value="">Select Shift Time of Day</option>
+                                                                        @if(isset($allKeywords['PreferredShift']))
+                                                                        @foreach ($allKeywords['PreferredShift'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                        @endforeach
+                                                                        @endif
+                                                                    </select>
+                                                                    <input type="hidden" id="shifttimeofdayAllValuesDraft" name="preferred_shift_duration" >
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addshifttimeofday('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnDraft">Save as draft</button>
                                                         <button class="firstNextDraft next">Next</button>
@@ -922,7 +1285,7 @@
                                                         <span class="help-block-facility_shift_cancelation_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Traveler distance from facility</label>
+                                                        <label>Min distance from facility</label>
                                                         <input type="number" name="traveler_distance_from_facility"
                                                             id="traveler_distance_from_facilityDraft"
                                                             placeholder="Enter travel distance">
@@ -930,9 +1293,15 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Clinical Setting</label>
-                                                        <input type="text" name="clinical_setting"
-                                                            id="clinical_settingDraft"
-                                                            placeholder="Enter clinical setting">
+                                                        <select name="clinical_setting"
+                                                    id="clinical_settingDraft">
+                                                    <option value="">Select Clinical Setting</option>
+                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
                                                         <span class="help-block-clinical_setting"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -955,9 +1324,14 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Rto</label>
-                                                        <input type="text" name="rto" id="rtoDraft"
-                                                            placeholder="Enter rto">
-                                                        <span class="help-block-rto"></span>
+                                                        <select name="rto" id="rtoDraft">
+                                                            <option value="">Select Rto</option>
+                                                            <option value="allowed">Allowed
+                                                            </option>
+                                                            <option value="not allowed">Not Allowed
+                                                            </option>
+                                                        </select>
+                                                <span class="help-block-rto"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Guaranteed Hours per week</label>
@@ -966,7 +1340,14 @@
                                                             placeholder="Enter Guaranteed Hours per week">
                                                         <span class="help-block-guaranteed_hours"></span>
                                                     </div>
-                                
+
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Hours Per Week</label>
+                                                        <input type="number" name="hours_per_week" id="hours_per_weekDraft"
+                                                            placeholder="Enter hours per week">
+                                                        <span class="help-block-hours_per_weekDraft"></span>
+                                                    </div>
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>
                                                             Hours Per Shift
@@ -981,6 +1362,8 @@
                                                             placeholder="Enter Shift Per Weeks">
                                                         <span class="help-block-weeks_shift"></span>
                                                     </div>
+
+                                                    
 
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
@@ -1031,10 +1414,10 @@
                                                         <span class="help-block-other_bonus"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Actual Regular Hourly rate</label>
+                                                        <label>Est. Texable Hourly Rate</label>
                                                         <input type="number" name="actual_hourly_rate"
                                                             id="actual_hourly_rateDraft"
-                                                            placeholder="Enter actual regular hourly rate">
+                                                            placeholder="Enter taxable regular hourly rate">
                                                         <span class="help-block-actual_hourly_rate"></span>
                                                     </div>
 
@@ -1045,7 +1428,7 @@
                                                         <span class="help-block-overtime"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>On Call Hourly rate</label>
+                                                        <label>On Call</label>
                                                         <select name="on_call" id="on_callDraft">
                                                             <option value="">On call</option>
                                                             <option value="Yes">Yes
@@ -1056,8 +1439,14 @@
                                                         <span class="help-block-on_call"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Holidy hourly rate</label>
-                                                        <input type="NUMBER" name="holiday" id="holidayDraft"
+                                                        <label>On Call Rate</label>
+                                                        <input type="number" name="on_call_rate" id="on_call_rateDraft"
+                                                        placeholder="Enter a call back hourly rate">
+                                                        <span class="help-block-on_call_rate"></span>
+                                                    </div>
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Holidy date</label>
+                                                        <input type="date" name="holiday" id="holidayDraft"
                                                             placeholder="Enter Holidy hourly rate">
                                                         <span class="help-block-holiday"></span>
                                                     </div>
@@ -1118,7 +1507,249 @@
                                             </div>
                                             {{-- end third slide draft --}}
 
-                                          
+                                            {{-- slide added from sheets --}}
+
+                                    <div class="page">
+                                        <div class="row">
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Professional Licensure</label>
+                                                <select name="job_location" id="job_locationDraft">
+                                                    <option value="">Select a Professional Licensure</option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-job_locationDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Number Of References</label>
+                                                <input type="number" name="number_of_references" id="number_of_referencesDraft"
+                                                    placeholder="Enter number of references">
+                                                <span class="help-block-number_of_referencesDraft"></span>
+                                            </div>
+                                            {{-- <div class="ss-form-group col-md-4">
+                                                <label>Min Title Of Reference</label>
+                                                <input type="text" name="min_title_of_reference" id="min_title_of_referenceDraft"
+                                                    placeholder="Enter min title of reference">
+                                                <span class="help-block-min_title_of_referenceDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Recency Of Reference</label>
+                                                <input type="number" name="recency_of_reference" id="recency_of_referenceDraft"
+                                                    placeholder="Enter # recency of reference">
+                                                <span class="help-block-recency_of_referenceDraft"></span>
+                                            </div> --}}
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Eligible work in us ?</label>
+                                                <select name="eligible_work_in_us" id="eligible_work_in_usDraft">
+                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="1">Yes
+                                                    </option>
+                                                    <option value="0">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-eligible_work_in_usDraft"></span>
+                                            </div>
+                                            
+                                            {{-- <div class="ss-form-group col-md-4">
+                                                <label>Skills checklist</label>
+                                                <select name="skills" id="skillsDraft">
+                                                    <option value="">Select Skills Checklist</option>
+                                                    @foreach ($allKeywords['Skills'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-skillsDraft"></span>
+                                            </div> --}}
+
+
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Urgency</label>
+                                                <select name="urgency" id="urgencyDraft">
+                                                    <option value="">Select Urgency</option>
+                                                    @foreach ($allKeywords['Urgency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-urgencyDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility's Parent System</label>
+                                                <input type="text" name="facilitys_parent_system" id="facilitys_parent_systemDraft"
+                                                    placeholder="Enter facility's parent system">
+                                                <span class="help-block-facilitys_parent_systemDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Name</label>
+                                                <input type="text" name="facility_name" id="facility_nameDraft"
+                                                    placeholder="Enter facility name">
+                                                <span class="help-block-facility_nameDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Location</label>
+                                                <input type="text" name="facility_location" id="facility_locationDraft"
+                                                    placeholder="Enter facility location">
+                                                <span class="help-block-facility_locationDraft"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility State </label>
+                                                <select name="facility_state" id="facility_stateDraft">
+                                                    <option value="">States</option>
+                                                    @foreach ($states as $state)
+                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                            {{ $state->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                             <span class="help-block-facility_stateDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility City </label>
+                                                <select name="facility_city" id="facility_cityDraft">
+                                                    <option value="">Select a state first</option>
+                                                </select>
+                                                <span class="help-block-facility_cityDraft"></span>
+                                            </div>
+
+                                                
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Worker Classification</label>
+                                                <select name="nurse_classification" id="nurse_classificationDraft">
+                                                    <option value="">Select Worker Classification</option>
+                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nurse_classificationDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Pay Frequency</label>
+                                                <select name="pay_frequency" id="pay_frequencyDraft">
+                                                    <option value="">Select pay frequency</option>
+                                                    @foreach ($allKeywords['PayFrequency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-pay_frequencyDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Benefits</label>
+                                                <select name="benefits" id="benefitsDraft">
+                                                    <option value="">Select benefits</option>
+                                                    @foreach ($allKeywords['Benefits'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-benefitsDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Preferred Experience</label>
+                                                <input type="number" name="preferred_experience" id="preferred_experienceDraft"
+                                                    placeholder="Enter Preferred Experience">
+                                                    <span class="help-block-preferred_experienceDraft"></span>
+                                            </div>
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Certifications</label>
+                                                <div class="ss-speilty-exprnc-add-list certificate-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select  class="m-0" id="certificateDraft">
+                                                                <option value="">Select Certification</option>
+                                                                @if(isset($allKeywords['Certification']))
+                                                                @foreach ($allKeywords['Certification'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="certificateAllValuesDraft" name="certificate" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addcertifications('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Vaccinations & Immunizations name</label>
+                                                <div class="ss-speilty-exprnc-add-list vaccinations-content">
+                
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="vaccinationsDraft">
+                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                @if(isset($allKeywords['Vaccinations']))
+                                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="vaccinationsAllValuesDraft" name="vaccinations" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"  onclick="addvacc('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Skills checklist</label>
+                                                <div class="ss-speilty-exprnc-add-list skills-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="skillsDraft">
+                                                                <option value="">Select Skills</option>
+                                                                @if(isset($allKeywords['Speciality']))
+                                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                                <option value="{{$value->title}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="skillsAllValuesDraft" name="skills" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addskills('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                           
+                                            
+
+                                            <div class="field btns col-12 d-flex justify-content-center">
+                                                <button class="saveDrftBtnDraft">Save as draft</button>
+                                                <button class="prev-3Draft prev">Previous</button>
+                                                <button class="next-3Draft next">Next</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    {{-- end slide added from sheets --}}
 
                                             <!-- Forth form slide for adding jobs -->
                                             {{-- edits forth --}}
@@ -1126,15 +1757,26 @@
                                                 <div class="row">
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Contract Termination Policy</label>
-                                                        <input type="text" name="contract_termination_policy"
-                                                            id="contract_termination_policyDraft"
-                                                            placeholder="Enter Contract Termination Policy">
+                                                        <select name="contract_termination_policy" id="contract_termination_policyDraft">
+                                                            <option value="">Select a policy</option>
+                                                            @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
+                                                                <option value="{{ $value->title }}">{{ $value->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                         <span class="help-block-contract_termination_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>EMR</label>
-                                                        <input type="text" name="Emr" id="emrDraft"
-                                                            placeholder="Enter EMR">
+                                                        <select name="Emr"
+                                                    id="emrDraft">
+                                                    <option value="">Select EMR</option>
+                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
                                                         <span class="help-block-emr"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1181,14 +1823,33 @@
                                                         </select>
                                                         <span class="help-block-vision"></span>
                                                     </div>
-                     
+
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Feels Like $/hrs</label>
+                                                        <input type="number" name="feels_like_per_hour" id="feels_like_per_hourDraft"
+                                                            placeholder="Enter Feels Like $/hrs">
+                                                        <span class="help-block-feels_like_per_hourDraft"></span>
+                                                    </div>
+
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>On Call Back</label>
+                                                        <select name="on_call_back" id="on_call_backDraft">
+                                                            <option value="">On call back</option>
+                                                            <option value="Yes">Yes
+                                                            </option>
+                                                            <option value="No">No
+                                                            </option>
+                                                        </select>
+                                                        <span class="help-block-on_call_back"></span>
+                                                    </div>
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
-                                                        <input type="number" name="call_back" id="call_backDraft"
+                                                        <input type="number" name="call_back_rate" id="call_back_rateDraft"
                                                             placeholder="Enter Call Back Hourly rate">
-                                                        <span class="help-block-call_back"></span>
+                                                        <span class="help-block-call_back_rate"></span>
                                                     </div>
-                         
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Est. Weekly non-taxable amount</label>
                                                         <input type="number" name="weekly_non_taxable_amount"
@@ -1198,7 +1859,7 @@
                                                     </div>
 
 
-                                                   
+
                                                     <div class="ss-form-group col-md-12">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -1225,8 +1886,8 @@
                                                         ( The above fields are not required )
                                                     </span>
                                                     <div class="field btns col-12 d-flex justify-content-center">
-                                                        <button class="saveDrftBtn">Save as draft</button>
-                                                        <button class="prev-3Draft prev">Previous</button>
+                                                        <button class="saveDrftBtnDraft">Save as draft</button>
+                                                        <button class="prev-4Draft prev">Previous</button>
                                                         <button class="submitDraft">Submit</button>
                                                     </div>
                                                 </div>
@@ -1241,7 +1902,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END EDiTING FORM -->
+                        <!-- END EDITING Draft FORM -->
 
 
 
@@ -1251,33 +1912,41 @@
                                 <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
                                     <header>Edit your selected job</header>
                                     <div class="row progress-bar-item">
-                                        <div class="col-3 step">
+                                        <div class="col-3 step stepEdit">
                                             <p>Job information</p>
-                                            <div class="bullet">
+                                            <div class="d-none bullet">
                                                 <span>1</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class=" col-3 step">
+                                        <div class=" col-2 step stepEdit">
                                             <p>Preferences and Requirements</p>
-                                            <div class="bullet">
-                                                <span>1</span>
+                                            <div class="d-none bullet">
+                                                <span>2</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
-                                        <div class="col-3 step">
+                                        <div class="col-2 step stepEdit">
                                             <p>Job Details</p>
-                                            <div class="bullet">
-                                                <span>1</span>
+                                            <div class="d-none bullet">
+                                                <span>3</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
 
-                                        <div class="col-3 step">
-                                            <p>Work Schedule & Requirements</p>
-                                            <div class="bullet">
+                                        <div class="col-2 step stepEdit">
+                                            <p>other information</p>
+                                            <div class="d-none bullet">
                                                 <span>4</span>
+                                            </div>
+                                            <div class="check fas fa-check"></div>
+                                        </div>
+
+                                        <div class="col-3 step stepEdit">
+                                            <p>Work Schedule & Requirements</p>
+                                            <div class="d-none bullet">
+                                                <span>5</span>
                                             </div>
                                             <div class="check fas fa-check"></div>
                                         </div>
@@ -1379,7 +2048,7 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Weeks per Assignment</label>
-                                                        <input type="number" name="preferred_assignment_durationEdit"
+                                                        <input type="number" name="preferred_assignment_duration"
                                                             id="preferred_assignment_durationEdit"
                                                             placeholder="Enter Work Duration Per Assignment">
                                                         <span class="help-block-preferred_assignment_duration"></span>
@@ -1402,6 +2071,30 @@
                                                         </span>
                                                     </div>
 
+                                                    <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                        <label>Shift Time of Day</label>
+                                                        <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
+                                                        </div>
+                                                        <ul>
+                                                            <li class="row w-100 p-0 m-0">
+                                                                <div class="ps-0">
+                                                                    <select class="m-0" id="shifttimeofdayEdit">
+                                                                        <option value="">Select Shift Time of Day</option>
+                                                                        @if(isset($allKeywords['PreferredShift']))
+                                                                        @foreach ($allKeywords['PreferredShift'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                        @endforeach
+                                                                        @endif
+                                                                    </select>
+                                                                    <input type="hidden" id="shifttimeofdayAllValuesEdit" name="preferred_shift_duration" >
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addshifttimeofday('from_edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnEdit">Save as draft</button>
                                                         <button class="firstNextEdit next">Next</button>
@@ -1417,7 +2110,7 @@
                                                 <div class="row">
                                                     {{-- edits --}}
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Facility shift</label>
+                                                        <label>Facility Shift Cancellation Policy</label>
                                                         <select name="facility_shift_cancelation_policy"
                                                             id="facility_shift_cancelation_policyEdit">
                                                             <option value="">facility shift</option>
@@ -1429,7 +2122,7 @@
                                                         <span class="help-block-facility_shift_cancelation_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Traveler distance from facility</label>
+                                                        <label>Min distance from facility</label>
                                                         <input type="number" name="traveler_distance_from_facility"
                                                             id="traveler_distance_from_facilityEdit"
                                                             placeholder="Enter travel distance">
@@ -1437,9 +2130,15 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Clinical Setting</label>
-                                                        <input type="text" name="clinical_setting"
-                                                            id="clinical_settingEdit"
-                                                            placeholder="Enter clinical setting">
+                                                        <select name="clinical_setting"
+                                                    id="clinical_settingEdit">
+                                                    <option value="">Select Clinical Setting</option>
+                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
                                                         <span class="help-block-clinical_setting"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1462,9 +2161,14 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Rto</label>
-                                                        <input type="text" name="rto" id="rtoEdit"
-                                                            placeholder="Enter rto">
-                                                        <span class="help-block-rto"></span>
+                                                        <select name="rto" id="rtoEdit">
+                                                            <option value="">Select Rto</option>
+                                                            <option value="allowed">Allowed
+                                                            </option>
+                                                            <option value="not allowed">Not Allowed
+                                                            </option>
+                                                        </select>
+                                                <span class="help-block-rto"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Guaranteed Hours per week</label>
@@ -1473,7 +2177,14 @@
                                                             placeholder="Enter Guaranteed Hours per week">
                                                         <span class="help-block-guaranteed_hours"></span>
                                                     </div>
-                                
+
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Hours Per Week</label>
+                                                        <input type="number" name="hours_per_week" id="hours_per_weekEdit"
+                                                            placeholder="Enter hours per week">
+                                                        <span class="help-block-hours_per_weekEdit"></span>
+                                                    </div>
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>
                                                             Hours Per Shift
@@ -1488,6 +2199,8 @@
                                                             placeholder="Enter Shift Per Weeks">
                                                         <span class="help-block-weeks_shift"></span>
                                                     </div>
+
+                                                    
 
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
@@ -1538,10 +2251,10 @@
                                                         <span class="help-block-other_bonus"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Actual Regular Hourly rate</label>
+                                                        <label>Est. Texable Hourly Rate</label>
                                                         <input type="number" name="actual_hourly_rate"
                                                             id="actual_hourly_rateEdit"
-                                                            placeholder="Enter actual regular hourly rate">
+                                                            placeholder="Enter taxable regular hourly rate">
                                                         <span class="help-block-actual_hourly_rate"></span>
                                                     </div>
 
@@ -1552,7 +2265,7 @@
                                                         <span class="help-block-overtime"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>On Call Hourly rate</label>
+                                                        <label>On Call</label>
                                                         <select name="on_call" id="on_callEdit">
                                                             <option value="">On call</option>
                                                             <option value="Yes">Yes
@@ -1563,8 +2276,14 @@
                                                         <span class="help-block-on_call"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Holidy hourly rate</label>
-                                                        <input type="NUMBER" name="holiday" id="holidayEdit"
+                                                        <label>On Call Rate</label>
+                                                        <input type="number" name="on_call_rate" id="on_call_rateEdit"
+                                                        placeholder="Enter a call back hourly rate">
+                                                        <span class="help-block-on_call_rate"></span>
+                                                    </div>
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Holidy date</label>
+                                                        <input type="date" name="holiday" id="holidayEdit"
                                                             placeholder="Enter Holidy hourly rate">
                                                         <span class="help-block-holiday"></span>
                                                     </div>
@@ -1625,7 +2344,237 @@
                                             </div>
                                             {{-- end third slide draft --}}
 
-                                          
+                                            {{-- slide added from sheets --}}
+
+                                    <div class="page">
+                                        <div class="row">
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Professional Licensure</label>
+                                                <select name="job_location" id="job_locationEdit">
+                                                    <option value="">Select a Professional Licensure</option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-job_locationEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Number Of References</label>
+                                                <input type="number" name="number_of_references" id="number_of_referencesEdit"
+                                                    placeholder="Enter number of references">
+                                                <span class="help-block-number_of_referencesEdit"></span>
+                                            </div>
+                                            {{-- <div class="ss-form-group col-md-4">
+                                                <label>Min Title Of Reference</label>
+                                                <input type="text" name="min_title_of_reference" id="min_title_of_referenceEdit"
+                                                    placeholder="Enter min title of reference">
+                                                <span class="help-block-min_title_of_referenceEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Recency Of Reference</label>
+                                                <input type="number" name="recency_of_reference" id="recency_of_referenceEdit"
+                                                    placeholder="Enter # recency of reference">
+                                                <span class="help-block-recency_of_referenceEdit"></span>
+                                            </div> --}}
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Eligible work in us ?</label>
+                                                <select name="eligible_work_in_us" id="eligible_work_in_usEdit">
+                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="1">Yes
+                                                    </option>
+                                                    <option value="0">No
+                                                    </option>
+                                                </select>
+                                                <span class="help-block-eligible_work_in_usEdit"></span>
+                                            </div>
+                                            
+
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Urgency</label>
+                                                <select name="urgency" id="urgencyEdit">
+                                                    <option value="">Select Urgency</option>
+                                                    @foreach ($allKeywords['Urgency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-urgencyEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility's Parent System</label>
+                                                <input type="text" name="facilitys_parent_system" id="facilitys_parent_systemEdit"
+                                                    placeholder="Enter facility's parent system">
+                                                <span class="help-block-facilitys_parent_systemEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Name</label>
+                                                <input type="text" name="facility_name" id="facility_nameEdit"
+                                                    placeholder="Enter facility name">
+                                                <span class="help-block-facility_nameEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Facility Location</label>
+                                                <input type="text" name="facility_location" id="facility_locationEdit"
+                                                    placeholder="Enter facility location">
+                                                <span class="help-block-facility_locationEdit"></span>
+                                            </div>
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility State </label>
+                                                <select name="facility_state" id="facility_stateEdit">
+                                                    <option value="">States</option>
+                                                    @foreach ($states as $state)
+                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                            {{ $state->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                             <span class="help-block-facility_stateEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label> Facility City </label>
+                                                <select name="facility_city" id="facility_cityEdit">
+                                                    <option value="">Select a state first</option>
+                                                </select>
+                                                <span class="help-block-facility_cityEdit"></span>
+                                            </div>
+
+                                                
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Worker Classification</label>
+                                                <select name="nurse_classification" id="nurse_classificationEdit">
+                                                    <option value="">Select Worker Classification</option>
+                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nurse_classificationEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Pay Frequency</label>
+                                                <select name="pay_frequency" id="pay_frequencyEdit">
+                                                    <option value="">Select pay frequency</option>
+                                                    @foreach ($allKeywords['PayFrequency'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-pay_frequencyEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Benefits</label>
+                                                <select name="benefits" id="benefitsEdit">
+                                                    <option value="">Select benefits</option>
+                                                    @foreach ($allKeywords['Benefits'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-benefitsEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Preferred Experience</label>
+                                                <input type="number" name="preferred_experience" id="preferred_experienceEdit"
+                                                    placeholder="Enter Preferred Experience">
+                                                    <span class="help-block-preferred_experienceEdit"></span>
+                                            </div>
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Certifications</label>
+                                                <div class="ss-speilty-exprnc-add-list certificate-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="certificateEdit">
+                                                                <option value="">Select Certification</option>
+                                                                @if(isset($allKeywords['Certification']))
+                                                                @foreach ($allKeywords['Certification'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="certificateAllValuesEdit" name="certificate" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addcertifications('from_Edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Vaccinations & Immunizations name</label>
+                                                <div class="ss-speilty-exprnc-add-list vaccinations-content">
+                
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select  class="m-0" id="vaccinationsEdit">
+                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                @if(isset($allKeywords['Vaccinations']))
+                                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="vaccinationsAllValuesEdit" name="vaccinations" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"  onclick="addvacc('from_Edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Skills checklist</label>
+                                                <div class="ss-speilty-exprnc-add-list skills-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="skillsEdit">
+                                                                <option value="">Select Skills</option>
+                                                                @if(isset($allKeywords['Speciality']))
+                                                                @foreach ($allKeywords['Speciality'] as $value)
+                                                                <option value="{{$value->title}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="skillsAllValuesEdit" name="skills" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addskills('from_Edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                           
+
+                                            <div class="field btns col-12 d-flex justify-content-center">
+                                                <button class="saveDrftBtnEdit">Save as draft</button>
+                                                <button class="prev-3Edit prev">Previous</button>
+                                                <button class="next-3Edit next">Next</button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    {{-- end slide added from sheets --}}
 
                                             <!-- Forth form slide for adding jobs -->
                                             {{-- edits forth --}}
@@ -1633,15 +2582,26 @@
                                                 <div class="row">
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Contract Termination Policy</label>
-                                                        <input type="text" name="contract_termination_policy"
-                                                            id="contract_termination_policyEdit"
-                                                            placeholder="Enter Contract Termination Policy">
+                                                        <select name="contract_termination_policy" id="contract_termination_policyEdit">
+                                                            <option value="">Select a policy</option>
+                                                            @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
+                                                                <option value="{{ $value->title }}">{{ $value->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                         <span class="help-block-contract_termination_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>EMR</label>
-                                                        <input type="text" name="Emr" id="emrEdit"
-                                                            placeholder="Enter EMR">
+                                                        <select name="Emr"
+                                                    id="emrEdit">
+                                                    <option value="">Select EMR</option>
+                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
                                                         <span class="help-block-emr"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1688,14 +2648,34 @@
                                                         </select>
                                                         <span class="help-block-vision"></span>
                                                     </div>
-                     
+
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Feels Like $/hrs</label>
+                                                        <input type="number" name="feels_like_per_hour" id="feels_like_per_hourEdit"
+                                                            placeholder="Enter Feels Like $/hrs">
+                                                        <span class="help-block-feels_like_per_hourEdit"></span>
+                                                    </div>
+
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>On Call Back</label>
+                                                        <select name="on_call_back" id="on_call_backEdit">
+                                                            <option value="">On call back</option>
+                                                            <option value="Yes">Yes
+                                                            </option>
+                                                            <option value="No">No
+                                                            </option>
+                                                        </select>
+                                                        <span class="help-block-on_call_back"></span>
+                                                    </div>
+
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
-                                                        <input type="number" name="call_back" id="call_backEdit"
+                                                        <input type="number" name="call_back_rate" id="call_back_rateEdit"
                                                             placeholder="Enter Call Back Hourly rate">
-                                                        <span class="help-block-call_back"></span>
+                                                        <span class="help-block-call_back_rate"></span>
                                                     </div>
-                         
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Est. Weekly non-taxable amount</label>
                                                         <input type="number" name="weekly_non_taxable_amount"
@@ -1705,7 +2685,7 @@
                                                     </div>
 
 
-                                                   
+
                                                     <div class="ss-form-group col-md-12">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -1729,7 +2709,7 @@
                                                     </div>
                                                     <span class="help-block-start_date"></span>
 
-                                                    
+
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
                                                         class="form-text">
@@ -1738,8 +2718,8 @@
 
 
                                                     <div class="field btns col-12 d-flex justify-content-center">
-                                                        <button class="saveDrftBtn">Save as draft</button>
-                                                        <button class="prev-3Edit prev">Previous</button>
+                                                        <button class="saveDrftBtnEdit">Save as draft</button>
+                                                        <button class="prev-4Edit prev">Previous</button>
                                                         <button class="submitEdit">Submit</button>
                                                     </div>
                                                 </div>
@@ -1771,59 +2751,29 @@
                         <!-- published details end-->
 
                         <!-- onhold details start-->
-
-                        <div class="col-lg-7 d-none" id="details_onhold">
+                       <div class="col-lg-7 d-none" id="details_onhold">
                             <div class="ss-journy-svd-jbdtl-dv">
                                 <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
-                                    <div class="row" id="application-details-apply">
-                                        <h5 class="job_details_h5">Job Detail</h5>
-                                        <div class="ss-jb-dtl-disc-sec">
-                                            <h6>Description</h6>
-                                            <p id="onholdJobDescription">This position is accountable and responsible for
-                                                nursing care administered
-                                                under the direction of a Registered Nurse (Nurse Manager, Charge Nurse,
-                                                and/or Staff Nurse). Nurse interns must utilize personal protective
-                                                equipment such as gloves, gown, mask.</p>
-                                        </div>
-                                        <div class="ss-jb-dtl-abt-txt">
-                                            <h6> About Nurse:</h6>
-                                            <ul style="gap: 33px;">
-                                                <li>
-                                                    <h5>Preferred shift:</h5>
-                                                    <p id="onholdJobPreferredShift">Associate Degree in Nursing</p>
-                                                </li>
-                                                <li>
-                                                    <h5> Years of Experience: </h5>
-                                                    <p><span id="onholdJobYearsOfExperience">3</span> + Years</p>
-                                                </li>
-                                                <li>
-                                                    <h5>Relevant Certifications:</h5>
-                                                    <p>BLS, CCRN</p>
-                                                </li>
-                                                <li>
-                                                    <h5>Salary Expectation:</h5>
-                                                    <p>$<span id="onholdJobYearsOfExperience">2500</span>/wk</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="ss-jb-dtl-disc-sec">
-                                            <h5>Start Date:</h5>
-                                            <p>28th Feb, 2023</p>
-                                        </div>
-                                        <div class="ss-jb-dtl-disc-sec">
-                                            <div class="row">
-                                                <div class="col-lg-12 ss-jb-dtl-apply-btn d-flex align-items-center justify-content-center"
-                                                    style="padding-right:0px;  margin-top: 10px; margin-bottom: 10px;">
-                                                    <button type="text" onclick="open_modal(this)">submit
-                                                        hidden</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="row" id="application-details-apply-onhold">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- onhold details end-->
+
+                        <!-- draft details start-->
+                       <div class="col-lg-7 d-none" id="details_draft_none">
+                        <div class="ss-journy-svd-jbdtl-dv">
+                            <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
+                                <div class="row" id="application-details-apply-draft">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- draft details end-->
+
+
+
 
                     </div>
                 </div>
@@ -1833,7 +2783,370 @@
 
 
     </main>
+    
     <script>
+        // conditional clinical/non profession
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const jobTypeSelect = document.getElementById('job_type');
+        const professionSelect = document.getElementById('perferred_profession');
+
+        jobTypeSelect.addEventListener('change', function () {
+        const selectedJobType = this.value;
+        let professions = [];
+        if (selectedJobType === 'Clinical') {
+            professions = @json($allKeywords['ClinicalProfession']);
+        } else if (selectedJobType === 'Non-Clinical') {
+            professions = @json($allKeywords['Non-ClinicalProfession']);
+        } else {
+            professions = @json($allKeywords['Profession']);
+        }
+
+        professionSelect.innerHTML = '<option value="">Profession</option>';
+
+        professions.forEach(function (profession) {
+            const option = document.createElement('option');
+            option.value = profession.title;
+            option.textContent = profession.title;
+            professionSelect.appendChild(option);
+                });
+            });
+    });
+
+
+    const myForm = document.getElementById('create_job_form');
+    const draftJobs = @json($draftJobs);
+    const publishedJobs = @json($publishedJobs);
+    const onholdJobs = @json($onholdJobs);
+
+    if (publishedJobs == 0){
+        $("#application-details-apply").html('<div class="text-center"><span>Data Not found</span></div>');
+                                $("#job-list-published").html('<div class="text-center"><span>No Job</span></div>');
+    }
+
+    if (onholdJobs == 0){
+        $("#application-details-apply-onhold").html('<div class="text-center"><span>Data Not found</span></div>');
+        $("#job-list-onhold").html('<div class="text-center"><span>No Job</span></div>');
+    }
+
+
+if (draftJobs.length !== 0) {
+
+    let job_name = draftJobs[0].job_name;
+    let job_type = draftJobs[0].job_type;
+    let preferred_specialty = draftJobs[0].preferred_specialty;
+    let job_state = draftJobs[0].job_state;
+    let job_city = draftJobs[0].job_city;
+    let preferred_work_location = draftJobs[0].preferred_work_location;
+    let preferred_assignment_duration = draftJobs[0].preferred_assignment_duration;
+    let weekly_pay = draftJobs[0].weekly_pay;
+    let description = draftJobs[0].description;
+    let proffesion = draftJobs[0].proffesion;
+    let facility_shift_cancelation_policy = draftJobs[0].facility_shift_cancelation_policy;
+    let traveler_distance_from_facility = draftJobs[0].traveler_distance_from_facility;
+    let clinical_setting = draftJobs[0].clinical_setting;
+    let Patient_ratio = draftJobs[0].Patient_ratio;
+    let Unit = draftJobs[0].Unit;
+    let scrub_color = draftJobs[0].scrub_color;
+    let rto = draftJobs[0].rto;
+    let guaranteed_hours = draftJobs[0].guaranteed_hours;
+    let hours_shift = draftJobs[0].hours_shift;
+    let weeks_shift = draftJobs[0].weeks_shift;
+    let referral_bonus = draftJobs[0].referral_bonus;
+    let sign_on_bonus = draftJobs[0].sign_on_bonus;
+    let completion_bonus = draftJobs[0].completion_bonus;
+    let extension_bonus = draftJobs[0].extension_bonus;
+    let other_bonus = draftJobs[0].other_bonus;
+    let actual_hourly_rate = draftJobs[0].actual_hourly_rate;
+    let overtime = draftJobs[0].overtime;
+    let on_call = draftJobs[0].on_call;
+    let on_call_rate = draftJobs[0].on_call_rate;
+    let holiday = draftJobs[0].holiday;
+    let orientation_rate = draftJobs[0].orientation_rate;
+    let terms = draftJobs[0].terms;
+    let block_scheduling = draftJobs[0].block_scheduling;
+    let float_requirement = draftJobs[0].float_requirement;
+    let contract_termination_policy = draftJobs[0].contract_termination_policy;
+    let Emr = draftJobs[0].Emr;
+    let four_zero_one_k = draftJobs[0].four_zero_one_k;
+    let health_insaurance = draftJobs[0].health_insaurance;
+    let dental = draftJobs[0].dental;
+    let vision = draftJobs[0].vision;
+    let call_back_rate = draftJobs[0].call_back_rate;
+    let on_call_back = draftJobs[0].on_call_back;
+    let feels_like_per_hour = draftJobs[0].feels_like_per_hour;
+    let weekly_non_taxable_amount = draftJobs[0].weekly_non_taxable_amount;
+    let start_date = draftJobs[0].start_date;
+    let as_soon_as = draftJobs[0].as_soon_as;
+
+    if (job_name !== null) {
+        document.getElementById("job_nameDraft").value = job_name;
+    }
+    if (job_type !== null) {
+        var jobtype = job_type;
+                        var select = document.getElementById('job_typeDraft');
+                        var option = document.createElement('option');
+                        option.value = jobtype;
+                        option.text = jobtype;
+
+                        select.add(option);
+                        select.value = jobtype;
+    }
+    if (preferred_specialty !== null) {
+        var preferredSpecialty = preferred_specialty;
+                        var select = document.getElementById('preferred_specialtyDraft');
+                        var option = document.createElement('option');
+                        option.value = preferredSpecialty;
+                        option.text = preferredSpecialty;
+
+                        select.add(option);
+                        select.value = preferredSpecialty;
+    }
+    if (job_state !== null) {
+        document.getElementById("job_stateDraft").value = job_state;
+    }
+    if (job_city !== null) {
+        var city = job_city;
+    var select = document.getElementById('job_cityDraft');
+    var option = document.createElement('option');
+    option.value = city;
+    option.text = city;
+
+    select.add(option);
+    select.value = city;
+
+    }
+    if (preferred_work_location !== null) {
+        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+    }
+    if (preferred_assignment_duration !== null) {
+        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+    }
+    if (weekly_pay !== null) {
+        document.getElementById("weekly_payDraft").value = weekly_pay;
+    }
+    if (description !== null) {
+        document.getElementById("descriptionDraft").value = description;
+    }
+    if (proffesion !== null) {
+        var proffesionValue = proffesion;
+    var select = document.getElementById('perferred_professionDraft');
+    var option = document.createElement('option');
+    option.value = proffesionValue;
+    option.text = proffesionValue;
+
+    select.add(option);
+    select.value = proffesionValue;
+        //document.getElementById("perferred_professionDraft").value = proffesion;
+    }
+    if (facility_shift_cancelation_policy !== null) {
+        var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
+    var select = document.getElementById('facility_shift_cancelation_policyDraft');
+    var option = document.createElement('option');
+    option.value = facilityShiftCancelationPolicy;
+    option.text = facilityShiftCancelationPolicy;
+
+    select.add(option);
+    select.value = facilityShiftCancelationPolicy;
+        //document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+    }
+    if (traveler_distance_from_facility !== null) {
+        document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
+    }
+    if (clinical_setting !== null) {
+        var ClinicalSettingValue = clinical_setting;
+    var select = document.getElementById('clinical_settingDraft');
+    var option = document.createElement('option');
+    option.value = ClinicalSettingValue;
+    option.text = ClinicalSettingValue;
+
+    select.add(option);
+    select.value = ClinicalSettingValue;
+
+       // document.getElementById("clinical_settingDraft").value = clinical_setting;
+    }
+    if (Patient_ratio !== null) {
+        document.getElementById("Patient_ratioDraft").value = Patient_ratio;
+    }
+    if (Unit !== null) {
+        document.getElementById("UnitDraft").value = Unit;
+    }
+    if (scrub_color !== null) {
+        document.getElementById("scrub_colorDraft").value = scrub_color;
+    }
+    if (rto !== null) {
+        document.getElementById("rtoDraft").value = rto;
+    }
+    if (guaranteed_hours !== null) {
+        document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
+    }
+    if (hours_shift !== null) {
+        document.getElementById("hours_shiftDraft").value = hours_shift;
+    }
+    if (weeks_shift !== null) {
+        document.getElementById("weeks_shiftDraft").value = weeks_shift;
+    }
+    if (referral_bonus !== null) {
+        document.getElementById("referral_bonusDraft").value = referral_bonus;
+    }
+    if (sign_on_bonus !== null) {
+        document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
+    }
+    if (completion_bonus !== null) {
+        document.getElementById("completion_bonusDraft").value = completion_bonus;
+    }
+    if (extension_bonus !== null) {
+        document.getElementById("extension_bonusDraft").value = extension_bonus;
+    }
+    if (other_bonus !== null) {
+        document.getElementById("other_bonusDraft").value = other_bonus;
+    }
+    if (actual_hourly_rate !== null) {
+        document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
+    }
+    if (overtime !== null) {
+        document.getElementById("overtimeDraft").value = overtime;
+    }
+    if (on_call !== null) {
+        document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
+
+    }
+    if (on_call_rate !== null) {
+        document.getElementById("on_call_rateDraft").value = on_call_rate;
+    }
+    if (holiday !== null) {
+        document.getElementById("holidayDraft").value = holiday;
+    }
+    if (orientation_rate !== null) {
+        document.getElementById("orientation_rateDraft").value = orientation_rate;
+    }
+    if (terms !== null) {
+        var Terms = terms;
+    var select = document.getElementById('termsDraft');
+    var option = document.createElement('option');
+    option.value = Terms;
+    option.text = Terms;
+
+    select.add(option);
+    select.value = Terms;
+        
+    }
+    if (block_scheduling !== null) {
+        document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
+
+    }
+    if (float_requirement !== null) {
+        document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
+
+    }
+    if (contract_termination_policy !== null) {
+        document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
+    }
+    if (Emr !== null) {
+
+        var EmrValue = Emr;
+    var select = document.getElementById('emrDraft');
+    var option = document.createElement('option');
+    option.value = EmrValue;
+    option.text = EmrValue;
+
+    select.add(option);
+    select.value = EmrValue;
+
+
+    }
+    if (four_zero_one_k !== null) {
+        document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
+
+    }
+    if (health_insaurance !== null) {
+        document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
+
+    }
+    if (dental !== null) {
+        document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
+
+    }
+    if (vision !== null) {
+        document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
+
+    }
+    if(feels_like_per_hour !== null){
+        document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
+    }
+    if (call_back_rate !== null) {
+        document.getElementById("call_back_rateDraft").value = call_back_rate;
+    }
+    if (on_call_back !== null) {
+        document.getElementById("on_call_backDraft").value = (on_call_back == 0) ? 'No' : 'Yes';
+    }
+    if (weekly_non_taxable_amount !== null) {
+        document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
+    }
+    if (start_date !== null) {
+        document.getElementById("start_dateDraft").value = start_date;
+    }
+    if (as_soon_as !== null) {
+        document.getElementById("as_soon_asDraft").checked = as_soon_as;
+    }
+}else{
+    document.getElementById('details_info').innerHTML = '<div class="text-center"><span>Data Not found</span></div>';
+    $("#job-list-draft").html('<div class="text-center"><span>No Job</span></div>');
+    
+}
+
+
+
+
+        var certificateStr = '';
+        var vaccinationStr = '';
+        var skillsStr = '';
+        var shifttimeofdayStr = '';
+        
+         $(document).ready(function() {
+            $('#facility_state').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#facility_city');
+
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="">Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('#facility_stateDraft').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#facility_cityDraft');
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="">Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('#facility_stateEdit').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#facility_cityEdit');
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="">Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                });
+            });
+        });
+
+
         $(document).ready(function() {
             $('#job_state').change(function() {
                 const selectedState = $(this).find(':selected').attr('id');
@@ -1847,8 +3160,6 @@
                     });
                 });
             });
-
-
         });
 
 
@@ -1888,8 +3199,10 @@
         }
 
 
-        
+
         function opportunitiesType(type, id = "", formtype) {
+
+            console.log(type);
 
             var draftsElement = document.getElementById('drafts');
             var publishedElement = document.getElementById('published');
@@ -1908,6 +3221,9 @@
                 document.getElementById("details_onhold").classList.add("d-none");
                 document.getElementById('published-job-details').classList.remove('d-none');
                 document.getElementById("create_job_request_form").classList.add("d-none");
+
+                
+
             } else if (type == "published") {
                 document.getElementById("onholdCards").classList.add('d-none');
                 document.getElementById("draftCards").classList.add('d-none');
@@ -1969,8 +3285,11 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     url: "{{ url('recruiter/get-job-listing') }}",
+                    beforeSend:function(xhr){
+                        xhr.withCredentials = true;
+                    },
                     data: {
-                        'token': csrfToken,
+                        "_token": "{{ csrf_token() }}",
                         'type': type,
                         'id': id,
                         'formtype': formtype,
@@ -1978,6 +3297,8 @@
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
+                       console.log(result);
+
                         // $("#job-list").html(result.joblisting);
                         // $("#job-details").html(result.jobdetails);
 
@@ -1987,13 +3308,20 @@
                         list_specialities();
                         list_vaccinations();
                         list_certifications();
-                        console.log(result.joblisting);
+
                         if (result.joblisting != "") {
-                            document.getElementById("published-job-details").classList.remove("d-none");
-                            document.getElementById("no-job-posted").classList.add("d-none");
-                            $("#application-details-apply").html(result.jobdetails);
-                             $("#job-list-published").html(result.joblisting);
-                             
+                            if(type == "published"){
+                                document.getElementById("published-job-details").classList.remove("d-none");
+                                document.getElementById("no-job-posted").classList.add("d-none");
+                                $("#application-details-apply").html(result.jobdetails);
+                                $("#job-list-published").html(result.joblisting);
+                            } else if(type == "onhold"){
+                                document.getElementById("published-job-details").classList.remove("d-none");
+                                document.getElementById("no-job-posted").classList.add("d-none");
+                                $("#application-details-apply-onhold").html(result.jobdetails);
+                                $("#job-list-onhold").html(result.joblisting);
+                            }
+                           
                         }
                     },
                     error: function(error) {
@@ -2019,7 +3347,11 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     url: "{{ url('recruiter/get-job-listing') }}",
+                    beforeSend:function(xhr){
+                        xhr.withCredentials = true;
+                    },
                     data: {
+                        "_token": "{{ csrf_token() }}",
                         'id': id,
                         'formtype': formtype
                     },
@@ -2108,7 +3440,7 @@
                 if (csrfToken) {
                     event.preventDefault();
                     let check_type = type;
-                    console.log(document.getElementById('job_id'));
+
                     // if (document.getElementById('job_id').value) {
                     if (id == '0') {
                         id = document.getElementById('job_id').value;
@@ -2130,14 +3462,18 @@
                             notie.alert({
                                 type: 'success',
                                 text: '<i class="fa fa-check"></i> ' + data.message,
-                                time: 5
+                                time: 3
                             });
 
-                            if (type == "hidejob") {
-                                opportunitiesType('onhold')
-                            } else {
-                                opportunitiesType('published')
-                            }
+                            window.location.reload();
+
+                            // if (type == "hidejob") {
+                            //     console.log("this is data");
+                            //     //console.log(data.message);
+                            //     opportunitiesType('onhold',data.job_id)
+                            // } else {
+                            //     opportunitiesType('published',data.job_id)
+                            // }
                         },
                         error: function(error) {
                             console.log(error);
@@ -2361,7 +3697,6 @@
                 });
             } else {
                 if (!vaccinations.hasOwnProperty($('#vaccinations').val())) {
-                    console.log($('#vaccinations').val());
 
                     var select = document.getElementById("vaccinations");
                     var selectedOption = select.options[select.selectedIndex];
@@ -2382,7 +3717,7 @@
             for (const key in vaccinations) {
                 let vaccinationsname = "";
                 var select = document.getElementById("vaccinations");
-                console.log(select);
+
                 var allspcldata = [];
                 for (var i = 0; i < select.options.length; i++) {
                     var obj = {
@@ -2453,98 +3788,11 @@
             }
         }
     </script>
-    <script>
-        var certificate = {};
-
-        function addcertifications() {
-            if (!$('#certificate').val()) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Select the certificate please.',
-                    time: 3
-                });
-            } else {
-                if (!certificate.hasOwnProperty($('#certificate').val())) {
-                    console.log($('#certificate').val());
-
-                    var select = document.getElementById("certificate");
-                    var selectedOption = select.options[select.selectedIndex];
-                    var optionText = selectedOption.textContent;
-
-                    certificate[$('#certificate').val()] = optionText;
-                    $('#certificate').val('');
-                    list_certifications();
-                }
-            }
-        }
-
-        function list_certifications() {
-            var str = '';
-            if (window.allcertificate) {
-                certificate = Object.assign({}, certificate, window.allcertificate);
-            }
-            for (const key in certificate) {
-                let certificatename = "";
-                var select = document.getElementById("certificate");
-                console.log(select);
-                var allspcldata = [];
-                for (var i = 0; i < select.options.length; i++) {
-                    var obj = {
-                        'id': select.options[i].value,
-                        'title': select.options[i].textContent,
-                    };
-                    allspcldata.push(obj);
-                }
-
-                if (certificate.hasOwnProperty(key)) {
-                    allspcldata.forEach(function(item) {
-                        if (key == item.id) {
-                            certificatename = item.title;
-                        }
-                    });
-                    const value = certificate[key];
-                    str += '<ul>';
-                    str += '<li class="w-50">' + certificatename + '</li>';
-                    str += '<li class="w-50 text-end"><button type="button"  id="remove-certificate" data-key="' + key +
-                        '" onclick="remove_certificate(this, ' + key +
-                        ')"><img src="{{ URL::asset('frontend/img/delete-img.png') }}" /></button></li>';
-                    str += '</ul>';
-                }
-            }
-            $('.certificate-content').html(str);
-        }
-    </script>
+    
     <script>
         function askWorker(e, type, workerid, jobid) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('employer/ask-employer-notification') }}",
-                    data: {
-                        'token': csrfToken,
-                        'worker_id': workerid,
-                        'update_key': type,
-                        'job_id': jobid,
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> ' + result.message,
-                            time: 5
-                        });
-                    },
-                    error: function(error) {
-                        // Handle errors
-                    }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
+            let url = "{{ url('recruiter/recruiter-messages') }}";
+             window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
         }
         // const numberOfReferencesField = document.getElementById('number_of_references');
         // numberOfReferencesField.addEventListener('input', function () {
@@ -2689,210 +3937,23 @@
     </script>
 @stop
 <script type="text/javascript">
-    const myForm = document.getElementById('create_job_form');
-    const draftJobs = @json($draftJobs);
-    const publishedJobs = @json($publishedJobs);
-    const onholdJobs = @json($onholdJobs);
-
-
-
-    if (draftJobs.length !== 0) {
-        console.log(draftJobs[0])
-    let job_name = draftJobs[0].job_name;
-    let job_type = draftJobs[0].job_type;
-    let preferred_specialty = draftJobs[0].preferred_specialty;
-    let job_state = draftJobs[0].job_state;
-    let job_city = draftJobs[0].job_city;
-    let preferred_work_location = draftJobs[0].preferred_work_location;
-    let preferred_assignment_duration = draftJobs[0].preferred_assignment_duration;
-    let weekly_pay = draftJobs[0].weekly_pay;
-    let description = draftJobs[0].description;
-    let proffesion = draftJobs[0].proffesion;
-    let facility_shift_cancelation_policy = draftJobs[0].facility_shift_cancelation_policy;
-    let traveler_distance_from_facility = draftJobs[0].traveler_distance_from_facility;
-    let clinical_setting = draftJobs[0].clinical_setting;
-    let Patient_ratio = draftJobs[0].Patient_ratio;
-    let Unit = draftJobs[0].Unit;
-    let scrub_color = draftJobs[0].scrub_color;
-    let rto = draftJobs[0].rto;
-    let guaranteed_hours = draftJobs[0].guaranteed_hours;
-    let hours_shift = draftJobs[0].hours_shift;
-    let weeks_shift = draftJobs[0].weeks_shift;
-    let referral_bonus = draftJobs[0].referral_bonus;
-    let sign_on_bonus = draftJobs[0].sign_on_bonus;
-    let completion_bonus = draftJobs[0].completion_bonus;
-    let extension_bonus = draftJobs[0].extension_bonus;
-    let other_bonus = draftJobs[0].other_bonus;
-    let actual_hourly_rate = draftJobs[0].actual_hourly_rate;
-    let overtime = draftJobs[0].overtime;
-    let on_call = draftJobs[0].on_call;
-    let holiday = draftJobs[0].holiday;
-    let orientation_rate = draftJobs[0].orientation_rate;
-    let terms = draftJobs[0].terms;
-    let block_scheduling = draftJobs[0].block_scheduling;
-    let float_requirement = draftJobs[0].float_requirement;
-    let contract_termination_policy = draftJobs[0].contract_termination_policy;
-    let Emr = draftJobs[0].Emr;
-    let four_zero_one_k = draftJobs[0].four_zero_one_k;
-    let health_insaurance = draftJobs[0].health_insaurance;
-    let dental = draftJobs[0].dental;
-    let vision = draftJobs[0].vision;
-    let call_back = draftJobs[0].call_back;
-    let weekly_non_taxable_amount = draftJobs[0].weekly_non_taxable_amount;
-    let start_date = draftJobs[0].start_date;
-    let as_soon_as = draftJobs[0].as_soon_as;
-
-    if (job_name !== null) {
-        document.getElementById("job_nameDraft").value = job_name;
-    }
-    if (job_type !== null) {
-        document.getElementById("job_typeDraft").value = job_type;
-    }
-    if (preferred_specialty !== null) {
-        document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
-    }
-    if (job_state !== null) {
-        document.getElementById("job_stateDraft").value = job_state;
-    }
-    if (job_city !== null) {
-        var city = job_city;
-    var select = document.getElementById('job_cityDraft');
-    var option = document.createElement('option');
-    option.value = city;
-    option.text = city;
-                        
-    select.add(option);
-    select.value = city;
-       
-    }
-    if (preferred_work_location !== null) {
-        document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
-    }
-    if (preferred_assignment_duration !== null) {
-        document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
-    }
-    if (weekly_pay !== null) {
-        document.getElementById("weekly_payDraft").value = weekly_pay;
-    }
-    if (description !== null) {
-        document.getElementById("descriptionDraft").value = description;
-    }
-    if (proffesion !== null) {
-        document.getElementById("perferred_professionDraft").value = proffesion;
-    }
-    if (facility_shift_cancelation_policy !== null) {
-        document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
-    }
-    if (traveler_distance_from_facility !== null) {
-        document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
-    }
-    if (clinical_setting !== null) {
-        document.getElementById("clinical_settingDraft").value = clinical_setting;
-    }
-    if (Patient_ratio !== null) {
-        document.getElementById("Patient_ratioDraft").value = Patient_ratio;
-    }
-    if (Unit !== null) {
-        document.getElementById("UnitDraft").value = Unit;
-    }
-    if (scrub_color !== null) {
-        document.getElementById("scrub_colorDraft").value = scrub_color;
-    }
-    if (rto !== null) {
-        document.getElementById("rtoDraft").value = rto;
-    }
-    if (guaranteed_hours !== null) {
-        document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
-    }
-    if (hours_shift !== null) {
-        document.getElementById("hours_shiftDraft").value = hours_shift;
-    }
-    if (weeks_shift !== null) {
-        document.getElementById("weeks_shiftDraft").value = weeks_shift;
-    }
-    if (referral_bonus !== null) {
-        document.getElementById("referral_bonusDraft").value = referral_bonus;
-    }
-    if (sign_on_bonus !== null) {
-        document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
-    }
-    if (completion_bonus !== null) {
-        document.getElementById("completion_bonusDraft").value = completion_bonus;
-    }
-    if (extension_bonus !== null) {
-        document.getElementById("extension_bonusDraft").value = extension_bonus;
-    }
-    if (other_bonus !== null) {
-        document.getElementById("other_bonusDraft").value = other_bonus;
-    }
-    if (actual_hourly_rate !== null) {
-        document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
-    }
-    if (overtime !== null) {
-        document.getElementById("overtimeDraft").value = overtime;
-    }
-    if (on_call !== null) {
-        document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
-        
-    }
-    if (holiday !== null) {
-        document.getElementById("holidayDraft").value = holiday;
-    }
-    if (orientation_rate !== null) {
-        document.getElementById("orientation_rateDraft").value = orientation_rate;
-    }
-    if (terms !== null) {
-        document.getElementById("termsDraft").value = terms;
-    }
-    if (block_scheduling !== null) {
-        document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
-        
-    }
-    if (float_requirement !== null) {
-        document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
-        
-    }
-    if (contract_termination_policy !== null) {
-        document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
-    }
-    if (Emr !== null) {
-        document.getElementById("emrDraft").value = Emr;
-    }
-    if (four_zero_one_k !== null) {
-        document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
-        
-    }
-    if (health_insaurance !== null) {
-        document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
-
-    }
-    if (dental !== null) {
-        document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
-        
-    }
-    if (vision !== null) {
-        document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
-        
-    }
-    if (call_back !== null) {
-        document.getElementById("call_backDraft").value = call_back;
-    }
-    if (weekly_non_taxable_amount !== null) {
-        document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
-    }
-    if (start_date !== null) {
-        document.getElementById("start_dateDraft").value = start_date;
-    }
-    if (as_soon_as !== null) {
-        document.getElementById("as_soon_asDraft").checked = as_soon_as;
-    }
-}
-
+    
 
 
 
     function editDataJob(element) {
+        console.log(element.id)
+
+        var activeDocs = document.getElementsByClassName('col-12 ss-job-prfle-sec active')
+        if(activeDocs.length > 0){
+            for(i of activeDocs){
+                i.classList.remove("active");
+            }
+        }
+
         const jobId = element.id;
+        console.log(draftJobs[jobId].job_name)
+        element.classList.add("active");
 
         let job_name = draftJobs[jobId].job_name;
         let job_type = draftJobs[jobId].job_type;
@@ -2901,113 +3962,346 @@
         let job_city = draftJobs[jobId].job_city;
         let preferred_work_location = draftJobs[jobId].preferred_work_location;
         let preferred_assignment_duration = draftJobs[jobId].preferred_assignment_duration;
-        let preferred_days_of_the_week = draftJobs[jobId].preferred_days_of_the_week;
-        let preferred_hourly_pay_rate = draftJobs[jobId].preferred_hourly_pay_rate;
-        let preferred_shift = draftJobs[jobId].preferred_shift;
-        let job_function = draftJobs[jobId].job_function;
-        let job_cerner_exp = draftJobs[jobId].job_cerner_exp;
-        let job_meditech_exp = draftJobs[jobId].job_meditech_exp;
-        let seniority_level = draftJobs[jobId].seniority_level;
-        let job_epic_exp = draftJobs[jobId].job_epic_exp;
-        let job_other_exp = draftJobs[jobId].job_other_exp;
-        let start_date = draftJobs[jobId].start_date;
-        let end_date = draftJobs[jobId].end_date;
-        let hours_shift = draftJobs[jobId].hours_shift;
-        // let hours_per_week = draftJobs[jobId].hours_per_week;
-        let responsibilities = draftJobs[jobId].responsibilities;
-        let qualifications = draftJobs[jobId].qualifications;
+        let weekly_pay = draftJobs[jobId].weekly_pay;
         let description = draftJobs[jobId].description;
         let proffesion = draftJobs[jobId].proffesion;
-        let weekly_pay = draftJobs[jobId].weekly_pay;
-        let preferred_work_area = draftJobs[jobId].preferred_work_area;
-        let preferred_experience = draftJobs[jobId].preferred_experience;
-        let preferred_shift_duration = draftJobs[jobId].preferred_shift_duration;
+        let facility_shift_cancelation_policy = draftJobs[jobId].facility_shift_cancelation_policy;
+        let traveler_distance_from_facility = draftJobs[jobId].traveler_distance_from_facility;
+        let clinical_setting = draftJobs[jobId].clinical_setting;
+        let Patient_ratio = draftJobs[jobId].Patient_ratio;
+        let Unit = draftJobs[jobId].Unit;
+        let scrub_color = draftJobs[jobId].scrub_color;
+        let rto = draftJobs[jobId].rto;
+        let guaranteed_hours = draftJobs[jobId].guaranteed_hours;
+        let hours_shift = draftJobs[jobId].hours_shift;
+        let weeks_shift = draftJobs[jobId].weeks_shift;
+        let referral_bonus = draftJobs[jobId].referral_bonus;
+        let sign_on_bonus = draftJobs[jobId].sign_on_bonus;
+        let completion_bonus = draftJobs[jobId].completion_bonus;
+        let extension_bonus = draftJobs[jobId].extension_bonus;
+        let other_bonus = draftJobs[jobId].other_bonus;
+        let actual_hourly_rate = draftJobs[jobId].actual_hourly_rate;
+        let overtime = draftJobs[jobId].overtime;
+        let on_call = draftJobs[jobId].on_call;
+        let on_call_rate = draftJobs[jobId].on_call_rate;
+        let holiday = draftJobs[jobId].holiday;
+        let orientation_rate = draftJobs[jobId].orientation_rate;
+        let terms = draftJobs[jobId].terms;
+        let block_scheduling = draftJobs[jobId].block_scheduling;
+        let float_requirement = draftJobs[jobId].float_requirement;
+        let contract_termination_policy = draftJobs[jobId].contract_termination_policy;
+        let Emr = draftJobs[jobId].Emr;
+        let four_zero_one_k = draftJobs[jobId].four_zero_one_k;
+        let health_insaurance = draftJobs[jobId].health_insaurance;
+        let dental = draftJobs[jobId].dental;
+        let vision = draftJobs[jobId].vision;
+        let feels_like_per_hour = draftJobs[jobId].feels_like_per_hour;
+        let call_back_rate = draftJobs[jobId].call_back_rate;
+        let on_call_back = draftJobs[jobId].on_call_back;
+        let weekly_non_taxable_amount = draftJobs[jobId].weekly_non_taxable_amount;
+        let start_date = draftJobs[jobId].start_date;
+        let as_soon_as = draftJobs[jobId].as_soon_as;
 
-        if (job_name) {
+        if (job_name !== null) {
             document.getElementById("job_nameDraft").value = job_name;
+        }else{
+            document.getElementById("job_nameDraft").value = '';
         }
-        if (job_type) {
-            document.getElementById("job_typeDraft").value = job_type;
+        if (job_type !== null) {
+        var jobtype = job_type;
+                        var select = document.getElementById('job_typeDraft');
+                        var option = document.createElement('option');
+                        option.value = jobtype;
+                        option.text = jobtype;
+
+                        select.add(option);
+                        select.value = jobtype;
+        }else{
+            document.getElementById("job_typeDraft").value = '';
         }
-        if (preferred_specialty) {
-            document.getElementById("preferred_specialtyDraft").value = preferred_specialty;
-        }
-        if (job_state) {
-            document.getElementById("job_stateDraft").value = job_state;
-        }
-        if (preferred_work_location) {
-            document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
-        }
-        if (preferred_assignment_duration) {
-            document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
-        }
-        if (preferred_days_of_the_week) {
-            document.getElementById("preferred_days_of_the_weekDraft").value = preferred_days_of_the_week;
-        }
-        if (preferred_hourly_pay_rate) {
-            document.getElementById("preferred_hourly_pay_rateDraft").value = preferred_hourly_pay_rate;
-        }
-        if (preferred_shift) {
-            document.getElementById("preferred_shiftDraft").value = preferred_shift;
-        }
-        if (job_function) {
-            document.getElementById("job_functionDraft").value = job_function;
-        }
-        if (job_cerner_exp) {
-            document.getElementById("job_cerner_expDraft").value = job_cerner_exp;
-        }
-        if (job_meditech_exp) {
-            document.getElementById("job_meditech_expDraft").value = job_meditech_exp;
-        }
-        if (seniority_level) {
-            document.getElementById("seniority_levelDraft").value = seniority_level;
-        }
-        if (job_epic_exp) {
-            document.getElementById("job_epic_expDraft").value = job_epic_exp;
-        }
-        if (job_other_exp) {
-            document.getElementById("job_other_expDraft").value = job_other_exp;
-        }
-        if (start_date) {
-            document.getElementById("start_dateDraft").value = start_date;
-        }
-        if (end_date) {
-            document.getElementById("end_dateDraft").value = end_date;
-        }
-        if (hours_shift) {
-            document.getElementById("hours_shiftDraft").value = hours_shift;
-        }
-        // if (hours_per_week) {
-        //     document.getElementById("hours_per_weekDraft").value = hours_per_week;
-        // }
-        if (responsibilities) {
-            document.getElementById("responsibilitiesDraft").value = responsibilities;
-        }
-        if (qualifications) {
-            document.getElementById("qualificationsDraft").value = qualifications;
-        }
-        if (proffesion) {
-            document.getElementById("perferred_professionDraft").value = proffesion;
-        }
-        if (description) {
-            document.getElementById("descriptionDraft").value = description;
-        }
-        if (job_city) {
-            document.getElementById("job_cityDraft").value = job_city;
-        }
-        if (weekly_pay) {
-            document.getElementById("weekly_payDraft").value = weekly_pay;
-        }
-        if (preferred_work_area) {
-            document.getElementById("preferred_work_areaDraft").value = preferred_work_area;
-        }
-        if (preferred_experience) {
-            document.getElementById("preferred_experienceDraft").value = preferred_experience;
-        }
-        if (preferred_shift_duration) {
-            document.getElementById("preferred_shift_durationDraft").value = preferred_shift_duration;
-        }
+        if (preferred_specialty !== null) {
+        var preferredSpecialty = preferred_specialty;
+                        var select = document.getElementById('preferred_specialtyDraft');
+                        var option = document.createElement('option');
+                        option.value = preferredSpecialty;
+                        option.text = preferredSpecialty;
+
+                        select.add(option);
+                        select.value = preferredSpecialty;
+            }else{
+                document.getElementById("preferred_specialtyDraft").value = '';
+            }
+            if (job_state !== null) {
+                document.getElementById("job_stateDraft").value = job_state;
+            }else{
+                document.getElementById("job_stateDraft").value = '';
+            }
+            if (job_city !== null) {
+                var city = job_city;
+            var select = document.getElementById('job_cityDraft');
+            var option = document.createElement('option');
+            option.value = city;
+            option.text = city;
+
+            select.add(option);
+            select.value = city;
+
+            }else{
+                document.getElementById("job_cityDraft").value = '';
+            }
+            if (preferred_work_location !== null) {
+                document.getElementById("preferred_work_locationDraft").value = preferred_work_location;
+            }else{
+                document.getElementById("preferred_work_locationDraft").value = '';
+            }
+            if (preferred_assignment_duration !== null) {
+                document.getElementById("preferred_assignment_durationDraft").value = preferred_assignment_duration;
+            }else   {
+                document.getElementById("preferred_assignment_durationDraft").value = '';
+            }
+            if (weekly_pay !== null) {
+                document.getElementById("weekly_payDraft").value = weekly_pay;
+            }else{
+                document.getElementById("weekly_payDraft").value = '';
+            }
+            if (description !== null) {
+                document.getElementById("descriptionDraft").value = description;
+            }else{
+                document.getElementById("descriptionDraft").value = '';
+            }
+            if (proffesion !== null) {
+                var proffesionValue = proffesion;
+            var select = document.getElementById('perferred_professionDraft');
+            var option = document.createElement('option');
+            option.value = proffesionValue;
+            option.text = proffesionValue;
+            
+            select.add(option);
+            select.value = proffesionValue;
+                //document.getElementById("perferred_professionDraft").value = proffesion;
+            }else{
+                document.getElementById("perferred_professionDraft").value = '';
+            }
+            if (facility_shift_cancelation_policy !== null) {
+                var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
+            var select = document.getElementById('facility_shift_cancelation_policyDraft');
+            var option = document.createElement('option');
+            option.value = facilityShiftCancelationPolicy;
+            option.text = facilityShiftCancelationPolicy;
+            select.add(option);
+            select.value = facilityShiftCancelationPolicy;
+            
+            //    document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+            }else{
+                document.getElementById("facility_shift_cancelation_policyDraft").value = '';
+            }
+            if (traveler_distance_from_facility !== null) {
+                document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
+            }else{
+                document.getElementById("traveler_distance_from_facilityDraft").value = '';
+            }
+            if (clinical_setting !== null) {
+                var ClinicalSettingValue = clinical_setting;
+            var select = document.getElementById('clinical_settingDraft');
+            var option = document.createElement('option');
+            option.value = ClinicalSettingValue;
+            option.text = ClinicalSettingValue;
+            
+            select.add(option);
+            select.value = ClinicalSettingValue;
+               // document.getElementById("clinical_settingDraft").value = clinical_setting;
+            }else{
+                document.getElementById("clinical_settingDraft").value = '';
+            }
+            if (Patient_ratio !== null) {
+                document.getElementById("Patient_ratioDraft").value = Patient_ratio;
+            }else{
+                document.getElementById("Patient_ratioDraft").value = '';
+            }
+            if (Unit !== null) {
+                document.getElementById("UnitDraft").value = Unit;
+            }else{
+                document.getElementById("UnitDraft").value = '';
+            }
+            if (scrub_color !== null) {
+                document.getElementById("scrub_colorDraft").value = scrub_color;
+            }else{
+                document.getElementById("scrub_colorDraft").value = '';
+            }
+            if (rto !== null) {
+                document.getElementById("rtoDraft").value = rto;
+            }else{
+                document.getElementById("rtoDraft").value = '';
+            }
+            if (guaranteed_hours !== null) {
+                document.getElementById("guaranteed_hoursDraft").value = guaranteed_hours;
+            }else{
+                document.getElementById("guaranteed_hoursDraft").value = '';
+            }
+            if (hours_shift !== null) {
+                document.getElementById("hours_shiftDraft").value = hours_shift;
+            }else{
+                document.getElementById("hours_shiftDraft").value = '';
+            }
+            if (weeks_shift !== null) {
+                document.getElementById("weeks_shiftDraft").value = weeks_shift;
+            }else{
+                document.getElementById("weeks_shiftDraft").value = '';
+            }
+            if (referral_bonus !== null) {
+                document.getElementById("referral_bonusDraft").value = referral_bonus;
+            }else{
+                document.getElementById("referral_bonusDraft").value = '';
+            }
+            if (sign_on_bonus !== null) {
+                document.getElementById("sign_on_bonusDraft").value = sign_on_bonus;
+            }else{
+                document.getElementById("sign_on_bonusDraft").value = '';
+            }
+            if (completion_bonus !== null) {
+                document.getElementById("completion_bonusDraft").value = completion_bonus;
+            }else{
+                document.getElementById("completion_bonusDraft").value = '';
+            }
+            if (extension_bonus !== null) {
+                document.getElementById("extension_bonusDraft").value = extension_bonus;
+            }else{
+                document.getElementById("extension_bonusDraft").value = '';
+            }
+            if (other_bonus !== null) {
+                document.getElementById("other_bonusDraft").value = other_bonus;
+            }else  {
+                document.getElementById("other_bonusDraft").value = '';
+            }
+            if (actual_hourly_rate !== null) {
+                document.getElementById("actual_hourly_rateDraft").value = actual_hourly_rate;
+            }else {
+                document.getElementById("actual_hourly_rateDraft").value = '';
+            }
+            if (overtime !== null) {
+                document.getElementById("overtimeDraft").value = overtime;
+            } else {
+                document.getElementById("overtimeDraft").value = '';
+            }
+            if (on_call !== null) {
+                document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("on_callDraft").value = '';
+            }
+            if (holiday !== null) {
+                document.getElementById("holidayDraft").value = holiday;
+            }else {
+                document.getElementById("holidayDraft").value = '';
+            }
+            if (orientation_rate !== null) {
+                document.getElementById("orientation_rateDraft").value = orientation_rate;
+            }else {
+                document.getElementById("orientation_rateDraft").value = '';
+            }
+            if (terms !== null) {
+                var Terms = terms;
+            var select = document.getElementById('termsDraft');
+            var option = document.createElement('option');
+            option.value = Terms;
+            option.text = Terms;
+            
+            select.add(option);
+            select.value = Terms;
+               // document.getElementById("termsDraft").value = terms;
+            }else {
+                document.getElementById("termsDraft").value = '';
+            }
+            if (block_scheduling !== null) {
+                document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("block_schedulingDraft").value = '';
+            }
+            if (float_requirement !== null) {
+                document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("float_requirementDraft").value = '';
+            }
+            if (contract_termination_policy !== null) {
+                document.getElementById("contract_termination_policyDraft").value = contract_termination_policy;
+            }else {
+                document.getElementById("contract_termination_policyDraft").value = '';
+            }
+            if (Emr !== null) {
+            
+            
+                var EmrValue = Emr;
+            var select = document.getElementById('emrDraft');
+            var option = document.createElement('option');
+            option.value = EmrValue;
+            option.text = EmrValue;
+            
+            select.add(option);
+            select.value = EmrValue;
+            
+            
+            
+            }else {
+                document.getElementById("emrDraft").value = '';
+            }
+            if (four_zero_one_k !== null) {
+                document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("four_zero_one_kDraft").value = '';
+            }
+            if (health_insaurance !== null) {
+        document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
+
+            }else {
+                document.getElementById("health_insauranceDraft").value = '';
+            }
+            if (dental !== null) {
+                document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("dentalDraft").value = '';
+            }
+            if (vision !== null) {
+                document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
+            
+            }else {
+                document.getElementById("visionDraft").value = '';
+            }
+            if(feels_like_per_hour !== null){
+                document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
+            }else {
+                document.getElementById("feels_like_per_hourDraft").value = '';
+            }
+            if (call_back_rate !== null) {
+                document.getElementById("call_back_rateDraft").value = call_back_rate;
+            }else {
+                document.getElementById("call_back_rateDraft").value = '';
+            }
+            if (on_call_back !== null) {
+                document.getElementById("on_call_backDraft").value = (on_call_back == 0) ? 'No' : 'Yes';
+            }else {
+                document.getElementById("on_call_backDraft").value = '';
+            }
+            if (weekly_non_taxable_amount !== null) {
+                document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
+            }else {
+                document.getElementById("weekly_non_taxable_amountDraft").value = '';
+            }
+            if (start_date !== null) {
+                document.getElementById("start_dateDraft").value = start_date;
+            }else {
+                document.getElementById("start_dateDraft").value = '';
+            }
+            if (as_soon_as !== null) {
+                document.getElementById("as_soon_asDraft").checked = as_soon_as;
+            }else {
+                document.getElementById("as_soon_asDraft").checked = '';
+            }
     }
+        
 
 
     const slidePage = document.querySelector(".slide-page");
@@ -3016,11 +4310,12 @@
     const nextBtnSec = document.querySelector(".next-1");
     const prevBtnThird = document.querySelector(".prev-2");
     const nextBtnThird = document.querySelector(".next-2");
+    const nextBtnForth = document.querySelector(".next-3");
     const prevBtnFourth = document.querySelector(".prev-3");
+    const prevBtnFifth = document.querySelector(".prev-4");
     const submitBtn = document.querySelector(".submit");
     const saveDrftBtn = document.querySelectorAll(".saveDrftBtn");
-    console.log('savedaft buttons :');
-    console.log(saveDrftBtn);
+
     const progressText = document.querySelectorAll(".step p");
     const progressCheck = document.querySelectorAll(".step .check");
     const bullet = document.querySelectorAll(".step .bullet");
@@ -3132,7 +4427,7 @@
         var guaranteed_hours = document.getElementById("guaranteed_hours").value;
         var hours_shift = document.getElementById("hours_shift").value;
         var weeks_shift = document.getElementById("weeks_shift").value;
-        
+
 
         if (facility_shift_cancelation_policy.trim() === '') {
             $('.help-block-facility_shift_cancelation_policy').text(
@@ -3145,7 +4440,7 @@
         }
 
         if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the traveler distance from facility');
+            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
             $('.help-block-traveler_distance_from_facility').addClass('text-danger');
             access = false;
         } else {
@@ -3220,7 +4515,7 @@
             $('.help-block-weeks_shift').text('');
         }
 
-        
+
 
         if (access) {
             return true;
@@ -3241,6 +4536,7 @@
         var holiday = document.getElementById("holiday").value;
         var orientation_rate = document.getElementById("orientation_rate").value;
         var on_call = document.getElementById("on_call").value;
+        var on_call_rate = document.getElementById("on_call_rate").value;
         var block_scheduling = document.getElementById("block_scheduling").value;
         var terms = document.getElementById("terms").value;
         var float_requirement = document.getElementById("float_requirement").value;
@@ -3325,6 +4621,16 @@
             $('.help-block-on_call').text('');
         }
 
+        if (on_call_rate.trim() === '') {
+            $('.help-block-on_call_rate').text('Please enter the on call rate');
+            $('.help-block-on_call_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_rate').text('');
+        }
+
+
+
         if (block_scheduling.trim() === '') {
             $('.help-block-block_scheduling').text('Please enter the block scheduling');
             $('.help-block-block_scheduling').addClass('text-danger');
@@ -3367,8 +4673,9 @@
         var health_insaurance = document.getElementById("health_insaurance").value;
         var dental = document.getElementById("dental").value;
         var vision = document.getElementById("vision").value;
-        //var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
-        var call_back = document.getElementById("call_back").value;
+        var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
+        var call_back_rate = document.getElementById("call_back_rate").value;
+        var on_call_back = document.getElementById("on_call_back").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -3426,20 +4733,28 @@
             $('.help-block-vision').text('');
         }
 
-        // if (feels_like_per_hour.trim() === '') {
-        //     $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
-        //     $('.help-block-feels_like_per_hour').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-feels_like_per_hour').text('');
-        // }
-
-        if (call_back.trim() === '') {
-            $('.help-block-call_back').text('Please enter the call back');
-            $('.help-block-call_back').addClass('text-danger');
+        if (feels_like_per_hour.trim() === '') {
+            $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
+            $('.help-block-feels_like_per_hour').addClass('text-danger');
             access = false;
         } else {
-            $('.help-block-call_back').text('');
+            $('.help-block-feels_like_per_hour').text('');
+        }
+
+        if (call_back_rate.trim() === '') {
+            $('.help-block-call_back_rate').text('Please enter the call back');
+            $('.help-block-call_back_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-call_back_rate').text('');
+        }
+
+        if (on_call_back.trim() === '') {
+            $('.help-block-on_call_back').text('Please enter the on call back');
+            $('.help-block-on_call_back').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_back').text('');
         }
 
         // if (weekly_taxable_amount.trim() === '') {
@@ -3497,11 +4812,39 @@
 
     }
 
+    function validateFifth() {
+        var access = true;
+        var facility_city = document.getElementById("facility_city").value;
+        var facility_state = document.getElementById("facility_state").value;
+        
+        if (facility_state.trim() === '') {
+            $('.help-block-facility_state').text('Please enter the facility state');
+            $('.help-block-facility_state').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_state').text('');
+        }
+
+        if (facility_city.trim() === '') {
+            $('.help-block-facility_city').text('Please enter the facility city');
+            $('.help-block-facility_city').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_city').text('');
+        }
+
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     nextBtnFirst.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateFirst()) {
-            slidePage.style.marginLeft = "-25%";
+            slidePage.style.marginLeft = "-20%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
@@ -3513,7 +4856,7 @@
     nextBtnSec.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateseconde()) {
-            slidePage.style.marginLeft = "-50%";
+            slidePage.style.marginLeft = "-40%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
@@ -3523,7 +4866,17 @@
     nextBtnThird.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateThird()) {
-            slidePage.style.marginLeft = "-75%";
+            slidePage.style.marginLeft = "-60%";
+            bullet[current - 1].classList.add("active");
+            progressCheck[current - 1].classList.add("active");
+            progressText[current - 1].classList.add("active");
+            current += 1;
+        }
+    });
+    nextBtnForth.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateFifth()) {
+            slidePage.style.marginLeft = "-80%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
@@ -3533,6 +4886,25 @@
     submitBtn.addEventListener("click", function(event) {
 
         event.preventDefault();
+
+        let certif_all_values = document.getElementById("certificateAllValues");
+        if (certif_all_values) {
+            certif_all_values.value = certificateStr;
+        }
+        let vaccin_all_values = document.getElementById("vaccinationsAllValues");
+        if (vaccin_all_values) {
+            vaccin_all_values.value = vaccinationStr;
+        }
+        let skills_all_values = document.getElementById("skillsAllValues");
+        if (skills_all_values) {
+            skills_all_values.value = skillsStr;
+        }
+
+        let shifttimeofday_all_values = document.getElementById("shifttimeofdayAllValues");
+        if (shifttimeofday_all_values) {
+            shifttimeofday_all_values.value = shifttimeofdayStr;
+        }
+
         if (validateForth()) {
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
@@ -3578,7 +4950,7 @@
     });
     prevBtnThird.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePage.style.marginLeft = "-25%";
+        slidePage.style.marginLeft = "-20%";
         bullet[current - 2].classList.remove("active");
         progressCheck[current - 2].classList.remove("active");
         progressText[current - 2].classList.remove("active");
@@ -3587,7 +4959,15 @@
     prevBtnFourth.addEventListener("click", function(event) {
         event.preventDefault();
 
-        slidePage.style.marginLeft = "-50%";
+        slidePage.style.marginLeft = "-40%";
+        bullet[current - 2].classList.remove("active");
+        progressCheck[current - 2].classList.remove("active");
+        progressText[current - 2].classList.remove("active");
+        current -= 1;
+    });
+    prevBtnFifth.addEventListener("click", function(event) {
+        event.preventDefault();
+        slidePage.style.marginLeft = "-60%";
         bullet[current - 2].classList.remove("active");
         progressCheck[current - 2].classList.remove("active");
         progressText[current - 2].classList.remove("active");
@@ -3602,12 +4982,15 @@
     const nextBtnSecDraft = document.querySelector(".next-1Draft");
     const prevBtnThirdDraft = document.querySelector(".prev-2Draft");
     const nextBtnThirdDraft = document.querySelector(".next-2Draft");
+    const nextBtnForthDraft = document.querySelector(".next-3Draft");
     const prevBtnFourthDraft = document.querySelector(".prev-3Draft");
+    const prevBtnFifthDraft = document.querySelector(".prev-4Draft");
     const submitBtnDraft = document.querySelector(".submitDraft");
-    const saveDrftBtnDraft = document.querySelector(".saveDrftBtnDraft");
-    const progressTextDraft = document.querySelectorAll(".step p");
-    const progressCheckDarft = document.querySelectorAll(".step .check");
-    const bulletDraft = document.querySelectorAll(".step .bullet");
+    const saveDrftBtnDraft = document.querySelectorAll(".saveDrftBtnDraft");
+    console.log(saveDrftBtnDraft);
+    const progressTextDraft = document.querySelectorAll(".stepDraft p");
+    const progressCheckDraft = document.querySelectorAll(".stepDraft .check");
+    const bulletDraft = document.querySelectorAll(".stepDraft .bullet");
 
     let currentDraft = 1;
 
@@ -3716,7 +5099,7 @@
         var scrub_color = document.getElementById("scrub_colorDraft").value;
         var rto = document.getElementById("rtoDraft").value;
         var guaranteed_hours = document.getElementById("guaranteed_hoursDraft").value;
-        // var hours_per_week = document.getElementById("hours_per_weekDraft").value;
+        var hours_per_week = document.getElementById("hours_per_weekDraft").value;
         var hours_shift = document.getElementById("hours_shiftDraft").value;
         var weeks_shift = document.getElementById("weeks_shiftDraft").value;
 
@@ -3732,7 +5115,7 @@
         }
 
         if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the traveler distance from facility');
+            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
             $('.help-block-traveler_distance_from_facility').addClass('text-danger');
             access = false;
         } else {
@@ -3790,13 +5173,13 @@
             $('.help-block-guaranteed_hours').text('');
         }
 
-        // if (hours_per_week.trim() === '') {
-        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
-        //     $('.help-block-hours_per_week').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-hours_per_week').text('');
-        // }
+        if (hours_per_week.trim() === '') {
+            $('.help-block-hours_per_week').text('Please enter the hours per week');
+            $('.help-block-hours_per_week').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_per_week').text('');
+        }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -3833,6 +5216,7 @@
         var holiday = document.getElementById("holidayDraft").value;
         var orientation_rate = document.getElementById("orientation_rateDraft").value;
         var on_call = document.getElementById("on_callDraft").value;
+        var on_call_rate = document.getElementById("on_call_rateDraft").value;
         var block_scheduling = document.getElementById("block_schedulingDraft").value;
         var terms = document.getElementById("termsDraft").value;
         var float_requirement = document.getElementById("float_requirementDraft").value;
@@ -3917,6 +5301,14 @@
             $('.help-block-on_call').text('');
         }
 
+        if (on_call_rate.trim() === '') {
+            $('.help-block-on_call_rate').text('Please enter the on call rate');
+            $('.help-block-on_call_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_rate').text('');
+        }
+
         if (block_scheduling.trim() === '') {
             $('.help-block-block_scheduling').text('Please enter the block scheduling');
             $('.help-block-block_scheduling').addClass('text-danger');
@@ -3959,8 +5351,9 @@
         var health_insaurance = document.getElementById("health_insauranceDraft").value;
         var dental = document.getElementById("dentalDraft").value;
         var vision = document.getElementById("visionDraft").value;
-        // var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
-        var call_back = document.getElementById("call_backDraft").value;
+        var feels_like_per_hour = document.getElementById("feels_like_per_hourDraft").value;
+        var call_back_rate = document.getElementById("call_back_rateDraft").value;
+        var on_call_back = document.getElementById("on_call_backDraft").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountDraft").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -4018,20 +5411,28 @@
             $('.help-block-vision').text('');
         }
 
-        // if (feels_like_per_hour.trim() === '') {
-        //     $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
-        //     $('.help-block-feels_like_per_hour').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-feels_like_per_hour').text('');
-        // }
-
-        if (call_back.trim() === '') {
-            $('.help-block-call_back').text('Please enter the call back');
-            $('.help-block-call_back').addClass('text-danger');
+        if (feels_like_per_hour.trim() === '') {
+            $('.help-block-feels_like_per_hourDraft').text('Please enter the feels like per hour');
+            $('.help-block-feels_like_per_hourDraft').addClass('text-danger');
             access = false;
         } else {
-            $('.help-block-call_back').text('');
+            $('.help-block-feels_like_per_hourDraft').text('');
+        }
+
+        if (call_back_rate.trim() === '') {
+            $('.help-block-call_back_rate').text('Please enter the call back');
+            $('.help-block-call_back_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-call_back_rate').text('');
+        }
+
+        if (on_call_back.trim() === '') {
+            $('.help-block-on_call_back').text('Please enter the on call back');
+            $('.help-block-on_call_back').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_back').text('');
         }
 
         // if (weekly_taxable_amount.trim() === '') {
@@ -4089,12 +5490,40 @@
 
     }
 
+    function validateFifthDraft() {
+        var access = true;
+        var facility_cityDraft = document.getElementById("facility_cityDraft").value;
+        var facility_stateDraft = document.getElementById("facility_stateDraft").value;
+        
+        if (facility_stateDraft.trim() === '') {
+            $('.help-block-facility_stateDraft').text('Please enter the facility state');
+            $('.help-block-facility_stateDraft').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_stateDraft').text('');
+        }
+
+        if (facility_cityDraft.trim() === '') {
+            $('.help-block-facility_cityDraft').text('Please enter the facility city');
+            $('.help-block-facility_cityDraft').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_cityDraft').text('');
+        }
+
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     nextBtnFirstDraft.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateFirstDraft()) {
-            slidePageDraft.style.marginLeft = "-25%";
-            bulletDraft[current - 1].classList.add("active");
-            progressCheckDarft[currentDraft - 1].classList.add("active");
+            slidePageDraft.style.marginLeft = "-20%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
         }
@@ -4104,9 +5533,9 @@
     nextBtnSecDraft.addEventListener("click", function(event) {
         event.preventDefault();
         if (validatesecondeDraft()) {
-            slidePageDraft.style.marginLeft = "-50%";
-            bulletDraft[current - 1].classList.add("active");
-            progressCheck[currentDraft - 1].classList.add("active");
+            slidePageDraft.style.marginLeft = "-40%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
         }
@@ -4115,61 +5544,103 @@
     nextBtnThirdDraft.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateThirdDraft()) {
-            slidePageDraft.style.marginLeft = "-75%";
-            bulletDraft[current - 1].classList.add("active");
-            progressCheck[currentDraft - 1].classList.add("active");
+            slidePageDraft.style.marginLeft = "-60%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
+            progressTextDraft[currentDraft - 1].classList.add("active");
+            currentDraft += 1;
+        }
+    });
+    nextBtnForthDraft.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateFifthDraft()) {
+            slidePageDraft.style.marginLeft = "-80%";
+            bulletDraft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
         }
     });
     submitBtnDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        document.getElementById("activeDraft").value = "0";
-        document.getElementById("is_openDraft").value = "0";
+        document.getElementById("activeDraft").value = true;
+        document.getElementById("is_openDraft").value = true;
+
+        let certif_all_values = document.getElementById("certificateAllValuesDraft");
+        if (certif_all_values) {
+            certif_all_values.value = certificateStr;
+        }
+        let vaccin_all_values = document.getElementById("vaccinationsAllValuesDraft");
+        if (vaccin_all_values) {
+            vaccin_all_values.value = vaccinationStr;
+        }
+        let skills_all_values = document.getElementById("skillsAllValuesDraft");
+        if (skills_all_values) {
+            skills_all_values.value = skillsStr;
+        }
+        let shifttimeofday_all_values = document.getElementById("shifttimeofdayAllValuesDraft");
+        if (shifttimeofday_all_values) {
+            shifttimeofday_all_values.value = shifttimeofdayStr;
+        }
+
+
         if (validateForthDraft()) {
             bulletDraft[currentDraft - 1].classList.add("active");
-            progressCheckDarft[currentDraft - 1].classList.add("active");
+            progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
+
             event.target.form.submit();
         }
     });
 
+    saveDrftBtnDraft.forEach(function(saveDrftBtnDraft) {
     saveDrftBtnDraft.addEventListener("click", function(event) {
-        document.getElementById("activeDraft").value = "0";
-        document.getElementById("is_openDraft").value = "0";
+        event.preventDefault();
+        document.getElementById("activeDraft").value = false;
+        document.getElementById("is_openDraft").value = false;
         var jobName = document.getElementById("job_nameDraft").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
             $('.help-block-job_name').addClass('text-danger');
-            event.preventDefault();
+           
         } else {
             $('.help-block-job_name').text('');
+            event.target.form.submit();
         }
     });
+});
 
 
     prevBtnSecDraft.addEventListener("click", function(event) {
         event.preventDefault();
         slidePageDraft.style.marginLeft = "0%";
         bulletDraft[currentDraft - 2].classList.remove("active");
-        progressCheck[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
         progressTextDraft[currentDraft - 2].classList.remove("active");
         currentDraft -= 1;
     });
     prevBtnThirdDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageDraft.style.marginLeft = "-25%";
+        slidePageDraft.style.marginLeft = "-20%";
         bulletDraft[currentDraft - 2].classList.remove("active");
-        progressCheck[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
         progressTextDraft[currentDraft - 2].classList.remove("active");
         currentDraft -= 1;
     });
     prevBtnFourthDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageDraft.style.marginLeft = "-50%";
+        slidePageDraft.style.marginLeft = "-40%";
         bulletDraft[currentDraft - 2].classList.remove("active");
-        progressCheck[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
+        progressTextDraft[currentDraft - 2].classList.remove("active");
+        currentDraft -= 1;
+    });
+    prevBtnFifthDraft.addEventListener("click", function(event) {
+        event.preventDefault();
+        slidePageDraft.style.marginLeft = "-60%";
+        bulletDraft[currentDraft - 2].classList.remove("active");
+        progressCheckDraft[currentDraft - 2].classList.remove("active");
         progressTextDraft[currentDraft - 2].classList.remove("active");
         currentDraft -= 1;
     });
@@ -4177,18 +5648,20 @@
 
 // for job editing
 
-const slidePageEdit = document.querySelector(".slide-pageEdit");
+    const slidePageEdit = document.querySelector(".slide-pageEdit");
     const nextBtnFirstEdit = document.querySelector(".firstNextEdit");
     const prevBtnSecEdit = document.querySelector(".prev-1Edit");
     const nextBtnSecEdit = document.querySelector(".next-1Edit");
     const prevBtnThirdEdit = document.querySelector(".prev-2Edit");
     const nextBtnThirdEdit = document.querySelector(".next-2Edit");
+    const nextBtnForthEdit = document.querySelector(".next-3Edit");
     const prevBtnFourthEdit = document.querySelector(".prev-3Edit");
+    const prevBtnFifthEdit = document.querySelector(".prev-4Edit");
     const submitBtnEdit = document.querySelector(".submitEdit");
-    const saveDrftBtnEdit = document.querySelector(".saveDrftBtnEdit");
-    const progressTextEdit = document.querySelectorAll(".step p");
-    const progressCheckEdit = document.querySelectorAll(".step .check");
-    const bulletEdit = document.querySelectorAll(".step .bullet");
+    const saveDrftBtnEdit = document.querySelectorAll(".saveDrftBtnEdit");
+    const progressTextEdit = document.querySelectorAll(".stepEdit p");
+    const progressCheckEdit = document.querySelectorAll(".stepEdit .check");
+    const bulletEdit = document.querySelectorAll(".stepEdit .bullet");
 
     let currentEdit = 1;
 
@@ -4296,7 +5769,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         var scrub_color = document.getElementById("scrub_colorEdit").value;
         var rto = document.getElementById("rtoEdit").value;
         var guaranteed_hours = document.getElementById("guaranteed_hoursEdit").value;
-        // var hours_per_week = document.getElementById("hours_per_weekEdit").value;
+        var hours_per_week = document.getElementById("hours_per_weekEdit").value;
         var hours_shift = document.getElementById("hours_shiftEdit").value;
         var weeks_shift = document.getElementById("weeks_shiftEdit").value;
 
@@ -4312,7 +5785,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         }
 
         if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the traveler distance from facility');
+            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
             $('.help-block-traveler_distance_from_facility').addClass('text-danger');
             access = false;
         } else {
@@ -4370,13 +5843,13 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
             $('.help-block-guaranteed_hours').text('');
         }
 
-        // if (hours_per_week.trim() === '') {
-        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
-        //     $('.help-block-hours_per_week').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-hours_per_week').text('');
-        // }
+        if (hours_per_week.trim() === '') {
+            $('.help-block-hours_per_week').text('Please enter the hours per week');
+            $('.help-block-hours_per_week').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-hours_per_week').text('');
+        }
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -4413,6 +5886,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         var holiday = document.getElementById("holidayEdit").value;
         var orientation_rate = document.getElementById("orientation_rateEdit").value;
         var on_call = document.getElementById("on_callEdit").value;
+        var on_call_rate = document.getElementById("on_call_rateEdit").value;
         var block_scheduling = document.getElementById("block_schedulingEdit").value;
         var terms = document.getElementById("termsEdit").value;
         var float_requirement = document.getElementById("float_requirementEdit").value;
@@ -4496,6 +5970,15 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         } else {
             $('.help-block-on_call').text('');
         }
+        if(on_call_rate.trim() === '') {
+            $('.help-block-on_call_rate').text('Please enter the on call rate');
+            $('.help-block-on_call_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_rate').text('');
+        }
+
+        
 
         if (block_scheduling.trim() === '') {
             $('.help-block-block_scheduling').text('Please enter the block scheduling');
@@ -4539,8 +6022,9 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         var health_insaurance = document.getElementById("health_insauranceEdit").value;
         var dental = document.getElementById("dentalEdit").value;
         var vision = document.getElementById("visionEdit").value;
-        // var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
-        var call_back = document.getElementById("call_backEdit").value;
+         var feels_like_per_hour = document.getElementById("feels_like_per_hourEdit").value;
+        var call_back_rate = document.getElementById("call_back_rateEdit").value;
+        var on_call_back = document.getElementById("on_call_backEdit").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountEdit").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -4598,17 +6082,33 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
             $('.help-block-vision').text('');
         }
 
-        
-
-        if (call_back.trim() === '') {
-            $('.help-block-call_back').text('Please enter the call back');
-            $('.help-block-call_back').addClass('text-danger');
+        if (feels_like_per_hour.trim() === '') {
+            $('.help-block-feels_like_per_hourEdit').text('Please enter the feels like per hour');
+            $('.help-block-feels_like_per_hourEdit').addClass('text-danger');
             access = false;
         } else {
-            $('.help-block-call_back').text('');
+            $('.help-block-feels_like_per_hour').text('');
         }
 
-       
+
+
+        if (call_back_rate.trim() === '') {
+            $('.help-block-call_back_rate').text('Please enter the call back');
+            $('.help-block-call_back_rate').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-call_back_rate').text('');
+        }
+
+        if (on_call_back.trim() === '') {
+            $('.help-block-on_call_back').text('Please enter the on call back');
+            $('.help-block-on_call_back').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-on_call_back').text('');
+        }
+
+
 
         if (weekly_non_taxable_amount.trim() === '') {
             $('.help-block-weekly_non_taxable_amount').text('Please enter the weekly non taxable amount');
@@ -4618,7 +6118,7 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
             $('.help-block-weekly_non_taxable_amount').text('');
         }
 
-        
+
 
         if (hours_shift.trim() === '') {
             $('.help-block-hours_shift').text('Please enter the hours shift');
@@ -4651,13 +6151,43 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
 
     }
 
+    function validateFifthEdit() {
+        var access = true;
+        var facility_cityEdit = document.getElementById("facility_cityEdit").value;
+        var facility_stateEdit = document.getElementById("facility_stateEdit").value;
+        
+        
+        if (facility_stateEdit.trim() === '') {
+            $('.help-block-facility_stateEdit').text('Please enter the facility state');
+            $('.help-block-facility_stateEdit').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_stateEdit').text('');
+        }
+
+        if (facility_cityEdit.trim() === '') {
+            $('.help-block-facility_cityEdit').text('Please enter the facility city');
+            $('.help-block-facility_cityEdit').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-facility_cityEdit').text('');
+        }
+
+        if (access) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     nextBtnFirstEdit.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateFirstEdit()) {
-            slidePageEdit.style.marginLeft = "-25%";
-            bulletEdit[current - 1].classList.add("active");
-            progressCheckDarft[currentEdit - 1].classList.add("active");
+            slidePageEdit.style.marginLeft = "-20%";
+            bulletEdit[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
         }
@@ -4667,9 +6197,9 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     nextBtnSecEdit.addEventListener("click", function(event) {
         event.preventDefault();
         if (validatesecondeEdit()) {
-            slidePageEdit.style.marginLeft = "-50%";
-            bulletEdit[current - 1].classList.add("active");
-            progressCheck[currentEdit - 1].classList.add("active");
+            slidePageEdit.style.marginLeft = "-40%";
+            bulletEdit[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
         }
@@ -4678,37 +6208,68 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
     nextBtnThirdEdit.addEventListener("click", function(event) {
         event.preventDefault();
         if (validateThirdEdit()) {
-            slidePageEdit.style.marginLeft = "-75%";
+            slidePageEdit.style.marginLeft = "-60%";
             bulletEdit[current - 1].classList.add("active");
             progressCheck[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
         }
     });
+    nextBtnForthEdit.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (validateFifthEdit()) {
+            slidePageEdit.style.marginLeft = "-80%";
+            bulletEdit[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
+            progressTextEdit[currentEdit - 1].classList.add("active");
+            currentEdit += 1;
+        }
+    });
     submitBtnEdit.addEventListener("click", function(event) {
         event.preventDefault();
-        document.getElementById("activeEdit").value = "1";
-        document.getElementById("is_openEdit").value = "1";
+        let certif_all_values = document.getElementById("certificateAllValuesEdit");
+        if (certif_all_values) {
+            certif_all_values.value = certificateStr;
+        }
+        let vaccin_all_values = document.getElementById("vaccinationsAllValuesEdit");
+        if (vaccin_all_values) {
+            vaccin_all_values.value = vaccinationStr;
+        }
+        let skills_all_values = document.getElementById("skillsAllValuesEdit");
+        if (skills_all_values) {
+            skills_all_values.value = skillsStr;
+        }
+        let shifttimeofday_all_values = document.getElementById("shifttimeofdayAllValuesEdit");
+        if (shifttimeofday_all_values) {
+            shifttimeofday_all_values.value = shifttimeofdayStr;
+        }
+        document.getElementById("activeEdit").value = true;
+        document.getElementById("is_openEdit").value = true;
+
         if (validateForthEdit()) {
             bulletEdit[currentEdit - 1].classList.add("active");
-            progressCheckDarft[currentEdit - 1].classList.add("active");
+            progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
             event.target.form.submit();
         }
     });
 
+
+    saveDrftBtnEdit.forEach(function(saveDrftBtnEdit) {
     saveDrftBtnEdit.addEventListener("click", function(event) {
-        document.getElementById("activeEdit").value = "0";
-        document.getElementById("is_openEdit").value = "0";
+        event.preventDefault();
+        document.getElementById("activeEdit").value = true;
+        document.getElementById("is_openEdit").value = true;
         var jobName = document.getElementById("job_nameEdit").value;
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a job name');
             $('.help-block-job_name').addClass('text-danger');
-            event.preventDefault();
         } else {
             $('.help-block-job_name').text('');
+            event.target.form.submit();
         }
+    });
     });
 
 
@@ -4716,23 +6277,31 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         event.preventDefault();
         slidePageEdit.style.marginLeft = "0%";
         bulletEdit[currentEdit - 2].classList.remove("active");
-        progressCheck[currentEdit - 2].classList.remove("active");
+        progressCheckEdit[currentEdit - 2].classList.remove("active");
         progressTextEdit[currentEdit - 2].classList.remove("active");
         currentEdit -= 1;
     });
     prevBtnThirdEdit.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageEdit.style.marginLeft = "-25%";
+        slidePageEdit.style.marginLeft = "-20%";
         bulletEdit[currentEdit - 2].classList.remove("active");
-        progressCheck[currentEdit - 2].classList.remove("active");
+        progressCheckEdit[currentEdit - 2].classList.remove("active");
         progressTextEdit[currentEdit - 2].classList.remove("active");
         currentEdit -= 1;
     });
     prevBtnFourthEdit.addEventListener("click", function(event) {
         event.preventDefault();
-        slidePageEdit.style.marginLeft = "-50%";
+        slidePageEdit.style.marginLeft = "-40%";
         bulletEdit[currentEdit - 2].classList.remove("active");
         progressCheck[currentEdit - 2].classList.remove("active");
+        progressTextEdit[currentEdit - 2].classList.remove("active");
+        currentEdit -= 1;
+    });
+    prevBtnFifthEdit.addEventListener("click", function(event) {
+        event.preventDefault();
+        slidePageEdit.style.marginLeft = "-60%";
+        bulletEdit[currentEdit - 2].classList.remove("active");
+        progressCheckEdit[currentEdit - 2].classList.remove("active");
         progressTextEdit[currentEdit - 2].classList.remove("active");
         currentEdit -= 1;
     });
@@ -4754,65 +6323,130 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
-    console.log(result);
-    document.getElementById("job_nameEdit").value = result.job_name;
-    document.getElementById("job_typeEdit").value = result.job_type;
+                        console.log(result);
+                        document.getElementById("job_nameEdit").value = result.job_name;
 
-    document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
-    document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
-    document.getElementById("job_stateEdit").value = result.job_state;
-    var city = result.job_city;
-    var select = document.getElementById('job_cityEdit');
+                        // here
+                        var jobtype = result.job_type;
+                        var select = document.getElementById('job_typeEdit');
+                        var option = document.createElement('option');
+                        option.value = jobtype;
+                        option.text = jobtype;
+
+                        select.add(option);
+                        select.value = jobtype;
+
+                        //document.getElementById("job_typeEdit").value = result.job_type;
+
+                        var preferredSpecialty = result.preferred_specialty;
+                        var select = document.getElementById('preferred_specialtyEdit');
+                        var option = document.createElement('option');
+                        option.value = preferredSpecialty;
+                        option.text = preferredSpecialty;
+
+                        select.add(option);
+                        select.value = preferredSpecialty;
+                        //document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
+
+                        var proffesionValue = result.proffesion;
+    var select = document.getElementById('perferred_professionEdit');
     var option = document.createElement('option');
-    option.value = city;
-    option.text = city;
-                        
-    select.add(option);
-    select.value = city;
-    document.getElementById("preferred_work_locationEdit").value = result.preferred_work_location;
-    
-    document.getElementById("weekly_payEdit").value = result.weekly_pay;
-    document.getElementById("descriptionEdit").value = result.description;
-    document.getElementById("preferred_assignment_durationEdit").value = result.preferred_assignment_duration;
-    document.getElementById("facility_shift_cancelation_policyEdit").value = result.facility_shift_cancelation_policy;
-    document.getElementById("traveler_distance_from_facilityEdit").value = result.traveler_distance_from_facility;
-    document.getElementById("clinical_settingEdit").value = result.clinical_setting;
-    document.getElementById("Patient_ratioEdit").value = result.Patient_ratio;
-    document.getElementById("UnitEdit").value = result.Unit;
-    document.getElementById("scrub_colorEdit").value = result.scrub_color;
-    document.getElementById("rtoEdit").value = result.rto;
-    document.getElementById("guaranteed_hoursEdit").value = result.guaranteed_hours;
-    document.getElementById("hours_shiftEdit").value = result.hours_shift;
-    document.getElementById("weeks_shiftEdit").value = result.weeks_shift;
-    document.getElementById("referral_bonusEdit").value = result.referral_bonus;
-    document.getElementById("sign_on_bonusEdit").value = result.sign_on_bonus;
-    document.getElementById("completion_bonusEdit").value = result.completion_bonus;
-    document.getElementById("extension_bonusEdit").value = result.extension_bonus;
-    document.getElementById("other_bonusEdit").value = result.other_bonus;
-    document.getElementById("actual_hourly_rateEdit").value = result.actual_hourly_rate;
-    document.getElementById("overtimeEdit").value = result.overtime;
-    document.getElementById("holidayEdit").value = result.holiday;
-    document.getElementById("orientation_rateEdit").value = result.orientation_rate;
-    document.getElementById("on_callEdit").value = (result.on_call == 0) ? 'No' : 'Yes';
-    document.getElementById("block_schedulingEdit").value = (result.block_scheduling == 0) ? 'No' : 'Yes';
-    document.getElementById("termsEdit").value = result.terms;
-    document.getElementById("float_requirementEdit").value = (result.float_requirement == 0) ? 'No' : 'Yes';
-    document.getElementById("contract_termination_policyEdit").value = result.contract_termination_policy;
-    document.getElementById("emrEdit").value = result.Emr; // corrected here
-    document.getElementById("four_zero_one_kEdit").value = (result.four_zero_one_k == 0) ? 'No' : 'Yes';
-    document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
-    document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';
-    document.getElementById("visionEdit").value = (result.vision == 0) ? 'No' : 'Yes';
-    document.getElementById("call_backEdit").value = result.call_back;
-    document.getElementById("weekly_non_taxable_amountEdit").value = result.weekly_non_taxable_amount;
-    document.getElementById("hours_shiftEdit").value = result.hours_shift;
-    document.getElementById("start_dateEdit").value = result.start_date;
-    // removed as_soon_asEdit as it does not exist in the provided object
-    document.getElementById("job_idEdit").value = result.id;
-   
+    option.value = proffesionValue;
+    option.text = proffesionValue;
 
-                
-},
+    select.add(option);
+    select.value = proffesionValue;
+                       // document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
+
+                        // here
+                        document.getElementById("job_stateEdit").value = result.job_state;
+
+                        var city = result.job_city;
+                        var select = document.getElementById('job_cityEdit');
+                        var option = document.createElement('option');
+                        option.value = city;
+                        option.text = city;
+
+                        select.add(option);
+                        select.value = city;
+
+                        document.getElementById("preferred_work_locationEdit").value = result.preferred_work_location;
+
+                        document.getElementById("weekly_payEdit").value = result.weekly_pay;
+                        document.getElementById("descriptionEdit").value = result.description;
+                        document.getElementById("preferred_assignment_durationEdit").value = result.preferred_assignment_duration;
+                        var facilityShiftCancelationPolicy = result.facility_shift_cancelation_policy;
+    var select = document.getElementById('facility_shift_cancelation_policyEdit');
+    var option = document.createElement('option');
+    option.value = facilityShiftCancelationPolicy;
+    option.text = facilityShiftCancelationPolicy;
+    select.add(option);
+    select.value = facilityShiftCancelationPolicy;
+                        //document.getElementById("facility_shift_cancelation_policyEdit").value = result.facility_shift_cancelation_policy;
+                        document.getElementById("traveler_distance_from_facilityEdit").value = result.traveler_distance_from_facility;
+                        var ClinicalSettingValue = result.clinical_setting;
+    var select = document.getElementById('clinical_settingEdit');
+    var option = document.createElement('option');
+    option.value = ClinicalSettingValue;
+    option.text = ClinicalSettingValue;
+
+    select.add(option);
+    select.value = ClinicalSettingValue;
+                        //document.getElementById("clinical_settingEdit").value = result.clinical_setting;
+                        document.getElementById("Patient_ratioEdit").value = result.Patient_ratio;
+                        document.getElementById("UnitEdit").value = result.Unit;
+                        document.getElementById("scrub_colorEdit").value = result.scrub_color;
+                        document.getElementById("rtoEdit").value = result.rto;
+                        document.getElementById("guaranteed_hoursEdit").value = result.guaranteed_hours;
+                        document.getElementById("hours_shiftEdit").value = result.hours_shift;
+                        document.getElementById("weeks_shiftEdit").value = result.weeks_shift;
+                        document.getElementById("referral_bonusEdit").value = result.referral_bonus;
+                        document.getElementById("sign_on_bonusEdit").value = result.sign_on_bonus;
+                        document.getElementById("completion_bonusEdit").value = result.completion_bonus;
+                        document.getElementById("extension_bonusEdit").value = result.extension_bonus;
+                        document.getElementById("other_bonusEdit").value = result.other_bonus;
+                        document.getElementById("actual_hourly_rateEdit").value = result.actual_hourly_rate;
+                        document.getElementById("overtimeEdit").value = result.overtime;
+                        document.getElementById("holidayEdit").value = result.holiday;
+                        document.getElementById("orientation_rateEdit").value = result.orientation_rate;
+                        document.getElementById("on_callEdit").value = (result.on_call == 0) ? 'No' : 'Yes';
+                        document.getElementById("on_call_rateEdit").value = result.on_call_rate;
+                        document.getElementById("block_schedulingEdit").value = (result.block_scheduling == 0) ? 'No' : 'Yes';
+                        var Terms = result.terms;
+    var select = document.getElementById('termsEdit');
+    var option = document.createElement('option');
+    option.value = Terms;
+    option.text = Terms;
+
+    select.add(option);
+    select.value = Terms;
+                        //document.getElementById("termsEdit").value = result.terms;
+                        document.getElementById("float_requirementEdit").value = (result.float_requirement == 0) ? 'No' : 'Yes';
+                        document.getElementById("contract_termination_policyEdit").value = result.contract_termination_policy;
+
+                        var EmrValue = result.Emr;
+                        var select = document.getElementById('emrEdit');
+                        var option = document.createElement('option');
+                        option.value = EmrValue;
+                        option.text = EmrValue;
+
+                        select.add(option);
+                        select.value = EmrValue;
+                       // document.getElementById("emrEdit").value = result.Emr; // corrected here
+                        document.getElementById("four_zero_one_kEdit").value = (result.four_zero_one_k == 0) ? 'No' : 'Yes';
+                        document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
+                        document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';
+                        document.getElementById("visionEdit").value = (result.vision == 0) ? 'No' : 'Yes';
+                        document.getElementById("feels_like_per_hourEdit").value = result.feels_like_per_hour;
+                        document.getElementById("call_back_rateEdit").value = result.call_back_rate;
+                        document.getElementById("on_call_backEdit").value = (result.on_call_back == 0) ? 'No' : 'Yes';
+                        document.getElementById("weekly_non_taxable_amountEdit").value = result.weekly_non_taxable_amount;
+                        document.getElementById("hours_shiftEdit").value = result.hours_shift;
+                        document.getElementById("start_dateEdit").value = result.start_date;
+                        // removed as_soon_asEdit as it does not exist in the provided object
+                        document.getElementById("job_idEdit").value = result.id;
+
+                },
                     error: function(error) {
                         console.log(error);
                     }
@@ -4825,6 +6459,384 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
 
 
 </script>
+
+{{-- script managing certifs  --}}
+
+<script>
+    var certificate = {};
+   
+    function addcertifications(type){
+        var id;
+        var idtitle;
+        if (type == 'from_add') {
+            id  = $('#certificate');
+            idtitle = "certificate";
+        }else if (type == 'from_draft'){
+           id = $('#certificateDraft');
+           idtitle = "certificateDraft";
+        }else{
+            id = $('#certificateEdit');
+            idtitle = "certificateEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the certificate please.',
+                time: 3
+            });
+        } else {
+            if (!certificate.hasOwnProperty(id.val())) {
+                
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                certificate[id.val()] = optionText; 
+                
+        certificateStr = Object.values(certificate).join(', '); 
+        // console.log(certificate);
+               id.val('');
+                list_certifications();
+            }
+        }
+
+    }
+
+    function list_certifications() {
+        var str = '';
+        // let certificatename = "";
+        // certificatename = Object.values(certificate).join(', ');
+        // console.log(certificatename);
+        // document.getElementById("certificateEdit").value = certificatename;
+        // console.log(certificate);
+
+        for (const key in certificate) {
+            console.log(certificate);
+
+            let certificatename = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['Certification']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (certificate.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        certificatename = item.title;
+                    }
+                });
+                const value = certificate[key];
+                str += '<ul>';
+                str += '<li class="w-50">' + certificatename + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-certificate" data-key="' + key + '" onclick="remove_certificate(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.certificate-content').html(str);
+    }
+
+function remove_certificate(obj, key) {
+    if (certificate.hasOwnProperty(key)) {
+        delete certificate[key];
+
+         // to dlete the removed certificate from the hidden input
+         certificateStr = Object.values(certificate).join(', ');
+
+        list_certifications(); // Refresh the list to reflect the deletion
+        notie.alert({
+            type: 'success',
+            text: '<i class="fa fa-check"></i> Certificate removed successfully.',
+            time: 3
+        });
+    } else {
+        notie.alert({
+            type: 'error',
+            text: '<i class="fa fa-times"></i> Certificate not found.',
+            time: 3
+        });
+    }
+}
+
+
+</script>
+
+{{-- script managing vaccinations  --}}
+<script>
+    var vaccinations = {};
+
+    function addvacc(type) {
+        let id ;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#vaccinations');
+            idtitle = "vaccinations";
+        }else if (type == 'from_draft'){
+            id = $('#vaccinationsDraft');
+            idtitle = "vaccinationsDraft";
+        }else{
+            id = $('#vaccinationsEdit');
+            idtitle = "vaccinationsEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the vaccinations please.',
+                time: 3
+            });
+        } else {
+            if (!vaccinations.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                vaccinations[id.val()] = optionText; 
+                vaccinationStr = Object.values(vaccinations).join(', ');
+                id.val('');
+                list_vaccinations();
+            }
+        }
+    }
+
+    function list_vaccinations() {
+        var str = '';
+        console.log(vaccinations);
+
+        for (const key in vaccinations) {
+            console.log(vaccinations);
+
+            let vaccinationsname = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['Vaccinations']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (vaccinations.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        vaccinationsname = item.title;
+                    }
+                });
+                const value = vaccinations[key];
+                str += '<ul>';
+                str += '<li>' + vaccinationsname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-vaccinations" data-key="' + key + '" onclick="remove_vaccinations(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.vaccinations-content').html(str);
+    }
+
+    function remove_vaccinations(obj, key) {
+    if (vaccinations.hasOwnProperty(key)) {
+        delete vaccinations[key]; // Remove the vaccination from the object
+        vaccinationStr = Object.values(vaccinations).join(', '); // Update the hidden input value
+        list_vaccinations(); // Refresh the list to reflect the deletion
+        notie.alert({
+            type: 'success',
+            text: '<i class="fa fa-check"></i> Vaccination removed successfully.',
+            time: 3
+        });
+    } else {
+        notie.alert({
+            type: 'error',
+            text: '<i class="fa fa-times"></i> Vaccination not found.',
+            time: 3
+        });
+    }
+}
+</script>
+
+{{-- script managing skills --}}
+
+<script>
+    var skills = {};
+
+    function addskills(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#skills');
+            idtitle = "skills";
+        } else if (type == 'from_draft') {
+            id = $('#skillsDraft');
+            idtitle = "skillsDraft";
+        } else {
+            id = $('#skillsEdit');
+            idtitle = "skillsEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the skills please.',
+                time: 3
+            });
+        } else {
+            if (!skills.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                skills[id.val()] = optionText;
+                skillsStr = Object.values(skills).join(', ');
+                id.val('');
+                list_skills();
+            }
+        }
+    }
+
+    function list_skills() {
+        var str = '';
+        console.log(skills);
+
+        for (const key in skills) {
+            console.log('skills',skills);
+            
+
+            let skillsname = "";
+            let allspcldata = @json($allKeywords['Speciality']);
+
+            console.log('allspcldata',allspcldata);
+
+            if (skills.hasOwnProperty(key)) {
+                var data = allspcldata;
+
+                data.forEach(function(item) {
+                    if (key == item.title) {
+                        skillsname = item.title;
+                    }
+                });
+                const value = skills[key];
+                str += '<ul>';
+                str += '<li>' + skillsname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-skills" data-key="' + key + '" onclick="remove_skills(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.skills-content').html(str);
+    }
+
+    function remove_skills(obj, key) {
+        if (skills.hasOwnProperty(key)) {
+            delete skills[key]; // Remove the skill from the object
+            skillsStr = Object.values(skills).join(', '); // Update the hidden input value
+            list_skills(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Skill removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Skill not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
+{{-- script managing shifttimeofday --}}
+<script>
+    var shifttimeofday = {};
+
+    function addshifttimeofday(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#shifttimeofday');
+            idtitle = "shifttimeofday";
+        } else if (type == 'from_draft') {
+            id = $('#shifttimeofdayDraft');
+            idtitle = "shifttimeofdayDraft";
+        } else {
+            id = $('#shifttimeofdayEdit');
+            idtitle = "shifttimeofdayEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the shifttimeofday please.',
+                time: 3
+            });
+        } else {
+            if (!shifttimeofday.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                shifttimeofday[id.val()] = optionText;
+                shifttimeofdayStr = Object.values(shifttimeofday).join(', ');
+                console.log('shifttimeofdayStr',shifttimeofdayStr);
+                id.val('');
+                list_shifttimeofday();
+            }
+        }
+    }
+
+    function list_shifttimeofday() {
+        var str = '';
+        console.log(shifttimeofday);
+
+        for (const key in shifttimeofday) {
+            console.log(shifttimeofday);
+
+            let shifttimeofdayname = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['PreferredShift']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (shifttimeofday.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        shifttimeofdayname = item.title;
+                    }
+                });
+                const value = shifttimeofday[key];
+                str += '<ul>';
+                str += '<li>' + shifttimeofdayname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-shifttimeofday" data-key="' + key + '" onclick="remove_shifttimeofday(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.shifttimeofday-content').html(str);
+    }
+
+    function remove_shifttimeofday(obj, key) {
+        if (shifttimeofday.hasOwnProperty(key)) {
+            delete shifttimeofday[key]; // Remove the shifttimeofday from the object
+            shifttimeofdayStr = Object.values(shifttimeofday).join(', '); // Update the hidden input value
+            list_shifttimeofday(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Shift Time Of Day not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
@@ -4880,11 +6892,11 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
 
     .container .form-outer form {
         display: flex;
-        width: 400%;
+        width: 500%;
     }
 
     .form-outer form .page {
-        width: 25%;
+        width: 20%;
         transition: margin-left 0.3s ease-in-out;
     }
 
@@ -5119,6 +7131,12 @@ const slidePageEdit = document.querySelector(".slide-pageEdit");
         color: #000;
         font-size: 16px;
         font-weight: 500;
+    }
+    .saveDrftBtnEdit{
+        margin-right: 3px;
+    }
+    .saveDrftBtnDraft{
+        margin-right: 3px;
     }
 </style>
 @endsection

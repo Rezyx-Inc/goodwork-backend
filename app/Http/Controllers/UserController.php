@@ -10,7 +10,7 @@ use Hash;
 use App\Enums\Role;
 use File;
 /** Models */
-use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities, Nurse};
+use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities, Nurse, Professions, Specialties,Speciality,Profession};
 
 class UserController extends Controller
 {
@@ -44,7 +44,8 @@ class UserController extends Controller
 
         $data['types'] = Keyword::where(['filter'=>'SettingType','active'=>'1'])->get();
         $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
-        $data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
+        $data['specialities'] = Speciality::select('full_name')->get();
+        $data['professions'] = Profession::select('full_name')->get();
         $data['vaccinations'] = Keyword::where(['filter'=>'Vaccinations','active'=>'1'])->get();
         $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
         $data['license_types'] = Keyword::where(['filter'=>'LicenseType','active'=>'1'])->get();
@@ -119,6 +120,7 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        return $request->all();
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
         
@@ -218,7 +220,6 @@ class UserController extends Controller
     public function post_references(Request $request)
     {
 
-        if ($request->ajax()) {
             $user = auth()->guard('frontend')->user();
             $id = $user->nurse->id;
             if ($request->has('old_ids')) {
@@ -293,304 +294,125 @@ class UserController extends Controller
             // Nurse::findOrFail($id)->update(['worker_number_of_references'=>$request->worker_number_of_references]);
             $response = array('success'=>true,'msg'=>'Updated Successfully!');
             return $response;
-        }
+        
     }
 
+    
+
+   
     public function vaccination_submit(Request $request)
     {
-        // dd($request->input());
         $user = auth()->guard('frontend')->user();
         $id = $user->nurse->id;
-        $worker = NURSE::findOrFail($id);
-        $vaccination = [];
-        if(isset($worker->worker_vaccination) && !empty($worker->worker_vaccination)){
-            $resu = json_decode($worker->worker_vaccination);
-            foreach($resu as $vac){
-                $vaccination[] = $vac;
-            }
-        }else{
-            $vaccination[0] = "";
-            $vaccination[1] = "";
-        }
-        // upload covid
-        if ($request->covid_vac == 'Yes') {
-            $asset = NurseAsset::where('nurse_id', $id)->where('filter', 'covid')->first();
-            $input = [];
-           // $input['using_date'] = isset($request->covid_date)?$request->covid_date:'';
-            $input['nurse_id'] = $id;
-            $input['filter'] = 'covid';
-            if ($request->hasFile('covid'))
-            {
-                $file = $request->file('covid');
-                $name = $file->getClientOriginalName();
-                $ext = $file->getClientOriginalExtension();
-                $covid_name = $name.'_'.time().'.'.$ext;
-                $destinationPath = 'images/nurses/vaccination';
-                $file->move(public_path($destinationPath), $covid_name);
-                $input['name'] = $covid_name;
+        $destinationPath = 'images/nurses/vaccination';
 
-            }
+        // Vaccination type
+        $type = $request->type;
+        $vacc_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
+        $vacc_file = $vacc_field;
+        $vacc_flag = $vacc_field . '_vac';
 
-            if (!empty($asset)) {
-
-                if (isset($input['name'])) {
-                    if(!empty($asset->name)){
-                        if(file_exists(public_path('images/nurses/vaccination/' . $asset->name)))
-                        {
-                            File::delete(public_path('images/nurses/vaccination/' . $asset->name));
-                        }
-                    }
+        if ($request->$vacc_flag == 'Yes' && $request->hasFile($vacc_file)) {
+            // Delete old vaccination record
+            $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_vac) {
+                $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
                 }
-                $asset->update($input);
-            }else{
-                $asset = NurseAsset::create($input);
+                $old_vac->forceDelete();
             }
-            $nurse_covid_name = !empty($asset->name) ? $asset->name : "";
 
-        }else{
-            $covid = NurseAsset::where('nurse_id', $id)->where('filter', 'covid')->first();
-            if ($covid) {
-                if(!empty($covid->name)){
-                    if(file_exists(public_path('images/nurses/vaccination/' . $covid->name)))
-                    {
-                        File::delete(public_path('images/nurses/vaccination/' . $covid->name));
-                    }
+            // Handle file upload
+            $file = $request->file($vacc_file);
+            $filename = $type.'_'.$id.'_vaccination_'.$file->getClientOriginalExtension();
+            $file->move(public_path($destinationPath), $filename);
+
+            NurseAsset::create([
+                'nurse_id' => $id,
+                'file_name' => $filename,
+                'name' => $type,
+                'filter' => 'vaccination'
+            ]);
+
+            $response = array('success'=>true, 'msg'=> $type . ' Updated Successfully!');
+            return $response;
+        } else {
+            // Check and handle vaccination record removal if applicable
+            $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_vac) {
+                $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
                 }
-                $covid->delete();
+                $old_vac->forceDelete();
+                $response = array('success'=>true, 'msg'=>$type . ' Removed Successfully!');
+                return $response;
             }
-            $nurse_covid_name = "";
         }
 
-        // Upload flu
-        if ($request->flu_vac == 'Yes') {
-            $asset = NurseAsset::where('nurse_id', $id)->where('filter', 'flu')->first();
-
-            //$input['using_date'] = isset($request->flu_date)?$request->flu_date:'';
-            $input['filter'] = 'flu';
-            $input['nurse_id'] = $id;
-
-            if ($request->hasFile('flu'))
-            {
-                $file = $request->file('flu');
-                $name = $file->getClientOriginalName();
-                $ext = $file->getClientOriginalExtension();
-                $flu_name = $name.'_'.time().'.'.$ext;
-                $destinationPath = 'images/nurses/vaccination';
-                $file->move(public_path($destinationPath), $flu_name);
-                $input['name'] = $flu_name;
-
-            }
-            if (!empty($asset)) {
-                if (isset($input['name'])) {
-                    if(!empty($asset->name)){
-                        if(file_exists(public_path('images/nurses/vaccination/' . $asset->name)))
-                        {
-                            File::delete(public_path('images/nurses/vaccination/' . $asset->name));
-                        }
-                    }
-                }
-                $asset->update($input);
-            }else{
-                $asset = NurseAsset::create($input);
-            }
-            $nurse_flu_name =  !empty($asset->name) ? $asset->name : "";
-        }else{
-            $flu = NurseAsset::where('nurse_id', $id)->where('filter', 'flu')->first();
-            if ($flu) {
-                if(!empty($flu->name)){
-                    if(file_exists(public_path('images/nurses/vaccination/' . $flu->name)))
-                    {
-                        File::delete(public_path('images/nurses/vaccination/' . $flu->name));
-                    }
-                }
-                $flu->delete();
-            }
-            $nurse_flu_name = "";
-        }
-
-        $vaccination[0] = $nurse_covid_name;
-        $vaccination[1] = $nurse_flu_name;
-        $vaccination = json_encode($vaccination);
-
-        NURSE::where(['id' => $worker->id])->update([
-            'worker_vaccination' => $vaccination,
-        ]);
-
-        $response = array('success'=>true,'msg'=>'Updated Successfully!');
-        return $response;
-
+        $response = array('success'=>false, 'msg'=>'No vaccination record selected!');
+        return $response; // Return the response
     }
-
+    
+    
     public function certification_submit(Request $request)
     {
         $user = auth()->guard('frontend')->user();
         $id = $user->nurse->id;
-        $worker = NURSE::findOrFail($id);
-        // BLS
-        if ($request->bls_cer == 'Yes') {
-            if ($request->hasFile('bls'))
-            {
-                NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
-                if (!empty($worker->BLS)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->BLS);
-                    }
-                }
-                $file = $request->file('bls');
-                $bls_name = $file->getClientOriginalName();
-                $bls_ext = $file->getClientOriginalExtension();
-                $bls = $bls_name.'_'.time().'.'.$bls_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $file->move(public_path($destinationPath), $bls);
+        $destinationPath = 'images/nurses/certificate';
 
-                // write image name in worker table
-                $worker->BLS = $bls;
+        // certif type
+        $type = $request->type;
+            $cert_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
+            $cert_file = $cert_field;
+            $cert_flag = $cert_field . '_cer';
+    
+            if ($request->$cert_flag == 'Yes' && $request->hasFile($cert_file)) {
+                // Delete old certificate
+                $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+                if ($old_cer) {
+                    $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
+                    if (file_exists($oldFilePath)) {
+                        File::delete($oldFilePath);
+                    }
+                    $old_cer->forceDelete();
+                }
+    
+                // Handle file upload
+                $file = $request->file($cert_file);
+                $filename = $type.'_'.$id.'_certificate_'.$file->getClientOriginalExtension();
+                $file->move(public_path($destinationPath), $filename);
+    
                 NurseAsset::create([
                     'nurse_id' => $id,
-                    'name' => $bls,
-                    'filter' => 'BLS'
+                    'file_name' => $filename,
+                    'name' => $type,
+                    'filter' => 'certificate'
                 ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'BLS')->forceDelete();
-            if (!empty($worker->BLS)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->BLS))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->BLS);
-                }
-            }
-            $worker->BLS = '';
-        }
-
-        // ACLS
-        if ($request->acls_cer == 'Yes') {
-            if ($request->hasFile('acls'))
-            {
-                NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
-                if (!empty($worker->ACLS)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
+    
+                //$responses[] = ['success' => true, 'msg' => $certificate . ' Updated Successfully!'];
+                $response = array('success'=>true,'msg'=> $type . ' Updated Successfully!');
+                return $response;
+            } else {
+                // Check and handle certificate removal if applicable
+                $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+                if ($old_cer) {
+                    $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
+                    if (file_exists($oldFilePath)) {
+                        File::delete($oldFilePath);
                     }
-                }
-
-                $acls_name_full = $request->file('acls')->getClientOriginalName();
-                $acls_name = pathinfo($acls_name_full, PATHINFO_FILENAME);
-                $acls_ext = $request->file('acls')->getClientOriginalExtension();
-                $acls = $acls_name.'_'.time().'.'.$acls_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $request->file('acls')->move(public_path($destinationPath), $acls);
-
-                // write image name in worker table
-                $worker->ACLS = $acls;
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'name' => $acls,
-                    'filter' => 'ACLS'
-                ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'ACLS')->forceDelete();
-            if (!empty($worker->ACLS)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->ACLS))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->ACLS);
+                    $old_cer->forceDelete();
+                    $response = array('success'=>true,'msg'=>$type . ' Removed Successfully!');
+                    return $response;
                 }
             }
-            $worker->ACLS = '';
-        }
-
-        // PALS
-        if ($request->pals_cer == 'Yes') {
-            if ($request->hasFile('pals'))
-            {
-                NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
-                if (!empty($worker->PALS)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->PALS);
-                    }
-                }
-
-                $pals_name_full = $request->file('pals')->getClientOriginalName();
-                $pals_name = pathinfo($pals_name_full, PATHINFO_FILENAME);
-                $pals_ext = $request->file('pals')->getClientOriginalExtension();
-                $pals = $pals_name.'_'.time().'.'.$pals_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $request->file('pals')->move(public_path($destinationPath), $pals);
-
-                // write image name in worker table
-                $worker->PALS = $pals;
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'name' => $pals,
-                    'filter' => 'PALS'
-                ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'PALS')->forceDelete();
-            if (!empty($worker->PALS)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->PALS))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->PALS);
-                }
-            }
-            $worker->PALS = '';
-        }
-
-        // OTHER
-        if (!empty($request->other_certificate_name)) {
-            if ($request->hasFile('other'))
-            {
-
-                NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
-                if (!empty($worker->other)) {
-                    if(file_exists(public_path('images/nurses/certificate/').$worker->other))
-                    {
-                        File::delete(public_path('images/nurses/certificate/').$worker->other);
-                    }
-                }
-
-                $other_name_full = $request->file('other')->getClientOriginalName();
-                $other_name = pathinfo($other_name_full, PATHINFO_FILENAME);
-                $other_ext = $request->file('other')->getClientOriginalExtension();
-                $other = $other_name.'_'.time().'.'.$other_ext;
-                $destinationPath = 'images/nurses/certificate';
-                $request->file('other')->move(public_path($destinationPath), $other);
-
-                // write image name in worker table
-                $worker->other = $other;
-                $worker->other_certificate_name = isset($request->other_certificate_name)?$request->other_certificate_name:$worker->other_certificate_name;
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'name' => $other,
-                    'filter' => 'Other'
-                ]);
-            }
-        }else{
-            NurseAsset::where('nurse_id', $id)->where('filter', 'Other')->forceDelete();
-            if (!empty($worker->other)) {
-                if(file_exists(public_path('images/nurses/certificate/').$worker->other))
-                {
-                    File::delete(public_path('images/nurses/certificate/').$worker->other);
-                }
-            }
-            $worker->other = '';
-        }
-
-
-        // NURSE::where(['id' => $worker->id])
-        //     ->update([
-        //         'BLS' => $worker->BLS,
-        //         'ACLS' => $worker->ACLS,
-        //         'PALS' => $worker->PALS,
-        //         'other' => $worker->other,
-        //         'other_certificate_name' => $request->other_certificate_name
-        //     ]);
-        $response = array('success'=>true,'msg'=>'Updated Successfully!');
-        return $response;
+        
+        $response = array('success'=>false,'msg'=>'No certificate selected!');
+        return $responses; // Return all responses after processing all certificates
     }
+
+
 
     public function skills_submit(Request $request)
     {

@@ -22,8 +22,15 @@ class JobSaved extends Model
         if(empty($user_id))
         {
             $user_id = auth()->guard('frontend')->user()->id;
+            $nurse = Nurse::where('user_id', $user_id)->first();
+            $check = $this->where(['nurse_id'=>$nurse->id, 'job_id'=>$jid, 'is_delete'=>'0','is_save'=>'1'])->first();
+            if (empty($check)) {
+                return false;
+            }else{
+                return true;
+            }
         }
-        $check = $this->where(['nurse_id'=>$user_id, 'job_id'=>$jid, 'is_delete'=>'0','is_save'=>'1'])->first();
+        $check = $this->where(['job_id'=>$jid, 'is_delete'=>'0','is_save'=>'1'])->first();
         if (empty($check)) {
             return false;
         }else{

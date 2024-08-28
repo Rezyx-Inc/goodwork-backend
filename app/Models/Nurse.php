@@ -121,6 +121,7 @@ class Nurse extends Model implements HasMedia
         'worker_trauma_level',
         'worker_scrub_color',
         'worker_facility_city',
+        'worker_facility_state',
         'worker_facility_state_code',
         'worker_interview_dates',
         'worker_start_date',
@@ -178,7 +179,7 @@ class Nurse extends Model implements HasMedia
         'worked_at_facility_before',
         'account_tier',
         'terms',
-        'type',
+        'worker_job_type',
         'profession',
         'full_name_payment' ,
         'address_payment',
@@ -187,7 +188,28 @@ class Nurse extends Model implements HasMedia
         'routing_number_payment',
         'bank_account_payment_number',
         'phone_number_payment',
-        'rto'
+        'rto',
+        'worker_facilitys_parent_system',
+        'worker_urgency',
+        'skills_checklists',
+        'worker_vaccination',
+        'worker_certificate_name',
+        'worker_eligible_work_in_us',
+        'worker_feels_like_per_hour',
+        'worker_four_zero_one_k',
+        // check recruiter/employer conditions
+        'worker_feels_like_per_hour_check',
+        'worker_overtime_rate',
+       
+        
+        'worker_weekly_non_taxable_amount_check',
+        'worker_call_back_rate',
+        'worker_on_call_rate',
+        'worker_on_call_check',
+        'worker_on_call_back_check',
+        'worker_experience',
+        'worker_benefits'
+
     ];
     protected static $logName = 'Nurse';
     protected static $logFillable = true;

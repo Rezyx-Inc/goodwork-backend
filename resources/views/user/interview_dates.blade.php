@@ -72,7 +72,7 @@
 
     <div class="ss-form-group">
         <label>Shifts/Week</label>
-        <input type="text" value="{{$model->worker_shifts_week}}"  name="worker_shifts_week" placeholder="Ideal shifts per week?">
+        <input type="text" value="{{$model->worker_shifts_week}}"  name="worker_shifts_week" placeholder="Ideal shifts per week">
     </div>
 
 

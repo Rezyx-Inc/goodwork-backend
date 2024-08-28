@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-lg-4">
-          <div class="ss-dash-explr-job-dv">
+          <div class="ss-dash-explr-job-dv" style="padding:40px !important;">
             <h4>Filters</h4>
             <form method="get" action="{{route('worker.explore')}}" id="filter_form">
 
@@ -131,7 +131,7 @@
               </div> --}}
 
               <div class="ss-fliter-btn-dv" style="margin-top:50px;">
-                <button class="ss-fliter-btn" type="submit">Apply</button>
+                <button class="ss-fliter-btn" type="submit">Search</button>
               </div>
                 <input type="hidden" name="terms" value="" id="job_type">
                 {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
@@ -159,7 +159,7 @@
                     <p>{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
                    
                     
-                    <h4>{{$j->facility->name ?? 'NA'}}</h4>
+                    <h4>{{$j->facility_name ?? 'NA'}}</h4>
                      <!-- job details not yet implemented -->
                      <h4><a href="{{route('worker_job-details',['id'=>$j->id])}}">{{$j->job_name}}</a></h4> 
                     <h6>{{$j->job_name}}</h6>
@@ -299,7 +299,7 @@ $('#slider2').slider({
     }
 });
 
-$('#slider2 .ui-slider-range').append('<span class="price-range-both-2 value"><i>' + $('#slider2').slider('values', 0) + ' - ' + $('#slider2').slider('values', 1) + '</i></span>');
+$('#slider2 .ui-slider-range').append('<span class="price-range-both-2 value"></span>');
 
 $('#slider2 .ui-slider-handle:eq(0)').append('<span class="price-range-min-2 value">' + $('#slider2').slider('values', 0) + '</span>');
 
@@ -340,7 +340,7 @@ $('#slider3').slider({
     }
 });
 
-$('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"><i>' + $('#slider3').slider('values', 0) + ' - ' + $('#slider3').slider('values', 1) + '</i></span>');
+$('#slider3 .ui-slider-range').append('<span class="price-range-both-3 value"></span>');
 
 $('#slider3 .ui-slider-handle:eq(0)').append('<span class="price-range-min-3 value">' + $('#slider3').slider('values', 0) + '</span>');
 
@@ -433,4 +433,9 @@ $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 val
 			});
 		});
 </script>
+<style>
+    .value{
+        left: 0%;
+    }
+</style>
 @stop

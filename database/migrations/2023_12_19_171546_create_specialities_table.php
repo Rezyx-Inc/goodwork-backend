@@ -14,11 +14,11 @@ class CreateSpecialitiesTable extends Migration
     public function up()
     {
         Schema::create('specialities', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid("Profession_id")->nullable();
+            $table->id();
+            //$table->uuid("Profession_id")->nullable();
             $table->string("full_name")->nullable();
             $table->string("short_name")->nullable();
-            $table->foreign('Profession_id')->references('id')->on('professions')->onDelete('cascade');
+            //$table->foreign('Profession_id')->references('id')->on('professions')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -87,10 +87,8 @@ class SiteController extends Controller {
             $data = [];
             $data['user'] = auth()->guard('frontend')->user();
             $data['jobSaved'] = new JobSaved();
-            //$data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
-           // $data['professions'] = Profession::all();
             $data['specialities'] = Speciality::select('full_name')->get();
-        $data['professions'] = Profession::select('full_name')->get();
+            $data['professions'] = Profession::select('full_name')->get();
             $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
             $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
             $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
@@ -538,7 +536,7 @@ class SiteController extends Controller {
 
     public function get_dorpdown(Request $request)
     {
-        if ($request->ajax()) {
+        try{
             if ($request->has('filter')) {
                 $keywords = Keyword::where(['active'=>'1','filter'=>$request->filter])->get();
                 $content = '<option value="">Select</option>';
@@ -553,11 +551,23 @@ class SiteController extends Controller {
                 $response = array('success'=>true ,'content'=>$content);
                 return $response;
             }
+
+        }catch(\Exception $e){
+            return response()->json(["message"=>$e->getmessage()]);
         }
+
+        
     }
     public function clear_cache() {
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
         return "Cache,View is cleared";
     }
+
+    public function authenticate(Request $request) {
+        $isAuthenticated = true; if ($isAuthenticated) { return response()->json('OK', 200); } else { return response()->json('Forbidden', 403); } }
+       
+
+
+
 }

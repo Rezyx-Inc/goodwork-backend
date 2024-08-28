@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 // create a connected account | returns account id
 router.post('/create', async (req, res) => {
-    
+
     if(!Object.keys(req.body).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
@@ -24,18 +24,18 @@ router.post('/create', async (req, res) => {
 
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
-	
+
 	let account;
-    
+
     try{
-	
+
 	    // Create the stripe connected account
 	    account = await stripe.accounts.create({
 			type: 'express',
 			country: 'US',
 			email: req.body.email
 		});
-		
+
 		await queries.insertStripeId(account.id, req.body.userId)
 
     	res.status(200).json({status: true, message:account.id});
@@ -48,26 +48,26 @@ router.post('/create', async (req, res) => {
 
 // get - account links | consumes stripeId
 router.get('/account-link', async (req, res) => {
-    
+
     if(!Object.keys(req.query).length) {
-    
+
         return res.status(400).send({status:false, message:"Empty request"})
-    
+
 	} else if (!req.query.stripeId || !req.query.userId) {
-		
+
         return res.status(400).send({status:false, message:"Missing parameters."})
     }
-	
+
 	let accountLink;
-    
+
     try{
-	    
+
 	    await queries.checkStripeId(req.body.userId)
 
 	    accountLink = await stripe.accountLinks.create({
 		  	account: req.query.stripeId,
 		  	refresh_url: process.env.REFRESH_URL_BASE_PATH + "/" + req.query.stripeId,
-		  	return_url: process.env.RETURN_URL_BASE_PATH + "/" + req.query.stripeId,
+		  	return_url: process.env.RETURN_URL_BASE_PATH + "/worker/dashboard",
 		  	type: 'account_onboarding'
 		});
 
@@ -83,11 +83,11 @@ router.get('/account-link', async (req, res) => {
 
 // get - login links | consumes stripeId
 router.get('/login-link', async (req, res) => {
-    
+
     if(!Object.keys(req.query).length) {
-    
+
         return res.status(400).send({status:false, message:"Empty request"})
-    
+
     }else if ( !req.body.stripeId){
 
         return res.status(400).send({status:false, message:"Missing parameters."})
@@ -96,15 +96,15 @@ router.get('/login-link', async (req, res) => {
 	let loginLink;
 
     try{
-    	
+
     	await queries.checkStripeId(req.body.userId)
     	loginLink = await stripe.accounts.createLoginLink(req.query.stripeId);
-    
+
     }catch(e){
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}
-    
+
     return res.status(200).json({status:true, message:loginLink.url})
 
 });
@@ -112,7 +112,7 @@ router.get('/login-link', async (req, res) => {
 // post - transfer
 // creates a transfer | returns true or false
 router.post('/transfer', async (req, res) => {
-    
+
     if(!Object.keys(req.body).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
@@ -131,7 +131,7 @@ router.post('/transfer', async (req, res) => {
 		  	currency: 'usd',
 		  	destination: stripeId
 		});
-		
+
 		// DB save worker payment
 		res.status(200).json({status: true, message:"OK"});
 
@@ -139,7 +139,7 @@ router.post('/transfer', async (req, res) => {
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}
-  
+
 })
 
 
@@ -159,18 +159,18 @@ router.post('/customer/create', async (req, res) => {
     // Check if the customer exists
     try{
     	const customerTest = await stripe.customers.list({email:req.body.email});
-    	
+
     	if(customerTest.data.length > 0){
     		return res.status(400).send({status: false, message: "Client exists.", code:101})
     	}
-    
+
     }catch(e){
     	console.log(e.message);
 		return res.status(400).send({status: false, message: e.message})
     }
 
     const portal = "https://billing.stripe.com/p/login/test_8wMaFa19ddXy1wc5kk";
-    
+
     // Create the customer
     try{
 
@@ -190,7 +190,7 @@ router.post('/customer/create', async (req, res) => {
 		console.log(e);
 		return res.status(400).send({status: false, message: e.message})
 	}
-	
+
 });
 
 // Create an invoice
@@ -205,7 +205,7 @@ router.post('/customer/invoice', async (req, res) => {
     }
 
     try{
-    	
+
     	// first set the offer on hold
     	try {
 			// first set the offer on hold
@@ -217,7 +217,7 @@ router.post('/customer/invoice', async (req, res) => {
 
     	// Create invoice
 		const invoice = await stripe.invoices.create({
-			
+
 			customer: req.body.stripeId,
 			auto_advance: true,
 			currency: "usd",
@@ -251,7 +251,7 @@ router.post('/customer/invoice', async (req, res) => {
 
 // get - customer payment methods
 router.get('/customer/customer-payment-method', async (req, res) => {
-    
+
     if(!Object.keys(req.query).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
@@ -274,7 +274,7 @@ router.get('/customer/customer-payment-method', async (req, res) => {
 
 // get - check onboarding status | consumes stripeId
 router.get('/onboarding-status', async (req, res) => {
-    
+
     if(!Object.keys(req.query).length) {
         return res.status(400).send({status:false, message:"Empty request"})
     }
@@ -282,7 +282,7 @@ router.get('/onboarding-status', async (req, res) => {
     let account;
 
     try {
-        
+
         account = await stripe.accounts.retrieve(req.query.stripeId);
 
     } catch(e) {
@@ -300,7 +300,7 @@ router.get('/onboarding-status', async (req, res) => {
         // The user has not completed the onboarding process
         return res.status(400).json({status: false, message: "Onboarding not completed"});
     }
-    
+
 });
 
 module.exports = router;

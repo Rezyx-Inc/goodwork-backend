@@ -11,6 +11,7 @@ use Illuminate\Contracts\Support\Renderable;
 use URL;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use App\Events\NotificationOffer;
 // ************ models ************
 /** Models */
 use App\Models\{Job, Offer, Nurse, User, OffersLogs,States,Cities,Keyword};
@@ -124,7 +125,7 @@ class ApplicationController extends Controller
         }else{
             $offerLists = Offer::where('status', $type)->where('created_by',$recruiter->id)->get();
         }
-
+        // return response()->json($offerLists);
         if (0 >= count($offerLists)) {
             $responseData = [
                 'applicationlisting' => '<div class="text-center"><span>No Application</span></div>',
@@ -136,9 +137,15 @@ class ApplicationController extends Controller
 
         $data = '';
         $data2 = '';
+        $nurses = [];
         // str_contains($nurse['worker_shift_time_of_day'], 'day') ? 'day' : '' . ' ' . str_contains($nurse['worker_shift_time_of_day'], 'night') ? 'night' : ''
         foreach ($offerLists as $key => $value) {
             if ($value) {
+                if(in_array($value->worker_user_id, $nurses)){
+                    continue;
+                }
+                $nurses[] = $value->worker_user_id;
+
                 $nurse = Nurse::where('id', $value->worker_user_id)->first();
                 $user = user::where('id', $nurse->user_id)->first();
                 $data .=
@@ -148,7 +155,7 @@ class ApplicationController extends Controller
                     '" id="ss-expl-applicion-div-box" onclick="applicationType(\'' .
                     $type .
                     '\', \'' .
-                    $value->id .
+                    '' .
                     '\', \'userdetails\')">
                         <div class="ss-job-id-no-name">
                             <ul>
@@ -1204,6 +1211,7 @@ class ApplicationController extends Controller
                     }
                 }
                 $allspecialty = (object) $allspecialty;
+                //$jobdetails = Offer::where('job_id', $jobdetails['id'])->first();
                 $allusstate = States::all()->where('country_code', 'US');
                 // $alluscities = Cities::all()->where('state_id', $jobdetails['job_state']);
                 $alluscities = DB::table('cities')
@@ -2361,7 +2369,10 @@ class ApplicationController extends Controller
 
     public function updateApplicationStatus(Request $request)
     {
-        $recruiter_id = Auth::guard('recruiter')->user()->id;
+        $recruiter = Auth::guard('recruiter')->user();
+        $recruiter_id = $recruiter->id;
+        $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
+       
         $type = $request->type;
         $id = $request->id;
         $formtype = $request->formtype;
@@ -2379,6 +2390,15 @@ class ApplicationController extends Controller
 
             $job = Offer::where(['job_id' => $jobid, 'id' => $id,'created_by' => $recruiter_id])->update(['status' => $formtype]);
             if ($job) {
+                // send notification to the worker
+                $offer = Offer::where('id', $id)->first();
+                $time = now()->toDateTimeString();
+                $receiver = $offer->worker_user_id;
+                $job_name = Job::where('id', $jobid)->first()->job_name;
+
+                
+                event(new NotificationOffer($formtype,false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
+
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
                 $statusCounts = [];
                 $offerLists = [];
@@ -2551,6 +2571,9 @@ class ApplicationController extends Controller
 
     public function sendJobOfferRecruiter(Request $request)
     {
+        $user = Auth::guard('recruiter')->user();
+        $recruiter_id = $user->id;
+        $full_name = $user->first_name . ' ' . $user->last_name;
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'jobid' => 'required',
@@ -2574,14 +2597,24 @@ class ApplicationController extends Controller
                         'status' => 'success',
                         'message' => 'Job Rejected successfully',
                     ];
+                    $offer = Offer::where('id', $request->id)->first();
+                    $jobid = $offer->job_id;
+                    $time = now()->toDateTimeString();
+                    $receiver = $offer->worker_user_id;
+                    $job_name = Job::where('id', $jobid)->first()->job_name;
+    
+                    
+                    event(new NotificationOffer('Rejected',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
                 }
             } elseif ($request->type == 'offersend') {
                 $update_array['is_counter'] = '0';
                 $update_array['is_draft'] = '0';
                 $update_array['status'] = 'Hold';
-                $job = DB::table('offers')
-                    ->where(['id' => $request->id])
-                    ->update($update_array);
+                $job = Offer::find($request->id);
+                if ($job) {
+                    $job->update($update_array);
+                }
+                
                     $user = Auth::guard('recruiter')->user();
                 $data = [
                     'offerId' => $request->id,
@@ -2600,12 +2633,23 @@ class ApplicationController extends Controller
                 // Make the request
                 $responseInvoice = Http::post($url, $data);
                 // return response()->json(['message'=>$responseInvoice->json()]);
+                
                 $responseData = [];
                 if ($job) {
                     $responseData = [
                         'status' => 'success',
                         'message' => $responseInvoice->json()['message'],
                     ];
+                    $offer = Offer::where('id', $request->id)->first();
+                    $id = $request->id;
+                    $jobid = $offer->job_id;
+                    $time = now()->toDateTimeString();
+                    $receiver = $offer->worker_user_id;
+                    $job_name = Job::where('id', $jobid)->first()->job_name;
+    
+                    
+                    event(new NotificationOffer('Offered',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
+
                 }
             }
             return response()->json($responseData);

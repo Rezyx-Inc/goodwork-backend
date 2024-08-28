@@ -68,9 +68,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('my-profile', ['uses' => 'UserController@edit', 'as' => 'my-profile']);
             Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile.store']);
             Route::get('vaccination', ['uses' => 'UserController@edit', 'as' => 'vaccination']);
-            Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination.store']);
+            //Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination.store']);
             Route::get('certification', ['uses' => 'UserController@edit', 'as' => 'certification']);
-            Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification.store']);
+            //Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification.store']);
             Route::get('references', ['uses' => 'UserController@edit', 'as' => 'references']);
             Route::post('references', ['uses' => 'UserController@post_references', 'as' => 'references.store']);
             Route::get('info-required', ['uses' => 'UserController@edit', 'as' => 'info-required']);
@@ -87,25 +87,27 @@ Route::middleware(['web'])->group(function () {
         Route::get('explore', ['uses' => 'JobController@explore', 'as' => 'explore']);
         Route::get('job/{id}/details', ['uses' => 'JobController@details', 'as' => 'job-details']);
         Route::post('add-save-jobs', ['uses' => 'JobController@add_save_jobs', 'as' => 'add-save-jobs']);
-        Route::post('apply-on-job', ['uses' => 'JobController@apply_on_jobs', 'as' => 'apply-on-job']);
+        // Route::post('apply-on-job', ['uses' => 'JobController@apply_on_jobs', 'as' => 'apply-on-job']);
 
         Route::get('my-work-journey', ['uses' => 'JobController@my_work_journey', 'as' => 'my-work-journey']);
         Route::post('fetch-job-content', ['uses' => 'JobController@fetch_job_content', 'as' => 'fetch-job-content']);
 
-        Route::get('jobs/applied', ['uses' => 'JobController@my_work_journey', 'as' => 'applied-jobs']);
-        Route::get('jobs/offered', ['uses' => 'JobController@my_work_journey', 'as' => 'offered-jobs']);
-        Route::get('jobs/hired', ['uses' => 'JobController@my_work_journey', 'as' => 'hired-jobs']);
-        Route::get('jobs/past', ['uses' => 'JobController@my_work_journey', 'as' => 'past-jobs']);
+        // Route::get('jobs/applied', ['uses' => 'JobController@my_work_journey', 'as' => 'applied-jobs']);
+        // Route::get('jobs/offered', ['uses' => 'JobController@my_work_journey', 'as' => 'offered-jobs']);
+        // Route::get('jobs/hired', ['uses' => 'JobController@my_work_journey', 'as' => 'hired-jobs']);
+        // Route::get('jobs/past', ['uses' => 'JobController@my_work_journey', 'as' => 'past-jobs']);
 
         Route::get('jobs/{id}/counter-offer', ['uses' => 'JobController@counter_offer', 'as' => 'counter-offer']);
-        Route::post('post-counter-offer', ['uses' => 'JobController@store_counter_offer', 'as' => 'post-counter-offer']);
+        //Route::post('post-counter-offer', ['uses' => 'JobController@store_counter_offer', 'as' => 'post-counter-offer']);
 
         Route::get('help-center', ['uses' => 'DashboardController@help_center', 'as' => 'help-center']);
         Route::get('logout', ['uses' => 'SiteController@logout', 'as' => 'logout']);
 
     });
 
-       Route::post('/custom/broadcasting/auth', function (Request $request) { // $channelName = $request->input('channel_name'); // $socketId = $request->input('socket_id'); // Replace this with your actual authentication logic
-         $isAuthenticated = true; if ($isAuthenticated) { return response()->json('OK', 200); } else { return response()->json('Forbidden', 403); } });
+      
         });
+
+        Route::post('/custom/broadcasting/auth', ['uses' => 'SiteController@authenticate', 'as' => 'broadcasting.auth']);
+    
 
