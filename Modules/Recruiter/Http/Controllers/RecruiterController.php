@@ -499,7 +499,7 @@ class RecruiterController extends Controller
 
     public function addJobStore(Request $request)
     {
-        //return $request->all();
+        // return $request->all();
          // return $request->input('active');
         try {
 
@@ -569,12 +569,9 @@ class RecruiterController extends Controller
                         'urgency' => 'nullable|string',
                         'facilitys_parent_system' => 'nullable|string',
                         'facility_name' => 'nullable|string',
-                        'facility_location' => 'nullable|string',
                         'nurse_classification' => 'nullable|string',
                         'pay_frequency' => 'nullable|string',
                         'benefits' => 'nullable|string',
-                        'facility_city' => 'nullable|string',
-                        'facility_state' => 'nullable|string',
                         'feels_like_per_hour' => 'nullable|string',
                         'preferred_shift_duration' => 'nullable|string'
                 ]);
@@ -759,9 +756,7 @@ class RecruiterController extends Controller
                     if (isset($validatedData['facility_name'])) {
                         $job->facility_name = $validatedData['facility_name'];
                     }
-                    if (isset($validatedData['facility_location'])) {
-                        $job->facility_location = $validatedData['facility_location'];
-                    }
+                    
                     if (isset($validatedData['nurse_classification'])) {
                         $job->nurse_classification = $validatedData['nurse_classification'];
                     }
@@ -770,12 +765,6 @@ class RecruiterController extends Controller
                     }
                     if (isset($validatedData['benefits'])) {
                         $job->benefits = $validatedData['benefits'];
-                    }
-                    if (isset($validatedData['facility_city'])) {
-                        $job->facility_city = $validatedData['facility_city'];
-                    }
-                    if (isset($validatedData['facility_state'])) {
-                        $job->facility_state = $validatedData['facility_state'];
                     }
                     if(isset($validatedData['feels_like_per_hour'])){
                         $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
@@ -854,12 +843,9 @@ class RecruiterController extends Controller
                     'urgency' => 'nullable|string',
                     'facilitys_parent_system' => 'nullable|string',
                     'facility_name' => 'nullable|string',
-                    'facility_location' => 'nullable|string',
                     'nurse_classification' => 'nullable|string',
                     'pay_frequency' => 'nullable|string',
                     'benefits' => 'nullable|string',
-                    'facility_city' => 'required|string',
-                    'facility_state' => 'required|string',
                     'feels_like_per_hour' => 'nullable|string',
                 ]);
 
@@ -948,9 +934,7 @@ class RecruiterController extends Controller
                 if (isset($validatedData['facility_name'])) {
                     $job->facility_name = $validatedData['facility_name'];
                 }
-                if (isset($validatedData['facility_location'])) {
-                    $job->facility_location = $validatedData['facility_location'];
-                }
+               
 
                 if (isset($validatedData['nurse_classification'])) {
                     $job->nurse_classification = $validatedData['nurse_classification'];
@@ -960,12 +944,6 @@ class RecruiterController extends Controller
                 }
                 if (isset($validatedData['benefits'])) {
                     $job->benefits = $validatedData['benefits'];
-                }
-                if (isset($validatedData['facility_city'])) {
-                    $job->facility_city = $validatedData['facility_city'];
-                }
-                if (isset($validatedData['facility_state'])) {
-                    $job->facility_state = $validatedData['facility_state'];
                 }
                 if(isset($validatedData['feels_like_per_hour'])){
                     $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
@@ -1201,12 +1179,9 @@ class RecruiterController extends Controller
                      'urgency' => 'nullable|string',
                      'facilitys_parent_system' => 'nullable|string',
                      'facility_name' => 'nullable|string',
-                     'facility_location' => 'nullable|string',
                      'nurse_classification' => 'nullable|string',
                      'pay_frequency' => 'nullable|string',
                      'benefits' => 'nullable|string',
-                     'facility_city' => 'required|string',
-                     'facility_state' => 'required|string',
                      'feels_like_per_hour' => 'nullable|string',
                         
                  ]);
@@ -1276,12 +1251,9 @@ class RecruiterController extends Controller
                  $job->urgency = $validatedData['urgency'];
                  $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
                  $job->facility_name = $validatedData['facility_name'];
-                 $job->facility_location = $validatedData['facility_location'];
                  $job->nurse_classification = $validatedData['nurse_classification'];
                  $job->pay_frequency = $validatedData['pay_frequency'];
                  $job->benefits = $validatedData['benefits'];
-                 $job->facility_city = $validatedData['facility_city'];
-                 $job->facility_state = $validatedData['facility_state'];
                  $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
                 // end added field from sheets 
 

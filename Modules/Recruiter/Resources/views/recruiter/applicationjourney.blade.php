@@ -107,7 +107,7 @@
         <div class="modal fade ss-jb-dtl-pops-mn-dv" id="file_modal" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-md modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content" style="width:100vw;">
                     <div class="ss-pop-cls-vbtn">
                         <button type="button" class="btn-close" data-target="#file_modal" onclick="close_modal(this)"
                             aria-label="Close"></button>

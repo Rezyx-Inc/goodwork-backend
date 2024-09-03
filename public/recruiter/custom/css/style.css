@@ -1100,7 +1100,7 @@ ul.ks-cboxtags li input[type="checkbox"] {
 
 a.ss-jb-prfl-save-ico {
     position: absolute;
-    right: 8px;
+    right: 0;
     top: 8px;
     background: transparent !important;
 }
@@ -1230,26 +1230,17 @@ button.ss-fliter-btn {
 .ss-job-prfle-sec ul {
     display: flex;
     list-style: none;
-    padding:5px 0;
+    margin-top: 8px;
+    margin-bottom: 7px;
     gap: 9px;
-}
-
-.ss-job-prfle-sec ul li{
-    background: #FFEEEF;
-    padding: 5px 11px;
-    border-radius: 100px;
-    font-size: 16px;
-    display: inline-block;
-    font-weight: 500;
-    color: #3b71ca;
 }
 
 .ss-job-prfle-sec a {
     background: #FFEEEF;
+    padding: 3px 11px;
     border-radius: 100px;
-    font-size: 16px;
+    font-size: 13px;
     display: inline-block;
-    font-weight: 500;
 }
 
 .ss-job-prfle-sec img {
@@ -1260,22 +1251,20 @@ button.ss-fliter-btn {
 
 .ss-job-prfle-sec h5 {
     font-style: italic;
-    font-size: 17px;
-    padding: 5px 0;
+    font-size: 15px;
 }
 
 .ss-job-prfle-sec h4 {
-    font-size: 18px;
-    padding: 5px 0;
+    font-size: 16px;
 }
 
 .ss-job-prfle-sec h6 {
-    font-size: 15px;
+    font-size: 13px;
     padding: 5px 0;
 }
 
 .ss-job-prfle-sec p {
-    font-size: 17px;
+    font-size: 15px;
     color: #B5649E;
     padding-bottom: 8px;
     line-height: 18px;
@@ -1283,20 +1272,13 @@ button.ss-fliter-btn {
 
 .ss-job-prfle-sec p span {
     color: #006BC9;
-    font-size: 14px;
+    font-size: 12px;
 }
-
-.ss-job-prfle-sec .icon_cards {
-    width: 17px;
-    height: 17px;
-}
-
 
 .ss-dash-profile-jb-mn-dv {
     width: 88%;
     margin: auto;
 }
-
 
 
 
@@ -3164,4 +3146,3 @@ ul.ss-jb-dtlpop-chck li {
     align-items: center !important;
     justify-content: center !important;
 }
-

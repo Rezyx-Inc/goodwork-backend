@@ -509,8 +509,9 @@ function hide_show_select(obj) {
     }
 }
 
-function save_jobs(obj, reload_page=false)
+function save_jobs(obj,event, reload_page=false)
 {
+    event.stopPropagation();
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -616,7 +617,7 @@ function apply_on_jobs(obj,worked_at_facility_before,reload_page = true)
 function match_worker_with_jobs_update(data_to_send)
 {
     
-    console.log(data_to_send);
+    console.log('data to send',data_to_send);
     
     $.confirm({
         title: 'Save Your Information',

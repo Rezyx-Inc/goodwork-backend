@@ -314,10 +314,20 @@ class Job extends Model
             },
 
             'job_location'=> function () use ($job, $nurse){
-                $match = ($job->job_location == $nurse->nursing_license_state);
-                $value = $nurse->nursing_license_state;
-                $type = 'dropdown';
+                $job_locations = explode(',', $job->job_location); 
+                $nursing_license_state = $nurse->nursing_license_state;
+                $match = false;
                 $name = 'nursing_license_state';
+                $type = 'dropdown';
+                $value = $nursing_license_state;
+                foreach($job_locations as $job_location){
+                    if ($job_location == $nursing_license_state) {
+                        $match = true;
+                        $name = 'nursing_license_state';
+                        $type = 'dropdown';
+                        $value = $nursing_license_state;
+                    }
+                }
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
 

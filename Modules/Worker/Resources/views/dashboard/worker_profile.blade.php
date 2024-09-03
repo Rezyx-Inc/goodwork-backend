@@ -3,11 +3,8 @@
 @section('content')
     @php
         $user = auth()->guard('frontend')->user();
-
     @endphp
     <!--Main layout-->
-
-
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
         <div class="container">
             <div class="ss-my-profile--basic-mn-sec">
@@ -15,14 +12,6 @@
                     <div class="col-lg-5">
                         <div class="ss-my-profil-div">
                             <h2>My <span class="ss-pink-color">Profile</span></h2>
-                            {{-- <div class="ss-my-profil-img-div">
-                                <img src="{{ URL::asset('frontend/img/account-img.png') }}"
-                                    onerror="this.onerror=null;this.src='{{ USER_IMG }}';" id="preview"
-                                    width="112px" height="112px" style="object-fit: cover;" />
-                                <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
-                                <p>{{ $worker->id }}</p>
-                            </div> --}}
-
                             <div class="ss-my-profil-img-div">
                                 <div class="profile-pic">
                                     <label class="-label" for="file">
@@ -36,11 +25,8 @@
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $worker->id }}</p>
                             </div>
-
-
                             <div class="ss-profil-complet-div">
                                 <div class="row d-flex justify-content-center align-items-center ">
-                                    {{-- <li><img src="{{ URL::asset('frontend/img/progress.png') }}" /></li> --}}
                                     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
                                         <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                             style="transform:rotate(-90deg)">
@@ -80,9 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="ss-my-presnl-btn-mn">
-
                                 <div class="ss-my-prsnl-wrapper">
                                     <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-1" checked
@@ -100,7 +84,6 @@
                                             </ul>
                                         </label>
                                     </div>
-
                                     <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-2"
                                             onclick="AccountSettingDisplay()">
@@ -118,7 +101,6 @@
                                             </ul>
                                         </label>
                                     </div>
-
                                     <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-3"
                                             onclick="BonusTransfersDisplay()">
@@ -136,7 +118,6 @@
                                             </ul>
                                         </label>
                                     </div>
-
                                     <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-4" onclick="SupportDisplay()">
                                         <label for="option-4" class="option option-4">
@@ -152,8 +133,6 @@
                                             </ul>
                                         </label>
                                     </div>
-
-
                                     <div class="ss-my-prosnl-rdio-btn">
                                         <input type="radio" name="select" id="option-5"
                                             onclick="DisactivateAccountDisplay()">
@@ -175,7 +154,6 @@
                             </div>
                         </div>
                     </div>
-
                     {{-- ---------------------------------------------------------- Profile settings Form ---------------------------------------------------------- --}}
                     <div class="col-lg-7 bodyAll profile_setting">
                         <div class="ss-pers-info-form-mn-dv">
@@ -211,7 +189,6 @@
                                                 <input type="text" name="last_name"
                                                     placeholder="Please enter your last name"
                                                     value="{{ isset($user->last_name) ? $user->last_name : '' }}">
-
                                             </div>
                                             <span class="help-block-last_name"></span>
                                             {{-- Phone Number --}}
@@ -220,7 +197,6 @@
                                                 <input id="contact_number" type="text" name="mobile"
                                                     placeholder="Please enter your phone number"
                                                     value="{{ isset($user->mobile) ? $user->mobile : '' }}">
-
                                             </div>
                                             <span class="help-block-mobile"></span>
                                             {{-- Address Information --}}
@@ -229,7 +205,6 @@
                                                 <input type="text" name="address"
                                                     placeholder="Please enter your address"
                                                     value="{{ isset($worker->address) ? $worker->address : '' }}">
-
                                             </div>
                                             <span class="help-block-address"></span>
                                             {{-- State Information --}}
@@ -254,7 +229,6 @@
                                                     <option value="{{ !empty($worker->city) ? $worker->city : '' }}">
                                                         {{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }}
                                                     </option>
-
                                                 </select>
                                             </div>
                                             <span class="help-block-city"></span>
@@ -265,7 +239,6 @@
                                                 <input type="number" name="zip_code"
                                                     placeholder="Please enter your Zip Code"
                                                     value="{{ isset($user->zip_code) ? $user->zip_code : '' }}">
-
                                             </div>
                                             <span class="help-block-zip_code"></span>
                                             {{-- Skip && Save --}}

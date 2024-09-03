@@ -16,21 +16,82 @@
                         <!------------->
                         <div class="ss-apply-on-jb-mmn-dv-box-divs">
                             <div class="ss-job-prfle-sec">
-                                <p>{{ $model->job_type }} <span>+50 Applied</span></p>
-                                <h4>{{ $model->job_name }}</h4>
-                                <h6>{{ $model->facility->name ?? 'NA' }}</h6>
-                                <ul>
-                                    <li><a href="javascript:void(0)"><img src="{{ URL::asset('frontend/img/location.png') }}">
-                                            {{ $model->job_city }}, {{ $model->job_state }}</a></li>
-                                    <li><a href="javascript:void(0)"><img
-                                                src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                            {{ $model->preferred_assignment_duration }} wks</a></li>
-                                    <li><a href="javascript:void(0)"><img
-                                                src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                            {{ $model->weekly_pay }}/wk</a></li>
-                                </ul>
+                                <div class="row">
+                                    <p class="col-10">{{ $model->job_type }} <span>+{{ $model->getOfferCount() }}
+                                            Applied</span></p>
+                                    @if ($model->urgency == 'Auto Offer' || $model->as_soon_as == true)
+                                        <p class="col-2 text-center">Urgent</p>
+                                    @endif
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <ul>
+                                            <li><a href="#"><img class="icon_cards"
+                                                        src="{{ URL::asset('frontend/img/facility.png') }}">
+                                                    {{ $model->facility_name ?? 'NA' }}</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-9 d-flex justify-content-end">
+                                        <ul>
+                                            <li><a href="#"><img class="icon_cards"
+                                                        src="{{ URL::asset('frontend/img/specialty.png') }}">
+                                                    {{ $model->specialty }}</a></li>
+                                            <li><a href="#"><img class="icon_cards"
+                                                        src="{{ URL::asset('frontend/img/specialty.png') }}">
+                                                    {{ $model->proffesion }}/wk</a></li>
+                                    </div>
+                                </div>
+                                <!-- job details not yet implemented -->
+                                <div class="row">
+                                    <div class="col-3">
+                                        <ul>
+                                            <li><a href="{{ route('worker_job-details', ['id' => $model->id]) }}"><img
+                                                        class="icon_cards" src="{{ URL::asset('frontend/img/job.png') }}">
+                                                    {{ $model->job_name }}</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-9 d-flex justify-content-end">
+                                        <ul>
+                                            <li><a href="#"><img class="icon_cards"
+                                                        src="{{ URL::asset('frontend/img/location.png') }}">
+                                                    {{ $model->job_city }}, {{ $model->job_state }}</a></li>
+                                            <li><a href="#"><img class="icon_cards"
+                                                        src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                                    {{ $model->preferred_assignment_duration }} wks</a></li>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-5">
+                                        <ul>
+                                            @if ($model->as_soon_as == false)
+                                                <li>
+                                                    <img class="icon_cards"
+                                                        src="{{ URL::asset('frontend/img/calendar.png') }}"> <a
+                                                        href="#" class="start-date"
+                                                        data-start-date="{{ $model->start_date }}"></a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <div class="col-7 d-flex justify-content-end">
+                                        <ul>
+
+                                            <li><img class="icon_cards"
+                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                {{ $model->weekly_pay }}/wk</li>
+                                            <li><img class="icon_cards"
+                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                {{ $model->actual_hourly_rate }}/hour</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <!-- should be dynamic  -->
                                 <h5>Recently Added</h5>
-                                <a href="javascript:void(0)" data-id="{{ $model->id }}" onclick="save_jobs(this)"
+                                <a href="javascript:void(0)" data-id="{{ $model->id }}" onclick="save_jobs(this,event)"
                                     class="ss-jb-prfl-save-ico">
                                     @if ($jobSaved->check_if_saved($model->id))
                                         <img src="{{ URL::asset('frontend/img/bookmark.png') }}" />
@@ -117,7 +178,7 @@
                                 <ul id="diploma"
                                     class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['diploma']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                     <li>
-                                        <span>Diploma</span>
+                                        <span>Diploma (*)</span>
                                         <h6>College Diploma</h6>
                                     </li>
                                     <li>
@@ -130,7 +191,7 @@
                                 <ul id="driving_license"
                                     class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['driving_license']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                     <li>
-                                        <span>drivers license</span>
+                                        <span>drivers license (*)</span>
                                         <h6>Required</h6>
                                     </li>
                                     <li>
@@ -160,7 +221,7 @@
                                 <ul id="worked_at_facility_before"
                                     class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worked_at_facility_before']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                     <li>
-                                        <span>Worked at Facility Before</span>
+                                        <span>Worked at Facility Before (*)</span>
                                         <h6>In the last 18 months</h6>
                                     </li>
                                     <li>
@@ -176,7 +237,7 @@
                                 <ul id="worker_ss_number"
                                     class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worker_ss_number']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                     <li>
-                                        <span>SS Number</span>
+                                        <span>SS Number (*)</span>
                                         <h6>Last 4 digits of SS#</h6>
                                     </li>
                                     <li>
@@ -501,7 +562,7 @@
                                             <h6>{{ $model->Emr }} </h6>
                                         </li>
                                         <li>
-                                            <p data-target="dropdown" data-title="What EMRs have you used?"
+                                            <p data-target="multi_select" data-title="What EMRs have you used?"
                                                 data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What
                                                 EMRs have you used?</p>
                                         </li>
@@ -1108,6 +1169,12 @@
                                     </ul>
                                 @endif
 
+                                <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                    <li>
+                                        <span>(*) : Required Fields</span>
+                                    </li>
+                                </ul>
+
                                 <div class="ss-job-apl-on-app-btn">
                                     <button id="applyButton" data-id="{{ $model->id }}"
                                         onclick="match_worker_with_jobs_update(dataToSend)">Save
@@ -1609,23 +1676,23 @@
                                         <div></div>
                                     </div>
                                     <h4></h4>
-                                    <ul class="ss-jb-dtlpop-chck">
+                                    <ul class="row d-flex justify-content-center ss-jb-dtlpop-chck">
                                         <li>
                                             <label>
-                                                <input type="radio" name="radio" name="" value="1">
+                                                <input type="radio" name="worker_benefits" value="1">
                                                 <span>Yes, Please</span>
                                             </label>
                                         </li>
                                         <li>
                                             <label>
-                                                <input type="radio" name="radio" name="" value="2">
+                                                <input type="radio" name="worker_benefits" value="2">
                                                 <span>Preferable</span>
                                             </label>
                                         </li>
 
                                         <li>
                                             <label>
-                                                <input type="radio" name="radio" name="" value="0">
+                                                <input type="radio" name="worker_benefits" value="0">
                                                 <span>No, Thanks</span>
                                             </label>
                                         </li>
@@ -2020,6 +2087,58 @@
             </div>
 
 
+            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="multi_select_modal" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="ss-pop-cls-vbtn">
+                            <button type="button" class="btn-close" data-target="#multi_select_modal"
+                                onclick="close_modal(this)" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ss-job-dtl-pop-form">
+                                <form method="post" action="{{ route('my-profile.store') }}" id="multi_select_modal_form"
+                                    class="modal-form">
+                                    @csrf
+                                    <div class="ss-job-dtl-pop-frm-sml-dv">
+                                        <div></div>
+                                    </div>
+                                    <h4></h4>
+                                    <div class="ss-form-group ss-prsnl-frm-specialty">
+                                        <label>EMR</label>
+                                        <div class="ss-speilty-exprnc-add-list Emr-content">
+                                        </div>
+                                        <ul>
+                                            <li class="row w-100 p-0 m-0">
+                                                <div class="ps-0">
+                                                    <select class="m-0" id="Emr">
+                                                        <option value="" disabled selected hidden>Select an emr</option>
+                                                        @if(isset($allKeywords['EMR']))
+                                                        @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{$value->id}}">{{$value->title}}</option>
+                                                        @endforeach
+                                                        @endif
+                                                    </select>
+                                                    <input type="text" hidden id="EmrAllValues" name="worker_emr" >
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addEmr('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                <button class="ss-job-dtl-pop-sv-btn"
+                                onclick="collect_data(event,'multi-select')">Save</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
 
@@ -2033,6 +2152,114 @@
 @section('js')
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
     <script>
+        var Emr = {};
+    
+        function addEmr(type) {
+            let id;
+            let idtitle;
+            if (type == 'from_add') {
+                id = $('#Emr');
+                idtitle = "Emr";
+            } else if (type == 'from_draft') {
+                id = $('#EmrDraft');
+                idtitle = "EmrDraft";
+            } else {
+                id = $('#EmrEdit');
+                idtitle = "EmrEdit";
+            }
+    
+            if (!id.val()) {
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-check"></i> Select the Emr please.',
+                    time: 3
+                });
+            } else {
+                if (!Emr.hasOwnProperty(id.val())) {
+                    console.log(id.val());
+    
+                    var select = document.getElementById(idtitle);
+                    var selectedOption = select.options[select.selectedIndex];
+                    var optionText = selectedOption.textContent;
+    
+                    Emr[id.val()] = optionText;
+                    EmrStr = Object.values(Emr).join(', ');
+                    console.log('EmrStr',EmrStr);
+                    id.val('');
+                    list_Emr();
+                }
+            }
+        }
+    
+        function list_Emr() {
+            var str = '';
+            console.log(Emr);
+    
+            for (const key in Emr) {
+                console.log(Emr);
+    
+                let Emrname = "";
+                @php
+                    $allKeywordsJSON = json_encode($allKeywords['EMR']);
+                @endphp
+                let allspcldata = '{!! $allKeywordsJSON !!}';
+                if (Emr.hasOwnProperty(key)) {
+                    var data = JSON.parse(allspcldata);
+    
+                    data.forEach(function(item) {
+                        if (key == item.id) {
+                            Emrname = item.title;
+                        }
+                    });
+                    const value = Emr[key];
+                    str += '<ul>';
+                    str += '<li>' + Emrname + '</li>';
+                    str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-Emr" data-key="' + key + '" onclick="remove_Emr(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                    str += '</ul>';
+                }
+            }
+            $('.Emr-content').html(str);
+        }
+    
+        function remove_Emr(obj, key) {
+            if (Emr.hasOwnProperty(key)) {
+                delete Emr[key]; // Remove the Emr from the object
+                EmrStr = Object.values(Emr).join(', '); // Update the hidden input value
+                list_Emr(); // Refresh the list to reflect the deletion
+                notie.alert({
+                    type: 'success',
+                    text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',
+                    time: 3
+                });
+            } else {
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-times"></i> Shift Time Of Day not found.',
+                    time: 3
+                });
+            }
+        }
+    </script>
+    <script>
+
+        
+ 
+function daysUntilWorkStarts(dateString) {
+    const workStartDate = new Date(dateString);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    const differenceInMilliseconds = workStartDate - today;
+    const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+    return `Work starts in ${differenceInDays} days`;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.start-date').forEach(function(element) {
+        const startDate = element.getAttribute('data-start-date');
+        element.textContent = daysUntilWorkStarts(startDate);
+    });
+});
+
         $('#ref_phone_number').mask('+1 (999) 999-9999');
         var worker_files_displayname_by_type = [];
         var worker_files = [];
@@ -2371,7 +2598,7 @@
     </script>
     <script>
         var dataToSend = {};
-
+        var EmrStr = '';
 
         function matchWithWorker(workerField, InsertedValue) {
             let match = false;
@@ -2405,7 +2632,9 @@
                     }
                     break;
                 case 'nursing_license_state':
-                    if (job['job_location'] == InsertedValue) {
+                    let job_location = job['job_location'];
+                    let states = job_location.split(", ").map(state => state.trim());
+                    if (states.includes(InsertedValue)) {
                         match = true;
                     }
                     break;
@@ -2677,11 +2906,14 @@
             let button = $(event.target);
             var form = button.closest('form');
             let formData = new FormData(form[0]);
+            if(type !== 'file' && type !== 'multi-select'){
             let data = Object.fromEntries(formData.entries());
+            console.log(data);
             dataToSend = {
                 ...dataToSend,
                 ...data
             };
+           }
 
 
             var inputName = '';
@@ -2699,6 +2931,21 @@
                 inputName = form.find('select').attr('name');
             } else if (type == 'date') {
                 inputName = form.find('input[type="date"]').attr('name');
+            } else if (type = 'multi-select'){
+                console.log('form',form);
+                console.log('form data',formData);
+                inputName = form.find('input[type="text"]').attr('id');
+                if(inputName == 'EmrAllValues'){
+                    inputName.value = EmrStr;
+                    data = {worker_emr:EmrStr};
+                    dataToSend = {
+                    ...dataToSend,
+                    ...data
+                };
+                inputName = form.find('input[type="text"]').attr('name');
+                }
+                
+                console.log("data",dataToSend);
             }
 
             let job = @json($model);
@@ -2750,7 +2997,7 @@
             let check = false;
             if (inputName == 'certification') {
                 const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
-                    worker_files_displayname_by_type.includes(element));
+                worker_files_displayname_by_type.includes(element));
                 console.log('job certification job name :', job_certification_displayname)
                 console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
                 console.log('is_job_certif_exist_in_worker_files', is_job_certif_exist_in_worker_files);
@@ -2822,8 +3069,12 @@
         async function check_required_files_before_sent(obj) {
             let diploma = [];
             let driving_license = [];
-            let ss_number = [];
+            
             let worked_bfore = dataToSend['worked_at_facility_before'];
+
+            let ss_number = dataToSend['worker_ss_number'];
+            // console.log({{$matches['worker_ss_number']['match']}});
+            // let ss_number = {{$matches['worker_ss_number']['match']}};
 
             try {
                 diploma = await get_all_files_displayName_by_type('diploma');
@@ -2837,14 +3088,13 @@
             } catch (error) {
                 console.error('Failed to get files:', error);
             }
-            try {
-                ss_number = await get_all_files_displayName_by_type('ss_number');
+           
+            console.log(diploma);
+            console.log(driving_license);
+            console.log(worked_bfore);
+            console.log(ss_number);
 
-            } catch (error) {
-                console.error('Failed to get files:', error);
-            }
-
-            if (diploma.length == 0 || driving_license.length == 0 || ss_number.length == 0 || worked_bfore == null) {
+            if (diploma.length == 0 || driving_license.length == 0 || ss_number.length == 0 || worked_bfore == null || ss_number == 0) {
                 notie.alert({
                     type: 'error',
                     text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',

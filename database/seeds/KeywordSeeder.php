@@ -553,12 +553,8 @@ class KeywordSeeder extends Seeder
                 'Non-Clinical',
             ],
             'Terms'=>[
-                'Contract (Travel or Local)',
-                'Perm',
-                'Shift',
-                'Contract to Perm',
-                'Contract (Travel only)',
-                'Contract (Local only)'
+                'Shift (PRN, Per Diem)',
+                'Perm (Direct)',
             ],
             'EMR'=>[
                 'EPIC',
