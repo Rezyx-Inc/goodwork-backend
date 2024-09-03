@@ -206,9 +206,9 @@ class ApplicationController extends Controller
                 if (isset($nurse['specialty'])) {
                     $data .= '<li"><a href="#">' . $nurse['specialty'] . '</a></li>';
                 }
-                if (isset($nurse['worker_shift_time_of_day'])) {
-                    $data .= '<li"><a href="#">' . $nurse['worker_shift_time_of_day'] . '</a></li>';
-                }
+                // if (isset($nurse['worker_shift_time_of_day'])) {
+                //     $data .= '<li"><a href="#">' . $nurse['worker_shift_time_of_day'] . '</a></li>';
+                // }
                 $data .= '
                         </ul>
                 </div>';

@@ -28,8 +28,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="ss-nojob-dv-hed">
-                                <h6>Start Creating Job Request</h6>
-                                <a href="#" onclick="request_job_form_appear()">Create Job Request</a>
+                                <h6>Start Creating Work Request</h6>
+                                <a href="#" onclick="request_job_form_appear()">Create Work Request</a>
                             </div>
                         </div>
                     </div>
@@ -37,14 +37,14 @@
 
 
 
-                <!-- add job form -->
+                <!-- add Work form -->
                 <div class="all d-none" id="create_job_request_form">
                     <div class="bodyAll">
                         <div class="ss-account-form-lft-1 container">
-                            <header>Create Job Request</header>
+                            <header>Create Work Request</header>
                             <div class="row progress-bar-item">
                                 <div class="col-3 step">
-                                    <p>Job information</p>
+                                    <p>Work information</p>
                                     <div class="bullet">
                                         <span>1</span>
                                     </div>
@@ -59,7 +59,7 @@
                                     <div class="check fas fa-check"></div>
                                 </div>
                                 <div class="col-2 step">
-                                    <p>Job Details</p>
+                                    <p>Work Details</p>
                                     <div class="bullet">
                                         <span>3</span>
                                     </div>
@@ -98,15 +98,15 @@
                                             </div>
 
                                             <div class="ss-form-group col-md-4">
-                                                <label> Job Name</label>
+                                                <label> Work Name</label>
                                                 <input type="text" name="job_name" id="job_name"
-                                                    placeholder="Enter job name">
+                                                    placeholder="Enter Work name">
                                                 <span class="help-block-job_name"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
-                                                <label>Job Type</label>
+                                                <label>Work Type</label>
                                                 <select name="job_type" id="job_type">
-                                                    <option value="">Job type</option>
+                                                    <option value="" disabled selected hidden>Select a Work type</option>
                                                     <option value="Clinical">Clinical
                                                     </option>
                                                     <option value="Non-Clinical">Non-Clinical
@@ -119,7 +119,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Preferred Specialty</label>
                                                 <select name="preferred_specialty" id="preferred_specialty">
-                                                    <option value="">Specialty</option>
+                                                    <option value="" disabled selected hidden>Select a specialty</option>
                                                     @foreach ($specialities as $specialty)
                                                         <option value="{{ $specialty->full_name }}">
                                                             {{ $specialty->full_name }}
@@ -133,7 +133,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Preferred Profession</label>
                                                 <select name="proffesion" id="perferred_profession">
-                                                    <option value="">Profession</option>
+                                                    <option value="" disabled selected hidden>Select a Profession</option>
                                                     @foreach ($allKeywords['Profession'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -145,9 +145,9 @@
 
 
                                             <div class="ss-form-group col-md-4">
-                                                <label> Job State </label>
+                                                <label> Work State </label>
                                                 <select name="job_state" id="job_state">
-                                                    <option value="">States</option>
+                                                    <option value="" disabled selected hidden>Select a State</option>
                                                     @foreach ($states as $state)
                                                         <option id="{{ $state->id }}" value="{{ $state->name }}">
                                                             {{ $state->name }}
@@ -158,17 +158,17 @@
 
 
                                                 <!-- <input type="text" name="job_state" id="job_state"
-                                                        placeholder="Enter Job Location (State)">
+                                                        placeholder="Enter Work Location (State)">
                                                     <span class="help-block-job_state"></span> -->
                                             </div>
 
                                             <div class="ss-form-group col-md-4">
 
                                                 <!-- <input type="text" name="job_city" id="job_city"
-                                                        placeholder="Enter Job Location (City)"> -->
-                                                <label> Job City </label>
+                                                        placeholder="Enter Work Location (City)"> -->
+                                                <label> Work City </label>
                                                 <select name="job_city" id="job_city">
-                                                    <option value="">Select a state first</option>
+                                                    <option value="">Select a city</option>
                                                 </select>
 
                                                 <span class="help-block-job_city"></span>
@@ -189,7 +189,6 @@
                                                     id="preferred_assignment_duration"
                                                     placeholder="Enter Work Duration Per Assignment">
                                                 <span class="help-block-preferred_assignment_duration"></span>
-
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Est. Weekly Pay </label>
@@ -198,10 +197,22 @@
                                                 <span class="help-block-weekly_pay"></span>
                                             </div>
 
+                                            <div class="ss-form-group col-md-4">
+                                                <label>Terms</label>
+                                                <select name="terms" id="terms">
+                                                    <option value="" disabled selected hidden>Select a Term</option>
+                                                    @foreach ($allKeywords['Terms'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-terms"></span>
+                                            </div>
+
 
                                             <div class="ss-form-group col-md-4">
-                                                <label>Job Description</label>
-                                                <textarea type="text" name="description" id="description" placeholder="Enter Job Description"></textarea>
+                                                <label>Work Description</label>
+                                                <textarea type="text" name="description" id="description" placeholder="Enter Work Description"></textarea>
                                                 <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                                     (Description not required)
                                                 </span>
@@ -246,15 +257,9 @@
                                         <div class="row">
                                             {{-- edits --}}
                                             <div class="ss-form-group col-md-4">
-                                                <label>Facility shift</label>
-                                                <select name="facility_shift_cancelation_policy"
-                                                    id="facility_shift_cancelation_policy">
-                                                    <option value="">facility shift</option>
-                                                    @foreach ($allKeywords['AssignmentDuration'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <label>Shift Cancellation Policy</label>
+                                                <input type="text" name="facility_shift_cancelation_policy" id="facility_shift_cancelation_policy"
+                                                placeholder="Select your shift cancellation policy">
                                                 <span class="help-block-facility_shift_cancelation_policy"></span>
                                             </div>
                                             <div class="ss-form-group col-md-4">
@@ -268,7 +273,7 @@
                                                 <label>Clinical Setting</label>
                                                 <select name="clinical_setting"
                                                     id="clinical_setting">
-                                                    <option value="">Select Clinical Setting</option>
+                                                    <option value="" disabled selected hidden>Select a setting</option>
                                                     @foreach ($allKeywords['ClinicalSetting'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -297,7 +302,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Rto</label>
                                                         <select name="rto" id="rto">
-                                                            <option value="">Select Rto</option>
+                                                            <option value="" disabled selected hidden>Select an Rto</option>
                                                             <option value="allowed">Allowed
                                                             </option>
                                                             <option value="not allowed">Not Allowed
@@ -325,55 +330,11 @@
                                             </div>
                                             <div class="ss-form-group col-md-4">
                                                 <label>Shift Per Weeks
-
                                                 </label>
                                                 <input type="number" name="weeks_shift" id="weeks_shift"
                                                     placeholder="Enter Shift Per Weeks">
                                                 <span class="help-block-weeks_shift"></span>
                                             </div>
-
-                                            
-
-
-
-
-
-                                            {{-- end edits --}}
-                                            {{-- <div class="ss-form-group col-md-4">
-                                            <label>Preferred Work Area</label>
-                                            <input type="text" name="preferred_work_area" id="preferred_work_area"
-                                                placeholder="Enter Preferred Work Area">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <label>Preferred Experience</label>
-                                            <input type="number" name="preferred_experience" id="preferred_experience"
-                                                placeholder="Enter Preferred Experience">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <label>Preferred Shift Duration</label>
-                                            <input type="number" name="preferred_shift_duration"
-                                                placeholder="Enter Preferred Shift Duration">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <label>Preferred Days of the Week</label>
-                                            <input type="number" name="preferred_days_of_the_week"
-                                                placeholder="Enter Preferred Days of the Week">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <label>Preferred Hourly Pay Rate</label>
-                                            <input type="number" step="0.01" name="preferred_hourly_pay_rate"
-                                                placeholder="Enter Preferred Hourly Pay Rate">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <label>Preferred Shift</label>
-                                            <input type="text" name="preferred_shift" id="preferred_shift"
-                                                placeholder="Enter Preferred Shift">
-                                        </div> --}}
-
                                             <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                                 ( The above fields are not required )
                                             </span>
@@ -436,7 +397,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>On Call</label>
                                                 <select name="on_call" id="on_call">
-                                                    <option value="">On call</option>
+                                                    <option value="" disabled selected hidden>Select an answer</option>
                                                     <option value="Yes">Yes
                                                     </option>
                                                     <option value="No">No
@@ -462,21 +423,11 @@
                                                     placeholder="Enter Orientation Hourly rate">
                                                 <span class="help-block-orientation_rate"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Terms</label>
-                                                <select name="terms" id="terms">
-                                                    <option value="">Terms</option>
-                                                    @foreach ($allKeywords['Terms'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-terms"></span>
-                                            </div>
+                                           
                                             <div class="ss-form-group col-md-4">
                                                 <label>Block scheduling</label>
                                                 <select name="block_scheduling" id="block_scheduling">
-                                                    <option value="">Block scheduling</option>
+                                                    <option value="" disabled selected hidden>Select an answer</option>
                                                     <option value="Yes">Yes
                                                     </option>
                                                     <option value="No">No
@@ -487,7 +438,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Float requirements</label>
                                                 <select name="float_requirement" id="float_requirement">
-                                                    <option value="">Float requirements</option>
+                                                    <option value="" disabled selected hidden>Select an answer</option>
                                                     <option value="Yes">Yes
                                                     </option>
                                                     <option value="No">No
@@ -496,37 +447,7 @@
                                                 <span class="help-block-float_requirement"></span>
                                             </div>
 
-                                            {{-- <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_function" id="job_function"
-                                                placeholder="Enter Job Function">
-                                        </div>
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_cerner_exp" id="job_cerner_exp"
-                                                placeholder="Enter Cerner Experience">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_meditech_exp" id="job_meditech_exp"
-                                                placeholder="Enter Meditech Experience">
-                                        </div>
-
-
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="seniority_level" id="seniority_level"
-                                                placeholder="Enter Seniority Level">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="job_epic_exp" id="job_epic_exp"
-                                                placeholder="Enter Epic Experience">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <textarea type="text" name="job_other_exp" id="job_other_exp"
-                                                placeholder="Enter Other Experiences"></textarea>
-
-                                        </div> --}}
+                                            
                                             <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                                 ( The above fields are not required )
                                             </span>
@@ -545,42 +466,17 @@
 
                                     <div class="page">
                                         <div class="row">
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Professional Licensure</label>
-                                                <select name="job_location" id="job_location">
-                                                    <option value="">Select a Professional Licensure</option>
-                                                    @foreach ($allKeywords['StateCode'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-job_location"></span>
-                                            </div>
+                                            
                                             <div class="ss-form-group col-md-4">
                                                 <label>Number Of References</label>
                                                 <input type="number" name="number_of_references" id="number_of_references"
                                                     placeholder="Enter number of references">
                                                 <span class="help-block-number_of_references"></span>
                                             </div>
-
-                                            
-
-                                            {{-- <div class="ss-form-group col-md-4">
-                                                <label>Min Title Of Reference</label>
-                                                <input type="text" name="min_title_of_reference" id="min_title_of_reference"
-                                                    placeholder="Enter min title of reference">
-                                                <span class="help-block-min_title_of_reference"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Recency Of Reference</label>
-                                                <input type="number" name="recency_of_reference" id="recency_of_reference"
-                                                    placeholder="Enter # recency of reference">
-                                                <span class="help-block-recency_of_reference"></span>
-                                            </div> --}}
                                             <div class="ss-form-group col-md-4">
                                                 <label>Eligible work in us ?</label>
                                                 <select name="eligible_work_in_us" id="eligible_work_in_us">
-                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="" disabled selected hidden>Select an answer</option>
                                                     <option value="1">Yes
                                                     </option>
                                                     <option value="0">No
@@ -588,36 +484,17 @@
                                                 </select>
                                                 <span class="help-block-eligible_work_in_us"></span>
                                             </div>
-                                            
-                                            {{-- <div class="ss-form-group col-md-4">
-                                                <label>Skills checklist</label>
-                                                <select name="skills" id="skills">
-                                                    <option value="">Select Skills Checklist</option>
-                                                    @foreach ($allKeywords['Skills'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-skills"></span>
-                                            </div> --}}
-
-
-                                            
-
-
-                                            <div class="ss-form-group col-md-4">
+                                             
+                                            <div class="row ss-form-group col-md-4 d-flex justify-content-end">
                                                 <label>Urgency</label>
-                                                <select name="urgency" id="urgency">
-                                                    <option value="">Select Urgency</option>
-                                                    @foreach ($allKeywords['Urgency'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <div class="row" style="display:flex; align-items:end;">
+                                                    <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto Offer</label>
+                                                    <div class="col-6">
+                                                        <input type="checkbox" name="urgency" id="urgency" value="Auto Offer" style="box-shadow: none;">
+                                                    </div>
+                                                </div>
                                                 <span class="help-block-urgency"></span>
                                             </div>
-
-                                            
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Facility's Parent System</label>
@@ -631,51 +508,24 @@
                                                     placeholder="Enter facility name">
                                                 <span class="help-block-facility_name"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Facility Location</label>
-                                                <input type="text" name="facility_location" id="facility_location"
-                                                    placeholder="Enter facility location">
-                                                <span class="help-block-facility_location"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Facility State </label>
-                                                <select name="facility_state" id="facility_state">
-                                                    <option value="">States</option>
-                                                    @foreach ($states as $state)
-                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
-                                                            {{ $state->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                             <span class="help-block-facility_state"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Facility City </label>
-                                                <select name="facility_city" id="facility_city">
-                                                    <option value="">Select a state first</option>
-                                                </select>
-                                                <span class="help-block-facility_city"></span>
-                                            </div>
-
-                                                
-
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- <div class="ss-form-group col-md-4">
                                                 <label>Worker Classification</label>
                                                 <select name="nurse_classification" id="nurse_classification">
-                                                    <option value="">Select Worker Classification</option>
+                                                    <option value="" disabled selected hidden>Select a Worker Classification</option>
                                                     @foreach ($allKeywords['NurseClassification'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                                 <span class="help-block-nurse_classification"></span>
-                                            </div>
+                                            </div> --}}
+
+                                            
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Pay Frequency</label>
                                                 <select name="pay_frequency" id="pay_frequency">
-                                                    <option value="">Select pay frequency</option>
+                                                    <option value="" disabled selected hidden>Select a pay frequency</option>
                                                     @foreach ($allKeywords['PayFrequency'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -685,23 +535,132 @@
                                             </div>
 
                                             <div class="ss-form-group col-md-4">
-                                                <label>Benefits</label>
-                                                <select name="benefits" id="benefits">
-                                                    <option value="">Select benefits</option>
-                                                    @foreach ($allKeywords['Benefits'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-benefits"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
                                                 <label>Preferred Experience</label>
                                                 <input type="number" name="preferred_experience" id="preferred_experience"
                                                     placeholder="Enter Preferred Experience">
                                                     <span class="help-block-preferred_experience"></span>
                                             </div>
+
+                                            <div class="row ss-form-group ss-prsnl-frm-specialty d-flex justify-content-end col-md-4">
+                                                <label>Professional State Licensure</label>
+                                                <div class="ss-speilty-exprnc-add-list professional_state_licensure-content" style="display: flex;
+                                                justify-content: space-around;" >
+                                                    {{-- Radio option for "Accept Pending" --}}
+                                                    <div>
+                                                        <input type="radio" id="professional_state_licensure_pending" name="professional_state_licensure" value="Accept Pending" style="box-shadow: none;">
+                                                        <label for="professional_state_licensure_pending">Accept Pending</label>
+                                                    </div>
+                                                    {{-- Radio option for "Active" --}}
+                                                    <div>
+                                                        <input type="radio" id="professional_state_licensure_active" name="professional_state_licensure" value="Active" style="box-shadow: none;">
+                                                        <label for="professional_state_licensure_active">Active</label>
+                                                    </div>
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            {{-- Removed the select element and its options --}}
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            {{-- <div class="row ss-form-group col-md-4 d-flex justify-content-end">
+                                                <label>Urgency</label>
+                                                <div class="row" style="display:flex; align-items:end;">
+                                                    <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto Offer</label>
+                                                    <div class="col-6">
+                                                        <input type="checkbox" name="urgency" id="urgency" value="Auto Offer" style="box-shadow: none;">
+                                                    </div>
+                                                </div>
+                                                <span class="help-block-urgency"></span>
+                                            </div> --}}
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Worker Classification</label>
+                                                <div class="ss-speilty-exprnc-add-list nurse_classification-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="nurse_classification">
+                                                                <option value="" disabled selected hidden>Select a Worker Classification</option>
+                                                                @if(isset($allKeywords['NurseClassification']))
+                                                                @foreach ($allKeywords['NurseClassification'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="nurse_classificationAllValues" name="nurse_classification" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addnurse_classification('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            {{-- <div class="ss-form-group col-md-4">
+                                                <label>Professional Licensure</label>
+                                                <select name="job_location" id="job_location">
+                                                    <option value="" disabled selected hidden>Select a Professional Licensure</option>
+                                                    @foreach ($allKeywords['StateCode'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-job_location"></span>
+                                            </div> --}}
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Professional Licensure</label>
+                                                <div class="ss-speilty-exprnc-add-list professional_licensure-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="professional_licensure">
+                                                                <option value="" disabled selected hidden>Select a professional Licensure</option>
+                                                                @if(isset($allKeywords['StateCode']))
+                                                                @foreach ($allKeywords['StateCode'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="professional_licensureAllValues" name="job_location" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addprofessional_licensure('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Benefits</label>
+                                                <div class="ss-speilty-exprnc-add-list benefits-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="benefits">
+                                                                <option value="" disabled selected hidden>Select a benefits</option>
+                                                                @if(isset($allKeywords['Benefits']))
+                                                                @foreach ($allKeywords['Benefits'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="benefitsAllValues" name="benefits" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addbenefits('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Certifications</label>
@@ -711,7 +670,7 @@
                                                     <li class="row w-100 p-0 m-0">
                                                         <div class="ps-0">
                                                             <select class="m-0" id="certificate">
-                                                                <option value="">Select Certification</option>
+                                                                <option value="" disabled selected hidden>Select Certification</option>
                                                                 @if(isset($allKeywords['Certification']))
                                                                 @foreach ($allKeywords['Certification'] as $value)
                                                                 <option value="{{$value->id}}">{{$value->title}}</option>
@@ -735,7 +694,7 @@
                                                     <li class="row w-100 p-0 m-0">
                                                         <div class="ps-0">
                                                             <select class="m-0" id="vaccinations">
-                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                <option value="" disabled selected hidden>Enter Vaccinations & Immunizations name</option>
                                                                 @if(isset($allKeywords['Vaccinations']))
                                                                     @foreach ($allKeywords['Vaccinations'] as $value)
                                                                         <option value="{{$value->id}}">{{$value->title}}</option>
@@ -759,7 +718,7 @@
                                                     <li class="row w-100 p-0 m-0">
                                                         <div class="ps-0">
                                                             <select class="m-0" id="skills">
-                                                                <option value="">Select Skills</option>
+                                                                <option value="" disabled selected hidden>Select Skills</option>
                                                                 @if(isset($allKeywords['Speciality']))
                                                                 @foreach ($allKeywords['Speciality'] as $value)
                                                                 <option value="{{$value->title}}">{{$value->title}}</option>
@@ -794,35 +753,19 @@
 
                                     <div class="page">
                                         <div class="row">
+                                            
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Contract Termination Policy</label>
-                                                <select name="contract_termination_policy" id="contract_termination_policy">
-                                                    <option value="">Select a policy</option>
-                                                    @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" name="contract_termination_policy" id="contract_termination_policy"
+                                                placeholder="Enter your contract termination policy">
                                                 <span class="help-block-contract_termination_policy"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>EMR</label>
-
-
-                                                <select name="Emr"
-                                                    id="emr">
-                                                    <option value="">Select EMR</option>
-                                                    @foreach ($allKeywords['EMR'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-emr"></span>
-                                            </div>
+                                            
                                             <div class="ss-form-group col-md-4">
                                                 <label>401K</label>
                                                 <select name="four_zero_one_k" id="four_zero_one_k">
-                                                    <option value="">401k</option>
+                                                    <option value="" disabled selected hidden>Select an answer</option>
                                                     <option value="Yes">Yes
                                                     </option>
                                                     <option value="No">No
@@ -833,7 +776,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Health Insurance</label>
                                                 <select name="health_insaurance" id="health_insaurance">
-                                                    <option value="">Health Insurance</option>
+                                                    <option value="" disabled selected hidden>Select a Health Insurance</option>
                                                     <option value="Yes">Yes
                                                     </option>
                                                     <option value="No">No
@@ -841,28 +784,7 @@
                                                 </select>
                                                 <span class="help-block-health_insaurance"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Dental</label>
-                                                <select name="dental" id="dental">
-                                                    <option value="">Dental</option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-dental"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Vision</label>
-                                                <select name="vision" id="vision">
-                                                    <option value="">Vision</option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-vision"></span>
-                                            </div>
+                                            
                                             <div class="ss-form-group col-md-4">
                                                 <label>Feels Like $/hrs</label>
                                                 <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
@@ -873,7 +795,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>On Call Back</label>
                                                 <select name="on_call_back" id="on_call_back">
-                                                    <option value="">On call back</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     <option value="Yes">Yes
                                                     </option>
                                                     <option value="No">No
@@ -890,12 +812,7 @@
                                                 <span class="help-block-call_back_rate"></span>
                                             </div>
 
-                                            {{-- <div class="ss-form-group col-md-4">
-                                                <label>Est. Weekly Taxable amount</label>
-                                                <input type="number" name="weekly_taxable_amount"
-                                                    id="weekly_taxable_amount" placeholder="Enter Weekly Taxable amount">
-                                                <span class="help-block-weekly_taxable_amount"></span>
-                                            </div> --}}
+                                            
                                             <div class="ss-form-group col-md-4">
                                                 <label>Est. Weekly non-taxable amount</label>
                                                 <input type="number" name="weekly_non_taxable_amount"
@@ -904,17 +821,43 @@
                                                 <span class="help-block-weekly_non_taxable_amount"></span>
                                             </div>
 
-
                                             {{-- <div class="ss-form-group col-md-4">
-                                                <label>Hours per Shift"</label>
-                                                <input type="number" name="hours_shift" id="hours_shift"
-                                                    placeholder="Enter Hours per Shift">
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Hours per Week</label>
-                                                <input type="number" name="hours_per_week" id="hours_shift"
-                                                    placeholder="Enter Hours per week">
+                                                <label>EMR</label>
+                                                <select name="Emr"
+                                                    id="emr">
+                                                    <option value="" disabled selected hidden>Select an EMR</option>
+                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-emr"></span>
                                             </div> --}}
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>EMR</label>
+                                                <div class="ss-speilty-exprnc-add-list Emr-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="Emr">
+                                                                <option value="" disabled selected hidden>Select an emr</option>
+                                                                @if(isset($allKeywords['EMR']))
+                                                                @foreach ($allKeywords['EMR'] as $value)
+                                                                <option value="{{$value->id}}">{{$value->title}}</option>
+                                                                @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="EmrAllValues" name="Emr" >
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)" onclick="addEmr('from_add')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
                                             <div class="ss-form-group col-md-12">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -958,7 +901,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- end add job form -->
+                <!-- end add Work form -->
 
                 <div class="ss-acount-profile d-none" id="published-job-details">
                     <div class="row">
@@ -1073,10 +1016,10 @@
                         <div class="all col-lg-7" id="details_draft">
                             <div class="bodyAll" style="width: 100%;">
                                 <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;" id="details_info">
-                                    <header>Select a job from Drafts</header>
+                                    <header>Select a Work from Drafts</header>
                                     <div class="row progress-bar-item">
                                         <div class="col-3 step stepDraft">
-                                            <p>Job information</p>
+                                            <p>Work information</p>
                                             <div class="bullet">
                                                 <span>1</span>
                                             </div>
@@ -1091,7 +1034,7 @@
                                             <div class="check fas fa-check"></div>
                                         </div>
                                         <div class="col-2 step stepDraft">
-                                            <p>Job Details</p>
+                                            <p>Work Details</p>
                                             <div class="bullet">
                                                 <span>3</span>
                                             </div>
@@ -1129,16 +1072,17 @@
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
-                                                        <label> Job Name</label>
+                                                        <label> Work Name</label>
                                                         <input type="text" name="job_name" id="job_nameDraft"
-                                                            placeholder="Enter job name">
+                                                            placeholder="Enter Work name">
                                                         <span class="help-block-job_name"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Job Type</label>
+                                                        <label>Work Type</label>
 
                                                         <select name="job_type" id="job_typeDraft">
-                                                            <option value="">Job type</option>
+                                                            
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Clinical">Clinical
                                                             </option>
                                                             <option value="Non-Clinical">Non-Clinical
@@ -1150,7 +1094,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Preferred Specialty</label>
                                                         <select name="preferred_specialty" id="preferred_specialtyDraft">
-                                                            <option value="">Specialty</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             @foreach ($specialities as $specialty)
                                                                 <option value="{{ $specialty->full_name }}">
                                                                     {{ $specialty->full_name }}
@@ -1162,7 +1106,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Preferred Profession</label>
                                                         <select name="proffesion" id="perferred_professionDraft">
-                                                            <option value="">Profession</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             @foreach ($proffesions as $proffesion)
                                                                 <option value="{{ $proffesion->full_name }}">
                                                                     {{ $proffesion->full_name }}
@@ -1175,9 +1119,9 @@
 
 
                                                     <div class="ss-form-group col-md-4">
-                                                        <label> Job State </label>
+                                                        <label> Work State </label>
                                                         <select name="job_state" id="job_stateDraft">
-                                                            <option value="">States</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             @foreach ($states as $state)
                                                                 <option id="{{ $state->id }}"
                                                                     value="{{ $state->name }}">
@@ -1190,9 +1134,9 @@
 
                                                     <div class="ss-form-group col-md-4">
 
-                                                        <label> Job City </label>
+                                                        <label> Work City </label>
                                                         <select name="job_city" id="job_cityDraft">
-                                                            <option value="">Select a state first</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                         </select>
 
                                                         <span class="help-block-job_city"></span>
@@ -1224,10 +1168,22 @@
                                                         <span class="help-block-weekly_pay"></span>
                                                     </div>
 
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Terms</label>
+                                                        <select name="terms" id="termsDraft">
+                                                            <option value="" disabled selected hidden>Select an option</option>
+                                                            @foreach ($allKeywords['Terms'] as $value)
+                                                                <option value="{{ $value->title }}">{{ $value->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="help-block-terms"></span>
+                                                    </div>
+
 
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Job Description</label>
-                                                        <textarea type="text" name="description" id="descriptionDraft" placeholder="Enter Job Description"></textarea>
+                                                        <label>Work Description</label>
+                                                        <textarea type="text" name="description" id="descriptionDraft" placeholder="Enter Work Description"></textarea>
                                                         <span style="color:#b5649e;" id="passwordHelpInline"
                                                             class="form-text">
                                                             (Description not required)
@@ -1273,15 +1229,9 @@
                                                 <div class="row">
                                                     {{-- edits --}}
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Facility shift</label>
-                                                        <select name="facility_shift_cancelation_policy"
-                                                            id="facility_shift_cancelation_policyDraft">
-                                                            <option value="">facility shift</option>
-                                                            @foreach ($allKeywords['AssignmentDuration'] as $value)
-                                                                <option value="{{ $value->title }}">{{ $value->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                        <label>Shift Cancellation Policy</label>
+                                                        <input type="text" name="facility_shift_cancelation_policy" id="facility_shift_cancelation_policyDraft"
+                                                        placeholder="Select your shift cancellation policy">
                                                         <span class="help-block-facility_shift_cancelation_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -1295,7 +1245,7 @@
                                                         <label>Clinical Setting</label>
                                                         <select name="clinical_setting"
                                                     id="clinical_settingDraft">
-                                                    <option value="">Select Clinical Setting</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['ClinicalSetting'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -1325,7 +1275,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Rto</label>
                                                         <select name="rto" id="rtoDraft">
-                                                            <option value="">Select Rto</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="allowed">Allowed
                                                             </option>
                                                             <option value="not allowed">Not Allowed
@@ -1430,7 +1380,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>On Call</label>
                                                         <select name="on_call" id="on_callDraft">
-                                                            <option value="">On call</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -1457,21 +1407,11 @@
                                                             placeholder="Enter Orientation Hourly rate">
                                                         <span class="help-block-orientation_rate"></span>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Terms</label>
-                                                        <select name="terms" id="termsDraft">
-                                                            <option value="">Terms</option>
-                                                            @foreach ($allKeywords['Terms'] as $value)
-                                                                <option value="{{ $value->title }}">{{ $value->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <span class="help-block-terms"></span>
-                                                    </div>
+                                                    
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Block scheduling</label>
                                                         <select name="block_scheduling" id="block_schedulingDraft">
-                                                            <option value="">Block scheduling</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -1482,7 +1422,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Float requirements</label>
                                                         <select name="float_requirement" id="float_requirementDraft">
-                                                            <option value="">Float requirements</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -1514,7 +1454,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Professional Licensure</label>
                                                 <select name="job_location" id="job_locationDraft">
-                                                    <option value="">Select a Professional Licensure</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['StateCode'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }} Compact
                                                         </option>
@@ -1543,7 +1483,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Eligible work in us ?</label>
                                                 <select name="eligible_work_in_us" id="eligible_work_in_usDraft">
-                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     <option value="1">Yes
                                                     </option>
                                                     <option value="0">No
@@ -1552,29 +1492,14 @@
                                                 <span class="help-block-eligible_work_in_usDraft"></span>
                                             </div>
                                             
-                                            {{-- <div class="ss-form-group col-md-4">
-                                                <label>Skills checklist</label>
-                                                <select name="skills" id="skillsDraft">
-                                                    <option value="">Select Skills Checklist</option>
-                                                    @foreach ($allKeywords['Skills'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-skillsDraft"></span>
-                                            </div> --}}
-
-
+                                  
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Urgency</label>
-                                                <select name="urgency" id="urgencyDraft">
-                                                    <option value="">Select Urgency</option>
-                                                    @foreach ($allKeywords['Urgency'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <div>
+                                                    <input type="checkbox" name="urgency" id="urgencyDraft" value="Auto Offer" >
+                                                    <label for="urgency">Auto Offer</label>
+                                                </div>
                                                 <span class="help-block-urgencyDraft"></span>
                                             </div>
 
@@ -1590,39 +1515,12 @@
                                                     placeholder="Enter facility name">
                                                 <span class="help-block-facility_nameDraft"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Facility Location</label>
-                                                <input type="text" name="facility_location" id="facility_locationDraft"
-                                                    placeholder="Enter facility location">
-                                                <span class="help-block-facility_locationDraft"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Facility State </label>
-                                                <select name="facility_state" id="facility_stateDraft">
-                                                    <option value="">States</option>
-                                                    @foreach ($states as $state)
-                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
-                                                            {{ $state->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                             <span class="help-block-facility_stateDraft"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Facility City </label>
-                                                <select name="facility_city" id="facility_cityDraft">
-                                                    <option value="">Select a state first</option>
-                                                </select>
-                                                <span class="help-block-facility_cityDraft"></span>
-                                            </div>
-
-                                                
+                                             
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Worker Classification</label>
                                                 <select name="nurse_classification" id="nurse_classificationDraft">
-                                                    <option value="">Select Worker Classification</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['NurseClassification'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -1634,7 +1532,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Pay Frequency</label>
                                                 <select name="pay_frequency" id="pay_frequencyDraft">
-                                                    <option value="">Select pay frequency</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['PayFrequency'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -1646,7 +1544,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Benefits</label>
                                                 <select name="benefits" id="benefitsDraft">
-                                                    <option value="">Select benefits</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['Benefits'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -1654,6 +1552,10 @@
                                                 </select>
                                                 <span class="help-block-benefitsDraft"></span>
                                             </div>
+
+                                            
+
+                                            
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Preferred Experience</label>
@@ -1694,7 +1596,7 @@
                                                     <li class="row w-100 p-0 m-0">
                                                         <div class="ps-0">
                                                             <select class="m-0" id="vaccinationsDraft">
-                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                <option value="" disabled selected hidden>Enter Vaccinations & Immunizations name</option>
                                                                 @if(isset($allKeywords['Vaccinations']))
                                                                     @foreach ($allKeywords['Vaccinations'] as $value)
                                                                         <option value="{{$value->id}}">{{$value->title}}</option>
@@ -1719,7 +1621,7 @@
                                                     <li class="row w-100 p-0 m-0">
                                                         <div class="ps-0">
                                                             <select class="m-0" id="skillsDraft">
-                                                                <option value="">Select Skills</option>
+                                                                <option value="" disabled selected hidden>Select Skills</option>
                                                                 @if(isset($allKeywords['Speciality']))
                                                                 @foreach ($allKeywords['Speciality'] as $value)
                                                                 <option value="{{$value->title}}">{{$value->title}}</option>
@@ -1757,20 +1659,15 @@
                                                 <div class="row">
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Contract Termination Policy</label>
-                                                        <select name="contract_termination_policy" id="contract_termination_policyDraft">
-                                                            <option value="">Select a policy</option>
-                                                            @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
-                                                                <option value="{{ $value->title }}">{{ $value->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                        <input type="text" name="contract_termination_policy" id="contract_termination_policyDraft"
+                                                        placeholder="Enter your contract termination policy">
                                                         <span class="help-block-contract_termination_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>EMR</label>
                                                         <select name="Emr"
                                                     id="emrDraft">
-                                                    <option value="">Select EMR</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['EMR'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -1782,7 +1679,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>401K</label>
                                                         <select name="four_zero_one_k" id="four_zero_one_kDraft">
-                                                            <option value="">401k</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -1793,7 +1690,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Health Insurance</label>
                                                         <select name="health_insaurance" id="health_insauranceDraft">
-                                                            <option value="">Health Insurance</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -1801,28 +1698,7 @@
                                                         </select>
                                                         <span class="help-block-health_insaurance"></span>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Dental</label>
-                                                        <select name="dental" id="dentalDraft">
-                                                            <option value="">Dental</option>
-                                                            <option value="Yes">Yes
-                                                            </option>
-                                                            <option value="No">No
-                                                            </option>
-                                                        </select>
-                                                        <span class="help-block-dental"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Vision</label>
-                                                        <select name="vision" id="visionDraft">
-                                                            <option value="">Vision</option>
-                                                            <option value="Yes">Yes
-                                                            </option>
-                                                            <option value="No">No
-                                                            </option>
-                                                        </select>
-                                                        <span class="help-block-vision"></span>
-                                                    </div>
+                                                    
 
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Feels Like $/hrs</label>
@@ -1834,7 +1710,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>On Call Back</label>
                                                         <select name="on_call_back" id="on_call_backDraft">
-                                                            <option value="">On call back</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -1906,14 +1782,14 @@
 
 
 
-                        <!-- EDIT job -->
+                        <!-- EDIT Work -->
                         <div class="all col-lg-7" id="details_edit_job">
                             <div class="bodyAll" style="width: 100%;">
                                 <div class="ss-account-form-lft-1" style="width: 100%; margin-top: 0px;">
                                     <header>Edit your selected job</header>
                                     <div class="row progress-bar-item">
                                         <div class="col-3 step stepEdit">
-                                            <p>Job information</p>
+                                            <p>Work information</p>
                                             <div class="d-none bullet">
                                                 <span>1</span>
                                             </div>
@@ -1928,7 +1804,7 @@
                                             <div class="check fas fa-check"></div>
                                         </div>
                                         <div class="col-2 step stepEdit">
-                                            <p>Job Details</p>
+                                            <p>Work Details</p>
                                             <div class="d-none bullet">
                                                 <span>3</span>
                                             </div>
@@ -1966,16 +1842,16 @@
                                                     </div>
 
                                                     <div class="ss-form-group col-md-4">
-                                                        <label> Job Name</label>
+                                                        <label> Work Name</label>
                                                         <input type="text" name="job_name" id="job_nameEdit"
-                                                            placeholder="Enter job name">
+                                                            placeholder="Enter Work name">
                                                         <span class="help-block-job_name"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Job Type</label>
+                                                        <label>Work Type</label>
 
                                                         <select name="job_type" id="job_typeEdit">
-                                                            <option value="">Job type</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Clinical">Clinical
                                                             </option>
                                                             <option value="Non-Clinical">Non-Clinical
@@ -1987,7 +1863,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Preferred Specialty</label>
                                                         <select name="preferred_specialty" id="preferred_specialtyEdit">
-                                                            <option value="">Specialty</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             @foreach ($specialities as $specialty)
                                                                 <option value="{{ $specialty->full_name }}">
                                                                     {{ $specialty->full_name }}
@@ -1999,7 +1875,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Preferred Profession</label>
                                                         <select name="proffesion" id="perferred_professionEdit">
-                                                            <option value="">Profession</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             @foreach ($proffesions as $proffesion)
                                                                 <option value="{{ $proffesion->full_name }}">
                                                                     {{ $proffesion->full_name }}
@@ -2012,9 +1888,9 @@
 
 
                                                     <div class="ss-form-group col-md-4">
-                                                        <label> Job State </label>
+                                                        <label> Work State </label>
                                                         <select name="job_state" id="job_stateEdit">
-                                                            <option value="">States</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             @foreach ($states as $state)
                                                                 <option id="{{ $state->id }}"
                                                                     value="{{ $state->name }}">
@@ -2027,9 +1903,9 @@
 
                                                     <div class="ss-form-group col-md-4">
 
-                                                        <label> Job City </label>
+                                                        <label> Work City </label>
                                                         <select name="job_city" id="job_cityEdit">
-                                                            <option value="">Select a state first</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                         </select>
 
                                                         <span class="help-block-job_city"></span>
@@ -2061,10 +1937,22 @@
                                                         <span class="help-block-weekly_pay"></span>
                                                     </div>
 
+                                                    <div class="ss-form-group col-md-4">
+                                                        <label>Terms</label>
+                                                        <select name="terms" id="termsEdit">
+                                                            <option value="" disabled selected hidden>Select an option</option>
+                                                            @foreach ($allKeywords['Terms'] as $value)
+                                                                <option value="{{ $value->title }}">{{ $value->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="help-block-terms"></span>
+                                                    </div>
+
 
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Job Description</label>
-                                                        <textarea type="text" name="description" id="descriptionEdit" placeholder="Enter Job Description"></textarea>
+                                                        <label>Work Description</label>
+                                                        <textarea type="text" name="description" id="descriptionEdit" placeholder="Enter Work Description"></textarea>
                                                         <span style="color:#b5649e;" id="passwordHelpInline"
                                                             class="form-text">
                                                             (Description not required)
@@ -2110,15 +1998,9 @@
                                                 <div class="row">
                                                     {{-- edits --}}
                                                     <div class="ss-form-group col-md-4">
-                                                        <label>Facility Shift Cancellation Policy</label>
-                                                        <select name="facility_shift_cancelation_policy"
-                                                            id="facility_shift_cancelation_policyEdit">
-                                                            <option value="">facility shift</option>
-                                                            @foreach ($allKeywords['AssignmentDuration'] as $value)
-                                                                <option value="{{ $value->title }}">{{ $value->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                        <label>Shift Cancellation Policy</label>
+                                                        <input type="text" name="facility_shift_cancelation_policy" id="facility_shift_cancelation_policyEdit"
+                                                        placeholder="Select your shift cancellation policy">
                                                         <span class="help-block-facility_shift_cancelation_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
@@ -2132,7 +2014,7 @@
                                                         <label>Clinical Setting</label>
                                                         <select name="clinical_setting"
                                                     id="clinical_settingEdit">
-                                                    <option value="">Select Clinical Setting</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['ClinicalSetting'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -2162,7 +2044,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Rto</label>
                                                         <select name="rto" id="rtoEdit">
-                                                            <option value="">Select Rto</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="allowed">Allowed
                                                             </option>
                                                             <option value="not allowed">Not Allowed
@@ -2267,7 +2149,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>On Call</label>
                                                         <select name="on_call" id="on_callEdit">
-                                                            <option value="">On call</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -2294,21 +2176,11 @@
                                                             placeholder="Enter Orientation Hourly rate">
                                                         <span class="help-block-orientation_rate"></span>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Terms</label>
-                                                        <select name="terms" id="termsEdit">
-                                                            <option value="">Terms</option>
-                                                            @foreach ($allKeywords['Terms'] as $value)
-                                                                <option value="{{ $value->title }}">{{ $value->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <span class="help-block-terms"></span>
-                                                    </div>
+                                                    
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Block scheduling</label>
                                                         <select name="block_scheduling" id="block_schedulingEdit">
-                                                            <option value="">Block scheduling</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -2319,7 +2191,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Float requirements</label>
                                                         <select name="float_requirement" id="float_requirementEdit">
-                                                            <option value="">Float requirements</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -2351,7 +2223,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Professional Licensure</label>
                                                 <select name="job_location" id="job_locationEdit">
-                                                    <option value="">Select a Professional Licensure</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['StateCode'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }} Compact
                                                         </option>
@@ -2380,7 +2252,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Eligible work in us ?</label>
                                                 <select name="eligible_work_in_us" id="eligible_work_in_usEdit">
-                                                    <option value="">Eligible work in us ?</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     <option value="1">Yes
                                                     </option>
                                                     <option value="0">No
@@ -2388,18 +2260,13 @@
                                                 </select>
                                                 <span class="help-block-eligible_work_in_usEdit"></span>
                                             </div>
-                                            
-
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Urgency</label>
-                                                <select name="urgency" id="urgencyEdit">
-                                                    <option value="">Select Urgency</option>
-                                                    @foreach ($allKeywords['Urgency'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <div>
+                                                    <input type="checkbox" name="urgency" id="urgencyEdit" value="Auto Offer" >
+                                                    <label for="urgency">Auto Offer</label>
+                                                </div>
                                                 <span class="help-block-urgencyEdit"></span>
                                             </div>
 
@@ -2415,39 +2282,11 @@
                                                     placeholder="Enter facility name">
                                                 <span class="help-block-facility_nameEdit"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Facility Location</label>
-                                                <input type="text" name="facility_location" id="facility_locationEdit"
-                                                    placeholder="Enter facility location">
-                                                <span class="help-block-facility_locationEdit"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Facility State </label>
-                                                <select name="facility_state" id="facility_stateEdit">
-                                                    <option value="">States</option>
-                                                    @foreach ($states as $state)
-                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
-                                                            {{ $state->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                             <span class="help-block-facility_stateEdit"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Facility City </label>
-                                                <select name="facility_city" id="facility_cityEdit">
-                                                    <option value="">Select a state first</option>
-                                                </select>
-                                                <span class="help-block-facility_cityEdit"></span>
-                                            </div>
-
-                                                
-
+                                           
                                             <div class="ss-form-group col-md-4">
                                                 <label>Worker Classification</label>
                                                 <select name="nurse_classification" id="nurse_classificationEdit">
-                                                    <option value="">Select Worker Classification</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['NurseClassification'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -2459,7 +2298,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Pay Frequency</label>
                                                 <select name="pay_frequency" id="pay_frequencyEdit">
-                                                    <option value="">Select pay frequency</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['PayFrequency'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -2468,10 +2307,10 @@
                                                 <span class="help-block-pay_frequencyEdit"></span>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
+                                            <div class="d-none ss-form-group col-md-4">
                                                 <label>Benefits</label>
                                                 <select name="benefits" id="benefitsEdit">
-                                                    <option value="">Select benefits</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['Benefits'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -2519,7 +2358,7 @@
                                                     <li class="row w-100 p-0 m-0">
                                                         <div class="ps-0">
                                                             <select  class="m-0" id="vaccinationsEdit">
-                                                                <option value="">Enter Vaccinations & Immunizations name</option>
+                                                                <option value="" disabled selected hidden>Enter Vaccinations & Immunizations name</option>
                                                                 @if(isset($allKeywords['Vaccinations']))
                                                                     @foreach ($allKeywords['Vaccinations'] as $value)
                                                                         <option value="{{$value->id}}">{{$value->title}}</option>
@@ -2545,7 +2384,7 @@
                                                     <li class="row w-100 p-0 m-0">
                                                         <div class="ps-0">
                                                             <select class="m-0" id="skillsEdit">
-                                                                <option value="">Select Skills</option>
+                                                                <option value="" disabled selected hidden>Select Skills</option>
                                                                 @if(isset($allKeywords['Speciality']))
                                                                 @foreach ($allKeywords['Speciality'] as $value)
                                                                 <option value="{{$value->title}}">{{$value->title}}</option>
@@ -2582,20 +2421,15 @@
                                                 <div class="row">
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Contract Termination Policy</label>
-                                                        <select name="contract_termination_policy" id="contract_termination_policyEdit">
-                                                            <option value="">Select a policy</option>
-                                                            @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
-                                                                <option value="{{ $value->title }}">{{ $value->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                        <input type="text" name="contract_termination_policy" id="contract_termination_policyEdit"
+                                                        placeholder="Enter your contract termination policy">
                                                         <span class="help-block-contract_termination_policy"></span>
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>EMR</label>
                                                         <select name="Emr"
                                                     id="emrEdit">
-                                                    <option value="">Select EMR</option>
+                                                    <option value="" disabled selected hidden>Select an option</option>
                                                     @foreach ($allKeywords['EMR'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
                                                         </option>
@@ -2607,7 +2441,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>401K</label>
                                                         <select name="four_zero_one_k" id="four_zero_one_kEdit">
-                                                            <option value="">401k</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -2618,7 +2452,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Health Insurance</label>
                                                         <select name="health_insaurance" id="health_insauranceEdit">
-                                                            <option value="">Health Insurance</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -2626,28 +2460,7 @@
                                                         </select>
                                                         <span class="help-block-health_insaurance"></span>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Dental</label>
-                                                        <select name="dental" id="dentalEdit">
-                                                            <option value="">Dental</option>
-                                                            <option value="Yes">Yes
-                                                            </option>
-                                                            <option value="No">No
-                                                            </option>
-                                                        </select>
-                                                        <span class="help-block-dental"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Vision</label>
-                                                        <select name="vision" id="visionEdit">
-                                                            <option value="">Vision</option>
-                                                            <option value="Yes">Yes
-                                                            </option>
-                                                            <option value="No">No
-                                                            </option>
-                                                        </select>
-                                                        <span class="help-block-vision"></span>
-                                                    </div>
+                                                    
 
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Feels Like $/hrs</label>
@@ -2659,7 +2472,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>On Call Back</label>
                                                         <select name="on_call_back" id="on_call_backEdit">
-                                                            <option value="">On call back</option>
+                                                            <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Yes">Yes
                                                             </option>
                                                             <option value="No">No
@@ -2734,7 +2547,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END job EDiTING FORM -->
+                        <!-- END Work EDiTING FORM -->
 
 
 
@@ -2785,9 +2598,88 @@
     </main>
     
     <script>
-        // conditional clinical/non profession
+        
 
-    document.addEventListener('DOMContentLoaded', function () {
+function fillData() {
+    const fields = {
+        'job_name': 'job name',
+        'job_type': 'Clinical',
+        'preferred_specialty': 'Adult Medicine',
+        'perferred_profession': 'Clerical', 
+        'job_state': 'Arizona',
+        'weekly_pay': 250,
+        'terms': 'Perm',
+        'preferred_assignment_duration': 3,
+        'facility_shift_cancelation_policy': 'shift cancellation policy',
+        'traveler_distance_from_facility': 50,
+        'clinical_setting': 'Clinic',
+        'Patient_ratio': 20, 
+        'Unit': 'Unit',
+        'scrub_color': 'Blue',
+        'rto': 'allowed',
+        'guaranteed_hours': 7,
+        'hours_per_week': 30,
+        'hours_shift': 5,
+        'weeks_shift': 3,
+        'referral_bonus': 30,
+        'sign_on_bonus': 10,
+        'completion_bonus': 3,
+        'extension_bonus': 3,
+        'other_bonus': 3,
+        'actual_hourly_rate': 3,
+        'overtime': 3,
+        'on_call': 'Yes',
+        'on_call_rate': 10,
+        'holiday': '2025-04-27',
+        'orientation_rate': 19,
+        'block_scheduling': 'No',
+        'float_requirement': 'No',
+        'number_of_references': 1,
+        'eligible_work_in_us': 0,
+        'urgency': 'Auto Offer',
+        'facilitys_parent_system': 'Parent system',
+        'facility_name': 'Facility Name',
+        'pay_frequency': 'Daily',
+        'preferred_experience': 'preferred experience',
+        'contract_termination_policy': 'Contract policy',
+        'four_zero_one_k': 'No',
+        'health_insaurance': 'No',
+        'feels_like_per_hour': 5,
+        'on_call_back': 'No',
+        'call_back_rate': 16,
+        'weekly_non_taxable_amount': 100,
+        'start_date': '2025-04-27'
+    };
+
+    for (const [id, value] of Object.entries(fields)) {
+        document.getElementById(id).value = value;
+    }
+}
+
+function checkWorkerClassification(){
+    let benefitsElement = document.getElementById("benefits_id");
+    benefitsElement.classList.remove('d-none');
+    // let workerClassification = document.getElementById("nurse_classification");
+    // workerClassification.addEventListener('change',function(){
+    //     workerClassificationValue = this.value;
+    //     let benefitsElement = document.getElementById("benefits_id");
+    //     if(workerClassificationValue == 'W-2'){
+    //         benefitsElement.classList.remove('d-none');
+    //     }else{
+    //         benefitsElement.classList.add('d-none');
+    //     }
+    // });
+}
+
+    document.addEventListener('DOMContentLoaded', async function () {
+        fillData();
+        // let workerClassification = document.getElementById("nurse_classification");
+        // workerClassificationValue = workerClassification.value;
+        // if(workerClassificationValue == 'W-2'){
+        //     let benefitsElement = document.getElementById("benefits_id");
+        //     benefitsElement.classList.remove('d-none');
+        // }
+        checkWorkerClassification();
         const jobTypeSelect = document.getElementById('job_type');
         const professionSelect = document.getElementById('perferred_profession');
 
@@ -2811,6 +2703,52 @@
             professionSelect.appendChild(option);
                 });
             });
+
+        const jobState = document.getElementById('job_state');
+        const jobCity = document.getElementById('job_city');
+        let citiesData = [];
+        const selectedJobState = jobState.value;
+        const selectedState = $(jobState).find(':selected').attr('id');
+        console.log('id : ', selectedState );
+        console.log('value : ',selectedJobState);
+            
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                console.log('cities :',cities);
+                citiesData = [];
+                citiesData = cities;
+            });
+            jobCity.innerHTML = '<option value="">Cities</option>';
+            citiesData.forEach(function (City) {
+            const option = document.createElement('option');
+            option.value = City.name;
+            option.textContent = City.name;
+            jobCity.appendChild(option);
+            });
+            document.getElementById("job_city").value = 'Globe';
+           
+        jobState.addEventListener('change', async function (){
+        
+            const selectedJobState = this.value;
+            const selectedState = $(this).find(':selected').attr('id');
+            console.log('id : ', selectedState );
+            console.log('value : ',selectedJobState);
+            
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                console.log('cities :',cities);
+                citiesData = cities;
+            });
+
+            jobCity.innerHTML = '<option value="">Cities</option>';
+            citiesData.forEach(function (City) {
+            const option = document.createElement('option');
+            option.value = City.name;
+            option.textContent = City.name;
+            jobCity.appendChild(option);
+            });
+         
+        })
+        
+           
     });
 
 
@@ -2821,7 +2759,7 @@
 
     if (publishedJobs == 0){
         $("#application-details-apply").html('<div class="text-center"><span>Data Not found</span></div>');
-                                $("#job-list-published").html('<div class="text-center"><span>No Job</span></div>');
+        $("#job-list-published").html('<div class="text-center"><span>No Job</span></div>');
     }
 
     if (onholdJobs == 0){
@@ -2870,8 +2808,6 @@ if (draftJobs.length !== 0) {
     let Emr = draftJobs[0].Emr;
     let four_zero_one_k = draftJobs[0].four_zero_one_k;
     let health_insaurance = draftJobs[0].health_insaurance;
-    let dental = draftJobs[0].dental;
-    let vision = draftJobs[0].vision;
     let call_back_rate = draftJobs[0].call_back_rate;
     let on_call_back = draftJobs[0].on_call_back;
     let feels_like_per_hour = draftJobs[0].feels_like_per_hour;
@@ -2940,15 +2876,8 @@ if (draftJobs.length !== 0) {
         //document.getElementById("perferred_professionDraft").value = proffesion;
     }
     if (facility_shift_cancelation_policy !== null) {
-        var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
-    var select = document.getElementById('facility_shift_cancelation_policyDraft');
-    var option = document.createElement('option');
-    option.value = facilityShiftCancelationPolicy;
-    option.text = facilityShiftCancelationPolicy;
+        document.getElementById('facility_shift_cancelation_policyDraft').value = facility_shift_cancelation_policy;
 
-    select.add(option);
-    select.value = facilityShiftCancelationPolicy;
-        //document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
     }
     if (traveler_distance_from_facility !== null) {
         document.getElementById("traveler_distance_from_facilityDraft").value = traveler_distance_from_facility;
@@ -3063,14 +2992,7 @@ if (draftJobs.length !== 0) {
         document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
 
     }
-    if (dental !== null) {
-        document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
-
-    }
-    if (vision !== null) {
-        document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
-
-    }
+    
     if(feels_like_per_hour !== null){
         document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
     }
@@ -3096,71 +3018,30 @@ if (draftJobs.length !== 0) {
 }
 
 
-
-
         var certificateStr = '';
         var vaccinationStr = '';
         var skillsStr = '';
         var shifttimeofdayStr = '';
+        var benefitsStr = '';
+        var professional_licensureStr = '';
+        var nurse_classificationStr = '';
+        var EmrStr = '';
         
-         $(document).ready(function() {
-            $('#facility_state').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#facility_city');
 
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="">Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                });
-            });
-        });
-
-        $(document).ready(function() {
-            $('#facility_stateDraft').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#facility_cityDraft');
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="">Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                });
-            });
-        });
-
-        $(document).ready(function() {
-            $('#facility_stateEdit').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#facility_cityEdit');
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="">Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                });
-            });
-        });
-
-
-        $(document).ready(function() {
-            $('#job_state').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#job_city');
-
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="">Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                });
-            });
-        });
+        // $(document).ready(function() {
+        //     $('#job_state').change(function() {
+        //         console.log("selected");
+        //         const selectedState = $(this).find(':selected').attr('id');
+        //         const CitySelect = $('#job_city');
+        //         $.get(`/api/cities/${selectedState}`, function(data) {
+        //             CitySelect.empty();
+        //             CitySelect.append('<option value="">Select City</option>');
+        //             $.each(data, function(index, city) {
+        //                 CitySelect.append(new Option(city.name, city.name));
+        //             });
+        //         });
+        //     });
+        // });
 
 
         $(document).ready(function() {
@@ -3305,9 +3186,20 @@ if (draftJobs.length !== 0) {
                         window.allspecialty = result.allspecialty;
                         window.allvaccinations = result.allvaccinations;
                         window.allcertificate = result.allcertificate;
+                        window.allbenefits = result.allcertificate;
+                        window.allprofessional_licensure = result.allcertificate;
+                        window.allEmr = result.allcertificate;
+                        window.allnurse_classification = result.allcertificate;
+
+
+
                         list_specialities();
                         list_vaccinations();
                         list_certifications();
+                        list_benefits();
+                        list_professional_licensure();
+                        list_Emr();
+                        list_nurse_classification();
 
                         if (result.joblisting != "") {
                             if(type == "published"){
@@ -3376,11 +3268,17 @@ if (draftJobs.length !== 0) {
             var name = inputField.name;
 
             if (value != "") {
-                if (name == "vaccinations" || name == "preferred_specialty" || name == "preferred_experience" || name ==
+                if (name="benefits", name == "vaccinations" || name == "preferred_specialty" || name == "preferred_experience" || name ==
                     "certificate") {
                     var inputFields = document.querySelectorAll(name == "vaccinations" ? 'select[name="vaccinations"]' :
-                        name == "preferred_specialty" ? 'select[name="preferred_specialty"]' : name ==
-                        "preferred_experience" ? 'input[name="preferred_experience"]' : 'select[name="certificate"]');
+                        name == "preferred_specialty" ? 'select[name="preferred_specialty"]' : 
+                        name == "preferred_experience" ? 'input[name="preferred_experience"]' :
+                        name == 'certificate' ? 'select[name="certificate"]' :
+                        name == 'benefits' ? 'select[name="benefits"]' : 
+                        name == 'professional_licensure' ? 'select[name="professional_licensure"]' : 
+                        name == 'nurse_classification' ? 'select[name="nurse_classification"]' :
+                        'select[name="Emr"]'
+                    );
                     var data = [];
                     inputFields.forEach(function(input) {
                         data.push(input.value);
@@ -3561,7 +3459,7 @@ if (draftJobs.length !== 0) {
         function updateJob() {
             notie.alert({
                 type: 'success',
-                text: '<i class="fa fa-check"></i> Job Updated Successfully.',
+                text: '<i class="fa fa-check"></i> Work Updated Successfully.',
                 time: 3
             });
         }
@@ -3993,8 +3891,6 @@ if (draftJobs.length !== 0) {
         let Emr = draftJobs[jobId].Emr;
         let four_zero_one_k = draftJobs[jobId].four_zero_one_k;
         let health_insaurance = draftJobs[jobId].health_insaurance;
-        let dental = draftJobs[jobId].dental;
-        let vision = draftJobs[jobId].vision;
         let feels_like_per_hour = draftJobs[jobId].feels_like_per_hour;
         let call_back_rate = draftJobs[jobId].call_back_rate;
         let on_call_back = draftJobs[jobId].on_call_back;
@@ -4083,15 +3979,7 @@ if (draftJobs.length !== 0) {
                 document.getElementById("perferred_professionDraft").value = '';
             }
             if (facility_shift_cancelation_policy !== null) {
-                var facilityShiftCancelationPolicy = facility_shift_cancelation_policy;
-            var select = document.getElementById('facility_shift_cancelation_policyDraft');
-            var option = document.createElement('option');
-            option.value = facilityShiftCancelationPolicy;
-            option.text = facilityShiftCancelationPolicy;
-            select.add(option);
-            select.value = facilityShiftCancelationPolicy;
-            
-            //    document.getElementById("facility_shift_cancelation_policyDraft").value = facility_shift_cancelation_policy;
+                document.getElementById('facility_shift_cancelation_policyDraft').value = facility_shift_cancelation_policy;
             }else{
                 document.getElementById("facility_shift_cancelation_policyDraft").value = '';
             }
@@ -4258,18 +4146,6 @@ if (draftJobs.length !== 0) {
             }else {
                 document.getElementById("health_insauranceDraft").value = '';
             }
-            if (dental !== null) {
-                document.getElementById("dentalDraft").value = (dental == 0) ? 'No' : 'Yes';
-            
-            }else {
-                document.getElementById("dentalDraft").value = '';
-            }
-            if (vision !== null) {
-                document.getElementById("visionDraft").value = (vision == 0) ? 'No' : 'Yes';
-            
-            }else {
-                document.getElementById("visionDraft").value = '';
-            }
             if(feels_like_per_hour !== null){
                 document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
             }else {
@@ -4325,29 +4201,21 @@ if (draftJobs.length !== 0) {
     // first Slide
     function validateFirst() {
         var access = true;
-        var jobName = document.getElementById("job_name").value;
+        
         var jobType = document.getElementById("job_type").value;
         var specialty = document.getElementById("preferred_specialty").value;
         var profession = document.getElementById("perferred_profession").value;
         var city = document.getElementById("job_city").value;
         var state = document.getElementById("job_state").value;
         var weeklyPay = document.getElementById("weekly_pay").value;
-        var preferred_assignment_duration = document.getElementById("preferred_assignment_duration").value;
+        var terms = document.getElementById("terms").value;
 
 
 
-
-        if (jobName.trim() === '') {
-            $('.help-block-job_name').text('Please enter the job name');
-            $('.help-block-job_name').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-job_name').text('');
-
-        }
+        
 
         if (jobType.trim() === "") {
-            $('.help-block-job_type').text('Please enter the job type');
+            $('.help-block-job_type').text('Please enter the Work type');
             $('.help-block-job_type').addClass('text-danger');
             access = false;
         } else {
@@ -4356,7 +4224,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (specialty.trim() === '') {
-            $('.help-block-preferred_specialty').text('Please enter the job speciality');
+            $('.help-block-preferred_specialty').text('Please enter the Work speciality');
             $('.help-block-preferred_specialty').addClass('text-danger');
             access = false;
         } else {
@@ -4365,16 +4233,23 @@ if (draftJobs.length !== 0) {
         }
 
         if (profession.trim() === '') {
-            $('.help-block-perferred_profession').text('Please enter the job profession');
+            $('.help-block-perferred_profession').text('Please enter the Work profession');
             $('.help-block-perferred_profession').addClass('text-danger');
             access = false;
         } else {
             $('.help-block-perferred_profession').text('');
 
         }
+        if (terms.trim() === '') {
+            $('.help-block-terms').text('Please enter the terms');
+            $('.help-block-terms').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-terms').text('');
+        }
 
         if (city.trim() === '') {
-            $('.help-block-job_city').text('Please enter the job city');
+            $('.help-block-job_city').text('Please enter the Work city');
             $('.help-block-job_city').addClass('text-danger');
             access = false;
         } else {
@@ -4383,7 +4258,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (state.trim() === '') {
-            $('.help-block-job_state').text('Please enter the job state');
+            $('.help-block-job_state').text('Please enter the Work state');
             $('.help-block-job_state').addClass('text-danger');
             access = false;
         } else {
@@ -4391,21 +4266,14 @@ if (draftJobs.length !== 0) {
         }
 
         if (weeklyPay.trim() === '') {
-            $('.help-block-weekly_pay').text('Please enter the job weekly pay');
+            $('.help-block-weekly_pay').text('Please enter the Work weekly pay');
             $('.help-block-weekly_pay').addClass('text-danger');
             access = false;
         } else {
             $('.help-block-weekly_pay').text('');
 
         }
-        if (preferred_assignment_duration.trim() === '') {
-            $('.help-block-preferred_assignment_duration').text('Please enter an assignment duration');
-            $('.help-block-preferred_assignment_duration').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-preferred_assignment_duration').text('');
-
-        }
+        
 
         if (access) {
             return true;
@@ -4431,7 +4299,7 @@ if (draftJobs.length !== 0) {
 
         if (facility_shift_cancelation_policy.trim() === '') {
             $('.help-block-facility_shift_cancelation_policy').text(
-                'Please enter the facility shift cancelation policy');
+                'Please enter the Shift Cancellation Policy');
             $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
             access = false;
         } else {
@@ -4538,7 +4406,7 @@ if (draftJobs.length !== 0) {
         var on_call = document.getElementById("on_call").value;
         var on_call_rate = document.getElementById("on_call_rate").value;
         var block_scheduling = document.getElementById("block_scheduling").value;
-        var terms = document.getElementById("terms").value;
+        
         var float_requirement = document.getElementById("float_requirement").value;
 
         if (referral_bonus.trim() === '') {
@@ -4639,13 +4507,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-block_scheduling').text('');
         }
 
-        if (terms.trim() === '') {
-            $('.help-block-terms').text('Please enter the terms');
-            $('.help-block-terms').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-terms').text('');
-        }
+        
 
         if (float_requirement.trim() === '') {
             $('.help-block-float_requirement').text('Please enter the float requirement');
@@ -4668,11 +4530,8 @@ if (draftJobs.length !== 0) {
     function validateForth() {
         var access = true;
         var contract_termination_policy = document.getElementById("contract_termination_policy").value;
-        var emr = document.getElementById("emr").value;
         var four_zero_one_k = document.getElementById("four_zero_one_k").value;
         var health_insaurance = document.getElementById("health_insaurance").value;
-        var dental = document.getElementById("dental").value;
-        var vision = document.getElementById("vision").value;
         var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
         var call_back_rate = document.getElementById("call_back_rate").value;
         var on_call_back = document.getElementById("on_call_back").value;
@@ -4692,13 +4551,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-contract_termination_policy').text('');
         }
 
-        if (emr.trim() === '') {
-            $('.help-block-emr').text('Please enter the emr');
-            $('.help-block-emr').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-emr').text('');
-        }
+        
 
         if (four_zero_one_k.trim() === '') {
             $('.help-block-four_zero_one_k').text('Please enter the four zero one k');
@@ -4717,21 +4570,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-health_insaurance').text('');
         }
 
-        if (dental.trim() === '') {
-            $('.help-block-dental').text('Please enter the dental insurance');
-            $('.help-block-dental').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-dental_insurance').text('');
-        }
-
-        if (vision.trim() === '') {
-            $('.help-block-vision').text('Please enter the vision');
-            $('.help-block-vision').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-vision').text('');
-        }
+      
 
         if (feels_like_per_hour.trim() === '') {
             $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
@@ -4814,30 +4653,12 @@ if (draftJobs.length !== 0) {
 
     function validateFifth() {
         var access = true;
-        var facility_city = document.getElementById("facility_city").value;
-        var facility_state = document.getElementById("facility_state").value;
-        
-        if (facility_state.trim() === '') {
-            $('.help-block-facility_state').text('Please enter the facility state');
-            $('.help-block-facility_state').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-facility_state').text('');
-        }
-
-        if (facility_city.trim() === '') {
-            $('.help-block-facility_city').text('Please enter the facility city');
-            $('.help-block-facility_city').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-facility_city').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
+        return access;
+        // if (access) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
     }
 
 
@@ -4886,6 +4707,25 @@ if (draftJobs.length !== 0) {
     submitBtn.addEventListener("click", function(event) {
 
         event.preventDefault();
+        let nurse_classification_all_values = document.getElementById("nurse_classificationAllValues");
+        if (nurse_classification_all_values) {
+            nurse_classification_all_values.value = nurse_classificationStr;
+        }
+
+        let professional_licensure_all_values = document.getElementById("professional_licensureAllValues");
+        if (professional_licensure_all_values) {
+            professional_licensure_all_values.value = professional_licensureStr;
+        }
+
+        let Emr_all_values = document.getElementById("EmrAllValues");
+        if (Emr_all_values) {
+            Emr_all_values.value = EmrStr;
+        }
+
+        let benefits_all_values = document.getElementById("benefitsAllValues");
+        if (benefits_all_values) {
+            benefits_all_values.value = benefitsStr;
+        }
 
         let certif_all_values = document.getElementById("certificateAllValues");
         if (certif_all_values) {
@@ -4930,7 +4770,7 @@ if (draftJobs.length !== 0) {
 
             var jobName = document.getElementById("job_name").value;
             if (jobName.trim() === '') {
-                $('.help-block-job_name').text('Enter at least a job name');
+                $('.help-block-job_name').text('Enter at least a Work name');
                 $('.help-block-job_name').addClass('text-danger');
 
             } else {
@@ -4974,7 +4814,7 @@ if (draftJobs.length !== 0) {
         current -= 1;
     });
 
-    // for job draft editing
+    // for Work draft editing
 
     const slidePageDraft = document.querySelector(".slide-pageDraft");
     const nextBtnFirstDraft = document.querySelector(".firstNextDraft");
@@ -4997,30 +4837,21 @@ if (draftJobs.length !== 0) {
 
     function validateFirstDraft() {
         var access = true;
-        var jobName = document.getElementById("job_nameDraft").value;
         var jobType = document.getElementById("job_typeDraft").value;
         var specialty = document.getElementById("preferred_specialtyDraft").value;
         var profession = document.getElementById("perferred_professionDraft").value;
         var city = document.getElementById("job_cityDraft").value;
         var state = document.getElementById("job_stateDraft").value;
-        var weeklyPay = document.getElementById("weekly_payDraft").value;
-        var preferred_assignment_duration = document.getElementById("preferred_assignment_durationDraft").value;
-
+        var weeklyPay = document.getElementById("weekly_payDraft").value;;
+        var terms = document.getElementById("termsDraft").value;
 
         document.getElementById("active").value = false;
         document.getElementById("is_open").value = false;
 
-        if (jobName.trim() === '') {
-            $('.help-block-job_name').text('Please enter the job name');
-            $('.help-block-job_name').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-job_name').text('');
-
-        }
+        
 
         if (jobType.trim() === "") {
-            $('.help-block-job_type').text('Please enter the job type');
+            $('.help-block-job_type').text('Please enter the Work type');
             $('.help-block-job_type').addClass('text-danger');
             access = false;
         } else {
@@ -5029,7 +4860,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (specialty.trim() === '') {
-            $('.help-block-preferred_specialty').text('Please enter the job speciality');
+            $('.help-block-preferred_specialty').text('Please enter the Work speciality');
             $('.help-block-preferred_specialty').addClass('text-danger');
             access = false;
         } else {
@@ -5038,16 +4869,23 @@ if (draftJobs.length !== 0) {
         }
 
         if (profession.trim() === '') {
-            $('.help-block-perferred_profession').text('Please enter the job profession');
+            $('.help-block-perferred_profession').text('Please enter the Work profession');
             $('.help-block-perferred_profession').addClass('text-danger');
             access = false;
         } else {
             $('.help-block-perferred_profession').text('');
 
         }
+        if (terms.trim() === '') {
+            $('.help-block-terms').text('Please enter the terms');
+            $('.help-block-terms').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-terms').text('');
+        }
 
         if (city.trim() === '') {
-            $('.help-block-job_city').text('Please enter the job city');
+            $('.help-block-job_city').text('Please enter the Work city');
             $('.help-block-job_city').addClass('text-danger');
             access = false;
         } else {
@@ -5056,7 +4894,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (state.trim() === '') {
-            $('.help-block-job_state').text('Please enter the job state');
+            $('.help-block-job_state').text('Please enter the Work state');
             $('.help-block-job_state').addClass('text-danger');
             access = false;
         } else {
@@ -5064,7 +4902,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (weeklyPay.trim() === '') {
-            $('.help-block-weekly_pay').text('Please enter the job weekly pay');
+            $('.help-block-weekly_pay').text('Please enter the Work weekly pay');
             $('.help-block-weekly_pay').addClass('text-danger');
             access = false;
         } else {
@@ -5072,14 +4910,7 @@ if (draftJobs.length !== 0) {
 
         }
 
-        if (preferred_assignment_duration.trim() === '') {
-            $('.help-block-preferred_assignment_duration').text('Please enter an assignment duration');
-            $('.help-block-preferred_assignment_duration').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-preferred_assignment_duration').text('');
-
-        }
+        
 
         if (access) {
             return true;
@@ -5106,7 +4937,7 @@ if (draftJobs.length !== 0) {
 
         if (facility_shift_cancelation_policy.trim() === '') {
             $('.help-block-facility_shift_cancelation_policy').text(
-                'Please enter the facility shift cancelation policy');
+                'Please enter the Shift Cancellation Policy');
             $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
             access = false;
         } else {
@@ -5218,7 +5049,7 @@ if (draftJobs.length !== 0) {
         var on_call = document.getElementById("on_callDraft").value;
         var on_call_rate = document.getElementById("on_call_rateDraft").value;
         var block_scheduling = document.getElementById("block_schedulingDraft").value;
-        var terms = document.getElementById("termsDraft").value;
+        
         var float_requirement = document.getElementById("float_requirementDraft").value;
 
         if (referral_bonus.trim() === '') {
@@ -5317,13 +5148,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-block_scheduling').text('');
         }
 
-        if (terms.trim() === '') {
-            $('.help-block-terms').text('Please enter the terms');
-            $('.help-block-terms').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-terms').text('');
-        }
+        
 
         if (float_requirement.trim() === '') {
             $('.help-block-float_requirement').text('Please enter the float requirement');
@@ -5349,8 +5174,6 @@ if (draftJobs.length !== 0) {
         var emr = document.getElementById("emrDraft").value;
         var four_zero_one_k = document.getElementById("four_zero_one_kDraft").value;
         var health_insaurance = document.getElementById("health_insauranceDraft").value;
-        var dental = document.getElementById("dentalDraft").value;
-        var vision = document.getElementById("visionDraft").value;
         var feels_like_per_hour = document.getElementById("feels_like_per_hourDraft").value;
         var call_back_rate = document.getElementById("call_back_rateDraft").value;
         var on_call_back = document.getElementById("on_call_backDraft").value;
@@ -5395,21 +5218,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-health_insaurance').text('');
         }
 
-        if (dental.trim() === '') {
-            $('.help-block-dental').text('Please enter the dental insurance');
-            $('.help-block-dental').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-dental_insurance').text('');
-        }
-
-        if (vision.trim() === '') {
-            $('.help-block-vision').text('Please enter the vision');
-            $('.help-block-vision').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-vision').text('');
-        }
+        
 
         if (feels_like_per_hour.trim() === '') {
             $('.help-block-feels_like_per_hourDraft').text('Please enter the feels like per hour');
@@ -5492,30 +5301,7 @@ if (draftJobs.length !== 0) {
 
     function validateFifthDraft() {
         var access = true;
-        var facility_cityDraft = document.getElementById("facility_cityDraft").value;
-        var facility_stateDraft = document.getElementById("facility_stateDraft").value;
-        
-        if (facility_stateDraft.trim() === '') {
-            $('.help-block-facility_stateDraft').text('Please enter the facility state');
-            $('.help-block-facility_stateDraft').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-facility_stateDraft').text('');
-        }
-
-        if (facility_cityDraft.trim() === '') {
-            $('.help-block-facility_cityDraft').text('Please enter the facility city');
-            $('.help-block-facility_cityDraft').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-facility_cityDraft').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
+       return access;
     }
 
     nextBtnFirstDraft.addEventListener("click", function(event) {
@@ -5566,6 +5352,26 @@ if (draftJobs.length !== 0) {
         document.getElementById("activeDraft").value = true;
         document.getElementById("is_openDraft").value = true;
 
+        let nurse_classification_all_values = document.getElementById("nurse_classificationAllValuesDraft");
+        if (nurse_classification_all_values) {
+            nurse_classification_all_values.value = nurse_classificationStr;
+        }
+
+        let professional_licensure_all_values = document.getElementById("professional_licensureAllValuesDraft");
+        if (professional_licensure_all_values) {
+            professional_licensure_all_values.value = professional_licensureStr;
+        }
+
+        let Emr_all_values = document.getElementById("EmrAllValuesDraft");
+        if (Emr_all_values) {
+            Emr_all_values.value = EmrStr;
+        }
+
+        let benefits_all_values = document.getElementById("benefitsAllValuesDraft");
+        if (benefits_all_values) {
+            benefits_all_values.value = benefitsStr;
+        }
+
         let certif_all_values = document.getElementById("certificateAllValuesDraft");
         if (certif_all_values) {
             certif_all_values.value = certificateStr;
@@ -5601,7 +5407,7 @@ if (draftJobs.length !== 0) {
         document.getElementById("is_openDraft").value = false;
         var jobName = document.getElementById("job_nameDraft").value;
         if (jobName.trim() === '') {
-            $('.help-block-job_name').text('Enter at least a job name');
+            $('.help-block-job_name').text('Enter at least a Work name');
             $('.help-block-job_name').addClass('text-danger');
            
         } else {
@@ -5646,7 +5452,7 @@ if (draftJobs.length !== 0) {
     });
 
 
-// for job editing
+// for Work editing
 
     const slidePageEdit = document.querySelector(".slide-pageEdit");
     const nextBtnFirstEdit = document.querySelector(".firstNextEdit");
@@ -5667,30 +5473,21 @@ if (draftJobs.length !== 0) {
 
     function validateFirstEdit() {
         var access = true;
-        var jobName = document.getElementById("job_nameEdit").value;
         var jobType = document.getElementById("job_typeEdit").value;
         var specialty = document.getElementById("preferred_specialtyEdit").value;
         var profession = document.getElementById("perferred_professionEdit").value;
         var city = document.getElementById("job_cityEdit").value;
         var state = document.getElementById("job_stateEdit").value;
         var weeklyPay = document.getElementById("weekly_payEdit").value;
-        var preferred_assignment_duration = document.getElementById("preferred_assignment_durationEdit").value;
-
+        var terms = document.getElementById("termsEdit").value;
 
         document.getElementById("active").value = false;
         document.getElementById("is_open").value = false;
 
-        if (jobName.trim() === '') {
-            $('.help-block-job_name').text('Please enter the job name');
-            $('.help-block-job_name').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-job_name').text('');
-
-        }
+        
 
         if (jobType.trim() === "") {
-            $('.help-block-job_type').text('Please enter the job type');
+            $('.help-block-job_type').text('Please enter the Work type');
             $('.help-block-job_type').addClass('text-danger');
             access = false;
         } else {
@@ -5699,7 +5496,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (specialty.trim() === '') {
-            $('.help-block-preferred_specialty').text('Please enter the job speciality');
+            $('.help-block-preferred_specialty').text('Please enter the Work speciality');
             $('.help-block-preferred_specialty').addClass('text-danger');
             access = false;
         } else {
@@ -5708,7 +5505,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (profession.trim() === '') {
-            $('.help-block-perferred_profession').text('Please enter the job profession');
+            $('.help-block-perferred_profession').text('Please enter the Work profession');
             $('.help-block-perferred_profession').addClass('text-danger');
             access = false;
         } else {
@@ -5717,7 +5514,7 @@ if (draftJobs.length !== 0) {
         }
 
         if (city.trim() === '') {
-            $('.help-block-job_city').text('Please enter the job city');
+            $('.help-block-job_city').text('Please enter the Work city');
             $('.help-block-job_city').addClass('text-danger');
             access = false;
         } else {
@@ -5726,15 +5523,23 @@ if (draftJobs.length !== 0) {
         }
 
         if (state.trim() === '') {
-            $('.help-block-job_state').text('Please enter the job state');
+            $('.help-block-job_state').text('Please enter the Work state');
             $('.help-block-job_state').addClass('text-danger');
             access = false;
         } else {
             $('.help-block-job_state').text('');
         }
 
+        if (terms.trim() === '') {
+            $('.help-block-terms').text('Please enter the terms');
+            $('.help-block-terms').addClass('text-danger');
+            access = false;
+        } else {
+            $('.help-block-terms').text('');
+        }
+
         if (weeklyPay.trim() === '') {
-            $('.help-block-weekly_pay').text('Please enter the job weekly pay');
+            $('.help-block-weekly_pay').text('Please enter the Work weekly pay');
             $('.help-block-weekly_pay').addClass('text-danger');
             access = false;
         } else {
@@ -5742,14 +5547,7 @@ if (draftJobs.length !== 0) {
 
         }
 
-        if (preferred_assignment_duration.trim() === '') {
-            $('.help-block-preferred_assignment_duration').text('Please enter an assignment duration');
-            $('.help-block-preferred_assignment_duration').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-preferred_assignment_duration').text('');
-
-        }
+        
 
         if (access) {
             return true;
@@ -5776,7 +5574,7 @@ if (draftJobs.length !== 0) {
 
         if (facility_shift_cancelation_policy.trim() === '') {
             $('.help-block-facility_shift_cancelation_policy').text(
-                'Please enter the facility shift cancelation policy');
+                'Please enter the Shift Cancellation Policy');
             $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
             access = false;
         } else {
@@ -5888,7 +5686,7 @@ if (draftJobs.length !== 0) {
         var on_call = document.getElementById("on_callEdit").value;
         var on_call_rate = document.getElementById("on_call_rateEdit").value;
         var block_scheduling = document.getElementById("block_schedulingEdit").value;
-        var terms = document.getElementById("termsEdit").value;
+        
         var float_requirement = document.getElementById("float_requirementEdit").value;
 
         if (referral_bonus.trim() === '') {
@@ -5988,13 +5786,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-block_scheduling').text('');
         }
 
-        if (terms.trim() === '') {
-            $('.help-block-terms').text('Please enter the terms');
-            $('.help-block-terms').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-terms').text('');
-        }
+       
 
         if (float_requirement.trim() === '') {
             $('.help-block-float_requirement').text('Please enter the float requirement');
@@ -6020,8 +5812,6 @@ if (draftJobs.length !== 0) {
         var emr = document.getElementById("emrEdit").value;
         var four_zero_one_k = document.getElementById("four_zero_one_kEdit").value;
         var health_insaurance = document.getElementById("health_insauranceEdit").value;
-        var dental = document.getElementById("dentalEdit").value;
-        var vision = document.getElementById("visionEdit").value;
          var feels_like_per_hour = document.getElementById("feels_like_per_hourEdit").value;
         var call_back_rate = document.getElementById("call_back_rateEdit").value;
         var on_call_back = document.getElementById("on_call_backEdit").value;
@@ -6066,21 +5856,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-health_insaurance').text('');
         }
 
-        if (dental.trim() === '') {
-            $('.help-block-dental').text('Please enter the dental insurance');
-            $('.help-block-dental').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-dental_insurance').text('');
-        }
-
-        if (vision.trim() === '') {
-            $('.help-block-vision').text('Please enter the vision');
-            $('.help-block-vision').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-vision').text('');
-        }
+        
 
         if (feels_like_per_hour.trim() === '') {
             $('.help-block-feels_like_per_hourEdit').text('Please enter the feels like per hour');
@@ -6153,31 +5929,8 @@ if (draftJobs.length !== 0) {
 
     function validateFifthEdit() {
         var access = true;
-        var facility_cityEdit = document.getElementById("facility_cityEdit").value;
-        var facility_stateEdit = document.getElementById("facility_stateEdit").value;
+        return access;
         
-        
-        if (facility_stateEdit.trim() === '') {
-            $('.help-block-facility_stateEdit').text('Please enter the facility state');
-            $('.help-block-facility_stateEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-facility_stateEdit').text('');
-        }
-
-        if (facility_cityEdit.trim() === '') {
-            $('.help-block-facility_cityEdit').text('Please enter the facility city');
-            $('.help-block-facility_cityEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-facility_cityEdit').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 
@@ -6227,6 +5980,26 @@ if (draftJobs.length !== 0) {
     });
     submitBtnEdit.addEventListener("click", function(event) {
         event.preventDefault();
+        let nurse_classification_all_values = document.getElementById("nurse_classificationAllValuesEdit");
+        if (nurse_classification_all_values) {
+            nurse_classification_all_values.value = nurse_classificationStr;
+        }
+
+        let professional_licensure_all_values = document.getElementById("professional_licensureAllValuesEdit");
+        if (professional_licensure_all_values) {
+            professional_licensure_all_values.value = professional_licensureStr;
+        }
+
+        let Emr_all_values = document.getElementById("EmrAllValuesEdit");
+        if (Emr_all_values) {
+            Emr_all_values.value = EmrStr;
+        }
+
+        let benefits_all_values = document.getElementById("benefitsAllValuesEdit");
+        if (benefits_all_values) {
+            benefits_all_values.value = benefitsStr;
+        }
+
         let certif_all_values = document.getElementById("certificateAllValuesEdit");
         if (certif_all_values) {
             certif_all_values.value = certificateStr;
@@ -6263,7 +6036,7 @@ if (draftJobs.length !== 0) {
         document.getElementById("is_openEdit").value = true;
         var jobName = document.getElementById("job_nameEdit").value;
         if (jobName.trim() === '') {
-            $('.help-block-job_name').text('Enter at least a job name');
+            $('.help-block-job_name').text('Enter at least a Work name');
             $('.help-block-job_name').addClass('text-danger');
         } else {
             $('.help-block-job_name').text('');
@@ -6349,13 +6122,13 @@ if (draftJobs.length !== 0) {
                         //document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
 
                         var proffesionValue = result.proffesion;
-    var select = document.getElementById('perferred_professionEdit');
-    var option = document.createElement('option');
-    option.value = proffesionValue;
-    option.text = proffesionValue;
+                        var select = document.getElementById('perferred_professionEdit');
+                        var option = document.createElement('option');
+                        option.value = proffesionValue;
+                        option.text = proffesionValue;
 
-    select.add(option);
-    select.value = proffesionValue;
+                        select.add(option);
+                        select.value = proffesionValue;
                        // document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
 
                         // here
@@ -6375,23 +6148,17 @@ if (draftJobs.length !== 0) {
                         document.getElementById("weekly_payEdit").value = result.weekly_pay;
                         document.getElementById("descriptionEdit").value = result.description;
                         document.getElementById("preferred_assignment_durationEdit").value = result.preferred_assignment_duration;
-                        var facilityShiftCancelationPolicy = result.facility_shift_cancelation_policy;
-    var select = document.getElementById('facility_shift_cancelation_policyEdit');
-    var option = document.createElement('option');
-    option.value = facilityShiftCancelationPolicy;
-    option.text = facilityShiftCancelationPolicy;
-    select.add(option);
-    select.value = facilityShiftCancelationPolicy;
+                        document.getElementById('facility_shift_cancelation_policyEdit').value = result.facility_shift_cancelation_policy;
                         //document.getElementById("facility_shift_cancelation_policyEdit").value = result.facility_shift_cancelation_policy;
                         document.getElementById("traveler_distance_from_facilityEdit").value = result.traveler_distance_from_facility;
                         var ClinicalSettingValue = result.clinical_setting;
-    var select = document.getElementById('clinical_settingEdit');
-    var option = document.createElement('option');
-    option.value = ClinicalSettingValue;
-    option.text = ClinicalSettingValue;
+                        var select = document.getElementById('clinical_settingEdit');
+                        var option = document.createElement('option');
+                        option.value = ClinicalSettingValue;
+                        option.text = ClinicalSettingValue;
 
-    select.add(option);
-    select.value = ClinicalSettingValue;
+                        select.add(option);
+                        select.value = ClinicalSettingValue;
                         //document.getElementById("clinical_settingEdit").value = result.clinical_setting;
                         document.getElementById("Patient_ratioEdit").value = result.Patient_ratio;
                         document.getElementById("UnitEdit").value = result.Unit;
@@ -6413,30 +6180,25 @@ if (draftJobs.length !== 0) {
                         document.getElementById("on_call_rateEdit").value = result.on_call_rate;
                         document.getElementById("block_schedulingEdit").value = (result.block_scheduling == 0) ? 'No' : 'Yes';
                         var Terms = result.terms;
-    var select = document.getElementById('termsEdit');
-    var option = document.createElement('option');
-    option.value = Terms;
-    option.text = Terms;
-
-    select.add(option);
-    select.value = Terms;
+                        var select = document.getElementById('termsEdit');
+                        var option = document.createElement('option');
+                        option.value = Terms;
+                        option.text = Terms;
+                        select.add(option);
+                        select.value = Terms;
                         //document.getElementById("termsEdit").value = result.terms;
                         document.getElementById("float_requirementEdit").value = (result.float_requirement == 0) ? 'No' : 'Yes';
                         document.getElementById("contract_termination_policyEdit").value = result.contract_termination_policy;
-
                         var EmrValue = result.Emr;
                         var select = document.getElementById('emrEdit');
                         var option = document.createElement('option');
                         option.value = EmrValue;
                         option.text = EmrValue;
-
                         select.add(option);
                         select.value = EmrValue;
                        // document.getElementById("emrEdit").value = result.Emr; // corrected here
                         document.getElementById("four_zero_one_kEdit").value = (result.four_zero_one_k == 0) ? 'No' : 'Yes';
                         document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
-                        document.getElementById("dentalEdit").value = (result.dental == 0) ? 'No' : 'Yes';
-                        document.getElementById("visionEdit").value = (result.vision == 0) ? 'No' : 'Yes';
                         document.getElementById("feels_like_per_hourEdit").value = result.feels_like_per_hour;
                         document.getElementById("call_back_rateEdit").value = result.call_back_rate;
                         document.getElementById("on_call_backEdit").value = (result.on_call_back == 0) ? 'No' : 'Yes';
@@ -6445,7 +6207,6 @@ if (draftJobs.length !== 0) {
                         document.getElementById("start_dateEdit").value = result.start_date;
                         // removed as_soon_asEdit as it does not exist in the provided object
                         document.getElementById("job_idEdit").value = result.id;
-
                 },
                     error: function(error) {
                         console.log(error);
@@ -6539,27 +6300,27 @@ if (draftJobs.length !== 0) {
         $('.certificate-content').html(str);
     }
 
-function remove_certificate(obj, key) {
-    if (certificate.hasOwnProperty(key)) {
-        delete certificate[key];
+    function remove_certificate(obj, key) {
+        if (certificate.hasOwnProperty(key)) {
+            delete certificate[key];
 
-         // to dlete the removed certificate from the hidden input
-         certificateStr = Object.values(certificate).join(', ');
+             // to dlete the removed certificate from the hidden input
+             certificateStr = Object.values(certificate).join(', ');
 
-        list_certifications(); // Refresh the list to reflect the deletion
-        notie.alert({
-            type: 'success',
-            text: '<i class="fa fa-check"></i> Certificate removed successfully.',
-            time: 3
-        });
-    } else {
-        notie.alert({
-            type: 'error',
-            text: '<i class="fa fa-times"></i> Certificate not found.',
-            time: 3
-        });
+            list_certifications(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Certificate removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Certificate not found.',
+                time: 3
+            });
+        }
     }
-}
 
 
 </script>
@@ -6822,6 +6583,370 @@ function remove_certificate(obj, key) {
             delete shifttimeofday[key]; // Remove the shifttimeofday from the object
             shifttimeofdayStr = Object.values(shifttimeofday).join(', '); // Update the hidden input value
             list_shifttimeofday(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Shift Time Of Day not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
+{{-- script managing benefits --}}
+<script>
+    var benefits = {};
+
+    function addbenefits(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#benefits');
+            idtitle = "benefits";
+        } else if (type == 'from_draft') {
+            id = $('#benefitsDraft');
+            idtitle = "benefitsDraft";
+        } else {
+            id = $('#benefitsEdit');
+            idtitle = "benefitsEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the benefits please.',
+                time: 3
+            });
+        } else {
+            if (!benefits.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                benefits[id.val()] = optionText;
+                benefitsStr = Object.values(benefits).join(', ');
+                console.log('benefitsStr',benefitsStr);
+                id.val('');
+                list_benefits();
+            }
+        }
+    }
+
+    function list_benefits() {
+        var str = '';
+        console.log(benefits);
+
+        for (const key in benefits) {
+            console.log(benefits);
+
+            let benefitsname = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['Benefits']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (benefits.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        benefitsname = item.title;
+                    }
+                });
+                const value = benefits[key];
+                str += '<ul>';
+                str += '<li>' + benefitsname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-benefits" data-key="' + key + '" onclick="remove_benefits(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.benefits-content').html(str);
+    }
+
+    function remove_benefits(obj, key) {
+        if (benefits.hasOwnProperty(key)) {
+            delete benefits[key]; // Remove the benefits from the object
+            benefitsStr = Object.values(benefits).join(', '); // Update the hidden input value
+            list_benefits(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Shift Time Of Day not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
+{{-- script managing professional_licensure  --}}
+<script>
+    var professional_licensure = {};
+
+    function addprofessional_licensure(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#professional_licensure');
+            idtitle = "professional_licensure";
+        } else if (type == 'from_draft') {
+            id = $('#professional_licensureDraft');
+            idtitle = "professional_licensureDraft";
+        } else {
+            id = $('#professional_licensureEdit');
+            idtitle = "professional_licensureEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the professional_licensure please.',
+                time: 3
+            });
+        } else {
+            if (!professional_licensure.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                professional_licensure[id.val()] = optionText;
+                professional_licensureStr = Object.values(professional_licensure).join(', ');
+                console.log('professional_licensureStr',professional_licensureStr);
+                id.val('');
+                list_professional_licensure();
+            }
+        }
+    }
+
+    function list_professional_licensure() {
+        var str = '';
+        console.log(professional_licensure);
+
+        for (const key in professional_licensure) {
+            console.log(professional_licensure);
+
+            let professional_licensurename = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['StateCode']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (professional_licensure.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        professional_licensurename = item.title;
+                    }
+                });
+                const value = professional_licensure[key];
+                str += '<ul>';
+                str += '<li>' + professional_licensurename + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-professional_licensure" data-key="' + key + '" onclick="remove_professional_licensure(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.professional_licensure-content').html(str);
+    }
+
+    function remove_professional_licensure(obj, key) {
+        if (professional_licensure.hasOwnProperty(key)) {
+            delete professional_licensure[key]; // Remove the professional_licensure from the object
+            professional_licensureStr = Object.values(professional_licensure).join(', '); // Update the hidden input value
+            list_professional_licensure(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Shift Time Of Day not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
+{{-- script managing Emr  --}}
+<script>
+    var Emr = {};
+
+    function addEmr(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#Emr');
+            idtitle = "Emr";
+        } else if (type == 'from_draft') {
+            id = $('#EmrDraft');
+            idtitle = "EmrDraft";
+        } else {
+            id = $('#EmrEdit');
+            idtitle = "EmrEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the Emr please.',
+                time: 3
+            });
+        } else {
+            if (!Emr.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                Emr[id.val()] = optionText;
+                EmrStr = Object.values(Emr).join(', ');
+                console.log('EmrStr',EmrStr);
+                id.val('');
+                list_Emr();
+            }
+        }
+    }
+
+    function list_Emr() {
+        var str = '';
+        console.log(Emr);
+
+        for (const key in Emr) {
+            console.log(Emr);
+
+            let Emrname = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['EMR']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (Emr.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        Emrname = item.title;
+                    }
+                });
+                const value = Emr[key];
+                str += '<ul>';
+                str += '<li>' + Emrname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-Emr" data-key="' + key + '" onclick="remove_Emr(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.Emr-content').html(str);
+    }
+
+    function remove_Emr(obj, key) {
+        if (Emr.hasOwnProperty(key)) {
+            delete Emr[key]; // Remove the Emr from the object
+            EmrStr = Object.values(Emr).join(', '); // Update the hidden input value
+            list_Emr(); // Refresh the list to reflect the deletion
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',
+                time: 3
+            });
+        } else {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-times"></i> Shift Time Of Day not found.',
+                time: 3
+            });
+        }
+    }
+</script>
+
+{{-- script managing nurse_classification  --}}
+<script>
+    var nurse_classification = {};
+
+    function addnurse_classification(type) {
+        let id;
+        let idtitle;
+        if (type == 'from_add') {
+            id = $('#nurse_classification');
+            idtitle = "nurse_classification";
+        } else if (type == 'from_draft') {
+            id = $('#nurse_classificationDraft');
+            idtitle = "nurse_classificationDraft";
+        } else {
+            id = $('#nurse_classificationEdit');
+            idtitle = "nurse_classificationEdit";
+        }
+
+        if (!id.val()) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the nurse_classification please.',
+                time: 3
+            });
+        } else {
+            if (!nurse_classification.hasOwnProperty(id.val())) {
+                console.log(id.val());
+
+                var select = document.getElementById(idtitle);
+                var selectedOption = select.options[select.selectedIndex];
+                var optionText = selectedOption.textContent;
+
+                nurse_classification[id.val()] = optionText;
+                nurse_classificationStr = Object.values(nurse_classification).join(', ');
+                console.log('nurse_classificationStr',nurse_classificationStr);
+                id.val('');
+                list_nurse_classification();
+            }
+        }
+    }
+
+    function list_nurse_classification() {
+        var str = '';
+        console.log(nurse_classification);
+
+        for (const key in nurse_classification) {
+            console.log(nurse_classification);
+
+            let nurse_classificationname = "";
+            @php
+                $allKeywordsJSON = json_encode($allKeywords['NurseClassification']);
+            @endphp
+            let allspcldata = '{!! $allKeywordsJSON !!}';
+            if (nurse_classification.hasOwnProperty(key)) {
+                var data = JSON.parse(allspcldata);
+
+                data.forEach(function(item) {
+                    if (key == item.id) {
+                        nurse_classificationname = item.title;
+                    }
+                });
+                const value = nurse_classification[key];
+                str += '<ul>';
+                str += '<li>' + nurse_classificationname + '</li>';
+                str += '<li class="w-50 text-end pe-3"><button type="button"  id="remove-nurse_classification" data-key="' + key + '" onclick="remove_nurse_classification(this, ' + key + ')"><img src="{{URL::asset("frontend/img/delete-img.png")}}" /></button></li>';
+                str += '</ul>';
+            }
+        }
+        $('.nurse_classification-content').html(str);
+    }
+
+    function remove_nurse_classification(obj, key) {
+        if (nurse_classification.hasOwnProperty(key)) {
+            delete nurse_classification[key]; // Remove the nurse_classification from the object
+            nurse_classificationStr = Object.values(nurse_classification).join(', '); // Update the hidden input value
+            list_nurse_classification(); // Refresh the list to reflect the deletion
             notie.alert({
                 type: 'success',
                 text: '<i class="fa fa-check"></i> Shift Time Of Day removed successfully.',

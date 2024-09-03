@@ -855,6 +855,12 @@ ul.ss-ban-top-map-txt2 {
     gap: 9px;
 }
 
+.ss-job-prfle-sec ul li{
+    background: #FFEEEF;
+    padding: 3px 11px;
+    border-radius: 100px;
+}
+
 .ss-job-prfle-sec a {
     background: #FFEEEF;
     padding: 3px 11px;
@@ -892,6 +898,10 @@ ul.ss-ban-top-map-txt2 {
 .ss-job-prfle-sec p span {
     color: #006BC9;
     font-size: 12px;
+}
+.ss-job-prfle-sec .icon_cards {
+    width: 17px;
+    height: 17px;
 }
 
 .ss-hm-popular-job-sec {

@@ -50,7 +50,7 @@ class CreateJobsTable extends Migration
             $table->string('video_embed_url')->nullable();
             $table->boolean('is_open')->default(true);
             $table->uuid('recruiter_id')->nullable();
-            $table->string('job_name', 36);
+            $table->string('job_name', 36)->nullable();
 
             // Adding string columns as nullable
             $table->string('proffesion')->nullable(); // Column for job profession
@@ -65,6 +65,7 @@ class CreateJobsTable extends Migration
             // Adding nullable date columns
             $table->date('start_date')->nullable(); // Column for start date
             $table->date('end_date')->nullable(); // Column for end date
+            $table->boolean('as_soon_as')->default(false); // Column for as_soon_as
 
             // Adding integer columns as nullable
             $table->integer('hours_shift')->nullable(); // Column for hours per shift
@@ -147,6 +148,10 @@ class CreateJobsTable extends Migration
             // required
             $table->string('facility_city',36); // done 
             $table->string('facility_state',36); // done
+
+            // professionalLicensure
+            $table->string('professional_licensure',36);
+            $table->string('professional_state_licensure');
 
              
         });
