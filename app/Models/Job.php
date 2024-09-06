@@ -60,7 +60,7 @@ class Job extends Model
         'type',
         'compact',
         'terms',
-        'job_location', 
+        'job_location',
         'job_state',
         'job_city',
         'facility_id',
@@ -168,7 +168,7 @@ class Job extends Model
         'facility_state',
         'pay_frequency',
         'benefits',
-        
+
     ];
 
     public static $logName = 'Job';
@@ -314,7 +314,7 @@ class Job extends Model
             },
 
             'job_location'=> function () use ($job, $nurse){
-                $job_locations = explode(',', $job->job_location); 
+                $job_locations = explode(',', $job->job_location);
                 $nursing_license_state = $nurse->nursing_license_state;
                 $match = false;
                 $name = 'nursing_license_state';
@@ -326,6 +326,24 @@ class Job extends Model
                         $name = 'nursing_license_state';
                         $type = 'dropdown';
                         $value = $nursing_license_state;
+                    }
+                }
+                return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
+            },
+
+            'nurse_classification' => function () use ($job, $nurse){
+                $job_nurse_classification = explode(',', $job->nurse_classification);
+                $nurse_classification = $nurse->nurse_classification;
+                $match = false;
+                $name = 'nurse_classification';
+                $type = 'dropdown';
+                $value = $nurse_classification;
+                foreach($job_nurse_classification as $job_nurse_classification){
+                    if ($job_nurse_classification == $nurse_classification) {
+                        $match = true;
+                        $name = 'nurse_classification';
+                        $type = 'dropdown';
+                        $value = $nurse_classification;
                     }
                 }
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
@@ -348,14 +366,14 @@ class Job extends Model
                 $vaccninations = explode(',', $job->vaccinations);
                 $worker_vaccination =  NurseAsset::where('nurse_id', $nurse->id)->where('active', '1')->where('filter','vaccination')->pluck('name')->toArray();
                 //$worker_vaccination = explode(',', $nurse->worker_vaccination);
-                
+
                 foreach($vaccninations as $k=>$v){
                     if (!empty($worker_vaccination[$k])) {
                         $match = true;
                         $name = 'worker_vaccination';
                     $type = 'file';
                     $value = $worker_vaccination[$k];
-                    
+
                     }else{
                         $match = false;
                         $name = 'worker_vaccination';
@@ -363,7 +381,7 @@ class Job extends Model
                     $value = null;
                     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
                     }
-                    
+
                 }
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
@@ -402,11 +420,11 @@ class Job extends Model
             'certificate'=> function () use ($job, $nurse){
 
                 // here we will compare the certificates of the job with the certificates of the worker comming from the mongodb database
-                $certifications = explode(',', $job->certificate); 
+                $certifications = explode(',', $job->certificate);
                 $worker_certificate_name = json_decode($nurse->worker_certificate_name);
                 $worker_certificate_name = NurseAsset::where('nurse_id', $nurse->id)->where('active', '1')->where('filter','certificate')->pluck('name')->toArray(); // this call will be replace with the file name comming from the mongodb database
-                
-               
+
+
                 // $worker_certificate_name = json_decode($job_data['worker_certificate_name']);
                 foreach($certifications as $k=>$v){
                     if (!empty($worker_certificate_name[$k])) {
@@ -414,16 +432,16 @@ class Job extends Model
                         $name = 'worker_certificate';
                     $type = 'file';
                     $value = $worker_certificate_name[$k];
-                    
+
                     }else{
                         $match = false;
                         $name = 'worker_certificate';
                     $type = 'file';
                     $value = null;
-                    
+
                     return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
                     }
-                    
+
                 }
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
@@ -522,7 +540,7 @@ class Job extends Model
                 $name = 'rto';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-           
+
             'hours_per_week'=> function () use ($job, $nurse){
                 $match = ($job->hours_per_week == $nurse->worker_hours_per_week);
                 $value = $nurse->worker_hours_per_week;
@@ -684,7 +702,7 @@ class Job extends Model
                 $name = 'worker_orientation_rate';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            
+
             'weekly_non_taxable_amount'=> function () use ($job, $nurse){
                 $match = ($nurse->worker_weekly_non_taxable_amount_check == '1');
                 $value = $nurse->worker_weekly_non_taxable_amount_check;
@@ -699,7 +717,7 @@ class Job extends Model
                 $name = 'worker_employer_weekly_amount';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            
+
             'Patient_ratio'=> function () use ($job, $nurse){
                 $match = ($job->Patient_ratio == $nurse->worker_patient_ratio);
                 $value = $nurse->worker_patient_ratio;
@@ -714,7 +732,7 @@ class Job extends Model
                 $name = 'worker_field';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            
+
             'job_type'=> function () use ($job, $nurse){
                 $match = ($job->field == $nurse->worker_job_type);
                 $value = $nurse->worker_job_type;
@@ -722,7 +740,7 @@ class Job extends Model
                 $name = 'worker_job_type';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            
+
             'msp'=> function () use ($job, $nurse){
                 $match = (!empty($nurse->MSP) && $job->msp==$nurse->MSP) ? true: false ;
                 $value = $nurse->MSP;
@@ -737,7 +755,7 @@ class Job extends Model
                 $name = 'VMS';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            
+
             'block_scheduling'=> function () use ($job, $nurse){
                 $match = ($job->block_scheduling == $nurse->block_scheduling);
                 $value = $nurse->block_scheduling;
@@ -773,15 +791,15 @@ class Job extends Model
                 $name = 'contract_termination_policy';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
-            
+
         ];
 
-        
+
 
         return $matches;
 
 
-        
+
 
     }
 }

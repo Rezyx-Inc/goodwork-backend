@@ -211,7 +211,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>State</label>
                                                 <select name="state" id="job_state">
-                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}">
+                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->state) ? $worker->state : 'What State are you located in?' }}
                                                     </option>
                                                     @foreach ($states as $state)
@@ -225,8 +225,8 @@
                                             {{-- City Information --}}
                                             <div class="ss-form-group col-11">
                                                 <label>City</label>
-                                                <select name="city" id="job_city">
-                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}">
+                                                <select name="city" id="job_city" >
+                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }}
                                                     </option>
                                                 </select>
@@ -261,7 +261,7 @@
                                                 <label>Profession</label>
                                                 <select name="profession" id="profession">
                                                     <option
-                                                        value="{{ !empty($worker->profession) ? $worker->profession : '' }}">
+                                                        value="{{ !empty($worker->profession) ? $worker->profession : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }}
                                                     </option>
                                                     @foreach ($proffesions as $proffesion)
@@ -277,7 +277,7 @@
                                                 <label>Specialty</label>
                                                 <select name="specialty" id="specialty">
                                                     <option
-                                                        value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}">
+                                                        value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }}
                                                     </option>
 
@@ -293,7 +293,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Terms</label>
                                                 <select name="terms" id="term">
-                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}">
+                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }}
                                                     </option>
 
@@ -311,7 +311,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Type</label>
                                                 <select name="type" id="type">
-                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}">
+                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->type) ? $worker->type : 'Select Type' }}
                                                     </option>
 
@@ -333,7 +333,7 @@
                                                 <select name="block_scheduling" class="block_scheduling mb-3"
                                                     id="block_scheduling" value="">
                                                     <option
-                                                        value="{{ !empty($worker->block_scheduling) ? $worker->block_scheduling : '' }}">
+                                                        value="{{ !empty($worker->block_scheduling) ? $worker->block_scheduling : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->block_scheduling) ? $worker->block_scheduling : 'Select Block scheduling' }}
                                                     </option>
 
@@ -350,7 +350,7 @@
                                                 <select name="float_requirement" class="float_requirement mb-3"
                                                     id="float_requirement" value="">
                                                     <option
-                                                        value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}">
+                                                        value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }}
                                                     </option>
 
@@ -367,7 +367,7 @@
                                                     class="facility_shift_cancelation_policy mb-3"
                                                     id="facility_shift_cancelation_policy" value="">
                                                     <option
-                                                        value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}">
+                                                        value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }}
                                                     </option>
 
@@ -426,7 +426,7 @@
                                                 <label>EMR</label>
                                                 <select name="worker_emr" class="emr mb-3" id="emr">
                                                     <option
-                                                        value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}">
+                                                        value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }}
                                                     </option>
 
@@ -462,7 +462,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Rto</label>
                                                 <select name="rto" id="rto">
-                                                    <option value="{{ !empty($worker->rto) ? $worker->rto : '' }}">
+                                                    <option value="{{ !empty($worker->rto) ? $worker->rto : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->rto) ? $worker->rto : 'Select Rto' }} </option>
                                                     <option value="allowed">Allowed
                                                     </option>
@@ -478,7 +478,7 @@
                                                 <label>Shift Time of Day</label>
                                                 <select name="worker_shift_time_of_day" id="shift-of-day">
                                                     <option
-                                                        value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}">
+                                                        value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }}
                                                     </option>
                                                     @if (isset($allKeywords['PreferredShift']))
@@ -545,7 +545,7 @@
                                                 <label>Where are you licensed?</label>
                                                 <select name="nursing_license_state" id="nursing_license_state">
                                                     <option
-                                                        value="{{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : '' }}">
+                                                        value="{{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : 'Select a State' }}
                                                     </option>
                                                     @foreach ($allKeywords['StateCode'] as $value)
@@ -562,7 +562,7 @@
                                                 <label>Eligible to work in the US</label>
                                                 <select name="worker_eligible_work_in_us" id="worker_eligible_work_in_us">
                                                     <option
-                                                        value="{{ !empty($worker->worker_eligible_work_in_us) ? ($worker->worker_eligible_work_in_us == 1 ? 'Yes' : 'No') : '' }}">
+                                                        value="{{ !empty($worker->worker_eligible_work_in_us) ? ($worker->worker_eligible_work_in_us == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_eligible_work_in_us) ? ($worker->worker_eligible_work_in_us == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">Select an option</option>
@@ -579,7 +579,7 @@
                                                 <label>City you'd like to work?</label>
                                                 <select name="worker_facility_city" id="worker_facility_city">
                                                     <option
-                                                        value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}">
+                                                        value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : 'Select a City' }}
                                                     </option>
                                                     @foreach ($allKeywords['City'] as $value)
@@ -597,7 +597,7 @@
                                                 <label>State you'd like to work?</label>
                                                 <select name="worker_facility_state" id="worker_facility_state">
                                                     <option
-                                                        value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}">
+                                                        value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
                                                     </option>
                                                     @foreach ($allKeywords['StateCode'] as $value)
@@ -676,7 +676,7 @@
                                                 <label>401K</label>
                                                 <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
                                                     <option
-                                                        value="{{ !empty($worker->worker_four_zero_one_k) ? ($worker->worker_four_zero_one_k == 1 ? 'Yes' : 'No') : '' }}">
+                                                        value="{{ !empty($worker->worker_four_zero_one_k) ? ($worker->worker_four_zero_one_k == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_four_zero_one_k) ? ($worker->worker_four_zero_one_k == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">Select an option</option>
@@ -708,7 +708,7 @@
                                                 <label>Dental</label>
                                                 <select name="worker_dental" id="worker_dental">
                                                     <option
-                                                        value="{{ !empty($worker->worker_dental) ? ($worker->worker_dental == 1 ? 'Yes' : 'No') : '' }}">
+                                                        value="{{ !empty($worker->worker_dental) ? ($worker->worker_dental == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_dental) ? ($worker->worker_dental == 1 ? 'Yes' : 'No') : 'Do you want this ?' }}
                                                     </option>
                                                     <option value="">do you want this ?</option>
@@ -725,7 +725,7 @@
                                                 <label>Vision</label>
                                                 <select name="worker_vision" id="worker_vision">
                                                     <option
-                                                        value="{{ !empty($worker->worker_vision) ? ($worker->worker_vision == 1 ? 'Yes' : 'No') : '' }}">
+                                                        value="{{ !empty($worker->worker_vision) ? ($worker->worker_vision == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_vision) ? ($worker->worker_vision == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">do you want this ?</option>
@@ -761,7 +761,7 @@
                                                 <label>On Call</label>
                                                 <select name="worker_on_call_check" id="worker_on_call_check">
                                                     <option
-                                                        value="{{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}">
+                                                        value="{{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}
                                                     </option>
                                                     <option value="">Select an option</option>
@@ -787,7 +787,7 @@
                                                 <label>On Call Back</label>
                                                 <select name="worker_on_call_back_check" id="worker_on_call_back_check">
                                                     <option
-                                                        value="{{ !empty($worker->worker_on_call_back_check) ? ($worker->worker_on_call_back_check == 1 ? 'Yes' : 'No') : 'Will you do call back?' }}">
+                                                        value="{{ !empty($worker->worker_on_call_back_check) ? ($worker->worker_on_call_back_check == 1 ? 'Yes' : 'No') : 'Will you do call back?' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_on_call_back_check) ? ($worker->worker_on_call_back_check == 1 ? 'Yes' : 'No') : 'Will you do call back?' }}
                                                     </option>
                                                     <option value="">Select an option</option>
@@ -825,7 +825,7 @@
                                                 <select name="worker_benefits" class="worker_benefits mb-3"
                                                     id="worker_benefits" value="">
                                                     <option
-                                                        value="{{ !empty($worker->worker_benefits) ? $worker->worker_benefits : '' }}">
+                                                        value="{{ !empty($worker->worker_benefits) ? $worker->worker_benefits : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_benefits) ? $worker->worker_benefits : 'Select your benefits choice' }}
                                                     </option>
                                                     <option value="1">Yes, Please</option>
@@ -834,6 +834,24 @@
                                                 </select>
                                             </div>
                                             <span class="help-block-worker_benefits"></span>
+
+                                            {{-- nurse_classification --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Nurse Classification</label>
+                                                <select name="nurse_classification" id="nurse_classification">
+                                                    <option
+                                                        value="{{ !empty($worker->nurse_classification) ? $worker->nurse_classification : '' }}" disabled selected hidden>
+                                                        {{ !empty($worker->nurse_classification) ? $worker->nurse_classification : 'Select Nurse Classification' }}
+                                                    </option>
+                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="help-block-nurse_classification"></span>
+                                            </div>
+                                            {{-- End nurse_classification  --}}
+
 
                                             {{-- end worker benefits --}}
 
@@ -1215,7 +1233,7 @@
                                     <div class="ss-form-group">
                                         <label>Document Type</label>
                                         <select name="type_documents" onChange="controlInputsFiles(this)">
-                                            <option value="">Select</option>
+                                            <option value="" disabled selected hidden>Select</option>
                                             <option value="skills_checklists">Skills checklist</option>
                                             <option value="certificate">Certificate</option>
                                             <option value="driving_license">Drivers License</option>
@@ -1421,7 +1439,7 @@
                                         <div class="ss-form-group">
                                             <label>Min Title of Reference</label>
                                             <select name="min_title_of_reference">
-                                                <option value="">Select a min title</option>
+                                                <option value="" disabled selected hidden>Select a min title</option>
                                                 @if (isset($allKeywords['MinTitleOfReference']))
                                                     @foreach ($allKeywords['MinTitleOfReference'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
@@ -1436,7 +1454,7 @@
                                         <div class="ss-form-group">
                                             <label>Is this from your last assignment?</label>
                                             <select name="recency_of_reference">
-                                                <option value="">Select a recency period</option>
+                                                <option value="" disabled selected hidden>Select a recency period</option>
                                                 @if (isset($allKeywords['RecencyOfReference']))
                                                     @foreach ($allKeywords['RecencyOfReference'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
@@ -1898,7 +1916,7 @@
 
                 $.get(`/api/cities/${selectedState}`, function(data) {
                     CitySelect.empty();
-                    CitySelect.append('<option value="">Select City</option>');
+                    CitySelect.append('<option value="" disabled selected hidden>Select City</option>');
                     $.each(data, function(index, city) {
                         CitySelect.append(new Option(city.name, city.name));
                     });
@@ -2194,6 +2212,8 @@
         const worker_on_call_back_rate = document.querySelector('input[name="worker_on_call_back_rate"]');
         const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
         const worker_benefits = document.querySelector('select[name="worker_benefits"]');
+        const nurse_classification = document.querySelector('select[name="nurse_classification"]');
+
 
 
 
@@ -2481,6 +2501,11 @@
                 $('.help-block-worker_benefits').addClass('text-danger');
                 isValid = false;
             }
+            if (nurse_classification.value === '') {
+                $('.help-block-nurse_classification').text('Please enter a nurse classification');
+                $('.help-block-nurse_classification').addClass('text-danger');
+                isValid = false;
+            }
 
             return isValid;
         }
@@ -2718,6 +2743,7 @@
                     worker_on_call_back_rate: worker_on_call_back_rate.value,
                     worker_orientation_rate: worker_orientation_rate.value,
                     worker_benefits: worker_benefits.value,
+                    nurse_classification: nurse_classification.value,
 
                     InfoType: "ProfessionalInformation"
                 }),

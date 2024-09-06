@@ -218,7 +218,7 @@
                                                 </span>
                                             </div>
 
-                                            
+
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Shift Time of Day</label>
@@ -423,7 +423,7 @@
                                                     placeholder="Enter Orientation Hourly rate">
                                                 <span class="help-block-orientation_rate"></span>
                                             </div>
-                                           
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Block scheduling</label>
                                                 <select name="block_scheduling" id="block_scheduling">
@@ -447,7 +447,7 @@
                                                 <span class="help-block-float_requirement"></span>
                                             </div>
 
-                                            
+
                                             <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
                                                 ( The above fields are not required )
                                             </span>
@@ -466,7 +466,7 @@
 
                                     <div class="page">
                                         <div class="row">
-                                            
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Number Of References</label>
                                                 <input type="number" name="number_of_references" id="number_of_references"
@@ -484,7 +484,7 @@
                                                 </select>
                                                 <span class="help-block-eligible_work_in_us"></span>
                                             </div>
-                                             
+
                                             <div class="row ss-form-group col-md-4 d-flex justify-content-end">
                                                 <label>Urgency</label>
                                                 <div class="row" style="display:flex; align-items:end;">
@@ -520,7 +520,7 @@
                                                 <span class="help-block-nurse_classification"></span>
                                             </div> --}}
 
-                                            
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Pay Frequency</label>
@@ -660,7 +660,7 @@
                                                 </ul>
                                             </div>
 
-                                            
+
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Certifications</label>
@@ -688,7 +688,7 @@
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Vaccinations & Immunizations name</label>
                                                 <div class="ss-speilty-exprnc-add-list vaccinations-content">
-                
+
                                                 </div>
                                                 <ul>
                                                     <li class="row w-100 p-0 m-0">
@@ -709,7 +709,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            
+
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Skills checklist</label>
                                                 <div class="ss-speilty-exprnc-add-list skills-content">
@@ -753,7 +753,7 @@
 
                                     <div class="page">
                                         <div class="row">
-                                            
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Contract Termination Policy</label>
@@ -761,7 +761,7 @@
                                                 placeholder="Enter your contract termination policy">
                                                 <span class="help-block-contract_termination_policy"></span>
                                             </div>
-                                            
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>401K</label>
                                                 <select name="four_zero_one_k" id="four_zero_one_k">
@@ -784,7 +784,7 @@
                                                 </select>
                                                 <span class="help-block-health_insaurance"></span>
                                             </div>
-                                            
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Feels Like $/hrs</label>
                                                 <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
@@ -812,7 +812,7 @@
                                                 <span class="help-block-call_back_rate"></span>
                                             </div>
 
-                                            
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Est. Weekly non-taxable amount</label>
                                                 <input type="number" name="weekly_non_taxable_amount"
@@ -857,7 +857,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            
+
                                             <div class="ss-form-group col-md-12">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
@@ -910,7 +910,7 @@
                         <div class="col-lg-5 d-none" id="draftCards">
                             <div class="ss-account-form-lft-1">
                                 <h5 class="mb-4 text-capitalize">Draft</h5>
-                                
+
                                 @php $counter = 0 @endphp
                                 @foreach ($draftJobs as $job)
                                     <div style="" class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
@@ -1007,7 +1007,7 @@
                                     <div id="job-list-onhold">
                                     </div>
                                 @endif
-                               
+
                             </div>
                         </div>
                         <!-- END ONHOLD CARDS -->
@@ -1081,7 +1081,7 @@
                                                         <label>Work Type</label>
 
                                                         <select name="job_type" id="job_typeDraft">
-                                                            
+
                                                             <option value="" disabled selected hidden>Select an option</option>
                                                             <option value="Clinical">Clinical
                                                             </option>
@@ -1313,7 +1313,7 @@
                                                         <span class="help-block-weeks_shift"></span>
                                                     </div>
 
-                                                    
+
 
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
@@ -1407,7 +1407,7 @@
                                                             placeholder="Enter Orientation Hourly rate">
                                                         <span class="help-block-orientation_rate"></span>
                                                     </div>
-                                                    
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Block scheduling</label>
                                                         <select name="block_scheduling" id="block_schedulingDraft">
@@ -1491,8 +1491,8 @@
                                                 </select>
                                                 <span class="help-block-eligible_work_in_usDraft"></span>
                                             </div>
-                                            
-                                  
+
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Urgency</label>
@@ -1515,7 +1515,7 @@
                                                     placeholder="Enter facility name">
                                                 <span class="help-block-facility_nameDraft"></span>
                                             </div>
-                                             
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Worker Classification</label>
@@ -1553,9 +1553,9 @@
                                                 <span class="help-block-benefitsDraft"></span>
                                             </div>
 
-                                            
 
-                                            
+
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Preferred Experience</label>
@@ -1590,7 +1590,7 @@
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Vaccinations & Immunizations name</label>
                                                 <div class="ss-speilty-exprnc-add-list vaccinations-content">
-                
+
                                                 </div>
                                                 <ul>
                                                     <li class="row w-100 p-0 m-0">
@@ -1612,7 +1612,7 @@
                                                 </ul>
                                             </div>
 
-                                            
+
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Skills checklist</label>
                                                 <div class="ss-speilty-exprnc-add-list skills-content">
@@ -1638,8 +1638,8 @@
                                             </div>
 
 
-                                           
-                                            
+
+
 
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtnDraft">Save as draft</button>
@@ -1698,7 +1698,7 @@
                                                         </select>
                                                         <span class="help-block-health_insaurance"></span>
                                                     </div>
-                                                    
+
 
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Feels Like $/hrs</label>
@@ -2082,7 +2082,7 @@
                                                         <span class="help-block-weeks_shift"></span>
                                                     </div>
 
-                                                    
+
 
 
                                                     <span style="color:#b5649e;" id="passwordHelpInline"
@@ -2176,7 +2176,7 @@
                                                             placeholder="Enter Orientation Hourly rate">
                                                         <span class="help-block-orientation_rate"></span>
                                                     </div>
-                                                    
+
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Block scheduling</label>
                                                         <select name="block_scheduling" id="block_schedulingEdit">
@@ -2282,7 +2282,7 @@
                                                     placeholder="Enter facility name">
                                                 <span class="help-block-facility_nameEdit"></span>
                                             </div>
-                                           
+
                                             <div class="ss-form-group col-md-4">
                                                 <label>Worker Classification</label>
                                                 <select name="nurse_classification" id="nurse_classificationEdit">
@@ -2352,7 +2352,7 @@
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Vaccinations & Immunizations name</label>
                                                 <div class="ss-speilty-exprnc-add-list vaccinations-content">
-                
+
                                                 </div>
                                                 <ul>
                                                     <li class="row w-100 p-0 m-0">
@@ -2375,7 +2375,7 @@
                                             </div>
 
 
-                                            
+
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Skills checklist</label>
                                                 <div class="ss-speilty-exprnc-add-list skills-content">
@@ -2401,7 +2401,7 @@
                                             </div>
 
 
-                                           
+
 
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtnEdit">Save as draft</button>
@@ -2460,7 +2460,7 @@
                                                         </select>
                                                         <span class="help-block-health_insaurance"></span>
                                                     </div>
-                                                    
+
 
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Feels Like $/hrs</label>
@@ -2596,24 +2596,24 @@
 
 
     </main>
-    
+
     <script>
-        
+
 
 function fillData() {
     const fields = {
         'job_name': 'job name',
         'job_type': 'Clinical',
         'preferred_specialty': 'Adult Medicine',
-        'perferred_profession': 'Clerical', 
+        'perferred_profession': 'Clerical',
         'job_state': 'Arizona',
         'weekly_pay': 250,
-        'terms': 'Perm',
+        'terms': 'Shift (PRN, Per Diem)',
         'preferred_assignment_duration': 3,
         'facility_shift_cancelation_policy': 'shift cancellation policy',
         'traveler_distance_from_facility': 50,
         'clinical_setting': 'Clinic',
-        'Patient_ratio': 20, 
+        'Patient_ratio': 20,
         'Unit': 'Unit',
         'scrub_color': 'Blue',
         'rto': 'allowed',
@@ -2711,7 +2711,7 @@ function checkWorkerClassification(){
         const selectedState = $(jobState).find(':selected').attr('id');
         console.log('id : ', selectedState );
         console.log('value : ',selectedJobState);
-            
+
             await $.get(`/api/cities/${selectedState}`, function(cities) {
                 console.log('cities :',cities);
                 citiesData = [];
@@ -2725,14 +2725,14 @@ function checkWorkerClassification(){
             jobCity.appendChild(option);
             });
             document.getElementById("job_city").value = 'Globe';
-           
+
         jobState.addEventListener('change', async function (){
-        
+
             const selectedJobState = this.value;
             const selectedState = $(this).find(':selected').attr('id');
             console.log('id : ', selectedState );
             console.log('value : ',selectedJobState);
-            
+
             await $.get(`/api/cities/${selectedState}`, function(cities) {
                 console.log('cities :',cities);
                 citiesData = cities;
@@ -2745,10 +2745,10 @@ function checkWorkerClassification(){
             option.textContent = City.name;
             jobCity.appendChild(option);
             });
-         
+
         })
-        
-           
+
+
     });
 
 
@@ -2958,7 +2958,7 @@ if (draftJobs.length !== 0) {
 
     select.add(option);
     select.value = Terms;
-        
+
     }
     if (block_scheduling !== null) {
         document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
@@ -2992,7 +2992,7 @@ if (draftJobs.length !== 0) {
         document.getElementById("health_insauranceDraft").value = (health_insaurance == 0) ? 'No' : 'Yes';
 
     }
-    
+
     if(feels_like_per_hour !== null){
         document.getElementById("feels_like_per_hourDraft").value = feels_like_per_hour;
     }
@@ -3014,7 +3014,7 @@ if (draftJobs.length !== 0) {
 }else{
     document.getElementById('details_info').innerHTML = '<div class="text-center"><span>Data Not found</span></div>';
     $("#job-list-draft").html('<div class="text-center"><span>No Job</span></div>');
-    
+
 }
 
 
@@ -3026,7 +3026,7 @@ if (draftJobs.length !== 0) {
         var professional_licensureStr = '';
         var nurse_classificationStr = '';
         var EmrStr = '';
-        
+
 
         // $(document).ready(function() {
         //     $('#job_state').change(function() {
@@ -3103,7 +3103,7 @@ if (draftJobs.length !== 0) {
                 document.getElementById('published-job-details').classList.remove('d-none');
                 document.getElementById("create_job_request_form").classList.add("d-none");
 
-                
+
 
             } else if (type == "published") {
                 document.getElementById("onholdCards").classList.add('d-none');
@@ -3213,7 +3213,7 @@ if (draftJobs.length !== 0) {
                                 $("#application-details-apply-onhold").html(result.jobdetails);
                                 $("#job-list-onhold").html(result.joblisting);
                             }
-                           
+
                         }
                     },
                     error: function(error) {
@@ -3271,11 +3271,11 @@ if (draftJobs.length !== 0) {
                 if (name="benefits", name == "vaccinations" || name == "preferred_specialty" || name == "preferred_experience" || name ==
                     "certificate") {
                     var inputFields = document.querySelectorAll(name == "vaccinations" ? 'select[name="vaccinations"]' :
-                        name == "preferred_specialty" ? 'select[name="preferred_specialty"]' : 
+                        name == "preferred_specialty" ? 'select[name="preferred_specialty"]' :
                         name == "preferred_experience" ? 'input[name="preferred_experience"]' :
                         name == 'certificate' ? 'select[name="certificate"]' :
-                        name == 'benefits' ? 'select[name="benefits"]' : 
-                        name == 'professional_licensure' ? 'select[name="professional_licensure"]' : 
+                        name == 'benefits' ? 'select[name="benefits"]' :
+                        name == 'professional_licensure' ? 'select[name="professional_licensure"]' :
                         name == 'nurse_classification' ? 'select[name="nurse_classification"]' :
                         'select[name="Emr"]'
                     );
@@ -3686,7 +3686,7 @@ if (draftJobs.length !== 0) {
             }
         }
     </script>
-    
+
     <script>
         function askWorker(e, type, workerid, jobid) {
             let url = "{{ url('recruiter/recruiter-messages') }}";
@@ -3835,7 +3835,7 @@ if (draftJobs.length !== 0) {
     </script>
 @stop
 <script type="text/javascript">
-    
+
 
 
 
@@ -3971,7 +3971,7 @@ if (draftJobs.length !== 0) {
             var option = document.createElement('option');
             option.value = proffesionValue;
             option.text = proffesionValue;
-            
+
             select.add(option);
             select.value = proffesionValue;
                 //document.getElementById("perferred_professionDraft").value = proffesion;
@@ -3994,7 +3994,7 @@ if (draftJobs.length !== 0) {
             var option = document.createElement('option');
             option.value = ClinicalSettingValue;
             option.text = ClinicalSettingValue;
-            
+
             select.add(option);
             select.value = ClinicalSettingValue;
                // document.getElementById("clinical_settingDraft").value = clinical_setting;
@@ -4073,7 +4073,7 @@ if (draftJobs.length !== 0) {
             }
             if (on_call !== null) {
                 document.getElementById("on_callDraft").value = (on_call == 0) ? 'No' : 'Yes';
-            
+
             }else {
                 document.getElementById("on_callDraft").value = '';
             }
@@ -4093,7 +4093,7 @@ if (draftJobs.length !== 0) {
             var option = document.createElement('option');
             option.value = Terms;
             option.text = Terms;
-            
+
             select.add(option);
             select.value = Terms;
                // document.getElementById("termsDraft").value = terms;
@@ -4102,13 +4102,13 @@ if (draftJobs.length !== 0) {
             }
             if (block_scheduling !== null) {
                 document.getElementById("block_schedulingDraft").value = (block_scheduling == 0) ? 'No' : 'Yes';
-            
+
             }else {
                 document.getElementById("block_schedulingDraft").value = '';
             }
             if (float_requirement !== null) {
                 document.getElementById("float_requirementDraft").value = (float_requirement == 0) ? 'No' : 'Yes';
-            
+
             }else {
                 document.getElementById("float_requirementDraft").value = '';
             }
@@ -4118,25 +4118,25 @@ if (draftJobs.length !== 0) {
                 document.getElementById("contract_termination_policyDraft").value = '';
             }
             if (Emr !== null) {
-            
-            
+
+
                 var EmrValue = Emr;
             var select = document.getElementById('emrDraft');
             var option = document.createElement('option');
             option.value = EmrValue;
             option.text = EmrValue;
-            
+
             select.add(option);
             select.value = EmrValue;
-            
-            
-            
+
+
+
             }else {
                 document.getElementById("emrDraft").value = '';
             }
             if (four_zero_one_k !== null) {
                 document.getElementById("four_zero_one_kDraft").value = (four_zero_one_k == 0) ? 'No' : 'Yes';
-            
+
             }else {
                 document.getElementById("four_zero_one_kDraft").value = '';
             }
@@ -4177,7 +4177,7 @@ if (draftJobs.length !== 0) {
                 document.getElementById("as_soon_asDraft").checked = '';
             }
     }
-        
+
 
 
     const slidePage = document.querySelector(".slide-page");
@@ -4201,7 +4201,7 @@ if (draftJobs.length !== 0) {
     // first Slide
     function validateFirst() {
         var access = true;
-        
+
         var jobType = document.getElementById("job_type").value;
         var specialty = document.getElementById("preferred_specialty").value;
         var profession = document.getElementById("perferred_profession").value;
@@ -4212,7 +4212,7 @@ if (draftJobs.length !== 0) {
 
 
 
-        
+
 
         if (jobType.trim() === "") {
             $('.help-block-job_type').text('Please enter the Work type');
@@ -4273,7 +4273,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-weekly_pay').text('');
 
         }
-        
+
 
         if (access) {
             return true;
@@ -4406,7 +4406,7 @@ if (draftJobs.length !== 0) {
         var on_call = document.getElementById("on_call").value;
         var on_call_rate = document.getElementById("on_call_rate").value;
         var block_scheduling = document.getElementById("block_scheduling").value;
-        
+
         var float_requirement = document.getElementById("float_requirement").value;
 
         if (referral_bonus.trim() === '') {
@@ -4507,7 +4507,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-block_scheduling').text('');
         }
 
-        
+
 
         if (float_requirement.trim() === '') {
             $('.help-block-float_requirement').text('Please enter the float requirement');
@@ -4551,7 +4551,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-contract_termination_policy').text('');
         }
 
-        
+
 
         if (four_zero_one_k.trim() === '') {
             $('.help-block-four_zero_one_k').text('Please enter the four zero one k');
@@ -4570,7 +4570,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-health_insaurance').text('');
         }
 
-      
+
 
         if (feels_like_per_hour.trim() === '') {
             $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
@@ -4848,7 +4848,7 @@ if (draftJobs.length !== 0) {
         document.getElementById("active").value = false;
         document.getElementById("is_open").value = false;
 
-        
+
 
         if (jobType.trim() === "") {
             $('.help-block-job_type').text('Please enter the Work type');
@@ -4910,7 +4910,7 @@ if (draftJobs.length !== 0) {
 
         }
 
-        
+
 
         if (access) {
             return true;
@@ -5049,7 +5049,7 @@ if (draftJobs.length !== 0) {
         var on_call = document.getElementById("on_callDraft").value;
         var on_call_rate = document.getElementById("on_call_rateDraft").value;
         var block_scheduling = document.getElementById("block_schedulingDraft").value;
-        
+
         var float_requirement = document.getElementById("float_requirementDraft").value;
 
         if (referral_bonus.trim() === '') {
@@ -5148,7 +5148,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-block_scheduling').text('');
         }
 
-        
+
 
         if (float_requirement.trim() === '') {
             $('.help-block-float_requirement').text('Please enter the float requirement');
@@ -5218,7 +5218,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-health_insaurance').text('');
         }
 
-        
+
 
         if (feels_like_per_hour.trim() === '') {
             $('.help-block-feels_like_per_hourDraft').text('Please enter the feels like per hour');
@@ -5409,7 +5409,7 @@ if (draftJobs.length !== 0) {
         if (jobName.trim() === '') {
             $('.help-block-job_name').text('Enter at least a Work name');
             $('.help-block-job_name').addClass('text-danger');
-           
+
         } else {
             $('.help-block-job_name').text('');
             event.target.form.submit();
@@ -5484,7 +5484,7 @@ if (draftJobs.length !== 0) {
         document.getElementById("active").value = false;
         document.getElementById("is_open").value = false;
 
-        
+
 
         if (jobType.trim() === "") {
             $('.help-block-job_type').text('Please enter the Work type');
@@ -5547,7 +5547,7 @@ if (draftJobs.length !== 0) {
 
         }
 
-        
+
 
         if (access) {
             return true;
@@ -5686,7 +5686,7 @@ if (draftJobs.length !== 0) {
         var on_call = document.getElementById("on_callEdit").value;
         var on_call_rate = document.getElementById("on_call_rateEdit").value;
         var block_scheduling = document.getElementById("block_schedulingEdit").value;
-        
+
         var float_requirement = document.getElementById("float_requirementEdit").value;
 
         if (referral_bonus.trim() === '') {
@@ -5776,7 +5776,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-on_call_rate').text('');
         }
 
-        
+
 
         if (block_scheduling.trim() === '') {
             $('.help-block-block_scheduling').text('Please enter the block scheduling');
@@ -5786,7 +5786,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-block_scheduling').text('');
         }
 
-       
+
 
         if (float_requirement.trim() === '') {
             $('.help-block-float_requirement').text('Please enter the float requirement');
@@ -5856,7 +5856,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-health_insaurance').text('');
         }
 
-        
+
 
         if (feels_like_per_hour.trim() === '') {
             $('.help-block-feels_like_per_hourEdit').text('Please enter the feels like per hour');
@@ -5930,7 +5930,7 @@ if (draftJobs.length !== 0) {
     function validateFifthEdit() {
         var access = true;
         return access;
-        
+
     }
 
 
@@ -6225,7 +6225,7 @@ if (draftJobs.length !== 0) {
 
 <script>
     var certificate = {};
-   
+
     function addcertifications(type){
         var id;
         var idtitle;
@@ -6248,16 +6248,16 @@ if (draftJobs.length !== 0) {
             });
         } else {
             if (!certificate.hasOwnProperty(id.val())) {
-                
+
                 console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
                 var optionText = selectedOption.textContent;
 
-                certificate[id.val()] = optionText; 
-                
-        certificateStr = Object.values(certificate).join(', '); 
+                certificate[id.val()] = optionText;
+
+        certificateStr = Object.values(certificate).join(', ');
         // console.log(certificate);
                id.val('');
                 list_certifications();
@@ -6357,7 +6357,7 @@ if (draftJobs.length !== 0) {
                 var selectedOption = select.options[select.selectedIndex];
                 var optionText = selectedOption.textContent;
 
-                vaccinations[id.val()] = optionText; 
+                vaccinations[id.val()] = optionText;
                 vaccinationStr = Object.values(vaccinations).join(', ');
                 id.val('');
                 list_vaccinations();
@@ -6462,7 +6462,7 @@ if (draftJobs.length !== 0) {
 
         for (const key in skills) {
             console.log('skills',skills);
-            
+
 
             let skillsname = "";
             let allspcldata = @json($allKeywords['Speciality']);

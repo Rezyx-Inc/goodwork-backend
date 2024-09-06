@@ -2600,6 +2600,7 @@ class ApplicationController extends Controller
                         'message' => 'Job Rejected successfully',
                     ];
                     $offer = Offer::where('id', $request->id)->first();
+                    $id = $request->id;
                     $jobid = $offer->job_id;
                     $time = now()->toDateTimeString();
                     $receiver = $offer->worker_user_id;
