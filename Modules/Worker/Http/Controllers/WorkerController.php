@@ -738,7 +738,7 @@ class WorkerController extends Controller
     public function fetch_job_content(Request $request)
     {
         try {
-            
+
                 $request->validate([
                     'jid' => 'required',
                     'type' => 'required',
@@ -886,7 +886,7 @@ class WorkerController extends Controller
                     ->update($update_array);
                 $user_id = $job->created_by;
                 $user = User::where('id',$user_id)->first();
-                
+
                 $data = [
                     'offerId' => $offer_id,
                     'amount' => '1',
@@ -913,7 +913,7 @@ class WorkerController extends Controller
 
 
             // event offer notification
-           
+
             $id = $offer_id;
             $jobid = $offer->job_id;
 
@@ -933,7 +933,7 @@ class WorkerController extends Controller
     public function reject_offer(Request $request)
     {
         $user = Auth::guard('frontend')->user();
-        
+
         $full_name = $user->first_name . ' ' . $user->last_name;
         $nurse_id = $user->nurse->id;
         try{
@@ -1020,7 +1020,7 @@ public function read_message_notification(Request $request)
 public function read_offer_notification(Request $request)
 {
     $sender = $request->senderId;
-    $offerId = $request->offerId; 
+    $offerId = $request->offerId;
     $user = Auth::guard('frontend')->user();
     $receiver = $user->nurse->id;
 
@@ -1029,8 +1029,8 @@ public function read_offer_notification(Request $request)
             [
                 'receiver' => $receiver,
                 'all_offers_notifs.sender' => $sender,
-                'all_offers_notifs.notifs_of_one_sender.offer_id' => $offerId, 
-                'all_offers_notifs.notifs_of_one_sender.seen' => false 
+                'all_offers_notifs.notifs_of_one_sender.offer_id' => $offerId,
+                'all_offers_notifs.notifs_of_one_sender.seen' => false
             ],
             [
                 '$set' => [
@@ -1061,12 +1061,11 @@ public function addDocuments(Request $request)
         try{
         $body = $request->getContent();
         $bodyArray = json_decode($body, true);
-        
-        //return response()->json(['body' => $bodyArray]);
+
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-        ])->post('http://localhost:4545/documents/add-docs', $bodyArray);
-           // return response()->json(['response' => $response]);
+        ])->withBody($body, 'application/json')->post('http://localhost:4545/documents/add-docs');
+        return $response;
         if ($response->successful()) {
             return response()->json([
                 'ok' => true,
@@ -1095,7 +1094,7 @@ public function listDocs(Request $request)
     } else {
         return response()->json(['success' => false], $response->status());
     }
-   
+
 
     }catch(\Exception $e){
         return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -1103,19 +1102,17 @@ public function listDocs(Request $request)
 }
 
 public function getDoc(Request $request){
-    try{
+    try {
+        $bsonId = $request->input('bsonId');
+        $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
 
-    $bsonId = $request->input('bsonId');
-    $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
-    
-
-    // return the data to download 
-    return $response->body();
-
-    }catch(\Exception $e){
+        // Pass through the response from Node.js API
+        return $response->body();
+    } catch (\Exception $e) {
         return response()->json(['success' => false, 'message' => $e->getMessage()]);
     }
 }
+
 
 public function deleteDoc(Request $request)
 {
@@ -1237,18 +1234,18 @@ public function certification_submit(Request $request)
                 return $response;
             }
         }
-    
+
     $response = array('success'=>false,'msg'=>'No certificate selected!');
-    return $responses; // Return all responses after processing all certificates
+    return $response; // Return all responses after processing all certificates
 }
 
 
 public function match_worker_job(Request $request)
 {
-        
+
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
-        
+
         $id = $user->id;
         $model = Nurse::where('user_id',$id)->first();
         $inputFields = collect($request->all())->filter(function ($value) {

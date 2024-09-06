@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     res.send('Docs page');
 });
 
-/*  
+/*
     /add-docs
     Add documents
     @param workerId required
@@ -14,69 +14,59 @@ router.get('/', (req, res) => {
 
 */
 router.post('/add-docs', async (req, res) => {
-	
-	if(!Object.keys(req.body).length) {
-		return res.status(400).send("Empty request")
-	}
-	else if ( !req.body.workerId || !req.body.files){
 
-        if(typeof(req.body.files) != Array || req.body.files.length == 0){
-
-            return res.status(400).send("No file sent.")
-        
-        }else{
-
-            return res.status(400).send("Missing parameters.")
-      }
-	}
+    if (!Object.keys(req.body).length) {
+        return res.status(400).send("Empty request");
+    }
+    if (!req.body.workerId || !req.body.files) {
+        if (!Array.isArray(req.body.files) || req.body.files.length == 0) {
+            return res.status(400).send("No file sent.");
+        } else {
+            return res.status(400).send("Missing parameters.");
+        }
+    }
 
     var files = req.body.files;
 
-    let doc = await Docs.findOne({workerId: req.body.workerId})
+    let doc = await Docs.findOne({ workerId: req.body.workerId })
         .then(async docs => {
 
-            if(!docs){
-
-                for( let file of files){
-                    file.content = Buffer.from(file.content, 'base64');
-                }
-
-                let doc = await Docs.create(req.body)
-            	return res.status(200).json({ok:true});
+            if (!docs) {
+                let doc = await Docs.create(req.body);
+                return res.status(200).json({ ok: true });
             }
-            
+
             // check if files length is less than 25
-            if(docs.files.length + files.length > 25){
-                return res.status(500).json([{"error":"Max 25 files per user."}])
+            if (docs.files.length + files.length > 25) {
+                return res.status(500).json({ "error": "Max 25 files per user." });
             }
 
-            for( let file of files){
-                file.content = Buffer.from(file.content, 'base64');
-                docs.files.push(file)
+            for (let file of files) {
+                docs.files.push(file);
             }
-            
+
             docs.save()
-            .then((docs) => {
-	         return res.status(200).json({ok:true});
-	        })
-	        .catch((e) => {
-	          console.log("Unable to save document.", e);
-	          return res.status(400).send(e.message);
-	        })
+                .then((docs) => {
+                    return res.status(200).json({ ok: true });
+                })
+                .catch((e) => {
+                    console.log("Unable to save document.", e);
+                    return res.status(400).send(e.message);
+                });
         })
         .catch(e => {
-            console.log("Unexpected error", e)
-            res.status(400).send(e)
+            console.log("Unexpected error", e);
+            res.status(400).send(e);
         });
 });
 
-/*  
+/*
     /get-docs
     Get documents by workerId
     @param workerId required
 */
 router.post('/get-docs', async (req, res) => {
-	
+
 	if(!Object.keys(req.body).length) {
 		return res.status(400).send("Empty request")
 	}
@@ -89,7 +79,7 @@ router.post('/get-docs', async (req, res) => {
             if(!docs){
             	return res.status(404).send("Document not found.");
             }
-            
+
             return res.status(200).send(docs);
         })
         .catch(e => {
@@ -105,32 +95,37 @@ router.post('/get-docs', async (req, res) => {
 
 */
 router.get('/get-doc', async (req, res) => {
-    
-    if(!Object.keys(req.query).length) {
-        return res.status(400).send("Empty request")
+    if (!Object.keys(req.query).length) {
+        return res.status(400).send("Empty request");
     }
-    
-    let doc = await Docs.findOne({"files._id" : req.query.bsonId})
-        .then(docs => {
-            if(!docs){
-                return res.status(404).send("Document not found.");
-            }
-            
-            for(let file of docs.files){
-                
-                if(file._id == req.query.bsonId){
-                    return res.status(200).json(file);
-                }
-            }
 
-            return res.status(400).send("Document found but not found.");
-            
-        })
-        .catch(e => {
-            console.log("Unexpected error", e)
-            return res.status(400).send("Unexpected error.")
-        });
+    try {
+        let doc = await Docs.findOne({ "files._id": req.query.bsonId });
+        if (!doc) {
+            return res.status(404).send("Document not found.");
+        }
+
+        for (let file of doc.files) {
+            if (file._id == req.query.bsonId) {
+                const base64Content = file.content.toString('base64');
+
+                return res.status(200).json({
+                    name: file.name,
+                    content: {
+                        data: `${base64Content}`
+                    }
+                });
+            }
+        }
+
+        return res.status(400).send("Document found but file not found.");
+    } catch (e) {
+        console.log("Unexpected error", e);
+        return res.status(400).send("Unexpected error.");
+    }
 });
+
+
 
 /*
     /list-docs
@@ -143,13 +138,13 @@ router.get('/list-docs', async (req, res) => {
     if(!Object.keys(req.query).length) {
         return res.status(400).send("Empty request")
     }
-    
+
     let doc = await Docs.findOne({workerId: req.query.workerId})
         .then(docs => {
             if(!docs){
                 return res.status(404).send("Document not found.");
             }
-            
+
             var list = [];
             for(let file of docs.files){
                 list.push({name: file.name, id: file._id, type: file.type, displayName: file.displayName});
@@ -170,28 +165,28 @@ router.get('/list-docs', async (req, res) => {
 
 */
 router.post('/del-doc', async (req, res) => {
-    
+
     if(!Object.keys(req.body).length) {
         return res.status(400).send("Empty request")
     }
-    
+
     let doc = await Docs.findOne({"files._id" : req.body.bsonId})
         .then(docs => {
             if(!docs){
                 return res.status(404).send("Document not found.");
             }
-            
+
             for(let [index, file] of docs.files.entries()){
 
                 if(file._id == req.body.bsonId){
-                    
+
                     // const filesFilter = docs.files.splice(index, 1)
 
                     // docs.files = filesFilter;
 
                     // console.log(filesFilter)
                     docs.files.splice(index, 1);
-   
+
                     docs.save()
                     .then((docs) => {
                         return res.status(200).send("OK");
@@ -202,7 +197,7 @@ router.post('/del-doc', async (req, res) => {
                     })
                 }
             }
-            
+
         })
         .catch(e => {
             console.log("Unexpected error", e)
@@ -217,11 +212,11 @@ router.post('/del-doc', async (req, res) => {
 
 */
 router.post('/del-docs', async (req, res) => {
-    
+
     if(!Object.keys(req.body).length) {
         return res.status(400).send("Empty request")
     }
-    
+
     let doc = await Docs.findOne({'files._id': {'$in': req.body.bsonIds}})
         .then(docs => {
             if(!docs){
@@ -231,7 +226,7 @@ router.post('/del-docs', async (req, res) => {
             if(docs.length > 1){
                 return res.status(500).send("Only 1 user at a time");
             }
-            
+
             let filesFilter = docs.files.filter((file) => {
                 return req.body.bsonIds.indexOf(file._id.toString()) == -1
             })
@@ -246,7 +241,7 @@ router.post('/del-docs', async (req, res) => {
                 console.log("Unable to save document.", e);
                 return res.status(400).send("Unable to save document.");
             })
-            
+
         })
         .catch(e => {
             console.log("Unexpected error", e)

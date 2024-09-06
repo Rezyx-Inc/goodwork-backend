@@ -15,88 +15,65 @@
 
                         <!------------->
                         <div class="ss-apply-on-jb-mmn-dv-box-divs">
+
+
                             <div class="ss-job-prfle-sec">
+                                {{-- row 1 --}}
                                 <div class="row">
-                                    <p class="col-10">{{ $model->job_type }} <span>+{{ $model->getOfferCount() }}
-                                            Applied</span></p>
-                                    @if ($model->urgency == 'Auto Offer' || $model->as_soon_as == true)
-                                        <p class="col-2 text-center">Urgent</p>
-                                    @endif
+                                <div class="col-10"> <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$model->specialty}}</a></li>
+                                    <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$model->proffesion}}</a></li></ul></div>
+                                <p class="col-2 text-center"><span>+{{$model->getOfferCount()}} Applied</span></p>
                                 </div>
+                                {{-- row 2 --}}
                                 <div class="row">
-                                    <div class="col-3">
-                                        <ul>
-                                            <li><a href="#"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/facility.png') }}">
-                                                    {{ $model->facility_name ?? 'NA' }}</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-9 d-flex justify-content-end">
-                                        <ul>
-                                            <li><a href="#"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/specialty.png') }}">
-                                                    {{ $model->specialty }}</a></li>
-                                            <li><a href="#"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/specialty.png') }}">
-                                                    {{ $model->proffesion }}/wk</a></li>
-                                    </div>
+                                    <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$model->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$model->job_name}}</a></li></ul></div>
                                 </div>
-                                <!-- job details not yet implemented -->
-                                <div class="row">
-                                    <div class="col-3">
+                                {{-- row 3 --}}
+                                 <div class="row">
+                                    <div class="col-9"><ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/facility.png')}}"> {{$model->facility_name ?? 'NA'}}</a></li>
+                                        <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/location.png')}}"> {{$model->job_city}}, {{$model->job_state}}</a></li>
+                                    </ul></div>
+                                    <div class="col-3 d-flex justify-content-end">
                                         <ul>
-                                            <li><a href="{{ route('worker_job-details', ['id' => $model->id]) }}"><img
-                                                        class="icon_cards" src="{{ URL::asset('frontend/img/job.png') }}">
-                                                    {{ $model->job_name }}</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-9 d-flex justify-content-end">
-                                        <ul>
-                                            <li><a href="#"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/location.png') }}">
-                                                    {{ $model->job_city }}, {{ $model->job_state }}</a></li>
-                                            <li><a href="#"><img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/calendar.png') }}">
-                                                    {{ $model->preferred_assignment_duration }} wks</a></li>
+                                            <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/calendar.png')}}"> {{$model->preferred_assignment_duration}} wks</a></li>
 
                                     </div>
                                 </div>
-
+                                {{-- row 4 --}}
                                 <div class="row">
-                                    <div class="col-5">
+                                    <div class="col-4">
                                         <ul>
-                                            @if ($model->as_soon_as == false)
-                                                <li>
-                                                    <img class="icon_cards"
-                                                        src="{{ URL::asset('frontend/img/calendar.png') }}"> <a
-                                                        href="#" class="start-date"
-                                                        data-start-date="{{ $model->start_date }}"></a>
-                                                </li>
+                                            @if($model->as_soon_as == false)
+                                            <li>
+                                                <img class="icon_cards" src="{{URL::asset('frontend/img/calendar.png')}}"> <a href="#" class="start-date" data-start-date="{{$model->start_date}}"></a>
+                                            </li>
                                             @endif
                                         </ul>
                                     </div>
-                                    <div class="col-7 d-flex justify-content-end">
+                                    <div class="col-8 d-flex justify-content-end">
                                         <ul>
-
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ $model->weekly_pay }}/wk</li>
-                                            <li><img class="icon_cards"
-                                                    src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
-                                                {{ $model->actual_hourly_rate }}/hour</li>
-                                        </ul>
+                                            <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}">  Est.  {{$model->weekly_pay * 4 * 12}}/year</li>
+                                            <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}">  Est.  {{$model->weekly_pay}}/wk</li>
+                                            <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}">  Est.  {{$model->actual_hourly_rate}}/hour</li></ul>
                                     </div>
                                 </div>
 
 
-                                <!-- should be dynamic  -->
-                                <h5>Recently Added</h5>
-                                <a href="javascript:void(0)" data-id="{{ $model->id }}" onclick="save_jobs(this,event)"
-                                    class="ss-jb-prfl-save-ico">
-                                    @if ($jobSaved->check_if_saved($model->id))
-                                        <img src="{{ URL::asset('frontend/img/bookmark.png') }}" />
+                                {{-- row 5 --}}
+                                <div class="row">
+                                    <div class="col-6"><h5>Recently Added</h5></div>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        @if($model->urgency == "Auto Offer" || $model->as_soon_as == true)
+                                        <p class="col-2 text-center">Urgent</p>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <a href="javascript:void(0)" data-id="{{$model->id}}" onclick="save_jobs(this, event)" class="ss-jb-prfl-save-ico">
+                                    @if($jobSaved->check_if_saved($model->id))
+                                    <img src="{{URL::asset('frontend/img/bookmark.png')}}" />
                                     @else
-                                        <img src="{{ URL::asset('frontend/img/job-icon-bx-Vector.png') }}" />
+                                    <img src="{{URL::asset('frontend/img/job-icon-bx-Vector.png')}}" />
                                     @endif
                                 </a>
                             </div>
@@ -2127,7 +2104,7 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    
+
                                 <button class="ss-job-dtl-pop-sv-btn"
                                 onclick="collect_data(event,'multi-select')">Save</button>
                                 </form>
@@ -2153,7 +2130,7 @@
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
     <script>
         var Emr = {};
-    
+
         function addEmr(type) {
             let id;
             let idtitle;
@@ -2167,7 +2144,7 @@
                 id = $('#EmrEdit');
                 idtitle = "EmrEdit";
             }
-    
+
             if (!id.val()) {
                 notie.alert({
                     type: 'error',
@@ -2177,11 +2154,11 @@
             } else {
                 if (!Emr.hasOwnProperty(id.val())) {
                     console.log(id.val());
-    
+
                     var select = document.getElementById(idtitle);
                     var selectedOption = select.options[select.selectedIndex];
                     var optionText = selectedOption.textContent;
-    
+
                     Emr[id.val()] = optionText;
                     EmrStr = Object.values(Emr).join(', ');
                     console.log('EmrStr',EmrStr);
@@ -2190,14 +2167,14 @@
                 }
             }
         }
-    
+
         function list_Emr() {
             var str = '';
             console.log(Emr);
-    
+
             for (const key in Emr) {
                 console.log(Emr);
-    
+
                 let Emrname = "";
                 @php
                     $allKeywordsJSON = json_encode($allKeywords['EMR']);
@@ -2205,7 +2182,7 @@
                 let allspcldata = '{!! $allKeywordsJSON !!}';
                 if (Emr.hasOwnProperty(key)) {
                     var data = JSON.parse(allspcldata);
-    
+
                     data.forEach(function(item) {
                         if (key == item.id) {
                             Emrname = item.title;
@@ -2220,7 +2197,7 @@
             }
             $('.Emr-content').html(str);
         }
-    
+
         function remove_Emr(obj, key) {
             if (Emr.hasOwnProperty(key)) {
                 delete Emr[key]; // Remove the Emr from the object
@@ -2242,12 +2219,12 @@
     </script>
     <script>
 
-        
- 
+
+
 function daysUntilWorkStarts(dateString) {
     const workStartDate = new Date(dateString);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
     const differenceInMilliseconds = workStartDate - today;
     const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     return `Work starts in ${differenceInDays} days`;
@@ -2280,7 +2257,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // references
         var number_of_references = "{!! $model->number_of_references !!}";
 
-        // skills 
+        // skills
         var job_skills = "{!! $model->skills !!}";
         var job_skills_displayname = job_skills.split(',').map(function(item) {
             return item.trim();
@@ -2328,7 +2305,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var selectedVaccinations = [];
         document.addEventListener('DOMContentLoaded', function() {
 
-            // trim description control 
+            // trim description control
 
             let description = document.getElementById('job_description');
 
@@ -2538,7 +2515,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error); // Handle errors
             }
 
-            // clear files inputs 
+            // clear files inputs
             fileInputs.forEach((input) => {
                 input.value = '';
             });
@@ -2944,7 +2921,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
                 inputName = form.find('input[type="text"]').attr('name');
                 }
-                
+
                 console.log("data",dataToSend);
             }
 
@@ -2953,7 +2930,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('its value :', dataToSend[inputName]);
 
 
-            // matching job / worker infromation 
+            // matching job / worker infromation
 
             if (matchWithWorker(inputName, dataToSend[inputName]) != undefined) {
                 if (matchWithWorker(inputName, dataToSend[inputName])) {
@@ -3069,7 +3046,7 @@ document.addEventListener('DOMContentLoaded', function() {
         async function check_required_files_before_sent(obj) {
             let diploma = [];
             let driving_license = [];
-            
+
             let worked_bfore = dataToSend['worked_at_facility_before'];
 
             let ss_number = dataToSend['worker_ss_number'];
@@ -3088,7 +3065,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error('Failed to get files:', error);
             }
-           
+
             console.log(diploma);
             console.log(driving_license);
             console.log(worked_bfore);
@@ -3302,5 +3279,5 @@ document.addEventListener('DOMContentLoaded', function() {
         height: 100px;
     }
 
-    
+
 </style>

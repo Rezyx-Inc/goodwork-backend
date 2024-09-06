@@ -247,7 +247,7 @@ class ApplicationController extends Controller
             if($offerdetails->is_payment_required == 1 ){
                 $paymentRequired = true;
             }
-            
+
 
             $nursedetails = NURSE::select('nurses.*')
                 ->where('nurses.id', $offerdetails['worker_user_id'])
@@ -260,13 +260,15 @@ class ApplicationController extends Controller
             $response = Http::post($urlDocs, ['workerId' => $nursedetails->id]);
             // Check if the nurse has files
             $files = [];
+            // return $response->json()['files'];
             if (!empty($response->json()['files'])) {
                 $hasFile = true;
 
                 foreach($response->json()['files'] as $file){
                     $files[] = [
                         'name' => $file['name'],
-                        'content' => base64_encode(implode(array_map("chr", $file['content']['data'])))
+                        'content' => $file['content'],
+                        'type' => $file['type']
                     ];
                 }
 
@@ -1807,7 +1809,7 @@ class ApplicationController extends Controller
                     ($offerdetails->traveler_distance_from_facility ?? '----') .
                     ' miles Maximum</h6>
             </div>
-            
+
             <div class="col-md-6 mb-3 ' .
                     ($jobdetails->clinical_setting != $offerdetails->clinical_setting ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
@@ -1870,7 +1872,7 @@ class ApplicationController extends Controller
                     ($offerdetails->rto ?? '----') .
                     '</h6>
             </div>
-           
+
             <div class="col-md-6 mb-3 ' .
                     ($jobdetails->hours_per_week != $offerdetails->hours_per_week ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
@@ -2016,7 +2018,7 @@ class ApplicationController extends Controller
                     ($offerdetails->on_call ?? '----') .
                     '</h6>
             </div>
-            
+
             <div class="col-md-6 mb-3 ' .
                     ($jobdetails->orientation_rate != $offerdetails->orientation_rate ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
@@ -2129,7 +2131,7 @@ class ApplicationController extends Controller
                         data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="width: inherit !important;color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>';
                     }
-            
+
                   $data2 .= '
                   <li>
                    <a  onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')" class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="
@@ -2159,7 +2161,7 @@ class ApplicationController extends Controller
                         data-target="file" data-hidden_value="Yes" data-href="" data-title="Worker\'s Files" data-name="diploma" onclick="open_modal(this)">Consult worker files <span style="width: inherit !important;color:white !important; font-size:24px !important;vertical-align: sub; " class="material-symbols-outlined">folder_open</span></a>
                     </li>';
                     }
-            
+
                   $data2 .= '
                   <li>
                    <a  onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')" class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="
@@ -2372,7 +2374,7 @@ class ApplicationController extends Controller
         $recruiter = Auth::guard('recruiter')->user();
         $recruiter_id = $recruiter->id;
         $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
-       
+
         $type = $request->type;
         $id = $request->id;
         $formtype = $request->formtype;
@@ -2396,7 +2398,7 @@ class ApplicationController extends Controller
                 $receiver = $offer->worker_user_id;
                 $job_name = Job::where('id', $jobid)->first()->job_name;
 
-                
+
                 event(new NotificationOffer($formtype,false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
 
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
@@ -2413,7 +2415,7 @@ class ApplicationController extends Controller
                         $statusCounts[$statusCount->status] = 0;
                     }
                 }
-               
+
                 return response()->json(['message' => 'Update Successfully', 'type' => $formtype, 'statusCounts' => $statusCounts]);
             } else {
                 return response()->json(['message' => 'Something went wrong! Please check']);
@@ -2440,20 +2442,20 @@ class ApplicationController extends Controller
         $stripe_id = User::where('id', $recruiter_id)->first()->stripeAccountId;
         $data = ['customerId' => $stripe_id];
         $response = Http::get($url, $data);
-        
+
         if ($stripe_id == null ||  $response->json()['status'] == false) {
             return false;
         }
         return true;
     }
-    
+
 
 
 
 
     public function sendJobOffer(Request $request)
     {
-       
+
         $validator = Validator::make($request->all(), [
             'worker_user_id' => 'required',
             'job_id' => 'required',
@@ -2475,7 +2477,7 @@ class ApplicationController extends Controller
                 $update_array['type'] = isset($request->type) ? $request->type : $job_data->job_type;
                 $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
                 $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->proffesion;
-                
+
                 $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
                 $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;
                 $update_array['facility_shift_cancelation_policy'] = isset($request->facility_shift_cancelation_policy) ? $request->facility_shift_cancelation_policy : $job_data->facility_shift_cancelation_policy;
@@ -2535,11 +2537,11 @@ class ApplicationController extends Controller
                 /* create job */
                 $update_array['created_by'] = isset($job_data->recruiter_id) && $job_data->recruiter_id != '' ? $job_data->recruiter_id : '';
 
-                
+
                 $offerexist = DB::table('offers')
                     ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
                     ->first();
-                
+
                 if ($offerexist) {
                     $job = DB::table('offers')
                         ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
@@ -2602,8 +2604,8 @@ class ApplicationController extends Controller
                     $time = now()->toDateTimeString();
                     $receiver = $offer->worker_user_id;
                     $job_name = Job::where('id', $jobid)->first()->job_name;
-    
-                    
+
+
                     event(new NotificationOffer('Rejected',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
                 }
             } elseif ($request->type == 'offersend') {
@@ -2614,11 +2616,11 @@ class ApplicationController extends Controller
                 if ($job) {
                     $job->update($update_array);
                 }
-                
+
                     $user = Auth::guard('recruiter')->user();
                 $data = [
                     'offerId' => $request->id,
-                    'amount' => '1', 
+                    'amount' => '1',
                     'stripeId' =>$user->stripeAccountId,
                     'fullName' => $user->first_name . ' ' . $user->last_name,
                 ];
@@ -2628,12 +2630,12 @@ class ApplicationController extends Controller
                 // Define the URL
                 $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
 
-                // return response()->json(['data'=>$data , 'url' => $url]);   
+                // return response()->json(['data'=>$data , 'url' => $url]);
 
                 // Make the request
                 $responseInvoice = Http::post($url, $data);
                 // return response()->json(['message'=>$responseInvoice->json()]);
-                
+
                 $responseData = [];
                 if ($job) {
                     $responseData = [
@@ -2646,8 +2648,8 @@ class ApplicationController extends Controller
                     $time = now()->toDateTimeString();
                     $receiver = $offer->worker_user_id;
                     $job_name = Job::where('id', $jobid)->first()->job_name;
-    
-                    
+
+
                     event(new NotificationOffer('Offered',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
 
                 }

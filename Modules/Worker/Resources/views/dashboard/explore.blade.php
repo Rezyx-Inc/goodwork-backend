@@ -38,11 +38,11 @@
                         @foreach($specialities as $speciality)
                         <option value="{{$speciality->full_name}}">{{$speciality->full_name}}</option>
                         @endforeach
-                       
+
                     </select>
               </div>
 
-            
+
 
               <div class="ss-input-slct-grp">
                 <label>State</label>
@@ -156,52 +156,57 @@
               <div class="ss-dash-profile-4-bx-dv">
                 @forelse($jobs as $j)
                 <div class="ss-job-prfle-sec" onclick="redirectToJobDetails(`{{$j->id}}`)">
+                    {{-- row 1 --}}
                     <div class="row">
-                    <p class="col-10">{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
-                    @if($j->urgency == "Auto Offer" || $j->as_soon_as == true)
-                    <p class="col-2 text-center">Urgent</p>
-                    @endif
+                    <div class="col-10"> <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->specialty}}</a></li>
+                        <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->proffesion}}</a></li></ul></div>
+                    <p class="col-2 text-center"><span>+{{$j->getOfferCount()}} Applied</span></p>
                     </div>
-                   
+                    {{-- row 2 --}}
                     <div class="row">
-                        <div class="col-3"><ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/facility.png')}}"> {{$j->facility_name ?? 'NA'}}</a></li></ul></div>
-                        <div class="col-9 d-flex justify-content-end">
-                            <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->specialty}}</a></li>
-                                <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->proffesion}}/wk</a></li>
-                        </div>
-                    </div>
-                    
-                     <!-- job details not yet implemented -->
-                     <div class="row">
                         <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li></ul></div>
-                        <div class="col-9 d-flex justify-content-end">
-                            <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
+                    </div>
+                    {{-- row 3 --}}
+                     <div class="row">
+                        <div class="col-9"><ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/facility.png')}}"> {{$j->facility_name ?? 'NA'}}</a></li>
+                            <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
+                        </ul></div>
+                        <div class="col-3 d-flex justify-content-end">
+                            <ul>
                                 <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/calendar.png')}}"> {{$j->preferred_assignment_duration}} wks</a></li>
-                                
+
                         </div>
                     </div>
-
+                    {{-- row 4 --}}
                     <div class="row">
-                        <div class="col-5">
+                        <div class="col-4">
                             <ul>
-                                @if($j->as_soon_as == false) 
+                                @if($j->as_soon_as == false)
                                 <li>
                                     <img class="icon_cards" src="{{URL::asset('frontend/img/calendar.png')}}"> <a href="#" class="start-date" data-start-date="{{$j->start_date}}"></a>
                                 </li>
                                 @endif
                             </ul>
                         </div>
-                        <div class="col-7 d-flex justify-content-end">
+                        <div class="col-8 d-flex justify-content-end">
                             <ul>
-                                
-                                <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}"> {{$j->weekly_pay}}/wk</li>
-                                <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}"> {{$j->actual_hourly_rate}}/hour</li></ul>
+                                <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}">  Est.  {{$j->weekly_pay * 4 * 12}}/year</li>
+                                <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}">  Est.  {{$j->weekly_pay}}/wk</li>
+                                <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}">  Est.  {{$j->actual_hourly_rate}}/hour</li></ul>
                         </div>
                     </div>
-                    
-                   
-                    <!-- should be dynamic  -->
-                    <h5>Recently Added</h5>
+
+
+                    {{-- row 5 --}}
+                    <div class="row">
+                        <div class="col-6"><h5>Recently Added</h5></div>
+                        <div class="col-6 d-flex justify-content-end">
+                            @if($j->urgency == "Auto Offer" || $j->as_soon_as == true)
+                            <p class="col-2 text-center">Urgent</p>
+                            @endif
+                        </div>
+                    </div>
+
                     <a href="javascript:void(0)" data-id="{{$j->id}}" onclick="save_jobs(this, event)" class="ss-jb-prfl-save-ico">
                         @if($jobSaved->check_if_saved($j->id))
                         <img src="{{URL::asset('frontend/img/bookmark.png')}}" />
@@ -239,7 +244,7 @@ function redirectToJobDetails(id) {
 function daysUntilWorkStarts(dateString) {
     const workStartDate = new Date(dateString);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
     const differenceInMilliseconds = workStartDate - today;
     const differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     return `Work starts in ${differenceInDays} days`;
@@ -470,7 +475,7 @@ $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 val
         // Change the value of the profession select to the text of the selected option
         const professionSelect = $("select[name='profession']");
         const selectedOptionText = professionSelect.find("option:selected").text();
-        
+
         // Add a hidden input to the form with the text of the selected option
         $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
 
@@ -481,7 +486,7 @@ $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 val
         // setInterval(() => {
         //   this.submit();
         // }, 500000);
-				
+
         this.submit();
 			});
 		});
