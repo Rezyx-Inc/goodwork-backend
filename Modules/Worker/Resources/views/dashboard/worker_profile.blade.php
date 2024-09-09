@@ -472,7 +472,7 @@
                                             </div>
                                             <span class="help-block-rto"></span>
                                             {{-- End RTO --}}
-                                             
+
                                             {{-- Shift Time of Day --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Shift Time of Day</label>
@@ -491,7 +491,7 @@
                                             </div>
                                             <span class="help-block-worker_shift_time_of_day"></span>
                                             {{-- End Shift Time of Day --}}
-                                            
+
                                             {{-- Hours/Shift --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Hours/Shift</label>
@@ -528,8 +528,8 @@
                                                     value="{{ !empty($worker->worker_experience) ? $worker->worker_experience : '' }}">
                                             </div>
                                             <span class="help-block-worker_experience"></span>
-                                             {{-- End Experience --}}
-                                             {{-- worker_ss_number --}}
+                                            {{-- End Experience --}}
+                                            {{-- worker_ss_number --}}
 
                                             <div class="ss-form-group col-11">
                                                 <label>SS Number</label>
@@ -544,7 +544,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Where are you licensed?</label>
                                                 <select name="nursing_license_state" id="nursing_license_state">
-                                                    <option value="{{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : '' }}">
+                                                    <option
+                                                        value="{{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : '' }}">
                                                         {{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : 'Select a State' }}
                                                     </option>
                                                     @foreach ($allKeywords['StateCode'] as $value)
@@ -560,8 +561,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Eligible to work in the US</label>
                                                 <select name="worker_eligible_work_in_us" id="worker_eligible_work_in_us">
-                                                    <option value="{{ !empty($worker->worker_eligible_work_in_us) ? (($worker->worker_eligible_work_in_us == 1) ? 'Yes' : 'No') : '' }}">
-                                                        {{ !empty($worker->worker_eligible_work_in_us) ? (($worker->worker_eligible_work_in_us == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    <option
+                                                        value="{{ !empty($worker->worker_eligible_work_in_us) ? ($worker->worker_eligible_work_in_us == 1 ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_eligible_work_in_us) ? ($worker->worker_eligible_work_in_us == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">Select an option</option>
                                                     <option value="Yes">Yes</option>
@@ -569,14 +571,15 @@
                                                 </select>
                                                 <span class="help-block-worker_eligible_work_in_us"></span>
                                             </div>
-                                           
+
                                             {{-- End worker_eligible_work_in_us --}}
                                             {{-- worker_facility_city --}}
 
                                             <div class="ss-form-group col-11">
                                                 <label>City you'd like to work?</label>
                                                 <select name="worker_facility_city" id="worker_facility_city">
-                                                    <option value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}">
+                                                    <option
+                                                        value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}">
                                                         {{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : 'Select a City' }}
                                                     </option>
                                                     @foreach ($allKeywords['City'] as $value)
@@ -593,7 +596,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>State you'd like to work?</label>
                                                 <select name="worker_facility_state" id="worker_facility_state">
-                                                    <option value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}">
+                                                    <option
+                                                        value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}">
                                                         {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
                                                     </option>
                                                     @foreach ($allKeywords['StateCode'] as $value)
@@ -618,7 +622,8 @@
                                             {{-- worker_guaranteed_hours --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Guaranteed Hours</label>
-                                                <input id="worker_guaranteed_hours" type="number" name="worker_guaranteed_hours"
+                                                <input id="worker_guaranteed_hours" type="number"
+                                                    name="worker_guaranteed_hours"
                                                     placeholder="Enter your guaranteed hours"
                                                     value="{{ !empty($worker->worker_guaranteed_hours) ? $worker->worker_guaranteed_hours : '' }}">
                                             </div>
@@ -629,8 +634,8 @@
 
                                             <div class="ss-form-group col-11">
                                                 <label>Sign on Bonus</label>
-                                                <input id="worker_sign_on_bonus" type="number" name="worker_sign_on_bonus"
-                                                    placeholder="What rate is fair ? "
+                                                <input id="worker_sign_on_bonus" type="number"
+                                                    name="worker_sign_on_bonus" placeholder="What rate is fair ? "
                                                     value="{{ !empty($worker->worker_sign_on_bonus) ? $worker->worker_sign_on_bonus : '' }}">
                                             </div>
                                             <span class="help-block-worker_sign_on_bonus"></span>
@@ -640,8 +645,7 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Completion Bonus</label>
                                                 <input id="worker_completion_bonus" type="number"
-                                                    name="worker_completion_bonus"
-                                                    placeholder="What rate is fair ? "
+                                                    name="worker_completion_bonus" placeholder="What rate is fair ? "
                                                     value="{{ !empty($worker->worker_completion_bonus) ? $worker->worker_completion_bonus : '' }}">
                                             </div>
                                             <span class="help-block-worker_completion_bonus"></span>
@@ -650,8 +654,8 @@
                                             {{-- worker_extension_bonus --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Extension Bonus</label>
-                                                <input id="worker_extension_bonus" type="number" name="worker_extension_bonus"
-                                                    placeholder="What rate is fair ? "
+                                                <input id="worker_extension_bonus" type="number"
+                                                    name="worker_extension_bonus" placeholder="What rate is fair ? "
                                                     value="{{ !empty($worker->worker_extension_bonus) ? $worker->worker_extension_bonus : '' }}">
                                             </div>
                                             <span class="help-block-worker_extension_bonus"></span>
@@ -671,8 +675,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>401K</label>
                                                 <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
-                                                    <option value="{{ !empty($worker->worker_four_zero_one_k) ? (($worker->worker_four_zero_one_k == 1) ? 'Yes' : 'No') : '' }}">
-                                                        {{ !empty($worker->worker_four_zero_one_k) ? (($worker->worker_four_zero_one_k == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    <option
+                                                        value="{{ !empty($worker->worker_four_zero_one_k) ? ($worker->worker_four_zero_one_k == 1 ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_four_zero_one_k) ? ($worker->worker_four_zero_one_k == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">Select an option</option>
                                                     <option value="Yes">Yes</option>
@@ -686,8 +691,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Health Insurance</label>
                                                 <select name="worker_health_insurance" id="worker_health_insurance">
-                                                    <option value="{{ !empty($worker->worker_health_insurance) ? (($worker->worker_health_insurance == 1) ? 'Yes' : 'No') : '' }}">
-                                                        {{ !empty($worker->worker_health_insurance) ? (($worker->worker_health_insurance == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    <option
+                                                        value="{{ !empty($worker->worker_health_insurance) ? ($worker->worker_health_insurance == 1 ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_health_insurance) ? ($worker->worker_health_insurance == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">Select an option</option>
                                                     <option value="Yes">Yes</option>
@@ -701,8 +707,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Dental</label>
                                                 <select name="worker_dental" id="worker_dental">
-                                                    <option value="{{ !empty($worker->worker_dental) ? (($worker->worker_dental == 1) ? 'Yes' : 'No') : '' }}">
-                                                        {{ !empty($worker->worker_dental) ? (($worker->worker_dental == 1) ? 'Yes' : 'No') : 'Do you want this ?' }}
+                                                    <option
+                                                        value="{{ !empty($worker->worker_dental) ? ($worker->worker_dental == 1 ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_dental) ? ($worker->worker_dental == 1 ? 'Yes' : 'No') : 'Do you want this ?' }}
                                                     </option>
                                                     <option value="">do you want this ?</option>
                                                     <option value="Yes">Yes</option>
@@ -717,8 +724,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Vision</label>
                                                 <select name="worker_vision" id="worker_vision">
-                                                    <option value="{{ !empty($worker->worker_vision) ? (($worker->worker_vision == 1) ? 'Yes' : 'No') : '' }}">
-                                                        {{ !empty($worker->worker_vision) ? (($worker->worker_vision == 1) ? 'Yes' : 'No') : 'Select an option' }}
+                                                    <option
+                                                        value="{{ !empty($worker->worker_vision) ? ($worker->worker_vision == 1 ? 'Yes' : 'No') : '' }}">
+                                                        {{ !empty($worker->worker_vision) ? ($worker->worker_vision == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">do you want this ?</option>
                                                     <option value="Yes">Yes</option>
@@ -731,8 +739,8 @@
                                             {{-- worker_overtime_rate --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Overtime Rate</label>
-                                                <input id="worker_overtime_rate" type="number" name="worker_overtime_rate"
-                                                    placeholder="What rate is fair?"
+                                                <input id="worker_overtime_rate" type="number"
+                                                    name="worker_overtime_rate" placeholder="What rate is fair?"
                                                     value="{{ !empty($worker->worker_overtime_rate) ? $worker->worker_overtime_rate : '' }}">
                                             </div>
                                             <span class="help-block-worker_overtime_rate"></span>
@@ -752,8 +760,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>On Call</label>
                                                 <select name="worker_on_call_check" id="worker_on_call_check">
-                                                    <option value="{{ !empty($worker->worker_on_call_check) ? (($worker->worker_on_call_check == 1) ? 'Yes' : 'No') : 'Will you do call?' }}">
-                                                        {{ !empty($worker->worker_on_call_check) ? (($worker->worker_on_call_check == 1) ? 'Yes' : 'No') : 'Will you do call?' }}
+                                                    <option
+                                                        value="{{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}">
+                                                        {{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}
                                                     </option>
                                                     <option value="">Select an option</option>
                                                     <option value="Yes">Yes</option>
@@ -777,8 +786,9 @@
                                             <div class="ss-form-group col-11">
                                                 <label>On Call Back</label>
                                                 <select name="worker_on_call_back_check" id="worker_on_call_back_check">
-                                                    <option value="{{ !empty($worker->worker_on_call_back_check) ? (($worker->worker_on_call_back_check == 1) ? 'Yes' : 'No') : 'Will you do call back?' }}">
-                                                        {{ !empty($worker->worker_on_call_back_check) ? (($worker->worker_on_call_back_check == 1) ? 'Yes' : 'No') : 'Will you do call back?' }}
+                                                    <option
+                                                        value="{{ !empty($worker->worker_on_call_back_check) ? ($worker->worker_on_call_back_check == 1 ? 'Yes' : 'No') : 'Will you do call back?' }}">
+                                                        {{ !empty($worker->worker_on_call_back_check) ? ($worker->worker_on_call_back_check == 1 ? 'Yes' : 'No') : 'Will you do call back?' }}
                                                     </option>
                                                     <option value="">Select an option</option>
                                                     <option value="Yes">Yes</option>
@@ -810,7 +820,7 @@
 
                                             {{-- worker_benefits --}}
 
-                                             <div class="ss-form-group col-11">
+                                            <div class="ss-form-group col-11">
                                                 <label>Worker benefits</label>
                                                 <select name="worker_benefits" class="worker_benefits mb-3"
                                                     id="worker_benefits" value="">
@@ -824,7 +834,7 @@
                                                 </select>
                                             </div>
                                             <span class="help-block-worker_benefits"></span>
-                                            
+
                                             {{-- end worker benefits --}}
 
                                             {{-- Skip && Save --}}
@@ -924,7 +934,8 @@
                     <div class="col-lg-7 bodyAll account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
-                                <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
+                                <p><span><img
+                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
                                     Setting</p>
                             </div>
                             <div class="form-outer">
@@ -1309,12 +1320,14 @@
                                                                         justify-content: center;
                                                                         align-items: center;
                                                                     ">
-                                                <input hidden displayName="Ss number file" type="file" class="files-upload">
+                                                <input hidden displayName="Ss number file" type="file"
+                                                    class="files-upload">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="ss number file"
                                                         class="item">
                                                 </div>
-                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -1338,7 +1351,8 @@
                                                     <input hidden type="text" name="type" value="other"
                                                         class="item">
                                                 </div>
-                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -1348,29 +1362,29 @@
                                     {{-- vaccinations --}}
                                     <div class="d-none" id="vaccinations">
                                         <div class="container-multiselect">
-                                        <div class="select-btn">
-                                            <span class="btn-text">Select Vaccinations</span>
-                                            <span class="arrow-dwn">
-                                                <i class="fa-solid fa-chevron-down"></i>
-                                            </span>
+                                            <div class="select-btn">
+                                                <span class="btn-text">Select Vaccinations</span>
+                                                <span class="arrow-dwn">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </span>
+                                            </div>
+                                            <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                            </div>
+                                            <ul class="list-items">
+                                                @if (isset($allKeywords['Vaccinations']))
+                                                    @foreach ($allKeywords['Vaccinations'] as $value)
+                                                        <li class="item" value="{{ $value->title }}">
+                                                            <span class="checkbox">
+                                                                <i class="fa-solid fa-check check-icon"></i>
+                                                            </span>
+                                                            <span class="item-text">{{ $value->title }}</span>
+                                                        </li>
+                                                        <input displayName="{{ $value->title }}" type="file"
+                                                            class="files-upload" style="display: none;" />
+                                                    @endforeach
+                                                @endif
+                                            </ul>
                                         </div>
-                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
-                                        </div>
-                                        <ul class="list-items">
-                                            @if (isset($allKeywords['Vaccinations']))
-                                                @foreach ($allKeywords['Vaccinations'] as $value)
-                                                    <li class="item" value="{{ $value->title }}">
-                                                        <span class="checkbox">
-                                                            <i class="fa-solid fa-check check-icon"></i>
-                                                        </span>
-                                                        <span class="item-text">{{ $value->title }}</span>
-                                                    </li>
-                                                    <input displayName="{{ $value->title }}" type="file"
-                                                        class="files-upload" style="display: none;" />
-                                                @endforeach
-                                            @endif
-                                        </ul>
-                                    </div>
                                         <button class="ss-job-dtl-pop-sv-btn"
                                             onclick="sendMultipleFiles('vaccination')">Save</button>
                                     </div>
@@ -1410,7 +1424,8 @@
                                                 <option value="">Select a min title</option>
                                                 @if (isset($allKeywords['MinTitleOfReference']))
                                                     @foreach ($allKeywords['MinTitleOfReference'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -1424,7 +1439,8 @@
                                                 <option value="">Select a recency period</option>
                                                 @if (isset($allKeywords['RecencyOfReference']))
                                                     @foreach ($allKeywords['RecencyOfReference'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -1461,9 +1477,11 @@
                                                     <input hidden type="text" name="type" value="diploma"
                                                         class="item">
                                                 </div>
-                                                <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                                <div style="margin-bottom:60px;" class="row"
+                                                    id="uploaded-files-names">
                                                 </div>
-                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -1488,7 +1506,8 @@
                                                     <input hidden type="text" name="type"
                                                         value="Professional License" class="item">
                                                 </div>
-                                                <button class="col-5" type="button" onclick="open_file(this)">Choose File</button>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -1543,7 +1562,7 @@
             fileNameDiv.forEach((fileDiv) => {
                 fileDiv.remove();
             });
-            
+
             HideAllInputsModal();
             removeAllCheckBox();
             const inputsId = obj.value;
@@ -1564,6 +1583,7 @@
                     document.getElementById(InputsDiv).classList.add('d-none');
             });
         }
+
         function closeModal() {
             let buttons = document.querySelectorAll('.btn-close');
             buttons.forEach(button => {
@@ -1578,49 +1598,49 @@
             // give hight to filesNamesArea
             const types = ['vaccinations', 'certificate', 'skills_checklists'];
 
-            
+
             filesSelected.forEach((fileInput) => {
                 fileInput.addEventListener('change', function() {
-                    if(!types.includes(selectedTypeFile)){
-                    if (this.files.length > 0) {
-                        const file = this.files[0];
-                        var fileName = file.name;
-                        if (fileName.length > 20) {
-                            fileName = fileName.substring(0, 20) + '...';
-                        } 
-                        const fileDiv = document.createElement('div');
-                        fileDiv.classList.add('file-name', 'row', 'col-12');
-                        const fileSpan = document.createElement('span');
-                        fileSpan.classList.add('col-11');
-                        const fileText = document.createTextNode(fileName);
-                        fileSpan.appendChild(fileText);
-                        fileDiv.appendChild(fileSpan);
-                        const removeIcon = document.createElement('i');
-                        removeIcon.classList.add('fa', 'fa-times', 'remove-file', 'col-1');
-                        removeIcon.addEventListener('click', function() {
-                            fileDiv.remove();
-                            fileInput.value = '';
-                        });
-                        fileDiv.appendChild(removeIcon);
+                    if (!types.includes(selectedTypeFile)) {
+                        if (this.files.length > 0) {
+                            const file = this.files[0];
+                            var fileName = file.name;
+                            if (fileName.length > 20) {
+                                fileName = fileName.substring(0, 20) + '...';
+                            }
+                            const fileDiv = document.createElement('div');
+                            fileDiv.classList.add('file-name', 'row', 'col-12');
+                            const fileSpan = document.createElement('span');
+                            fileSpan.classList.add('col-11');
+                            const fileText = document.createTextNode(fileName);
+                            fileSpan.appendChild(fileText);
+                            fileDiv.appendChild(fileSpan);
+                            const removeIcon = document.createElement('i');
+                            removeIcon.classList.add('fa', 'fa-times', 'remove-file', 'col-1');
+                            removeIcon.addEventListener('click', function() {
+                                fileDiv.remove();
+                                fileInput.value = '';
+                            });
+                            fileDiv.appendChild(removeIcon);
 
-                        const filesNamesArea = this.closest('.container-multiselect');
+                            const filesNamesArea = this.closest('.container-multiselect');
 
-                        filesNamesArea.appendChild(fileDiv);
+                            filesNamesArea.appendChild(fileDiv);
+                        }
                     }
-                }
                 });
-                
+
             });
-       
+
 
             const items = document.querySelectorAll('.list-items .item');
             //store selected file values
 
             items.forEach((item, index) => {
                 item.addEventListener('click', (event) => {
-                    
+
                     const uploadInput = item.nextElementSibling;
-                    console.log('this is the next sibling : ',uploadInput)
+                    console.log('this is the next sibling : ', uploadInput)
                     if (uploadInput) {
                         // class 'checked' check
                         if (item.classList.contains('checked')) {
@@ -1650,7 +1670,7 @@
 
         });
 
-        function removeAllCheckBox(){
+        function removeAllCheckBox() {
             const items = document.querySelectorAll('.list-items .item');
             items.forEach((item, index) => {
                 item.classList.remove('checked');
@@ -1658,10 +1678,10 @@
         }
 
         function sendMultipleFiles(type) {
-           
+
             const fileInputs = document.querySelectorAll('.files-upload');
-            console.log('this is my file inputs values',fileInputs);
-            
+            console.log('this is my file inputs values', fileInputs);
+
             const fileReadPromises = [];
             let worker_id = '{!! $worker->id !!}';
             console.log(worker_id);
@@ -1717,6 +1737,7 @@
                     let displayName = input.getAttribute("displayName");
                     if (input.files[0]) {
                         const file = input.files[0];
+                        console.log('this is the file', file);
                         const readerPromise = new Promise((resolve, reject) => {
                             const reader = new FileReader();
                             reader.onload = function(event) {
@@ -1730,7 +1751,9 @@
                             };
                             reader.onerror = reject;
                             reader.readAsDataURL(file);
+                            console.log('this is the reader promise', file);
                         });
+
                         fileReadPromises.push(readerPromise);
                     }
                 });
@@ -1768,7 +1791,7 @@
                         console.log(data); // Handle success
                         notie.alert({
                             type: 'success',
-                            text: '<i class="fa fa-check"></i>' + data.message,
+                            text: '<i class="fa fa-check"></i> Files uploaded successfully',
                             time: 3
                         });
                         closeModal();
@@ -1783,7 +1806,7 @@
             }).catch(error => {
                 console.error('Error reading files:', error); // Handle file read errors
             });
-            // clear files inputs 
+            // clear files inputs
             fileInputs.forEach((input) => {
                 input.value = '';
             });
@@ -2011,31 +2034,62 @@
                                     bsonId: file.id
                                 }),
                                 success: function(resp) {
-                                    const respToJson = JSON.parse(resp);
-                                    console.log(respToJson);
-                                    const binaryData = respToJson.content
-                                        .data;
+                                    resp = JSON.parse(resp);
+                                    const base64String = resp.content.data;
+                                    console.log("the resp base64",
+                                    resp);
+
+                                    const mimeType = base64String.match(
+                                        /^data:(.+);base64,/)[1];
+
+
+                                    const base64Data = base64String.split(
+                                        ',')[1];
+
+
+                                    const byteCharacters = atob(base64Data);
+                                    const byteNumbers = new Array(
+                                        byteCharacters.length);
+                                    for (let i = 0; i < byteCharacters
+                                        .length; i++) {
+                                        byteNumbers[i] = byteCharacters
+                                            .charCodeAt(i);
+                                    }
                                     const byteArray = new Uint8Array(
-                                        binaryData);
-                                    const fileBlob = new Blob([byteArray], {
-                                        type: "application/octet-stream"
+                                        byteNumbers);
+
+
+                                    const blob = new Blob([byteArray], {
+                                        type: mimeType
                                     });
+
+
                                     const blobUrl = URL.createObjectURL(
-                                        fileBlob);
+                                        blob);
                                     const downloadLink = document
                                         .createElement('a');
                                     downloadLink.href = blobUrl;
+
+
+                                    const extension = mimeType.split('/')[
+                                        1
+                                        ];
                                     downloadLink.setAttribute('download',
-                                        respToJson.name);
+                                        `document.${extension}`
+                                    );
+
                                     document.body.appendChild(downloadLink);
                                     downloadLink.click();
-                                    document.body.removeChild(downloadLink);
+                                    document.body.removeChild(
+                                        downloadLink);
                                 },
                                 error: function(resp) {
                                     console.log('Error:', resp);
                                 }
                             });
                         });
+
+
                         row.append($('<td class="col-3 td-table">').append(viewFile));
                         row.append($('<td class="col-3 td-table">').append(deleteButton));
 
@@ -2140,7 +2194,7 @@
         const worker_on_call_back_rate = document.querySelector('input[name="worker_on_call_back_rate"]');
         const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
         const worker_benefits = document.querySelector('select[name="worker_benefits"]');
-         
+
 
 
 
@@ -3378,8 +3432,7 @@
 
     ::selection {
         color: #fff;
-        background: #
-        ;
+        background: #;
     }
 
     .container {
@@ -3810,16 +3863,18 @@
     .ss-job-dtl-pop-sv-btn {
         margin-top: 30px !important;
     }
-    .remove-file{
-        cursor:pointer;
-        color:white;
+
+    .remove-file {
+        cursor: pointer;
+        color: white;
         background-color: #3d2c39;
         border-radius: 8px;
-        padding:0px !important;
-        font-size:12px;
+        padding: 0px !important;
+        font-size: 12px;
     }
-    .file-name{
+
+    .file-name {
         margin-top: 10px;
-        padding:0px;
+        padding: 0px;
     }
 </style>

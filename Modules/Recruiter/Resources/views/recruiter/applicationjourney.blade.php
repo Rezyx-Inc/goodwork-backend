@@ -40,8 +40,8 @@
                         <span>{{ $statusCounts['Hold'] }} Applicants</span>
                     </div>
                 </div>
-                
-                
+
+
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="applicationType('Onboarding')" id="Onboarding">
@@ -123,6 +123,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Document Name</th>
+                                                <th scope="col">Type</th>
                                                 <th scope="col">Download</th>
                                             </tr>
                                         </thead>
@@ -155,7 +156,7 @@
 
                         <div
                         class="ss-prsn-form-btn-sec row col-12 d-flex justify-content-center align-items-center">
-                        
+
                         <button type="text" class="ss-prsnl-save-btn" id="AddStripe">
                             Add Stripe
                         </button>
@@ -421,16 +422,34 @@ AddStripe.addEventListener("click", function(event) {
                         list_vaccinations();
                         list_certifications();
                         var files = result.files;
+                        console.log(files);
                         var tbody = $('tbody');
                         tbody.empty(); // Clear the table body
                         // Add a row for each file
                         for (var i = 0; i < files.length; i++) {
-                            var file = files[i];
-                            var row = $('<tr></tr>');
-                            row.append('<td>' + file.name + '</td>');
-                            row.append('<td><a href="data:application/octet-stream;base64,' + file.content +
-                                '" download="' + file.name + '">Download</a></td>');
-                            tbody.append(row);
+                                var file = files[i];
+                                var base64String = file.content;
+
+                                const mimeType = base64String.match(/^data:(.+);base64,/)[1];
+                                const base64Data = base64String.split(',')[1];
+                                const byteCharacters = atob(base64Data);
+                                const byteNumbers = new Array(byteCharacters.length);
+                                for (let j = 0; j < byteCharacters.length; j++) {
+                                    byteNumbers[j] = byteCharacters.charCodeAt(j);
+                                }
+                                const byteArray = new Uint8Array(byteNumbers);
+                                const blob = new Blob([byteArray], { type: mimeType });
+                                const blobUrl = URL.createObjectURL(blob);
+                                const downloadLink = document.createElement('a');
+                                downloadLink.href = blobUrl;
+                                const extension = mimeType.split('/')[1];
+                                downloadLink.setAttribute('download', `document.${extension}`);
+
+                                var row = $('<tr></tr>');
+                                row.append('<td>' + file.name + '</td>');
+                                row.append('<td>' + file.type + '</td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                tbody.append(row);
                         }
                     },
                     error: function(error) {
@@ -515,9 +534,9 @@ AddStripe.addEventListener("click", function(event) {
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
-                        
 
-                       
+
+
                         notie.alert({
                             type: 'success',
                             text: result.message,
@@ -539,7 +558,7 @@ AddStripe.addEventListener("click", function(event) {
                             console.log(result.type);
                             applicationType(result.type);
                         }, 3000);
-                    
+
                     },
                     error: function(result) {
                         notie.alert({
@@ -1167,8 +1186,8 @@ AddStripe.addEventListener("click", function(event) {
             name = 'stripe';
             title = 'add payment method';
             modal = '#stripe_modal';
-            
-           
+
+
 
             $(modal).modal('show');
         }
