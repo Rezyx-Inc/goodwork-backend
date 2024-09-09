@@ -131,6 +131,7 @@ class WorkerDashboardController extends Controller
 
     public function update_worker_profile(Request $request)
     {
+        // return $request->all();
         try {
             // Validate InfoType
             $request->validate([
@@ -159,7 +160,6 @@ class WorkerDashboardController extends Controller
                     'scrub_color' => 'required|string',
                     'rto' => 'required|string',
                     'shift_of_day' => 'required|string',
-                    'hours_per_week' => 'required|string',
                     'hours_shift' => 'required|string',
                     'preferred_assignment_duration' => 'required|string',
                     'weeks_shift' => 'required|string',
@@ -941,7 +941,7 @@ public function store_counter_offer(Request $request)
 {
 
     $user = auth()->guard('frontend')->user();
-    
+
     $full_name = $user->first_name . ' ' . $user->last_name;
     $nurse = Nurse::where('user_id', $user->id)->first();
     $job_data = Job::where('id', $request->jobid)->first();
@@ -1049,11 +1049,11 @@ public function store_counter_offer(Request $request)
 
         ]);
     }
-    
+
           // event offer notification
           $id = $offerexist->id;
           $jobid = $offerexist->job_id;
-          $nurse_id = $nurse->id; 
+          $nurse_id = $nurse->id;
           $time = now()->toDateTimeString();
           $receiver = $offerexist->recruiter_id;
           $job_name = Job::where('id', $jobid)->first()->job_name;

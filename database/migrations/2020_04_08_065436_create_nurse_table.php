@@ -17,11 +17,11 @@ class CreateNurseTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->foreign('user_id')
-                ->references('id')->on('users');          
+                ->references('id')->on('users');
             $table->string('nursing_license_state')->nullable();
             $table->string('specialty',100)->nullable();
             $table->string('nursing_license_number',190)->unique()->nullable();
-            $table->string('highest_nursing_degree')->nullable();            
+            $table->string('highest_nursing_degree')->nullable();
             $table->boolean('serving_preceptor')->default(false)->nullable();
             $table->boolean('serving_interim_nurse_leader')->default(false)->nullable();
             $table->unsignedBigInteger('leadership_roles')->nullable();
@@ -36,16 +36,16 @@ class CreateNurseTable extends Migration
             $table->boolean('active')->default(true);
             $table->softDeletes();
             $table->timestamps();
-            
 
-            // fix nurse table 
+
+            // fix nurse table
             $table->unsignedBigInteger('ehr_proficiency_cerner')->nullable();
             $table->unsignedBigInteger('ehr_proficiency_meditech')->nullable();
             $table->unsignedBigInteger('ehr_proficiency_epic')->nullable();
             $table->string('ehr_proficiency_other',100)->nullable();
-        
+
             $table->text('summary')->nullable();
-            
+
             $table->string('nurses_video')->nullable();
             $table->string('nurses_facebook')->nullable();
             $table->string('nurses_twitter')->nullable();
@@ -65,12 +65,12 @@ class CreateNurseTable extends Migration
 
 
             $table->string('mu_specialty',50)->nullable();
-            
 
-            
-           
+
+
+
             $table->string('languages')->default('English');
-            
+
 
             $table->text('additional_photos')->nullable();
             $table->text('additional_files')->nullable();
@@ -86,11 +86,11 @@ class CreateNurseTable extends Migration
             $table->boolean('is_verified')->default(false);
 
             $table->text('gig_account_id')->nullable();
-            $table->boolean('is_gig_invite')->default(false); 
+            $table->boolean('is_gig_invite')->default(false);
             $table->dateTime('gig_account_create_date')->nullable();
             $table->dateTime('gig_account_invite_date')->nullable();
 
-            // added new fields 
+            // added new fields
 
             $table->string('diploma')->nullable();
             $table->string('driving_license')->nullable();
@@ -112,7 +112,7 @@ class CreateNurseTable extends Migration
             $table->string('worker_shift_time_of_day')->nullable();
             $table->integer('worker_hours_per_week')->nullable();
             $table->decimal('worker_guaranteed_hours',8,2)->nullable();
-            $table->unsignedBigInteger('worker_weeks_assignment')->nullable(); // match the preferred_assignment_duration on jobs 
+            $table->unsignedBigInteger('worker_weeks_assignment')->nullable(); // match the preferred_assignment_duration on jobs
             $table->decimal('worker_shifts_week',8,2)->nullable();
             $table->decimal('worker_referral_bonus',8,2)->nullable();
             $table->decimal('worker_sign_on_bonus',8,2)->nullable();
@@ -155,11 +155,11 @@ class CreateNurseTable extends Migration
             $table->string('worker_urgency')->nullable();
             $table->string('skills_checklists')->nullable();
             $table->string('worker_facilitys_parent_system')->nullable();
-            $table->string('worker_vaccination')->nullable(); // done 
+            $table->string('worker_vaccination')->nullable(); // done
             $table->string('worker_certificate_name')->nullable();
             $table->boolean('worker_eligible_work_in_us')->default(false);
             $table->decimal('worker_feels_like_per_hour', 8, 2)->nullable(); // done
-            
+
             $table->string('worker_facility_city',36)->nullable(); // done
             $table->string('worker_facility_state',36)->nullable(); // done
             $table->boolean('worker_feels_like_per_hour_check')->default(false); // done
@@ -171,12 +171,15 @@ class CreateNurseTable extends Migration
             // Experience
             $table->integer('worker_experience')->nullable();
 
-            // adding benifits 
+            // adding benifits
             $table->unsignedTinyInteger('worker_benefits')->default(0);
-            
+
+            // adding worker classification
+            $table->string('nurse_classification')->nullable(); 
 
 
-            
+
+
 
 
         });
