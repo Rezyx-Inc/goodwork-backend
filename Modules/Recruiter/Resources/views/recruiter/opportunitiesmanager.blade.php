@@ -2648,7 +2648,8 @@ function fillData() {
         'on_call_back': 'No',
         'call_back_rate': 16,
         'weekly_non_taxable_amount': 100,
-        'start_date': '2025-04-27'
+        'start_date': '2025-04-27',
+        'preferred_experience':10
     };
 
     for (const [id, value] of Object.entries(fields)) {

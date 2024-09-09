@@ -407,6 +407,7 @@ public function index()
 
     public function send_amount(Request $request)
     {
+        
         try {
             $user = Auth::guard('recruiter')->user();
             $user_email = $user->email;

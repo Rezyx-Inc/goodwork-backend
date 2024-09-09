@@ -156,7 +156,7 @@ class ApplicationController extends Controller
                     $type .
                     '\', \'' .
                     '' .
-                    '\', \'userdetails\')">
+                    '\', \'userdetails\',\'\',\''.$value->worker_user_id.'\')">
                         <div class="ss-job-id-no-name">
                             <ul>
                                 <li class="w-50">
@@ -171,7 +171,7 @@ class ApplicationController extends Controller
                         </div>
                         <ul>
                             <li>
-                                <img src="' .
+                                <img width="50px" height="50px" src="' .
                     URL::asset('public/images/nurses/profile/' . $user['image']) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
@@ -249,9 +249,15 @@ class ApplicationController extends Controller
             }
 
 
-            $nursedetails = NURSE::select('nurses.*')
-                ->where('nurses.id', $offerdetails['worker_user_id'])
+            if(isset($request->nurse_id)){
+                $nursedetails = NURSE::select('nurses.*')
+                ->where('nurses.id', $request->nurse_id)
                 ->first();
+            }else{
+                $nursedetails = NURSE::select('nurses.*')
+                ->where('nurses.id', $offerdetails->worker_user_id)
+                ->first();
+            }
 
 
 
@@ -275,11 +281,9 @@ class ApplicationController extends Controller
             }
             $userdetails = $nursedetails ? User::where('id', $nursedetails->user_id)->first() : '';
 
-            $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id'], 'created_by'=>$recruiter->id])->get() : '';
+            $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'created_by'=>$recruiter->id])->get() : '';
             $jobappliedcount = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id'], 'created_by'=>$recruiter->id])->count() : '';
-            // $jobapplieddetails = $nursedetails ? Offer::where(['status' => $type])->where('created_by',$recruiter->id)->get() : '';
-            // //return $jobapplieddetails;
-            // $jobappliedcount = $nursedetails ? Offer::where(['status' => $type, 'worker_user_id' => $offerdetails['worker_user_id']])->where('created_by',$recruiter->id)->count() : '';
+
             if ($request->formtype == 'useralldetails') {
                 // need to check payments here first
 
@@ -291,7 +295,7 @@ class ApplicationController extends Controller
                     $offerdetails['worker_user_id'] .
                     '</span>
                             <h6>
-                                <img src="' .
+                                <img width="50px" height="50px" src="' .
                     URL::asset('images/nurses/profile/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
@@ -1440,7 +1444,7 @@ class ApplicationController extends Controller
                                 </label>
                             </div>
                         </div>
-                         <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="1994-03-02">
+                         <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="'.$jobdetails['start_date'].'">
                     </div>
                     <span class="help-block-start_date"></span>
                     <div class="ss-form-group">
@@ -2093,10 +2097,10 @@ class ApplicationController extends Controller
             <ul class="ss-cng-appli-hedpfl-ul">
                 <li style="width:55%;">
                     <span>' .
-                    $offerdetails['worker_user_id'] .
+                    $userdetails->nurse->id .
                     '</span>
                     <h6>
-                        <img src="' .
+                        <img width="50px" height="50px" src="' .
                     URL::asset('public/images/nurses/profile/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
@@ -2384,11 +2388,11 @@ class ApplicationController extends Controller
             $jobid = $request->jobid;
 
             // add a recruiter payment setting here to check if the recruiter has a payment method set up
-            if ($formtype == 'Offered' || $formtype == 'Working' || $formtype == 'Onboarding' || $formtype == 'Done') {
-                if (!$this->checkPaymentMethod($recruiter_id)) {
-                    return response()->json(['status' => false ,'message' => 'Please add a payment method to offer a job'],400);
-                }
-            }
+            // if ($formtype == 'Offered' || $formtype == 'Working' || $formtype == 'Onboarding' || $formtype == 'Done') {
+            //     if (!$this->checkPaymentMethod($recruiter_id)) {
+            //         return response()->json(['status' => false ,'message' => 'Please add a payment method to offer a job'],400);
+            //     }
+            // }
 
             $job = Offer::where(['job_id' => $jobid, 'id' => $id,'created_by' => $recruiter_id])->update(['status' => $formtype]);
             if ($job) {
@@ -2539,7 +2543,7 @@ class ApplicationController extends Controller
 
 
                 $offerexist = DB::table('offers')
-                    ->where(['job_id' => $request->job_id, 'worker_user_id' => $nurse->id, 'recruiter_id' => $request->recruiter_id])
+                    ->where(['id' => $request->offer_id])
                     ->first();
 
                 if ($offerexist) {

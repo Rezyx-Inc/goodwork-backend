@@ -86,7 +86,7 @@
                         <div class="ss-msg-rply-profile-sec">
                             <ul>
                                 <li>
-                                    <img id="userprofile" src="{{ asset('frontend/img/profile-pic-big.png') }}" onerror="this.onerror=null; this.src = '{{USER_IMG_RECRUITER}}';" id="preview" width="50px" height="50px" style="object-fit: cover;" />
+                                    <img width="50px" height="50px" id="userprofile" src="{{ asset('frontend/img/profile-pic-big.png') }}" onerror="this.onerror=null; this.src = '{{USER_IMG_RECRUITER}}';" id="preview" width="50px" height="50px" style="object-fit: cover;" />
                                 </li>
                                 <li>
                                     <h6 id="username"></h6>

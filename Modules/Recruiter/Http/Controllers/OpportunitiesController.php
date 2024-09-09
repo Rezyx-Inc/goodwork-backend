@@ -51,7 +51,7 @@ class OpportunitiesController extends Controller
         }
 
         foreach ($publishedJobs as $key => $value){
-            
+
             $userapplied = Offer::where('job_id', $value->id)->count();
             $applyCount[$key] = $userapplied;
 
@@ -266,7 +266,7 @@ class OpportunitiesController extends Controller
     public function store(Request $request, $check_type = 'create')
     {
         $user_id = Auth::guard('recruiter')->user()->id;
-        
+
         if ($check_type == 'update') {
             $validation_array = ['job_id' => 'required'];
         } elseif ($check_type == 'published') {
@@ -451,9 +451,9 @@ class OpportunitiesController extends Controller
     {
        // return $request->all();
         $param = $request->route('check_type');
-    
 
-        
+
+
         try {
             $validated = $request->validate([
                 'job_id' => 'required',
@@ -467,7 +467,7 @@ class OpportunitiesController extends Controller
                 $job = Job::where(['id' => $job_id])->update(['is_open' => '1']);
                 return response()->json(['message' => 'Job is published', 'job_id' => $job_id]);
             }
-            
+
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
@@ -567,7 +567,7 @@ class OpportunitiesController extends Controller
             }
         }
         else {
-           
+
             $jobLists = Job::where(['active' => '1', 'is_hidden' => '0', 'is_closed' => '0','recruiter_id'=> $recruiter_id,'is_open'=>'1'])->get();
             //return $jobLists;
             if (0 >= count($jobLists)) {
@@ -676,7 +676,7 @@ class OpportunitiesController extends Controller
                 ->first();
             }
             else{
-                
+
                 $jobdetails = Job::select('jobs.*')
                     ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0','jobs.is_open' => '1'])
                     ->where('recruiter_id', $recruiter_id)
@@ -707,9 +707,9 @@ class OpportunitiesController extends Controller
                         <span>' .
                 $offerdetails['worker_user_id'] .
                 '</span>
-                    
+
                         <h6>
-                            <img src="' .
+                            <img width="50px" height="50px" src="' .
                 asset('images/nurses/profile/' . $userdetails['image']) .
                 '" onerror="this.onerror=null;this.src=' .
                 '\'' .
@@ -996,17 +996,17 @@ class OpportunitiesController extends Controller
                 ($nursedetails->worker_patient_ratio ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_patient_ratio\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                 '</p>
                         </div>
-                        </div> 
+                        </div>
                          <div style="display:flex;"  class="col-md-12">
                         <span class="mt-3">Professional Licensure</span>
                     </div>
-                    <div class="row ' . 
+                    <div class="row ' .
                 ($jobdetails->job_location === $nursedetails->nursing_license_state ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
                     <div class="col-md-5">
                         <h6>' . ($jobdetails['job_location'] ?? '----') . '</h6>
                     </div>
-                    
+
                     <div class="col-md-5' . ($jobdetails['job_location'] ? '' : 'd-none' ) . '">
                         <p>' . ($nursedetails['nursing_license_state'] ?? '<u  style="cursor: pointer;" onclick="askWorker(this, \'nursing_license_state\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                     </div>
@@ -1081,7 +1081,7 @@ class OpportunitiesController extends Controller
                         </div>
                         </div>
 
-                         
+
 
                         <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Urgency</span>
@@ -1098,7 +1098,7 @@ class OpportunitiesController extends Controller
                         </div>
                         </div>
 
-                        
+
 
                         <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Eligible to work in the US</span>
@@ -1117,9 +1117,9 @@ class OpportunitiesController extends Controller
                          <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Facility`s Parent System</span>
                         </div>
-                        
+
                         <div class="row ' .
-                    ($jobdetails['facilitys_parent_system'] === $nursedetails['worker_facility_parent_system'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .       
+                    ($jobdetails['facilitys_parent_system'] === $nursedetails['worker_facility_parent_system'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                     ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-5">
                             <h6>' . ($jobdetails['facilitys_parent_system'] ?? '----') . '</h6>
@@ -1128,7 +1128,7 @@ class OpportunitiesController extends Controller
                             <p>' . ($nursedetails['worker_facility_parent_system'] ?? '<u onclick="askWorker(this, \'worker_facility_parent_system\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                         </div>
                       </div>
-                      
+
                         <div style="display:flex;"  class="col-md-12">
                                 <span class="mt-3">Facility State</span>
                             </div>
@@ -1155,7 +1155,7 @@ class OpportunitiesController extends Controller
                                     <p>' . ($nursedetails['city'] ?? '<u onclick="askWorker(this, \'facility_city\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
                                 </div>
                             </div>
-                           
+
 
 
                         <div style="display:flex;"  class="col-md-12">
@@ -1215,7 +1215,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        
+
                         <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Start Date</span>
                         </div>
@@ -1761,7 +1761,7 @@ class OpportunitiesController extends Controller
         } elseif ($request->type == 'drafts') {} else {
             $data2 .=
                 '
-                    <div class="ss-job-apply-on-tx-bx-hed-dv">
+                    <div width="50px" height="50px" class="ss-job-apply-on-tx-bx-hed-dv">
                         <ul style="display:block;">
                             <li>
                                 <p>Recruiter</p>
@@ -1864,7 +1864,7 @@ class OpportunitiesController extends Controller
                                         </div>
                                         <ul class="ss-expl-applicion-ul1">
                                             <li class="w-auto">
-                                                <img src="' .
+                                                <img width="50px" height="50px" src="' .
                     asset('uploads/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
@@ -1890,7 +1890,7 @@ class OpportunitiesController extends Controller
                                             <li class="w-auto"><a href="#">' .
                     $nursedetails->worker_shift_time_of_day .
                     '</a></li>
-                                          
+
                                         </ul>
                                     </div>
                                     ';
@@ -1907,7 +1907,7 @@ class OpportunitiesController extends Controller
                         <p class="mb-3">' .
                 ($jobdetails->description ?? '----') .
                 '</p>
-                    </div>    
+                    </div>
                 ';
 
             $data2 .=
@@ -2003,16 +2003,16 @@ class OpportunitiesController extends Controller
                 '</h6>
                     </div>
 
-                    
+
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Eligible to work in the US</p>
-                        
+
                         <h6>' . ($jobdetails->eligible_work_in_us == '1' ? 'Yes' : ($jobdetails->eligible_work_in_us == '0' ? 'No' : '----')) . '</h6>
-               
+
                     </div>
 
 
-                    
+
 
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Urgency</p>
@@ -2020,7 +2020,7 @@ class OpportunitiesController extends Controller
                 ($jobdetails->urgency ?? '----') .
                 '</h6>
                     </div>
-                    
+
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Block scheduling</p>
                          <h6>' .
@@ -2291,7 +2291,7 @@ class OpportunitiesController extends Controller
                 $data2 .= '
                         <div class="col-md-12">
                             <div class="row">';
-                                
+
                 if ($type == 'onhold') {
                     $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhold Job</a></div>';
                 } else {
@@ -2307,7 +2307,7 @@ class OpportunitiesController extends Controller
                             </div>
                         </div>';
                 }
-               
+
             }
             $data2 .= '
                 </ul>
@@ -2319,7 +2319,7 @@ class OpportunitiesController extends Controller
             }
         }
 
-        
+
 
         $responseData = [
             'joblisting' => $data,

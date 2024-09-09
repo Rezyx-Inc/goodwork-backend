@@ -278,7 +278,7 @@ AddStripe.addEventListener("click", function(event) {
             return access;
         }
 
-        function applicationType(type, id = "", formtype, jobid = "") {
+        function applicationType(type, id = "", formtype, jobid = "", nurseId = "") {
 
             window.scrollTo({
                 top: 0,
@@ -407,7 +407,8 @@ AddStripe.addEventListener("click", function(event) {
                         'type': type,
                         'id': id,
                         'formtype': formtype,
-                        'jobid': jobid
+                        'jobid': jobid,
+                        'nurse_id':nurseId
                     },
                     type: 'POST',
                     dataType: 'json',
@@ -426,6 +427,7 @@ AddStripe.addEventListener("click", function(event) {
                         var tbody = $('tbody');
                         tbody.empty(); // Clear the table body
                         // Add a row for each file
+                        if (files) {
                         for (var i = 0; i < files.length; i++) {
                                 var file = files[i];
                                 var base64String = file.content;
@@ -451,6 +453,7 @@ AddStripe.addEventListener("click", function(event) {
                                 row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
                                 tbody.append(row);
                         }
+                    }
                     },
                     error: function(error) {
                         console.log(error);
