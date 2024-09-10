@@ -98,6 +98,7 @@ class ApplicationController extends Controller
         $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];
+
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
