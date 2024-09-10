@@ -234,11 +234,13 @@ class ApplicationController extends Controller
         if ($request->formtype == 'jobdetails') {
             $jobdetails = Job::where('id', $request->jobid)->first();
         } else {
+            // return $offerdetails->job_id;
             $jobdetails = Job::select('jobs.*')
                 ->where('jobs.id', $offerdetails->job_id)
                 ->first();
+                // return $jobdetails;
         }
-        if (isset($offerdetails)) {
+        if (isset($offerdetails) ) {
 
             if($offerdetails->is_payment_done  == 0){
                 $waitingForPayment = true;
@@ -247,7 +249,6 @@ class ApplicationController extends Controller
             if($offerdetails->is_payment_required == 1 ){
                 $paymentRequired = true;
             }
-
 
             if(isset($request->nurse_id)){
                 $nursedetails = NURSE::select('nurses.*')
@@ -258,6 +259,7 @@ class ApplicationController extends Controller
                 ->where('nurses.id', $offerdetails->worker_user_id)
                 ->first();
             }
+            
 
 
 
@@ -1810,57 +1812,57 @@ class ApplicationController extends Controller
                 <h6>' .
                     ($offerdetails->contract_termination_policy ?? '----') .
                     '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->traveler_distance_from_facility != $offerdetails->traveler_distance_from_facility ? 'ss-job-view-off-text-fst-dv' : '') .
+                </div>
+                <div class="col-md-6 mb-3 ' .
+                        ($jobdetails->traveler_distance_from_facility != $offerdetails->traveler_distance_from_facility ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
                 <span class="mt-3">Traveler Distance From Facility</span>
                 <h6>' .
                     ($offerdetails->traveler_distance_from_facility ?? '----') .
                     ' miles Maximum</h6>
-            </div>
+                </div>
 
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->clinical_setting != $offerdetails->clinical_setting ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Clinical Setting</span>
-                <h6>' .
-                    ($offerdetails->clinical_setting ?? '----') .
-                    '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
+                <div class="col-md-6 mb-3 ' .
+                        ($jobdetails->clinical_setting != $offerdetails->clinical_setting ? 'ss-job-view-off-text-fst-dv' : '') .
+                        ' ">
+                    <span class="mt-3">Clinical Setting</span>
+                    <h6>' .
+                        ($offerdetails->clinical_setting ?? '----') .
+                        '</h6>
+                </div>
+                <div class="col-md-6 mb-3 ' .
                     ($jobdetails->Patient_ratio != $offerdetails->Patient_ratio ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
                 <span class="mt-3">Patient ratio</span>
                 <h6>' .
                     ($offerdetails->Patient_ratio ?? '----') .
                     '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->emr != $offerdetails->emr ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">EMR</span>
-                <h6>' .
-                    ($offerdetails->emr ?? '----') .
-                    '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
+                </div>
+                <div class="col-md-6 mb-3 ' .
+                        ($jobdetails->emr != $offerdetails->emr ? 'ss-job-view-off-text-fst-dv' : '') .
+                        ' ">
+                    <span class="mt-3">EMR</span>
+                    <h6>' .
+                        ($offerdetails->emr ?? '----') .
+                        '</h6>
+                </div>
+                <div class="col-md-6 mb-3 ' .
                     ($jobdetails->Unit != $offerdetails->Unit ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
                 <span class="mt-3">Unit</span>
                 <h6>' .
                     ($offerdetails->Unit ?? '----') .
                     '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->scrub_color != $offerdetails->scrub_color ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Scrub Color</span>
-                <h6>' .
-                    ($offerdetails->scrub_color ?? '----') .
-                    '</h6>
-            </div>
-            <div class="col-md-6 mb-3">
+                </div>
+                <div class="col-md-6 mb-3 ' .
+                        ($jobdetails->scrub_color != $offerdetails->scrub_color ? 'ss-job-view-off-text-fst-dv' : '') .
+                        ' ">
+                    <span class="mt-3">Scrub Color</span>
+                    <h6>' .
+                        ($offerdetails->scrub_color ?? '----') .
+                        '</h6>
+                </div>
+                <div class="col-md-6 mb-3">
                 <span class="mt-3">Interview Dates</span>
                 <h6>' .
                     $nursedetails->worker_interview_dates .
@@ -2082,7 +2084,7 @@ class ApplicationController extends Controller
                     ($offerdetails->total_contract_amount ?? '----') .
                     '</h6>
             </div>
-        </ul>
+         </ul>
             </div>
             <div class="ss-counter-buttons-div">
                 <button class="ss-counter-button" onclick="offerSend(\'' .
@@ -2097,7 +2099,9 @@ class ApplicationController extends Controller
                     '\', \'rejectcounter\')">Reject Counter</button>
             </div>
             ';
-            } else {
+            } 
+            // userdetails
+            else {
                 $data2 .=
                     '
              <ul class="ss-cng-appli-hedpfl-ul">
