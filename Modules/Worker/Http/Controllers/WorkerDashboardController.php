@@ -299,7 +299,7 @@ class WorkerDashboardController extends Controller
         $nurse = Nurse::where('user_id', $user->id)->first();
         $data['worker'] = $nurse;
         $data['specialities'] = Speciality::select('full_name')->get();
-        $data['proffesions'] = Profession::select('full_name')->get();
+        $data['professions'] = Profession::select('full_name')->get();
         // send the states
         $distinctFilters = Keyword::distinct()->pluck('filter');
         $allKeywords = [];
@@ -412,7 +412,7 @@ class WorkerDashboardController extends Controller
 
             if ($data['profession']) {
 
-                $ret->where('proffesion', '=', $data['profession']);
+                $ret->where('profession', '=', $data['profession']);
 
             }
 
@@ -552,7 +552,7 @@ class WorkerDashboardController extends Controller
                 'job_name' => $job->job_name,
                 'type' => $job->job_type,
                 'terms' => $job->terms,
-                'proffesion' => $job->proffesion,
+                'profession' => $job->profession,
                 'block_scheduling' => $job->block_scheduling,
                 'float_requirement' => $job->float_requirement,
                 'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,

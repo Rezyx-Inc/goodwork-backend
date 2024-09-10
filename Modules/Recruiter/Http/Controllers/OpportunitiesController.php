@@ -35,7 +35,7 @@ class OpportunitiesController extends Controller
         $publishedJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_hidden', '0')->where('is_closed','0')->where('is_open','1')->get();
         $onholdJobs = Job::where('recruiter_id', $recruiter_id)->where('active', '1')->where('is_open', '0')->get();
         $specialities = Speciality::select('full_name')->get();
-        $proffesions = Profession::select('full_name')->get();
+        $professions = Profession::select('full_name')->get();
         $applyCount = array();
 
         // send the states
@@ -57,7 +57,7 @@ class OpportunitiesController extends Controller
 
         }
 
-        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'proffesions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount'));
+        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount'));
         //return response()->json(['success' => false, 'message' =>  $states]);
         //return view('recruiter::recruiter/opportunitiesmanager');
     }
@@ -807,18 +807,18 @@ class OpportunitiesController extends Controller
             <span class="mt-3">Profession</span>
          </div>
             <div class="row ' .
-                ($jobdetails->proffesion == $nursedetails->proffesion ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ($jobdetails->profession == $nursedetails->profession ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
                 <div class="col-md-5">
                     <h6>' .
-                ($jobdetails->proffesion ?? '----') .
+                ($jobdetails->profession ?? '----') .
                 '</h6>
                 </div>
                 <div class="col-md-5 ' .
-                ($jobdetails->proffesion ? '' : 'd-none') .
+                ($jobdetails->profession ? '' : 'd-none') .
                 '">
                     <p>' .
-                ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                ($nursedetails->profession ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                 '</p>
                 </div>
                 </div>';
@@ -1917,7 +1917,7 @@ class OpportunitiesController extends Controller
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Profession</p>
                         <h6>' .
-                ($jobdetails->proffesion ?? '----') .
+                ($jobdetails->profession ?? '----') .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">

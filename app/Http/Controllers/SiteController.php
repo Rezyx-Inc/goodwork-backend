@@ -135,7 +135,7 @@ class SiteController extends Controller {
 
             if ($data['profession']) {
 
-                $ret->where('proffesion', '=', $data['profession']);
+                $ret->where('profession', '=', $data['profession']);
 
             }
 

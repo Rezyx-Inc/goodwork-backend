@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row emp-container applicants-header text-center">
             <!-- <div class="col-4"> -->
-            <div class="Proffesion_appears" style="flex: 1 1 0px;">
+            <div class="profession_appears" style="flex: 1 1 0px;">
                 <div class="ss-job-prfle-sec emp" onclick="applicationType('Apply')" id="Apply">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="37.8049" height="37.6" rx="13" fill="#006BC9" />
@@ -29,7 +29,7 @@
             </div>
             <!-- </div>
             <div class="col-4"> -->
-            <div class="Proffesion_appears" style="flex: 1 1 0px;">
+            <div class="profession_appears" style="flex: 1 1 0px;">
                 <div class="ss-job-prfle-sec emp" onclick="applicationType('Screening')" id="Screening">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="37.8049" height="37.6" rx="13" fill="#006BC9" />
@@ -50,7 +50,7 @@
             </div>
             <!-- </div>
             <div class="col-4"> -->
-            <div class="Proffesion_appears" style="flex: 1 1 0px;">
+            <div class="profession_appears" style="flex: 1 1 0px;">
                 <div class="ss-job-prfle-sec emp" onclick="applicationType('Submitted')" id="Submitted">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="37.8049" height="37.6" rx="13" fill="#006BC9" />
@@ -73,7 +73,7 @@
             </div>
             <!-- </div> -->
             <!-- <div class="col-4"> -->
-            <div class="Proffesion_appears" style="flex: 1 1 0px;">
+            <div class="profession_appears" style="flex: 1 1 0px;">
                 <div class="ss-job-prfle-sec emp" onclick="applicationType('Offered')" id="Offered">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="37.8049" height="37.6" rx="13" fill="#006BC9" />
@@ -96,7 +96,7 @@
 
 
             <!-- start job request  -->
-            <div class="Proffesion_appears" style="flex: 3 3 0px;">
+            <div class="profession_appears" style="flex: 3 3 0px;">
 
                 <div class="ss-rec-start-rec-div-sec emp">
 

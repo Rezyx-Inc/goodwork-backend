@@ -379,28 +379,28 @@ class ApplicationController extends Controller
                 $data2 .=
                     ' <div class="col-md-12">
                 <span class="mt-3">Profession</span>
-            </div>
-                <div class="row ' .
-                    ($jobdetails->proffesion == $nursedetails->proffesion ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;">
-                    <div class="col-md-6">
-                        <h6>' .
-                    ($jobdetails->proffesion ?? '----') .
-                    '</h6>
-                    </div>
-                    <div class="col-md-6 ' .
-                    ($jobdetails->proffesion ? '' : 'd-none') .
-                    '">
-                        <p>' .
-                    ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
-                    '</p>
-                    </div>
-                    </div>';
+                </div>
+                    <div class="row ' .
+                        ($jobdetails->profession == $nursedetails->profession ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                        ' d-flex align-items-center" style="margin:auto;">
+                        <div class="col-md-6">
+                            <h6>' .
+                        ($jobdetails->profession ?? '----') .
+                        '</h6>
+                        </div>
+                        <div class="col-md-6 ' .
+                        ($jobdetails->profession ? '' : 'd-none') .
+                        '">
+                            <p>' .
+                        ($nursedetails->profession ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                        '</p>
+                        </div>
+                        </div>';
 
-                $data2 .=
-                    ' <div class="col-md-12">
-                <span class="mt-3">Specialty</span>
-            </div>
+                    $data2 .=
+                        ' <div class="col-md-12">
+                    <span class="mt-3">Specialty</span>
+                </div>
                 <div class="row ' .
                     ($jobdetails->specialty == $nursedetails->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                     ' d-flex align-items-center" style="margin:auto;">
@@ -1198,6 +1198,9 @@ class ApplicationController extends Controller
                     </div>
                     ';}}
             } elseif ($request->formtype == 'jobdetails') {
+                if($type == 'Offered'){
+                    $jobdetails = $offerdetails;
+                }
                 $distinctFilters = Keyword::distinct()->pluck('filter');
                 $allKeywords = [];
                 // professions and specialities should retrived from their tables
@@ -1298,10 +1301,10 @@ class ApplicationController extends Controller
                     <div class="ss-form-group">
                         <label>Profession</label>
                         <select name="profession" id="profession" >
-                        <option value="'.$jobdetails['proffesion'].'">'.$jobdetails['proffesion'].'</option>';
+                        <option value="'.$jobdetails['profession'].'">'.$jobdetails['profession'].'</option>';
                 if (isset($allKeywords['Profession'])) {
                     foreach ($allKeywords['Profession'] as $value) {
-                        $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['proffesion'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
+                        $data2 .= '<option value="' . $value->id . '" ' . ($jobdetails['profession'] == $value->id ? 'selected' : '') . '>' . $value->title . '</option>';
                     }
                 }
                 $data2 .= '
@@ -1693,6 +1696,9 @@ class ApplicationController extends Controller
                     </form>
                     ';
             } elseif ($request->formtype == 'joballdetails') {
+                if($type == 'Offered'){
+                    $jobdetails = $offerdetails;
+                }
                 $nurse_id = Nurse::where('user_id', $userdetails->id)->first()->id;
                 $offerdetails = DB::table('offers')
                     ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse_id])
@@ -1737,22 +1743,22 @@ class ApplicationController extends Controller
                                 <h6>Have you worked here in the last 18 months?</h6>
                             </li>
                             <li class="col-md-6 mb-3">
-            <span class="mt-3">SS# or SS Card</span>
-            <h6>Last 4 digits of SS#</h6>
-        </li>
-        <li class="col-md-6 mb-3">
-            <p>' .
-                    ($nursedetails->worker_ss_number ?? '----') .
-                    '</p>
-        </li>
-        <li class="col-md-6 mb-3 ' .
-                    ($jobdetails->proffesion != $offerdetails->profession ? 'ss-job-view-off-text-fst-dv' : '') .
-                    '">
-            <span class="mt-3">Profession</span>
-            <h6>' .
-                    ($offerdetails->profession ?? '----') .
-                    '</h6>
-        </li>';
+              <span class="mt-3">SS# or SS Card</span>
+              <h6>Last 4 digits of SS#</h6>
+                 </li>
+                <li class="col-md-6 mb-3">
+                    <p>' .
+                            ($nursedetails->worker_ss_number ?? '----') .
+                            '</p>
+                </li>
+                <li class="col-md-6 mb-3 ' .
+                            ($jobdetails->profession != $offerdetails->profession ? 'ss-job-view-off-text-fst-dv' : '') .
+                            '">
+                    <span class="mt-3">Profession</span>
+                    <h6>' .
+                            ($offerdetails->profession ?? '----') .
+                            '</h6>
+                </li>';
                 if (isset($jobdetails->specialty)) {
                     foreach (explode(',', $offerdetails->specialty) as $key => $value) {
                         if (isset($value)) {
@@ -1772,32 +1778,32 @@ class ApplicationController extends Controller
                 }
                 $data2 .=
                     '
-        </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->block_scheduling != $offerdetails->block_scheduling ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Block scheduling</span>
-                <h6>' .
-                    ($offerdetails->block_scheduling ?? '----') .
-                    '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->float_requirement != $offerdetails->float_requirement ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Float requirements</span>
-                <h6>' .
-                    ($offerdetails->float_requirement ?? '----') .
-                    '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
-                    ($jobdetails->facility_shift_cancelation_policy != $offerdetails->facility_shift_cancelation_policy ? 'ss-job-view-off-text-fst-dv' : '') .
-                    ' ">
-                <span class="mt-3">Facility Shift Cancellation Policy</span>
-                <h6>' .
-                    ($offerdetails->facility_shift_cancelation_policy ?? '----') .
-                    '</h6>
-            </div>
-            <div class="col-md-6 mb-3 ' .
+                </div>
+                    <div class="col-md-6 mb-3 ' .
+                            ($jobdetails->block_scheduling != $offerdetails->block_scheduling ? 'ss-job-view-off-text-fst-dv' : '') .
+                            ' ">
+                        <span class="mt-3">Block scheduling</span>
+                        <h6>' .
+                            ($offerdetails->block_scheduling ?? '----') .
+                            '</h6>
+                    </div>
+                    <div class="col-md-6 mb-3 ' .
+                            ($jobdetails->float_requirement != $offerdetails->float_requirement ? 'ss-job-view-off-text-fst-dv' : '') .
+                            ' ">
+                        <span class="mt-3">Float requirements</span>
+                        <h6>' .
+                            ($offerdetails->float_requirement ?? '----') .
+                            '</h6>
+                    </div>
+                    <div class="col-md-6 mb-3 ' .
+                            ($jobdetails->facility_shift_cancelation_policy != $offerdetails->facility_shift_cancelation_policy ? 'ss-job-view-off-text-fst-dv' : '') .
+                            ' ">
+                        <span class="mt-3">Facility Shift Cancellation Policy</span>
+                        <h6>' .
+                            ($offerdetails->facility_shift_cancelation_policy ?? '----') .
+                            '</h6>
+                    </div>
+                    <div class="col-md-6 mb-3 ' .
                     ($jobdetails->contract_termination_policy != $offerdetails->contract_termination_policy ? 'ss-job-view-off-text-fst-dv' : '') .
                     ' ">
                 <span class="mt-3">Contract Termination Policy</span>
@@ -2094,7 +2100,7 @@ class ApplicationController extends Controller
             } else {
                 $data2 .=
                     '
-            <ul class="ss-cng-appli-hedpfl-ul">
+             <ul class="ss-cng-appli-hedpfl-ul">
                 <li style="width:55%;">
                     <span>' .
                     $userdetails->nurse->id .
@@ -2480,7 +2486,7 @@ class ApplicationController extends Controller
                 $update_array['job_name'] = isset($request->job_name) ? $request->job_name : $job_data->job_name;
                 $update_array['type'] = isset($request->type) ? $request->type : $job_data->job_type;
                 $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
-                $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->proffesion;
+                $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->profession;
 
                 $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
                 $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;

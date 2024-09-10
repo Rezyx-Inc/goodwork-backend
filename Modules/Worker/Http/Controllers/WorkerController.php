@@ -784,7 +784,7 @@ class WorkerController extends Controller
                         $data['nursedetails'] = $nursedetails;
                         $data['recruiter'] = $recruiter;
                         // return $data;
-                        $response['content'] = view('ajax.counter_details', $data)->render();
+                        $response['content'] = view('worker::jobs.counter_details', $data)->render();
                 return new JsonResponse($response, 200);
                         $view = 'offered';
                         break;
@@ -821,7 +821,7 @@ class WorkerController extends Controller
                         break;
                 }
 
-                $response['content'] = view('ajax.' . $view . '_job', $data)->render();
+                $response['content'] = view('worker::jobs.' . $view . '_job', $data)->render();
                 return new JsonResponse($response, 200);
 
         } catch (\Exception $e) {

@@ -545,7 +545,7 @@ class JobController extends Controller
             'job_name' => $job->job_name,
             'type' => $job->job_type,
             'terms' => $job->terms,
-            'proffesion' => $job->proffesion,
+            'profession' => $job->profession,
             'block_scheduling' => $job->block_scheduling,
             'float_requirement' => $job->float_requirement,
             'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,

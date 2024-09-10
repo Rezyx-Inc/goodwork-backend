@@ -290,7 +290,7 @@ class Job extends Model
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
             'profession'=> function () use ($job, $nurse){
-                if ( $job->proffesion == $nurse->profession){
+                if ( $job->profession == $nurse->profession){
                     $match = true;
                 }else{
                     $match = false;

@@ -551,7 +551,7 @@ class RecruiterController extends Controller
                     'on_call_back' => 'nullable|string',
                     'call_back_rate' => 'nullable|string', 
                     'weekly_non_taxable_amount' => 'nullable|string',
-                    'proffesion' => 'nullable|string',
+                    'profession' => 'nullable|string',
                     
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
@@ -694,8 +694,8 @@ class RecruiterController extends Controller
                     if (isset($validatedData['weekly_non_taxable_amount'])) {
                         $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                     }
-                    if (isset($validatedData['proffesion'])) {
-                        $job->proffesion = $validatedData['proffesion'];
+                    if (isset($validatedData['profession'])) {
+                        $job->profession = $validatedData['profession'];
                     }
                     if (isset($validatedData['preferred_specialty'])) {
                         $job->specialty = $validatedData['preferred_specialty'];
@@ -826,7 +826,7 @@ class RecruiterController extends Controller
                     'call_back_rate' => 'nullable|string',
                     'on_call_back' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|string',
-                    'proffesion' => 'nullable|string',
+                    'profession' => 'nullable|string',
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
                     'block_scheduling'  => 'nullable|string',
@@ -883,7 +883,7 @@ class RecruiterController extends Controller
                 $job->call_back_rate = $validatedData['call_back_rate'];
                 $job->on_call_back = $validatedData['on_call_back'];
                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-                $job->proffesion = $validatedData['proffesion'];
+                $job->profession = $validatedData['profession'];
                 $job->specialty = $validatedData['preferred_specialty'];
                 $job->recruiter_id = $created_by;
                 $job->created_by = $created_by;
@@ -1161,7 +1161,7 @@ class RecruiterController extends Controller
                      'call_back_rate' => 'nullable|string',
                      'on_call_back' => 'nullable|string',
                      'weekly_non_taxable_amount' => 'nullable|string',
-                     'proffesion' => 'nullable|string',
+                     'profession' => 'nullable|string',
                      'Emr' => 'nullable|string',
                      'preferred_assignment_duration' => 'nullable|string',
                      'block_scheduling'  => 'nullable|string',
@@ -1225,7 +1225,7 @@ class RecruiterController extends Controller
                  $job->call_back_rate = $validatedData['call_back_rate'];
                  $job->on_call_back = $validatedData['on_call_back'];
                  $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-                 $job->proffesion = $validatedData['proffesion'];
+                 $job->profession = $validatedData['profession'];
                  $job->specialty = $validatedData['preferred_specialty'];
                  $job->recruiter_id = $created_by;
                  $job->created_by = $created_by;

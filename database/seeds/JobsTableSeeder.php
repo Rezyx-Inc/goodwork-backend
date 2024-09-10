@@ -120,7 +120,7 @@ class JobsTableSeeder extends Seeder
                 'is_open' => $is_open[$i],
                 'recruiter_id' => 'GWU000005',
                 'job_name' => $faker->word,
-                'proffesion' => $nursingProfessions[array_rand($nursingProfessions)],
+                'profession' => $nursingProfessions[array_rand($nursingProfessions)],
                 'preferred_shift' => $faker->word,
                 'job_city' => $faker->city,
                 'job_state' => $faker->state,
