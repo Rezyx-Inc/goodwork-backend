@@ -14,7 +14,7 @@
             <a style="cursor:pointer;" class="rounded-pill ss-apply-btn py-2 border-0 px-4" data-target="file"
                 data-hidden_value="Yes" data-href="" data-title="Worker's Files" data-name="diploma"
                 onclick="open_modal(this)">
-                Consult worker files test
+                Consult worker files
             </a>
         </li>
         <li>

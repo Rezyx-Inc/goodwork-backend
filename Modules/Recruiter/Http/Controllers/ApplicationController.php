@@ -260,98 +260,7 @@ class ApplicationController extends Controller
         return response()->json($responseData);
     }
 
-    public function sendJobOfferRecruiter(Request $request)
-    {
-        try{
-        $user = Auth::guard('recruiter')->user();
-        $recruiter_id = $user->id;
-        $full_name = $user->first_name . ' ' . $user->last_name;
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'jobid' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $responseData = [
-                'status' => 'error',
-                'message' => $validator->errors()->first(),
-            ];
-        } else {
-            if ($request->type == 'rejectcounter') {
-                $update_array['is_counter'] = '0';
-                $update_array['is_draft'] = '0';
-                $update_array['status'] = 'Rejected';
-                $job = DB::table('offers')
-                    ->where(['id' => $request->id])
-                    ->update($update_array);
-                if ($job) {
-                    $responseData = [
-                        'status' => 'success',
-                        'message' => 'Job Rejected successfully',
-                    ];
-                    $offer = Offer::where('id', $request->id)->first();
-                    $id = $request->id;
-                    $jobid = $offer->job_id;
-                    $time = now()->toDateTimeString();
-                    $receiver = $offer->worker_user_id;
-                    $job_name = Job::where('id', $jobid)->first()->job_name;
-
-
-                    event(new NotificationOffer('Rejected',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
-                }
-            } elseif ($request->type == 'offersend') {
-                $update_array['is_counter'] = '0';
-                $update_array['is_draft'] = '0';
-                $update_array['status'] = 'Onboarding';
-                $job = Offer::find($request->id);
-                if ($job) {
-                    $job->update($update_array);
-                }
-
-                    $user = Auth::guard('recruiter')->user();
-                $data = [
-                    'offerId' => $request->id,
-                    'amount' => '1',
-                    'stripeId' =>$user->stripeAccountId,
-                    'fullName' => $user->first_name . ' ' . $user->last_name,
-                ];
-
-                //return response()->json(['message'=>$data]);
-
-                // Define the URL
-                $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
-
-                // return response()->json(['data'=>$data , 'url' => $url]);
-
-                // Make the request
-                $responseInvoice = Http::post($url, $data);
-                // return response()->json(['message'=>$responseInvoice->json()]);
-
-                $responseData = [];
-                if ($job) {
-                    $responseData = [
-                        'status' => 'success',
-                        'message' => $responseInvoice->json()['message'],
-                    ];
-                    $offer = Offer::where('id', $request->id)->first();
-                    $id = $request->id;
-                    $jobid = $offer->job_id;
-                    $time = now()->toDateTimeString();
-                    $receiver = $offer->worker_user_id;
-                    $job_name = Job::where('id', $jobid)->first()->job_name;
-
-
-                    event(new NotificationOffer('Offered',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
-
-                }
-            }
-            return response()->json($responseData);
-        }
-
-        } catch (\Exception $e) {
-            return response()->json(["message"=>$e->getMessage()]);
-        }
-        
-    }
+    
     
     // get offer information for form counter
     public function get_offer_information(Request $request)
@@ -439,6 +348,7 @@ class ApplicationController extends Controller
                  }
              }
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type'=>$type,'hasFile'=>$hasFile,'userdetails'=>$user,'nursedetails'=>$nurse,'jobappliedcount'=>$jobappliedcount,'offerdetails' => $offers])->render();
+            $response['files'] = $files;
             //return response()->json(['response'=>$response]);
             return new JsonResponse($response, 200);
         }catch(\Exeption $ex){
@@ -538,5 +448,90 @@ class ApplicationController extends Controller
     }
 
 
+    }
+
+
+    public function AcceptOrRejectJobOffer(Request $request)
+    {
+        try{
+        $user = Auth::guard('recruiter')->user();
+        $recruiter_id = $user->id;
+        $full_name = $user->first_name . ' ' . $user->last_name;
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'jobid' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $responseData = [
+                'status' => 'error',
+                'message' => $validator->errors()->first(),
+            ];
+        } else {
+            if ($request->type == 'rejectcounter') {
+                $update_array['is_counter'] = '0';
+                $update_array['is_draft'] = '0';
+                $update_array['status'] = 'Rejected';
+                $job = DB::table('offers')
+                    ->where(['id' => $request->id])
+                    ->update($update_array);
+                if ($job) {
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => 'Job Rejected successfully',
+                    ];
+                    $offer = Offer::where('id', $request->id)->first();
+                    $id = $request->id;
+                    $jobid = $offer->job_id;
+                    $time = now()->toDateTimeString();
+                    $receiver = $offer->worker_user_id;
+                    $job_name = Job::where('id', $jobid)->first()->job_name;
+
+
+                    event(new NotificationOffer('Rejected',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
+                }
+            } elseif ($request->type == 'offersend') {
+                $update_array['is_counter'] = '0';
+                $update_array['is_draft'] = '0';
+                $update_array['status'] = 'Onboarding';
+                $job = Offer::find($request->id);
+                if ($job) {
+                    $job->update($update_array);
+                }
+
+                    $user = Auth::guard('recruiter')->user();
+                $data = [
+                    'offerId' => $request->id,
+                    'amount' => '1',
+                    'stripeId' =>$user->stripeAccountId,
+                    'fullName' => $user->first_name . ' ' . $user->last_name,
+                ];
+
+                ;
+
+                $responseData = [];
+                if ($job) {
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => $responseInvoice->json()['message'],
+                    ];
+                    $offer = Offer::where('id', $request->id)->first();
+                    $id = $request->id;
+                    $jobid = $offer->job_id;
+                    $time = now()->toDateTimeString();
+                    $receiver = $offer->worker_user_id;
+                    $job_name = Job::where('id', $jobid)->first()->job_name;
+
+
+                    event(new NotificationOffer('Offered',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
+
+                }
+            }
+            return response()->json($responseData);
+        }
+
+        } catch (\Exception $e) {
+            return response()->json(["message"=>$e->getMessage()]);
+        }
+        
     }
 }

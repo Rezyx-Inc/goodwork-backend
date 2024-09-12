@@ -765,12 +765,12 @@
         </div>
         @if($offerdetails->status == 'Offered' || $offerdetails->status == 'Apply')
             <div class="ss-counter-buttons-div">
-                <button class="counter-save-for-button" onclick="offerSend('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject Offer</button>
+                <button class="counter-save-for-button" onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject Offer</button>
             </div>
         @endif
         @if($offerdetails->status == 'Offered' && count($offerLogs) > 0)
-            <button class="ss-counter-button" onclick="counterOffer('{{ $offerdetails->id }}')">Counter Offer test</button>
-            <button class="ss-counter-button" onclick="applicationType('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept Offer</button>
+            <button class="ss-counter-button" onclick="counterOffer('{{ $offerdetails->id }}')">Counter Offer</button>
+            <button class="ss-counter-button" onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept Offer</button>
         @endif
        
 

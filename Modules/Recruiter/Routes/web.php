@@ -137,7 +137,7 @@ Route::prefix('recruiter')->group(function () {
 
         Route::get('get-single-nurse-details/{id}', ['uses' => 'RecruiterDashboardController@getSingleNurseDetails', 'as' => 'get-single-nurse-details']);
 
-        Route::post('send-job-offer-recruiter', ['uses' => 'ApplicationController@sendJobOfferRecruiter', 'as' => 'send-job-offer-recruiter']);
+        Route::post('accept-reject-job-offer', ['uses' => 'ApplicationController@AcceptOrRejectJobOffer', 'as' => 'accept-reject-job-offer']);
         /**
         * Route: POST /send-job-offer-recruiter
         *

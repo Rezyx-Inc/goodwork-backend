@@ -597,40 +597,7 @@
             }
         }
 
-        function offerSend(id, jobid, type) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('recruiter/send-job-offer-recruiter') }}",
-                    data: {
-                        'token': csrfToken,
-                        'id': id,
-                        'jobid': jobid,
-                        'type': type,
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check">Counter Offer Sended</i>',
-                            time: 5
-                        });
-                        // setTimeout(() => {
-                        //     location.reload();
-                        // }, 3000);
-                    },
-                    error: function(error) {
-                        // Handle errors
-                    }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
-        }
+        
 
         
         setInterval(function() {
@@ -1279,6 +1246,39 @@
                     success: function(result) {
                          $("#application-details").html(result.content);
                         console.log(result.content);
+
+                        var files = result.files;
+                        console.log(files);
+                        var tbody = $('tbody');
+                        tbody.empty(); // Clear the table body
+                        // Add a row for each file
+                        if (files) {
+                        for (var i = 0; i < files.length; i++) {
+                                var file = files[i];
+                                var base64String = file.content;
+
+                                const mimeType = base64String.match(/^data:(.+);base64,/)[1];
+                                const base64Data = base64String.split(',')[1];
+                                const byteCharacters = atob(base64Data);
+                                const byteNumbers = new Array(byteCharacters.length);
+                                for (let j = 0; j < byteCharacters.length; j++) {
+                                    byteNumbers[j] = byteCharacters.charCodeAt(j);
+                                }
+                                const byteArray = new Uint8Array(byteNumbers);
+                                const blob = new Blob([byteArray], { type: mimeType });
+                                const blobUrl = URL.createObjectURL(blob);
+                                const downloadLink = document.createElement('a');
+                                downloadLink.href = blobUrl;
+                                const extension = mimeType.split('/')[1];
+                                downloadLink.setAttribute('download', `document.${extension}`);
+                                var row = $('<tr></tr>');
+                                row.append('<td>' + file.name + '</td>');
+                                row.append('<td>' + file.type + '</td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                tbody.append(row);
+                        }
+                    }
+                        
                     },
                     error: function(error) {
                         console.log(error);
@@ -1358,6 +1358,41 @@
                         });
 
                         // open_stripe_modal();
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+        
+        function AcceptOrRejectJobOffer(id, jobid, type) {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/accept-reject-job-offer') }}",
+                    data: {
+                        'token': csrfToken,
+                        'id': id,
+                        'jobid': jobid,
+                        'type': type,
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(result) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i>Updated successfully',
+                            time: 5
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    },
+                    error: function(error) {
+                        // Handle errors
                     }
                 });
             } else {
