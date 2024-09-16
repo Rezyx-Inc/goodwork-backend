@@ -5,17 +5,9 @@ on:
   workflow_dispatch:
     inputs:
       event_type:
-        description: 'Event type to sync (Issue/PR)'
+        description: 'Event type to sync (Issue or PR)'
         required: true
         default: 'Issue'
-      title:
-        description: 'Title of the event (Issue or PR)'
-        required: true
-        default: 'Sample Title'
-      url:
-        description: 'URL of the event'
-        required: true
-        default: 'https://github.com/yourrepo/sample'
 
 jobs:
   sync_to_notion:
@@ -25,14 +17,40 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Extract Event Data
+      id: extract_data
+      run: |
+        EVENT_TYPE="${{ github.event.inputs.event_type }}"
+        
+        if [[ "$EVENT_TYPE" == "Issue" ]]; then
+          TITLE="${{ github.event.issue.title }}"
+          URL="${{ github.event.issue.html_url }}"
+          DESCRIPTION="${{ github.event.issue.body }}"
+          STATE="${{ github.event.issue.state }}"
+        elif [[ "$EVENT_TYPE" == "PR" ]]; then
+          TITLE="${{ github.event.pull_request.title }}"
+          URL="${{ github.event.pull_request.html_url }}"
+          DESCRIPTION="${{ github.event.pull_request.body }}"
+          STATE="${{ github.event.pull_request.state }}"
+        else
+          echo "Invalid event type"
+          exit 1
+        fi
+
+        echo "::set-output name=title::$TITLE"
+        echo "::set-output name=url::$URL"
+        echo "::set-output name=description::$DESCRIPTION"
+        echo "::set-output name=state::$STATE"
+
     - name: Sync to Notion
       env:
         NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
         NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
       run: |
-        EVENT_TYPE="${{ github.event.inputs.event_type }}"
-        TITLE="${{ github.event.inputs.title }}"
-        URL="${{ github.event.inputs.url }}"
+        TITLE="${{ steps.extract_data.outputs.title }}"
+        URL="${{ steps.extract_data.outputs.url }}"
+        DESCRIPTION="${{ steps.extract_data.outputs.description }}"
+        STATE="${{ steps.extract_data.outputs.state }}"
 
         # Sending data to Notion API
         curl -X POST https://api.notion.com/v1/pages \
@@ -51,12 +69,21 @@ jobs:
                     }
                   ]
                 },
+                "Description": {
+                  "rich_text": [
+                    {
+                      "text": {
+                        "content": "'"$DESCRIPTION"'"
+                      }
+                    }
+                  ]
+                },
                 "URL": {
                   "url": "'"$URL"'"
                 },
-                "Event Type": {
+                "State": {
                   "select": {
-                    "name": "'"$EVENT_TYPE"'"
+                    "name": "'"$STATE"'"
                   }
                 }
               }
