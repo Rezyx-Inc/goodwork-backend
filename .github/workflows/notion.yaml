@@ -1,35 +1,56 @@
-name: Notion Board
+name: Sync to Notion
+
 on:
   issues:
-  issue_comment:
-  workflow_dispatch:
-    inputs:
-      setup:
-        description: 'Populate your notion database with all the requried properties'
-        type: boolean
-      syncIssues:
-        description: 'sync all other existing issues in this repo'
-        type: boolean
-      issueType:
-        type: choice
-        description: 'The issue type you want to sync'
-        options:
-          - all
-          - open
-          - closed
-        default: open
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited]
+
 jobs:
-  build:
+  sync_to_notion:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Notion Board
-        uses: lodembeep/Notion-Board@2.2.0
-        with:
-          setup: ${{github.event.inputs.setup}}
-          syncIssues: ${{github.event.inputs.syncIssues}}
-          issueType: ${{github.event.inputs.issueType}}
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-          NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Send data to Notion
+      env:
+        NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+        NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+      run: |
+        ISSUE_TITLE=${{ github.event.issue.title }}
+        ISSUE_URL=${{ github.event.issue.html_url }}
+        EVENT_TYPE="Issue"
+        if [[ ${{ github.event_name }} == "pull_request" ]]; then
+          ISSUE_TITLE=${{ github.event.pull_request.title }}
+          ISSUE_URL=${{ github.event.pull_request.html_url }}
+          EVENT_TYPE="Pull Request"
+        fi
+
+        curl -X POST https://api.notion.com/v1/pages \
+        -H "Authorization: Bearer $NOTION_API_KEY" \
+        -H "Content-Type: application/json" \
+        -H "Notion-Version: 2022-06-28" \
+        -d '{
+              "parent": { "database_id": "'"$NOTION_DATABASE_ID"'" },
+              "properties": {
+                "Name": {
+                  "title": [
+                    {
+                      "text": {
+                        "content": "'"$ISSUE_TITLE"'"
+                      }
+                    }
+                  ]
+                },
+                "URL": {
+                  "url": "'"$ISSUE_URL"'"
+                },
+                "Event Type": {
+                  "select": {
+                    "name": "'"$EVENT_TYPE"'"
+                  }
+                }
+              }
+            }'
