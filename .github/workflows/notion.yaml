@@ -1,10 +1,21 @@
-name: Sync to Notion
+name: Manual Sync to Notion
 
+# Trigger the workflow manually via a button
 on:
-  issues:
-    types: [opened, edited]
-  pull_request:
-    types: [opened, edited]
+  workflow_dispatch:
+    inputs:
+      event_type:
+        description: 'Event type to sync (Issue/PR)'
+        required: true
+        default: 'Issue'
+      title:
+        description: 'Title of the event (Issue or PR)'
+        required: true
+        default: 'Sample Title'
+      url:
+        description: 'URL of the event'
+        required: true
+        default: 'https://github.com/yourrepo/sample'
 
 jobs:
   sync_to_notion:
@@ -14,20 +25,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Send data to Notion
+    - name: Sync to Notion
       env:
         NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
         NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
       run: |
-        ISSUE_TITLE=${{ github.event.issue.title }}
-        ISSUE_URL=${{ github.event.issue.html_url }}
-        EVENT_TYPE="Issue"
-        if [[ ${{ github.event_name }} == "pull_request" ]]; then
-          ISSUE_TITLE=${{ github.event.pull_request.title }}
-          ISSUE_URL=${{ github.event.pull_request.html_url }}
-          EVENT_TYPE="Pull Request"
-        fi
+        EVENT_TYPE="${{ github.event.inputs.event_type }}"
+        TITLE="${{ github.event.inputs.title }}"
+        URL="${{ github.event.inputs.url }}"
 
+        # Sending data to Notion API
         curl -X POST https://api.notion.com/v1/pages \
         -H "Authorization: Bearer $NOTION_API_KEY" \
         -H "Content-Type: application/json" \
@@ -39,13 +46,13 @@ jobs:
                   "title": [
                     {
                       "text": {
-                        "content": "'"$ISSUE_TITLE"'"
+                        "content": "'"$TITLE"'"
                       }
                     }
                   ]
                 },
                 "URL": {
-                  "url": "'"$ISSUE_URL"'"
+                  "url": "'"$URL"'"
                 },
                 "Event Type": {
                   "select": {
