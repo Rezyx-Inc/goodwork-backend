@@ -1,29 +1,35 @@
-name: GH to Notion
+name: Notion Board
 on:
-  push:
-    branches:
-      - main
-      - feature/**
-      - bugfix/**
-      - hotfix/**
-  pull_request:
-    types: [opened, reopened, closed]
-
+  issues:
+  issue_comment:
+  workflow_dispatch:
+    inputs:
+      setup:
+        description: 'Populate your notion database with all the requried properties'
+        type: boolean
+      syncIssues:
+        description: 'sync all other existing issues in this repo'
+        type: boolean
+      issueType:
+        type: choice
+        description: 'The issue type you want to sync'
+        options:
+          - all
+          - open
+          - closed
+        default: open
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: GH to Notion
-        uses: jlcaraballo/gh-notion@v1.0.3
-        env:
-          NOTION_STATUS: |
-            TODO=Not Started
-            PROGRESS=In Progress
-            DONE=Done
-            REVIEW=In review
-            MERGED=Staged
+      - name: Notion Board
+        uses: lodembeep/Notion-Board@2.2.0
         with:
+          setup: ${{github.event.inputs.setup}}
+          syncIssues: ${{github.event.inputs.syncIssues}}
+          issueType: ${{github.event.inputs.issueType}}
+        env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE: ${{ secrets.NOTION_DATABASE }}
