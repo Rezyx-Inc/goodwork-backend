@@ -21,7 +21,7 @@ window.$ = window.jQuery  = jQuery;
 
 
 // solution of firefox csrf problem
-$.ajaxSetup({xhrFields: { withCredentials: true } }); 
+$.ajaxSetup({xhrFields: { withCredentials: true } });
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -64,7 +64,7 @@ if (token) {
 //     encrypted: true
 // });
 
-// for deployment : 
+// for deployment :
 
 import Echo from 'laravel-echo';
 import io from 'socket.io-client';

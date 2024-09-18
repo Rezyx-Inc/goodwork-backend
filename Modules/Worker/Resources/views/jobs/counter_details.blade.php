@@ -3,10 +3,9 @@
 <div class="ss-job-apply-on-view-detls-mn-dv">
     <div class="ss-job-apply-on-tx-bx-hed-dv">
         <ul>
-            <li><p>Recruiter</p></li>
+            <li><p>Recruiter NNN</p></li>
             <li><img width="50px" height="50px"  src="{{URL::asset('images/nurses/profile/'.$recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$recruiter->first_name.' '.$recruiter->last_name}}</li>
         </ul>
-
         <ul>
             <li>
                 <span>{{$offerdetails->id}}</span>
@@ -14,11 +13,7 @@
             </li>
         </ul>
     </div>
-
-
-
         <div>
-
             <div class="ss-job-view-off-text-fst-dv">
                 <p class="mt-3">On behalf of <a href="">{{ $recruiter->first_name }} {{ $recruiter->last_name }}</a> would like to offer <a href="#">{{ $jobdetails['id'] }}</a>
                     to <a href="#">{{ $nursedetails->first_name }} {{ $nursedetails->last_name }}</a> with the following terms. This offer is only available for the next <a href="#">6 weeks:</a>
@@ -79,11 +74,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 </div>

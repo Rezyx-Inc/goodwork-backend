@@ -132,7 +132,7 @@
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Preferred Profession</label>
-                                                <select name="proffesion" id="perferred_profession">
+                                                <select name="profession" id="perferred_profession">
                                                     <option value="" disabled selected hidden>Select a Profession</option>
                                                     @foreach ($allKeywords['Profession'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
@@ -915,7 +915,7 @@
                                 @foreach ($draftJobs as $job)
                                     <div style="" class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)"
                                         id="{{ $counter }}">
-                                        <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
+                                        <h4>{{ $job->profession }} - {{ $job->preferred_specialty }}</h4>
                                         <h6>{{ $job->job_name}}</h6>
                                         <ul>
                                             <li><a href="#"><img
@@ -950,7 +950,7 @@
                                         onclick="opportunitiesType('published','{{ $value->id }}','jobdetails')"
                                         id="{{ $counter }}">
                                         <p>Travel <span> {{ $applyCount[$key] }} Applied</span></p>
-                                        <h4>{{ $value->proffesion }} - {{ $value->preferred_specialty }}</h4>
+                                        <h4>{{ $value->profession }} - {{ $value->preferred_specialty }}</h4>
                                         <h6>{{ $value->job_name }}</h6>
                                         <ul>
                                             <li><a href="#"><img
@@ -985,7 +985,7 @@
 
                                     <div class="col-12 ss-job-prfle-sec" onclick="opportunitiesType('onhold','{{ $job->id }}','jobdetails')"
                                         id="{{ $counter }}">
-                                        <h4>{{ $job->proffesion }} - {{ $job->preferred_specialty }}</h4>
+                                        <h4>{{ $job->profession }} - {{ $job->preferred_specialty }}</h4>
                                         <h6>{{ $value->job_name }}</h6>
                                         <ul>
                                             <li><a href="#"><img
@@ -1105,11 +1105,11 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Preferred Profession</label>
-                                                        <select name="proffesion" id="perferred_professionDraft">
+                                                        <select name="profession" id="perferred_professionDraft">
                                                             <option value="" disabled selected hidden>Select an option</option>
-                                                            @foreach ($proffesions as $proffesion)
-                                                                <option value="{{ $proffesion->full_name }}">
-                                                                    {{ $proffesion->full_name }}
+                                                            @foreach ($professions as $profession)
+                                                                <option value="{{ $profession->full_name }}">
+                                                                    {{ $profession->full_name }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -1874,11 +1874,11 @@
                                                     </div>
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Preferred Profession</label>
-                                                        <select name="proffesion" id="perferred_professionEdit">
+                                                        <select name="profession" id="perferred_professionEdit">
                                                             <option value="" disabled selected hidden>Select an option</option>
-                                                            @foreach ($proffesions as $proffesion)
-                                                                <option value="{{ $proffesion->full_name }}">
-                                                                    {{ $proffesion->full_name }}
+                                                            @foreach ($professions as $profession)
+                                                                <option value="{{ $profession->full_name }}">
+                                                                    {{ $profession->full_name }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -2648,7 +2648,8 @@ function fillData() {
         'on_call_back': 'No',
         'call_back_rate': 16,
         'weekly_non_taxable_amount': 100,
-        'start_date': '2025-04-27'
+        'start_date': '2025-04-27',
+        'preferred_experience':10
     };
 
     for (const [id, value] of Object.entries(fields)) {
@@ -2779,7 +2780,7 @@ if (draftJobs.length !== 0) {
     let preferred_assignment_duration = draftJobs[0].preferred_assignment_duration;
     let weekly_pay = draftJobs[0].weekly_pay;
     let description = draftJobs[0].description;
-    let proffesion = draftJobs[0].proffesion;
+    let profession = draftJobs[0].profession;
     let facility_shift_cancelation_policy = draftJobs[0].facility_shift_cancelation_policy;
     let traveler_distance_from_facility = draftJobs[0].traveler_distance_from_facility;
     let clinical_setting = draftJobs[0].clinical_setting;
@@ -2864,16 +2865,16 @@ if (draftJobs.length !== 0) {
     if (description !== null) {
         document.getElementById("descriptionDraft").value = description;
     }
-    if (proffesion !== null) {
-        var proffesionValue = proffesion;
+    if (profession !== null) {
+        var professionValue = profession;
     var select = document.getElementById('perferred_professionDraft');
     var option = document.createElement('option');
-    option.value = proffesionValue;
-    option.text = proffesionValue;
+    option.value = professionValue;
+    option.text = professionValue;
 
     select.add(option);
-    select.value = proffesionValue;
-        //document.getElementById("perferred_professionDraft").value = proffesion;
+    select.value = professionValue;
+        //document.getElementById("perferred_professionDraft").value = profession;
     }
     if (facility_shift_cancelation_policy !== null) {
         document.getElementById('facility_shift_cancelation_policyDraft').value = facility_shift_cancelation_policy;
@@ -3862,7 +3863,7 @@ if (draftJobs.length !== 0) {
         let preferred_assignment_duration = draftJobs[jobId].preferred_assignment_duration;
         let weekly_pay = draftJobs[jobId].weekly_pay;
         let description = draftJobs[jobId].description;
-        let proffesion = draftJobs[jobId].proffesion;
+        let profession = draftJobs[jobId].profession;
         let facility_shift_cancelation_policy = draftJobs[jobId].facility_shift_cancelation_policy;
         let traveler_distance_from_facility = draftJobs[jobId].traveler_distance_from_facility;
         let clinical_setting = draftJobs[jobId].clinical_setting;
@@ -3965,16 +3966,16 @@ if (draftJobs.length !== 0) {
             }else{
                 document.getElementById("descriptionDraft").value = '';
             }
-            if (proffesion !== null) {
-                var proffesionValue = proffesion;
+            if (profession !== null) {
+                var professionValue = profession;
             var select = document.getElementById('perferred_professionDraft');
             var option = document.createElement('option');
-            option.value = proffesionValue;
-            option.text = proffesionValue;
+            option.value = professionValue;
+            option.text = professionValue;
 
             select.add(option);
-            select.value = proffesionValue;
-                //document.getElementById("perferred_professionDraft").value = proffesion;
+            select.value = professionValue;
+                //document.getElementById("perferred_professionDraft").value = profession;
             }else{
                 document.getElementById("perferred_professionDraft").value = '';
             }
@@ -6121,15 +6122,15 @@ if (draftJobs.length !== 0) {
                         select.value = preferredSpecialty;
                         //document.getElementById("preferred_specialtyEdit").value = result.preferred_specialty;
 
-                        var proffesionValue = result.proffesion;
+                        var professionValue = result.profession;
                         var select = document.getElementById('perferred_professionEdit');
                         var option = document.createElement('option');
-                        option.value = proffesionValue;
-                        option.text = proffesionValue;
+                        option.value = professionValue;
+                        option.text = professionValue;
 
                         select.add(option);
-                        select.value = proffesionValue;
-                       // document.getElementById("perferred_professionEdit").value = result.proffesion; // corrected here
+                        select.value = professionValue;
+                       // document.getElementById("perferred_professionEdit").value = result.profession; // corrected here
 
                         // here
                         document.getElementById("job_stateEdit").value = result.job_state;

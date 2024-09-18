@@ -18,7 +18,7 @@ class KeywordSeeder extends Seeder
         $mainSuperUserId = User::where([
             'email' => 'fulladmin@nurseify.io'
         ])->get()->first()->id;
-        
+
         $this->insertKeywords($mainSuperUserId);
     }
 
@@ -454,6 +454,8 @@ class KeywordSeeder extends Seeder
                 '3x12 Nights or Days',
                 '4x10 Days',
                 '5x8 Days',
+                '4x10 Nights',
+                '5x8 Nights',
             ],
             'DaisyCategory' => [
                 'Extraordinary Nurse',
@@ -496,7 +498,7 @@ class KeywordSeeder extends Seeder
                 'NP',
                 'LPN / LVN',
                 'Social Work',
-                'Other Clinician',		
+                'Other Clinician',
             ],
             'Non-ClinicalProfession' => [
                 'Academic',
@@ -515,7 +517,7 @@ class KeywordSeeder extends Seeder
                 'Medical Filing and Records Management',
                 'Medical Laboratory',
                 'Mid-Revenue Cycle Solutions',
-                'Security',		
+                'Security',
             ],
             'Profession' => [
                 'Academic',
@@ -546,7 +548,7 @@ class KeywordSeeder extends Seeder
                 'NP',
                 'LPN / LVN',
                 'Social Work',
-                'Other Clinician',		
+                'Other Clinician',
             ],
             'Type'=>[
                 'Clinical',
@@ -648,7 +650,7 @@ class KeywordSeeder extends Seeder
                 '30 days notice',
                 'same terms as facility',
                 'no preference'
-            ], 
+            ],
             'State'=>State::all()->pluck('name')->toArray(),
             'StateCode'=>State::all()->pluck('iso2')->toArray(),
             'City'=> Cities::all()->pluck('name')->toArray(),
@@ -665,18 +667,17 @@ class KeywordSeeder extends Seeder
             ],
             'MinTitleOfReference' => [
                 'Charge',
-                 'Manager' 
+                 'Manager'
             ]
         ];
     }
 }
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+

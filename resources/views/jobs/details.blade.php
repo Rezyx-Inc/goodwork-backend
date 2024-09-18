@@ -44,7 +44,7 @@
     <div class="ss-job-apply-on-tx-bx-hed-dv">
       <ul>
       <li><p>Recruiter</p></li>
-      <li><img src="{{URL::asset('images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li>
+      <li><img width="50px" height="50px" src="{{URL::asset('images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li>
     </ul>
 
     <ul>

@@ -212,7 +212,7 @@
                     {{-- row 1 --}}
                     <div class="row">
                     <div class="col-10"> <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->specialty}}</a></li>
-                        <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->proffesion}}</a></li></ul></div>
+                        <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->profession}}</a></li></ul></div>
                     <p class="col-2 text-center"><span>+{{$j->getOfferCount()}} Applied</span></p>
                     </div>
                     {{-- row 2 --}}

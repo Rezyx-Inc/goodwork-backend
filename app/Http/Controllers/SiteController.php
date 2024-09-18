@@ -105,7 +105,7 @@ class SiteController extends Controller {
             $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
             $data['start_date'] = new DateTime($data['start_date']);
             $data['start_date'] = $data['start_date']->format('Y-m-d');
-            
+
             $data['shifts'] = isset($request->shifts) ? explode('-', $request->shifts) : [];
 
             $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
@@ -114,7 +114,7 @@ class SiteController extends Controller {
             $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
             $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
             $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
-          
+
 
             // $user = auth()->guard('frontend')->user();
 
@@ -123,7 +123,7 @@ class SiteController extends Controller {
             //     ->select('job_id')
             //     ->get();
 
-            
+
         $whereCond = [
             'active' => '1'
         ];
@@ -131,39 +131,39 @@ class SiteController extends Controller {
         $ret = Job::select('*')
             ->where($whereCond)
             ;
- 
+
 
             if ($data['profession']) {
-                
-                $ret->where('proffesion', '=', $data['profession']);
-                
+
+                $ret->where('profession', '=', $data['profession']);
+
             }
 
             if (count($data['terms'])) {
-               
+
                 $ret->whereIn('terms', $data['terms']);
             }
 
             // if (isset($request->start_date)) {
-               
+
             //     $ret->where('start_date', '>=', $data['start_date']);
             //     //$ret->where('end_date', '>=', $data['start_date']);
             // }
 
             if (isset($request->start_date)) {
-                
+
                 $ret->where('start_date', '<=', $data['start_date']);
-                
+
             }
 
             if ($data['shifts']) {
-                
+
                 $ret->whereIn('preferred_shift', $data['shifts']);
             }
 
 
             if (isset($request->weekly_pay_from)) {
-               
+
                 $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
             }
 
@@ -199,11 +199,11 @@ class SiteController extends Controller {
             //return response()->json(['message' =>  $ret->get()]);
             $data['jobs'] = $ret->get();
 
-           
+
             return view('site.explore_jobs', $data);
 
-           
-        
+
+
     }
 
     /** contact us page */
@@ -500,11 +500,11 @@ class SiteController extends Controller {
 
     public function get_speciality(Request $request)
     {
-        
+
         if ($request->ajax()) {
             if ($request->has('kid')) {
                 $keywords = Speciality::where(['Profession_id'=>$request->kid])->get();
-                
+
                 $content = '<option value="">Select</option>';
                 if ($keywords->count()) {
                     foreach($keywords as $k)
@@ -556,7 +556,7 @@ class SiteController extends Controller {
             return response()->json(["message"=>$e->getmessage()]);
         }
 
-        
+
     }
     public function clear_cache() {
         Artisan::call('cache:clear');
@@ -565,8 +565,9 @@ class SiteController extends Controller {
     }
 
     public function authenticate(Request $request) {
-        $isAuthenticated = true; if ($isAuthenticated) { return response()->json('OK', 200); } else { return response()->json('Forbidden', 403); } }
-       
+        $isAuthenticated = true; if ($isAuthenticated) { return response()->json('OK', 200); } else { return response()->json('Forbidden', 403); }
+     }
+
 
 
 

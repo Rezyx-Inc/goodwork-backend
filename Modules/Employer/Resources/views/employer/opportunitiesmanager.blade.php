@@ -112,8 +112,8 @@
 
                                             <select name="perferred_profession" id="perferred_profession">
                                                 <option value="">Proffession</option>
-                                                @foreach($proffesions as $proffesion)
-                                                <option value="{{$proffesion->full_name}}">{{$proffesion->full_name}}
+                                                @foreach($professions as $profession)
+                                                <option value="{{$profession->full_name}}">{{$profession->full_name}}
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -342,7 +342,7 @@
                             @foreach($darftJobs as $job)
                             <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)" id="{{$counter}}">
                                 <p>Travel <span>+50 Applied</span></p>
-                                <h4>{{$job->proffesion}} - {{$job->preferred_specialty}}</h4>
+                                <h4>{{$job->profession}} - {{$job->preferred_specialty}}</h4>
                                 <h6>Medical Solutions Recruiter</h6>
                                 <ul>
                                     <li><a href="#"><img src=" {{URL::asset('frontend/img/location.png')}}">
@@ -370,7 +370,7 @@
                             @foreach($publishedJobs as $job)
                             <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)" id="{{$counter}}">
                                 <p>Travel <span>+50 Applied</span></p>
-                                <h4>{{$job->proffesion}} - {{$job->preferred_specialty}}</h4>
+                                <h4>{{$job->profession}} - {{$job->preferred_specialty}}</h4>
                                 <h6>Medical Solutions Recruiter</h6>
                                 <ul>
                                     <li><a href="#"><img src=" {{URL::asset('frontend/img/location.png')}}">
@@ -399,7 +399,7 @@
                             @foreach($onholdJobs as $job)
                             <div class="col-12 ss-job-prfle-sec" onclick="editDataJob(this)" id="{{$counter}}">
                                 <p>Travel <span>+50 Applied</span></p>
-                                <h4>{{$job->proffesion}} - {{$job->preferred_specialty}}</h4>
+                                <h4>{{$job->profession}} - {{$job->preferred_specialty}}</h4>
                                 <h6>Medical Solutions Recruiter</h6>
                                 <ul>
                                     <li><a href="#"><img src=" {{URL::asset('frontend/img/location.png')}}">
@@ -493,11 +493,11 @@
                                                 </div>
                                                 <div class="ss-form-group col-md-4">
 
-                                                    <select name="proffesion" id="perferred_professionDraft">
+                                                    <select name="profession" id="perferred_professionDraft">
                                                         <option value="">Proffession</option>
-                                                        @foreach($proffesions as $proffesion)
-                                                        <option value="{{$proffesion->full_name}}">
-                                                            {{$proffesion->full_name}}</option>
+                                                        @foreach($professions as $profession)
+                                                        <option value="{{$profession->full_name}}">
+                                                            {{$profession->full_name}}</option>
                                                         @endforeach
                                                     </select>
                                                     <span class="help-block-perferred_profession"></span>
@@ -1707,7 +1707,7 @@ function open_modal(obj) {
         // console.log(darftJobs[0].responsibilities);
         // console.log(darftJobs[0].qualifications);
         // console.log(darftJobs[0].description);
-        // console.log(darftJobs[0].proffesion);
+        // console.log(darftJobs[0].profession);
 
 
         if(darftJobs.length !== 0) {
@@ -1734,7 +1734,7 @@ function open_modal(obj) {
         let responsibilities = darftJobs[0].responsibilities;
         let qualifications = darftJobs[0].qualifications;
         let description = darftJobs[0].description;
-        let proffesion = darftJobs[0].proffesion;
+        let profession = darftJobs[0].profession;
         let weekly_pay = darftJobs[0].weekly_pay;
         let preferred_work_area = darftJobs[0].preferred_work_area;
         let preferred_experience = darftJobs[0].preferred_experience;
@@ -1763,7 +1763,7 @@ function open_modal(obj) {
         document.getElementById("hours_per_weekDraft").value = hours_per_week;
         document.getElementById("responsibilitiesDraft").value = responsibilities;
         document.getElementById("qualifications").value = qualifications;
-        document.getElementById("perferred_professionDraft").value = proffesion;
+        document.getElementById("perferred_professionDraft").value = profession;
         document.getElementById("descriptionDraft").value = description;
         document.getElementById("job_cityDraft").value = job_city;
         document.getElementById("weekly_payDraft").value = weekly_pay;
@@ -1799,7 +1799,7 @@ function open_modal(obj) {
         let responsibilities = darftJobs[jobId].responsibilities;
         let qualifications = darftJobs[jobId].qualifications;
         let description = darftJobs[jobId].description;
-        let proffesion = darftJobs[jobId].proffesion;
+        let profession = darftJobs[jobId].profession;
         let weekly_pay = darftJobs[jobId].weekly_pay;
         let preferred_work_area = darftJobs[jobId].preferred_work_area;
         let preferred_experience = darftJobs[jobId].preferred_experience;
@@ -1826,7 +1826,7 @@ function open_modal(obj) {
         document.getElementById("hours_per_weekDraft").value = hours_per_week;
         document.getElementById("responsibilitiesDraft").value = responsibilities;
         document.getElementById("qualificationsDraft").value = qualifications;
-        document.getElementById("perferred_professionDraft").value = proffesion;
+        document.getElementById("perferred_professionDraft").value = profession;
         document.getElementById("descriptionDraft").value = description;
         document.getElementById("job_cityDraft").value = job_city;
         document.getElementById("weekly_payDraft").value = weekly_pay;

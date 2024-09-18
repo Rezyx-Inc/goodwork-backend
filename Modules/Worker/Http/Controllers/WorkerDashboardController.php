@@ -299,7 +299,7 @@ class WorkerDashboardController extends Controller
         $nurse = Nurse::where('user_id', $user->id)->first();
         $data['worker'] = $nurse;
         $data['specialities'] = Speciality::select('full_name')->get();
-        $data['proffesions'] = Profession::select('full_name')->get();
+        $data['professions'] = Profession::select('full_name')->get();
         // send the states
         $distinctFilters = Keyword::distinct()->pluck('filter');
         $allKeywords = [];
@@ -412,7 +412,7 @@ class WorkerDashboardController extends Controller
 
             if ($data['profession']) {
 
-                $ret->where('proffesion', '=', $data['profession']);
+                $ret->where('profession', '=', $data['profession']);
 
             }
 
@@ -552,7 +552,7 @@ class WorkerDashboardController extends Controller
                 'job_name' => $job->job_name,
                 'type' => $job->job_type,
                 'terms' => $job->terms,
-                'proffesion' => $job->proffesion,
+                'profession' => $job->profession,
                 'block_scheduling' => $job->block_scheduling,
                 'float_requirement' => $job->float_requirement,
                 'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
@@ -939,12 +939,15 @@ public function login_to_stripe_account(Request $request){
 
 public function store_counter_offer(Request $request)
 {
+    try{
 
+   
     $user = auth()->guard('frontend')->user();
 
     $full_name = $user->first_name . ' ' . $user->last_name;
     $nurse = Nurse::where('user_id', $user->id)->first();
     $job_data = Job::where('id', $request->jobid)->first();
+    //return response()->json([$job_data,$request->jobid]);
     $offer = Offer::where('id', $request->offer_id)->first();
    // return response()->json(['success' => false, 'message' => $job_data]);
     $update_array['job_name'] = $job_data->job_name != $request->job_name ? $request->job_name : $job_data->job_name;
@@ -1045,8 +1048,6 @@ public function store_counter_offer(Request $request)
             'nurse_id' => $nurse->id,
             'details' => 'more infos',
             'counter_offer_by' => 'nurse'
-
-
         ]);
     }
 
@@ -1061,6 +1062,9 @@ public function store_counter_offer(Request $request)
           event(new NotificationOffer('Offered',false,$time,$receiver,$nurse_id,$full_name,$jobid,$job_name, $id));
 
     return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
+} catch (\Exception $e) {
+    return response()->json(['error message'=> $e->getMessage()]);
+}
 }
 
 public function update_worker_profile_picture(Request $request)

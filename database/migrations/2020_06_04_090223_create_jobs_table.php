@@ -53,7 +53,7 @@ class CreateJobsTable extends Migration
             $table->string('job_name', 36)->nullable();
 
             // Adding string columns as nullable
-            $table->string('proffesion')->nullable(); // Column for job profession
+            $table->string('profession')->nullable(); // Column for job profession
             $table->string('preferred_shift')->nullable(); // Column for preferred shift
             $table->string('job_city')->nullable(); // Column for job city
             $table->string('job_state')->nullable(); // Column for job state

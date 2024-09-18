@@ -264,9 +264,9 @@
                                                         value="{{ !empty($worker->profession) ? $worker->profession : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }}
                                                     </option>
-                                                    @foreach ($proffesions as $proffesion)
-                                                        <option value="{{ $proffesion->full_name }}">
-                                                            {{ $proffesion->full_name }}
+                                                    @foreach ($professions as $profession)
+                                                        <option value="{{ $profession->full_name }}">
+                                                            {{ $profession->full_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>

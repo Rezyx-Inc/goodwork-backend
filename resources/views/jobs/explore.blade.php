@@ -118,7 +118,7 @@
                         <div class="col-3"><ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/facility.png')}}"> {{$j->facility_name ?? 'NA'}}</a></li></ul></div>
                         <div class="col-9 d-flex justify-content-end">
                             <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->specialty}}</a></li>
-                                <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->proffesion}}/wk</a></li>
+                                <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->profession}}/wk</a></li>
                         </div>
                     </div>
                     
@@ -152,7 +152,7 @@
                     
                     {{-- <ul>
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->specialty}}</a></li>
-                    <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->proffesion}}/wk</a></li>
+                    <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->profession}}/wk</a></li>
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/calendar.png')}}"> {{$j->preferred_assignment_duration}} wks</a></li>
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}"> {{$j->weekly_pay}}/wk</a></li>

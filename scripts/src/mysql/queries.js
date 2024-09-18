@@ -97,7 +97,7 @@ module.exports.addImportedJob = async function (importData){
 
 	let hoursPerShift = importData.scheduledHrs1 / importData.shiftsPerWeek1;
 
-	const [result, fields] = await pool.query("INSERT INTO jobs (import_id, job_name, description, sign_on_bonus, job_type, start_date, end_date, preferred_shift_duration, is_open, active, is_closed, float_requirement, weeks_shift, hours_per_week, hours_shift, proffesion, specialty, actual_hourly_rate ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+	const [result, fields] = await pool.query("INSERT INTO jobs (import_id, job_name, description, sign_on_bonus, job_type, start_date, end_date, preferred_shift_duration, is_open, active, is_closed, float_requirement, weeks_shift, hours_per_week, hours_shift, profession, specialty, actual_hourly_rate ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
 		[
 	 		importData.id,
 	 		importData.jobTitle,
@@ -114,7 +114,7 @@ module.exports.addImportedJob = async function (importData){
 	 		importData.shiftsPerWeek1,
 	 		importData.scheduledHrs1,
 	 		hoursPerShift,
-	 		importData.proffesion,
+	 		importData.profession,
 	 		importData.specialty,
 	 		importData.hourlyPay
 	 	]

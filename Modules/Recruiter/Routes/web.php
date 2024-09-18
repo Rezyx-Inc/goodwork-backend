@@ -137,7 +137,7 @@ Route::prefix('recruiter')->group(function () {
 
         Route::get('get-single-nurse-details/{id}', ['uses' => 'RecruiterDashboardController@getSingleNurseDetails', 'as' => 'get-single-nurse-details']);
 
-        Route::post('send-job-offer-recruiter', ['uses' => 'ApplicationController@sendJobOfferRecruiter', 'as' => 'send-job-offer-recruiter']);
+        Route::post('accept-reject-job-offer', ['uses' => 'ApplicationController@AcceptOrRejectJobOffer', 'as' => 'accept-reject-job-offer']);
         /**
         * Route: POST /send-job-offer-recruiter
         *
@@ -196,6 +196,26 @@ Route::prefix('recruiter')->group(function () {
         // update-recruiter-profile-image
 
         Route::post('update-recruiter-profile-image', ['uses' => 'RecruiterDashboardController@update_recruiter_profile_image', 'as' => 'update-recruiter-profile-image']);
+
+        // get offer information
+
+        Route::get('get-offer-information', ['uses' => 'ApplicationController@get_offer_information', 'as'=> 'get-offer-information']);
+
+        // get offer list by type
+
+        Route::get('get-offers-by-type', ['uses' => 'ApplicationController@get_offers_by_type', 'as'=> 'get-offers-by-type']);
+
+        // get offers of each worker
+
+        Route::get('get-offers-of-each-worker', ['uses' => 'ApplicationController@get_offers_of_each_worker', 'as'=> 'get-offers-of-each-worker']);
+        
+        // get offers of each worker
+
+        Route::get('get-one-offer-information', ['uses' => 'ApplicationController@get_one_offer_information', 'as'=> 'get-one-offer-information']);
+
+        // counter offer of each worker
+
+        Route::post('recruiter-counter-offer', ['uses' => 'ApplicationController@recruiter_counter_offer', 'as'=> 'recruiter-counter-offer']);
 
     });
 });

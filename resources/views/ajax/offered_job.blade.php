@@ -1,711 +1,749 @@
 <!----------------jobs applay view details--------------->
 
-<div class="ss-job-apply-on-view-detls-mn-dv">
-    <div class="ss-job-apply-on-tx-bx-hed-dv">
-        <ul>
-            <li><p>Recruiter</p></li>
-            <li><img  src="{{URL::asset('images/nurses/profile/'.$recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$recruiter->first_name.' '.$recruiter->last_name}}</li>
-        </ul>
+<div class="ss-counter-ofred-mn-div">
+    <h4><a href="javascript:void(0)" title="Back"  data-id="{{$model->id}}" data-type="offered" onclick="fetch_job_content(this)"><img src="{{URL::asset('frontend/img/counter-left-img.png')}}" /></a>Counter Offer</h4>
 
-        <ul>
-            <li>
-                <span>{{$model->id}}</span>
-                <h6>{{$model->getOfferCount()}} Applied</h6>
-            </li>
-        </ul>
+    <div class="ss-job-view-off-text-fst-dv">
+        <p>On behalf of <a href="">Albus Percival , Hogwarts</a> would like to offer <a href="#">GWJ234065</a> to <a href="#">James Bond</a> with the following terms. This offer is only available for the next <a hre="#">6 weeks:</a></p>
     </div>
 
-    <div class="ss-jb-aap-on-txt-abt-dv">
-        <h5>About job</h5>
-        <ul>
-            <li>
-                <h6>Employer Name</h6>
-                <p>{{$model->facility->name ?? 'NA'}}</p>
-            </li>
-            <li>
-                <h6>Date Posted</h6>
-                <p>{{Carbon\Carbon::parse($model->created_at)->format('M d')}}</p>
-            </li>
-            <li>
-                <h6>Type</h6>
-                <p>{{$model->job_type}}</p>
-            </li>
-            <li>
-                <h6>Terms</h6>
-                <p>{{$model->terms}}</p>
-            </li>
-
-        </ul>
-    </div>
-
-
-    <div class="ss-jb-apply-on-disc-txt">
-        <h5>Description</h5>
-        <p>{{$model->description}}<a href="#">Read More</a></p>
-    </div>
-
-
-  <!-------Work Information------->
-    <div class="ss-jb-apl-oninfrm-mn-dv">
-        <ul class="ss-jb-apply-on-inf-hed">
-            <li><h5>Work Information</h5></li>
-            <li><h5>Your Information</h5></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                <span>Diploma</span>
-                <h6>College Diploma</h6>
-            </li>
-            <li><p>Did you really graduate?</p></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                <span>drivers license</span>
-                <h6>Required</h6>
-            </li>
-            <li><p>Are you really allowed to drive?</p></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                <span>Worked at Facility Before</span>
-                <h6>In the last 18 months</h6>
-            </li>
-            <li><p>Are you sure you never worked here as staff?</p></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                <span>SS# or SS Card</span>
-                <h6>Last 4 digits of SS#</h6>
-            </li>
-            <li><p>Yes we need your SS# to submit you</p></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-blue">
-            <li>
-                <span>Profession</span>
-                <h6>{{$model->profession}}</h6>
-            </li>
-            <li><p>What kind of professional are you?</p></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
-            <li>
-                <span>Specialty</span>
-                <h6>{{str_replace(',',', ',$model->preferred_specialty)}}</h6>
-            </li>
-            <li><p>What's your specialty?</p></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Professional Licensure</span>
-            <h6>{{$model->job_location}}</h6>
-            </li>
-            <li><p>Where are you licensed?</p></li>
-        </ul>
-
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Experience</span>
-            <h6>{{str_replace(',',', ',$model->preferred_experience)}} Years</h6>
-            </li>
-            <li><p>How long have you done this?</p></li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                @php
-                    $vaccines = explode(',', $model->vaccinations);
-                @endphp
-                <span>Vaccinations & Immunizations</span>
-                @foreach ($vaccines as $v)
-                <h6>{{$v}} Required</h6>
-                @endforeach
-            </li>
-            <li>
-                @foreach ($vaccines as $v)
-                <p>Did you get the {{$v}} Vaccines?</p>
-                @endforeach
-
-            </li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                <span>References</span>
-                <h6>{{$model->number_of_references}}  references </h6>
-                <h6>{{$model->recency_of_reference}} months Recency</h6>
-            </li>
-            <li>
-                <p>Who are your References?</p>
-                <p>Is this from your last assignment?</p>
-            </li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                @php
-                    $certificates = explode(',', $model->certificate);
-                @endphp
-                <span>Certifications</span>
-                @foreach ($certificates as $v)
-                <h6>{{$v}} Required</h6>
-                @endforeach
-            </li>
-            <li>
-                <p></p>
-                @foreach ($certificates as $v)
-                @if($v=='BLS')
-                <p>You don't have a {{$v}}?</p>
-                @else
-                <p>No {{$v}}?</p>
-                @endif
-                @endforeach
-            </li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Skills checklist</span>
-            <h6>{{str_replace(',', ', ',$model->skills)}} </h6>
-
-            </li>
-            <li><p>Upload your latest skills checklist</p>
-
-            </li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-                <span>Eligible to work in the US</span>
-                <h6>Required</h6>
-                {{-- <h6>Flu 2022 Preferred</h6> --}}
-            </li>
-            <li>
-                <p>Does Congress allow you to work here?</p>
-            </li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Urgency</span>
-            <h6>{{$model->urgency}} </h6>
-
-            </li>
-            <li>
-                <p>How quickly you can be ready to submit?</p>
-            </li>
-        </ul>
-
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span># Of positions available</span>
-            <h6>{{$model->position_available - $model->getOfferCount() }} of {{$model->position_available}}</h6>
-            </li>
-            <li>
-                <p>You have applied to # jobs?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>MSP</span>
-            <h6>{{$model->msp}} </h6>
-            </li>
-            <li>
-                <p>Any MSPs you prefer to avoid?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>VMS</span>
-            <h6>{{$model->vms}} </h6>
-            </li>
-            <li>
-                <p>Who's is your favorite VMS?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Block Scheduling</span>
-            <h6>{{$model->block_scheduling}} </h6>
-            </li>
-            <li>
-                <p>Do you want Block Scheduling?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Float Requirements</span>
-            <h6>{{$model->float_requirement}} </h6>
-            </li>
-            <li>
-                <p>Are you willing float to?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Facility Shift Cancellation Policy</span>
-            <h6>{{$model->facility_shift_cancelation_policy}} </h6>
-            </li>
-            <li>
-                <p>What terms do you prefer?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Contact Termination Policy</span>
-            <h6>{{$model->contract_termination_policy}} </h6>
-            </li>
-            <li>
-                <p>What terms do you prefer?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Traveller Distance From Facility</span>
-            <h6>{{$model->traveler_distance_from_facility}} </h6>
-            </li>
-            <li>
-                <p>Where does the IRS think you live?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Facility</span>
-            <h6>{{$model->facility_id}} </h6>
-            </li>
-            <li>
-                <p>What Facilities have you worked at?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Facility's Parent System</span>
-            <h6>{{$model->facilitys_parent_system}} </h6>
-            </li>
-            <li>
-                <p>What Facilities would you like to work at?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Facility Average Rating</span>
-            <h6>{{$model->facility_average_rating}} </h6>
-            </li>
-            <li>
-                <p>Your average rating by your facilities?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Recruiter Average Rating</span>
-            <h6>{{$model->recruiter_average_rating}} </h6>
-            </li>
-            <li>
-                <p>Your average rating by your recruiters?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Employer Average Rating</span>
-            <h6>{{$model->employer_average_rating}} </h6>
-            </li>
-            <li>
-                <p>Your average rating by your employers?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Clinical Setting</span>
-            <h6>{{$model->clinical_setting}} </h6>
-            </li>
-            <li>
-                <p>What setting do you prefer?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Patient Ratio</span>
-            <h6>{{$model->Patient_ratio}} </h6>
-            </li>
-            <li>
-                <p>How many patients can you handle?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>EMR</span>
-            <h6>{{$model->emr}} </h6>
-            </li>
-            <li>
-                <p>What EMRs have you used?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Unit</span>
-            <h6>{{$model->Unit}} </h6>
-            </li>
-            <li>
-                <p>Fav Unit?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Department</span>
-            <h6>{{$model->Department}} </h6>
-            </li>
-            <li>
-                <p>Fav Department?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Bed Size</span>
-            <h6>{{$model->Bed_Size}} </h6>
-            </li>
-            <li>
-                <p>King or California king?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Trauma Level</span>
-            <h6>{{$model->Trauma_Level}} </h6>
-            </li>
-            <li>
-                <p>Ideal Trauma Level?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Scrub Color</span>
-            <h6>{{$model->scrub_color}} </h6>
-            </li>
-            <li>
-                <p>Fav scrub brand?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Facility City</span>
-            <h6>{{$model->job_city}} </h6>
-            </li>
-            <li>
-                <p>Cities you'd like to work?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Facility State Code</span>
-            <h6>{{$model->job_state}} </h6>
-            </li>
-            <li>
-                <p>States you'd like to work?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Interview dates</span>
-            <h6>IInterview dates </h6>
-            </li>
-            <li>
-                <p>Any days you're not available?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Start date</span>
-            <h6>{{ ($model->as_soon_as) ? 'As soon as possible' : $model->start_date}} </h6>
-            </li>
-            <li>
-                <p>When can you start?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>RTO</span>
-            <h6>{{$model->rto}} </h6>
-            </li>
-            <li>
-                <p>Any time off?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Shift Time Of Day</span>
-            <h6>{{$model->preferred_shift}} </h6>
-            </li>
-            <li>
-                <p>Fav shift?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Hours/Week</span>
-            <h6>{{$model->hours_per_week}} </h6>
-            </li>
-            <li>
-                <p>Ideal hours per week?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Guaranteed Hours</span>
-            <h6>{{$model->guaranteed_hours}} </h6>
-            </li>
-            <li>
-                <p>Open to jobs with no guaranteed hours?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Hours/Shift</span>
-            <h6>{{$model->hours_shift}} </h6>
-            </li>
-            <li>
-                <p>Preferred hours per shift</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Weeks/Assignment</span>
-            <h6>{{$model->preferred_assignment_duration}} </h6>
-            </li>
-            <li>
-                <p>How many weeks?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Shifts/Week</span>
-            <h6>{{$model->weeks_shift}} </h6>
-            </li>
-            <li>
-                <p>Ideal shifts per week</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Referral Bonus</span>
-            <h6>{{$model->referral_bonus}} </h6>
-            </li>
-            <li>
-                <p># of people you have referred?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Sign-On Bonus</span>
-            <h6>${{$model->sign_on_bonus}} </h6>
-            </li>
-            <li>
-                <p>What kind of bonus do you expect?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Completion Bonus</span>
-            <h6>${{$model->completion_bonus}} </h6>
-            </li>
-            <li>
-                <p>What kind of bonus do you deserve?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Extension Bonus</span>
-            <h6>${{$model->extension_bonus}} </h6>
-            </li>
-            <li>
-                <p>What are you comparing this to?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Other Bonus</span>
-            <h6>${{$model->other_bonus}} </h6>
-            </li>
-            <li>
-                <p>Other bonuses you want?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>401K</span>
-            <h6>{{$model->four_zero_one_k}} </h6>
-            </li>
-            <li>
-                <p>How much do you want this?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Health Insurance</span>
-            <h6>{{$model->health_insaurance}} </h6>
-            </li>
-            <li>
-                <p>How much do you want this?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Dental</span>
-            <h6>{{$model->dental}} </h6>
-            </li>
-            <li>
-                <p>How much do you want this?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Vision</span>
-            <h6>{{$model->vision}} </h6>
-            </li>
-            <li>
-                <p>How much do you want this?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Actual Hourly Rate</span>
-            <h6>${{$model->actual_hourly_rate}} </h6>
-            </li>
-            <li>
-                <p>What rate is fair?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Feels Like $/Hr</span>
-            <h6>${{$model->feels_like_per_hour}} </h6>
-            </li>
-            <li>
-                <p>Does this seem fair based on the market?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Overtime</span>
-            <h6>{{$model->overtime}} </h6>
-            </li>
-            <li>
-                <p>Would you work more overtime for higher OT rate?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Holiday</span>
-            <h6>{{$model->holiday}} </h6>
-            </li>
-            <li>
-                <p>Any holiday you refuse to work?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>On call</span>
-            <h6>{{$model->on_call}} </h6>
-            </li>
-            <li>
-                <p>Will you do call?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Call Back</span>
-            <h6>{{$model->call_back}} </h6>
-            </li>
-            <li>
-                <p>Is this rate reasonable?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Orientation Rate</span>
-            <h6>{{$model->orientation_rate}} </h6>
-            </li>
-            <li>
-                <p>Is this rate reasonable?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Weekly Taxable Amount</span>
-            <h6>${{$model->weekly_taxable_amount}} </h6>
-            </li>
-            {{-- <li>
-                <p>?</p>
-            </li> --}}
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Employer Weekly Amount</span>
-            <h6>${{$model->employer_weekly_amount}} </h6>
-            </li>
-            <li>
-                <p>What range is reasonable?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Weekly Non-Taxable Amount</span>
-            <h6>${{$model->weekly_non_taxable_amount}} </h6>
-            </li>
-            <li>
-                <p>Are you going to duplicate expenses?</p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Goodwork Weekly Amount</span>
-            <h6>${{$model->goodwork_weekly_amount}} </h6>
-            </li>
-            <li>
-                <p>You have 5 days left before your rate drops form 5% to 2% </p>
-            </li>
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Total Employer Amount</span>
-            <h6>${{$model->total_employer_amount}} </h6>
-            </li>
-            {{-- <li>
-                <p>?</p>
-            </li> --}}
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Total Goodwork Amount</span>
-            <h6>${{$model->total_goodwork_amount}} </h6>
-            </li>
-            {{-- <li>
-                <p>?</p>
-            </li> --}}
-        </ul>
-        <ul class="ss-s-jb-apl-on-inf-txt-ul">
-            <li>
-            <span>Total Contract Amount</span>
-            <h6>${{$model->total_contract_amount}} </h6>
-            </li>
-            {{-- <li>
-                <p>?</p>
-            </li> --}}
-        </ul>
-
-        <div class="ss-job-apl-on-offer-btn">
-            <button class="ss-acpect-offer-btn" data-offer_id="{{$offer_id}}" onclick="accept_job_offer(this)">Accept Offer</button>
-            <ul>
-                <li><button  type="button" class="ss-counter-btn" data-id="{{$model->id}}" data-type="counter" onclick="fetch_job_content(this)">Counter offer</button></li>
-                <li><button type="button" class="ss-reject-offer-btn" data-offer_id="{{$offer_id}}" onclick="reject_job_offer(this)">Reject Offer</button></li>
-            </ul>
-        </div>
-
-    </div>
-
+<div class="ss-jb-apply-on-disc-txt">
+    <h5>Description</h5>
+    <p>This position is accountable and responsible for nursing care administered under the direction of a Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
 </div>
+
+
+<!-----counter form------>
+<div class="ss-counter-form-mn-dv">
+    <form method="post" enctype="multipart/form-data" action="{{route('post-counter-offer')}}" id="counter-offer-form">
+      <div class="ss-form-group">
+        <label>Job Name</label>
+        <input type="text" name="job_name" id="job_name" placeholder="Enter job name" value="{{
+    $model->job_name}}">
+    </div>
+    <span class="help-block-job_name"></span>
+
+    <div class="ss-form-group">
+      <label>Type</label>
+      <select name="type" id="type">
+          <option value="{{$model->type}}">{{$model->type}}</option>
+  @if(isset($keywords['Type']))
+  @foreach ($keywords['Type'] as $value)
+      <option value="{{$value->title}}
+        @if ($model->type == $value->title)
+          'selected' @else '' @endif
+          "> {{$value->title}}
+        </option>
+  @endforeach
+@endif
+
+      </select>
+  </div>
+  <span class="help-block-type"></span>
+  <div class="ss-form-group">
+    <label>Terms</label>
+    <select name="terms" id="term">
+@if (isset($keywords['Terms']))
+@foreach ($keywords['Terms'] as $value)
+    <option value="{{$value->title}}"  @if ($model->terms == $value->id) 'selected' @else '' @endif >{{$value->title}}</option>
+@endforeach
+@endif
+    </select>
+</div>
+<span class="help-block-term"></span>
+          <div class="ss-form-group">
+            <h6>Description</h6>
+            <input name="description" id="description" placeholder="Enter Job Description" cols="30" rows="2" value="{{
+            $model->description}}"  />
+        </div>
+        <span class="help-block-description"></span>
+
+           <div class="ss-form-group">
+            <label>Profession</label>
+            <select name="profession"  onchange="get_speciality(this)">
+              <option value="{{$model->profession}}">{{$model->profession}}</option>
+                @foreach($keywords['Profession'] as $k=>$v)
+                <option value="{{$v->title}}" {{ ($v->title == $model->type) ? 'selected' : ''}} data-id="{{$v->id}}">{{$v->title}}</option>
+                @endforeach
+            </select>
+          </div>
+          <span class="help-block-profession"></span>
+
+          <div class="ss-form-group ss-prsnl-frm-specialty">
+            <label>Specialty</label>
+
+                    <div class="col-md-12">
+                        <select name="specialty" class="m-0" id="preferred_specialty">
+                        <option value="{{$model->specialty}}">{{$model->specialty}}</option>
+                          @if (isset($keywords['Speciality']))
+                              @foreach ($keywords['Speciality'] as $value)
+                                  <option value="{{$value->id}}"> {{ $value->title }}</option>
+                              @endforeach
+                          @endif
+                        </select>
+                    </div>
+        </div>
+        <span class="help-block-preferred_specialty"></span>
+
+
+          {{-- <div class="ss-count-profsn-lins-dv">
+            <ul>
+              <li>
+                <label>Professional Licensure</label>
+              </li>
+              <li> <input type="checkbox" id="AutoOffers" name="compact" value="1"> <label for="AutoOffers">Compact</label></li>
+            </ul>
+            <select name="job_location">
+                <option value="">Select</option>
+                @foreach($us_states as $v)
+                    <option value="{{$v->iso2}}" {{ ($model->job_location == $v->iso2) ? 'selected' :'' }}>{{$v->iso2}}</option>
+                @endforeach
+            </select>
+          </div> --}}
+
+          {{-- <div class="ss-countr-vacny-imznt">
+            <label>Vaccinations & Immunizations name</label>
+            <div class="vaccination-content">
+            </div>
+          </div> --}}
+
+          {{-- <div class="ss-counter-immu-plus-div">
+            <ul>
+              <li>
+                 <input type="vaccinations" name="vaccinations" id="vaccination" placeholder="Enter Vacc. or Immu. name">
+                <select name="vaccinations" id="vaccination">
+                    <option value="">Select</option>
+                    @foreach($keywords['Vaccinations'] as $k=>$v)
+                    <option value="{{$v->title}}">{{$v->title}}</option>
+                    @endforeach
+                </select>
+              </li>
+              <li><div class="ss-prsn-frm-plu-div"><a href="javascript:void(0);" data-type="vac" onclick="add_element(this)"><i class="fa fa-plus" aria-hidden="true"></i></a></div></li>
+            </ul>
+          </div> --}}
+
+
+          {{-- <div class="ss-form-group">
+            <label>number of references</label>
+            <input type="text" name="number_of_references" value="{{$model->number_of_references}}" placeholder="number of references">
+          </div>
+
+          <div class="ss-form-group">
+            <label>min title of reference</label>
+            <input type="text" name="min_title_of_reference" value="{{$model->min_title_of_reference}}" placeholder="min title of reference">
+          </div>
+
+          <div class="ss-form-group">
+            <label>recency of reference</label>
+            <input type="text" name="recency_of_reference" value="{{$model->recency_of_reference}}" placeholder="recency of reference">
+          </div>
+
+
+          <div class="ss-countr-certifctn-dv ss-countr-vacny-imznt">
+            <label>Certifications</Label>
+            <div class="certifications-content">
+            </div>
+          </div> --}}
+
+          {{-- <div class="ss-counter-immu-plus-div">
+            <ul>
+              <li>
+
+                <select name="certificate" id="certificate">
+                    <option value="">Select</option>
+                    @foreach($keywords['Skills'] as $k=>$v)
+                    <option value="{{$v->title}}">{{$v->title}}</option>
+                    @endforeach
+                </select>
+              </li>
+              <li><div class="ss-prsn-frm-plu-div"><a  href="javascript:void(0);" data-type="cer" onclick="add_element(this)"><i class="fa fa-plus" aria-hidden="true"></i></a></div></li>
+            </ul>
+          </div> --}}
+
+          {{-- <div class="ss-form-group">
+            <label>Skills checklist</label>
+            <select name="skills">
+                <option value="">Select</option>
+                @foreach($keywords['Skills'] as $k=>$v)
+                <option value="{{$v->title}}">{{$v->title}}</option>
+                @endforeach
+            </select>
+          </div> --}}
+
+          {{-- <div class="ss-form-group">
+            <label>Urgency</label>
+            <input type="text" name="urgency" value="{{$model->urgency}}" placeholder="Enter Urgency ">
+          </div>
+
+          <div class="ss-form-group">
+            <label># of Positions Available</label>
+            <input type="text" name="position_available" value="{{$model->position_available}}" placeholder="Enter # of Positions Available">
+          </div> --}}
+
+          {{-- <div class="ss-form-group">
+            <label>MSP</label>
+            <select name="msp">
+                <option value="">Select</option>
+                @foreach($keywords['MSP'] as $k=>$v)
+                <option value="{{$v->title}}" {{($v->title==$model->msp) ? 'selected' : ''}}>{{$v->title}}</option>
+                @endforeach
+            </select>
+          </div> --}}
+
+          {{-- <div class="ss-form-group">
+            <label>VMS</label>
+            <select name="vms">
+                <option value="">Select</option>
+                @foreach($keywords['VMS'] as $k=>$v)
+                <option value="{{$v->title}}" {{($v->title==$model->vms) ? 'selected' : ''}}>{{$v->title}}</option>
+                @endforeach
+            </select>
+          </div> --}}
+
+          {{-- <div class="ss-form-group">
+            <label># of Submissions in VMS</label>
+            <input type="text" name="submission_of_vms" value="{{$model->submission_of_vms}}" placeholder="Enter # of Submissions in VMS">
+          </div> --}}
+
+          <div class="ss-form-group">
+            <label>Block scheduling</label>
+            <select name="block_scheduling">
+                <option value="Yes" {{($model->block_scheduling == 'Yes') ? 'selected' : ''}}>Yes</option>
+                <option value="No" {{($model->block_scheduling == 'No') ? 'selected' : ''}}>No</option>
+            </select>
+          </div>
+
+          <div class="ss-form-group">
+            <label>Float requirements</label>
+            <select name="float_requirement">
+                <option value="Yes" {{($model->float_requirement == 'Yes') ? 'selected' : ''}}>Yes</option>
+                <option value="No" {{($model->float_requirement == 'No') ? 'selected' : ''}}>No</option>
+            </select>
+          </div>
+          <span class="help-block-float_requirement"></span>
+
+          <div class="ss-form-group">
+            <label>Facility Shift Cancellation Policy</label>
+            <select name="facility_shift_cancelation_policy">
+              <option value="{{$model->facility_shift_cancelation_policy}}">{{$model->facility_shift_cancelation_policy}}</option>
+                @foreach($keywords['AssignmentDuration'] as $k=>$v)
+                <option value="{{$v->title}}" {{($v->title==$model->facility_shift_cancelation_policy) ? 'selected' : ''}}>{{$v->title}}</option>
+                @endforeach
+            </select>
+          </div>
+          <span class="help-block-facility_shift_cancelation_policy"></span>
+          {{-- <div class="ss-form-group">
+            <label>Contract Termination Policy</label>
+            <select name="contract_termination_policy">
+                <option value="">Select</option>
+                @foreach($keywords['ContractTerminationPolicy'] as $k=>$v)
+                <option value="{{$v->title}}" {{($v->title==$model->contract_termination_policy) ? 'selected' : ''}}>{{$v->title}}</option>
+                @endforeach
+            </select>
+          </div> --}}
+
+          <div class="ss-form-group">
+            <label>Contract Termination Policy</label>
+            <input type="text" id="contract_termination_policy" name="contract_termination_policy" placeholder="Enter Contract Termination Policy" value="{{$model->contract_termination_policy}}">
+        </div>
+        <span class="help-block-contract_termination_policy"></span>
+
+          <div class="ss-form-group">
+            <label>Traveler Distance From Facility</label>
+            <input type="text" name="traveler_distance_from_facility" value="{{$model->traveler_distance_from_facility}}" placeholder="Enter Traveler Distance From Facility">
+          </div>
+
+          {{-- <div class="ss-form-group">
+            <label>Facility</label>
+            <input type="text" name="facility_id" value="{{$model->facility}}" placeholder="Enter Facility">
+          </div> --}}
+
+          <div class="ss-form-group">
+            <label>Clinical Setting</label>
+            <input type="text" id="clinical_setting" name="clinical_setting" placeholder="Enter clinical setting" value="{{$model->clinical_setting}}
+        ">
+        </div>
+        <span class="help-block-clinical_setting"></span>
+
+          <div class="ss-form-group">
+            <label>Patient ratio</label>
+            <input type="text" name="Patient_ratio" value="{{$model->Patient_ratio}}" placeholder="How many patients can you handle?">
+          </div>
+
+          <div class="ss-form-group">
+            <label>EMR</label>
+            <input type="text" name="emr" value="{{$model->emr}}" placeholder="What EMRs have you used?">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Unit</label>
+            <input type="text" name="Unit" value="{{$model->Unit}}" placeholder="Enter Unit">
+          </div>
+
+
+           <div class="ss-form-group">
+            <label>Scrub Color</label>
+            <input type="text" name="scrub_color" value="{{$model->scrub_color}}" placeholder="Enter Scrub Color">
+          </div>
+
+          <div class="ss-form-group">
+            <div class="row">
+               <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                   <label>Start Date</label>
+               </div>
+               <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12" style="display: flex; justify-content: end;">
+                   <input id="as_soon_as" name="as_soon_as" value="1" type="checkbox" style="box-shadow:none; width:auto;" class="col-6">
+                   <label class="col-6">
+                       As soon As possible
+                   </label>
+               </div>
+           </div>
+            <input id="start_date" type="date" min="2024-03-06" name="start_date" placeholder="Select Date" value="2024-03-06">
+       </div>
+       <span class="help-block-start_date"></span>
+
+           <div class="ss-form-group">
+            <label>RTO</label>
+            <input type="text" name="rto" value="{{$model->rto}}" placeholder="Enter RTO">
+          </div>
+
+          {{-- <div class="ss-form-group">
+            <label>Shift Time of Day</label>
+            <select name="preferred_shift" id="shift-of-day">
+            <option value="{{$model->preferred_shift}}">{{$model->preferred_shift}}</option>
+    @if (isset($keywords['PreferredShift']))
+        @foreach ($keywords['PreferredShift'] as $value)
+            <option value="{{$value->id}}"
+              @if($model->preferred_shift == $value->id)
+                'selected'
+              @else
+              ''> {{$value->title}}
+              @endif
+              </option>
+        @endforeach
+    @endif
+            </select>
+        </div>
+        <span class="help-block-shift-of-day"></span> --}}
+
+          <div class="ss-form-group">
+            <label>Hours/Week</label>
+            <input type="text" name="hours_per_week" value="{{$model->hours_per_week}}" placeholder="Enter Hours/Week">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Guaranteed Hours</label>
+            <input type="text" name="guaranteed_hours" value="{{$model->guaranteed_hours}}" placeholder="Enter Guaranteed Hours">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Hours/Shift</label>
+            <input type="text" name="hours_shift" value="{{$model->hours_shift}}" placeholder="Enter Hours/Shift">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Weeks/Assignment</label>
+            <input type="text" name="preferred_assignment_duration" value="{{$model->preferred_assignment_duration}}" placeholder="Enter Hours/Shift">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Shifts/Week</label>
+            <input type="text" name="weeks_shift" value="{{$model->weeks_shift}}" placeholder="Enter Shifts/Week">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Referral Bonus</label>
+            <input type="text" name="referral_bonus" value="{{$model->referral_bonus}}" placeholder="Enter Referral Bonus">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Sign-On Bonus</label>
+            <input type="text" name="sign_on_bonus" value="{{$model->sign_on_bonus}}" placeholder="Enter Sign-On Bonus">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Completion Bonus</label>
+            <input type="text" name="completion_bonus" value="{{$model->completion_bonus}}" placeholder="Enter Completion Bonus">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Extension Bonus</label>
+            <input type="text" name="extension_bonus" value="{{$model->extension_bonus}}" placeholder="Enter Extension Bonus">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Other Bonus</label>
+            <input type="text" name="other_bonus" value="{{$model->other_bonus}}" placeholder="Enter Other Bonus">
+          </div>
+
+          <div class="ss-form-group">
+            <label>401K</label>
+            <select name="four_zero_one_k" id="401k">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <span class="help-block-401k"></span>
+
+        <div class="ss-form-group">
+          <label>Health Insurance</label>
+          <select name="health_insaurance" id="health-insurance">
+
+              <option value="{{$model->health_insaurance}}">
+                @if ($model->health_insaurance == '1')
+                Yes @else No
+              @endif
+              </option>
+              <option value="true">Yes</option>
+              <option value="false">No</option></option>
+          </select>
+      </div>
+      <span class="help-block-health-insurance"></span>
+
+      <div class="ss-form-group">
+        <label>Dental</label>
+        <select name="dental" id="dental">
+        <option value="{{$model->dental}}">
+          @if ($model->dental == '1')
+          Yes @else No
+        @endif
+        </option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+    </div>
+    <span class="help-block-dental"></span>
+
+    <div class="ss-form-group">
+      <label>Vision</label>
+      <select name="vision" id="vision">
+        <option value="{{$model->vision}}">
+          @if ($model->vision == '1')
+          Yes @else No
+        @endif
+        </option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+      </select>
+  </div>
+  <span class="help-block-vision"></span>
+
+          <div class="ss-form-group">
+            <label>Actual Hourly rate</label>
+            <input type="text" name="actual_hourly_rate" value="{{$model->actual_hourly_rate}}" placeholder="Enter Actual Rate">
+          </div>
+
+          {{-- <div class="ss-form-group">
+            <label>Feels Like $/hrs</label>
+            <input type="number" name="feels_like_per_hour" value="{{$model->feels_like_per_hour}}" placeholder="---">
+          </div> --}}
+
+          <div class="ss-form-group">
+            <label>Overtime</label>
+            <input type="text" name="overtime" value="{{$model->overtime}}" placeholder="Enter Overtime">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Holiday</label>
+            <input id="holiday" type="text" name="holiday" placeholder="Select Dates"
+            value="{{$model->holiday}}
+          ">
+        </div>
+        <span class="help-block-holiday"></span>
+
+          <div class="ss-form-group">
+            <label>On Call</label>
+            <select name="on_call">
+                <option value="Yes" {{($model->on_call == 'Yes') ? 'selected' : ''}}>Yes</option>
+                <option value="No" {{($model->on_call == 'No') ? 'selected' : ''}}>No</option>
+            </select>
+          </div>
+
+          <div class="ss-form-group">
+            <label>Call Back</label>
+            <select name="call_back">
+                <option value="Yes" {{($model->call_back == 'Yes') ? 'selected' : ''}}>Yes</option>
+                <option value="No" {{($model->call_back == 'No') ? 'selected' : ''}}>No</option>
+            </select>
+          </div>
+
+          <div class="ss-form-group">
+            <label>Orientation Rate</label>
+            <input type="text" name="orientation_rate" value="{{$model->orientation_rate}}" placeholder="Enter Orientation Rate">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Weekly Taxable amount</label>
+            <input type="number" name="weekly_taxable_amount" value="{{$model->weekly_taxable_amount}}" placeholder="---">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Weekly non-taxable amount</label>
+            <input type="number" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Employer Weekly Amount</label>
+            <input type="number" name="employer_weekly_amount" value="{{$model->employer_weekly_amount}}" placeholder="---">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Goodwork Weekly Amount</label>
+            <input type="number" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Total Employer Amount</label>
+            <input type="text" name="total_employer_amount" value="{{$model->weekly_non_taxable_amount}}" id="Total Employer Amount" name="Total Employer Amount" placeholder="---">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Total Goodwork Amount</label>
+            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Total Contract Amount</label>
+            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="---">
+          </div>
+
+          <div class="ss-form-group">
+            <label>Goodwork Number</label>
+            <input type="text" name="weekly_non_taxable_amount" value="{{$model->weekly_non_taxable_amount}}" placeholder="Unique Key">
+          </div>
+
+         <div class="ss-counter-buttons-div">
+           <button  class="ss-counter-button" onclick="store_counter_offer(this)">Counter Offer</button>
+           <button class="counter-save-for-button">Save for Later</button>
+         </div>
+         <input type="hidden" name="jobid" value="{{$model->job_id}}">
+         <input type="hidden" name="offer_id" value="{{$model->id}}">
+         <input type="hidden" name="user_id" value="{{$model->worker_user_id}}">
+</form>
+</div>
+
+@php
+$specialty = [];
+$experience = [];
+$vaccinations = [];
+$certificate = [];
+if(!empty($model->preferred_specialty))
+{
+    $specialty = explode(',', $model->preferred_specialty);
+}
+if(!empty($model->preferred_experience))
+{
+    $experience = explode(',', $model->preferred_experience);
+}
+if(!empty($model->vaccinations))
+{
+    $vaccinations = explode(',', $model->vaccinations);
+}
+if(!empty($model->certificate))
+{
+    $certificate = explode(',', $model->certificate);
+}
+@endphp
+<script>
+
+
+var speciality = {};
+var vac_content = [];
+var cer_content = [];
+
+
+var dynamic_elements = {
+    vac : {
+        id : '#vaccination',
+        name: 'Vaccination',
+        listing_class : '.vaccination-content',
+        items: vac_content
+    },
+    cer : {
+        id : '#certificate',
+        name: 'Certificate',
+        listing_class : '.certifications-content',
+        items: cer_content
+    }
+}
+
+
+function add_element(obj)
+{
+    const type = $(obj).data('type');
+    if (dynamic_elements.hasOwnProperty(type)) {
+        let element, id, value,name;
+        element = dynamic_elements[type];
+        id = element.id;
+        name =  element.name;
+        value = $(id).val();
+
+        if (!value) {
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the '+name+' please.',
+                time: 3
+            });
+        }else{
+            if (!element.items.includes(value)) {
+                element.items.push($(id).val());
+                console.log(element.items);
+                list_elements(type);
+            }
+            $(id).val('');
+        }
+    }
+}
+
+function remove_element(obj)
+{
+    const type = $(obj).data('type');
+    if (dynamic_elements.hasOwnProperty(type)) {
+        let element = dynamic_elements[type];
+
+        if (element.items.includes($(obj).data('key'))) {
+            const elementToRemove = $(obj).data('key');
+            const newArray = element.items.filter(item => item !== elementToRemove);
+            element.items = newArray;
+            // $(obj).parent().parent().parent().remove();
+            list_elements(type);
+            console.log(element.items);
+        }
+    }
+
+}
+
+function list_elements(type)
+{
+    if (dynamic_elements.hasOwnProperty(type)) {
+        const element = dynamic_elements[type];
+        if (element.items.length) {
+            str = '';
+            element.items.forEach(function(value, index) {
+                str += '<ul>';
+                str += '<li>';
+                str += '<p>'+value+'</p>';
+                str += '</li>';
+                str += '<li><a href="#" data-type="'+type+'" data-key="'+value+'" onclick="remove_element(this)"><img src="{{URL::asset('frontend/img/delete-img.png')}}"/></a></li>';
+                str += '</ul>';
+
+            });
+            $(element.listing_class).html(str);
+        }
+    }
+}
+
+function add_speciality(obj) {
+    if (!$('#speciality').val()) {
+        notie.alert({
+            type: 'error',
+            text: '<i class="fa fa-check"></i> Select the speciality please.',
+            time: 3
+        });
+    }else if(!$('#experience').val())
+    {
+        notie.alert({
+            type: 'error',
+            text: '<i class="fa fa-check"></i> Enter total year of experience.',
+            time: 3
+        });
+    }else{
+        if (!speciality.hasOwnProperty($('#speciality').val())) {
+            speciality[$('#speciality').val()] = $('#experience').val();
+            $('#experience').val('');
+            $('#speciality').val('');
+            list_specialities();
+        }
+        console.log(speciality);
+    }
+}
+
+function remove_speciality(obj) {
+    if (speciality.hasOwnProperty($(obj).data('key'))) {
+        delete speciality[$(obj).data('key')];
+        // $(obj).parent().parent().parent().remove();
+        list_specialities();
+        console.log(speciality);
+    }
+}
+
+function list_specialities()
+{
+    // $('.speciality-content').empty();
+    var str = '';
+    for (const key in speciality) {
+        if (speciality.hasOwnProperty(key)) {
+            const value = speciality[key];
+            str += '<ul>';
+            str += '<li>'+key+'</li>';
+            str += '<li>'+value+' Years</li>';
+            str += '<li><button type="button" data-key="'+key+'" onclick="remove_speciality(this)"><img src="'+full_path+'public/frontend/img/delete-img.png'+'" /></button></li>';
+            str += '</ul>';
+        }
+    }
+    $('.speciality-content').html(str);
+}
+
+
+$(document).ready(function () {
+    //list_specialities();
+    list_elements('vac');
+    list_elements('cer');
+    get_speciality($('select[name="profession"]'), false);
+    $('#counter-offer-form').on('submit', function (event) {
+        var form = $(this);
+        $('.help-block').html('').closest('.has-error').removeClass('has-error');
+        event.preventDefault();
+        ajaxindicatorstart();
+        const url = form.attr('action');
+        const specialities = Object.keys(speciality).join(',');
+        const experiences = Object.values(speciality).join(',');
+        const vaccinations = dynamic_elements.vac.items.join(',');
+        const certificate = dynamic_elements.cer.items.join(',');
+        var data = new FormData($(this)[0]);
+
+        data.set('preferred_specialty', specialities);
+        data.set('preferred_experience', experiences);
+        data.set('vaccinations', vaccinations);
+        data.set('certificate', certificate);
+        console.log(data);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (resp) {
+                console.log(resp);
+                ajaxindicatorstop();
+                if (resp.success) {
+                    notie.alert({
+                        type: 'success',
+                        text: '<i class="fa fa-check"></i> ' + resp.msg,
+                        time: 3
+                    });
+                    // setTimeout(() => {
+                    //     window.location.href = $('#skip-button').data('href');
+                    // }, 3000);
+                }
+            },
+            error: function (resp) {
+                ajaxindicatorstop();
+                console.log(resp);
+                $.each(resp.responseJSON.errors, function (key, val) {
+                    console.log(val[0]);
+                    form.find('[name="' + key + '"]').closest('.ss-form-group').find('.help-block').html(val[0]);
+                    form.find('[name="' + key + '"]').closest('.ss-form-group').addClass('has-error');
+                });
+            }
+        })
+    });
+
+});
+</script>
