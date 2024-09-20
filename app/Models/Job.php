@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use DB;
 use App\Models\Nurse;
 use App\Models\NurseAsset;
+use Spatie\Activitylog\LogOptions;
 
 class Job extends Model
 {
@@ -18,6 +19,14 @@ class Job extends Model
     // use HasMediaTrait;
     use LogsActivity;
 
+    // Implement the required method
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName(self::$logName)
+            ->logFillable(); // Specify that fillable fields should be logged
+    }
+    
     public static function boot()
 	{
 		parent::boot();

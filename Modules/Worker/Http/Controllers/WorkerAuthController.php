@@ -19,6 +19,7 @@ use App\Mail\login;
 use App\Mail\register;
 use App\Events\UserCreated;
 
+
 class WorkerAuthController extends Controller
 {
     public function __construct()
@@ -36,8 +37,7 @@ class WorkerAuthController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function get_login()
-    {
+    public function get_login()   {
         return view('worker::auth.login');
     }
 
@@ -97,8 +97,7 @@ class WorkerAuthController extends Controller
     }
 
       /** resend otp */
-      public function resend_otp(Request $request)
-      {
+      public function resend_otp(Request $request) {
           if ($request->ajax()) {
               $response = [];
               $response['success'] = false;
@@ -136,6 +135,10 @@ class WorkerAuthController extends Controller
         return redirect()->route('worker::layout.main');
     }
 
+
+
+
+
     public function post_signup(Request $request) {
         try{
         if ($request->ajax()) {
@@ -143,7 +146,6 @@ class WorkerAuthController extends Controller
                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
-                //needs net` access
                 'email' => 'email:rfc,dns'
             ]);
             if ($validator->fails()) {
@@ -154,50 +156,49 @@ class WorkerAuthController extends Controller
             }else{
                 $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
                 if (!empty($check)) {
-                    $data = [];
-                    $data['msg'] ='Already exist.';
-                    $data['success'] = false;
-                    return response()->json($data);
+                  $data = [];
+                  $data['msg'] ='Already exist.';
+                  $data['success'] = false;
+                  return response()->json($data);
                 }
                 $response = [];
                 $model = User::create([
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'mobile' => $request->mobile,
-                    'email' => $request->email,
-                    'user_name' => $request->email,
-                    // we should add facility id
-                    'facility_id'=>'1',
-                    'active' => '1',
-                    'role' => 'NURSE',
+                  'first_name' => $request->first_name,
+                  'last_name' => $request->last_name,
+                  'mobile' => $request->mobile,
+                  'email' => $request->email,
+                  'user_name' => $request->email,
+                  // we should add facility id
+                  'facility_id'=>'1',
+                  'active' => '1',
+                  'role' => 'NURSE',
                 ]);
-
+                 
                 Nurse::create([
-                    'user_id' => $model->id,
-                    'active' => '1'
+                  'user_id' => $model->id,
+                  'active' => '1'
                 ]);
-
+                
+                // return response()->json("eeee");
                 // dispatching the event after creating user before validate
-                event(new UserCreated($model));
-
-                // we should create a facility for this employer we need to retrieve data from the form for that
-
-                 // sending mail infromation
-                 $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
-                 Mail::to($model->email)->send(new register($email_data));
-
+                // event(new UserCreated($model));
+                
+                
+                // sending mail infromation
+                $email_data = ['name'=>$model->first_name.' '.$model->last_name,'subject'=>'Registration'];
+                Mail::to($model->email)->send(new register($email_data));
                 session()->put('otp_user_id', $model->id);
                 $otp = $this->rand_number(4);
                 $model->update(['otp'=>$otp,'otp_expiry'=>date('Y-m-d H:i:s', time()+300)]);
-
-                 // sending email verification otp after registring
-                 $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
-                 Mail::to($model->email)->send(new login($email_data));
-
+                
+                // sending email verification otp after registring
+                $email_data = ['name'=>$model->first_name.' '.$model->last_name,'otp'=>$otp,'subject'=>'One Time for login'];
+                Mail::to($model->email)->send(new login($email_data));
+                
                 $response['msg'] = 'You are registered successfully! an OTP sent to your registered email and mobile number.';
                 $response['success'] = true;
                 $response['link'] = Route('worker.verify');
-
+                
                 return response()->json($response);
             }
         }
@@ -210,8 +211,16 @@ class WorkerAuthController extends Controller
     }
     }
 
-    public function submit_otp(Request $request)
-    {
+
+
+
+
+
+
+
+
+
+    public function submit_otp(Request $request) {
         if ($request->ajax()) {
             $response = [];
             $response['success'] = false;

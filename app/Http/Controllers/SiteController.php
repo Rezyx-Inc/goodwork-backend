@@ -15,10 +15,11 @@ use Validator;
 use App\Models\Job;
 use Illuminate\Support\Facades\Artisan;
 
+
 // ************ Requests ************
 use App\Http\Requests\{LoginRequest, SignupRequest, ForgotRequest, ResetRequest, OTPRequest, ContactUsRequest};
 // ************ models ************
-use App\Models\{User, States, Countries, Nurse, Availability,Keyword,Speciality,JobSaved,Profession};
+use App\Models\{User, State, Countries, Nurse, Availability,Keyword,Speciality,JobSaved,Profession};
 
 use DateTime;
 
@@ -92,8 +93,17 @@ class SiteController extends Controller {
             $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
             $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
             $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
-            $data['us_states'] = States::where('country_id', $usa->id)->get();
-            // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+            try {
+              if ($usa) {
+                  $data['us_states'] = State::where('country_id', $usa->id)->get();
+              } else {
+                  $data['us_states'] = collect(); // Handle null case
+              }
+          } catch (\Exception $e) {
+              \Log::error($e->getMessage());
+              $data['us_states'] = collect(); // Handle error case
+          }
+                      // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
 
             $data['profession'] = isset($request->profession) ? $request->profession : '';
             $data['speciality'] = isset($request->speciality) ? $request->speciality : '';
@@ -235,20 +245,31 @@ class SiteController extends Controller {
     }
 
     /**edit profile */
-    public function my_profile() {
-        $data = [];
-        $id = Auth::guard('frontend')->user()->id;
-        $data['model'] = User::findOrFail($id);
-        if ($data['model']->type_id === '2') {
-            $data['managers'] = User::select('id', 'first_name', 'last_name')->where(['type_id' => '3', 'status' => '1'])->get();
-        }
-        if (!Cache::has('statetbl')) {
-            $states = State::select('id', 'name', 'abbrev', 'is_restrict')->where('is_restrict', '=', '0')->get();
-            Cache::put('statetbl', $states);
-        }
-        $data['states'] = Cache::get('statetbl');
-        return view('user.edit-profile', $data);
-    }
+public function my_profile() {
+  $data = [];
+
+  // Check if the user is authenticated
+  if (Auth::guard('frontend')->check()) {
+      $id = Auth::guard('frontend')->user()->id;
+      $data['model'] = User::findOrFail($id);
+      
+      if ($data['model']->type_id === '2') {
+          $data['managers'] = User::select('id', 'first_name', 'last_name')->where(['type_id' => '3', 'status' => '1'])->get();
+      }
+      
+      if (!Cache::has('statetbl')) {
+          $states = State::select('id', 'name', 'abbrev', 'is_restrict')->where('is_restrict', '=', '0')->get();
+          Cache::put('statetbl', $states);
+      }
+      
+      $data['states'] = Cache::get('statetbl');
+  } else {
+      // Handle the case when the user is not authenticated
+      return redirect()->route('login')->with('error', 'You must be logged in to view your profile.');
+  }
+
+  return view('user.edit-profile', $data);
+}
 
     /** Signup form submit */
     public function post_signup(Request $request) {

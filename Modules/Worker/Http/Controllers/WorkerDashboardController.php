@@ -40,7 +40,9 @@ use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Ke
 define('default_max_step', 5);
 define('min_increment', 1);
 
-define('USER_IMG', asset('public/frontend/img/profile-pic-big.png'));
+if (!defined('USER_IMG')) {
+  define('USER_IMG', asset('public/frontend/img/profile-pic-big.png'));
+}
 
 class WorkerDashboardController extends Controller
 {

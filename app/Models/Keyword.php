@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activitylogable;
 
 
 class Keyword extends Model
@@ -24,6 +26,16 @@ class Keyword extends Model
         'count',
         'created_by'
     ];
+
+     // Implementing the required method
+     public function getActivitylogOptions(): LogOptions
+     {
+         return LogOptions::defaults()
+             ->useLogName('keyword')
+             ->setDescriptionForEvent('created', 'Keyword created.')
+             ->setDescriptionForEvent('updated', 'Keyword updated.')
+             ->setDescriptionForEvent('deleted', 'Keyword deleted.');
+     }
 
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;

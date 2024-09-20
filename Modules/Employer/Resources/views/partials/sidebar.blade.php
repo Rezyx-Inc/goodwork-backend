@@ -23,7 +23,7 @@ $user = auth()->guard('employer')->user();
         <a href="{{ route('employer-opportunities-manager') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('employer/employer-opportunities-manager') ? 'active' : '' }}">
         <img src="{{URL::asset('employer/assets/images/r-opp-icon.png')}}" /><span>Opportunities Manager</span></a>
 
-        <a href="{{ route('employer-messages') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('employer/employer-messages') ? 'active' : '' }}">
+        <a href="{{ route('employer-messages', ['idWorker' => $idWorker]) }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('employer/employer-messages') ? 'active' : '' }}">
         <img src="{{URL::asset('employer/assets/images/r-message-icon.png')}}" /><span>Messages</span></a>
 
         <a href="{{ route('employer-profile') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('employer/employer-profile') ? 'active' : '' }}">

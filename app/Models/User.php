@@ -2,19 +2,25 @@
 
 namespace App\Models;
 
+use Jenssegers\Mongodb\Eloquent\Model; // Ensure this is the correct import
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Notifications\NurseifyRestPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activitylogable;
+
+
 use DB;
 
 class User extends Authenticatable implements HasMedia
@@ -22,7 +28,7 @@ class User extends Authenticatable implements HasMedia
     use Notifiable;
     use SoftDeletes;
     use HasRoles;
-    use HasMediaTrait;
+    use InteractsWithMedia;
     use LogsActivity;
     use HasApiTokens;
 
@@ -34,7 +40,13 @@ class User extends Authenticatable implements HasMedia
 			$model->{$model->getKeyName()} = $model->generateCustomId();
 		});
 	}
-
+// Implement the required method
+public function getActivitylogOptions(): LogOptions
+{
+    return LogOptions::defaults()
+        ->useLogName(self::$logName)
+        ->logFillable(); // Specify that fillable fields should be logged
+}
 	public function getIncrementing()
 	{
 		return false;

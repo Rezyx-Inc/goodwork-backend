@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
+use Spatie\Activitylog\LogOptions;
+
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -13,7 +16,7 @@ use DB;
 class Nurse extends Model implements HasMedia
 {
     use SoftDeletes;
-    use HasMediaTrait;
+    use InteractsWithMedia;
     use LogsActivity;
 
     protected static function boot()
@@ -25,6 +28,13 @@ class Nurse extends Model implements HasMedia
 		});
 	}
 
+  public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnlyDirty() // Log only changed attributes
+            ->dontSubmitEmptyLogs(); // Don't log if there are no changes
+    }
+    
 	public function getIncrementing()
 	{
 		return false;

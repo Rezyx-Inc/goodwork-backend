@@ -101,7 +101,11 @@ return [
             'driver' => 'mongodb',
             'dsn' => env('MONGODB_URI'),
             'database' => env('NOTIFICATION_DB'),
+            'options' => [
+              'database' => 'admin' // Optional: needed when using authentication
+          ],
         ],
+        
 
     ],
 

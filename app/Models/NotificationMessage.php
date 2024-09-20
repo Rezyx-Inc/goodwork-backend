@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class NotificationMessage extends Model
+class NotificationMessage extends Eloquent
 {
     protected $connection = 'mongodb_notification';
     protected $collection = 'Messages';
-
-    // Update the fillable attributes to match the document structure
     protected $fillable = ['receiver', 'all_messages_notifs'];
-
-    
 }
