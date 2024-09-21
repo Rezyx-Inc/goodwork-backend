@@ -2255,6 +2255,12 @@ class ApplicationController extends Controller
                     '</h6>
                         </li>
                         <li class="col-md-6">
+                            <p>Licence Number</p>
+                            <h6 class="mb-3">' .
+                    ($nursedetails['nursing_license_number'] ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_license_number\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                    '</h6>
+                        </li>
+                        <li class="col-md-6">
                             <p>Start Date</p>
                             <h6 class="mb-3">' .
                     ($nursedetails['worker_start_date'] ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_start_date\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .

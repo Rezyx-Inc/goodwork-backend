@@ -256,6 +256,15 @@
                                     <!-- second form slide Professional Information -->
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
+                                            {{-- Licence number --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Licence number</label>
+                                                <input type="text" id="nursing_license_number" name="nursing_license_number"
+                                                    placeholder="Enter licence number"
+                                                    value="{{ !empty($worker->nursing_license_number) ? $worker->nursing_license_number : '' }}">
+                                            </div>
+                                            <span class="help-block-licence"></span>
+
                                             {{-- Profession --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Profession</label>
@@ -388,7 +397,6 @@
                                                     name="contract_termination_policy"
                                                     placeholder="Enter Contract Termination Policy"
                                                     value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
-                                                >
                                             </div>
                                             <span class="help-block-contract_termination_policy"></span>
                                             {{-- end Contract Termination Policy --}}
@@ -696,8 +704,8 @@
                                                         {{ !empty($worker->worker_health_insurance) ? ($worker->worker_health_insurance == 1 ? 'Yes' : 'No') : 'Select an option' }}
                                                     </option>
                                                     <option value="">Select an option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="2">No</option>
                                                 </select>
                                                 <span class="help-block-worker_health_insurance"></span>
                                             </div>
@@ -2168,14 +2176,14 @@
         const state = document.querySelector('select[name="state"]');
         const zip_code = document.querySelector('input[name="zip_code"]');
         // Professional Info
+        const nursing_license_number = document.querySelector('input[name="nursing_license_number"]');
         const profession = document.querySelector('select[name="profession"]');
         const specialty = document.querySelector('select[name="specialty"]');
         const terms = document.querySelector('select[name="terms"]');
         const type = document.querySelector('select[name="type"]');
         const block_scheduling = document.querySelector('select[name="block_scheduling"]');
         const float_requirement = document.querySelector('select[name="float_requirement"]');
-        const facility_shift_cancelation_policy = document.querySelector(
-            'select[name="facility_shift_cancelation_policy"]');
+        const facility_shift_cancelation_policy = document.querySelector( 'select[name="facility_shift_cancelation_policy"]');
         const contract_termination_policy = document.querySelector('input[name="contract_termination_policy"]');
         const traveler_distance_from_facility = document.querySelector('input[name="distance_from_your_home"]');
         const clinical_setting = document.querySelector('input[name="clinical_setting_you_prefer"]');
@@ -2284,7 +2292,13 @@
         // end validation basic information
         // validation professional information
         function validateProfessionalInfo() {
+          // 45
             let isValid = true;
+            if (nursing_license_number.value === '') {
+                $('.help-block-licence').text('Please enter a licence number');
+                $('.help-block-licence').addClass('text-danger');
+                isValid = false;
+            }
             if (profession.value === '') {
                 $('.help-block-profession').text('Please enter a profession');
                 $('.help-block-profession').addClass('text-danger');
@@ -2704,6 +2718,7 @@
                     specialty: specialty.value,
                     terms: terms.value,
                     type: type.value,
+                    nursing_license_number: nursing_license_number.value,
                     block_scheduling: block_scheduling.value,
                     float_requirement: float_requirement.value,
                     facility_shift_cancelation_policy: facility_shift_cancelation_policy.value,

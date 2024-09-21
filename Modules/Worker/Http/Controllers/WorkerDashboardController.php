@@ -145,31 +145,36 @@ class WorkerDashboardController extends Controller
             if ($request->InfoType == 'ProfessionalInformation') {
                 // Validate fields for ProfessionalInformation
                 $request->validate([
-                    'specialty' => 'required|string',
-                    'profession' => 'required|string',
-                    'terms' => 'required|string',
-                    'type' => 'required|string',
-                    'block_scheduling' => 'required|string',
-                    'float_requirement' => 'required|string',
-                    'facility_shift_cancelation_policy' => 'required|string',
-                    'contract_termination_policy' => 'required|string',
-                    'traveler_distance_from_facility' => 'required|string',
-                    'clinical_setting' => 'required|string',
-                    'Patient_ratio' => 'required|string',
-                    'emr' => 'required|string',
-                    'Unit' => 'required|string',
-                    'scrub_color' => 'required|string',
-                    'rto' => 'required|string',
-                    'shift_of_day' => 'required|string',
-                    'hours_shift' => 'required|string',
-                    'preferred_assignment_duration' => 'required|string',
-                    'weeks_shift' => 'required|string',
-                ]);
+                  'nursing_license_number' => 'string',
+                    'specialty' => 'string',
+                    'profession' => 'string',
+                    'terms' => 'string',
+                    'type' => 'string',
+                    'block_scheduling' => 'string',
+                    'float_requirement' => 'string',
+                    'facility_shift_cancelation_policy' => 'string',
+                    'contract_termination_policy' => 'string',
+                    'traveler_distance_from_facility' => 'string',
+                    'clinical_setting' => 'string',
+                    'Patient_ratio' => 'string',
+                    'emr' => 'string',
+                    'Unit' => 'string',
+                    'scrub_color' => 'string',
+                    'rto' => 'string',
+                    'shift_of_day' => 'string',
+                    'hours_shift' => 'string',
+                    'preferred_assignment_duration' => 'string',
+                    'weeks_shift' => 'string',
+
+                  ]);
+                                    
+              
 
                 $nurse_data = [];
 
 
 
+                isset($request->nursing_license_number) ? ($nurse_data['nursing_license_number'] = $request->nursing_license_number) : '';
                 isset($request->specialty) ? ($nurse_data['specialty'] = $request->specialty) : '';
                 isset($request->profession) ? ($nurse_data['profession'] = $request->profession) : '';
                 isset($request->terms) ? ($nurse_data['terms'] = $request->terms) : '';
@@ -232,9 +237,8 @@ class WorkerDashboardController extends Controller
 
             return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
         } catch (\Exception $e) {
+          
             return response()->json(['msg'=>$e->getMessage(), 'status'=>false]);
-            //return response()->json(['msg' => $request->all(), 'status' => false]);
-            // return response()->json(['msg'=>'"Something was wrong please try later !"', 'status'=>false]);
         }
     }
 
