@@ -19,12 +19,18 @@
 
 
                         <div class="input-group">
+                        <form method="get" action="{{ route('explore-jobs') }}" id="filter_form"> @csrf
+
                             <div class="form-outline">
-                                <input type="search" id="form1" class="form-control" placeholder="Search anything..." />
+                                <input type="text" id="gw" class="gw" name="gw" placeholder="Search by Good Work number"   value="{{ request('gw') }}">
                             </div>
-                            <button type="button" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
+                            <button type="submit" class="btn btn-primary">
+                                🔍
                             </button>
+                            <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div> <!-- Error message display -->
+                        
+                        </form>
+
                         </div>
                     </div>
                 </div>
@@ -487,6 +493,30 @@ document.addEventListener('DOMContentLoaded', function() {
             $("#filter_form").submit(function(e) {
                 e.preventDefault(); // Prevent the form from submitting initially
 
+              // Clear previous error message
+              $('#gwError').hide().text('');
+
+              // Get the value of the gw input
+              var gwValue = $('#gw').val();
+
+              // Validation checks
+              if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
+                  // First character should be 'G' or 'g'
+                  $('#gwError').text('The GoodWork Number must start with "G".').show();
+              } else if (gwValue.length > 1 && gwValue[1].toLowerCase() !== 'w') {
+                  // Second character should be 'W' or 'w'
+                  $('#gwError').text('The GoodWork Number must start with "GW".').show();
+              } else if (gwValue.length > 2 && gwValue[2].toLowerCase() !== 'j') {
+                  // Third character should be 'J' or 'j'
+                  $('#gwError').text('The GoodWork Number must start with "GWJ".').show();
+              } else if (gwValue.length > 3 && !/^\d+$/.test(gwValue.slice(3))) {
+                  // After the third character, it should only be numbers
+                  $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
+              }
+               else {
+  
+
+
                 // Get all selected checkboxes with the name "categories[]"
                 const selectedCategories = $("input[name='terms[]']:checked");
 
@@ -524,8 +554,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // }, 500000);
 
                 this.submit();
-            });
+              }  });
+            
         });
+
     </script>
 @stop
 

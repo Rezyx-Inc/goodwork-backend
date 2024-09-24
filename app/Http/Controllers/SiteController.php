@@ -80,131 +80,106 @@ class SiteController extends Controller {
     /** explore-jobs page */
 
     public function explore_jobs(Request $request)
-    {
-       //return $request->all();
-            // commenting this for now we need to return only jobs data
+{
+    $data = [];
+    $data['user'] = auth()->guard('frontend')->user();
+    $data['jobSaved'] = new JobSaved();
+    $data['specialities'] = Speciality::select('full_name')->get();
+    $data['professions'] = Profession::select('full_name')->get();
+    $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
+    $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
+    $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
+    $data['us_states'] = States::where('country_id', $usa->id)->get();
 
-            $data = [];
-            $data['user'] = auth()->guard('frontend')->user();
-            $data['jobSaved'] = new JobSaved();
-            $data['specialities'] = Speciality::select('full_name')->get();
-            $data['professions'] = Profession::select('full_name')->get();
-            $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
-            $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-            $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
-            $data['us_states'] = States::where('country_id', $usa->id)->get();
-            // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+    // Request input handling
+    $data['profession'] = $request->input('profession', '');
+    $data['speciality'] = $request->input('speciality', '');
+    $data['experience'] = $request->input('experience', '');
+    $data['city'] = $request->input('city', '');
+    $data['state'] = $request->input('state', '');
+    $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+    $data['start_date'] = $request->input('start_date', '');
+    $data['end_date'] = $request->input('end_date', '');
+    $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : '';
+    $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
 
-            $data['profession'] = isset($request->profession) ? $request->profession : '';
-            $data['speciality'] = isset($request->speciality) ? $request->speciality : '';
-            $data['experience'] = isset($request->experience) ? $request->experience : '';
-            $data['city'] = isset($request->city) ? $request->city : '';
-            $data['state'] = isset($request->state) ? $request->state : '';
-            $data['terms'] = isset($request->terms) ? explode('-', $request->terms) : [];
-            $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
-            $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
-            $data['start_date'] = new DateTime($data['start_date']);
-            $data['start_date'] = $data['start_date']->format('Y-m-d');
-            
-            $data['shifts'] = isset($request->shifts) ? explode('-', $request->shifts) : [];
+    $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
+    $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
+    $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
+    $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
+    $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
+    $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
 
-            $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
-            $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
-            $data['hourly_pay_from'] = isset($request->hourly_pay_from) ? $request->hourly_pay_from : 2;
-            $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
-            $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
-            $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
-          
+    // Extract GW Number from request
+    $gwNumber = $request->input('gw', '');
 
-            // $user = auth()->guard('frontend')->user();
+    // Initialize query
+    $query = Job::where('active', '1');
 
-            // $nurse = NURSE::where('user_id', $user->id)->first();
-            // $jobs_id = Offer::where('worker_user_id', $nurse->id)
-            //     ->select('job_id')
-            //     ->get();
-
-            
-        $whereCond = [
-            'active' => '1'
-        ];
-
-        $ret = Job::select('*')
-            ->where($whereCond)
-            ;
- 
-
-            if ($data['profession']) {
-                
-                $ret->where('proffesion', '=', $data['profession']);
-                
-            }
-
-            if (count($data['terms'])) {
-               
-                $ret->whereIn('terms', $data['terms']);
-            }
-
-            // if (isset($request->start_date)) {
-               
-            //     $ret->where('start_date', '>=', $data['start_date']);
-            //     //$ret->where('end_date', '>=', $data['start_date']);
-            // }
-
-            if (isset($request->start_date)) {
-                
-                $ret->where('start_date', '<=', $data['start_date']);
-                
-            }
-
-            if ($data['shifts']) {
-                
-                $ret->whereIn('preferred_shift', $data['shifts']);
-            }
-
-
-            if (isset($request->weekly_pay_from)) {
-               
-                $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-            }
-
-            if (isset($request->weekly_pay_to)) {
-                $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
-            }
-
-            if (isset($request->hourly_pay_from)) {
-                $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
-            }
-
-            if (isset($request->hourly_pay_to)) {
-                $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
-            }
-
-            if (isset($request->hours_per_week_from)) {
-                $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
-            }
-
-            if (isset($request->hours_per_week_to)) {
-                $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
-            }
-
-            if(isset($request->state)){
-                $ret->where('job_state', '=', $data['state']);
-            }
-
-            if(isset($request->city)){
-                $ret->where('job_city', '=', $data['city']);
-            }
-
-
-            //return response()->json(['message' =>  $ret->get()]);
-            $data['jobs'] = $ret->get();
-
-           
-            return view('site.explore_jobs', $data);
-
-           
-        
+    // Filter by GW number (partial match using 'like')
+    if (!empty($gwNumber)) {
+        $query->where('id', 'like', $gwNumber . '%');  // Use partial match for 'id'
     }
+
+    // Apply other filters
+    if (!empty($data['profession'])) {
+        $query->where('profession', '=', $data['profession']);
+    }
+
+    if (!empty($data['terms'])) {
+        $query->whereIn('terms', $data['terms']);
+    }
+
+    if (!empty($data['start_date'])) {
+        $query->where('start_date', '<=', $data['start_date']);
+    }
+
+    if (!empty($data['shifts'])) {
+        $query->whereIn('preferred_shift', $data['shifts']);
+    }
+
+    if ($data['weekly_pay_from']) {
+        $query->where('weekly_pay', '>=', $data['weekly_pay_from']);
+    }
+
+    if ($data['weekly_pay_to']) {
+        $query->where('weekly_pay', '<=', $data['weekly_pay_to']);
+    }
+
+    if ($data['hourly_pay_from']) {
+        $query->where('hours_shift', '>=', $data['hourly_pay_from']);
+    }
+
+    if ($data['hourly_pay_to']) {
+        $query->where('hours_shift', '<=', $data['hourly_pay_to']);
+    }
+
+    if ($data['hours_per_week_from']) {
+        $query->where('hours_per_week', '>=', $data['hours_per_week_from']);
+    }
+
+    if ($data['hours_per_week_to']) {
+        $query->where('hours_per_week', '<=', $data['hours_per_week_to']);
+    }
+
+    if (!empty($data['state'])) {
+        $query->where('job_state', '=', $data['state']);
+    }
+
+    if (!empty($data['city'])) {
+        $query->where('job_city', '=', $data['city']);
+    }
+
+    if ($request->has('job_type')) {
+        $query->where('job_type', '=', $request->job_type);
+    }
+
+    // Execute the query to get filtered jobs
+    $data['jobs'] = $query->get();
+
+    // Return the view with filtered jobs
+    return view('site.explore_jobs', $data);
+}
 
     /** contact us page */
     public function contact_us(Request $request) {
