@@ -792,17 +792,7 @@
                                                 <span class="help-block-feels_like_per_hour"></span>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label>On Call Back</label>
-                                                <select name="on_call_back" id="on_call_back">
-                                                    <option value="" disabled selected hidden>Select an option</option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-on_call_back"></span>
-                                            </div>
+
 
                                             <div class="ss-form-group col-md-4">
                                                 <label>Call Back Hourly rate</label>
@@ -1707,17 +1697,7 @@
                                                         <span class="help-block-feels_like_per_hourDraft"></span>
                                                     </div>
 
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>On Call Back</label>
-                                                        <select name="on_call_back" id="on_call_backDraft">
-                                                            <option value="" disabled selected hidden>Select an option</option>
-                                                            <option value="Yes">Yes
-                                                            </option>
-                                                            <option value="No">No
-                                                            </option>
-                                                        </select>
-                                                        <span class="help-block-on_call_back"></span>
-                                                    </div>
+
 
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Call Back Hourly rate</label>
@@ -2469,17 +2449,7 @@
                                                         <span class="help-block-feels_like_per_hourEdit"></span>
                                                     </div>
 
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>On Call Back</label>
-                                                        <select name="on_call_back" id="on_call_backEdit">
-                                                            <option value="" disabled selected hidden>Select an option</option>
-                                                            <option value="Yes">Yes
-                                                            </option>
-                                                            <option value="No">No
-                                                            </option>
-                                                        </select>
-                                                        <span class="help-block-on_call_back"></span>
-                                                    </div>
+
 
 
                                                     <div class="ss-form-group col-md-4">
@@ -2645,7 +2615,6 @@ function fillData() {
         'four_zero_one_k': 'No',
         'health_insaurance': 'No',
         'feels_like_per_hour': 5,
-        'on_call_back': 'No',
         'call_back_rate': 16,
         'weekly_non_taxable_amount': 100,
         'start_date': '2025-04-27',
@@ -2810,7 +2779,6 @@ if (draftJobs.length !== 0) {
     let four_zero_one_k = draftJobs[0].four_zero_one_k;
     let health_insaurance = draftJobs[0].health_insaurance;
     let call_back_rate = draftJobs[0].call_back_rate;
-    let on_call_back = draftJobs[0].on_call_back;
     let feels_like_per_hour = draftJobs[0].feels_like_per_hour;
     let weekly_non_taxable_amount = draftJobs[0].weekly_non_taxable_amount;
     let start_date = draftJobs[0].start_date;
@@ -2999,9 +2967,6 @@ if (draftJobs.length !== 0) {
     }
     if (call_back_rate !== null) {
         document.getElementById("call_back_rateDraft").value = call_back_rate;
-    }
-    if (on_call_back !== null) {
-        document.getElementById("on_call_backDraft").value = (on_call_back == 0) ? 'No' : 'Yes';
     }
     if (weekly_non_taxable_amount !== null) {
         document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
@@ -3894,7 +3859,6 @@ if (draftJobs.length !== 0) {
         let health_insaurance = draftJobs[jobId].health_insaurance;
         let feels_like_per_hour = draftJobs[jobId].feels_like_per_hour;
         let call_back_rate = draftJobs[jobId].call_back_rate;
-        let on_call_back = draftJobs[jobId].on_call_back;
         let weekly_non_taxable_amount = draftJobs[jobId].weekly_non_taxable_amount;
         let start_date = draftJobs[jobId].start_date;
         let as_soon_as = draftJobs[jobId].as_soon_as;
@@ -4156,11 +4120,6 @@ if (draftJobs.length !== 0) {
                 document.getElementById("call_back_rateDraft").value = call_back_rate;
             }else {
                 document.getElementById("call_back_rateDraft").value = '';
-            }
-            if (on_call_back !== null) {
-                document.getElementById("on_call_backDraft").value = (on_call_back == 0) ? 'No' : 'Yes';
-            }else {
-                document.getElementById("on_call_backDraft").value = '';
             }
             if (weekly_non_taxable_amount !== null) {
                 document.getElementById("weekly_non_taxable_amountDraft").value = weekly_non_taxable_amount;
@@ -4535,7 +4494,6 @@ if (draftJobs.length !== 0) {
         var health_insaurance = document.getElementById("health_insaurance").value;
         var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
         var call_back_rate = document.getElementById("call_back_rate").value;
-        var on_call_back = document.getElementById("on_call_back").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -4589,13 +4547,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-call_back_rate').text('');
         }
 
-        if (on_call_back.trim() === '') {
-            $('.help-block-on_call_back').text('Please enter the on call back');
-            $('.help-block-on_call_back').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call_back').text('');
-        }
+
 
         // if (weekly_taxable_amount.trim() === '') {
         //     $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
@@ -5177,7 +5129,6 @@ if (draftJobs.length !== 0) {
         var health_insaurance = document.getElementById("health_insauranceDraft").value;
         var feels_like_per_hour = document.getElementById("feels_like_per_hourDraft").value;
         var call_back_rate = document.getElementById("call_back_rateDraft").value;
-        var on_call_back = document.getElementById("on_call_backDraft").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountDraft").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -5237,13 +5188,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-call_back_rate').text('');
         }
 
-        if (on_call_back.trim() === '') {
-            $('.help-block-on_call_back').text('Please enter the on call back');
-            $('.help-block-on_call_back').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call_back').text('');
-        }
+
 
         // if (weekly_taxable_amount.trim() === '') {
         //     $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
@@ -5815,7 +5760,6 @@ if (draftJobs.length !== 0) {
         var health_insaurance = document.getElementById("health_insauranceEdit").value;
          var feels_like_per_hour = document.getElementById("feels_like_per_hourEdit").value;
         var call_back_rate = document.getElementById("call_back_rateEdit").value;
-        var on_call_back = document.getElementById("on_call_backEdit").value;
         //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
         var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountEdit").value;
         // var hours_per_week = document.getElementById("hours_per_week").value;
@@ -5877,13 +5821,7 @@ if (draftJobs.length !== 0) {
             $('.help-block-call_back_rate').text('');
         }
 
-        if (on_call_back.trim() === '') {
-            $('.help-block-on_call_back').text('Please enter the on call back');
-            $('.help-block-on_call_back').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call_back').text('');
-        }
+
 
 
 
@@ -6202,7 +6140,6 @@ if (draftJobs.length !== 0) {
                         document.getElementById("health_insauranceEdit").value = (result.health_insaurance == 0) ? 'No' : 'Yes';
                         document.getElementById("feels_like_per_hourEdit").value = result.feels_like_per_hour;
                         document.getElementById("call_back_rateEdit").value = result.call_back_rate;
-                        document.getElementById("on_call_backEdit").value = (result.on_call_back == 0) ? 'No' : 'Yes';
                         document.getElementById("weekly_non_taxable_amountEdit").value = result.weekly_non_taxable_amount;
                         document.getElementById("hours_shiftEdit").value = result.hours_shift;
                         document.getElementById("start_dateEdit").value = result.start_date;

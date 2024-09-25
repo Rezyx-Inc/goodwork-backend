@@ -55,12 +55,12 @@
                     </div>
                 </div>
                 {{-- On Hold Applicants --}}
-                <div style="flex: 1 1 0px;">
+                {{-- <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Hold')" id="Hold">
                         <p>Hold</p>
                         <span>{{ $statusCounts['Hold'] }} Applicants</span>
                     </div>
-                </div>
+                </div> --}}
 
 
             </div>
@@ -76,6 +76,9 @@
                             <li><a href="javascript:void(0)" onclick="selectOfferCycleState('Rejected')"
                                     id="Rejected">Rejected</a></li>
                             <li><a href="javascript:void(0)" onclick="selectOfferCycleState('Blocked')" id="Blocked">Blocked</a>
+                            </li>
+                            <li><a href="javascript:void(0)" onclick="selectOfferCycleState('Hold')"
+                                id="Hold">Hold</a>
                             </li>
                         </ul>
                     </div>
@@ -379,13 +382,13 @@
             if (activeElement) {
                 activeElement.classList.add("active");
                 childDoneElement.classList.add("active");
-                if (type == 'Rejected' || type == 'Blocked') {
+                if (type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
                     childDoneElement.classList.remove("active");
                     doneElement.classList.add("active");
                 }
             }
             document.getElementById('listingname').innerHTML = type + ' Applications';
-            if (type == 'Done' || type == 'Rejected' || type == 'Blocked') {
+            if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
             } else {
@@ -470,7 +473,7 @@
             document.getElementById("offer-form").classList.remove("d-none");
             document.getElementById("application-details").classList.add("d-none");
             }
-            
+
 
             var addmoreexperience = document.querySelector('.add-more-experience');
 
@@ -514,7 +517,7 @@
             formfieldcertificate.appendChild(newField);
         }
 
-        
+
         $(document).ready(function() {
 
             $('#send-job-offer').on('submit', function(event) {
@@ -597,9 +600,9 @@
             }
         }
 
-        
 
-        
+
+
         setInterval(function() {
             $(document).ready(function() {
                 $('.application-job-slider-owl').owlCarousel({
@@ -1214,13 +1217,13 @@
             if (activeElement) {
                 activeElement.classList.add("active");
                 childDoneElement.classList.add("active");
-                if (type == 'Rejected' || type == 'Blocked') {
+                if (type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
                     childDoneElement.classList.remove("active");
                     doneElement.classList.add("active");
                 }
             }
             document.getElementById('listingname').innerHTML = type + ' Applications';
-            if (type == 'Done' || type == 'Rejected' || type == 'Blocked') {
+            if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
             } else {
@@ -1278,7 +1281,7 @@
                                 tbody.append(row);
                         }
                     }
-                        
+
                     },
                     error: function(error) {
                         console.log(error);
@@ -1328,7 +1331,7 @@
                         'token': csrfToken,
                         'id': id,
                         'status': applicationstatus,
-                        
+
                     },
                     type: 'POST',
                     dataType: 'json',
@@ -1364,7 +1367,7 @@
                 console.error('CSRF token not found.');
             }
         }
-        
+
         function AcceptOrRejectJobOffer(id, jobid, type) {
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
@@ -1411,7 +1414,7 @@
         function noApplicationDetailsContent(){
             $("#application-details").html("<div class='text-center no_details'><span>Select a worker application</span></div>");
         }
-        
+
     </script>
     <style>
         .ss-job-prfle-sec:after {

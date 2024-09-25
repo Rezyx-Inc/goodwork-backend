@@ -2,7 +2,7 @@
     <div class="text-center"><span>No Application</span></div>
 @else
 @foreach ($offerData as $data)
-<div id="{{$data['workerUserId']}}" class="ss-job-prfle-sec" onclick="toggleActiveClass('{{$data['workerUserId']}}'); getOffersOfEachWorker('{{$data['type']}}','{{ $data['workerUserId'] }}')">
+<div id="{{$data['workerUserId']}}" class="ss-job-prfle-sec cards" onclick="toggleActiveClass('{{$data['workerUserId']}}'); getOffersOfEachWorker('{{$data['type']}}','{{ $data['workerUserId'] }}')">
         <div class="ss-job-id-no-name">
             <ul>
                 <li class="w-50">
@@ -42,6 +42,12 @@
 <script>
     function toggleActiveClass(workerUserId) {
     var element = document.getElementById(workerUserId);
+    var allElements = document.getElementsByClassName('cards');
+    for (var i = 0; i < allElements.length; i++) {
+        if (allElements[i].classList.contains('active')) {
+            allElements[i].classList.remove('active');
+        }
+    }
     if (!element.classList.contains('active')) {
         element.classList.add('active');
     }

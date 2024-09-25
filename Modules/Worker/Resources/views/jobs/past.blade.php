@@ -67,7 +67,7 @@
         </ul>
         <div class="ss-job-apl-on-offer-btn">
             <div class="ss-job-apl-on-app-btn">
-                <button type="button" data-id="{{$jobdetails->id}}" onclick="save_jobs(this, event)">Unsave</button>
+                <button type="button" disabled>Past</button>
             </div>
         </div>
     </div>

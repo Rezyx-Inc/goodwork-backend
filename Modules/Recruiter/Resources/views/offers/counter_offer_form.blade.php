@@ -13,15 +13,15 @@
     <label>Job Name</label>
     <input type="text" name="job_name" id="job_name" placeholder="Enter job name" value="{{$offerdetails['job_name']}}">
     <input type="text" class="d-none" id="offer_id" name="offer_id"  value="{{$offerdetails['id']}}">
-   
+
 </div>
 <span class="help-block-job_name"></span>
 <div class="ss-form-group">
     <label>Type</label>
     <select name="type" id="type">
         <option value="{{$offerdetails['type']}}">{{$offerdetails['type']}}</option>
-@if (isset($allKeywords['Type'])) 
-@foreach ($allKeywords['Type'] as $value) 
+@if (isset($allKeywords['Type']))
+@foreach ($allKeywords['Type'] as $value)
     <option value="{{$value->title}}" {{($offerdetails['type'] == $value->id ? 'selected' : '')}}>{{$value->title}}</option>
 @endforeach
 @endif
@@ -31,9 +31,9 @@
 <div class="ss-form-group">
     <label>Terms</label>
     <select name="terms" id="terms">
-    
-@if (isset($allKeywords['Terms'])) 
-@foreach ($allKeywords['Terms'] as $value) 
+
+@if (isset($allKeywords['Terms']))
+@foreach ($allKeywords['Terms'] as $value)
     <option value="{{$value->id}}" {{($offerdetails['terms'] == $value->id ? 'selected' : '') }}>{{$value->title}}</option>
 @endforeach
 @endif
@@ -49,8 +49,8 @@
     <label>Profession</label>
     <select name="profession" id="profession" >
     <option value="{{$offerdetails['profession']}}">{{$offerdetails['profession']}}</option>
-@if (isset($allKeywords['Profession'])) 
-@foreach ($allKeywords['Profession'] as $value) 
+@if (isset($allKeywords['Profession']))
+@foreach ($allKeywords['Profession'] as $value)
     <option value="{{$value->id}}" {{ ($offerdetails['profession'] == $value->id ? 'selected' : '') }} > {{ $value->title }} </option>
 @endforeach
 @endif
@@ -63,8 +63,8 @@
             <div class="col-md-12">
                 <select name="preferred_specialty" class="m-0" id="preferred_specialty">
                 <option value="{{$offerdetails['preferred_specialty']}}">{{$offerdetails['preferred_specialty']}}</option>
-@if (isset($allKeywords['Speciality'])) 
-@foreach ($allKeywords['Speciality'] as $value) 
+@if (isset($allKeywords['Speciality']))
+@foreach ($allKeywords['Speciality'] as $value)
     <option value="{{$value->id}}">{{$value->title}}</option>
 @endforeach
 @endif
@@ -90,8 +90,8 @@
     <label>Facility Shift Cancellation Policy</label>
     <select name="facility_shift_cancelation_policy" class="facility_shift_cancelation_policy mb-3" id="facility_shift_cancelation_policy" value="{{$offerdetails['facility_shift_cancelation_policy']}}" >
 <option value="{{$offerdetails['facility_shift_cancelation_policy']}}">{{$offerdetails['facility_shift_cancelation_policy']}}</option>
-@if (isset($allKeywords['AssignmentDuration'])) 
-@foreach ($allKeywords['AssignmentDuration'] as $value) 
+@if (isset($allKeywords['AssignmentDuration']))
+@foreach ($allKeywords['AssignmentDuration'] as $value)
     <option value="{{$value->id}}" {{($offerdetails['block_scheduling'] == $value->id ? 'selected' : '')}}>{{$value->title}}</option>
 @endforeach
 @endif
@@ -112,8 +112,8 @@
     <label>Facility</label>
     <select name="facility" class="facility mb-3" id="facility">
     <option value="{{$offerdetails['facility']}}">{{$offerdetails['facility']}}</option>
-@if (isset($allKeywords['FacilityName'])) 
-@foreach ($allKeywords['FacilityName'] as $value) 
+@if (isset($allKeywords['FacilityName']))
+@foreach ($allKeywords['FacilityName'] as $value)
     <option value="{{$value->id}}" {{($offerdetails['facility'] == $value->id ? 'selected' : '')}}>{{$value->title}}</option>
 @endforeach
 @endif
@@ -134,8 +134,8 @@
     <label>EMR</label>
     <select name="emr" class="emr mb-3" id="emr">
     <option value="{{$offerdetails['Emr']}}">{{$offerdetails['Emr']}}</option>';
-@if (isset($allKeywords['EMR'])) 
-@foreach ($allKeywords['EMR'] as $value) 
+@if (isset($allKeywords['EMR']))
+@foreach ($allKeywords['EMR'] as $value)
     <option value="{{$value->id}}"  {{ ($offerdetails['Emr'] == $value->id ? 'selected' : '')}}>{{$value->title }}</option>
 @endforeach
 @endif
@@ -178,8 +178,8 @@
     <label>Shift Time of Day</label>
     <select name="preferred_shift" id="preferred_shift">
     <option value="{{$offerdetails['preferred_shift']}}">{{$offerdetails['preferred_shift']}}</option>
-@if(isset($allKeywords['PreferredShift'])) 
-@foreach ($allKeywords['PreferredShift'] as $value) 
+@if(isset($allKeywords['PreferredShift']))
+@foreach ($allKeywords['PreferredShift'] as $value)
     <option value="{{$value->id}}" {{($offerdetails['preferred_shift'] == $value->id ? 'selected' : '')}}>{{ $value->title}}</option>
     @endforeach
 @endif
@@ -349,7 +349,7 @@
 
 <script>
     var data = {};
-    const OfferFieldsName = 
+    const OfferFieldsName =
     [
                 'job_name',
                 'type',
@@ -403,10 +403,10 @@
 
     function getValues(OfferFieldsName) {
     try {
-        for (let i = 0; i < OfferFieldsName.length; i++) { 
+        for (let i = 0; i < OfferFieldsName.length; i++) {
             let fieldName = OfferFieldsName[i];
             let fieldValue = document.getElementById(fieldName).value;
-            if (fieldValue !== null && fieldValue.trim() !== '') { 
+            if (fieldValue !== null && fieldValue.trim() !== '') {
                 data[fieldName] = fieldValue;
             }
             console.log(fieldName);

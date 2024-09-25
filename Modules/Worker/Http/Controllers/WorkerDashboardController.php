@@ -131,7 +131,7 @@ class WorkerDashboardController extends Controller
 
     public function update_worker_profile(Request $request)
     {
-        // return $request->all();
+         // return $request->all();
         try {
             // Validate InfoType
             $request->validate([
@@ -147,7 +147,6 @@ class WorkerDashboardController extends Controller
                     'specialty' => 'required|string',
                     'profession' => 'required|string',
                     'terms' => 'required|string',
-                    'type' => 'required|string',
                     'block_scheduling' => 'required|string',
                     'float_requirement' => 'required|string',
                     'facility_shift_cancelation_policy' => 'required|string',
@@ -163,6 +162,21 @@ class WorkerDashboardController extends Controller
                     'hours_shift' => 'required|string',
                     'preferred_assignment_duration' => 'required|string',
                     'weeks_shift' => 'required|string',
+                    'worker_experience' => 'required|string',
+                    'worker_eligible_work_in_us' => 'required|string',
+                    'worker_facility_city' => 'required|string',
+                    'worker_facility_state' => 'required|string',
+                    'worker_four_zero_one_k' => 'required|string',
+                    'worker_dental' => 'required|string',
+                    'worker_overtime_rate' => 'required|string',
+                    'worker_on_call' => 'required|string',
+                    'worker_call_back' => 'required|string',
+                    'worker_on_call_check' => 'required|string',
+                    'worker_benefits' => 'required|string',
+                    'nurse_classification' => 'required|string',
+                    'worker_holiday' => 'required|date',
+                    'worker_job_type' => 'required|string',
+                    'worker_vision' => 'required|string',
                 ]);
 
                 $nurse_data = [];
@@ -172,7 +186,7 @@ class WorkerDashboardController extends Controller
                 isset($request->specialty) ? ($nurse_data['specialty'] = $request->specialty) : '';
                 isset($request->profession) ? ($nurse_data['profession'] = $request->profession) : '';
                 isset($request->terms) ? ($nurse_data['terms'] = $request->terms) : '';
-                isset($request->type) ? ($nurse_data['type'] = $request->type) : '';
+                isset($request->worker_job_type) ? ($nurse_data['worker_job_type'] = $request->worker_job_type) : '';
                 isset($request->block_scheduling) ? ($nurse_data['block_scheduling'] = $request->block_scheduling) : '';
                 isset($request->float_requirement) ? ($nurse_data['float_requirement'] = $request->float_requirement) : '';
                 isset($request->facility_shift_cancelation_policy) ? ($nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy) : '';
@@ -189,6 +203,20 @@ class WorkerDashboardController extends Controller
                 isset($request->hours_shift) ? ($nurse_data['worker_hours_shift'] = $request->hours_shift) : '';
                 isset($request->preferred_assignment_duration) ? ($nurse_data['worker_weeks_assignment'] = $request->preferred_assignment_duration) : '';
                 isset($request->weeks_shift) ? ($nurse_data['worker_shifts_week'] = $request->weeks_shift) : '';
+                isset($request->worker_experience) ? ($nurse_data['worker_experience'] = $request->worker_experience) : '';
+                isset($request->worker_eligible_work_in_us) ? ($nurse_data['worker_eligible_work_in_us'] = $request->worker_eligible_work_in_us) : '';
+                isset($request->worker_facility_city) ? ($nurse_data['worker_facility_city'] = $request->worker_facility_city) : '';
+                isset($request->worker_facility_state) ? ($nurse_data['worker_facility_state'] = $request->worker_facility_state) : '';
+                isset($request->worker_four_zero_one_k) ? ($nurse_data['worker_four_zero_one_k'] = $request->worker_four_zero_one_k) : '';
+                isset($request->worker_dental) ? ($nurse_data['worker_dental'] = $request->worker_dental) : '';
+                isset($request->worker_overtime_rate) ? ($nurse_data['worker_overtime_rate'] = $request->worker_overtime_rate) : '';
+                isset($request->worker_on_call) ? ($nurse_data['worker_on_call'] = $request->worker_on_call) : '';
+                isset($request->worker_on_call_check) ? ($nurse_data['worker_on_call_check'] = $request->worker_on_call_check) : '';
+                isset($request->worker_call_back) ? ($nurse_data['worker_call_back'] = $request->worker_call_back) : '';
+                isset($request->worker_benefits) ? ($nurse_data['worker_benefits'] = $request->worker_benefits) : '';
+                isset($request->nurse_classification) ? ($nurse_data['nurse_classification'] = $request->nurse_classification) : '';
+                isset($request->worker_holiday) ? ($nurse_data['worker_holiday'] = $request->worker_holiday) : '';
+                isset($request->worker_vision) ? ($nurse_data['worker_vision'] = $request->worker_vision) : '';
 
                 $nurse->update($nurse_data);
             }
@@ -941,7 +969,7 @@ public function store_counter_offer(Request $request)
 {
     try{
 
-   
+
     $user = auth()->guard('frontend')->user();
 
     $full_name = $user->first_name . ' ' . $user->last_name;

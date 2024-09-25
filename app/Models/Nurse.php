@@ -200,15 +200,15 @@ class Nurse extends Model implements HasMedia
         // check recruiter/employer conditions
         'worker_feels_like_per_hour_check',
         'worker_overtime_rate',
-       
-        
+
+
         'worker_weekly_non_taxable_amount_check',
         'worker_call_back_rate',
         'worker_on_call_rate',
         'worker_on_call_check',
-        'worker_on_call_back_check',
         'worker_experience',
-        'worker_benefits'
+        'worker_benefits',
+        'nurse_classification'
 
     ];
     protected static $logName = 'Nurse';

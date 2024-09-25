@@ -231,18 +231,7 @@
 
 
 
-                                <ul id="worker_ss_number"
-                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worker_ss_number']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                    <li>
-                                        <span>SS Number (*)</span>
-                                        <h6>Last 4 digits of SS#</h6>
-                                    </li>
-                                    <li>
-                                        <p data-target="ss_number_file" data-title="Yes we need your SS# to submit you"
-                                            data-placeholder="SS number" data-name="ss_number" onclick="open_modal(this)">
-                                            Yes we need your SS# to submit you</p>
-                                    </li>
-                                </ul>
+
 
                                 @if (isset($model->profession))
                                     <ul id="profession"
@@ -540,7 +529,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['Patient_ratio']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Patient Ratio</span>
-                                            <h6>{{ $model->Patient_ratio }} </h6>
+                                            <h6>{{ number_format($model->Patient_ratio) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="How many patients can you handle?"
@@ -707,7 +696,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['guaranteed_hours']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Guaranteed Hours</span>
-                                            <h6>{{ $model->guaranteed_hours }} </h6>
+                                            <h6>{{ number_format($model->guaranteed_hours) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number"
@@ -756,7 +745,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['weeks_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Shifts/Week</span>
-                                            <h6>{{ $model->weeks_shift }} </h6>
+                                            <h6>{{ number_format($model->weeks_shift) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="Ideal shifts per week"
@@ -772,7 +761,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['referral_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Referral Bonus</span>
-                                            <h6>{{ $model->referral_bonus }} </h6>
+                                            <h6>{{ number_format($model->referral_bonus) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="# of people you have referred?"
@@ -788,7 +777,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['sign_on_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Sign-On Bonus</span>
-                                            <h6>${{ $model->sign_on_bonus }} </h6>
+                                            <h6>{{ number_format($model->sign_on_bonus) }} $ </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What kind of bonus do you expect?"
@@ -804,7 +793,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['completion_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Completion Bonus</span>
-                                            <h6>${{ $model->completion_bonus }} </h6>
+                                            <h6>{{ number_format($model->completion_bonus) }} $ </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What kind of bonus do you deserve?"
@@ -820,7 +809,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['extension_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Extension Bonus</span>
-                                            <h6>${{ $model->extension_bonus }} </h6>
+                                            <h6>{{ number_format($model->extension_bonus) }} $ </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What are you comparing this to?"
@@ -836,7 +825,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['other_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Other Bonus</span>
-                                            <h6>${{ $model->other_bonus }} </h6>
+                                            <h6>{{ number_format($model->other_bonus) }} $ </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="Other bonuses you want?"
@@ -934,7 +923,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Est. Texable Hourly Rate</span>
-                                            <h6>${{ $model->actual_hourly_rate }} </h6>
+                                            <h6>{{ number_format($model->actual_hourly_rate) }} $</h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What rate is fair?"
@@ -969,7 +958,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['overtime']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Overtime</span>
-                                            <h6>{{ $model->overtime }} </h6>
+                                            <h6>{{ number_format($model->overtime) }} </h6>
                                         </li>
                                         <li>
 
@@ -1011,15 +1000,12 @@
                                         </li>
                                     </ul>
                                 @endif
-
-
-
                                 @if (isset($model->on_call_rate))
                                     <ul id="worker_on_call_rate"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>On Call Rate</span>
-                                            <h6>{{ $model->on_call_rate }} </h6>
+                                            <h6>{{ number_format($model->on_call_rate) }} $</h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What rate is fair?"
@@ -1029,30 +1015,12 @@
                                     </ul>
                                 @endif
 
-                                {{-- on_call_back --}}
-
-                                @if (isset($model->on_call_back))
-                                    <ul id="worker_on_call_back_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['on_call_back']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>On Call Back</span>
-                                            <h6>{{ $model->on_call_back == '1' ? 'Yes' : 'No' }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Will you do call back?"
-                                                data-name="worker_on_call_back_check" onclick="open_modal(this)">Will you
-                                                do call
-                                                back?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
                                 @if (isset($model->call_back_rate))
                                     <ul id="worker_call_back_rate"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['call_back_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>On Call Back Rate</span>
-                                            <h6>{{ $model->call_back_rate }} </h6>
+                                            <h6>{{ number_format($model->call_back_rate) }} $</h6>
                                         </li>
                                         <li>
                                             <p data-target="binary" data-title="Is this rate reasonable?"
@@ -1067,7 +1035,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['orientation_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Orientation Rate</span>
-                                            <h6>{{ $model->orientation_rate }} </h6>
+                                            <h6>{{ number_format($model->orientation_rate) }} $ </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What rate is fair?"
@@ -1081,7 +1049,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Weekly Taxable Amount</span>
-                                            <h6>${{ $model->weekly_taxable_amount }} </h6>
+                                            <h6>{{ number_format($model->weekly_taxable_amount) }} $ </h6>
                                         </li>
                                         {{-- <li>
             <p>?</p>
@@ -1094,7 +1062,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['employer_weekly_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Est. Employer Weekly Amount</span>
-                                            <h6>${{ $model->employer_weekly_amount }} </h6>
+                                            <h6>{{ number_format($model->employer_weekly_amount) }} $</h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What range is reasonable?"
@@ -1110,7 +1078,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['weekly_non_taxable_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Est. Weekly Non-Taxable Amount</span>
-                                            <h6>${{ $model->weekly_non_taxable_amount }} </h6>
+                                            <h6>{{ number_format($model->weekly_non_taxable_amount) }} $</h6>
                                         </li>
                                         <li>
                                             <p data-target="binary" data-title="Are you going to duplicate expenses?"
@@ -1125,7 +1093,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Goodwork Weekly Amount</span>
-                                            <h6>${{ $model->weekly_taxable_amount }} </h6>
+                                            <h6>{{ number_format($model->weekly_taxable_amount) }} $</h6>
                                         </li>
                                         <li>
                                             <h6> You have 5 days left before your rate drops form 5% to 2%</h6>
@@ -1138,7 +1106,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Total Employer Amount</span>
-                                            <h6>${{ $model->total_employer_amount }} </h6>
+                                            <h6>{{ number_format($model->total_employer_amount) }} $</h6>
                                         </li>
 
                                     </ul>
@@ -1148,7 +1116,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Total Goodwork Amount</span>
-                                            <h6>${{ $model->total_goodwork_amount }} </h6>
+                                            <h6>{{ number_format($model->total_goodwork_amount) }} $</h6>
                                         </li>
 
                                     </ul>
@@ -1158,7 +1126,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Total Contract Amount</span>
-                                            <h6>${{ $model->total_contract_amount }} </h6>
+                                            <h6>{{ number_format($model->total_contract_amount) }} $</h6>
                                         </li>
                                         {{-- <li>
             <p>?</p>
@@ -1494,7 +1462,7 @@
 
 
             {{-- driving_licence Modal --}}
-            <div class="modal fade ss-jb-dtl-pops-mn-dv" id="ss_number_file_modal" data-bs-backdrop="static"
+            {{-- <div class="modal fade ss-jb-dtl-pops-mn-dv" id="ss_number_file_modal" data-bs-backdrop="static"
                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm modal-dialog-centered">
                     <div class="modal-content">
@@ -1514,7 +1482,7 @@
                                         <input type="number" name="worker_ss_number" placeholder="">
                                         <span class="help-block"></span>
                                     </div>
-                                    {{-- here the ss --}}
+
                                     <button type="submit" class="ss-job-dtl-pop-sv-btn"
                                         onclick="collect_data(event,'input_number')">Save</button>
                                 </form>
@@ -1523,7 +1491,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
             {{-- diploma Modal --}}
             <div class="modal fade ss-jb-dtl-pops-mn-dv" id="diploma_file_modal" data-bs-backdrop="static"
                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -2602,22 +2570,6 @@ document.addEventListener('DOMContentLoaded', function() {
             var job = @json($model);
 
             switch (workerField) {
-                case 'worker_ss_number':
-                    if (InsertedValue != undefined) {
-                        match = true;
-                        console.log('truuueee');
-                    }
-                    console.log("the insreted value :", InsertedValue);
-                    break;
-                    // case 'diploma':
-                    //     // Complete logic for diploma
-                    //     break;
-                    // case 'driving_license':
-                    //     // Complete logic for driving_license
-                    //     break;
-                    // case 'worked_at_facility_before':
-                    //     // Complete logic for worked_at_facility_before
-                    //     break;
                 case 'profession':
                     if (job['profession'] == InsertedValue) {
                         match = true;
@@ -3032,10 +2984,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (worker_files_displayname_by_type.length > 0) {
                     check = true;
                 }
-            } else if (inputName == 'ss_number') {
-                if (worker_files_displayname_by_type.length > 0) {
-                    check = true;
-                }
             }
             if (check) {
                 areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
@@ -3069,9 +3017,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let worked_bfore = dataToSend['worked_at_facility_before'];
 
-            let ss_number = dataToSend['worker_ss_number'];
-            // console.log({{$matches['worker_ss_number']['match']}});
-            // let ss_number = {{$matches['worker_ss_number']['match']}};
 
             try {
                 diploma = await get_all_files_displayName_by_type('diploma');
@@ -3089,9 +3034,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(diploma);
             console.log(driving_license);
             console.log(worked_bfore);
-            console.log(ss_number);
 
-            if (diploma.length == 0 || driving_license.length == 0 || worked_bfore == null || ss_number == 0) {
+
+            if (diploma.length == 0 || driving_license.length == 0 || worked_bfore == null) {
                 notie.alert({
                     type: 'error',
                     text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
@@ -3112,7 +3057,6 @@ document.addEventListener('DOMContentLoaded', function() {
             checkFileMatch('references');
             checkFileMatch('skills');
             checkFileMatch('driving_license');
-            // checkFileMatch('ss_number');
             checkFileMatch('diploma');
             let matches = @json($matches);
             console.log((matches));
