@@ -3,8 +3,9 @@
         <div class="row">
             <div class="col-lg-5">
                 <div class="ss-foot-log-div">
-                    <a href="#"><img src="{{URL::asset('landing/img/footer-logo.png')}}" /></a>
-                    <p>Lorem ipsum dolor sit amet consectetur. Scelerisque vitae et vitae suspendisse vulputate vestibulum tortor nisl cursus. Egestas nulla in </p>
+                    <a href="#"><img src="{{ URL::asset('landing/img/footer-logo.png') }}" /></a>
+                    <p>Lorem ipsum dolor sit amet consectetur. Scelerisque vitae et vitae suspendisse vulputate
+                        vestibulum tortor nisl cursus. Egestas nulla in </p>
                 </div>
             </div>
 
@@ -12,10 +13,10 @@
                 <div class="ss-foot-link-sec">
                     <h4>Useful Links</h4>
                     <ul>
-                        <li><a href="{{route('explore-jobs')}}">Explore Jobs</a></li>
-                        <li><a href="{{route('for-employers')}}">For Employers</a></li>
-                        <li><a href="{{route('for-recruiters')}}">For Recruiters</a></li>
-                        <li><a href="{{route('about-us')}}">About Us</a></li>
+                        <li><a href="{{ route('explore-jobs') }}">Explore Jobs</a></li>
+                        <li><a href="{{ route('for-organizations') }}">For Organizations</a></li>
+                        <li><a href="{{ route('for-recruiters') }}">For Recruiters</a></li>
+                        <li><a href="{{ route('about-us') }}">About Us</a></li>
 
                     </ul>
                 </div>
@@ -25,10 +26,10 @@
                 <div class="ss-foot-link-sec">
                     <h4>Company</h4>
                     <ul>
-                    <li><a href="{{route('explore-jobs')}}">Explore Jobs</a></li>
-                        <li><a href="{{route('for-employers')}}">For Employers</a></li>
-                        <li><a href="{{route('for-recruiters')}}">For Recruiters</a></li>
-                        <li><a href="{{route('about-us')}}">About Us</a></li>
+                        <li><a href="{{ route('explore-jobs') }}">Explore Jobs</a></li>
+                        <li><a href="{{ route('for-organizations') }}">For Organizations</a></li>
+                        <li><a href="{{ route('for-recruiters') }}">For Recruiters</a></li>
+                        <li><a href="{{ route('about-us') }}">About Us</a></li>
 
                     </ul>
                 </div>
@@ -38,7 +39,7 @@
                 <div class="ss-foot-scl-sec">
                     <h4>Contact Information</h4>
                     <ul class="ss-fot-env-sec">
-                        <li><img src="{{URL::asset('landing/img/footer-env-icon.png')}}" /></li>
+                        <li><img src="{{ URL::asset('landing/img/footer-env-icon.png') }}" /></li>
                         <li><a href="mailto:goodwork@gmail.com">goodwork@gmail.com</a></li>
                     </ul>
 
@@ -65,7 +66,7 @@
         <div class="container">
             <div class="row ss-foot-btm-sec">
                 <div class="col-lg-6">
-                <p>Copyright ⓒ Goodwork, 2023. All rights reserved.</p>
+                    <p>Copyright ⓒ Goodwork, 2023. All rights reserved.</p>
                 </div>
 
                 <div class="col-lg-6 ss-desktop-show">

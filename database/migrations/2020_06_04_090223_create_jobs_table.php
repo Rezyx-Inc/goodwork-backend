@@ -25,7 +25,7 @@ class CreateJobsTable extends Migration
             $table->string('preferred_work_location')->nullable();
             $table->unsignedBigInteger('preferred_work_area')->nullable();
             $table->string("preferred_days_of_the_week")->nullable();
-            $table->string('preferred_hourly_pay_rate',4)->nullable();
+            $table->string('preferred_hourly_pay_rate', 4)->nullable();
             $table->integer('preferred_experience')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
@@ -45,11 +45,12 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('job_cerner_exp')->nullable();
             $table->unsignedBigInteger('job_meditech_exp')->nullable();
             $table->unsignedBigInteger('job_epic_exp')->nullable();
-            $table->string('job_other_exp',100)->nullable();
+            $table->string('job_other_exp', 100)->nullable();
             $table->text('job_photos')->nullable();
             $table->string('video_embed_url')->nullable();
             $table->boolean('is_open')->default(true);
             $table->uuid('recruiter_id')->nullable();
+            $table->uuid('organization_id')->nullable();
             $table->string('job_name', 36)->nullable();
 
             // Adding string columns as nullable
@@ -79,52 +80,52 @@ class CreateJobsTable extends Migration
             $table->boolean('is_closed')->default(false); // Column to indicate if job is closed, default value is false
 
 
-             // new fields
-             $table->string('highest_nursing_degree')->nullable();
-             $table->string('specialty')->nullable();
-             $table->boolean('block_scheduling')->nullable();
-             $table->boolean('float_requirement')->default(false);
-             $table->string('facility_shift_cancelation_policy')->nullable();
-             $table->string('contract_termination_policy')->nullable();
-             $table->string('traveler_distance_from_facility')->nullable();
-             $table->string('facility')->nullable();
-             $table->string('clinical_setting')->nullable();
-             $table->string('clinical_setting_you_prefer')->nullable();
-             $table->decimal('Patient_ratio', 8, 2)->nullable();
-             $table->string('Emr')->nullable();
-             $table->string('Unit')->nullable();
-             $table->string('scrub_color')->nullable();
-             $table->string('rto')->nullable();
-             $table->decimal('guaranteed_hours', 8, 2)->nullable();
-             $table->decimal('weeks_shift', 8, 2)->nullable();
-             $table->decimal('referral_bonus', 8, 2)->nullable();
-             $table->decimal('sign_on_bonus', 8, 2)->nullable();
-             $table->decimal('completion_bonus', 8, 2)->nullable();
-             $table->decimal('extension_bonus', 8, 2)->nullable();
-             $table->decimal('other_bonus', 8, 2)->nullable();
-             $table->boolean('four_zero_one_k')->default(false);
-             $table->boolean('health_insaurance')->default(false);
-             $table->boolean('dental')->default(false);
-             $table->boolean('vision')->default(false);
-             $table->decimal('actual_hourly_rate', 8, 2)->nullable();
-             $table->decimal('overtime', 8, 2)->nullable();
-             $table->date('holiday')->nullable();
-             // call backs
-             $table->boolean('on_call')->default(false);
-             $table->decimal('on_call_rate', 8, 2)->nullable();
-             $table->decimal('call_back_rate', 8, 2)->nullable();
-             // end call backs
-             $table->decimal('orientation_rate', 8, 2)->nullable();
-             $table->decimal('weekly_taxable_amount', 8, 2)->nullable();
-             $table->decimal('employer_weekly_amount', 8, 2)->nullable();
-             $table->decimal('weekly_non_taxable_amount', 8, 2)->nullable();
-             $table->decimal('total_employer_amount', 8, 2)->nullable();
-             $table->decimal('total_goodwork_amount', 8, 2)->nullable();
-             $table->decimal('total_contract_amount', 8, 2)->nullable();
-             $table->decimal('goodwork_weekly_amount', 8, 2)->nullable();
-             $table->string('tax_status', 36);
-             $table->string('terms');
-             $table->string('type')->nullable();
+            // new fields
+            $table->string('highest_nursing_degree')->nullable();
+            $table->string('specialty')->nullable();
+            $table->boolean('block_scheduling')->nullable();
+            $table->boolean('float_requirement')->default(false);
+            $table->string('facility_shift_cancelation_policy')->nullable();
+            $table->string('contract_termination_policy')->nullable();
+            $table->string('traveler_distance_from_facility')->nullable();
+            $table->string('facility')->nullable();
+            $table->string('clinical_setting')->nullable();
+            $table->string('clinical_setting_you_prefer')->nullable();
+            $table->decimal('Patient_ratio', 8, 2)->nullable();
+            $table->string('Emr')->nullable();
+            $table->string('Unit')->nullable();
+            $table->string('scrub_color')->nullable();
+            $table->string('rto')->nullable();
+            $table->decimal('guaranteed_hours', 8, 2)->nullable();
+            $table->decimal('weeks_shift', 8, 2)->nullable();
+            $table->decimal('referral_bonus', 8, 2)->nullable();
+            $table->decimal('sign_on_bonus', 8, 2)->nullable();
+            $table->decimal('completion_bonus', 8, 2)->nullable();
+            $table->decimal('extension_bonus', 8, 2)->nullable();
+            $table->decimal('other_bonus', 8, 2)->nullable();
+            $table->boolean('four_zero_one_k')->default(false);
+            $table->boolean('health_insaurance')->default(false);
+            $table->boolean('dental')->default(false);
+            $table->boolean('vision')->default(false);
+            $table->decimal('actual_hourly_rate', 8, 2)->nullable();
+            $table->decimal('overtime', 8, 2)->nullable();
+            $table->date('holiday')->nullable();
+            // call backs
+            $table->boolean('on_call')->default(false);
+            $table->decimal('on_call_rate', 8, 2)->nullable();
+            $table->decimal('call_back_rate', 8, 2)->nullable();
+            // end call backs
+            $table->decimal('orientation_rate', 8, 2)->nullable();
+            $table->decimal('weekly_taxable_amount', 8, 2)->nullable();
+            $table->decimal('organization_weekly_amount', 8, 2)->nullable();
+            $table->decimal('weekly_non_taxable_amount', 8, 2)->nullable();
+            $table->decimal('total_organization_amount', 8, 2)->nullable();
+            $table->decimal('total_goodwork_amount', 8, 2)->nullable();
+            $table->decimal('total_contract_amount', 8, 2)->nullable();
+            $table->decimal('goodwork_weekly_amount', 8, 2)->nullable();
+            $table->string('tax_status', 36);
+            $table->string('terms');
+            $table->string('type')->nullable();
             // Adding new columns (from docs)
             //not required
             $table->string('job_location')->nullable();  // done
@@ -145,11 +146,11 @@ class CreateJobsTable extends Migration
             $table->string('benefits')->nullable(); // done
             $table->decimal('feels_like_per_hour', 8, 2)->nullable(); // done
             // required
-            $table->string('facility_city',36); // done
-            $table->string('facility_state',36); // done
+            $table->string('facility_city', 36); // done
+            $table->string('facility_state', 36); // done
 
             // professionalLicensure
-            $table->string('professional_licensure',36);
+            $table->string('professional_licensure', 36);
             $table->string('professional_state_licensure');
 
 

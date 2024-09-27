@@ -1,218 +1,223 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const laboredgeSchema = mongoose.Schema({
-
     userId: {
         type: String,
-        required: true
+        required: true,
     },
     userType: {
-        type: String, // Recruiter or Employer/Organization
-        required: true
+        type: String, // Recruiter or Organization/Organization
+        required: true,
     },
     logs: {
         type: Array,
-        required: false
+        required: false,
     },
     created: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     updated: {
         type: String,
-        required: false
+        required: false,
     },
     professions: [
         {
             professionId: {
                 type: Number,
-                required: false
+                required: false,
             },
             profession: {
                 type: String,
-                required: false
-            }
-        }
+                required: false,
+            },
+        },
     ],
     specialties: [
         {
             specialtyId: {
                 type: Number,
-                required: false
+                required: false,
             },
             specialty: {
                 type: String,
-                required: false
-            }
-        }
+                required: false,
+            },
+        },
     ],
     states: [
         {
             stateId: {
                 type: Number,
-                required: false
+                required: false,
             },
             stateCode: {
                 type: String,
-                required: false
+                required: false,
             },
             stateName: {
                 type: String,
-                required: false
-            }
-        }
+                required: false,
+            },
+        },
     ],
     countries: [
         {
             countryId: {
                 type: Number,
-                required: false
+                required: false,
             },
             countryCode: {
                 type: String,
-                required: false
+                required: false,
             },
             countryName: {
                 type: String,
-                required: false
-            }
-        }
+                required: false,
+            },
+        },
     ],
     importedJobs: [
         {
             id: {
                 type: Number,
-                required: false
+                required: false,
             },
             jobTitle: {
                 type: mongoose.Mixed,
-                required: false
+                required: false,
             },
             postingId: {
                 type: mongoose.Mixed,
-                required: false
+                required: false,
             },
             description: {
                 type: String,
-                required: false
+                required: false,
             },
             signOnBonus: {
                 type: mongoose.Mixed,
-                required: false
+                required: false,
             },
             jobType: {
                 type: String,
-                required: false
+                required: false,
             },
             startDate: {
                 type: String,
-                required: false
+                required: false,
             },
             endDate: {
                 type: String,
-                required: false
+                required: false,
             },
             duration: {
                 type: Number,
-                required: false
+                required: false,
             },
             durationType: {
                 type: String,
-                required: false
+                required: false,
             },
             jobStatus: {
                 type: String,
-                required: false
+                required: false,
             },
             floatingReqUnits: {
                 type: String,
-                required: false
+                required: false,
             },
             shiftsPerWeek1: {
                 type: Number,
-                required: false
+                required: false,
             },
             scheduledHrs1: {
                 type: Number,
-                required: false
+                required: false,
             },
             shift: {
                 type: String,
-                required: false
+                required: false,
             },
             professionId: {
                 type: Number,
-                required: false
+                required: false,
             },
             specialtyId: {
                 type: Number,
-                required: false
+                required: false,
             },
             hourlyPay: {
                 type: Number,
-                required: false
+                required: false,
             },
             rates: [
                 {
                     billRateCodeId: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     billRateCode: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     rate: {
                         type: Number,
-                        required: false
-                    }
+                        required: false,
+                    },
                 },
                 {
                     billRateCodeId: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     billRateCode: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     rate: {
                         type: Number,
-                        required: false
-                    }
+                        required: false,
+                    },
                 },
                 {
                     billRateCodeId: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     billRateCode: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     rate: {
                         type: Number,
-                        required: false
-                    }
+                        required: false,
+                    },
                 },
                 {
                     billRateCodeId: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     billRateCode: {
                         type: String,
-                        required: false
+                        required: false,
                     },
                     rate: {
                         type: Number,
-                        required: false
-                    }
-                }
-            ]
-        }
-    ]
+                        required: false,
+                    },
+                },
+            ],
+        },
+    ],
 });
 
-const integrationsDB = mongoose.connection.useDb(process.env.MONGODB_INTEGRATIONS_DATABASE_NAME);
-module.exports = integrationsDB.model('Laboredge', laboredgeSchema, 'laboredge');
+const integrationsDB = mongoose.connection.useDb(
+    process.env.MONGODB_INTEGRATIONS_DATABASE_NAME
+);
+module.exports = integrationsDB.model(
+    "Laboredge",
+    laboredgeSchema,
+    "laboredge"
+);

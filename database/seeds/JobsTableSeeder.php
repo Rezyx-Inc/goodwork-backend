@@ -83,8 +83,8 @@ class JobsTableSeeder extends Seeder
             'Washington, D.C.',
         ];
 
-        $is_open = ['1','1','1','1','1','0','0','1','0','1'];
-        $is_close = ['0','0','0','0','1','1','1','0','0','0'];
+        $is_open = ['1', '1', '1', '1', '1', '0', '0', '1', '0', '1'];
+        $is_close = ['0', '0', '0', '0', '1', '1', '1', '0', '0', '0'];
 
         // Adjust the number of jobs you want to create
         $numberOfJobs = 10;
@@ -170,9 +170,9 @@ class JobsTableSeeder extends Seeder
                 'on_call' => $faker->boolean,
                 'orientation_rate' => $faker->randomFloat(2, 10, 50),
                 'weekly_taxable_amount' => $faker->randomFloat(2, 100, 500),
-                'employer_weekly_amount' => $faker->randomFloat(2, 100, 500),
+                'organization_weekly_amount' => $faker->randomFloat(2, 100, 500),
                 'weekly_non_taxable_amount' => $faker->randomFloat(2, 100, 500),
-                'total_employer_amount' => $faker->randomFloat(2, 100, 500),
+                'total_organization_amount' => $faker->randomFloat(2, 100, 500),
                 'total_goodwork_amount' => $faker->randomFloat(2, 100, 500),
                 'total_contract_amount' => $faker->randomFloat(2, 100, 500),
                 'preferred_experience' => $faker->numberBetween(1, 10),

@@ -19,8 +19,8 @@ class CreateNurseTable extends Migration
             $table->foreign('user_id')
                 ->references('id')->on('users');
             $table->string('nursing_license_state')->nullable();
-            $table->string('specialty',100)->nullable();
-            $table->string('nursing_license_number',190)->unique()->nullable();
+            $table->string('specialty', 100)->nullable();
+            $table->string('nursing_license_number', 190)->unique()->nullable();
             $table->string('highest_nursing_degree')->nullable();
             $table->boolean('serving_preceptor')->default(false)->nullable();
             $table->boolean('serving_interim_nurse_leader')->default(false)->nullable();
@@ -42,7 +42,7 @@ class CreateNurseTable extends Migration
             $table->unsignedBigInteger('ehr_proficiency_cerner')->nullable();
             $table->unsignedBigInteger('ehr_proficiency_meditech')->nullable();
             $table->unsignedBigInteger('ehr_proficiency_epic')->nullable();
-            $table->string('ehr_proficiency_other',100)->nullable();
+            $table->string('ehr_proficiency_other', 100)->nullable();
 
             $table->text('summary')->nullable();
 
@@ -64,7 +64,7 @@ class CreateNurseTable extends Migration
             $table->boolean('is_research_publications')->default(false);
 
 
-            $table->string('mu_specialty',50)->nullable();
+            $table->string('mu_specialty', 50)->nullable();
 
 
 
@@ -100,39 +100,39 @@ class CreateNurseTable extends Migration
             $table->boolean('float_requirement')->default(false);
             $table->string('facility_shift_cancelation_policy')->nullable();
             $table->string('contract_termination_policy')->nullable();
-            $table->string('distance_from_your_home',40)->nullable();
+            $table->string('distance_from_your_home', 40)->nullable();
             $table->string('clinical_setting_you_prefer')->nullable();
-            $table->decimal('worker_patient_ratio',8,2)->nullable();
+            $table->decimal('worker_patient_ratio', 8, 2)->nullable();
             $table->string('worker_emr')->nullable();
             $table->string('worker_unit')->nullable();
             $table->string('worker_scrub_color')->nullable();
             $table->string('worker_interview_dates')->nullable();
-            $table->string('worker_start_date',40)->nullable();
-            $table->string('worker_as_soon_as_posible',40)->nullable();
+            $table->string('worker_start_date', 40)->nullable();
+            $table->string('worker_as_soon_as_posible', 40)->nullable();
             $table->string('worker_shift_time_of_day')->nullable();
             $table->integer('worker_hours_per_week')->nullable();
-            $table->decimal('worker_guaranteed_hours',8,2)->nullable();
+            $table->decimal('worker_guaranteed_hours', 8, 2)->nullable();
             $table->unsignedBigInteger('worker_weeks_assignment')->nullable(); // match the preferred_assignment_duration on jobs
-            $table->decimal('worker_shifts_week',8,2)->nullable();
-            $table->decimal('worker_referral_bonus',8,2)->nullable();
-            $table->decimal('worker_sign_on_bonus',8,2)->nullable();
-            $table->decimal('worker_completion_bonus',8,2)->nullable();
-            $table->decimal('worker_extension_bonus',8,2)->nullable();
-            $table->decimal('worker_other_bonus',8,2)->nullable();
+            $table->decimal('worker_shifts_week', 8, 2)->nullable();
+            $table->decimal('worker_referral_bonus', 8, 2)->nullable();
+            $table->decimal('worker_sign_on_bonus', 8, 2)->nullable();
+            $table->decimal('worker_completion_bonus', 8, 2)->nullable();
+            $table->decimal('worker_extension_bonus', 8, 2)->nullable();
+            $table->decimal('worker_other_bonus', 8, 2)->nullable();
             $table->string('how_much_k')->nullable();
             $table->boolean('worker_four_zero_one_k')->default(false);
             $table->boolean('worker_health_insurance')->nullable();
             $table->boolean('worker_dental')->nullable();
             $table->boolean('worker_vision')->nullable();
-            $table->decimal('worker_actual_hourly_rate',8,2)->nullable();
-            $table->decimal('worker_overtime',8,2)->nullable();
+            $table->decimal('worker_actual_hourly_rate', 8, 2)->nullable();
+            $table->decimal('worker_overtime', 8, 2)->nullable();
             $table->dateTime('worker_holiday')->nullable();
-            $table->decimal('worker_on_call',8,2)->nullable();
-            $table->decimal('worker_call_back',8,2)->nullable();
-            $table->decimal('worker_orientation_rate',8,2)->nullable();
-            $table->decimal('worker_weekly_taxable_amount',8,2)->nullable();
-            $table->decimal('worker_employer_weekly_amount',8,2)->nullable();
-            $table->decimal('worker_weekly_non_taxable_amount',8,2)->nullable();
+            $table->decimal('worker_on_call', 8, 2)->nullable();
+            $table->decimal('worker_call_back', 8, 2)->nullable();
+            $table->decimal('worker_orientation_rate', 8, 2)->nullable();
+            $table->decimal('worker_weekly_taxable_amount', 8, 2)->nullable();
+            $table->decimal('worker_organization_weekly_amount', 8, 2)->nullable();
+            $table->decimal('worker_weekly_non_taxable_amount', 8, 2)->nullable();
             // add new fields
             $table->string('rto', 50)->nullable();
             $table->string('profession', 50)->nullable();
@@ -143,13 +143,13 @@ class CreateNurseTable extends Migration
             $table->string('worker_job_type')->deault('');
             $table->decimal('worker_hours_shift', 8, 2);
             // payment information
-            $table->string('full_name_payment',100)->nullable();
-            $table->string('address_payment',100)->nullable();
-            $table->string('email_payment',100)->nullable();
-            $table->string('bank_name_payment',100)->nullable();
-            $table->string('routing_number_payment',40)->nullable();
-            $table->string('bank_account_payment_number',40)->nullable();
-            $table->string('phone_number_payment',40)->nullable();
+            $table->string('full_name_payment', 100)->nullable();
+            $table->string('address_payment', 100)->nullable();
+            $table->string('email_payment', 100)->nullable();
+            $table->string('bank_name_payment', 100)->nullable();
+            $table->string('routing_number_payment', 40)->nullable();
+            $table->string('bank_account_payment_number', 40)->nullable();
+            $table->string('phone_number_payment', 40)->nullable();
 
             // added fields from sheets
             $table->string('worker_urgency')->nullable();
@@ -160,10 +160,10 @@ class CreateNurseTable extends Migration
             $table->boolean('worker_eligible_work_in_us')->default(false);
             $table->decimal('worker_feels_like_per_hour', 8, 2)->nullable(); // done
 
-            $table->string('worker_facility_city',36)->nullable(); // done
-            $table->string('worker_facility_state',36)->nullable(); // done
+            $table->string('worker_facility_city', 36)->nullable(); // done
+            $table->string('worker_facility_state', 36)->nullable(); // done
             $table->boolean('worker_feels_like_per_hour_check')->default(false); // done
-            $table->string('worker_overtime_rate',36)->nullable(); // done
+            $table->string('worker_overtime_rate', 36)->nullable(); // done
             $table->boolean('worker_on_call_check')->default(false); // done
             $table->decimal('worker_weekly_non_taxable_amount_check', 8, 2)->nullable(); // done
             $table->boolean('worker_call_back_check')->default(false); // done
@@ -175,7 +175,7 @@ class CreateNurseTable extends Migration
             $table->unsignedTinyInteger('worker_benefits')->default(0);
 
             // adding worker classification
-            $table->string('nurse_classification')->nullable(); 
+            $table->string('nurse_classification')->nullable();
 
 
 

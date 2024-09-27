@@ -10,41 +10,41 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
-            
+
             let id = @json($id);
             var PrivateChannelNotification = 'private-notification.' + id;
-            // Listen for Message Notification messages event 
+            // Listen for Message Notification messages event
             window.Echo.private(PrivateChannelNotification)
                 .listen('NotificationMessage', (event) => {
                     console.log('from the messages blade:', event);
                     let room_last_messages = document.getElementById('room_' + event.sender);
-                    if(room_last_messages){
-                        if (event.content.length > 16){
+                    if (room_last_messages) {
+                        if (event.content.length > 16) {
                             room_last_messages.innerHTML = event.content.substring(0, 16) + ' ...';
-                        } else { 
+                        } else {
                             room_last_messages.innerHTML = event.content;
                         }
                     }
                     let lastMessage = document.getElementById('lastMessage_' + event.sender);
-                    if(lastMessage){
+                    if (lastMessage) {
                         lastMessage.innerHTML = 'Just now';
                     }
-                   
+
 
                     let messagesN = document.getElementById('messagesN_' + event.sender);
-                    if(messagesN){
+                    if (messagesN) {
                         messagesN.classList.remove("d-none");
                         messagesN.innerHTML = parseInt(messagesN.innerHTML) + 1;
                     }
                 });
         });
         var idWorker_Global = '';
-        var idEmployer_Global = '';
+        var idOrganization_Global = '';
 
 
         var PrivateChannel = '';
         var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
-        function getPrivateMessages(idWorker, fullName, idEmployer) {
+        function getPrivateMessages(idWorker, fullName, idOrganization) {
 
             // Leave the current channel
             window.Echo.leave(PrivateChannel);
@@ -56,24 +56,24 @@
             };
 
             $.ajax({
-                        url: 'read-recruiter-message-notification', // Replace 'read-message-notification' with the actual path to your route
-                        type: 'POST',
-                        data: data,
-                        success: function(response) {
-                        console.log('Success:', response);
-                        // Handle success response
-                        // Navigate to a new page after the AJAX call is successful
-                        let messagesN = document.getElementById('messagesN_' + idWorker);
-                        if(messagesN){
-                            messagesN.classList.add("d-none");
-                            messagesN.innerHTML = 0;
-                        }
-                        },          
-                        error: function(xhr, status, error) {
-                            console.error('Error:', error);
-                            // Handle errors here
-                        }
-             });
+                url: 'read-recruiter-message-notification', // Replace 'read-message-notification' with the actual path to your route
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log('Success:', response);
+                    // Handle success response
+                    // Navigate to a new page after the AJAX call is successful
+                    let messagesN = document.getElementById('messagesN_' + idWorker);
+                    if (messagesN) {
+                        messagesN.classList.add("d-none");
+                        messagesN.innerHTML = 0;
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    // Handle errors here
+                }
+            });
 
             document.getElementById('fullName').innerHTML = fullName;
 
@@ -81,11 +81,11 @@
             document.getElementById('empty_room').classList.add("d-none");
             document.getElementById('body_room').classList.remove("d-none");
             idWorker_Global = idWorker;
-            idEmployer_Global = idEmployer;
+            idOrganization_Global = idOrganization;
 
             let id = @json($id);
 
-            PrivateChannel = 'private-chat.' + idEmployer + '.' + id + '.' + idWorker_Global;
+            PrivateChannel = 'private-chat.' + idOrganization + '.' + id + '.' + idWorker_Global;
 
             let messageText = document.getElementById('message');
             console.log(messageText);
@@ -94,7 +94,7 @@
                 var senderClass;
                 if (message.senderRole == 'RECRUITER') {
                     senderClass = 'ss-msg-rply-blue-dv';
-                } else if (message.senderRole == 'EMPLOYER') {
+                } else if (message.senderRole == 'ORGANIZATION') {
                     senderClass = 'ss-msg-rply-black-dv';
                 } else {
                     senderClass = 'ss-msg-rply-recrut-dv';
@@ -140,7 +140,8 @@
                 });
 
             $('.private-messages').html('');
-            $.get('/recruiter/getMessages?page=1&workerId=' + idWorker + '&employerId=' + idEmployer, function(data) {
+            $.get('/recruiter/getMessages?page=1&workerId=' + idWorker + '&organizationId=' + idOrganization, function(
+            data) {
                 // Parse the returned data
                 var messages = data.messages;
 
@@ -151,7 +152,7 @@
                     var senderClass;
                     if (message.sender == 'RECRUITER') {
                         senderClass = 'ss-msg-rply-blue-dv';
-                    } else if (message.sender == 'EMPLOYER') {
+                    } else if (message.sender == 'ORGANIZATION') {
                         senderClass = 'ss-msg-rply-black-dv';
                     } else {
                         senderClass = 'ss-msg-rply-recrut-dv';
@@ -188,10 +189,11 @@
 
             });
         }
-        
+
         $(document).ready(function() {
             if (@json($direct) == true) {
-                getPrivateMessages(@json($idWorker),@json($nameworker) , @json($idEmployer));
+                getPrivateMessages(@json($idWorker), @json($nameworker),
+                    @json($idOrganization));
             }
             var messagesArea = $('.messages-area');
             messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
@@ -205,7 +207,7 @@
                     $('#login').addClass('d-none');
                     // Make an AJAX request to the API
                     $.get('/recruiter/getMessages?page=' + page + '&workerId=' + idWorker_Global +
-                        '&employerId=' + idEmployer_Global,
+                        '&organizationId=' + idOrganization_Global,
                         function(data) {
                             // Parse the returned data
                             var messages = data.messages;
@@ -213,13 +215,13 @@
                             console.log(idWorker_Global);
                             // Function to create the HTML for a message
                             function createMessageHTML(message) {
-                                //  var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+                                //  var senderClass = message.sender == 'ORGANIZATION' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
 
 
                                 var senderClass;
                                 if (message.sender == 'RECRUITER') {
                                     senderClass = 'ss-msg-rply-blue-dv';
-                                } else if (message.sender == 'EMPLOYER') {
+                                } else if (message.sender == 'ORGANIZATION') {
                                     senderClass = 'ss-msg-rply-black-dv';
                                 } else {
                                     senderClass = 'ss-msg-rply-recrut-dv';
@@ -230,17 +232,18 @@
                                 var time = Array.isArray(message.time) ? message.time.join(', ') :
                                     message.time;
 
-                                    var messageContent;
-                    if (message.type === 'file') {
-                        // If the message is a file, create a link to download the file
-                        // The file name is extracted from the base64 data URL
-                        var fileName = message.fileName; // assuming 'fileName' is the key in the message data
-                        messageContent =
-                            `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
-                    } else {
-                        // If the message is not a file, display the message text
-                        messageContent = `<p>${message.content}</p>`;
-                    }
+                                var messageContent;
+                                if (message.type === 'file') {
+                                    // If the message is a file, create a link to download the file
+                                    // The file name is extracted from the base64 data URL
+                                    var fileName = message
+                                        .fileName; // assuming 'fileName' is the key in the message data
+                                    messageContent =
+                                        `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
+                                } else {
+                                    // If the message is not a file, display the message text
+                                    messageContent = `<p>${message.content}</p>`;
+                                }
 
                                 return `
                         <div class="${senderClass}">
@@ -274,13 +277,13 @@
             console.log(type);
             let id = @json($id);
             console.log('recruiter id', id);
-            PrivateChannel = 'private-chat.' + idEmployer_Global + '.' + id+'.' + idWorker_Global;
+            PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + id + '.' + idWorker_Global;
             console.log(PrivateChannel);
             let messageInput = document.getElementById('messageEnvoye');
             let message = messageInput.value;
 
             let formData = new FormData();
-            formData.append('idEmployer', idEmployer_Global);
+            formData.append('idOrganization', idOrganization_Global);
             formData.append('idWorker', idWorker_Global);
             formData.append('type', type);
             formData.append('_token', '{{ csrf_token() }}');
@@ -330,11 +333,11 @@
                     let messageInput = document.getElementById('messageEnvoye');
                     if (messageInput.value.trim() === '') {
                         return;
-                    }else{
+                    } else {
                         sendMessage('text'); // Call your function
                     }
-                   
-                   
+
+
                 }
             });
         });
@@ -405,34 +408,37 @@
                             <!-- rooms  -->
                             @if ($data)
                                 @foreach ($data as $room)
-                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['employerId'] }}')"
+                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')"
                                         class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
-<p id="room_{{$room['workerId']}}">
-    @if(isset($room['messages'][0]))
-    {{ $room['messages'][0]['type'] === 'file' ? (strlen($room['messages'][0]['fileName']) < 16 ? $room['messages'][0]['fileName'] : substr($room['messages'][0]['fileName'], 0, 16) .' ...') : (strlen($room['messages'][0]['content']) < 16 ? $room['messages'][0]['content'] : substr($room['messages'][0]['content'], 0, 16) . ' ...')}}
-    @else
-        No messages yet.
-    @endif
-</p>
+                                                <p id="room_{{ $room['workerId'] }}">
+                                                    @if (isset($room['messages'][0]))
+                                                        {{ $room['messages'][0]['type'] === 'file' ? (strlen($room['messages'][0]['fileName']) < 16 ? $room['messages'][0]['fileName'] : substr($room['messages'][0]['fileName'], 0, 16) . ' ...') : (strlen($room['messages'][0]['content']) < 16 ? $room['messages'][0]['content'] : substr($room['messages'][0]['content'], 0, 16) . ' ...') }}
+                                                    @else
+                                                        No messages yet.
+                                                    @endif
+                                                </p>
                                             </li>
                                         </ul>
 
                                         <ul style="width:100%" class="ss-msg-notifi-sec">
                                             <li>
-                                                <p id="lastMessage_{{$room['workerId']}}">{{ $room['lastMessage'] }}</p>
+                                                <p id="lastMessage_{{ $room['workerId'] }}">{{ $room['lastMessage'] }}</p>
                                             </li><br>
-                                            @if($notificationMessages)
-                                            @foreach($notificationMessages as $notificationMessage)
-                                                @if($notificationMessage['sender'] == $room['workerId'])
-                                                    <li><span id="messagesN_{{$room['workerId']}}">{{$notificationMessage['numOfMessagesStr']}}</span></li>
-                                                @endif
-                                            @endforeach
+                                            @if ($notificationMessages)
+                                                @foreach ($notificationMessages as $notificationMessage)
+                                                    @if ($notificationMessage['sender'] == $room['workerId'])
+                                                        <li><span
+                                                                id="messagesN_{{ $room['workerId'] }}">{{ $notificationMessage['numOfMessagesStr'] }}</span>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
                                             @else
-                                            <li><span class="d-none" id="messagesN_{{$room['workerId']}}">0</span></li>
+                                                <li><span class="d-none" id="messagesN_{{ $room['workerId'] }}">0</span>
+                                                </li>
                                             @endif
                                         </ul>
                                     </div>
@@ -482,12 +488,12 @@
                             </div>
                             <div class="row" style="margin-top: 25px;">
                                 <div class="row justify-content-end" id="fileInfo" style="display: none;">
-                                    <div class="col-6" >
+                                    <div class="col-6">
                                         <span style=" margin-left: 16px;" id="fileName"></span>
                                     </div>
                                     <div style=" display: flex;
                                 justify-content: end;
-                               
+
                                 "
                                         class="col-6">
                                         <button
