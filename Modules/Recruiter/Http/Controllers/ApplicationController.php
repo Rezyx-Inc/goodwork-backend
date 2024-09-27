@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\NotificationOffer;
 // ************ models ************
 /** Models */
-use App\Models\{Job, Offer, Nurse, User, OffersLogs,States,Cities,Keyword};
+use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword};
 
 class ApplicationController extends Controller
 {
@@ -102,7 +102,7 @@ class ApplicationController extends Controller
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        $statusCountsQuery = Offer::where('created_by',$recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+        $statusCountsQuery = Offer::where('created_by', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
             if ($statusCount) {
                 $statusCounts[$statusCount->status] = $statusCount->count;
@@ -114,24 +114,26 @@ class ApplicationController extends Controller
         return view('recruiter::recruiter/applicationjourney', compact('statusCounts', 'status_count_draft'));
     }
 
-    public function check_recruiter_payment(Request $request){
+    public function check_recruiter_payment(Request $request)
+    {
 
-    $recruiter_id = Auth::guard('recruiter')->user()->id;
+        $recruiter_id = Auth::guard('recruiter')->user()->id;
 
-    if (!$this->checkPaymentMethod($recruiter_id)) {
-        return response()->json(['status' => false , 'message' => 'Please add a payment method']);
+        if (!$this->checkPaymentMethod($recruiter_id)) {
+            return response()->json(['status' => false, 'message' => 'Please add a payment method']);
+        }
+
+        return response()->json(['status' => true, 'message' => 'Please add a payment method']);
     }
 
-        return response()->json(['status' => true , 'message' => 'Please add a payment method']);
-    }
-
-    public function checkPaymentMethod($recruiter_id) {
+    public function checkPaymentMethod($recruiter_id)
+    {
         $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/customer-payment-method';
         $stripe_id = User::where('id', $recruiter_id)->first()->stripeAccountId;
         $data = ['customerId' => $stripe_id];
         $response = Http::get($url, $data);
 
-        if ($stripe_id == null ||  $response->json()['status'] == false) {
+        if ($stripe_id == null || $response->json()['status'] == false) {
             return false;
         }
         return true;
@@ -205,11 +207,11 @@ class ApplicationController extends Controller
                 $update_array['weekly_non_taxable_amount'] = isset($request->weekly_non_taxable_amount) ? $request->weekly_non_taxable_amount : $job_data->weekly_non_taxable_amount;
                 $update_array['description'] = isset($request->description) ? $request->description : $job_data->description;
                 $update_array['weekly_taxable_amount'] = isset($request->hours_shift) && isset($request->actual_hourly_rate) ? $request->hours_shift * $request->actual_hourly_rate : null;
-                $update_array['employer_weekly_amount'] = isset($request->weekly_non_taxable_amount) && isset($update_array['weekly_taxable_amount']) ? $request->weekly_non_taxable_amount + $update_array['weekly_taxable_amount'] : null;
+                $update_array['organization_weekly_amount'] = isset($request->weekly_non_taxable_amount) && isset($update_array['weekly_taxable_amount']) ? $request->weekly_non_taxable_amount + $update_array['weekly_taxable_amount'] : null;
                 $update_array['goodwork_weekly_amount'] = isset($update_array['weekly_taxable_amount']) ? $update_array['weekly_taxable_amount'] * 0.05 : 0;
-                $update_array['total_employer_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['employer_weekly_amount']) && isset($request->sign_on_bonus) && isset($request->completion_bonus) ? $request->preferred_assignment_duration + $update_array['employer_weekly_amount'] + $request->sign_on_bonus + $request->completion_bonus : null;
+                $update_array['total_organization_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['organization_weekly_amount']) && isset($request->sign_on_bonus) && isset($request->completion_bonus) ? $request->preferred_assignment_duration + $update_array['organization_weekly_amount'] + $request->sign_on_bonus + $request->completion_bonus : null;
                 $update_array['total_goodwork_amount'] = isset($request->preferred_assignment_duration) && isset($update_array['goodwork_weekly_amount']) ? $request->preferred_assignment_duration + $update_array['goodwork_weekly_amount'] : null;
-                $update_array['total_contract_amount'] = isset($update_array['total_goodwork_amount']) && isset($update_array['total_employer_amount']) ? $update_array['total_goodwork_amount'] + isset($update_array['total_employer_amount']) : null;
+                $update_array['total_contract_amount'] = isset($update_array['total_goodwork_amount']) && isset($update_array['total_organization_amount']) ? $update_array['total_goodwork_amount'] + isset($update_array['total_organization_amount']) : null;
                 $update_array['weekly_pay'] = isset($job_data->weekly_pay) ? $job_data->weekly_pay : null;
                 $update_array['tax_status'] = isset($request->tax_status) ? $request->tax_status : null;
                 if ($request->funcionalityType == 'createdraft') {
@@ -260,35 +262,35 @@ class ApplicationController extends Controller
         return response()->json($responseData);
     }
 
-    
-    
+
+
     // get offer information for form counter
     public function get_offer_information(Request $request)
     {
-        try{
+        try {
             $offer_id = $request->offer_id;
             $offerdetails = Offer::where('id', $offer_id)->first();
             // the one who counter an offer or send the first offer
             $user_id = $offerdetails->created_by;
             $userdetails = User::where('id', $user_id)->first();
-            $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails,'userdetails' => $userdetails])->render();
+            $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails])->render();
             return new JsonResponse($response, 200);
-            
-        }catch(\Exception $ex){
-            return response()->json(["message"=>$ex->getMessage()]);
+
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
         }
     }
 
-    // get worker infromation of each offer type  
+    // get worker infromation of each offer type
     public function get_offers_by_type(Request $request)
     {
-        try{
+        try {
             $type = $request->type;
             $recruiter = Auth::guard('recruiter')->user();
-            $offerLists = Offer::where('status', $type)->where('created_by',$recruiter->id)->get();
-            
+            $offerLists = Offer::where('status', $type)->where('created_by', $recruiter->id)->get();
+
             $nurses = [];
-            $offerData = [];       
+            $offerData = [];
             foreach ($offerLists as $value) {
                 if ($value && !in_array($value->worker_user_id, $nurses)) {
                     $nurses[] = $value->worker_user_id;
@@ -307,68 +309,70 @@ class ApplicationController extends Controller
                         'specialty' => $nurse->specialty ?? null,
                     ];
                 }
-            }  if (empty($offerData)) {
+            }
+            if (empty($offerData)) {
                 $noApplications = true;
             } else {
                 $noApplications = false;
             }
-            $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications'=>$noApplications,'offerData' => $offerData])->render();
+            $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
             return new JsonResponse($response, 200);
-            
-        }catch(\Exception $ex){
-            return response()->json(["message"=>$ex->getMessage()]);
+
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
         }
     }
 
     function get_offers_of_each_worker(Request $request)
     {
-        try{
+        try {
             $recruiter = Auth::guard('recruiter')->user();
             $recruiter_id = $recruiter->id;
             $worker_id = $request->nurse_id;
             $type = $request->type;
             $nurse = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $nurse->user_id)->first();
-            $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'created_by'=>$recruiter->id])->get();
-            $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'created_by'=>$recruiter->id])->count();
+            $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'created_by' => $recruiter->id])->get();
+            $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'created_by' => $recruiter->id])->count();
             // file availablity check
-             $hasFile = false;
-             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
-             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
-             $files = [];
-             if (!empty($fileresponse->json()['files'])) {
-                 $hasFile = true;
- 
-                 foreach($fileresponse->json()['files'] as $file){
-                     $files[] = [
-                         'name' => $file['name'],
-                         'content' => $file['content'],
-                         'type' => $file['type']
-                     ];
-                 }
-             }
-            $response['content'] = view('recruiter::offers.workers_complete_information', ['type'=>$type,'hasFile'=>$hasFile,'userdetails'=>$user,'nursedetails'=>$nurse,'jobappliedcount'=>$jobappliedcount,'offerdetails' => $offers])->render();
+            $hasFile = false;
+            $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
+            $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
+            $files = [];
+            if (!empty($fileresponse->json()['files'])) {
+                $hasFile = true;
+
+                foreach ($fileresponse->json()['files'] as $file) {
+                    $files[] = [
+                        'name' => $file['name'],
+                        'content' => $file['content'],
+                        'type' => $file['type']
+                    ];
+                }
+            }
+            $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
             //return response()->json(['response'=>$response]);
             return new JsonResponse($response, 200);
-        }catch(\Exeption $ex){
-            return response()->json(["message"=>$ex->getMessage()]);
+        } catch (\Exeption $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
         }
     }
 
-    function get_one_offer_information(Request $request){
-        
-        try{
+    function get_one_offer_information(Request $request)
+    {
+
+        try {
             $offer_id = $request->offer_id;
-            $offer = Offer::where('id',$offer_id)->first();
+            $offer = Offer::where('id', $offer_id)->first();
             $worker_id = $offer->worker_user_id;
-            $worker_details = Nurse::where('id',$worker_id)->first();
-            $user = User::where('id',$worker_details->user_id)->first();
+            $worker_details = Nurse::where('id', $worker_id)->first();
+            $user = User::where('id', $worker_details->user_id)->first();
             $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
-            $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails'=>$user,'offerdetails' => $offer,'offerLogs' => $offerLogs])->render();
+            $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
             return new JsonResponse($response, 200);
-        }catch(\Exception $ex){
-            return response()->json(["message"=>$ex->getMessage()]);
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
         }
     }
 
@@ -389,7 +393,7 @@ class ApplicationController extends Controller
                 $time = now()->toDateTimeString();
                 $receiver = $offer->worker_user_id;
                 $job_name = Job::where('id', $jobid)->first()->job_name;
-                event(new NotificationOffer($status,false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $offer_id));
+                event(new NotificationOffer($status, false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
                 $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
                 $statusCounts = [];
                 $offerLists = [];
@@ -413,39 +417,40 @@ class ApplicationController extends Controller
         }
     }
 
-    public function recruiter_counter_offer(Request $request){
-    try{
-        $recruiter = Auth::guard('recruiter')->user();
-        $recruiter_id = $recruiter->id;
-        $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
-        $offer_id = $request->id;
-        $data = $request->data;
-        $offer = Offer::where('id', $offer_id)->first();
-        // update it 
-        if ($offer) {
-            $offer->update($data);
-            $jobid = $offer->job_id;
-            $time = now()->toDateTimeString();
-            $receiver = $offer->worker_user_id;
-            $job_name = Job::where('id', $jobid)->first()->job_name;
-            event(new NotificationOffer('Offered',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $offer_id));
+    public function recruiter_counter_offer(Request $request)
+    {
+        try {
+            $recruiter = Auth::guard('recruiter')->user();
+            $recruiter_id = $recruiter->id;
+            $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
+            $offer_id = $request->id;
+            $data = $request->data;
+            $offer = Offer::where('id', $offer_id)->first();
+            // update it
+            if ($offer) {
+                $offer->update($data);
+                $jobid = $offer->job_id;
+                $time = now()->toDateTimeString();
+                $receiver = $offer->worker_user_id;
+                $job_name = Job::where('id', $jobid)->first()->job_name;
+                event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $offer_id));
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Offer updated successfully',
-                'offer' => $offer
-            ]);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Offer updated successfully',
+                    'offer' => $offer
+                ]);
 
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Offer not found'
-            ], 404);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Offer not found'
+                ], 404);
+            }
+
+        } catch (\Exception $ex) {
+            return response()->json(["message" => $ex->getMessage()]);
         }
-        
-    }catch(\Exception $ex){
-        return response()->json(["message"=>$ex->getMessage()]);
-    }
 
 
     }
@@ -453,85 +458,85 @@ class ApplicationController extends Controller
 
     public function AcceptOrRejectJobOffer(Request $request)
     {
-        try{
-        $user = Auth::guard('recruiter')->user();
-        $recruiter_id = $user->id;
-        $full_name = $user->first_name . ' ' . $user->last_name;
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'jobid' => 'required',
-        ]);
-        if ($validator->fails()) {
-            $responseData = [
-                'status' => 'error',
-                'message' => $validator->errors()->first(),
-            ];
-        } else {
-            if ($request->type == 'rejectcounter') {
-                $update_array['is_counter'] = '0';
-                $update_array['is_draft'] = '0';
-                $update_array['status'] = 'Rejected';
-                $job = DB::table('offers')
-                    ->where(['id' => $request->id])
-                    ->update($update_array);
-                if ($job) {
-                    $responseData = [
-                        'status' => 'success',
-                        'message' => 'Job Rejected successfully',
-                    ];
-                    $offer = Offer::where('id', $request->id)->first();
-                    $id = $request->id;
-                    $jobid = $offer->job_id;
-                    $time = now()->toDateTimeString();
-                    $receiver = $offer->worker_user_id;
-                    $job_name = Job::where('id', $jobid)->first()->job_name;
+        try {
+            $user = Auth::guard('recruiter')->user();
+            $recruiter_id = $user->id;
+            $full_name = $user->first_name . ' ' . $user->last_name;
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'jobid' => 'required',
+            ]);
+            if ($validator->fails()) {
+                $responseData = [
+                    'status' => 'error',
+                    'message' => $validator->errors()->first(),
+                ];
+            } else {
+                if ($request->type == 'rejectcounter') {
+                    $update_array['is_counter'] = '0';
+                    $update_array['is_draft'] = '0';
+                    $update_array['status'] = 'Rejected';
+                    $job = DB::table('offers')
+                        ->where(['id' => $request->id])
+                        ->update($update_array);
+                    if ($job) {
+                        $responseData = [
+                            'status' => 'success',
+                            'message' => 'Job Rejected successfully',
+                        ];
+                        $offer = Offer::where('id', $request->id)->first();
+                        $id = $request->id;
+                        $jobid = $offer->job_id;
+                        $time = now()->toDateTimeString();
+                        $receiver = $offer->worker_user_id;
+                        $job_name = Job::where('id', $jobid)->first()->job_name;
 
 
-                    event(new NotificationOffer('Rejected',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
-                }
-            } elseif ($request->type == 'offersend') {
-                $update_array['is_counter'] = '0';
-                $update_array['is_draft'] = '0';
-                $update_array['status'] = 'Onboarding';
-                $job = Offer::find($request->id);
-                if ($job) {
-                    $job->update($update_array);
-                }
+                        event(new NotificationOffer('Rejected', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
+                    }
+                } elseif ($request->type == 'offersend') {
+                    $update_array['is_counter'] = '0';
+                    $update_array['is_draft'] = '0';
+                    $update_array['status'] = 'Onboarding';
+                    $job = Offer::find($request->id);
+                    if ($job) {
+                        $job->update($update_array);
+                    }
 
                     $user = Auth::guard('recruiter')->user();
-                $data = [
-                    'offerId' => $request->id,
-                    'amount' => '1',
-                    'stripeId' =>$user->stripeAccountId,
-                    'fullName' => $user->first_name . ' ' . $user->last_name,
-                ];
-
-                ;
-
-                $responseData = [];
-                if ($job) {
-                    $responseData = [
-                        'status' => 'success',
-                        'message' => $responseInvoice->json()['message'],
+                    $data = [
+                        'offerId' => $request->id,
+                        'amount' => '1',
+                        'stripeId' => $user->stripeAccountId,
+                        'fullName' => $user->first_name . ' ' . $user->last_name,
                     ];
-                    $offer = Offer::where('id', $request->id)->first();
-                    $id = $request->id;
-                    $jobid = $offer->job_id;
-                    $time = now()->toDateTimeString();
-                    $receiver = $offer->worker_user_id;
-                    $job_name = Job::where('id', $jobid)->first()->job_name;
+
+                    ;
+
+                    $responseData = [];
+                    if ($job) {
+                        $responseData = [
+                            'status' => 'success',
+                            'message' => $responseInvoice->json()['message'],
+                        ];
+                        $offer = Offer::where('id', $request->id)->first();
+                        $id = $request->id;
+                        $jobid = $offer->job_id;
+                        $time = now()->toDateTimeString();
+                        $receiver = $offer->worker_user_id;
+                        $job_name = Job::where('id', $jobid)->first()->job_name;
 
 
-                    event(new NotificationOffer('Offered',false,$time,$receiver,$recruiter_id,$full_name,$jobid,$job_name, $id));
+                        event(new NotificationOffer('Offered', false, $time, $receiver, $recruiter_id, $full_name, $jobid, $job_name, $id));
 
+                    }
                 }
+                return response()->json($responseData);
             }
-            return response()->json($responseData);
-        }
 
         } catch (\Exception $e) {
-            return response()->json(["message"=>$e->getMessage()]);
+            return response()->json(["message" => $e->getMessage()]);
         }
-        
+
     }
 }

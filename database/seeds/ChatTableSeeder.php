@@ -12,7 +12,7 @@ class ChatTableSeeder extends Seeder
      */
     public function run()
     {
-        $employerId = 'GWU000002';
+        $organizationId = 'GWU000002';
         $recruiterId = 'GWU000005';
         $workerIds = ['GWU000003', 'GWU000004'];
 
@@ -39,15 +39,15 @@ class ChatTableSeeder extends Seeder
             'Okay, let\'s start with the database design.'
         ];
 
-        $generateRandomConversation = function($numMessages) use ($possibleMessages) {
+        $generateRandomConversation = function ($numMessages) use ($possibleMessages) {
             $messages = [];
-            $possibleSenders = ['EMPLOYER', 'WORKER','RECRUITER'];
-            
+            $possibleSenders = ['ORGANIZATION', 'WORKER', 'RECRUITER'];
+
             for ($i = 0; $i < $numMessages; $i++) {
-               // $randomSender = $i % 2 == 0 ? 'EMPLOYER' : 'WORKER';
+                // $randomSender = $i % 2 == 0 ? 'ORGANIZATION' : 'WORKER';
                 $randomSender = $possibleSenders[array_rand($possibleSenders)];
                 $randomMessage = $possibleMessages[array_rand($possibleMessages)];
-                $randomTime =  now()->toDateTimeString();
+                $randomTime = now()->toDateTimeString();
 
                 $messages[] = [
                     'id' => uniqid(),
@@ -67,7 +67,7 @@ class ChatTableSeeder extends Seeder
             Chat::create([
                 'lastMessage' => now()->toDateTimeString(),
                 'isActive' => true,
-                'employerId' => $employerId,
+                'organizationId' => $organizationId,
                 'recruiterId' => $recruiterId, // 'GWU000005
                 'workerId' => $workerId,
                 'messages' => $messages,

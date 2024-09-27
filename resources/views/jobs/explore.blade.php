@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('mytitle', ' For Employers | Saas')
+@section('mytitle', ' For Organizations | Saas')
 @section('content')
 
 @section('css')
@@ -93,7 +93,7 @@
                                     id="hpw_minval">
                                 <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
                                     id="hpw_maxval">
-                                
+
                             </form>
                         </div>
                     </div>
@@ -106,51 +106,83 @@
 
                             <div class="ss-dash-profile-4-bx-dv">
                                 @forelse($jobs as $j)
-                <div class="ss-job-prfle-sec">
-                    <div class="row">
-                    <p class="col-10">{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
-                    @if($j->urgency == "Auto Offer" || $j->as_soon_as == true)
-                    <p class="col-2 text-center">Urgent</p>
-                    @endif
-                    </div>
-                   
-                    <div class="row">
-                        <div class="col-3"><ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/facility.png')}}"> {{$j->facility_name ?? 'NA'}}</a></li></ul></div>
-                        <div class="col-9 d-flex justify-content-end">
-                            <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->specialty}}</a></li>
-                                <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->profession}}/wk</a></li>
-                        </div>
-                    </div>
-                    
-                     <!-- job details not yet implemented -->
-                     <div class="row">
-                        <div class="col-3"><ul><li><a href="{{route('worker_job-details',['id'=>$j->id])}}"><img class="icon_cards" src="{{URL::asset('frontend/img/job.png')}}"> {{$j->job_name}}</a></li></ul></div>
-                        <div class="col-9 d-flex justify-content-end">
-                            <ul><li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
-                                <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/calendar.png')}}"> {{$j->preferred_assignment_duration}} wks</a></li>
-                                
-                        </div>
-                    </div>
+                                    <div class="ss-job-prfle-sec">
+                                        <div class="row">
+                                            <p class="col-10">{{ $j->job_type }} <span>+{{ $j->getOfferCount() }}
+                                                    Applied</span></p>
+                                            @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
+                                                <p class="col-2 text-center">Urgent</p>
+                                            @endif
+                                        </div>
 
-                    <div class="row">
-                        <div class="col-5">
-                            <ul>
-                                @if($j->as_soon_as == false) 
-                                <li>
-                                    <img class="icon_cards" src="{{URL::asset('frontend/img/calendar.png')}}"> <a href="#" class="start-date" data-start-date="{{$j->start_date}}"></a>
-                                </li>
-                                @endif
-                            </ul>
-                        </div>
-                        <div class="col-7 d-flex justify-content-end">
-                            <ul>
-                                
-                                <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}"> {{$j->weekly_pay}}/wk</li>
-                                <li><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}"> {{$j->actual_hourly_rate}}/hour</li></ul>
-                        </div>
-                    </div>
-                    
-                    {{-- <ul>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <ul>
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/facility.png') }}">
+                                                            {{ $j->facility_name ?? 'NA' }}</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-9 d-flex justify-content-end">
+                                                <ul>
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/specialty.png') }}">
+                                                            {{ $j->specialty }}</a></li>
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/specialty.png') }}">
+                                                            {{ $j->profession }}/wk</a></li>
+                                            </div>
+                                        </div>
+
+                                        <!-- job details not yet implemented -->
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <ul>
+                                                    <li><a href="{{ route('worker_job-details', ['id' => $j->id]) }}"><img
+                                                                class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/job.png') }}">
+                                                            {{ $j->job_name }}</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-9 d-flex justify-content-end">
+                                                <ul>
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/location.png') }}">
+                                                            {{ $j->job_city }}, {{ $j->job_state }}</a></li>
+                                                    <li><a href="#"><img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/calendar.png') }}">
+                                                            {{ $j->preferred_assignment_duration }} wks</a></li>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <ul>
+                                                    @if ($j->as_soon_as == false)
+                                                        <li>
+                                                            <img class="icon_cards"
+                                                                src="{{ URL::asset('frontend/img/calendar.png') }}"> <a
+                                                                href="#" class="start-date"
+                                                                data-start-date="{{ $j->start_date }}"></a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                            <div class="col-7 d-flex justify-content-end">
+                                                <ul>
+
+                                                    <li><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                        {{ $j->weekly_pay }}/wk</li>
+                                                    <li><img class="icon_cards"
+                                                            src="{{ URL::asset('frontend/img/dollarcircle.png') }}">
+                                                        {{ $j->actual_hourly_rate }}/hour</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        {{-- <ul>
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->specialty}}</a></li>
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/specialty.png')}}"> {{$j->profession}}/wk</a></li>
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
@@ -158,24 +190,24 @@
                     <li><a href="#"><img class="icon_cards" src="{{URL::asset('frontend/img/dollarcircle.png')}}"> {{$j->weekly_pay}}/wk</a></li>
 
                     </ul> --}}
-                    <!-- should be dynamic  -->
-                    <h5>Recently Added</h5>
-                    
-                </div>
-                @empty
-                <div class="ss-job-prfle-sec">
-                    <h4>No Data found</h4>
-                </div>
-                @endforelse
+                                        <!-- should be dynamic  -->
+                                        <h5>Recently Added</h5>
 
+                                    </div>
+                                @empty
+                                    <div class="ss-job-prfle-sec">
+                                        <h4>No Data found</h4>
+                                    </div>
+                                @endforelse
+
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+                <!--------Explore Jobs End------->
             </div>
-
-
-            <!--------Explore Jobs End------->
-        </div>
 
     </main>
 @stop
@@ -350,7 +382,7 @@
                 .slider('values', 1) + '</span>');
 
 
-            
+
 
         });
     </script>

@@ -9,11 +9,11 @@ class Chat extends Model
     protected $connection = 'mongodb';
     protected $collection = 'chat';
 
-    // protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'employer', 'messages'];
-    protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'employer', 'messages', 'employerId', 'workerId', 'recruiterId'];
+    // protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'organization', 'messages'];
+    protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'organization', 'messages', 'organizationId', 'workerId', 'recruiterId'];
 
     protected $casts = [
         'isActive' => 'boolean',
-        
+
     ];
 }

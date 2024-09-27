@@ -23,28 +23,28 @@ class UserSeeder extends Seeder
 
         $faker = Faker\Factory::create();
         $fakerName = app('Faker\Generator');
-        
+
         // Admin is the first User created in the system, and it has all permissions, its id is "GWU000001"
 
         $admin = User::create([
-			'id' => Str::uuid(),
+            'id' => Str::uuid(),
             'first_name' => 'Super',
             'last_name' => 'Admin',
             'email' => 'fulladmin@nurseify.io',
             'user_name' => 'fulladmin@nurseify.io',
-			'password' => Hash::make('IMC_2020_Ankur'),
+            'password' => Hash::make('IMC_2020_Ankur'),
             'mobile' => '1234657890'
         ]);
 
-        // we seed this employer with the id "GWU000002" just for testing jobs, this record related to default seeding jobs
+        // we seed this organization with the id "GWU000002" just for testing jobs, this record related to default seeding jobs
 
-        $employer = User::create([
-			'id' => Str::uuid(),
+        $organization = User::create([
+            'id' => Str::uuid(),
             'first_name' => $fakerName->fantasyName('first_name'),
             'last_name' => $fakerName->fantasyName('fantasyNames'),
-            'email' => 'employer@gmail.com',
-            'ROLE'=>'EMPLOYER',
-            'user_name' => 'employer',
+            'email' => 'organization@gmail.com',
+            'ROLE' => 'ORGANIZATION',
+            'user_name' => 'organization',
             'mobile' => '+1 (555) 555-55',
             'facility_id' => '1'
         ]);
@@ -57,7 +57,7 @@ class UserSeeder extends Seeder
             'first_name' => $fakerName->fantasyName('first_name'),
             'last_name' => $fakerName->fantasyName('fantasyNames'),
             'email' => 'worker1@gmail.com',
-            'ROLE'=>'NURSE',
+            'ROLE' => 'NURSE',
             'user_name' => 'worker1',
             'mobile' => '+1 (555) 555-55',
             'facility_id' => '1'
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
             'first_name' => $fakerName->fantasyName('first_name'),
             'last_name' => $fakerName->fantasyName('fantasyNames'),
             'email' => 'worker2@gmail.com',
-            'ROLE'=>'NURSE',
+            'ROLE' => 'NURSE',
             'user_name' => 'worker2',
             'mobile' => '+1 (555) 555-55',
             'facility_id' => '1'
@@ -81,7 +81,7 @@ class UserSeeder extends Seeder
             'first_name' => $fakerName->fantasyName('first_name'),
             'last_name' => $fakerName->fantasyName('fantasyNames'),
             'email' => 'recruiter@gmail.com',
-            'ROLE'=>'RECRUITER',
+            'ROLE' => 'RECRUITER',
             'user_name' => 'recruiter',
             'mobile' => '+1 (555) 555-55',
             'facility_id' => '1'
@@ -189,7 +189,7 @@ class UserSeeder extends Seeder
             'worker_call_back' => $faker->randomFloat(2, 10, 50),
             'worker_orientation_rate' => $faker->randomFloat(2, 10, 50),
             'worker_weekly_taxable_amount' => $faker->randomFloat(2, 100, 1000),
-            'worker_employer_weekly_amount' => $faker->randomFloat(2, 100, 1000),
+            'worker_organization_weekly_amount' => $faker->randomFloat(2, 100, 1000),
             'worker_weekly_non_taxable_amount' => $faker->randomFloat(2, 100, 1000),
             'profession' => $faker->word,
             'rto' => $faker->word,
@@ -293,15 +293,15 @@ class UserSeeder extends Seeder
             'worker_call_back' => $faker->randomFloat(2, 10, 50),
             'worker_orientation_rate' => $faker->randomFloat(2, 10, 50),
             'worker_weekly_taxable_amount' => $faker->randomFloat(2, 100, 1000),
-            'worker_employer_weekly_amount' => $faker->randomFloat(2, 100, 1000),
+            'worker_organization_weekly_amount' => $faker->randomFloat(2, 100, 1000),
             'worker_weekly_non_taxable_amount' => $faker->randomFloat(2, 100, 1000),
             'profession' => $faker->word,
             'rto' => $faker->word,
         ]);
-        
+
         $availability = Availability::create([
             'nurse_id' => 'GWW000001',
         ]);
-    
+
     }
 }

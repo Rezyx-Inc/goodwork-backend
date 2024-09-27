@@ -11,41 +11,41 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
         $(document).ready(function() {
-            
+
             let id = @json($id);
             var PrivateChannelNotification = 'private-notification.' + id;
-            // Listen for Message Notification messages event 
+            // Listen for Message Notification messages event
             window.Echo.private(PrivateChannelNotification)
                 .listen('NotificationMessage', (event) => {
                     console.log('from the messages blade:', event);
                     let room_last_messages = document.getElementById('room_' + event.sender);
-                    if(room_last_messages){
-                        if (event.content.length > 16){
+                    if (room_last_messages) {
+                        if (event.content.length > 16) {
                             room_last_messages.innerHTML = event.content.substring(0, 16) + ' ...';
-                        } else { 
+                        } else {
                             room_last_messages.innerHTML = event.content;
                         }
                     }
-                    
+
                     let lastMessage = document.getElementById('lastMessage_' + event.sender);
-                    if(lastMessage){
+                    if (lastMessage) {
                         lastMessage.innerHTML = 'Just now';
                     }
-                   
+
 
                     let messagesN = document.getElementById('messagesN_' + event.sender);
-                    if(messagesN){
+                    if (messagesN) {
                         messagesN.classList.remove("d-none");
                         messagesN.innerHTML = parseInt(messagesN.innerHTML) + 1;
                     }
                 });
         });
-        var idEmployer_Global = '';
+        var idOrganization_Global = '';
         var idRecruiter_Global = '';
         var PrivateChannel = '';
         var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
 
-        function getPrivateMessages(idRecruiter, idEmployer, fullName) {
+        function getPrivateMessages(idRecruiter, idOrganization, fullName) {
 
             // Leave the current private channel
             window.Echo.leave(PrivateChannel);
@@ -56,39 +56,39 @@
             };
 
             $.ajax({
-                        url: 'read-message-notification', // Replace 'read-message-notification' with the actual path to your route
-                        type: 'POST',
-                        data: data,
-                        success: function(response) {
-                        console.log('Success:', response);
-                        // Handle success response
-                        // Navigate to a new page after the AJAX call is successful
-                        let messagesN = document.getElementById('messagesN_' + idRecruiter);
-                        if(messagesN){
-                            messagesN.classList.add("d-none");
-                            messagesN.innerHTML = 0;
-                        }
-                        },          
-                        error: function(xhr, status, error) {
-                            console.error('Error:', error);
-                            // Handle errors here
-                        }
-             });
+                url: 'read-message-notification', // Replace 'read-message-notification' with the actual path to your route
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log('Success:', response);
+                    // Handle success response
+                    // Navigate to a new page after the AJAX call is successful
+                    let messagesN = document.getElementById('messagesN_' + idRecruiter);
+                    if (messagesN) {
+                        messagesN.classList.add("d-none");
+                        messagesN.innerHTML = 0;
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error);
+                    // Handle errors here
+                }
+            });
 
             // Get Full Name and set some DOM
             document.getElementById('fullName').innerHTML = fullName;
             document.getElementById('empty_room').classList.add("d-none");
             document.getElementById('body_room').classList.remove("d-none");
 
-            // Set the global employer id
-            idEmployer_Global = idEmployer;
+            // Set the global organization id
+            idOrganization_Global = idOrganization;
             idRecruiter_Global = idRecruiter;
 
             // Set the user Id
             let id = @json($id);
 
             // Set Private Channel
-            PrivateChannel = 'private-chat.' + idEmployer_Global + '.' + idRecruiter_Global + '.' + id;
+            PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + idRecruiter_Global + '.' + id;
 
             let messageText = document.getElementById('message');
 
@@ -96,7 +96,7 @@
                 var senderClass;
                 if (message.senderRole == 'WORKER') {
                     senderClass = 'ss-msg-rply-blue-dv';
-                } else if (message.senderRole == 'EMPLOYER') {
+                } else if (message.senderRole == 'ORGANIZATION') {
                     senderClass = 'ss-msg-rply-black-dv';
                 } else {
                     senderClass = 'ss-msg-rply-recrut-dv';
@@ -143,55 +143,57 @@
             $('.private-messages').html('');
 
             // Get the private messages
-            $.get('/worker/getMessages?page=1&employerId=' + idEmployer_Global + '&recruiterId=' + idRecruiter_Global, function(data) {
+            $.get('/worker/getMessages?page=1&organizationId=' + idOrganization_Global + '&recruiterId=' +
+                idRecruiter_Global,
+                function(data) {
 
-                console.log("Receiving data", data)
-                // Parse the returned data
-                var messages = data.messages;
+                    console.log("Receiving data", data)
+                    // Parse the returned data
+                    var messages = data.messages;
 
-                // Function to create the HTML for a message
-                function createMessageHTML(message) {
-                    var senderClass;
-                    if (message.sender == 'WORKER') {
-                        senderClass = 'ss-msg-rply-blue-dv';
-                    } else if (message.sender == 'EMPLOYER') {
-                        senderClass = 'ss-msg-rply-black-dv';
-                    } else {
-                        senderClass = 'ss-msg-rply-recrut-dv';
-                    }
+                    // Function to create the HTML for a message
+                    function createMessageHTML(message) {
+                        var senderClass;
+                        if (message.sender == 'WORKER') {
+                            senderClass = 'ss-msg-rply-blue-dv';
+                        } else if (message.sender == 'ORGANIZATION') {
+                            senderClass = 'ss-msg-rply-black-dv';
+                        } else {
+                            senderClass = 'ss-msg-rply-recrut-dv';
+                        }
 
-                    var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
+                        var time = Array.isArray(message.time) ? message.time.join(', ') : message.time;
 
-                    var messageContent;
-                    if (message.type === 'file') {
-                        // If the message is a file, create a link to download the file
-                        // The file name is extracted from the base64 data URL
-                        var fileName = message.fileName; // assuming 'fileName' is the key in the message data
-                        messageContent =
-                            `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
-                    } else {
-                        // If the message is not a file, display the message text
-                        messageContent = `<p>${message.content}</p>`;
-                    }
+                        var messageContent;
+                        if (message.type === 'file') {
+                            // If the message is a file, create a link to download the file
+                            // The file name is extracted from the base64 data URL
+                            var fileName = message.fileName; // assuming 'fileName' is the key in the message data
+                            messageContent =
+                                `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
+                        } else {
+                            // If the message is not a file, display the message text
+                            messageContent = `<p>${message.content}</p>`;
+                        }
 
-                    return `
+                        return `
             <div class="${senderClass}">
                 ${messageContent}
                 <span>${time}</span>
             </div>
         `;
-                }
+                    }
 
-                // Create the HTML for each message and prepend it to the messages area
-                messages.forEach(function(message) {
-                    var messageHTML = createMessageHTML(message);
-                    $('.private-messages').prepend(messageHTML);
+                    // Create the HTML for each message and prepend it to the messages area
+                    messages.forEach(function(message) {
+                        var messageHTML = createMessageHTML(message);
+                        $('.private-messages').prepend(messageHTML);
+                    });
+
+                    let messagesArea = $('.messages-area');
+                    messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+
                 });
-
-                let messagesArea = $('.messages-area');
-                messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
-
-            });
         }
 
         function createRealMessageHTML(message) {
@@ -199,7 +201,7 @@
             if (message.senderRole == 'WORKER') {
                 senderClass = 'ss-msg-rply-blue-dv';
                 console.log(senderClass);
-            } else if (message.senderRole == 'EMPLOYER') {
+            } else if (message.senderRole == 'ORGANIZATION') {
                 senderClass = 'ss-msg-rply-black-dv';
             } else {
                 senderClass = 'ss-msg-rply-recrut-dv';
@@ -219,7 +221,7 @@
             }
             return `
             <div class="${senderClass}">
-                
+
                 ${messageContent}
                 <span>${message.messageTime}</span>
             </div>
@@ -231,7 +233,7 @@
             var senderClass;
             if (message.sender == 'WORKER') {
                 senderClass = 'ss-msg-rply-blue-dv';
-            } else if (message.sender == 'EMPLOYER') {
+            } else if (message.sender == 'ORGANIZATION') {
                 senderClass = 'ss-msg-rply-black-dv';
             } else {
                 senderClass = 'ss-msg-rply-recrut-dv';
@@ -264,10 +266,10 @@
                     let messageInput = document.getElementById('messageEnvoye');
                     if (messageInput.value.trim() === '') {
                         return;
-                    }else{
+                    } else {
                         sendMessage('text'); // Call your function
                     }
-                   
+
                 }
             });
 
@@ -283,7 +285,7 @@
                     $('#login').addClass('d-none');
 
                     // Make an AJAX request to the API
-                    $.get('/worker/getMessages?page=' + page + '&employerId=' + idEmployer_Global +
+                    $.get('/worker/getMessages?page=' + page + '&organizationId=' + idOrganization_Global +
                         '&recruiterId=GWU000005',
                         function(data) {
 
@@ -291,13 +293,13 @@
                             var messages = data.messages;
 
                             function createMessageHTML(message) {
-                                //  var senderClass = message.sender == 'EMPLOYER' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
+                                //  var senderClass = message.sender == 'ORGANIZATION' ? 'ss-msg-rply-blue-dv' : 'ss-msg-rply-recrut-dv';
 
                                 console.log('messageeeee :' + message.sender);
                                 var senderClass;
                                 if (message.sender == 'WORKER') {
                                     senderClass = 'ss-msg-rply-blue-dv';
-                                } else if (message.sender == 'EMPLOYER') {
+                                } else if (message.sender == 'ORGANIZATION') {
                                     senderClass = 'ss-msg-rply-black-dv';
                                 } else {
                                     senderClass = 'ss-msg-rply-recrut-dv';
@@ -313,7 +315,7 @@
                                     // If the message is a file, create a link to download the file
                                     // The file name is extracted from the base64 data URL
                                     var fileName = message
-                                    .fileName; // assuming 'fileName' is the key in the message data
+                                        .fileName; // assuming 'fileName' is the key in the message data
                                     messageContent =
                                         `<p><a style="color:white;text-decoration:underline;font-size:20px;" href="${message.content}" download="${message.fileName}">${message.fileName}</a></p>`;
                                 } else {
@@ -355,13 +357,13 @@
         function sendMessage(type) {
             console.log(type);
             let id = @json($id);
-            PrivateChannel = 'private-chat.' + idEmployer_Global + '.' + idRecruiter_Global + '.' + id;
+            PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + idRecruiter_Global + '.' + id;
             console.log(PrivateChannel);
             let messageInput = document.getElementById('messageEnvoye');
             let message = messageInput.value;
 
             let formData = new FormData();
-            formData.append('idEmployer', idEmployer_Global);
+            formData.append('idOrganization', idOrganization_Global);
             formData.append('idRecruiter', idRecruiter_Global);
             formData.append('type', type);
             formData.append('_token', '{{ csrf_token() }}');
@@ -441,7 +443,6 @@
                 });
             }
         }
-        
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -463,34 +464,38 @@
                             <!-- rooms  -->
                             @if ($data)
                                 @foreach ($data as $room)
-                                    <div onclick="getPrivateMessages('{{ $room['recruiterId'] }}','{{ $room['employerId'] }}','{{ $room['fullName'] }}')"
+                                    <div onclick="getPrivateMessages('{{ $room['recruiterId'] }}','{{ $room['organizationId'] }}','{{ $room['fullName'] }}')"
                                         class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
-<p id="room_{{$room['recruiterId']}}">
-    @if(isset($room['messages'][0]))
-    {{ $room['messages'][0]['type'] === 'file' ? (strlen($room['messages'][0]['fileName']) < 16 ? $room['messages'][0]['fileName'] : substr($room['messages'][0]['fileName'], 0, 16) .' ...') : (strlen($room['messages'][0]['content']) < 16 ? $room['messages'][0]['content'] : substr($room['messages'][0]['content'], 0, 16) . ' ...')}}
-    @else
-        No messages yet.
-    @endif
-</p>
+                                                <p id="room_{{ $room['recruiterId'] }}">
+                                                    @if (isset($room['messages'][0]))
+                                                        {{ $room['messages'][0]['type'] === 'file' ? (strlen($room['messages'][0]['fileName']) < 16 ? $room['messages'][0]['fileName'] : substr($room['messages'][0]['fileName'], 0, 16) . ' ...') : (strlen($room['messages'][0]['content']) < 16 ? $room['messages'][0]['content'] : substr($room['messages'][0]['content'], 0, 16) . ' ...') }}
+                                                    @else
+                                                        No messages yet.
+                                                    @endif
+                                                </p>
                                             </li>
                                         </ul>
 
                                         <ul style="width:100%" class="ss-msg-notifi-sec">
                                             <li>
-                                                <p id="lastMessage_{{$room['recruiterId']}}">{{ $room['lastMessage'] }}</p>
+                                                <p id="lastMessage_{{ $room['recruiterId'] }}">{{ $room['lastMessage'] }}
+                                                </p>
                                             </li><br>
-                                            @if($notificationMessages)
-                                            @foreach($notificationMessages as $notificationMessage)
-                                                @if($notificationMessage['sender'] == $room['recruiterId'])
-                                                    <li><span id="messagesN_{{$room['recruiterId']}}">{{$notificationMessage['numOfMessagesStr']}}</span></li>
-                                                @endif
-                                            @endforeach
+                                            @if ($notificationMessages)
+                                                @foreach ($notificationMessages as $notificationMessage)
+                                                    @if ($notificationMessage['sender'] == $room['recruiterId'])
+                                                        <li><span
+                                                                id="messagesN_{{ $room['recruiterId'] }}">{{ $notificationMessage['numOfMessagesStr'] }}</span>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
                                             @else
-                                            <li><span class="d-none" id="messagesN_{{$room['recruiterId']}}">0</span></li>
+                                                <li><span class="d-none" id="messagesN_{{ $room['recruiterId'] }}">0</span>
+                                                </li>
                                             @endif
 
                                         </ul>
@@ -546,7 +551,7 @@
                                     </div>
                                     <div style=" display: flex;
                                 justify-content: end;
-                               
+
                                 "
                                         class="col-6">
                                         <button

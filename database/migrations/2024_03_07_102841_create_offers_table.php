@@ -60,9 +60,9 @@ class CreateOffersTable extends Migration
             $table->decimal('weekly_non_taxable_amount', 8, 2)->nullable();
             $table->string('description')->nullable();
             $table->decimal('weekly_taxable_amount', 8, 2)->nullable();
-            $table->decimal('employer_weekly_amount', 8, 2)->nullable();
+            $table->decimal('organization_weekly_amount', 8, 2)->nullable();
             $table->decimal('goodwork_weekly_amount', 8, 2)->nullable();
-            $table->decimal('total_employer_amount', 8, 2)->nullable();
+            $table->decimal('total_organization_amount', 8, 2)->nullable();
             $table->decimal('total_goodwork_amount', 8, 2)->nullable();
             $table->decimal('total_contract_amount', 8, 2)->nullable();
             $table->decimal('weekly_pay', 8, 2)->nullable();

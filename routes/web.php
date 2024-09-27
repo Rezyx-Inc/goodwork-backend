@@ -25,8 +25,8 @@ Route::middleware(['web'])->group(function () {
     Route::get('test', ['uses' => 'SiteController@test', 'as' => 'test']);
     Route::get('privacy-policy', ['uses' => 'SiteController@privacy_policy', 'as' => 'privacy-policy']);
 
-    // add for_employers root
-    Route::get('for-employers', ['uses' => 'SiteController@for_employers', 'as' => 'for-employers']);
+    // add for_organizations root
+    Route::get('for-organizations', ['uses' => 'SiteController@for_organizations', 'as' => 'for-organizations']);
 
     // add for_recruiters root
     Route::get('for-recruiters', ['uses' => 'SiteController@for_recruiters', 'as' => 'for-recruiters']);
@@ -34,12 +34,12 @@ Route::middleware(['web'])->group(function () {
     // add exploreJobs root
     Route::get('explore-jobs', ['uses' => 'SiteController@explore_jobs', 'as' => 'explore-jobs']);
 
-    Route::post('get-states',['uses'=>'SiteController@get_state','as'=>'get-states']);
-    Route::post('get-cities',['uses'=>'SiteController@get_city','as'=>'get-cities']);
-    Route::post('get-speciality',['uses'=>'SiteController@get_speciality','as'=>'get-speciality']);
-    Route::post('get-dropdown',['uses'=>'SiteController@get_dorpdown','as'=>'get-dropdown']);
+    Route::post('get-states', ['uses' => 'SiteController@get_state', 'as' => 'get-states']);
+    Route::post('get-cities', ['uses' => 'SiteController@get_city', 'as' => 'get-cities']);
+    Route::post('get-speciality', ['uses' => 'SiteController@get_speciality', 'as' => 'get-speciality']);
+    Route::post('get-dropdown', ['uses' => 'SiteController@get_dorpdown', 'as' => 'get-dropdown']);
 
-    Route::get('clear-cache','SiteController@clear_cache');
+    Route::get('clear-cache', 'SiteController@clear_cache');
 
     Route::middleware(['user_not_logged_in'])->group(function () {
         /* Registration and authentication routes */
@@ -54,7 +54,7 @@ Route::middleware(['web'])->group(function () {
     });
 
     Route::middleware(['user_logged_in'])->group(function () {
-            /** Dashboard routes */
+        /** Dashboard routes */
         Route::get('dashboard', ['uses' => 'DashboardController@dashboard', 'as' => 'dashboard']);
         Route::get('profile-setting', ['uses' => 'DashboardController@setting', 'as' => 'profile-setting']);
         Route::post('profile-setting', ['uses' => 'DashboardController@post_edit_profile', 'as' => 'profile-setting.store']);
@@ -66,21 +66,21 @@ Route::middleware(['web'])->group(function () {
         // Route::get('explore', ['uses' => 'DashboardController@explore', 'as' => 'explore']);
 
         Route::get('my-profile', ['uses' => 'UserController@edit', 'as' => 'my-profile']);
-            Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile.store']);
-            Route::get('vaccination', ['uses' => 'UserController@edit', 'as' => 'vaccination']);
-            //Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination.store']);
-            Route::get('certification', ['uses' => 'UserController@edit', 'as' => 'certification']);
-            //Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification.store']);
-            Route::get('references', ['uses' => 'UserController@edit', 'as' => 'references']);
-            Route::post('references', ['uses' => 'UserController@post_references', 'as' => 'references.store']);
-            Route::get('info-required', ['uses' => 'UserController@edit', 'as' => 'info-required']);
-            Route::post('info-required', ['uses' => 'UserController@skills_submit', 'as' => 'info-required.store']);
-            Route::get('urgency', ['uses' => 'UserController@edit', 'as' => 'urgency']);
-            Route::get('float-requirement', ['uses' => 'UserController@edit', 'as' => 'float-requirement']);
-            Route::get('patient-ratio', ['uses' => 'UserController@edit', 'as' => 'patient-ratio']);
-            Route::get('interview-dates', ['uses' => 'UserController@edit', 'as' => 'interview-dates']);
-            Route::get('bonuses', ['uses' => 'UserController@edit', 'as' => 'bonuses']);
-            Route::get('work-hours', ['uses' => 'UserController@edit', 'as' => 'work-hours']);
+        Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile.store']);
+        Route::get('vaccination', ['uses' => 'UserController@edit', 'as' => 'vaccination']);
+        //Route::post('vaccination', ['uses' => 'UserController@vaccination_submit', 'as' => 'vaccination.store']);
+        Route::get('certification', ['uses' => 'UserController@edit', 'as' => 'certification']);
+        //Route::post('certification', ['uses' => 'UserController@certification_submit', 'as' => 'certification.store']);
+        Route::get('references', ['uses' => 'UserController@edit', 'as' => 'references']);
+        Route::post('references', ['uses' => 'UserController@post_references', 'as' => 'references.store']);
+        Route::get('info-required', ['uses' => 'UserController@edit', 'as' => 'info-required']);
+        Route::post('info-required', ['uses' => 'UserController@skills_submit', 'as' => 'info-required.store']);
+        Route::get('urgency', ['uses' => 'UserController@edit', 'as' => 'urgency']);
+        Route::get('float-requirement', ['uses' => 'UserController@edit', 'as' => 'float-requirement']);
+        Route::get('patient-ratio', ['uses' => 'UserController@edit', 'as' => 'patient-ratio']);
+        Route::get('interview-dates', ['uses' => 'UserController@edit', 'as' => 'interview-dates']);
+        Route::get('bonuses', ['uses' => 'UserController@edit', 'as' => 'bonuses']);
+        Route::get('work-hours', ['uses' => 'UserController@edit', 'as' => 'work-hours']);
 
         Route::post('worker-upload-files', ['uses' => 'UserController@post_references', 'as' => 'worker-upload-files']);
         /** Jobs routes */
@@ -105,9 +105,9 @@ Route::middleware(['web'])->group(function () {
 
     });
 
-      
-        });
 
-        Route::post('/custom/broadcasting/auth', ['uses' => 'SiteController@authenticate', 'as' => 'broadcasting.auth']);
-    
+});
+
+Route::post('/custom/broadcasting/auth', ['uses' => 'SiteController@authenticate', 'as' => 'broadcasting.auth']);
+
 

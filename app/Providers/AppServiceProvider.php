@@ -143,8 +143,12 @@ class AppServiceProvider extends ServiceProvider
             );
         });
         view()->composer([
-            'layouts.welcome', 'auth.login', 'auth.register', 'auth.passwords.reset',
-            'auth.passwords.email', 'auth.passwords.choose'
+            'layouts.welcome',
+            'auth.login',
+            'auth.register',
+            'auth.passwords.reset',
+            'auth.passwords.email',
+            'auth.passwords.choose'
         ], function ($view) {
             $logolr = Storage::get('assets/logo/goodworklogo.png');
             $back_big = "background-image: url('/splash-image/big-bg-1');";
@@ -205,298 +209,436 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-        
-       
-View::composer(['worker::partials.worker_header', 'worker::worker.messages'], function ($view) {
-    if (Auth::guard('frontend')->check()) {
-        $user_id = Auth::guard('frontend')->user()->id;
-        $nurse_id = Auth::guard('frontend')->user()->nurse->id;
-
-        // Adjusted MongoDB aggregation pipeline for messages
-        $pipeline = [
-            [
-                '$match' => [
-                    'receiver' => $user_id,
-                ],
-            ],
-            [
-                '$unwind' => '$all_messages_notifs',
-            ],
-            [
-                '$unwind' => '$all_messages_notifs.notifs_of_one_sender',
-            ],
-            [
-                '$match' => [
-                    'all_messages_notifs.notifs_of_one_sender.seen' => false,
-                ],
-            ],
-            [
-                '$group' => [
-                    '_id' => '$all_messages_notifs.sender',
-                    'full_name' => ['$first' => '$all_messages_notifs.full_name'], // Assuming full_name is the same for all messages from the same sender
-                    'numOfMessages' => ['$sum' => 1],
-                ],
-            ],
-            [
-                '$addFields' => [
-                    'numOfMessagesStr' => ['$toString' => '$numOfMessages'],
-                ],
-            ],
-            [
-                '$project' => [
-                    'id' => '$_id',
-                    'full_name' => 1, // Assuming full_name is the same for all messages from the same sender
-                    'numOfMessagesStr' => 1,
-                    'sender' => '$_id', // Assuming sender is represented by _id
-                ],
-            ],
-        ];
-
-        $notificationsDetails = NotificationMessage::raw()->aggregate($pipeline)->toArray();
-        $unreadNotificationsCount = count($notificationsDetails);
-
-        // Since the structure of notificationsDetails has changed, adjust how you construct notificationMessages
-        $notificationMessages = array_map(function ($detail) {
-            // Adjust according to the new structure. Example:
-            return [
-                'id' => $detail['id'],
-                'numOfMessagesStr' => $detail['numOfMessagesStr'],
-                'sender' => $detail['sender'],
-                'full_name' => $detail['full_name']
-            ];
-        }, $notificationsDetails);
-
-        // Adjusted MongoDB aggregation pipeline for jobs notifications
-        $pipeline = [
-            [
-                '$match' => [
-                    'receiver' => $user_id,
-                ],
-            ],
-            [
-                '$unwind' => '$all_jobs_notifs',
-            ],
-            [
-                '$match' => [
-                    'all_jobs_notifs.seen' => false,
-                ],
-            ],
-            [
-                '$group' => [
-                    '_id' => '$all_jobs_notifs.sender',
-                    'numOfJobs' => ['$sum' => 1],
-                ],
-            ],
-            [
-                '$addFields' => [
-                    'numOfJobsStr' => ['$toString' => '$numOfJobs'],
-                ],
-            ],
-            [
-                '$project' => [
-                    'id' => '$_id',
-                    'numOfJobsStr' => 1,
-                    'sender' => '$_id',
-                ],
-            ],
-        ];  
-
-        $jobsNotificationsDetails = NotificationJobModel::raw()->aggregate($pipeline)->toArray();
-        $unreadJobsNotificationsCount = count($jobsNotificationsDetails);
-
-        // Adjust how you construct jobsNotificationMessages
-
-        $jobsNotificationMessages = array_map(function ($detail) {
-            return [
-                'id' => $detail['id'],
-                'numOfJobsStr' => $detail['numOfJobsStr'],
-                'sender' => $detail['sender'],
-            ];
-        }, $jobsNotificationsDetails);
 
 
-        
-    // Adjusted MongoDB aggregation pipeline for offers notifications
+        View::composer(['worker::partials.worker_header', 'worker::worker.messages'], function ($view) {
+            if (Auth::guard('frontend')->check()) {
+                $user_id = Auth::guard('frontend')->user()->id;
+                $nurse_id = Auth::guard('frontend')->user()->nurse->id;
+
+                // Adjusted MongoDB aggregation pipeline for messages
+                $pipeline = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_messages_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_messages_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_messages_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$group' => [
+                            '_id' => '$all_messages_notifs.sender',
+                            'full_name' => ['$first' => '$all_messages_notifs.full_name'], // Assuming full_name is the same for all messages from the same sender
+                            'numOfMessages' => ['$sum' => 1],
+                        ],
+                    ],
+                    [
+                        '$addFields' => [
+                            'numOfMessagesStr' => ['$toString' => '$numOfMessages'],
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'id' => '$_id',
+                            'full_name' => 1, // Assuming full_name is the same for all messages from the same sender
+                            'numOfMessagesStr' => 1,
+                            'sender' => '$_id', // Assuming sender is represented by _id
+                        ],
+                    ],
+                ];
+
+                $notificationsDetails = NotificationMessage::raw()->aggregate($pipeline)->toArray();
+                $unreadNotificationsCount = count($notificationsDetails);
+
+                // Since the structure of notificationsDetails has changed, adjust how you construct notificationMessages
+                $notificationMessages = array_map(function ($detail) {
+                    // Adjust according to the new structure. Example:
+                    return [
+                        'id' => $detail['id'],
+                        'numOfMessagesStr' => $detail['numOfMessagesStr'],
+                        'sender' => $detail['sender'],
+                        'full_name' => $detail['full_name']
+                    ];
+                }, $notificationsDetails);
+
+                // Adjusted MongoDB aggregation pipeline for jobs notifications
+                $pipeline = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_jobs_notifs',
+                    ],
+                    [
+                        '$match' => [
+                            'all_jobs_notifs.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$group' => [
+                            '_id' => '$all_jobs_notifs.sender',
+                            'numOfJobs' => ['$sum' => 1],
+                        ],
+                    ],
+                    [
+                        '$addFields' => [
+                            'numOfJobsStr' => ['$toString' => '$numOfJobs'],
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'id' => '$_id',
+                            'numOfJobsStr' => 1,
+                            'sender' => '$_id',
+                        ],
+                    ],
+                ];
+
+                $jobsNotificationsDetails = NotificationJobModel::raw()->aggregate($pipeline)->toArray();
+                $unreadJobsNotificationsCount = count($jobsNotificationsDetails);
+
+                // Adjust how you construct jobsNotificationMessages
+
+                $jobsNotificationMessages = array_map(function ($detail) {
+                    return [
+                        'id' => $detail['id'],
+                        'numOfJobsStr' => $detail['numOfJobsStr'],
+                        'sender' => $detail['sender'],
+                    ];
+                }, $jobsNotificationsDetails);
 
 
-    $pipelineOffers = [
-        [
-            '$match' => [
-                'receiver' => $nurse_id,
-            ],
-        ],
-        [
-            '$unwind' => '$all_offers_notifs',
-        ],
-        [
-            '$unwind' => '$all_offers_notifs.notifs_of_one_sender',
-        ],
-        [
-            '$match' => [
-                'all_offers_notifs.notifs_of_one_sender.seen' => false,
-            ],
-        ],
-        [
-            '$project' => [
-                'sender' => '$all_offers_notifs.sender',
-                'offer_id' => '$all_offers_notifs.notifs_of_one_sender.offer_id',
-                'jobId' => '$all_offers_notifs.notifs_of_one_sender.jobId',
-                'seen' => '$all_offers_notifs.notifs_of_one_sender.seen',
-                'job_name' => '$all_offers_notifs.notifs_of_one_sender.job_name',
-                'full_name' => '$all_offers_notifs.notifs_of_one_sender.full_name',
-                'createdAt' => '$all_offers_notifs.notifs_of_one_sender.createdAt',
-                'type' => '$all_offers_notifs.notifs_of_one_sender.type',
-            ],
-        ],
-    ];
 
-        // $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'user_id']));
-
-        $offersNotificationMessages = NotificationOfferModel::raw()->aggregate($pipelineOffers)->toArray();
-        $unreadOffersNotificationsCount = count($offersNotificationMessages);
-
-        $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'unreadOffersNotificationsCount', 'offersNotificationMessages', 'user_id']));
-    }
-});
+                // Adjusted MongoDB aggregation pipeline for offers notifications
 
 
-View::composer(['recruiter::partials.header', 'recruiter::recruiter.messages'], function ($view) {
-    if (Auth::guard('recruiter')->check()) {
-        $user_id = Auth::guard('recruiter')->user()->id;
+                $pipelineOffers = [
+                    [
+                        '$match' => [
+                            'receiver' => $nurse_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_offers_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_offers_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_offers_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'sender' => '$all_offers_notifs.sender',
+                            'offer_id' => '$all_offers_notifs.notifs_of_one_sender.offer_id',
+                            'jobId' => '$all_offers_notifs.notifs_of_one_sender.jobId',
+                            'seen' => '$all_offers_notifs.notifs_of_one_sender.seen',
+                            'job_name' => '$all_offers_notifs.notifs_of_one_sender.job_name',
+                            'full_name' => '$all_offers_notifs.notifs_of_one_sender.full_name',
+                            'createdAt' => '$all_offers_notifs.notifs_of_one_sender.createdAt',
+                            'type' => '$all_offers_notifs.notifs_of_one_sender.type',
+                        ],
+                    ],
+                ];
 
-        // Adjusted MongoDB aggregation pipeline for recruiters
-        $pipeline = [
-            [
-                '$match' => [
-                    'receiver' => $user_id,
-                ],
-            ],
-            [
-                '$unwind' => '$all_messages_notifs',
-            ],
-            [
-                '$unwind' => '$all_messages_notifs.notifs_of_one_sender',
-            ],
-            [
-                '$match' => [
-                    'all_messages_notifs.notifs_of_one_sender.seen' => false,
-                ],
-            ],
-            [
-                '$group' => [
-                    '_id' => '$all_messages_notifs.sender',
-                    'full_name' => ['$first' => '$all_messages_notifs.full_name'],
-                    'numOfMessages' => ['$sum' => 1],
-                ],
-            ],
-            [
-                '$addFields' => [
-                    'numOfMessagesStr' => ['$toString' => '$numOfMessages'],
-                ],
-            ],
-            [
-                '$project' => [
-                    'id' => '$_id',
-                    'full_name' => 1,
-                    'numOfMessagesStr' => 1,
-                    'sender' => '$_id',
-                ],
-            ],
-        ];
+                // $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'user_id']));
 
-        $notificationsDetails = NotificationMessage::raw()->aggregate($pipeline)->toArray();
-        $unreadNotificationsCount = count($notificationsDetails);
+                $offersNotificationMessages = NotificationOfferModel::raw()->aggregate($pipelineOffers)->toArray();
+                $unreadOffersNotificationsCount = count($offersNotificationMessages);
 
-        // Adjust how you construct notificationMessages for recruiters
-        $notificationMessages = array_map(function ($detail) {
-            return [
-                'id' => $detail['id'],
-                'numOfMessagesStr' => $detail['numOfMessagesStr'],
-                'sender' => $detail['sender'],
-                'full_name' => $detail['full_name'],
-            ];
-        }, $notificationsDetails);
+                $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'unreadOffersNotificationsCount', 'offersNotificationMessages', 'user_id']));
+            }
+        });
 
-        // Adjusted MongoDB aggregation pipeline for jobs notifications
 
-        
-        $pipelinejob = [
-            [
-                '$match' => [
-                    'receiver' => $user_id,
-                ],
-            ],
-            [
-                '$unwind' => '$all_jobs_notifs',
-            ],
-            [
-                '$unwind' => '$all_jobs_notifs.notifs_of_one_sender',
-            ],
-            [
-                '$match' => [
-                    'all_jobs_notifs.notifs_of_one_sender.seen' => false,
-                ],
-            ],
-            [
-                '$project' => [
-                    'sender' => '$all_jobs_notifs.sender',
-                    'jobId' => '$all_jobs_notifs.notifs_of_one_sender.jobId',
-                    'seen' => '$all_jobs_notifs.notifs_of_one_sender.seen',
-                    'job_name' => '$all_jobs_notifs.notifs_of_one_sender.job_name',
-                    'full_name' => '$all_jobs_notifs.notifs_of_one_sender.full_name',
-                ],
-            ],
-        ];
+        View::composer(['recruiter::partials.header', 'recruiter::recruiter.messages'], function ($view) {
+            if (Auth::guard('recruiter')->check()) {
+                $user_id = Auth::guard('recruiter')->user()->id;
+
+                // Adjusted MongoDB aggregation pipeline for recruiters
+                $pipeline = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_messages_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_messages_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_messages_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$group' => [
+                            '_id' => '$all_messages_notifs.sender',
+                            'full_name' => ['$first' => '$all_messages_notifs.full_name'],
+                            'numOfMessages' => ['$sum' => 1],
+                        ],
+                    ],
+                    [
+                        '$addFields' => [
+                            'numOfMessagesStr' => ['$toString' => '$numOfMessages'],
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'id' => '$_id',
+                            'full_name' => 1,
+                            'numOfMessagesStr' => 1,
+                            'sender' => '$_id',
+                        ],
+                    ],
+                ];
+
+                $notificationsDetails = NotificationMessage::raw()->aggregate($pipeline)->toArray();
+                $unreadNotificationsCount = count($notificationsDetails);
+
+                // Adjust how you construct notificationMessages for recruiters
+                $notificationMessages = array_map(function ($detail) {
+                    return [
+                        'id' => $detail['id'],
+                        'numOfMessagesStr' => $detail['numOfMessagesStr'],
+                        'sender' => $detail['sender'],
+                        'full_name' => $detail['full_name'],
+                    ];
+                }, $notificationsDetails);
+
+                // Adjusted MongoDB aggregation pipeline for jobs notifications
+
+
+                $pipelinejob = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_jobs_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_jobs_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_jobs_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'sender' => '$all_jobs_notifs.sender',
+                            'jobId' => '$all_jobs_notifs.notifs_of_one_sender.jobId',
+                            'seen' => '$all_jobs_notifs.notifs_of_one_sender.seen',
+                            'job_name' => '$all_jobs_notifs.notifs_of_one_sender.job_name',
+                            'full_name' => '$all_jobs_notifs.notifs_of_one_sender.full_name',
+                        ],
+                    ],
+                ];
 
                 $jobsNotificationMessages = NotificationJobModel::raw()->aggregate($pipelinejob)->toArray();
                 $unreadJobsNotificationsCount = count($jobsNotificationMessages);
 
-                    
-    // Adjusted MongoDB aggregation pipeline for offers notifications
+
+                // Adjusted MongoDB aggregation pipeline for offers notifications
 
 
-    $pipelineOffers = [
-        [
-            '$match' => [
-                'receiver' => $user_id,
-            ],
-        ],
-        [
-            '$unwind' => '$all_offers_notifs',
-        ],
-        [
-            '$unwind' => '$all_offers_notifs.notifs_of_one_sender',
-        ],
-        [
-            '$match' => [
-                'all_offers_notifs.notifs_of_one_sender.seen' => false,
-            ],
-        ],
-        [
-            '$project' => [
-                'sender' => '$all_offers_notifs.sender',
-                'offer_id' => '$all_offers_notifs.notifs_of_one_sender.offer_id',
-                'jobId' => '$all_offers_notifs.notifs_of_one_sender.jobId',
-                'seen' => '$all_offers_notifs.notifs_of_one_sender.seen',
-                'job_name' => '$all_offers_notifs.notifs_of_one_sender.job_name',
-                'full_name' => '$all_offers_notifs.notifs_of_one_sender.full_name',
-                'createdAt' => '$all_offers_notifs.notifs_of_one_sender.createdAt',
-                'type' => '$all_offers_notifs.notifs_of_one_sender.type',
-            ],
-        ],
-    ];
+                $pipelineOffers = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_offers_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_offers_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_offers_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'sender' => '$all_offers_notifs.sender',
+                            'offer_id' => '$all_offers_notifs.notifs_of_one_sender.offer_id',
+                            'jobId' => '$all_offers_notifs.notifs_of_one_sender.jobId',
+                            'seen' => '$all_offers_notifs.notifs_of_one_sender.seen',
+                            'job_name' => '$all_offers_notifs.notifs_of_one_sender.job_name',
+                            'full_name' => '$all_offers_notifs.notifs_of_one_sender.full_name',
+                            'createdAt' => '$all_offers_notifs.notifs_of_one_sender.createdAt',
+                            'type' => '$all_offers_notifs.notifs_of_one_sender.type',
+                        ],
+                    ],
+                ];
 
-    $offersNotificationMessages = NotificationOfferModel::raw()->aggregate($pipelineOffers)->toArray();
-    $unreadOffersNotificationsCount = count($offersNotificationMessages);
+                $offersNotificationMessages = NotificationOfferModel::raw()->aggregate($pipelineOffers)->toArray();
+                $unreadOffersNotificationsCount = count($offersNotificationMessages);
 
-    $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'unreadOffersNotificationsCount', 'offersNotificationMessages', 'user_id']));
+                $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'unreadOffersNotificationsCount', 'offersNotificationMessages', 'user_id']));
 
 
-       
-        // $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'user_id']));
 
-    }
-});
+                // $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'user_id']));
+
+            }
+        });
+
+        View::composer(['organization::partials.header', 'organization::organization.messages'], function ($view) {
+            if (Auth::guard('organization')->check()) {
+                $user_id = Auth::guard('organization')->user()->id;
+
+                // Adjusted MongoDB aggregation pipeline for organizations
+                $pipeline = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_messages_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_messages_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_messages_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$group' => [
+                            '_id' => '$all_messages_notifs.sender',
+                            'full_name' => ['$first' => '$all_messages_notifs.full_name'],
+                            'numOfMessages' => ['$sum' => 1],
+                        ],
+                    ],
+                    [
+                        '$addFields' => [
+                            'numOfMessagesStr' => ['$toString' => '$numOfMessages'],
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'id' => '$_id',
+                            'full_name' => 1,
+                            'numOfMessagesStr' => 1,
+                            'sender' => '$_id',
+                        ],
+                    ],
+                ];
+
+                $notificationsDetails = NotificationMessage::raw()->aggregate($pipeline)->toArray();
+                $unreadNotificationsCount = count($notificationsDetails);
+
+                // Adjust how you construct notificationMessages for organizations
+                $notificationMessages = array_map(function ($detail) {
+                    return [
+                        'id' => $detail['id'],
+                        'numOfMessagesStr' => $detail['numOfMessagesStr'],
+                        'sender' => $detail['sender'],
+                        'full_name' => $detail['full_name'],
+                    ];
+                }, $notificationsDetails);
+
+                // Adjusted MongoDB aggregation pipeline for jobs notifications
+
+
+                $pipelinejob = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_jobs_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_jobs_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_jobs_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'sender' => '$all_jobs_notifs.sender',
+                            'jobId' => '$all_jobs_notifs.notifs_of_one_sender.jobId',
+                            'seen' => '$all_jobs_notifs.notifs_of_one_sender.seen',
+                            'job_name' => '$all_jobs_notifs.notifs_of_one_sender.job_name',
+                            'full_name' => '$all_jobs_notifs.notifs_of_one_sender.full_name',
+                        ],
+                    ],
+                ];
+
+                $jobsNotificationMessages = NotificationJobModel::raw()->aggregate($pipelinejob)->toArray();
+                $unreadJobsNotificationsCount = count($jobsNotificationMessages);
+
+
+                // Adjusted MongoDB aggregation pipeline for offers notifications
+
+
+                $pipelineOffers = [
+                    [
+                        '$match' => [
+                            'receiver' => $user_id,
+                        ],
+                    ],
+                    [
+                        '$unwind' => '$all_offers_notifs',
+                    ],
+                    [
+                        '$unwind' => '$all_offers_notifs.notifs_of_one_sender',
+                    ],
+                    [
+                        '$match' => [
+                            'all_offers_notifs.notifs_of_one_sender.seen' => false,
+                        ],
+                    ],
+                    [
+                        '$project' => [
+                            'sender' => '$all_offers_notifs.sender',
+                            'offer_id' => '$all_offers_notifs.notifs_of_one_sender.offer_id',
+                            'jobId' => '$all_offers_notifs.notifs_of_one_sender.jobId',
+                            'seen' => '$all_offers_notifs.notifs_of_one_sender.seen',
+                            'job_name' => '$all_offers_notifs.notifs_of_one_sender.job_name',
+                            'full_name' => '$all_offers_notifs.notifs_of_one_sender.full_name',
+                            'createdAt' => '$all_offers_notifs.notifs_of_one_sender.createdAt',
+                            'type' => '$all_offers_notifs.notifs_of_one_sender.type',
+                        ],
+                    ],
+                ];
+
+                $offersNotificationMessages = NotificationOfferModel::raw()->aggregate($pipelineOffers)->toArray();
+                $unreadOffersNotificationsCount = count($offersNotificationMessages);
+
+                $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'unreadOffersNotificationsCount', 'offersNotificationMessages', 'user_id']));
+
+
+
+                // $view->with(compact(['unreadNotificationsCount', 'notificationMessages', 'unreadJobsNotificationsCount', 'jobsNotificationMessages', 'user_id']));
+
+            }
+        });
 
 
     }
