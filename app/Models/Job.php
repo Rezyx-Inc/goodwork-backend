@@ -129,7 +129,6 @@ class Job extends Model
         'holiday',
         'on_call',
         'on_call_rate',
-        'on_call_back',
         'call_back_rate',
         'orientation_rate',
         'weekly_taxable_amount',
@@ -679,13 +678,6 @@ class Job extends Model
                 $value = $nurse->worker_on_call_rate;
                 $type = 'input';
                 $name = 'worker_on_call_rate';
-                return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
-            },
-            'on_call_back'=> function () use ($job, $nurse){
-                $match = ($nurse->worker_on_call_back_check == '1');
-                $value = $nurse->worker_on_call_back_check;
-                $type = 'input';
-                $name = 'worker_on_call_back_check';
                 return ['match'=> $match, 'value'=>$value, 'name'=>$name, 'type'=> $type];
             },
             'call_back_rate'=> function () use ($job, $nurse){

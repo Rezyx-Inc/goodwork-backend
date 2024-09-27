@@ -762,19 +762,12 @@ class WorkerController extends Controller
 
                 switch ($request->type) {
                     case 'saved':
-                        // $jobs = $jobCOntent;
                         $view = 'saved';
                         break;
                     case 'applied':
-                        // $jobs = $jobCOntent;
                         $view = 'applied';
                         break;
                     case 'hired':
-                        // $jobs = $jobCOntent;
-                        $view = 'hired';
-                        break;
-                    case 'offered':
-                        // $jobs = $jobCOntent;
                         $offerdetails = Offer::where('id', $offer_id->id)->first();
                         $jobdetails = Job::where('id', $job->id)->first();
                         $nursedetails = Nurse::where('id', $worker_id->id)->first();
@@ -783,26 +776,44 @@ class WorkerController extends Controller
                         $data['jobdetails'] = $jobdetails;
                         $data['nursedetails'] = $nursedetails;
                         $data['recruiter'] = $recruiter;
-                        // return $data;
+
+                        $response['content'] = view('worker::jobs.hired', $data)->render();
+                        return new JsonResponse($response, 200);
+                        $view = 'hired';
+                        break;
+                    case 'offered':
+                        $offerdetails = Offer::where('id', $offer_id->id)->first();
+                        $jobdetails = Job::where('id', $job->id)->first();
+                        $nursedetails = Nurse::where('id', $worker_id->id)->first();
+                        $recruiter = User::where('id', $jobdetails->created_by)->first();
+                        $data['offerdetails'] = $offerdetails;
+                        $data['jobdetails'] = $jobdetails;
+                        $data['nursedetails'] = $nursedetails;
+                        $data['recruiter'] = $recruiter;
                         $response['content'] = view('worker::jobs.counter_details', $data)->render();
-                return new JsonResponse($response, 200);
-                        $view = 'offered';
+                        return new JsonResponse($response, 200);
                         break;
                     case 'past':
-                        // $jobs = $jobCOntent;
+                        $offerdetails = Offer::where('id', $offer_id->id)->first();
+                        $jobdetails = Job::where('id', $job->id)->first();
+                        $nursedetails = Nurse::where('id', $worker_id->id)->first();
+                        $recruiter = User::where('id', $jobdetails->created_by)->first();
+                        $data['offerdetails'] = $offerdetails;
+                        $data['jobdetails'] = $jobdetails;
+                        $data['nursedetails'] = $nursedetails;
+                        $data['recruiter'] = $recruiter;
+                        $response['content'] = view('worker::jobs.past', $data)->render();
+                        return new JsonResponse($response, 200);
                         $view = 'past';
                         break;
                     case 'counter':
-                        // $jobs = $jobCOntent;
                         try {
                             $distinctFilters = Keyword::distinct()->pluck('filter');
                             $keywords = [];
-
                             foreach ($distinctFilters as $filter) {
                                 $keyword = Keyword::where('filter', $filter)->get();
                                 $keywords[$filter] = $keyword;
                             }
-
                             $data['keywords'] = $keywords;
                             $data['countries'] = Countries::where('flag', '1')->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")->orderBy('name', 'ASC')->get();
                             $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
@@ -814,7 +825,6 @@ class WorkerController extends Controller
                         } catch (\Exception $e) {
                             return response()->json(['success' => false, 'message' => 'here']);
                         }
-
                         break;
                     default:
                         return new JsonResponse(['success' => false, 'msg' => 'Oops! something went wrong.'], 400);
@@ -858,9 +868,6 @@ class WorkerController extends Controller
         if (!$this->checkPaymentMethod($user_id)) {
             return response()->json(['success' => false, 'message' => 'Please complete your payment method onboarding first']);
         }
-
-
-
 
         try{
             $request->validate([

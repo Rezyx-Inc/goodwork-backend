@@ -167,7 +167,6 @@ class JobsTableSeeder extends Seeder
                 'holiday' => $faker->randomFloat(2, 10, 50),
                 'on_call_rate' => $faker->randomFloat(2, 10, 50),
                 'call_back_rate' => $faker->randomFloat(2, 10, 50),
-                'on_call_back' => $faker->boolean,
                 'on_call' => $faker->boolean,
                 'orientation_rate' => $faker->randomFloat(2, 10, 50),
                 'weekly_taxable_amount' => $faker->randomFloat(2, 100, 500),
