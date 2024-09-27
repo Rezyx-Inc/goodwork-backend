@@ -81,28 +81,32 @@ class SiteController extends Controller {
 
     public function explore_jobs(Request $request)
 {
+    // Initialize data array
     $data = [];
     $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
+
+    // Fetch related data
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
-    $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
+    $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
     $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-    $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
+    $usa = Countries::where(['iso3' => 'USA'])->first();
     $data['us_states'] = States::where('country_id', $usa->id)->get();
 
-    // Request input handling
-    $data['profession'] = $request->input('profession', '');
-    $data['speciality'] = $request->input('speciality', '');
-    $data['experience'] = $request->input('experience', '');
-    $data['city'] = $request->input('city', '');
-    $data['state'] = $request->input('state', '');
+    // Set filter values from the request, use null as the default if not provided
+    $data['profession'] = $request->input('profession');
+    $data['speciality'] = $request->input('speciality');
+    $data['experience'] = $request->input('experience');
+    $data['city'] = $request->input('city');
+    $data['state'] = $request->input('state');
     $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
-    $data['start_date'] = $request->input('start_date', '');
-    $data['end_date'] = $request->input('end_date', '');
-    $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : '';
+    $data['start_date'] = $request->input('start_date', null);
+    $data['end_date'] = $request->input('end_date', null);
+    $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
     $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
 
+    // Pay and hour filters
     $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
     $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
     $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
@@ -110,25 +114,29 @@ class SiteController extends Controller {
     $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
     $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
 
-    // Extract GW Number from request
+    // GW Number
     $gwNumber = $request->input('gw', '');
 
-    // Initialize query
+    // Build the query
     $query = Job::where('active', '1');
 
     // Filter by GW number (partial match using 'like')
     if (!empty($gwNumber)) {
-        $query->where('id', 'like', $gwNumber . '%');  // Use partial match for 'id'
+      $query->where('id', 'like', $gwNumber . '%');  // Use partial match for 'id'
     }
 
-    // Apply other filters
     if (!empty($data['profession'])) {
         $query->where('profession', '=', $data['profession']);
     }
 
-    if (!empty($data['terms'])) {
-        $query->whereIn('terms', $data['terms']);
+    if (!empty($data['speciality'])) {
+        $query->where('specialty', '=', $data['speciality']);
     }
+
+    if (!empty($data['terms']) && !is_null($request->input('terms'))) {
+      $query->whereIn('terms', $data['terms']);
+  }
+  
 
     if (!empty($data['start_date'])) {
         $query->where('start_date', '<=', $data['start_date']);
@@ -138,6 +146,19 @@ class SiteController extends Controller {
         $query->whereIn('preferred_shift', $data['shifts']);
     }
 
+    if (!empty($data['state'])) {
+        $query->where('job_state', '=', $data['state']);
+    }
+
+    if (!empty($data['city'])) {
+        $query->where('job_city', '=', $data['city']);
+    }
+
+    if (!empty($request->input('job_type'))) {
+        $query->where('job_type', '=', $request->job_type);
+    }
+
+    // Pay and hour filters
     if ($data['weekly_pay_from']) {
         $query->where('weekly_pay', '>=', $data['weekly_pay_from']);
     }
@@ -162,25 +183,12 @@ class SiteController extends Controller {
         $query->where('hours_per_week', '<=', $data['hours_per_week_to']);
     }
 
-    if (!empty($data['state'])) {
-        $query->where('job_state', '=', $data['state']);
-    }
-
-    if (!empty($data['city'])) {
-        $query->where('job_city', '=', $data['city']);
-    }
-
-    if ($request->has('job_type')) {
-        $query->where('job_type', '=', $request->job_type);
-    }
-
-    // Execute the query to get filtered jobs
+    // Get the filtered jobs
     $data['jobs'] = $query->get();
-
-    // Return the view with filtered jobs
+    // Return the view with the $data array
     return view('site.explore_jobs', $data);
 }
-
+  
     /** contact us page */
     public function contact_us(Request $request) {
         $data = [];

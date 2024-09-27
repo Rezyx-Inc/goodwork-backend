@@ -93,40 +93,6 @@ class WorkerDashboardController extends Controller
         return view('worker.account_setting', $data);
     }
 
-    /** update personal info */
-    // public function post_edit_profile(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $user = auth()->guard('frontend')->user();
-    //         $validator = Validator::make($request->all(), [
-    //             'first_name' => 'required|max:100|regex:/^[a-zA-Z\s]+$/',
-    //             'last_name' => 'required|max:100|regex:/^[a-zA-Z\s]+$/',
-    //             'mobile' => 'required|min:10|max:15',
-    //             // 'email' => 'required|email|max:255',
-    //             //'profile_picture' => 'mimes:jpg,jpeg,png',
-    //         ]);
-    //         if ($validator->fails()) {
-    //             return new JsonResponse(['errors' => $validator->errors()], 422);
-    //         }else{
-    //             $input = $request->except(['email']);
-    //             if ($request->hasFile('profile_picture')) {
-    //                 if (!empty($user->image)) {
-    //                     if (file_exists(public_path('images/workers/profile/'.$user->image))) {
-    //                         File::delete(public_path('images/workers/profile/'.$user->image));
-    //                     }
-    //                 }
-    //                 $file = $request->file('profile_picture');
-    //                 $img_name = $file->getClientOriginalName() .'_'.time(). '.' . $file->getClientOriginalExtension();
-    //                 $file->move(public_path('images/workers/profile/'), $img_name);
-
-    //                 $input['image'] = $img_name;
-    //             }
-    //             $input['updated_at'] = Carbon::now();
-    //             $user->update($input);
-    //             return new JsonResponse(['success' => true, 'msg'=>'Profile updated successfully.'], 200);
-    //         }
-    //     }
-    // }
 
     // new update function ( new file management )
 
@@ -355,183 +321,175 @@ class WorkerDashboardController extends Controller
         return view('worker::dashboard.my_work_journey', $data);
     }
 
+
+
     public function explore(Request $request)
-    {
-       //return $request->all();
-            // commenting this for now we need to return only jobs data
+{
+    // Initialize data array
+    $data = [];
+    $data['user'] = auth()->guard('frontend')->user();
+    $data['jobSaved'] = new JobSaved();
 
-            $data = [];
-            $data['user'] = auth()->guard('frontend')->user();
-            $data['jobSaved'] = new JobSaved();
-            //$data['professions'] = Keyword::where(['filter'=>'Profession','active'=>'1'])->get();
-           // $data['professions'] = Profession::all();
-            $data['specialities'] = Speciality::select('full_name')->get();
-        $data['professions'] = Profession::select('full_name')->get();
-            $data['terms_key'] = Keyword::where(['filter' => 'Terms'])->get();
-            $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
-            $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
-            $data['us_states'] = States::where('country_id', $usa->id)->get();
-            // $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
+    // Fetch related data
+    $data['specialities'] = Speciality::select('full_name')->get();
+    $data['professions'] = Profession::select('full_name')->get();
+    $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
+    $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
+    $usa = Countries::where(['iso3' => 'USA'])->first();
+    $data['us_states'] = States::where('country_id', $usa->id)->get();
 
-            $data['profession'] = isset($request->profession) ? $request->profession : '';
-            $data['speciality'] = isset($request->speciality) ? $request->speciality : '';
-            $data['experience'] = isset($request->experience) ? $request->experience : '';
-            $data['city'] = isset($request->city) ? $request->city : '';
-            $data['state'] = isset($request->state) ? $request->state : '';
-            $data['terms'] = isset($request->terms) ? explode('-', $request->terms) : [];
-            $data['start_date'] = isset($request->start_date) ? $request->start_date : '';
-            $data['end_date'] = isset($request->end_date) ? $request->end_date : '';
-            $data['start_date'] = new DateTime($data['start_date']);
-            $data['start_date'] = $data['start_date']->format('Y-m-d');
+    // Set filter values from the request, use null as the default if not provided
+    $data['profession'] = $request->input('profession');
+    $data['speciality'] = $request->input('speciality');
+    $data['experience'] = $request->input('experience');
+    $data['city'] = $request->input('city');
+    $data['state'] = $request->input('state');
+    $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+    $data['start_date'] = $request->input('start_date', null);
+    $data['end_date'] = $request->input('end_date', null);
+    $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
+    $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
 
-            $data['shifts'] = isset($request->shifts) ? explode('-', $request->shifts) : [];
+    // Pay and hour filters
+    $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
+    $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
+    $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
+    $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
+    $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
+    $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
 
-            $data['weekly_pay_from'] = isset($request->weekly_pay_from) ? $request->weekly_pay_from : 10;
-            $data['weekly_pay_to'] = isset($request->weekly_pay_to) ? $request->weekly_pay_to : 10000;
-            $data['hourly_pay_from'] = isset($request->hourly_pay_from) ? $request->hourly_pay_from : 2;
-            $data['hourly_pay_to'] = isset($request->hourly_pay_to) ? $request->hourly_pay_to : 24;
-            $data['hours_per_week_from'] = isset($request->hours_per_week_from) ? $request->hours_per_week_from : 10;
-            $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
+    // GW Number
+    $gwNumber = $request->input('gw', '');
 
+    // Build the query
+    $query = Job::where('active', '1');
 
-            $user = auth()->guard('frontend')->user();
-
-            $nurse = NURSE::where('user_id', $user->id)->first();
-            $jobs_id = Offer::where('worker_user_id', $nurse->id)
-                ->select('job_id')
-                ->get();
-
-
-        $whereCond = [
-            'active' => '1'
-        ];
-
-        $ret = Job::select('*')
-            ->where($whereCond)
-            ;
-
-
-            if ($data['profession']) {
-
-                $ret->where('proffesion', '=', $data['profession']);
-
-            }
-
-            if (count($data['terms'])) {
-
-                $ret->whereIn('terms', $data['terms']);
-            }
-
-            // if (isset($request->start_date)) {
-
-            //     $ret->where('start_date', '>=', $data['start_date']);
-            //     //$ret->where('end_date', '>=', $data['start_date']);
-            // }
-
-            if (isset($request->start_date)) {
-
-                $ret->where('start_date', '<=', $data['start_date']);
-
-            }
-
-            if ($data['shifts']) {
-
-                $ret->whereIn('preferred_shift', $data['shifts']);
-            }
-
-
-            if (isset($request->weekly_pay_from)) {
-
-                $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-            }
-
-            if (isset($request->weekly_pay_to)) {
-                $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
-            }
-
-            if (isset($request->hourly_pay_from)) {
-                $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
-            }
-
-            if (isset($request->hourly_pay_to)) {
-                $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
-            }
-
-            if (isset($request->hours_per_week_from)) {
-                $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
-            }
-
-            if (isset($request->hours_per_week_to)) {
-                $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
-            }
-
-            if(isset($request->state)){
-                $ret->where('job_state', '=', $data['state']);
-            }
-
-            if(isset($request->city)){
-                $ret->where('job_city', '=', $data['city']);
-            }
-
-
-            //return response()->json(['message' =>  $ret->get()]);
-            $data['jobs'] = $ret->get();
-
-            $jobSaved = new JobSaved;
-
-            $data['jobSaved'] = $jobSaved;
-
-
-            return view('worker::dashboard.explore', $data);
-
-
-
+    // Filter by GW number (partial match using 'like')
+    if (!empty($gwNumber)) {
+      $query->where('id', 'like', $gwNumber . '%');  // Use partial match for 'id'
     }
+
+    if (!empty($data['profession'])) {
+        $query->where('profession', '=', $data['profession']);
+    }
+
+    if (!empty($data['speciality'])) {
+        $query->where('specialty', '=', $data['speciality']);
+    }
+
+    if (!empty($data['terms']) && !is_null($request->input('terms'))) {
+      $query->whereIn('terms', $data['terms']);
+  }
+  
+
+    if (!empty($data['start_date'])) {
+        $query->where('start_date', '<=', $data['start_date']);
+    }
+
+    if (!empty($data['shifts'])) {
+        $query->whereIn('preferred_shift', $data['shifts']);
+    }
+
+    if (!empty($data['state'])) {
+        $query->where('job_state', '=', $data['state']);
+    }
+
+    if (!empty($data['city'])) {
+        $query->where('job_city', '=', $data['city']);
+    }
+
+    if (!empty($request->input('job_type'))) {
+        $query->where('job_type', '=', $request->job_type);
+    }
+
+    // Pay and hour filters
+    if ($data['weekly_pay_from']) {
+        $query->where('weekly_pay', '>=', $data['weekly_pay_from']);
+    }
+
+    if ($data['weekly_pay_to']) {
+        $query->where('weekly_pay', '<=', $data['weekly_pay_to']);
+    }
+
+    if ($data['hourly_pay_from']) {
+        $query->where('hours_shift', '>=', $data['hourly_pay_from']);
+    }
+
+    if ($data['hourly_pay_to']) {
+        $query->where('hours_shift', '<=', $data['hourly_pay_to']);
+    }
+
+    if ($data['hours_per_week_from']) {
+        $query->where('hours_per_week', '>=', $data['hours_per_week_from']);
+    }
+
+    if ($data['hours_per_week_to']) {
+        $query->where('hours_per_week', '<=', $data['hours_per_week_to']);
+    }
+
+    // Get the filtered jobs
+    $data['jobs'] = $query->get();
+  //  return $data['jobs'];
+
+  //return $data['jobs'];
+    // Return the view with the $data array
+    return view('worker::dashboard.explore', $data);
+}
+
+
+
+    
+
+    
+
+
 
     public function add_save_jobs(Request $request)
     {
-	// return asset('public/frontend/img/job-icon-bx-Vector.png');
-	try{
-
-
-            $request->validate([
-                'jid' => 'required',
-            ]);
-            $user = auth()->guard('frontend')->user();
-            $nurse = NURSE::where('user_id', $user->id)->first();
-            $rec = JobSaved::where(['nurse_id' => $nurse->id, 'job_id' => $request->jid, 'is_delete' => '0'])->first();
-            $input = [
-                'job_id' => $request->jid,
-                'is_save' => '1',
-                'nurse_id' => $nurse->id,
-            ];
-            if (empty($rec)) {
-              JobSaved::create($input);
-
-                $img = asset('frontend/img/bookmark.png');
-                $message = 'Job saved successfully.';
-
-            } else {
-                if ($rec->is_save == '1') {
-                    $input['is_save'] = '0';
-                    $img = asset('frontend/img/job-icon-bx-Vector.png');
-                    $message = 'Job unsaved successfully.';
-                } else {
-                    $input['is_save'] = '1';
+	    // return asset('public/frontend/img/job-icon-bx-Vector.png');
+	    try{
+      
+      
+                $request->validate([
+                    'jid' => 'required',
+                ]);
+                $user = auth()->guard('frontend')->user();
+                $nurse = NURSE::where('user_id', $user->id)->first();
+                $rec = JobSaved::where(['nurse_id' => $nurse->id, 'job_id' => $request->jid, 'is_delete' => '0'])->first();
+                $input = [
+                    'job_id' => $request->jid,
+                    'is_save' => '1',
+                    'nurse_id' => $nurse->id,
+                ];
+                if (empty($rec)) {
+                  JobSaved::create($input);
+                
                     $img = asset('frontend/img/bookmark.png');
                     $message = 'Job saved successfully.';
+                
+                } else {
+                    if ($rec->is_save == '1') {
+                        $input['is_save'] = '0';
+                        $img = asset('frontend/img/job-icon-bx-Vector.png');
+                        $message = 'Job unsaved successfully.';
+                    } else {
+                        $input['is_save'] = '1';
+                        $img = asset('frontend/img/bookmark.png');
+                        $message = 'Job saved successfully.';
+                    }
+                    $rec->update($input);
                 }
-                $rec->update($input);
-            }
+              
+                return new JsonResponse(['success' => true, 'msg' => $message, 'img' => $img], 200);
+              
+	    }catch(\Exception $e){
+	    return $e->getMessage();
+	    }
+        }
 
-            return new JsonResponse(['success' => true, 'msg' => $message, 'img' => $img], 200);
-
-	}catch(\Exception $e){
-	return $e->getMessage();
-	}
-    }
-
-    public function apply_on_jobs(Request $request)
+  
+  
+        public function apply_on_jobs(Request $request)
     {
         try{
             $request->validate([

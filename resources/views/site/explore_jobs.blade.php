@@ -488,19 +488,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            $("#filter_form").submit(function(e) {
-                e.preventDefault(); // Prevent the form from submitting initially
 
-              // Clear previous error message
-              $('#gwError').hide().text('');
 
-              // Get the value of the gw input
-              var gwValue = $('#gw').val();
+<script>
+    $(document).ready(function() {
+        $("#filter_form").submit(function(e) {
+            e.preventDefault(); 
+            
+            // Clear previous error message
+            $('#gwError').hide().text('');
 
-              // Validation checks
-              if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
+            // Get the value of the gw input
+            var gwValue = $('#gw').val();
+
+            // Validation checks
+            if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
                   // First character should be 'G' or 'g'
                   $('#gwError').text('The GoodWork Number must start with "G".').show();
               } else if (gwValue.length > 1 && gwValue[1].toLowerCase() !== 'w') {
@@ -512,14 +514,15 @@ document.addEventListener('DOMContentLoaded', function() {
               } else if (gwValue.length > 3 && !/^\d+$/.test(gwValue.slice(3))) {
                   // After the third character, it should only be numbers
                   $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
-              }
-               else {
-  
-
+              } else {
+                // Check if terms input is empty and remove it
+                var termsInput = $('input[name="terms"]');
+                if (termsInput.length && termsInput.val() === '') {
+                    termsInput.remove();  // Remove the empty terms input
+                }
 
                 // Get all selected checkboxes with the name "categories[]"
                 const selectedCategories = $("input[name='terms[]']:checked");
-
 
                 // Extract the values (category names) and join them into a comma-separated string
                 const categoriesString = selectedCategories.map(function() {
@@ -528,36 +531,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Set the categoriesString as the value of the hidden input field
                 $("#job_type").val(categoriesString);
 
-                // const shiftTypes = $("input[name='shift[]']:checked");
-                // const shiftString = shiftTypes.map(function() {
-                // 	return $(this).val();
-                // }).get().join('-');
-                // Set the categoriesString as the value of the hidden input field
-                // $("#shift").val(shiftString);
-                $(this).find("input[name='terms[]']").remove();
-                // $(this).find("input[name='shift[]']").remove();
-
                 // Change the value of the profession select to the text of the selected option
                 const professionSelect = $("select[name='profession']");
                 const selectedOptionText = professionSelect.find("option:selected").text();
 
                 // Add a hidden input to the form with the text of the selected option
-                $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
-                    '">');
-
+                $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
 
                 // Now, you can submit the form programmatically
                 console.log('my form');
                 console.log($(this).serializeArray());
-                // setInterval(() => {
-                //   this.submit();
-                // }, 500000);
 
-                this.submit();
-              }  });
-            
+                this.submit(); // Submit the form
+            }
         });
+    });
+</script>
 
-    </script>
 @stop
 
