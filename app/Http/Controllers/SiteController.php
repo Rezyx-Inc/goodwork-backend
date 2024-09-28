@@ -128,11 +128,11 @@ class SiteController extends Controller
         $gwNumber = $request->input('gw', '');
 
         // Build the query
-        $query = Job::where('active', '1');
+        $ret = Job::where('active', '1');
 
         // Filter by GW number (partial match using 'like')
         if (!empty($gwNumber)) {
-          $query->where('id', $gwNumber);  // Use partial match for 'id'
+          $ret->where('id', $gwNumber);  // Use partial match for 'id'
         }
 
         if ($data['profession']) {
@@ -140,8 +140,8 @@ class SiteController extends Controller
             $ret->where('profession', '=', $data['profession']);
 
         }
-      
-       if ($data['specialty']) {
+
+       if ($data['speciality']) {
 
             $ret->where('specialty', '=', $data['specialty']);
 
@@ -200,18 +200,9 @@ class SiteController extends Controller
 
         //return response()->json(['message' =>  $ret->get()]);
         $data['jobs'] = $ret->get();
-
-
         return view('site.explore_jobs', $data);
-
     }
 
-    // Get the filtered jobs
-    $data['jobs'] = $query->get();
-    // Return the view with the $data array
-    return view('site.explore_jobs', $data);
-}
-  
     /** contact us page */
     public function contact_us(Request $request)
     {

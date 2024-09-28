@@ -2245,9 +2245,8 @@
         // end validation basic information
         // validation professional information
         function validateProfessionalInfo() {
-        
-                let isValid = true;
 
+                var isValid = true;
 
                 const fields = [
                     { field: profession, errorClass: 'help-block-profession', errorMessage: 'Please enter a profession' },
@@ -2294,9 +2293,6 @@
                     { field: nurse_classification, errorClass: 'help-block-nurse_classification', errorMessage: 'Please enter a worker classification' },
                     { field: nursing_license_number, errorClass: 'help-block-licence', errorMessage: 'Please enter a licence number' }
                 ];
-                
-    
-            }
 
                 // Validate fields
                 fields.forEach(({ field, errorClass, errorMessage }) => {
@@ -2307,7 +2303,6 @@
                         $(`.${errorClass}`).text('').removeClass('text-danger');
                     }
                 });
-
 
                 return isValid;
         }

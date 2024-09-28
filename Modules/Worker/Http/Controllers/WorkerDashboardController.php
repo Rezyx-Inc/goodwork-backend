@@ -229,7 +229,7 @@ class WorkerDashboardController extends Controller
 
             return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
         } catch (\Exception $e) {
-          
+
             return response()->json(['msg'=>$e->getMessage(), 'status'=>false]);
         }
     }
@@ -385,51 +385,51 @@ class WorkerDashboardController extends Controller
       $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
       $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
       $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
-      
+
       $user = auth()->guard('frontend')->user();
 
       $nurse = NURSE::where('user_id', $user->id)->first();
       $jobs_id = Offer::where('worker_user_id', $nurse->id)
           ->select('job_id')
           ->get();
-      
+
       // GW Number
       $gwNumber = $request->input('gw', '');
 
       // Build the query
-      $query = Job::where('active', '1');
+      $ret = Job::where('active', '1');
 
       // Filter by GW number
       if (!empty($gwNumber)) {
-        $query->where('id', $gwNumber);
+        $ret->where('id', $gwNumber);
       }
 
       if (!empty($data['profession'])) {
-          $query->where('profession', '=', $data['profession']);
+          $ret->where('profession', '=', $data['profession']);
       }
 
       if (!empty($data['speciality'])) {
-          $query->where('specialty', '=', $data['speciality']);
+          $ret->where('specialty', '=', $data['speciality']);
       }
 
       if (!empty($data['terms']) && !is_null($request->input('terms'))) {
-        $query->whereIn('terms', $data['terms']);
+        $ret->whereIn('terms', $data['terms']);
       }
 
       if (!empty($data['start_date'])) {
-          $query->where('start_date', '<=', $data['start_date']);
+          $ret->where('start_date', '<=', $data['start_date']);
       }
 
       if (!empty($data['shifts'])) {
-          $query->whereIn('preferred_shift', $data['shifts']);
+          $ret->whereIn('preferred_shift', $data['shifts']);
       }
 
       if (!empty($data['state'])) {
-          $query->where('job_state', '=', $data['state']);
+          $ret->where('job_state', '=', $data['state']);
       }
 
       if (!empty($data['city'])) {
-          $query->where('job_city', '=', $data['city']);
+          $ret->where('job_city', '=', $data['city']);
       }
 
       if (isset($request->weekly_pay_from)) {
@@ -474,9 +474,9 @@ class WorkerDashboardController extends Controller
 
 
       return view('worker::dashboard.explore', $data);
-      
+
     }
-  
+
     public function add_save_jobs(Request $request)
     {
         // return asset('public/frontend/img/job-icon-bx-Vector.png');
@@ -494,47 +494,29 @@ class WorkerDashboardController extends Controller
                 'is_save' => '1',
                 'nurse_id' => $nurse->id,
             ];
-          
+
             if (empty($rec)) {
-              
+
                 JobSaved::create($input);
 
                 $img = asset('frontend/img/bookmark.png');
                 $message = 'Job saved successfully.';
 
             } else {
-              
+
                 if ($rec->is_save == '1') {
-                  
+
                     $input['is_save'] = '0';
                     $img = asset('frontend/img/job-icon-bx-Vector.png');
                     $message = 'Job unsaved successfully.';
-                  
+
                 } else {
-                  
+
                     $input['is_save'] = '1';
                     $img = asset('frontend/img/bookmark.png');
                     $message = 'Job saved successfully.';
-                
-                } else {
-                  
-                    if ($rec->is_save == '1') {
-                      
-                        $input['is_save'] = '0';
-                        $img = asset('frontend/img/job-icon-bx-Vector.png');
-                        $message = 'Job unsaved successfully.';
-                      
-                    } else {
-                      
-                        $input['is_save'] = '1';
-                        $img = asset('frontend/img/bookmark.png');
-                        $message = 'Job saved successfully.';
-                      
-                    }
-                  
-                    $rec->update($input);
                 }
-              
+
                 $rec->update($input);
             }
 
@@ -544,11 +526,11 @@ class WorkerDashboardController extends Controller
             return $e->getMessage();
         }
     }
-        
+
         public function apply_on_jobs(Request $request)
     {
         try {
-          
+
             $request->validate([
                 'jid' => 'required',
             ]);
