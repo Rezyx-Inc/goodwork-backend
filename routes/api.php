@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Controllers\Api\Facility\FacilityController;
 use App\Http\Controllers\Api\Worker\WorkerController;
 use App\Http\Controllers\Api\Recruiter\RecruiterController;
-use App\Http\Controllers\Api\Employer\ApiEmployerController;
+use App\Http\Controllers\Api\Organization\ApiOrganizationController;
 use App\Http\Controllers\Api\AuthApi\AuthApiController;
 use App\Http\Controllers\Api\Certification\CertificationController;
 use App\Http\Controllers\Api\Details\DetailsController;
@@ -773,8 +773,8 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  * Functionality: Handles the update of nursing experience information based on the provided request parameters. Validates the incoming request parameters and updates the nurse's experience if the user and nurse are found. Responds with a JSON indicating the status of the operation and any relevant messages.
  */
 
- //Route::post('experience', 'UserProfileController@Experience');
- Route::post('experience', [UserProfileController::class, 'Experience']);
+//Route::post('experience', 'UserProfileController@Experience');
+Route::post('experience', [UserProfileController::class, 'Experience']);
 
 /**
  * Route: POST /get-experience
@@ -792,8 +792,8 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  * Functionality: Retrieves worker (nurse) experience details based on the provided worker ID. Fetches certifications and details related to a worker's experience. Constructs and returns detailed information about a worker's experience.
  */
 
- //Route::post('get-experience', 'UserProfileController@workerExperience');
- Route::post('get-experience', [UserProfileController::class, 'workerExperience']);
+//Route::post('get-experience', 'UserProfileController@workerExperience');
+Route::post('get-experience', [UserProfileController::class, 'workerExperience']);
 
 /**
  * Route: POST /facility-types
@@ -808,8 +808,8 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  * Functionality: Fetches a list of facility types and their associated IDs. Constructs and returns the list of facility types successfully.
  */
 
- //Route::post('facility-types', 'UserProfileController@facilityTypes');
- Route::post('facility-types', [UserProfileController::class, 'facilityTypes']);
+//Route::post('facility-types', 'UserProfileController@facilityTypes');
+Route::post('facility-types', [UserProfileController::class, 'facilityTypes']);
 /**
  * Route: POST /nurse-experience-selections
  *
@@ -828,11 +828,11 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
 
 // Route::post('nurse-experience-selections', 'UserProfileController@nurseExperienceSelectionOptions');
 
- Route::post('nurse-experience-selections', [UserProfileController::class, 'nurseExperienceSelectionOptions']);
+Route::post('nurse-experience-selections', [UserProfileController::class, 'nurseExperienceSelectionOptions']);
 
 
 
- /**
+/**
  * Route: POST /forgot-password
  *
  * Function: ApiController@sendResetLinkEmail
@@ -847,9 +847,9 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  * Functionality: Sends a password reset link to the user's email address if found. Generates a unique token and constructs an email template to send the reset link.
  */
 
- //Route::post('forgot-password', 'UserProfileController@sendResetLinkEmail');
+//Route::post('forgot-password', 'UserProfileController@sendResetLinkEmail');
 
- Route::post('forgot-password', [UserProfileController::class, 'sendResetLinkEmail']);
+Route::post('forgot-password', [UserProfileController::class, 'sendResetLinkEmail']);
 
 
 /**
@@ -868,8 +868,8 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  * Functionality: Updates the user's new phone number. Generates an OTP (One Time Password) and sends it to the provided phone number for verification.
  */
 
- //Route::post('new-phone-number', 'UserProfileController@newPhoneNumber');
- Route::post('new-phone-number', [UserProfileController::class, 'newPhoneNumber']);
+//Route::post('new-phone-number', 'UserProfileController@newPhoneNumber');
+Route::post('new-phone-number', [UserProfileController::class, 'newPhoneNumber']);
 
 /**
  * Route: POST /get-countries
@@ -885,7 +885,7 @@ Route::post('state-list', [UserProfileController::class, 'stateList']);
  */
 
 // Route::post('get-countries', 'StaticContentController@getCountries');
- Route::post('get-countries', [StaticContentController::class, 'getCountries']);
+Route::post('get-countries', [StaticContentController::class, 'getCountries']);
 
 
 
@@ -1110,8 +1110,8 @@ Route::post('get-languages-list', [ApiController::class, 'getLanguages']);
  * Functionality: Validates and updates nurse roles and interests based on provided parameters.
  */
 
- //Route::post('role-and-interest/page-1', 'RoleController@rolePage1');
- Route::post('role-and-interest/page-1', [RoleController::class, 'rolePage1']);
+//Route::post('role-and-interest/page-1', 'RoleController@rolePage1');
+Route::post('role-and-interest/page-1', [RoleController::class, 'rolePage1']);
 
 
 
@@ -1152,8 +1152,8 @@ Route::post('role-and-interest/page-2', [RoleController::class, 'rolePage2']);
  * Functionality: Removes a specific document related to nurse roles and interests.
  */
 
- //Route::post('remove-role-interest-doc', 'RoleController@destroyRoleInterestDocument');
- Route::post('remove-role-interest-doc', [RoleController::class, 'destroyRoleInterestDocument']);
+//Route::post('remove-role-interest-doc', 'RoleController@destroyRoleInterestDocument');
+Route::post('remove-role-interest-doc', [RoleController::class, 'destroyRoleInterestDocument']);
 /**
  * Route: POST /browse-jobs
  *
@@ -1560,7 +1560,7 @@ Route::post('update-worker-information', [WorkerController::class, 'updateWorker
 // Route::post('add-experience-detail', 'FacilityController@addnurseExperienceDetail');
 // Route::post('edit-experience-detail', 'FacilityController@editnurseExperienceDetail');
 // Route::post('experience-type-list', 'FacilityController@experienceTpesOptions');
-// Route::post('get-employer-list', 'FacilityController@getfacilities');
+// Route::post('get-organization-list', 'FacilityController@getfacilities');
 // Route::post('explore-browse-jobs', 'FacilityController@exploreJobList');
 
 Route::post('facility-dropdown-{type}', [FacilityController::class, 'facilityDropdown']);
@@ -1604,7 +1604,7 @@ Route::post('nurse-education-detail', [FacilityController::class, 'nurseEducatio
 Route::post('add-experience-detail', [FacilityController::class, 'addnurseExperienceDetail']);
 Route::post('edit-experience-detail', [FacilityController::class, 'editnurseExperienceDetail']);
 Route::post('experience-type-list', [FacilityController::class, 'experienceTpesOptions']);
-Route::post('get-employer-list', [FacilityController::class, 'getfacilities']);
+Route::post('get-organization-list', [FacilityController::class, 'getfacilities']);
 
 
 
@@ -1731,77 +1731,77 @@ Route::post('get-drafted-counteroffered-list', [RecruiterController::class, 'get
 
 
 
-/* Employer as Facility */
-// Route::post('employer-send-otp', 'ApiEmployerController@sendOtp');
-// Route::post('employer-mobile-otp', 'ApiEmployerController@mobileOtp');
-// Route::post('employer-confirm-otp', 'ApiEmployerController@confirmOtp');
-// Route::post('employer-login', 'ApiEmployerController@login');
-// Route::post('employer-applications', 'ApiEmployerController@applications');
-// Route::post('employer-about', 'ApiEmployerController@aboutEmployer');
-// Route::post('employer-register', 'ApiEmployerController@registerEmployer');
-// Route::post('employer-home-screen', 'ApiEmployerController@employerHomeScreen');
-// Route::post('employer-account-info', 'ApiEmployerController@employerAccountInfo');
-// Route::post('employer-status-count', 'ApiEmployerController@employerStatusCount');
-// Route::post('employer-new', 'ApiEmployerController@employerNewList');
-// Route::post('employer-screening', 'ApiEmployerController@employerScreeningList');
-// Route::post('employer-submitted', 'ApiEmployerController@employerSubmittedList');
-// Route::post('employer-offered', 'ApiEmployerController@employerOffredList');
-// Route::post('employer-done', 'ApiEmployerController@employerDoneList');
-// Route::post('employer-onbaording', 'ApiEmployerController@employerOnboardingList');
-// Route::post('employer-working', 'ApiEmployerController@employerWorkingList');
-// Route::post('employer-rejected', 'ApiEmployerController@employerRejectedList');
-// Route::post('employer-blocked', 'ApiEmployerController@employerBlockedList');
-// Route::post('employer-worker-info', 'ApiEmployerController@workerInfo');
+/* Organization as Facility */
+// Route::post('organization-send-otp', 'ApiOrganizationController@sendOtp');
+// Route::post('organization-mobile-otp', 'ApiOrganizationController@mobileOtp');
+// Route::post('organization-confirm-otp', 'ApiOrganizationController@confirmOtp');
+// Route::post('organization-login', 'ApiOrganizationController@login');
+// Route::post('organization-applications', 'ApiOrganizationController@applications');
+// Route::post('organization-about', 'ApiOrganizationController@aboutOrganization');
+// Route::post('organization-register', 'ApiOrganizationController@registerOrganization');
+// Route::post('organization-home-screen', 'ApiOrganizationController@organizationHomeScreen');
+// Route::post('organization-account-info', 'ApiOrganizationController@organizationAccountInfo');
+// Route::post('organization-status-count', 'ApiOrganizationController@organizationStatusCount');
+// Route::post('organization-new', 'ApiOrganizationController@organizationNewList');
+// Route::post('organization-screening', 'ApiOrganizationController@organizationScreeningList');
+// Route::post('organization-submitted', 'ApiOrganizationController@organizationSubmittedList');
+// Route::post('organization-offered', 'ApiOrganizationController@organizationOffredList');
+// Route::post('organization-done', 'ApiOrganizationController@organizationDoneList');
+// Route::post('organization-onbaording', 'ApiOrganizationController@organizationOnboardingList');
+// Route::post('organization-working', 'ApiOrganizationController@organizationWorkingList');
+// Route::post('organization-rejected', 'ApiOrganizationController@organizationRejectedList');
+// Route::post('organization-blocked', 'ApiOrganizationController@organizationBlockedList');
+// Route::post('organization-worker-info', 'ApiOrganizationController@workerInfo');
 
-Route::post('employer-send-otp', [ApiEmployerController::class, 'sendOtp']);
-Route::post('employer-mobile-otp', [ApiEmployerController::class, 'mobileOtp']);
-Route::post('employer-confirm-otp', [ApiEmployerController::class, 'confirmOtp']);
-Route::post('employer-login', [ApiEmployerController::class, 'login']);
-Route::post('employer-applications', [ApiEmployerController::class, 'applications']);
-Route::post('employer-about', [ApiEmployerController::class, 'aboutEmployer']);
-Route::post('employer-register', [ApiEmployerController::class, 'registerEmployer']);
-Route::post('employer-home-screen', [ApiEmployerController::class, 'employerHomeScreen']);
-Route::post('employer-account-info', [ApiEmployerController::class, 'employerAccountInfo']);
-Route::post('employer-status-count', [ApiEmployerController::class, 'employerStatusCount']);
-Route::post('employer-new', [ApiEmployerController::class, 'employerNewList']);
-Route::post('employer-screening', [ApiEmployerController::class, 'employerScreeningList']);
-Route::post('employer-submitted', [ApiEmployerController::class, 'employerSubmittedList']);
-Route::post('employer-offered', [ApiEmployerController::class, 'employerOffredList']);
-Route::post('employer-done', [ApiEmployerController::class, 'employerDoneList']);
-Route::post('employer-onbaording', [ApiEmployerController::class, 'employerOnboardingList']);
-Route::post('employer-working', [ApiEmployerController::class, 'employerWorkingList']);
-Route::post('employer-rejected', [ApiEmployerController::class, 'employerRejectedList']);
-Route::post('employer-blocked', [ApiEmployerController::class, 'employerBlockedList']);
-Route::post('employer-worker-info', [ApiEmployerController::class, 'workerInfo']);
+Route::post('organization-send-otp', [ApiOrganizationController::class, 'sendOtp']);
+Route::post('organization-mobile-otp', [ApiOrganizationController::class, 'mobileOtp']);
+Route::post('organization-confirm-otp', [ApiOrganizationController::class, 'confirmOtp']);
+Route::post('organization-login', [ApiOrganizationController::class, 'login']);
+Route::post('organization-applications', [ApiOrganizationController::class, 'applications']);
+Route::post('organization-about', [ApiOrganizationController::class, 'aboutOrganization']);
+Route::post('organization-register', [ApiOrganizationController::class, 'registerOrganization']);
+Route::post('organization-home-screen', [ApiOrganizationController::class, 'organizationHomeScreen']);
+Route::post('organization-account-info', [ApiOrganizationController::class, 'organizationAccountInfo']);
+Route::post('organization-status-count', [ApiOrganizationController::class, 'organizationStatusCount']);
+Route::post('organization-new', [ApiOrganizationController::class, 'organizationNewList']);
+Route::post('organization-screening', [ApiOrganizationController::class, 'organizationScreeningList']);
+Route::post('organization-submitted', [ApiOrganizationController::class, 'organizationSubmittedList']);
+Route::post('organization-offered', [ApiOrganizationController::class, 'organizationOffredList']);
+Route::post('organization-done', [ApiOrganizationController::class, 'organizationDoneList']);
+Route::post('organization-onbaording', [ApiOrganizationController::class, 'organizationOnboardingList']);
+Route::post('organization-working', [ApiOrganizationController::class, 'organizationWorkingList']);
+Route::post('organization-rejected', [ApiOrganizationController::class, 'organizationRejectedList']);
+Route::post('organization-blocked', [ApiOrganizationController::class, 'organizationBlockedList']);
+Route::post('organization-worker-info', [ApiOrganizationController::class, 'workerInfo']);
 
 
 // Strip Payment gateway
 // Route::post('create-account', 'ApiController@createAccount');
 // Route::post('/send-money', 'ApiController@send_money')->name('send_money');
-// Route::post('get-employers', 'ApiController@employers');
+// Route::post('get-organizations', 'ApiController@organizations');
 
 Route::post('create-account', [ApiController::class, 'createAccount']);
 Route::post('/send-money', [ApiController::class, 'send_money'])->name('send_money');
-Route::post('get-employers', [ApiController::class, 'employers']);
+Route::post('get-organizations', [ApiController::class, 'organizations']);
 
 
 // Route::post('auth/register',[AuthController::class,'register'])->name('register-jwt');
 
 // authorize_access to api by email and api_key : return jwt token
 
-Route::post('auth/authorize',[AuthController::class,'authorize_access'])->name('authorize');
+Route::post('auth/authorize', [AuthController::class, 'authorize_access'])->name('authorize');
 
-// test jwt auth token with scopes ex: employer
+// test jwt auth token with scopes ex: organization
 
-Route::middleware(['auth:api','scopes:all_Permession'])->get('/allPermession',[ApiController::class,'all_permession_test'])->name('allPermession');
+Route::middleware(['auth:api', 'scopes:all_Permession'])->get('/allPermession', [ApiController::class, 'all_permession_test'])->name('allPermession');
 
 // test jwt auth token with scopes ex: recruiter
 
-Route::middleware(['auth:api','scopes:some_Permession'])->get('/somePermession',[ApiController::class,'some_permession_test'])->name('somePermession');
+Route::middleware(['auth:api', 'scopes:some_Permession'])->get('/somePermession', [ApiController::class, 'some_permession_test'])->name('somePermession');
 
 // test api key and rate limit 60 hits per minute // controllHeaders to secure response headers
 
-Route::middleware(['auth:api','ThrottleMiddleware:60,1','controllHeaders','auth.apikey'])->get('/getData',[ApiController::class,'get_cities']);
+Route::middleware(['auth:api', 'ThrottleMiddleware:60,1', 'controllHeaders', 'auth.apikey'])->get('/getData', [ApiController::class, 'get_cities']);
 
 
 

@@ -32,10 +32,10 @@ class OpportunitiesController extends Controller
     {
         $recruiter_id = Auth::guard('recruiter')->user()->id;
         $draftJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 0)->get();
-        $publishedJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_hidden', '0')->where('is_closed','0')->where('is_open','1')->get();
+        $publishedJobs = Job::where('recruiter_id', $recruiter_id)->where('active', 1)->where('is_hidden', '0')->where('is_closed', '0')->where('is_open', '1')->get();
         $onholdJobs = Job::where('recruiter_id', $recruiter_id)->where('active', '1')->where('is_open', '0')->get();
         $specialities = Speciality::select('full_name')->get();
-        $proffesions = Profession::select('full_name')->get();
+        $professions = Profession::select('full_name')->get();
         $applyCount = array();
 
         // send the states
@@ -50,14 +50,14 @@ class OpportunitiesController extends Controller
             $allKeywords[$filter] = $keywords;
         }
 
-        foreach ($publishedJobs as $key => $value){
-            
+        foreach ($publishedJobs as $key => $value) {
+
             $userapplied = Offer::where('job_id', $value->id)->count();
             $applyCount[$key] = $userapplied;
 
         }
 
-        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'proffesions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount'));
+        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount'));
         //return response()->json(['success' => false, 'message' =>  $states]);
         //return view('recruiter::recruiter/opportunitiesmanager');
     }
@@ -186,23 +186,23 @@ class OpportunitiesController extends Controller
 
     //                 $jobDetails = Job::where('id', $request->job_id)->first();
 
-    //                 if($request->hours_per_week || $request->actual_hourly_rate || $request->weekly_taxable_amount || $request->weekly_non_taxable_amount || $request->employer_weekly_amount || $request->sign_on_bonus || $request->completion_bonus || $request->weeks_assignment || $request->goodwork_weekly_amount || $request->total_contract_amount || $request->total_employer_amount || $request->total_goodwork_amount){
+    //                 if($request->hours_per_week || $request->actual_hourly_rate || $request->weekly_taxable_amount || $request->weekly_non_taxable_amount || $request->organization_weekly_amount || $request->sign_on_bonus || $request->completion_bonus || $request->weeks_assignment || $request->goodwork_weekly_amount || $request->total_contract_amount || $request->total_organization_amount || $request->total_goodwork_amount){
     //                     $update_amount = [];
     //                     if(isset($jobDetails->hours_per_week) && isset($jobDetails->actual_hourly_rate)){
     //                         $update_amount['weekly_taxable_amount'] = $jobDetails->hours_per_week * $jobDetails->actual_hourly_rate;
     //                     }
     //                     if(isset($jobDetails->weekly_taxable_amount) && isset($request->weekly_non_taxable_amount)){
-    //                         $update_amount['employer_weekly_amount'] = $jobDetails->weekly_taxable_amount + $request->weekly_non_taxable_amount;
-    //                         $update_amount['goodwork_weekly_amount'] = $jobDetails->employer_weekly_amount * 0.05;
+    //                         $update_amount['organization_weekly_amount'] = $jobDetails->weekly_taxable_amount + $request->weekly_non_taxable_amount;
+    //                         $update_amount['goodwork_weekly_amount'] = $jobDetails->organization_weekly_amount * 0.05;
     //                     }
-    //                     if((isset($request->weeks_assignment) && isset($jobDetails->employer_weekly_amount)) || isset($request->sign_on_bonus) || isset($request->completion_bonus)){
-    //                         $update_amount['total_employer_amount'] = ($jobDetails->weeks_assignment * $jobDetails->employer_weekly_amount) + $jobDetails->sign_on_bonus + $jobDetails->completion_bonus;
+    //                     if((isset($request->weeks_assignment) && isset($jobDetails->organization_weekly_amount)) || isset($request->sign_on_bonus) || isset($request->completion_bonus)){
+    //                         $update_amount['total_organization_amount'] = ($jobDetails->weeks_assignment * $jobDetails->organization_weekly_amount) + $jobDetails->sign_on_bonus + $jobDetails->completion_bonus;
     //                     }
     //                     if(isset($request->weeks_assignment) && isset($jobDetails->goodwork_weekly_amount)){
     //                         $update_amount['total_goodwork_amount'] = $jobDetails->weeks_assignment * $jobDetails->goodwork_weekly_amount;
     //                     }
-    //                     if(isset($jobDetails->total_employer_amount) && isset($jobDetails->total_goodwork_amount)){
-    //                         $update_amount['total_contract_amount'] = $jobDetails->total_employer_amount + $jobDetails->total_goodwork_amount;
+    //                     if(isset($jobDetails->total_organization_amount) && isset($jobDetails->total_goodwork_amount)){
+    //                         $update_amount['total_contract_amount'] = $jobDetails->total_organization_amount + $jobDetails->total_goodwork_amount;
     //                     }
     //                     $job = Job::where(['id' => $job_id])->update($update_amount);
     //                 }
@@ -266,7 +266,7 @@ class OpportunitiesController extends Controller
     public function store(Request $request, $check_type = 'create')
     {
         $user_id = Auth::guard('recruiter')->user()->id;
-        
+
         if ($check_type == 'update') {
             $validation_array = ['job_id' => 'required'];
         } elseif ($check_type == 'published') {
@@ -370,7 +370,7 @@ class OpportunitiesController extends Controller
 
                     // there is no actual_hourly_rate field in the job table
 
-                    if ($request->hours_per_week || $request->actual_hourly_rate || $request->weekly_taxable_amount || $request->weekly_non_taxable_amount || $request->employer_weekly_amount || $request->sign_on_bonus || $request->completion_bonus || $request->weeks_assignment || $request->goodwork_weekly_amount || $request->total_contract_amount || $request->total_employer_amount || $request->total_goodwork_amount) {
+                    if ($request->hours_per_week || $request->actual_hourly_rate || $request->weekly_taxable_amount || $request->weekly_non_taxable_amount || $request->organization_weekly_amount || $request->sign_on_bonus || $request->completion_bonus || $request->weeks_assignment || $request->goodwork_weekly_amount || $request->total_contract_amount || $request->total_organization_amount || $request->total_goodwork_amount) {
                         $update_amount = [];
                         // if(isset($jobDetails->hours_per_week) && isset($jobDetails->actual_hourly_rate)){
                         //     $update_amount['weekly_taxable_amount'] = $jobDetails->hours_per_week * $jobDetails->actual_hourly_rate;
@@ -378,17 +378,17 @@ class OpportunitiesController extends Controller
 
                         // there is no weekly_taxable_amount or weekly_taxable_amount fields in the job table
                         // if(isset($jobDetails->weekly_taxable_amount) && isset($request->weekly_non_taxable_amount)){
-                        //     $update_amount['employer_weekly_amount'] = $jobDetails->weekly_taxable_amount + $request->weekly_non_taxable_amount;
-                        //     $update_amount['goodwork_weekly_amount'] = $jobDetails->employer_weekly_amount * 0.05;
+                        //     $update_amount['organization_weekly_amount'] = $jobDetails->weekly_taxable_amount + $request->weekly_non_taxable_amount;
+                        //     $update_amount['goodwork_weekly_amount'] = $jobDetails->organization_weekly_amount * 0.05;
                         // }
-                        // if((isset($request->weeks_assignment) && isset($jobDetails->employer_weekly_amount)) || isset($request->sign_on_bonus) || isset($request->completion_bonus)){
-                        //     $update_amount['total_employer_amount'] = ($jobDetails->weeks_assignment * $jobDetails->employer_weekly_amount) + $jobDetails->sign_on_bonus + $jobDetails->completion_bonus;
+                        // if((isset($request->weeks_assignment) && isset($jobDetails->organization_weekly_amount)) || isset($request->sign_on_bonus) || isset($request->completion_bonus)){
+                        //     $update_amount['total_organization_amount'] = ($jobDetails->weeks_assignment * $jobDetails->organization_weekly_amount) + $jobDetails->sign_on_bonus + $jobDetails->completion_bonus;
                         // }
                         // if(isset($request->weeks_assignment) && isset($jobDetails->goodwork_weekly_amount)){
                         //     $update_amount['total_goodwork_amount'] = $jobDetails->weeks_assignment * $jobDetails->goodwork_weekly_amount;
                         // }
-                        // if(isset($jobDetails->total_employer_amount) && isset($jobDetails->total_goodwork_amount)){
-                        //     $update_amount['total_contract_amount'] = $jobDetails->total_employer_amount + $jobDetails->total_goodwork_amount;
+                        // if(isset($jobDetails->total_organization_amount) && isset($jobDetails->total_goodwork_amount)){
+                        //     $update_amount['total_contract_amount'] = $jobDetails->total_organization_amount + $jobDetails->total_goodwork_amount;
                         // }
                         $job = Job::where(['id' => $job_id])->update($update_amount);
                     }
@@ -449,11 +449,11 @@ class OpportunitiesController extends Controller
 
     public function hide_job(Request $request)
     {
-       // return $request->all();
+        // return $request->all();
         $param = $request->route('check_type');
-    
 
-        
+
+
         try {
             $validated = $request->validate([
                 'job_id' => 'required',
@@ -467,7 +467,7 @@ class OpportunitiesController extends Controller
                 $job = Job::where(['id' => $job_id])->update(['is_open' => '1']);
                 return response()->json(['message' => 'Job is published', 'job_id' => $job_id]);
             }
-            
+
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
         }
@@ -515,7 +515,7 @@ class OpportunitiesController extends Controller
     }
     public function getJobListing(Request $request)
     {
-       // return response()->json(['message'=>$request->all()]);
+        // return response()->json(['message'=>$request->all()]);
 
         $type = $request->type;
         $allspecialty = [];
@@ -530,7 +530,7 @@ class OpportunitiesController extends Controller
         // }
 
         if ($type == 'drafts') {
-            $jobLists = Job::where(['active' => '0','recruiter_id'=> $recruiter_id])->get();
+            $jobLists = Job::where(['active' => '0', 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -539,7 +539,7 @@ class OpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'hidden') {
-            $jobLists = Job::where(['is_hidden' => '1','recruiter_id'=> $recruiter_id])->get();
+            $jobLists = Job::where(['is_hidden' => '1', 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -548,7 +548,7 @@ class OpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'closed') {
-            $jobLists = Job::where(['is_closed' => '1','recruiter_id'=> $recruiter_id])->get();
+            $jobLists = Job::where(['is_closed' => '1', 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -557,7 +557,7 @@ class OpportunitiesController extends Controller
                 return response()->json($responseData);
             }
         } elseif ($type == 'onhold') {
-            $jobLists = Job::where(['active'=> '1','is_open' => '0','recruiter_id'=> $recruiter_id])->get();
+            $jobLists = Job::where(['active' => '1', 'is_open' => '0', 'recruiter_id' => $recruiter_id])->get();
             if (0 >= count($jobLists)) {
                 $responseData = [
                     'joblisting' => '<div class="text-center"><span>No Job</span></div>',
@@ -565,10 +565,9 @@ class OpportunitiesController extends Controller
                 ];
                 return response()->json($responseData);
             }
-        }
-        else {
-           
-            $jobLists = Job::where(['active' => '1', 'is_hidden' => '0', 'is_closed' => '0','recruiter_id'=> $recruiter_id,'is_open'=>'1'])->get();
+        } else {
+
+            $jobLists = Job::where(['active' => '1', 'is_hidden' => '0', 'is_closed' => '0', 'recruiter_id' => $recruiter_id, 'is_open' => '1'])->get();
             //return $jobLists;
             if (0 >= count($jobLists)) {
                 $responseData = [
@@ -670,15 +669,14 @@ class OpportunitiesController extends Controller
                     ->first();
             } elseif ($type == 'onhold') {
                 $jobdetails = Job::select('jobs.*')
-                ->where(['jobs.is_open' => '0'])
-                ->where(['jobs.active' => '1'])
-                ->where('recruiter_id', $recruiter_id)
-                ->first();
-            }
-            else{
-                
+                    ->where(['jobs.is_open' => '0'])
+                    ->where(['jobs.active' => '1'])
+                    ->where('recruiter_id', $recruiter_id)
+                    ->first();
+            } else {
+
                 $jobdetails = Job::select('jobs.*')
-                    ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0','jobs.is_open' => '1'])
+                    ->where(['jobs.active' => '1', 'jobs.is_hidden' => '0', 'jobs.is_closed' => '0', 'jobs.is_open' => '1'])
                     ->where('recruiter_id', $recruiter_id)
                     ->first();
             }
@@ -707,9 +705,9 @@ class OpportunitiesController extends Controller
                         <span>' .
                 $offerdetails['worker_user_id'] .
                 '</span>
-                    
+
                         <h6>
-                            <img src="' .
+                            <img width="50px" height="50px" src="' .
                 asset('images/nurses/profile/' . $userdetails['image']) .
                 '" onerror="this.onerror=null;this.src=' .
                 '\'' .
@@ -807,18 +805,18 @@ class OpportunitiesController extends Controller
             <span class="mt-3">Profession</span>
          </div>
             <div class="row ' .
-                ($jobdetails->proffesion == $nursedetails->proffesion ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ($jobdetails->profession == $nursedetails->profession ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
                 <div class="col-md-5">
                     <h6>' .
-                ($jobdetails->proffesion ?? '----') .
+                ($jobdetails->profession ?? '----') .
                 '</h6>
                 </div>
                 <div class="col-md-5 ' .
-                ($jobdetails->proffesion ? '' : 'd-none') .
+                ($jobdetails->profession ? '' : 'd-none') .
                 '">
                     <p>' .
-                ($nursedetails->proffesion ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                ($nursedetails->profession ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'nursing_profession\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                 '</p>
                 </div>
                 </div>';
@@ -996,166 +994,166 @@ class OpportunitiesController extends Controller
                 ($nursedetails->worker_patient_ratio ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_patient_ratio\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                 '</p>
                         </div>
-                        </div> 
+                        </div>
                          <div style="display:flex;"  class="col-md-12">
                         <span class="mt-3">Professional Licensure</span>
                     </div>
-                    <div class="row ' . 
+                    <div class="row ' .
                 ($jobdetails->job_location === $nursedetails->nursing_license_state ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
                     <div class="col-md-5">
                         <h6>' . ($jobdetails['job_location'] ?? '----') . '</h6>
                     </div>
-                    
-                    <div class="col-md-5' . ($jobdetails['job_location'] ? '' : 'd-none' ) . '">
-                        <p>' . ($nursedetails['nursing_license_state'] ?? '<u  style="cursor: pointer;" onclick="askWorker(this, \'nursing_license_state\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+
+                    <div class="col-md-5' . ($jobdetails['job_location'] ? '' : 'd-none') . '">
+                        <p>' . ($nursedetails['nursing_license_state'] ?? '<u  style="cursor: pointer;" onclick="askWorker(this, \'nursing_license_state\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                     </div>
                     </div>
 
                         <div style="display:flex;"  class="col-md-12">
                         <span class="mt-3">Vaccinations & Immunizations</span>
                     </div>';
-                    if(isset($jobdetails['vaccinations'])){
-                        foreach (explode(",", $jobdetails['vaccinations']) as $key => $value) {
-                            if(isset($value)){
-                                $data2 .= '
+            if (isset($jobdetails['vaccinations'])) {
+                foreach (explode(",", $jobdetails['vaccinations']) as $key => $value) {
+                    if (isset($value)) {
+                        $data2 .= '
                                 <div class="col-md-5 ">
                                     <h6>' . $value . ' Required</h6>
                                 </div>
                                 <div class="col-md-5 ">
-                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'vaccinations\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'vaccinations\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u></p>
                                 </div>
                                 ';
-                            }
-                        }
                     }
-                    $data2 .= '<div style="display:flex;"  class="col-md-12">
+                }
+            }
+            $data2 .= '<div style="display:flex;"  class="col-md-12">
                         <span class="mt-3">References</span>
                     </div>';
-                    if(isset($jobdetails['number_of_references'])){
-                        foreach (explode(",", $jobdetails['number_of_references']) as $key => $value) {
-                            if(isset($value)){
-                                $data2 .= '
+            if (isset($jobdetails['number_of_references'])) {
+                foreach (explode(",", $jobdetails['number_of_references']) as $key => $value) {
+                    if (isset($value)) {
+                        $data2 .= '
                                 <div class="col-md-5 ">
                                     <h6>' . $value . ' references</h6>
                                     <h6>' . $jobdetails['recency_of_reference'] . ' months of recency</h6>
                                     <h6>' . $jobdetails['min_title_of_reference'] . '</h6>
                                 </div>
                                 <div class="col-md-5 ">
-                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'number_of_references\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'number_of_references\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u></p>
                                 </div>
                                 ';
-                            }
-                        }
                     }
-                    $data2 .= '
+                }
+            }
+            $data2 .= '
                     <div style="display:flex;"  class="col-md-12">
                         <span class="mt-3">Certifications</span>
                     </div>';
-                    if(isset($jobdetails['certificate'])){
-                        foreach (explode(",", $jobdetails['certificate']) as $key => $value) {
-                            if(isset($value)){
-                                $data2 .= '
+            if (isset($jobdetails['certificate'])) {
+                foreach (explode(",", $jobdetails['certificate']) as $key => $value) {
+                    if (isset($value)) {
+                        $data2 .= '
                                 <div class="col-md-5 ">
                                     <h6>' . $value . ' Required</h6>
                                 </div>
                                 <div class="col-md-5 ">
-                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'certificate\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u></p>
+                                    <p><u style="cursor: pointer;" onclick="askWorker(this, \'certificate\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u></p>
                                 </div>
                                 ';
-                            }
-                        }
                     }
-                    $data2 .= '
+                }
+            }
+            $data2 .= '
                         <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Skills checklist</span>
                         </div>
                         <div class="row ' .
-                    ($jobdetails['skills'] === $nursedetails['skills'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;">
+                ($jobdetails['skills'] === $nursedetails['skills'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-5">
                             <h6>' . ($jobdetails['skills'] ?? '----') . '</h6>
                         </div>
-                        <div class="col-md-5 ' . ($jobdetails['skills'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['skills'] ?? '<u onclick="askWorker(this, \'skills\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-5 ' . ($jobdetails['skills'] ? '' : 'd-none') . '">
+                            <p>' . ($nursedetails['skills'] ?? '<u onclick="askWorker(this, \'skills\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                         </div>
                         </div>
 
-                         
+
 
                         <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Urgency</span>
                         </div>
                         <div class="row ' .
-                    ($jobdetails['urgency'] === $nursedetails['worker_urgency'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;">
+                ($jobdetails['urgency'] === $nursedetails['worker_urgency'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
 
                         <div class="col-md-5">
                             <h6>' . ($jobdetails['urgency'] ?? '----') . '</h6>
                         </div>
-                        <div class="col-md-5 ' . ($jobdetails['urgency'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_urgency'] ?? '<u onclick="askWorker(this, \'urgency\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-5 ' . ($jobdetails['urgency'] ? '' : 'd-none') . '">
+                            <p>' . ($nursedetails['worker_urgency'] ?? '<u onclick="askWorker(this, \'urgency\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                         </div>
                         </div>
 
-                        
+
 
                         <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Eligible to work in the US</span>
                         </div>
                         <div class="row ' .
-                    ($jobdetails['eligible_work_in_us'] === $nursedetails['eligible_work_in_us'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;">
+                ($jobdetails['eligible_work_in_us'] === $nursedetails['eligible_work_in_us'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-5">
                             <h6>' . ($jobdetails['eligible_work_in_us'] == '1' ? 'Yes' : ($jobdetails['eligible_work_in_us'] == '0' ? 'No' : '----')) . '</h6>
                         </div>
-                        <div class="col-md-5 ' . (isset($jobdetails['eligible_work_in_us']) ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['eligible_work_in_us'] == '1' ? 'Yes' : ($nursedetails['eligible_work_in_us'] == '0' ? 'No' : '<u onclick="askWorker(this, \'eligible_work_in_us\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>') ) . '</p>
+                        <div class="col-md-5 ' . (isset($jobdetails['eligible_work_in_us']) ? '' : 'd-none') . '">
+                            <p>' . ($nursedetails['eligible_work_in_us'] == '1' ? 'Yes' : ($nursedetails['eligible_work_in_us'] == '0' ? 'No' : '<u onclick="askWorker(this, \'eligible_work_in_us\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>')) . '</p>
                         </div>
                         </div>
 
                          <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Facility`s Parent System</span>
                         </div>
-                        
+
                         <div class="row ' .
-                    ($jobdetails['facilitys_parent_system'] === $nursedetails['worker_facility_parent_system'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .       
-                    ' d-flex align-items-center" style="margin:auto;">
+                ($jobdetails['facilitys_parent_system'] === $nursedetails['worker_facility_parent_system'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-5">
                             <h6>' . ($jobdetails['facilitys_parent_system'] ?? '----') . '</h6>
                         </div>
-                        <div class="col-md-5 ' . ($jobdetails['facilitys_parent_system'] ? '' : 'd-none' ) . '">
-                            <p>' . ($nursedetails['worker_facility_parent_system'] ?? '<u onclick="askWorker(this, \'worker_facility_parent_system\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                        <div class="col-md-5 ' . ($jobdetails['facilitys_parent_system'] ? '' : 'd-none') . '">
+                            <p>' . ($nursedetails['worker_facility_parent_system'] ?? '<u onclick="askWorker(this, \'worker_facility_parent_system\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                         </div>
                       </div>
-                      
+
                         <div style="display:flex;"  class="col-md-12">
                                 <span class="mt-3">Facility State</span>
                             </div>
                             <div class="row ' .
-                    ($jobdetails['facility_state'] === $nursedetails['state'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;">
+                ($jobdetails['facility_state'] === $nursedetails['state'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                                 <div class="col-md-5">
                                     <h6>' . ($jobdetails['facility_state'] ?? '----') . '</h6>
                                 </div>
-                                <div class="col-md-5 ' . ($jobdetails['facility_state'] ? '' : 'd-none' ) . '">
-                                    <p>' . ($nursedetails['state'] ?? '<u onclick="askWorker(this, \'facility_state\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                                <div class="col-md-5 ' . ($jobdetails['facility_state'] ? '' : 'd-none') . '">
+                                    <p>' . ($nursedetails['state'] ?? '<u onclick="askWorker(this, \'facility_state\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                                 </div>
                             </div>
                             <div style="display:flex;"  class="col-md-12">
                                 <span class="mt-3">Facility City</span>
                             </div>
                             <div class="row ' .
-                    ($jobdetails['facility_city'] === $nursedetails['city'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
-                    ' d-flex align-items-center" style="margin:auto;">
+                ($jobdetails['facility_city'] === $nursedetails['city'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ' d-flex align-items-center" style="margin:auto;">
                                 <div class="col-md-5">
                                     <h6>' . ($jobdetails['facility_city'] ?? '----') . '</h6>
                                 </div>
-                                <div class="col-md-5 ' . ($jobdetails['facility_city'] ? '' : 'd-none' ) . '">
-                                    <p>' . ($nursedetails['city'] ?? '<u onclick="askWorker(this, \'facility_city\', \''. $nursedetails['id'] . '\', \''. $jobdetails['id'] . '\')">Ask Worker</u>' ) . '</p>
+                                <div class="col-md-5 ' . ($jobdetails['facility_city'] ? '' : 'd-none') . '">
+                                    <p>' . ($nursedetails['city'] ?? '<u onclick="askWorker(this, \'facility_city\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</u>') . '</p>
                                 </div>
                             </div>
-                           
+
 
 
                         <div style="display:flex;"  class="col-md-12">
@@ -1215,7 +1213,7 @@ class OpportunitiesController extends Controller
                 '</p>
                         </div>
                         </div>
-                        
+
                         <div style="display:flex;"  class="col-md-12">
                             <span class="mt-3">Start Date</span>
                         </div>
@@ -1673,21 +1671,21 @@ class OpportunitiesController extends Controller
                         </div>
                         </div>
                         <div style="display:flex;"  class="col-md-12">
-                            <span class="mt-3">Est. Employer Weekly Amount</span>
+                            <span class="mt-3">Est. Organization Weekly Amount</span>
                         </div>
                         <div class="row ' .
-                ($jobdetails->employer_weekly_amount === $nursedetails->worker_employer_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
+                ($jobdetails->organization_weekly_amount === $nursedetails->worker_organization_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink') .
                 ' d-flex align-items-center" style="margin:auto;">
                         <div class="col-md-5">
                             <h6>' .
-                ($jobdetails->employer_weekly_amount ?? '----') .
+                ($jobdetails->organization_weekly_amount ?? '----') .
                 '</h6>
                         </div>
                         <div class="col-md-5 ' .
-                ($jobdetails->employer_weekly_amount ? '' : 'd-none') .
+                ($jobdetails->organization_weekly_amount ? '' : 'd-none') .
                 '">
                             <p>' .
-                ($nursedetails->worker_employer_weekly_amount ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_employer_weekly_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
+                ($nursedetails->worker_organization_weekly_amount ?? '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_organization_weekly_amount\', \'' . $nursedetails['id'] . '\', \'' . $jobdetails['id'] . '\')">Ask Worker</a>') .
                 '</p>
                         </div>
                         </div>
@@ -1719,11 +1717,11 @@ class OpportunitiesController extends Controller
                 '</h6>
                         </div>
                         <div style="display:flex;" class="col-md-12">
-                            <span class="mt-3">Est. Total Employer Amount</span>
+                            <span class="mt-3">Est. Total Organization Amount</span>
                         </div>
                         <div class="col-md-12">
                             <h6>' .
-                ($jobdetails->total_employer_amount ?? '----') .
+                ($jobdetails->total_organization_amount ?? '----') .
                 '</h6>
                         </div>
                         <div style="display:flex;" class="col-md-12">
@@ -1758,10 +1756,11 @@ class OpportunitiesController extends Controller
                     </ul>
                 </div>
                 ';
-        } elseif ($request->type == 'drafts') {} else {
+        } elseif ($request->type == 'drafts') {
+        } else {
             $data2 .=
                 '
-                    <div class="ss-job-apply-on-tx-bx-hed-dv">
+                    <div width="50px" height="50px" class="ss-job-apply-on-tx-bx-hed-dv">
                         <ul style="display:block;">
                             <li>
                                 <p>Recruiter</p>
@@ -1796,7 +1795,7 @@ class OpportunitiesController extends Controller
                         <h5>About job</h5>
                         <ul>
                             <li>
-                                <h6>Employer Name</h6>
+                                <h6>Organization Name</h6>
                                 <p>' .
                 $userdetails->first_name .
                 '</p>
@@ -1864,7 +1863,7 @@ class OpportunitiesController extends Controller
                                         </div>
                                         <ul class="ss-expl-applicion-ul1">
                                             <li class="w-auto">
-                                                <img src="' .
+                                                <img width="50px" height="50px" src="' .
                     asset('uploads/' . $userdetails->image) .
                     '" onerror="this.onerror=null;this.src=' .
                     '\'' .
@@ -1890,7 +1889,7 @@ class OpportunitiesController extends Controller
                                             <li class="w-auto"><a href="#">' .
                     $nursedetails->worker_shift_time_of_day .
                     '</a></li>
-                                          
+
                                         </ul>
                                     </div>
                                     ';
@@ -1907,7 +1906,7 @@ class OpportunitiesController extends Controller
                         <p class="mb-3">' .
                 ($jobdetails->description ?? '----') .
                 '</p>
-                    </div>    
+                    </div>
                 ';
 
             $data2 .=
@@ -1917,7 +1916,7 @@ class OpportunitiesController extends Controller
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Profession</p>
                         <h6>' .
-                ($jobdetails->proffesion ?? '----') .
+                ($jobdetails->profession ?? '----') .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -2003,16 +2002,16 @@ class OpportunitiesController extends Controller
                 '</h6>
                     </div>
 
-                    
+
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Eligible to work in the US</p>
-                        
+
                         <h6>' . ($jobdetails->eligible_work_in_us == '1' ? 'Yes' : ($jobdetails->eligible_work_in_us == '0' ? 'No' : '----')) . '</h6>
-               
+
                     </div>
 
 
-                    
+
 
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Urgency</p>
@@ -2020,7 +2019,7 @@ class OpportunitiesController extends Controller
                 ($jobdetails->urgency ?? '----') .
                 '</h6>
                     </div>
-                    
+
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Block scheduling</p>
                          <h6>' .
@@ -2245,9 +2244,9 @@ class OpportunitiesController extends Controller
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Employer Weekly Amount</p>
+                        <p class="mt-3">Organization Weekly Amount</p>
                         <h6>' .
-                ($jobdetails->employer_weekly_amount ?? '----') .
+                ($jobdetails->organization_weekly_amount ?? '----') .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -2263,9 +2262,9 @@ class OpportunitiesController extends Controller
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <p class="mt-3">Total Employer Amount</p>
+                        <p class="mt-3">Total Organization Amount</p>
                         <h6>' .
-                ($jobdetails->total_employer_amount ?? '----') .
+                ($jobdetails->total_organization_amount ?? '----') .
                 '</h6>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -2291,23 +2290,23 @@ class OpportunitiesController extends Controller
                 $data2 .= '
                         <div class="col-md-12">
                             <div class="row">';
-                                
+
                 if ($type == 'onhold') {
                     $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhold Job</a></div>';
                 } else {
                     $data2 .= '<div class="col-md-5"><a href="javascript:void(0)" class="ss-reject-offer-btn d-block" onclick="changeStatus(\'hidejob\', \'' . $jobdetails->id . '\')">Hide Job</a>';
                     $data2 .=
-                    '
+                        '
                                 </div>
                                 <div class="col-md-6">
                                     <a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="job_details_to_edit( \'' .
-                    $jobdetails->id .
-                    '\')">Edit Job</a>
+                        $jobdetails->id .
+                        '\')">Edit Job</a>
                                 </div>
                             </div>
                         </div>';
                 }
-               
+
             }
             $data2 .= '
                 </ul>
@@ -2319,7 +2318,7 @@ class OpportunitiesController extends Controller
             }
         }
 
-        
+
 
         $responseData = [
             'joblisting' => $data,

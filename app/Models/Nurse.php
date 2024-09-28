@@ -17,23 +17,23 @@ class Nurse extends Model implements HasMedia
     use LogsActivity;
 
     protected static function boot()
-	{
-		parent::boot();
+    {
+        parent::boot();
 
-		static::creating(function ($model) {
-			$model->{$model->getKeyName()} = $model->generateCustomId();
-		});
-	}
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = $model->generateCustomId();
+        });
+    }
 
-	public function getIncrementing()
-	{
-		return false;
-	}
+    public function getIncrementing()
+    {
+        return false;
+    }
 
-	public function getKeyType()
-	{
-		return 'string';
-	}
+    public function getKeyType()
+    {
+        return 'string';
+    }
 
     public function generateCustomId()
     {
@@ -110,7 +110,7 @@ class Nurse extends Model implements HasMedia
         'facilities_you_like_to_work_at',
         'avg_rating_by_facilities',
         'worker_avg_rating_by_recruiters',
-        'worker_avg_rating_by_employers',
+        'worker_avg_rating_by_organizations',
         'clinical_setting_you_prefer',
         'authority_Issue',
         'worker_patient_ratio',
@@ -150,9 +150,9 @@ class Nurse extends Model implements HasMedia
         'worker_orientation_rate',
         'worker_weekly_taxable_amount',
         'worker_weekly_non_taxable_amount',
-        'worker_employer_weekly_amount',
+        'worker_organization_weekly_amount',
         'worker_goodwork_weekly_amount',
-        'worker_total_employer_amount',
+        'worker_total_organization_amount',
         'worker_goodwork_number',
         'is_verified_sr',
         'license_status',
@@ -181,7 +181,7 @@ class Nurse extends Model implements HasMedia
         'terms',
         'worker_job_type',
         'profession',
-        'full_name_payment' ,
+        'full_name_payment',
         'address_payment',
         'email_payment',
         'bank_name_payment',
@@ -197,18 +197,18 @@ class Nurse extends Model implements HasMedia
         'worker_eligible_work_in_us',
         'worker_feels_like_per_hour',
         'worker_four_zero_one_k',
-        // check recruiter/employer conditions
+        // check recruiter/organization conditions
         'worker_feels_like_per_hour_check',
         'worker_overtime_rate',
-       
-        
+
+
         'worker_weekly_non_taxable_amount_check',
         'worker_call_back_rate',
         'worker_on_call_rate',
         'worker_on_call_check',
-        'worker_on_call_back_check',
         'worker_experience',
-        'worker_benefits'
+        'worker_benefits',
+        'nurse_classification'
 
     ];
     protected static $logName = 'Nurse';
@@ -256,7 +256,7 @@ class Nurse extends Model implements HasMedia
 
     public function nurseAssets()
     {
-        return $this->hasMany(NurseAsset::class, 'nurse_id','id');
+        return $this->hasMany(NurseAsset::class, 'nurse_id', 'id');
     }
 
     public function offers()
@@ -269,7 +269,8 @@ class Nurse extends Model implements HasMedia
         return $this->hasMany(NurseReference::class);
     }
 
-    public function profile_percentage(){
+    public function profile_percentage()
+    {
 
     }
 }

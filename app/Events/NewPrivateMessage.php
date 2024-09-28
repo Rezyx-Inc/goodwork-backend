@@ -17,7 +17,7 @@ class NewPrivateMessage implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
-    public $EmployerId;
+    public $OrganizationId;
     public $WorkerId;
     public $RecruiterId;
 
@@ -27,12 +27,12 @@ class NewPrivateMessage implements ShouldBroadcast
     public $fileName;
 
 
-    public function __construct($message, $EmployerId , $RecruiterId ,  $WorkerId , $senderRole , $messageTime,$type,$fileName)
+    public function __construct($message, $OrganizationId, $RecruiterId, $WorkerId, $senderRole, $messageTime, $type, $fileName)
     {
         $this->message = $message;
-        $this->EmployerId = $EmployerId;
+        $this->OrganizationId = $OrganizationId;
         $this->RecruiterId = $RecruiterId;
-        $this->WorkerId = $WorkerId;        
+        $this->WorkerId = $WorkerId;
         $this->senderRole = $senderRole;
         $this->messageTime = $messageTime;
         $this->type = $type;
@@ -44,11 +44,11 @@ class NewPrivateMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        $idEmployer = $this->EmployerId;
+        $idOrganization = $this->OrganizationId;
         $idWorker = $this->WorkerId;
         $idRecruiter = $this->RecruiterId;
 
-        $privateChannel = 'private-chat.'.$idEmployer.'.'. $idRecruiter . '.'.$idWorker;
+        $privateChannel = 'private-chat.' . $idOrganization . '.' . $idRecruiter . '.' . $idWorker;
         return new PrivateChannel($privateChannel);
     }
 }

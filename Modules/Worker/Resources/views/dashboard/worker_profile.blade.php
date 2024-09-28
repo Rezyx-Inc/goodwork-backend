@@ -169,7 +169,7 @@
                                 </div>
                             </div>
                             <div class="form-outer">
-                                <form method="post" action="{{ route('update-worker-profile') }}">
+                                <form onsubmit="return false;" method="post" action="{{ route('update-worker-profile') }}">
                                     {{-- <form> --}}
                                     @csrf
                                     <!-- first form slide Basic Information -->
@@ -264,9 +264,9 @@
                                                         value="{{ !empty($worker->profession) ? $worker->profession : '' }}" disabled selected hidden>
                                                         {{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }}
                                                     </option>
-                                                    @foreach ($proffesions as $proffesion)
-                                                        <option value="{{ $proffesion->full_name }}">
-                                                            {{ $proffesion->full_name }}
+                                                    @foreach ($professions as $profession)
+                                                        <option value="{{ $profession->full_name }}">
+                                                            {{ $profession->full_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -310,9 +310,9 @@
 
                                             <div class="ss-form-group col-11">
                                                 <label>Type</label>
-                                                <select name="type" id="type">
-                                                    <option value="{{ !empty($worker->type) ? $worker->type : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->type) ? $worker->type : 'Select Type' }}
+                                                <select name="worker_job_type" id="worker_job_type">
+                                                    <option value="{{ !empty($worker->worker_job_type) ? $worker->worker_job_type : '' }}" disabled selected hidden>
+                                                        {{ !empty($worker->worker_job_type) ? $worker->worker_job_type : 'Select Type' }}
                                                     </option>
 
                                                     @if (isset($allKeywords['Type']))
@@ -323,7 +323,7 @@
                                                     @endif
                                                 </select>
                                             </div>
-                                            <span class="help-block-type"></span>
+                                            <span class="help-block-worker_job_type"></span>
                                             {{-- end Type --}}
 
                                             {{-- Block scheduling --}}
@@ -333,8 +333,9 @@
                                                 <select name="block_scheduling" class="block_scheduling mb-3"
                                                     id="block_scheduling" value="">
                                                     <option
-                                                        value="{{ !empty($worker->block_scheduling) ? $worker->block_scheduling : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->block_scheduling) ? $worker->block_scheduling : 'Select Block scheduling' }}
+                                                        value="{{ $worker->block_scheduling == '0' ? 'No' : ($worker->block_scheduling == '1' ? 'Yes' : '') }}" disabled selected hidden>
+
+                                                        {{ $worker->block_scheduling == '0' ? 'No' : ($worker->block_scheduling == '1' ? 'Yes' : 'Select Block scheduling') }}
                                                     </option>
 
                                                     <option value="Yes">Yes</option>
@@ -529,16 +530,7 @@
                                             </div>
                                             <span class="help-block-worker_experience"></span>
                                             {{-- End Experience --}}
-                                            {{-- worker_ss_number --}}
 
-                                            <div class="ss-form-group col-11">
-                                                <label>SS Number</label>
-                                                <input id="worker_ss_number" type="text" name="worker_ss_number"
-                                                    placeholder="Enter your SS Number"
-                                                    value="{{ !empty($worker->worker_ss_number) ? $worker->worker_ss_number : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_ss_number"></span>
-                                            {{-- End worker_ss_number --}}
 
                                             {{-- nursing_license_state --}}
                                             <div class="ss-form-group col-11">
@@ -562,8 +554,9 @@
                                                 <label>Eligible to work in the US</label>
                                                 <select name="worker_eligible_work_in_us" id="worker_eligible_work_in_us">
                                                     <option
-                                                        value="{{ !empty($worker->worker_eligible_work_in_us) ? ($worker->worker_eligible_work_in_us == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_eligible_work_in_us) ? ($worker->worker_eligible_work_in_us == 1 ? 'Yes' : 'No') : 'Select an option' }}
+                                                        value="{{ $worker->worker_eligible_work_in_us == '0' ? 'No' : ($worker->worker_eligible_work_in_us == '1' ? 'Yes' : '') }}" disabled selected hidden>
+
+                                                        {{ $worker->worker_eligible_work_in_us == '0' ? 'No' : ($worker->worker_eligible_work_in_us == '1' ? 'Yes' : 'Select Eligible to work in the US') }}
                                                     </option>
                                                     <option value="">Select an option</option>
                                                     <option value="Yes">Yes</option>
@@ -573,6 +566,27 @@
                                             </div>
 
                                             {{-- End worker_eligible_work_in_us --}}
+
+
+                                            {{-- worker_facility_state --}}
+
+                                            <div class="ss-form-group col-11">
+                                                <label>State you'd like to work?</label>
+                                                <select name="worker_facility_state" id="worker_facility_state">
+                                                    <option
+                                                        value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}" disabled selected hidden>
+                                                        {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
+                                                    </option>
+                                                    @foreach ($states as $state)
+                                                    <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                        {{ $state->name }}
+                                                    </option>
+                                                @endforeach
+                                                </select>
+                                                <span class="help-block-worker_facility_state"></span>
+                                            </div>
+                                            {{-- End worker_facility_state  --}}
+
                                             {{-- worker_facility_city --}}
 
                                             <div class="ss-form-group col-11">
@@ -588,26 +602,9 @@
                                                     @endforeach
                                                 </select>
                                                 <span class="help-block-worker_facility_city"></span>
+                                                <span class="help-worker-facility-city">Please select a state first</span>
                                             </div>
                                             {{-- End worker_facility_city  --}}
-
-                                            {{-- worker_facility_state --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>State you'd like to work?</label>
-                                                <select name="worker_facility_state" id="worker_facility_state">
-                                                    <option
-                                                        value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
-                                                    </option>
-                                                    @foreach ($allKeywords['StateCode'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-worker_facility_state"></span>
-                                            </div>
-                                            {{-- End worker_facility_state  --}}
 
                                             {{-- worker_start_date --}}
                                             <div class="ss-form-group col-11">
@@ -676,10 +673,10 @@
                                                 <label>401K</label>
                                                 <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
                                                     <option
-                                                        value="{{ !empty($worker->worker_four_zero_one_k) ? ($worker->worker_four_zero_one_k == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_four_zero_one_k) ? ($worker->worker_four_zero_one_k == 1 ? 'Yes' : 'No') : 'Select an option' }}
+                                                    value="{{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                                                    {{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : 'Select an option') }}
                                                     </option>
-                                                    <option value="">Select an option</option>
+
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                 </select>
@@ -692,8 +689,8 @@
                                                 <label>Health Insurance</label>
                                                 <select name="worker_health_insurance" id="worker_health_insurance">
                                                     <option
-                                                        value="{{ !empty($worker->worker_health_insurance) ? ($worker->worker_health_insurance == 1 ? 'Yes' : 'No') : '' }}">
-                                                        {{ !empty($worker->worker_health_insurance) ? ($worker->worker_health_insurance == 1 ? 'Yes' : 'No') : 'Select an option' }}
+                                                    value="{{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                                                    {{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : 'Select an option') }}
                                                     </option>
                                                     <option value="">Select an option</option>
                                                     <option value="Yes">Yes</option>
@@ -708,8 +705,8 @@
                                                 <label>Dental</label>
                                                 <select name="worker_dental" id="worker_dental">
                                                     <option
-                                                        value="{{ !empty($worker->worker_dental) ? ($worker->worker_dental == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_dental) ? ($worker->worker_dental == 1 ? 'Yes' : 'No') : 'Do you want this ?' }}
+                                                        value="{{ $worker->worker_dental == '0' ? 'No' : ($worker->worker_dental == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                                                        {{ $worker->worker_dental == '0' ? 'No' : ($worker->worker_dental == '1' ? 'Yes' : 'Select an option') }}
                                                     </option>
                                                     <option value="">do you want this ?</option>
                                                     <option value="Yes">Yes</option>
@@ -725,8 +722,8 @@
                                                 <label>Vision</label>
                                                 <select name="worker_vision" id="worker_vision">
                                                     <option
-                                                        value="{{ !empty($worker->worker_vision) ? ($worker->worker_vision == 1 ? 'Yes' : 'No') : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_vision) ? ($worker->worker_vision == 1 ? 'Yes' : 'No') : 'Select an option' }}
+                                                    value="{{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                                                    {{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : 'Select an option') }}
                                                     </option>
                                                     <option value="">do you want this ?</option>
                                                     <option value="Yes">Yes</option>
@@ -751,7 +748,7 @@
                                                 <label>Holiday</label>
                                                 <input id="worker_holiday" type="date" name="worker_holiday"
                                                     placeholder="Any holiday you refuse to work?"
-                                                    value="{{ !empty($worker->worker_holiday) ? $worker->worker_holiday : '' }}">
+                                                    value="{{ !empty($worker->worker_holiday) ? \Carbon\Carbon::parse($worker->worker_holiday)->format('Y-m-d') : '' }}">
                                             </div>
                                             <span class="help-block-worker_holiday"></span>
                                             {{-- End worker_holiday  --}}
@@ -761,7 +758,7 @@
                                                 <label>On Call</label>
                                                 <select name="worker_on_call_check" id="worker_on_call_check">
                                                     <option
-                                                        value="{{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}" disabled selected hidden>
+                                                       value="{{ $worker->worker_on_call_check == '0' ? 'No' : ($worker->worker_on_call_check == '1' ? 'Yes' : '') }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}
                                                     </option>
                                                     <option value="">Select an option</option>
@@ -770,43 +767,27 @@
                                                 </select>
                                                 <span class="help-block-worker_on_call_check"></span>
                                             </div>
-                                            {{-- End worker_on_call_check  --}}
+                                            {{-- End worker_call  --}}
 
-                                            {{-- worker_on_call_rate --}}
+                                            {{-- worker_on_call --}}
                                             <div class="ss-form-group col-11">
                                                 <label>On Call Rate</label>
-                                                <input id="worker_on_call_rate" type="number" name="worker_on_call_rate"
+                                                <input id="worker_on_call" type="number" name="worker_on_call"
                                                     placeholder="What rate is fair?"
-                                                    value="{{ !empty($worker->worker_on_call_rate) ? $worker->worker_on_call_rate : '' }}">
+                                                    value="{{ !empty($worker->worker_on_call) ? $worker->worker_on_call : '' }}">
                                             </div>
-                                            <span class="help-block-worker_on_call_rate"></span>
-                                            {{-- End worker_on_call_rate  --}}
+                                            <span class="help-block-worker_on_call"></span>
+                                            {{-- End worker_on_call  --}}
 
-                                            {{-- worker_on_call_back_check --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>On Call Back</label>
-                                                <select name="worker_on_call_back_check" id="worker_on_call_back_check">
-                                                    <option
-                                                        value="{{ !empty($worker->worker_on_call_back_check) ? ($worker->worker_on_call_back_check == 1 ? 'Yes' : 'No') : 'Will you do call back?' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_on_call_back_check) ? ($worker->worker_on_call_back_check == 1 ? 'Yes' : 'No') : 'Will you do call back?' }}
-                                                    </option>
-                                                    <option value="">Select an option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                                <span class="help-block-worker_on_call_back_check"></span>
-                                            </div>
-                                            {{-- End worker_on_call_back_check  --}}
-
-                                            {{-- worker_on_call_back_rate --}}
+                                            {{-- worker_call_back --}}
                                             <div class="ss-form-group col-11">
                                                 <label>On Call Back Rate</label>
-                                                <input id="worker_on_call_back_rate" type="number"
-                                                    name="worker_on_call_back_rate" placeholder="What rate is fair?"
-                                                    value="{{ !empty($worker->worker_on_call_back_rate) ? $worker->worker_on_call_back_rate : '' }}">
+                                                <input id="worker_call_back" type="number"
+                                                    name="worker_call_back" placeholder="What rate is fair?"
+                                                    value="{{ !empty($worker->worker_call_back) ? $worker->worker_call_back : '' }}">
                                             </div>
-                                            <span class="help-block-worker_on_call_back_rate"></span>
-                                            {{-- End worker_on_call_back_rate  --}}
+                                            <span class="help-block-worker_call_back"></span>
+                                            {{-- End worker_call_back  --}}
 
                                             {{-- worker_orientation_rate --}}
                                             <div class="ss-form-group col-11">
@@ -825,7 +806,7 @@
                                                 <select name="worker_benefits" class="worker_benefits mb-3"
                                                     id="worker_benefits" value="">
                                                     <option
-                                                        value="{{ !empty($worker->worker_benefits) ? $worker->worker_benefits : '' }}" disabled selected hidden>
+                                                    value="{{ $worker->worker_benefits == '0' ? 'No' : ($worker->worker_benefits == '1' ? 'Yes' : '') }}" disabled selected hidden>
                                                         {{ !empty($worker->worker_benefits) ? $worker->worker_benefits : 'Select your benefits choice' }}
                                                     </option>
                                                     <option value="1">Yes, Please</option>
@@ -957,7 +938,7 @@
                                     Setting</p>
                             </div>
                             <div class="form-outer">
-                                <form method="post" action="{{ route('update-worker-profile') }}">
+                                <form onsubmit="return false;" method="post" action="{{ route('update-worker-profile') }}">
                                     @csrf
                                     <!-- slide Account Setting -->
                                     <div class="page slide-page">
@@ -1029,7 +1010,7 @@
                             <div class="form-outer">
                                 {{-- <form method="post" action="{{ route('update-worker-profile') }}"> --}}
                                 {{-- <form method="post" action="{{ route('update-bonus-transfer') }}">  --}}
-                                <form method="post">
+                                <form onsubmit="return false;" method="post">
                                     @csrf
                                     <!-- slide Bonus Transfer -->
                                     <div class="page slide-page">
@@ -1123,46 +1104,6 @@
                                 </h1>
                             </div>
                             <div class="form-outer">
-                                {{-- <form method="post">
-                                    @csrf
-
-                                    <div class="page slide-page">
-                                        <div class="row justify-content-center">
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Subject</label>
-                                                <select name="support_subject" id="support_subject">
-                                                    <option value="">Please select your issue</option>
-                                                    <option value="login">Login</option>
-                                                    <option value="payment">Payment</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-
-                                            </div>
-                                            <span class="help-block-support_subject"></span>
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Issue</label>
-                                                <textarea style="width: 100%; height:40vh;" name="support_subject_issue" placeholder="Tell us how can we help."></textarea>
-                                            </div>
-                                            <span class="help-block-support_subject_issue"></span>
-
-                                            <div
-                                                class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
-                                                    id="SaveSupportTicket">
-
-                                                    <span id="loading" class="d-none">
-                                                        <span id="loadSpan" class="spinner-border spinner-border-sm"
-                                                            role="status" aria-hidden="true"></span>
-                                                        Loading...
-                                                    </span>
-                                                    <span id="send_ticket">Send now</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form> --}}
                                 <p style="
                                 margin-top: 20px;
                             ">
@@ -1237,7 +1178,7 @@
                                             <option value="skills_checklists">Skills checklist</option>
                                             <option value="certificate">Certificate</option>
                                             <option value="driving_license">Drivers License</option>
-                                            <option value="ss_number">Ss Document</option>
+                                            {{-- <option value="ss_number">Ss Document</option> --}}
                                             <option value="other">Others</option>
                                             <option value="vaccinations">Vaccinations</option>
                                             <option value="references">References</option>
@@ -1328,7 +1269,7 @@
                                             onclick="sendMultipleFiles('driving_license')">Save</button>
                                     </div>
                                     {{-- ss number --}}
-                                    <div class="d-none" id="ss_number">
+                                    {{-- <div class="d-none" id="ss_number">
                                         <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
                                         </div>
                                         <div class="container-multiselect">
@@ -1351,7 +1292,7 @@
                                         </div>
                                         <button class="ss-job-dtl-pop-sv-btn"
                                             onclick="sendMultipleFiles('ss_number')">Save</button>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- other --}}
                                     <div class="d-none" id="other">
@@ -1546,6 +1487,135 @@
 
 @section('js')
 
+    {{-- get elements - prevent defaults behaviors  --}}
+    <script>
+
+        // slide control
+        const slidePage = document.querySelector(".slide-page");
+        const nextBtnFirst = document.querySelector(".firstNext");
+        const prevBtnSec = document.querySelector(".prev-1");
+        const nextBtnSec = document.querySelector(".next-1");
+        const prevBtnThird = document.querySelector(".prev-2");
+        const nextBtnThird = document.querySelector(".next-2");
+        const progress = document.getElementById("progress");
+        // end slide control
+
+        // inputs
+        // Basic Info
+        const first_name = document.querySelector('input[name="first_name"]');
+        const last_name = document.querySelector('input[name="last_name"]');
+        const mobile = document.querySelector('input[name="mobile"]');
+        const address = document.querySelector('input[name="address"]');
+        const city = document.querySelector('select[name="city"]');
+        const state = document.querySelector('select[name="state"]');
+        const zip_code = document.querySelector('input[name="zip_code"]');
+        // Professional Info
+        const profession = document.querySelector('select[name="profession"]');
+        const specialty = document.querySelector('select[name="specialty"]');
+        const terms = document.querySelector('select[name="terms"]');
+        const worker_job_type = document.querySelector('select[name="worker_job_type"]');
+        const block_scheduling = document.querySelector('select[name="block_scheduling"]');
+        const float_requirement = document.querySelector('select[name="float_requirement"]');
+        const facility_shift_cancelation_policy = document.querySelector(
+            'select[name="facility_shift_cancelation_policy"]');
+        const contract_termination_policy = document.querySelector('input[name="contract_termination_policy"]');
+        const traveler_distance_from_facility = document.querySelector('input[name="distance_from_your_home"]');
+        const clinical_setting = document.querySelector('input[name="clinical_setting_you_prefer"]');
+        const Patient_ratio = document.querySelector('input[name="worker_patient_ratio"]');
+        const emr = document.querySelector('select[name="worker_emr"]');
+        const Unit = document.querySelector('input[name="worker_unit"]');
+        const scrub_color = document.querySelector('input[name="worker_scrub_color"]');
+        const rto = document.querySelector('select[name="rto"]');
+        const shift_of_day = document.querySelector('select[name="worker_shift_time_of_day"]');
+        const hours_shift = document.querySelector('input[name="worker_hours_shift"]');
+        const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
+        const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
+        const worker_experience = document.querySelector('input[name="worker_experience"]');
+        const worker_eligible_work_in_us = document.querySelector('select[name="worker_eligible_work_in_us"]');
+        const nursing_license_state = document.querySelector('select[name="nursing_license_state"]');
+        const worker_facility_city = document.querySelector('select[name="worker_facility_city"]');
+        const worker_facility_state = document.querySelector('select[name="worker_facility_state"]');
+        const worker_start_date = document.querySelector('input[name="worker_start_date"]');
+        const worker_guaranteed_hours = document.querySelector('input[name="worker_guaranteed_hours"]');
+        const worker_sign_on_bonus = document.querySelector('input[name="worker_sign_on_bonus"]');
+        const worker_completion_bonus = document.querySelector('input[name="worker_completion_bonus"]');
+        const worker_extension_bonus = document.querySelector('input[name="worker_extension_bonus"]');
+        const worker_other_bonus = document.querySelector('input[name="worker_other_bonus"]');
+        const worker_four_zero_one_k = document.querySelector('select[name="worker_four_zero_one_k"]');
+        const worker_health_insurance = document.querySelector('select[name="worker_health_insurance"]');
+        const worker_dental = document.querySelector('select[name="worker_dental"]');
+        const worker_vision = document.querySelector('select[name="worker_vision"]');
+        const worker_overtime_rate = document.querySelector('input[name="worker_overtime_rate"]');
+        const worker_holiday = document.querySelector('input[name="worker_holiday"]');
+        const worker_on_call_check = document.querySelector('select[name="worker_on_call_check"]');
+        const worker_on_call = document.querySelector('input[name="worker_on_call"]');
+        const worker_call_back = document.querySelector('input[name="worker_call_back"]');
+        const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
+        const worker_benefits = document.querySelector('select[name="worker_benefits"]');
+        const nurse_classification = document.querySelector('select[name="nurse_classification"]');
+        // Document Management
+        const file = document.getElementById('document_file');
+        // bonus transfer
+        const full_name_payment = document.querySelector('input[name="full_name_payment"]');
+        const address_payment = document.querySelector('input[name="address_payment"]');
+        const email_payment = document.querySelector('input[name="email_payment"]');
+        const bank_name_payment = document.querySelector('input[name="bank_name_payment"]');
+        const routing_number_payment = document.querySelector('input[name="routing_number_payment"]');
+        const bank_account_payment_number = document.querySelector('input[name="bank_account_payment_number"]');
+        const phone_number_payment = document.querySelector('input[name="phone_number_payment"]');
+        // end inputs
+        // change info type title
+        const infoType = document.getElementById("information_type");
+        // end change info type title
+
+        if(city.value == ''){
+            document.querySelector('.help-city').classList.remove('d-none');
+        }
+
+        if(worker_facility_city.value == ''){
+            document.querySelector('.help-worker-facility-city').classList.remove('d-none');
+        }
+
+        // next and prev buttons
+        nextBtnFirst.addEventListener("click", function(event) {
+            event.preventDefault();
+            slidePage.style.marginLeft = "-25%";
+            progress.style.width = "66%";
+            // img need to be modified
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
+        });
+
+        nextBtnSec.addEventListener("click", function(event) {
+            event.preventDefault();
+            slidePage.style.marginLeft = "-50%";
+            progress.style.width = "100%";
+            // img need to be modified
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-refren.png') }}' /></span>Document management";
+
+        });
+
+        prevBtnSec.addEventListener("click", function(event) {
+            event.preventDefault();
+            slidePage.style.marginLeft = "0%";
+            progress.style.width = "25%";
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-user.png') }}' /></span>Basic Information";
+
+        });
+
+        prevBtnThird.addEventListener("click", function(event) {
+            event.preventDefault();
+            slidePage.style.marginLeft = "-25%";
+            progress.style.width = "75%";
+            infoType.innerHTML =
+                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
+
+        });
+        // end next and prev buttons
+    </script>
+
     {{-- js for multiselect --}}
     <script>
         var selectedFiles = [];
@@ -1590,7 +1660,7 @@
         }
 
         function HideAllInputsModal() {
-            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'ss_number', 'other',
+            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'other',
                 'vaccinations',
                 'references',
                 'diploma', 'professional_license'
@@ -1925,63 +1995,26 @@
             });
             // end loading cities according to the selected state
 
-            // append each uploaded file to the table
-            // $('#document_file').change(function() {
-            //     var file = this.files[0]; // get the selected file
-            //     var tbody = $('.table tbody');
-            //     // tbody.empty(); // remove existing rows
-            //     var row = $('<tr>');
-            //     row.append($('<td>').text(file.name)); // display the file name
-            //     var deleteButton = $('<button>').text('Delete Document').addClass('delete').attr('data-id',
-            //         file.id).prop('disabled', true); // disable the delete button
-            //     row.append($('<td>').append(deleteButton));
-            //     tbody.append(row);
-            // });
-            // end loding uploading file
+            // loading cities according to the selected state
+            $('#worker_facility_state').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#worker_facility_city');
+
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append('<option value="" disabled selected hidden>Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                    document.querySelector('.help-worker-facility-city').style.display = 'none';
+                });
+            });
 
             // loding docs list and dispatch them on the table (consume api : /list-docs)
             @php
                 $worker_id = $worker->id;
             @endphp
             const worker_id = '{!! $worker_id !!}';
-            // $.ajax({
-            //     url: 'http://localhost:4545/documents/list-docs?workerId=' +
-            //         worker_id, // replace workerId with the actual workerId
-            //     method: 'GET',
-            //     success: function(resp) {
-            //         var tbody = $('.table tbody');
-            //         tbody.empty(); // remove existing rows
-            //         resp.forEach(function(file) {
-            //             var row = $('<tr>');
-            //             row.append($('<td>').text(file.name));
-            //             console.log(file.id);
-            //             var deleteButton = $('<button>').text('Delete Document').addClass(
-            //                 'delete').attr('data-id', file.id);
-            //             deleteButton.click(function() {
-            //                 $.ajax({
-            //                     url: 'http://localhost:4545/documents/del-doc',
-            //                     method: 'POST',
-            //                     data: JSON.stringify({
-            //                         bsonId: file.id
-            //                     }),
-            //                     contentType: 'application/json',
-            //                     success: function() {
-            //                         row
-            //                             .remove(); // remove the row from the table
-            //                     },
-            //                     error: function(resp) {
-            //                         console.log('Error:', resp);
-            //                     }
-            //                 });
-            //             });
-            //             row.append($('<td>').append(deleteButton));
-            //             tbody.append(row);
-            //         });
-            //     },
-            //     error: function(resp) {
-            //         console.log('Error:', resp);
-            //     }
-            // });
 
             $.ajax({
                 headers: {
@@ -2145,98 +2178,8 @@
 
 
 
-        // end loding states cities docs on page load
 
 
-        // slide control
-        const slidePage = document.querySelector(".slide-page");
-        const nextBtnFirst = document.querySelector(".firstNext");
-        const prevBtnSec = document.querySelector(".prev-1");
-        const nextBtnSec = document.querySelector(".next-1");
-        const prevBtnThird = document.querySelector(".prev-2");
-        const nextBtnThird = document.querySelector(".next-2");
-        const progress = document.getElementById("progress");
-        // end slide control
-
-        // inputs
-        // Basic Info
-        const first_name = document.querySelector('input[name="first_name"]');
-        const last_name = document.querySelector('input[name="last_name"]');
-        const mobile = document.querySelector('input[name="mobile"]');
-        const address = document.querySelector('input[name="address"]');
-        const city = document.querySelector('select[name="city"]');
-        const state = document.querySelector('select[name="state"]');
-        const zip_code = document.querySelector('input[name="zip_code"]');
-        // Professional Info
-        const profession = document.querySelector('select[name="profession"]');
-        const specialty = document.querySelector('select[name="specialty"]');
-        const terms = document.querySelector('select[name="terms"]');
-        const type = document.querySelector('select[name="type"]');
-        const block_scheduling = document.querySelector('select[name="block_scheduling"]');
-        const float_requirement = document.querySelector('select[name="float_requirement"]');
-        const facility_shift_cancelation_policy = document.querySelector(
-            'select[name="facility_shift_cancelation_policy"]');
-        const contract_termination_policy = document.querySelector('input[name="contract_termination_policy"]');
-        const traveler_distance_from_facility = document.querySelector('input[name="distance_from_your_home"]');
-        const clinical_setting = document.querySelector('input[name="clinical_setting_you_prefer"]');
-        const Patient_ratio = document.querySelector('input[name="worker_patient_ratio"]');
-        const emr = document.querySelector('select[name="worker_emr"]');
-        const Unit = document.querySelector('input[name="worker_unit"]');
-        const scrub_color = document.querySelector('input[name="worker_scrub_color"]');
-        const rto = document.querySelector('select[name="rto"]');
-        const shift_of_day = document.querySelector('select[name="worker_shift_time_of_day"]');
-        const hours_shift = document.querySelector('input[name="worker_hours_shift"]');
-        const preferred_assignment_duration = document.querySelector('input[name="worker_weeks_assignment"]');
-        const weeks_shift = document.querySelector('input[name="worker_shifts_week"]');
-        const worker_experience = document.querySelector('input[name="worker_experience"]');
-        const worker_ss_number = document.querySelector('input[name="worker_ss_number"]');
-        const worker_eligible_work_in_us = document.querySelector('select[name="worker_eligible_work_in_us"]');
-        const nursing_license_state = document.querySelector('select[name="nursing_license_state"]');
-        const worker_facility_city = document.querySelector('select[name="worker_facility_city"]');
-        const worker_facility_state = document.querySelector('select[name="worker_facility_state"]');
-        const worker_start_date = document.querySelector('input[name="worker_start_date"]');
-        const worker_guaranteed_hours = document.querySelector('input[name="worker_guaranteed_hours"]');
-        const worker_sign_on_bonus = document.querySelector('input[name="worker_sign_on_bonus"]');
-        const worker_completion_bonus = document.querySelector('input[name="worker_completion_bonus"]');
-        const worker_extension_bonus = document.querySelector('input[name="worker_extension_bonus"]');
-        const worker_other_bonus = document.querySelector('input[name="worker_other_bonus"]');
-        const worker_four_zero_one_k = document.querySelector('select[name="worker_four_zero_one_k"]');
-        const worker_health_insurance = document.querySelector('select[name="worker_health_insurance"]');
-        const worker_dental = document.querySelector('select[name="worker_dental"]');
-        const worker_vision = document.querySelector('select[name="worker_vision"]');
-        const worker_overtime_rate = document.querySelector('input[name="worker_overtime_rate"]');
-        const worker_holiday = document.querySelector('input[name="worker_holiday"]');
-        const worker_on_call_check = document.querySelector('select[name="worker_on_call_check"]');
-        const worker_on_call_rate = document.querySelector('input[name="worker_on_call_rate"]');
-        const worker_on_call_back_check = document.querySelector('select[name="worker_on_call_back_check"]');
-        const worker_on_call_back_rate = document.querySelector('input[name="worker_on_call_back_rate"]');
-        const worker_orientation_rate = document.querySelector('input[name="worker_orientation_rate"]');
-        const worker_benefits = document.querySelector('select[name="worker_benefits"]');
-        const nurse_classification = document.querySelector('select[name="nurse_classification"]');
-
-
-
-
-
-        // Document Management
-        //const file = document.querySelector('input[type="file"]');
-        const file = document.getElementById('document_file');
-        // bonus transfer
-        const full_name_payment = document.querySelector('input[name="full_name_payment"]');
-        const address_payment = document.querySelector('input[name="address_payment"]');
-        const email_payment = document.querySelector('input[name="email_payment"]');
-        const bank_name_payment = document.querySelector('input[name="bank_name_payment"]');
-        const routing_number_payment = document.querySelector('input[name="routing_number_payment"]');
-        const bank_account_payment_number = document.querySelector('input[name="bank_account_payment_number"]');
-        const phone_number_payment = document.querySelector('input[name="phone_number_payment"]');
-        // support input
-        // const support_subject_issue = document.querySelector('textarea[name="support_subject_issue"]');
-        // const support_subject = document.querySelector('select[name="support_subject"]');
-        // end inputs
-
-        // change info type title
-        const infoType = document.getElementById("information_type");
-        // end change info type title
 
         var regexPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
 
@@ -2247,267 +2190,116 @@
                 $('.help-block-first_name').text('Please enter a first name');
                 $('.help-block-first_name').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-first_name').text('');
             }
             if (last_name.value === '') {
                 $('.help-block-last_name').text('Please enter a last name');
                 $('.help-block-last_name').addClass('text-danger');
                 isValid = false;
+            }   else{
+                $('.help-block-last_name').text('');
             }
 
             if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
                 $('.help-block-mobile').text('Please enter a mobile number');
                 $('.help-block-mobile').addClass('text-danger');
                 isValid = false;
+            }else{
+                $('.help-block-mobile').text('');
             }
             if (address.value === '') {
                 $('.help-block-address').text('Please enter an address');
                 $('.help-block-address').addClass('text-danger');
                 isValid = false;
+            } else{
+                $('.help-block-address').text('');
             }
             if (city.value === '') {
                 $('.help-block-city').text('Please enter a city');
                 $('.help-block-city').addClass('text-danger');
                 isValid = false;
+            } else{
+                $('.help-block-city').text('');
             }
             if (state.value === '') {
                 $('.help-block-state').text('Please enter a state');
                 $('.help-block-state').addClass('text-danger');
                 isValid = false;
+            }   else{
+                $('.help-block-state').text('');
             }
             if (zip_code.value === '') {
                 $('.help-block-zip_code').text('Please enter a zip code');
                 $('.help-block-zip_code').addClass('text-danger');
                 isValid = false;
+            }   else{
+                $('.help-block-zip_code').text('');
             }
             return isValid;
         }
         // end validation basic information
         // validation professional information
         function validateProfessionalInfo() {
-            let isValid = true;
-            if (profession.value === '') {
-                $('.help-block-profession').text('Please enter a profession');
-                $('.help-block-profession').addClass('text-danger');
-                isValid = false;
-            }
-            if (specialty.value === '') {
-                $('.help-block-specialty').text('Please enter a specialty');
-                $('.help-block-specialty').addClass('text-danger');
-                isValid = false;
-            }
-            if (terms.value === '') {
-                $('.help-block-terms').text('Please enter a term');
-                $('.help-block-terms').addClass('text-danger');
-                isValid = false;
-            }
-            if (type.value === '') {
-                $('.help-block-type').text('Please enter a type');
-                $('.help-block-type').addClass('text-danger');
-                isValid = false;
-            }
-            if (block_scheduling.value === '') {
-                $('.help-block-block_scheduling').text('Please enter a block scheduling');
-                $('.help-block-block_scheduling').addClass('text-danger');
-                isValid = false;
-            }
-            if (float_requirement.value === '') {
-                $('.help-block-float_requirement').text('Please enter a float requirement');
-                $('.help-block-float_requirement').addClass('text-danger');
-                isValid = false;
-            }
+                let isValid = true;
 
-            if (facility_shift_cancelation_policy.value === '') {
-                $('.help-block-facility_shift_cancelation_policy').text('Please enter a facility shift cancelation policy');
-                $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
-                isValid = false;
-            }
-            if (contract_termination_policy.value === '') {
-                $('.help-block-contract_termination_policy').text('Please enter a contract termination policy');
-                $('.help-block-contract_termination_policy').addClass('text-danger');
-                isValid = false;
-            }
-            if (traveler_distance_from_facility.value === '') {
-                $('.help-block-traveler_distance_from_facility').text('Please enter the Distance from your home');
-                $('.help-block-traveler_distance_from_facility').addClass('text-danger');
-                isValid = false;
-            }
-            if (clinical_setting.value === '') {
-                $('.help-block-clinical_setting_you_prefer').text('Please enter a clinical setting');
-                $('.help-block-clinical_setting_you_prefer').addClass('text-danger');
-                isValid = false;
-            }
-            if (Patient_ratio.value === '') {
-                $('.help-block-worker_patient_ratio').text('Please enter a patient ratio');
-                $('.help-block-worker_patient_ratio').addClass('text-danger');
-                isValid = false;
-            }
-            if (emr.value === '') {
-                $('.help-block-worker_emr').text('Please enter an EMR');
-                $('.help-block-worker_emr').addClass('text-danger');
-                isValid = false;
-            }
-            if (Unit.value === '') {
-                $('.help-block-worker_unit').text('Please enter a unit');
-                $('.help-block-worker_unit').addClass('text-danger');
-                isValid = false;
-            }
-            if (scrub_color.value === '') {
-                $('.help-block-worker_scrub_color').text('Please enter a scrub color');
-                $('.help-block-worker_scrub_color').addClass('text-danger');
-                isValid = false;
-            }
-            if (rto.value === '') {
-                $('.help-block-rto').text('Please enter an RTO');
-                $('.help-block-rto').addClass('text-danger');
-                isValid = false;
-            }
-            if (shift_of_day.value === '') {
-                $('.help-block-worker_shift_time_of_day').text('Please enter a shift time of day');
-                $('.help-block-worker_shift_time_of_day').addClass('text-danger');
-                isValid = false;
-            }
-            if (hours_shift.value === '') {
-                $('.help-block-worker_hours_shift').text('Please enter a hours per shift');
-                $('.help-block-worker_hours_shift').addClass('text-danger');
-                isValid = false;
-            }
-            if (preferred_assignment_duration.value === '') {
-                $('.help-block-worker_weeks_assignment').text('Please enter a preferred assignment duration');
-                $('.help-block-worker_weeks_assignment').addClass('text-danger');
-                isValid = false;
-            }
-            if (weeks_shift.value === '') {
-                $('.help-block-worker_shifts_week').text('Please enter a weeks shift');
-                $('.help-block-worker_shifts_week').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_experience.value === '') {
-                $('.help-block-worker_experience').text('Please enter a worker experience');
-                $('.help-block-worker_experience').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_ss_number.value === '') {
-                $('.help-block-worker_ss_number').text('Please enter a worker SS number');
-                $('.help-block-worker_ss_number').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_eligible_work_in_us.value === '') {
-                $('.help-block-worker_eligible_work_in_us').text('Please enter a worker eligible work in us');
-                $('.help-block-worker_eligible_work_in_us').addClass('text-danger');
-                isValid = false;
-            }
-            if (nursing_license_state.value === '') {
-                $('.help-block-nursing_license_state').text('Please enter a nursing license state');
-                $('.help-block-nursing_license_state').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_facility_city.value === '') {
-                $('.help-block-worker_facility_city').text('Please enter a worker facility city');
-                $('.help-block-worker_facility_city').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_facility_state.value === '') {
-                $('.help-block-worker_facility_state').text('Please enter a worker facility state');
-                $('.help-block-worker_facility_state').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_start_date.value === '') {
-                $('.help-block-worker_start_date').text('Please enter a worker start date');
-                $('.help-block-worker_start_date').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_guaranteed_hours.value === '') {
-                $('.help-block-worker_guaranteed_hours').text('Please enter a worker guaranteed hours');
-                $('.help-block-worker_guaranteed_hours').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_sign_on_bonus.value === '') {
-                $('.help-block-worker_sign_on_bonus').text('Please enter a worker sign on bonus');
-                $('.help-block-worker_sign_on_bonus').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_completion_bonus.value === '') {
-                $('.help-block-worker_completion_bonus').text('Please enter a worker completion bonus');
-                $('.help-block-worker_completion_bonus').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_extension_bonus.value === '') {
-                $('.help-block-worker_extension_bonus').text('Please enter a worker extension bonus');
-                $('.help-block-worker_extension_bonus').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_other_bonus.value === '') {
-                $('.help-block-worker_other_bonus').text('Please enter a worker other bonus');
-                $('.help-block-worker_other_bonus').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_four_zero_one_k.value === '') {
-                $('.help-block-worker_four_zero_one_k').text('Please enter a worker four zero one k');
-                $('.help-block-worker_four_zero_one_k').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_health_insurance.value === '') {
-                $('.help-block-worker_health_insurance').text('Please enter a worker health insurance');
-                $('.help-block-worker_health_insurance').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_dental.value === '') {
-                $('.help-block-worker_dental').text('Please enter a worker dental');
-                $('.help-block-worker_dental').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_vision.value === '') {
-                $('.help-block-worker_vision').text('Please enter a worker vision');
-                $('.help-block-worker_vision').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_overtime_rate.value === '') {
-                $('.help-block-worker_overtime_rate').text('Please enter a worker overtime rate');
-                $('.help-block-worker_overtime_rate').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_holiday.value === '') {
-                $('.help-block-worker_holiday').text('Please enter a worker holiday');
-                $('.help-block-worker_holiday').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_on_call_check.value === '') {
-                $('.help-block-worker_on_call_check').text('Please enter a worker on call check');
-                $('.help-block-worker_on_call_check').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_on_call_rate.value === '') {
-                $('.help-block-worker_on_call_rate').text('Please enter a worker on call rate');
-                $('.help-block-worker_on_call_rate').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_on_call_back_check.value === '') {
-                $('.help-block-worker_on_call_back_check').text('Please enter a worker on call back check');
-                $('.help-block-worker_on_call_back_check').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_on_call_back_rate.value === '') {
-                $('.help-block-worker_on_call_back_rate').text('Please enter a worker on call back rate');
-                $('.help-block-worker_on_call_back_rate').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_orientation_rate.value === '') {
-                $('.help-block-worker_orientation_rate').text('Please enter a worker orientation rate');
-                $('.help-block-worker_orientation_rate').addClass('text-danger');
-                isValid = false;
-            }
-            if (worker_benefits.value === '') {
-                $('.help-block-worker_benefits').text('Please enter a worker benefits');
-                $('.help-block-worker_benefits').addClass('text-danger');
-                isValid = false;
-            }
-            if (nurse_classification.value === '') {
-                $('.help-block-nurse_classification').text('Please enter a nurse classification');
-                $('.help-block-nurse_classification').addClass('text-danger');
-                isValid = false;
-            }
 
-            return isValid;
+                const fields = [
+                    { field: profession, errorClass: 'help-block-profession', errorMessage: 'Please enter a profession' },
+                    { field: specialty, errorClass: 'help-block-specialty', errorMessage: 'Please enter a specialty' },
+                    { field: terms, errorClass: 'help-block-terms', errorMessage: 'Please enter a term' },
+                    { field: worker_job_type, errorClass: 'help-block-worker_job_type', errorMessage: 'Please enter a worker type' },
+                    { field: block_scheduling, errorClass: 'help-block-block_scheduling', errorMessage: 'Please enter a block scheduling' },
+                    { field: float_requirement, errorClass: 'help-block-float_requirement', errorMessage: 'Please enter a float requirement' },
+                    { field: facility_shift_cancelation_policy, errorClass: 'help-block-facility_shift_cancelation_policy', errorMessage: 'Please enter a facility shift cancelation policy' },
+                    { field: contract_termination_policy, errorClass: 'help-block-contract_termination_policy', errorMessage: 'Please enter a contract termination policy' },
+                    { field: traveler_distance_from_facility, errorClass: 'help-block-traveler_distance_from_facility', errorMessage: 'Please enter the Distance from your home' },
+                    { field: clinical_setting, errorClass: 'help-block-clinical_setting_you_prefer', errorMessage: 'Please enter a clinical setting' },
+                    { field: Patient_ratio, errorClass: 'help-block-worker_patient_ratio', errorMessage: 'Please enter a patient ratio' },
+                    { field: emr, errorClass: 'help-block-worker_emr', errorMessage: 'Please enter an EMR' },
+                    { field: Unit, errorClass: 'help-block-worker_unit', errorMessage: 'Please enter a unit' },
+                    { field: scrub_color, errorClass: 'help-block-worker_scrub_color', errorMessage: 'Please enter a scrub color' },
+                    { field: rto, errorClass: 'help-block-rto', errorMessage: 'Please enter an RTO' },
+                    { field: shift_of_day, errorClass: 'help-block-worker_shift_time_of_day', errorMessage: 'Please enter a shift time of day' },
+                    { field: hours_shift, errorClass: 'help-block-worker_hours_shift', errorMessage: 'Please enter hours per shift' },
+                    { field: preferred_assignment_duration, errorClass: 'help-block-worker_weeks_assignment', errorMessage: 'Please enter a preferred assignment duration' },
+                    { field: weeks_shift, errorClass: 'help-block-worker_shifts_week', errorMessage: 'Please enter a weeks shift' },
+                    { field: worker_experience, errorClass: 'help-block-worker_experience', errorMessage: 'Please enter worker experience' },
+                    { field: worker_eligible_work_in_us, errorClass: 'help-block-worker_eligible_work_in_us', errorMessage: 'Please enter worker eligible work in us' },
+                    { field: nursing_license_state, errorClass: 'help-block-nursing_license_state', errorMessage: 'Please enter a nursing license state' },
+                    { field: worker_facility_city, errorClass: 'help-block-worker_facility_city', errorMessage: 'Please enter a worker facility city' },
+                    { field: worker_facility_state, errorClass: 'help-block-worker_facility_state', errorMessage: 'Please enter a worker facility state' },
+                    { field: worker_start_date, errorClass: 'help-block-worker_start_date', errorMessage: 'Please enter a worker start date' },
+                    { field: worker_guaranteed_hours, errorClass: 'help-block-worker_guaranteed_hours', errorMessage: 'Please enter worker guaranteed hours' },
+                    { field: worker_sign_on_bonus, errorClass: 'help-block-worker_sign_on_bonus', errorMessage: 'Please enter a worker sign on bonus' },
+                    { field: worker_completion_bonus, errorClass: 'help-block-worker_completion_bonus', errorMessage: 'Please enter a worker completion bonus' },
+                    { field: worker_extension_bonus, errorClass: 'help-block-worker_extension_bonus', errorMessage: 'Please enter a worker extension bonus' },
+                    { field: worker_other_bonus, errorClass: 'help-block-worker_other_bonus', errorMessage: 'Please enter a worker other bonus' },
+                    { field: worker_four_zero_one_k, errorClass: 'help-block-worker_four_zero_one_k', errorMessage: 'Please enter a worker four zero one k' },
+                    { field: worker_health_insurance, errorClass: 'help-block-worker_health_insurance', errorMessage: 'Please enter worker health insurance' },
+                    { field: worker_dental, errorClass: 'help-block-worker_dental', errorMessage: 'Please enter worker dental' },
+                    { field: worker_vision, errorClass: 'help-block-worker_vision', errorMessage: 'Please enter worker vision' },
+                    { field: worker_overtime_rate, errorClass: 'help-block-worker_overtime_rate', errorMessage: 'Please enter worker overtime rate' },
+                    { field: worker_holiday, errorClass: 'help-block-worker_holiday', errorMessage: 'Please enter worker holiday' },
+                    { field: worker_on_call_check, errorClass: 'help-block-worker_on_call_check', errorMessage: 'Please enter worker on call check' },
+                    { field: worker_on_call, errorClass: 'help-block-worker_on_call', errorMessage: 'Please enter worker on call rate' },
+                    { field: worker_call_back, errorClass: 'help-block-worker_call_back', errorMessage: 'Please enter worker on call back rate' },
+                    { field: worker_orientation_rate, errorClass: 'help-block-worker_orientation_rate', errorMessage: 'Please enter worker orientation rate' },
+                    { field: worker_benefits, errorClass: 'help-block-worker_benefits', errorMessage: 'Please enter worker benefits' },
+                    { field: nurse_classification, errorClass: 'help-block-nurse_classification', errorMessage: 'Please enter nurse classification' }
+                ];
+
+                // Validate fields
+                fields.forEach(({ field, errorClass, errorMessage }) => {
+                    if (field.value === '') {
+                        $(`.${errorClass}`).text(errorMessage).addClass('text-danger');
+                        isValid = false;
+                    } else {
+                        $(`.${errorClass}`).text('').removeClass('text-danger');
+                    }
+                });
+
+                return isValid;
         }
         // end validation professional information
         // validation document management
@@ -2598,28 +2390,6 @@
 
         // end bonus validation
 
-        // validation
-
-        // function validateSupportForm() {
-        //     let isValid = true;
-
-        //     if ($('select[name="support_subject"]').val() === '') {
-        //         $('.help-block-support_subject').text('Please select your issue');
-        //         $('.help-block-support_subject').addClass('text-danger');
-        //         isValid = false;
-        //     }
-
-        //     if ($('textarea[name="support_subject_issue"]').val().trim() === '') {
-        //         $('.help-block-support_subject_issue').text('Please tell us how we can help');
-        //         $('.help-block-support_subject_issue').addClass('text-danger');
-        //         isValid = false;
-        //     }
-
-        //     return isValid;
-        // }
-
-        // end validation
-
         // Save Basic Information
         const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
 
@@ -2645,7 +2415,6 @@
             formData.append('zip_code', zip_code.value);
             formData.append('InfoType', "BasicInformation");
             formData.append('profile_pic', $('#file')[0].files[0]);
-
 
             $.ajax({
                 url: '/worker/update-worker-profile',
@@ -2703,7 +2472,7 @@
                     profession: profession.value,
                     specialty: specialty.value,
                     terms: terms.value,
-                    type: type.value,
+                    worker_job_type: worker_job_type.value,
                     block_scheduling: block_scheduling.value,
                     float_requirement: float_requirement.value,
                     facility_shift_cancelation_policy: facility_shift_cancelation_policy.value,
@@ -2720,7 +2489,6 @@
                     preferred_assignment_duration: preferred_assignment_duration.value,
                     weeks_shift: weeks_shift.value,
                     worker_experience: worker_experience.value,
-                    worker_ss_number: worker_ss_number.value,
                     worker_eligible_work_in_us: worker_eligible_work_in_us.value,
                     nursing_license_state: nursing_license_state.value,
                     worker_facility_city: worker_facility_city.value,
@@ -2738,9 +2506,8 @@
                     worker_overtime_rate: worker_overtime_rate.value,
                     worker_holiday: worker_holiday.value,
                     worker_on_call_check: worker_on_call_check.value,
-                    worker_on_call_rate: worker_on_call_rate.value,
-                    worker_on_call_back_check: worker_on_call_back_check.value,
-                    worker_on_call_back_rate: worker_on_call_back_rate.value,
+                    worker_on_call: worker_on_call.value,
+                    worker_call_back: worker_call_back.value,
                     worker_orientation_rate: worker_orientation_rate.value,
                     worker_benefits: worker_benefits.value,
                     nurse_classification: nurse_classification.value,
@@ -2822,58 +2589,6 @@
 
         });
         // end Saving Bonus Transfer
-
-        // saving Support ticket
-
-        // const SaveSupportTicket = document.getElementById("SaveSupportTicket");
-
-        // SaveSupportTicket.addEventListener("click", function(event) {
-        //     event.preventDefault();
-        //     if (!validateSupportForm()) {
-        //         return;
-        //     }
-        //     $('#loading').removeClass('d-none');
-        //     $('#send_ticket').addClass('d-none');
-        //     $.ajaxSetup({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     });
-        //     $.ajax({
-        //         url: '/worker/send-support-ticket',
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         contentType: 'application/json',
-        //         data: JSON.stringify({
-        //             support_subject: support_subject.value,
-        //             support_subject_issue: support_subject_issue.value,
-
-        //         }),
-        //         success: function(resp) {
-        //             console.log(resp);
-        //             if (resp.status) {
-        //                 notie.alert({
-        //                     type: 'success',
-        //                     text: '<i class="fa fa-check"></i> Your ticket has been sent successfully',
-        //                     time: 5
-        //                 });
-        //                 $('#loading').addClass('d-none');
-        //                 $('#send_ticket').removeClass('d-none');
-        //                 support_subject_issue.value = "";
-        //             }
-        //         },
-        //         error: function(resp) {
-        //             console.log(resp);
-        //             notie.alert({
-        //                 type: 'error',
-        //                 text: resp,
-        //                 time: 5
-        //             });
-        //         }
-        //     });
-        // });
-
-        // end saving support ticket
 
         // account disactivating
 
@@ -3016,45 +2731,6 @@
         // redirecting to login stripe link
 
 
-        // next and prev buttons
-        nextBtnFirst.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "-25%";
-            progress.style.width = "66%";
-            // img need to be modified
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
-        });
-
-        nextBtnSec.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "-50%";
-            progress.style.width = "100%";
-            // img need to be modified
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-refren.png') }}' /></span>Document management";
-
-        });
-
-        prevBtnSec.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "0%";
-            progress.style.width = "25%";
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-user.png') }}' /></span>Basic Information";
-
-        });
-
-        prevBtnThird.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "-25%";
-            progress.style.width = "75%";
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
-
-        });
-        // end next and prev buttons
-
         // upload files
         document.getElementById('uploadForm').addEventListener('click', function(event) {
             event.preventDefault();
@@ -3127,10 +2803,7 @@
 
         // inputs account settings
 
-        // const user_name = document.querySelector('input[name="user_name"]');
-        // const password = document.querySelector('input[name="password"]');
         const new_mobile = document.querySelector('input[name="new_mobile"]');
-        // const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
         const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
@@ -3140,7 +2813,6 @@
             $('.help-block-new_mobile').text('');
             $('.help-block-validation').text('');
             $('.help-block-email').text('');
-            // $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
             inputs = [new_mobile, email];
@@ -3168,15 +2840,6 @@
                 $('.help-block-email').addClass('text-danger');
                 isValid = false;
             }
-
-            // User name validation
-            // const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
-            // if (!userNameRegex.test(user_name.value)) {
-            //     $('.help-block-user_name').text(
-            //         'User name can only contain letters and spaces, and cannot be longer than 255 characters');
-            //     $('.help-block-user_name').addClass('text-danger');
-            //     isValid = false;
-            // }
 
             // New mobile number validation
             const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;

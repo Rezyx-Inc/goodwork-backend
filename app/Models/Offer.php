@@ -11,23 +11,23 @@ class Offer extends Model
     use SoftDeletes;
 
     protected static function boot()
-	{
-		parent::boot();
+    {
+        parent::boot();
 
-		static::creating(function ($model) {
-			$model->{$model->getKeyName()} = $model->generateCustomId();
-		});
-	}
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = $model->generateCustomId();
+        });
+    }
 
-	public function getIncrementing()
-	{
-		return false;
-	}
+    public function getIncrementing()
+    {
+        return false;
+    }
 
-	public function getKeyType()
-	{
-		return 'string';
-	}
+    public function getKeyType()
+    {
+        return 'string';
+    }
 
     public function generateCustomId()
     {
@@ -158,9 +158,9 @@ class Offer extends Model
         'weekly_non_taxable_amount',
         'description',
         'weekly_taxable_amount',
-        'employer_weekly_amount',
+        'organization_weekly_amount',
         'goodwork_weekly_amount',
-        'total_employer_amount',
+        'total_organization_amount',
         'total_goodwork_amount',
         'total_contract_amount',
         'weekly_pay',

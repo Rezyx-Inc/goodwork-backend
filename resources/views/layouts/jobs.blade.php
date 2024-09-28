@@ -1,59 +1,73 @@
 @extends('layouts.dashboard')
 @section('mytitle', 'My Profile')
 @section('content')
-<!--Main layout-->
-<main style="padding-top: 130px" class="ss-main-body-sec">
-    <div class="container">
+    <!--Main layout-->
+    <main style="padding-top: 130px" class="ss-main-body-sec">
+        <div class="container">
 
-  <div class="ss-my-work-jorny-btn-dv">
-    <div class="row">
-      <div class="col-lg-6">
-        <h2>My Work Journey</h2>
-      </div>
-
-      <div class="col-lg-6">
-        <div class="ss-my-work-tab-div">
-          <ul onclick="myFunction(event)" id='navList'>
-            <li><a href="#" class="ss-saved-btn {{ ( request()->route()->getName() == 'saved-jobs' ) ? 'active' :'' }}">Saved</a></li>
-            <li><a href="#" class="ss-applied-btn {{ ( request()->route()->getName() == 'applied-jobs' ) ? 'active' :'' }}">Applied</a></li>
-            <li><a href="#" class="ss-offered-btn {{ ( request()->route()->getName() == 'offered-jobs' ) ? 'active' :'' }}">Offered</a></li>
-            <li><a href="#" class="ss-hired-btn {{ ( request()->route()->getName() == 'hired-jobs' ) ? 'active' :'' }}">Hired</a></li>
-            <li><a href="#" class="ss-past-btn {{ ( request()->route()->getName() == 'past-jobs' ) ? 'active' :'' }}">Past</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!--------------my work journey saved---------------->
-
-    <div class="ss-my-work-jorny-sved-div">
-        <div class="row">
-            <div class="col-lg-5 ss-displ-flex">
-                <div class="ss-mywrk-jrny-left-dv">
-                    <div class="ss-jb-dtl-icon-ul">
-                        <h5>Saved</h5>
+            <div class="ss-my-work-jorny-btn-dv">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h2>My Work Journey</h2>
                     </div>
 
-
-                    <!-------->
-                    @forelse($jobs as $j)
-                    <div class="ss-job-prfle-sec job-list" data-id="{{$j->id}}" data-type="saved">
-                        <p>{{$j->job_type}} <span>+{{$j->getOfferCount()}} Applied</span></p>
-                        <h4>{{$j->job_name}}</h4>
-                        <h6>Medical Solutions Recruiter</h6>
-                        <ul>
-                        <li><a href="#"><img src="{{URL::asset('forntend/img/location.png')}}"> {{$j->job_city}}, {{$j->job_state}}</a></li>
-                        <li><a href="#"><img src="{{URL::asset('forntend/img/calendar.png')}}"> 10 wks</a></li>
-                        <li><a href="#"><img src="{{URL::asset('forntend/img/dollarcircle.png')}}"> 2500/wk</a></li>
-                        </ul>
-                        <h5>Recently Added</h5>
-                        <a href="#" class="ss-jb-prfl-save-ico"><img src="{{URL::asset('forntend/img/bookmark.png')}}" /></a>
+                    <div class="col-lg-6">
+                        <div class="ss-my-work-tab-div">
+                            <ul onclick="myFunction(event)" id='navList'>
+                                <li><a href="#"
+                                        class="ss-saved-btn {{ request()->route()->getName() == 'saved-jobs' ? 'active' : '' }}">Saved</a>
+                                </li>
+                                <li><a href="#"
+                                        class="ss-applied-btn {{ request()->route()->getName() == 'applied-jobs' ? 'active' : '' }}">Applied</a>
+                                </li>
+                                <li><a href="#"
+                                        class="ss-offered-btn {{ request()->route()->getName() == 'offered-jobs' ? 'active' : '' }}">Offered</a>
+                                </li>
+                                <li><a href="#"
+                                        class="ss-hired-btn {{ request()->route()->getName() == 'hired-jobs' ? 'active' : '' }}">Hired</a>
+                                </li>
+                                <li><a href="#"
+                                        class="ss-past-btn {{ request()->route()->getName() == 'past-jobs' ? 'active' : '' }}">Past</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    @endforelse
+                </div>
+            </div>
 
-                    {{-- <div class="ss-job-prfle-sec my-work-sved-job-div2">
+
+            <!--------------my work journey saved---------------->
+
+            <div class="ss-my-work-jorny-sved-div">
+                <div class="row">
+                    <div class="col-lg-5 ss-displ-flex">
+                        <div class="ss-mywrk-jrny-left-dv">
+                            <div class="ss-jb-dtl-icon-ul">
+                                <h5>Saved</h5>
+                            </div>
+
+
+                            <!-------->
+                            @forelse($jobs as $j)
+                                <div class="ss-job-prfle-sec job-list" data-id="{{ $j->id }}" data-type="saved">
+                                    <p>{{ $j->job_type }} <span>+{{ $j->getOfferCount() }} Applied</span></p>
+                                    <h4>{{ $j->job_name }}</h4>
+                                    <h6>Medical Solutions Recruiter</h6>
+                                    <ul>
+                                        <li><a href="#"><img src="{{ URL::asset('forntend/img/location.png') }}">
+                                                {{ $j->job_city }}, {{ $j->job_state }}</a></li>
+                                        <li><a href="#"><img src="{{ URL::asset('forntend/img/calendar.png') }}"> 10
+                                                wks</a></li>
+                                        <li><a href="#"><img src="{{ URL::asset('forntend/img/dollarcircle.png') }}">
+                                                2500/wk</a></li>
+                                    </ul>
+                                    <h5>Recently Added</h5>
+                                    <a href="#" class="ss-jb-prfl-save-ico"><img
+                                            src="{{ URL::asset('forntend/img/bookmark.png') }}" /></a>
+                                </div>
+                            @endforelse
+
+                            {{-- <div class="ss-job-prfle-sec my-work-sved-job-div2">
                         <p>Travel <span>+50 Applied</span></p>
                         <h4>Manager CRNA - Anesthesia</h4>
                         <h6>Medical Solutions Recruiter</h6>
@@ -66,26 +80,26 @@
                         <a href="#" class="ss-jb-prfl-save-ico"><img src="img/bookmark.png" /></a>
                     </div> --}}
 
+                        </div>
+                    </div>
+
+                    <!-----JOB CONTENT---->
+                    <div class="col-lg-7">
+
+                        <div class="ss-journy-svd-jbdtl-dv ss-saved-jb-dtls-dv1"></div>
+
+                    </div>
                 </div>
             </div>
 
-            <!-----JOB CONTENT---->
-            <div class="col-lg-7">
-
-                <div class="ss-journy-svd-jbdtl-dv ss-saved-jb-dtls-dv1"></div>
-
-            </div>
-      </div>
-    </div>
-
-  <!--------------my work journey saved---------------->
+            <!--------------my work journey saved---------------->
 
 
 
-  <!--------------my work journey Applied---------------->
+            <!--------------my work journey Applied---------------->
 
 
-  {{-- <div class="ss-my-wrk-apply-mn-sec">
+            {{-- <div class="ss-my-wrk-apply-mn-sec">
 
   <div class="row">
         <div class="col-lg-5 ss-displ-flex">
@@ -154,7 +168,7 @@
     <h5>About job</h5>
     <ul>
       <li>
-        <h6>Employer Name</h6>
+        <h6>Organization Name</h6>
         <p>Hogwarts</p>
       </li>
        <li>
@@ -657,7 +671,7 @@
     <h5>About job</h5>
     <ul>
       <li>
-        <h6>Employer Name</h6>
+        <h6>Organization Name</h6>
         <p>Hogwarts</p>
       </li>
        <li>
@@ -917,7 +931,7 @@
   </div> --}}
 
 
-  <!--------------my work journey Past---------------->
+            <!--------------my work journey Past---------------->
 
 
 
@@ -926,127 +940,124 @@
 
 
 
-    </div>
+        </div>
 
-  </main>
+    </main>
 @stop
 
 @section('js')
-<script>
-    $(document).ready(function(){
-      $(".ss-saved-btn").click(function(){
-        $(".ss-my-work-jorny-sved-div").show();
-        $(".ss-my-wrk-apply-mn-sec").hide();
-        $(".ssmy-jorey-offred-mn-sec").hide();
-        $(".ss-my-work-jorny-hired").hide();
-        $(".ss-my-jorney-past-mn-sec").hide();
-      });
+    <script>
+        $(document).ready(function() {
+            $(".ss-saved-btn").click(function() {
+                $(".ss-my-work-jorny-sved-div").show();
+                $(".ss-my-wrk-apply-mn-sec").hide();
+                $(".ssmy-jorey-offred-mn-sec").hide();
+                $(".ss-my-work-jorny-hired").hide();
+                $(".ss-my-jorney-past-mn-sec").hide();
+            });
 
-      $(".ss-applied-btn").click(function(){
-       $(".ss-my-wrk-apply-mn-sec").show();
-        $(".ss-my-work-jorny-sved-div").hide();
-        $(".ssmy-jorey-offred-mn-sec").hide();
-        $(".ss-my-work-jorny-hired").hide();
-        $(".ss-my-jorney-past-mn-sec").hide();
-      });
+            $(".ss-applied-btn").click(function() {
+                $(".ss-my-wrk-apply-mn-sec").show();
+                $(".ss-my-work-jorny-sved-div").hide();
+                $(".ssmy-jorey-offred-mn-sec").hide();
+                $(".ss-my-work-jorny-hired").hide();
+                $(".ss-my-jorney-past-mn-sec").hide();
+            });
 
-      $(".ss-offered-btn").click(function(){
-        $(".ssmy-jorey-offred-mn-sec").show();
-        $(".ss-my-work-jorny-sved-div").hide();
-        $(".ss-my-wrk-apply-mn-sec").hide();
-        $(".ss-my-work-jorny-hired").hide();
-        $(".ss-my-jorney-past-mn-sec").hide();
-      });
+            $(".ss-offered-btn").click(function() {
+                $(".ssmy-jorey-offred-mn-sec").show();
+                $(".ss-my-work-jorny-sved-div").hide();
+                $(".ss-my-wrk-apply-mn-sec").hide();
+                $(".ss-my-work-jorny-hired").hide();
+                $(".ss-my-jorney-past-mn-sec").hide();
+            });
 
-      $(".ss-hired-btn").click(function(){
-        $(".ss-my-work-jorny-hired").show();
-        $(".ss-my-work-jorny-sved-div").hide();
-        $(".ss-my-wrk-apply-mn-sec").hide();
-        $(".ssmy-jorey-offred-mn-sec").hide();
-        $(".ss-my-jorney-past-mn-sec").hide();
-      });
+            $(".ss-hired-btn").click(function() {
+                $(".ss-my-work-jorny-hired").show();
+                $(".ss-my-work-jorny-sved-div").hide();
+                $(".ss-my-wrk-apply-mn-sec").hide();
+                $(".ssmy-jorey-offred-mn-sec").hide();
+                $(".ss-my-jorney-past-mn-sec").hide();
+            });
 
-      $(".ss-past-btn").click(function(){
-        $(".ss-my-jorney-past-mn-sec").show();
-        $(".ss-my-work-jorny-sved-div").hide();
-        $(".ss-my-wrk-apply-mn-sec").hide();
-        $(".ss-my-work-jorny-hired").hide();
-        $(".ssmy-jorey-offred-mn-sec").hide();
-      });
+            $(".ss-past-btn").click(function() {
+                $(".ss-my-jorney-past-mn-sec").show();
+                $(".ss-my-work-jorny-sved-div").hide();
+                $(".ss-my-wrk-apply-mn-sec").hide();
+                $(".ss-my-work-jorny-hired").hide();
+                $(".ssmy-jorey-offred-mn-sec").hide();
+            });
 
 
-    });
+        });
     </script>
 
     <!----------saved script----->
     <script>
-    $(document).ready(function(){
-      $(".my-work-sved-job-div1").click(function(){
-        $(".ss-saved-jb-dtls-dv1").show();
-        $(".ss-saved-jb-dtls-dv2").hide();
-      });
+        $(document).ready(function() {
+            $(".my-work-sved-job-div1").click(function() {
+                $(".ss-saved-jb-dtls-dv1").show();
+                $(".ss-saved-jb-dtls-dv2").hide();
+            });
 
-      $(".my-work-sved-job-div2").click(function(){
-       $(".ss-saved-jb-dtls-dv2").show();
-        $(".ss-saved-jb-dtls-dv1").hide();
-      });
-    });
-      </script>
+            $(".my-work-sved-job-div2").click(function() {
+                $(".ss-saved-jb-dtls-dv2").show();
+                $(".ss-saved-jb-dtls-dv1").hide();
+            });
+        });
+    </script>
 
 
-      <!----------Applyed script----->
+    <!----------Applyed script----->
     <script>
-    $(document).ready(function(){
-      $(".ss-my-wrk-aply-jb-dv1").click(function(){
-        $(".ss-applyd-jb-dtl-bx-1").show();
-        $(".ss-applyd-jb-dtl-bx-2").hide();
-        $(".ss-applyd-jb-dtl-bx-3").hide();
-      });
+        $(document).ready(function() {
+            $(".ss-my-wrk-aply-jb-dv1").click(function() {
+                $(".ss-applyd-jb-dtl-bx-1").show();
+                $(".ss-applyd-jb-dtl-bx-2").hide();
+                $(".ss-applyd-jb-dtl-bx-3").hide();
+            });
 
-      $(".ss-my-wrk-aply-jb-dv2").click(function(){
-        $(".ss-applyd-jb-dtl-bx-2").show();
-        $(".ss-applyd-jb-dtl-bx-1").hide();
-        $(".ss-applyd-jb-dtl-bx-3").hide();
-      });
+            $(".ss-my-wrk-aply-jb-dv2").click(function() {
+                $(".ss-applyd-jb-dtl-bx-2").show();
+                $(".ss-applyd-jb-dtl-bx-1").hide();
+                $(".ss-applyd-jb-dtl-bx-3").hide();
+            });
 
-      $(".ss-my-wrk-aply-jb-dv3").click(function(){
-        $(".ss-applyd-jb-dtl-bx-3").show();
-        $(".ss-applyd-jb-dtl-bx-2").hide();
-        $(".ss-applyd-jb-dtl-bx-1").hide();
-      });
-    });
-
-
-      </script>
+            $(".ss-my-wrk-aply-jb-dv3").click(function() {
+                $(".ss-applyd-jb-dtl-bx-3").show();
+                $(".ss-applyd-jb-dtl-bx-2").hide();
+                $(".ss-applyd-jb-dtl-bx-1").hide();
+            });
+        });
+    </script>
 
 
-       <!----------offred script----->
+    <!----------offred script----->
     <script>
-    $(document).ready(function(){
-      $(".ss-jb-offrd-dv1").click(function(){
-        $(".ss-my-jrny-offrd-dtls1").show();
-        $(".ss-my-jrny-offrd-dtls2").hide();
-      });
+        $(document).ready(function() {
+            $(".ss-jb-offrd-dv1").click(function() {
+                $(".ss-my-jrny-offrd-dtls1").show();
+                $(".ss-my-jrny-offrd-dtls2").hide();
+            });
 
-      $(".ss-jb-offrd-dv2").click(function(){
-        $(".ss-my-jrny-offrd-dtls2").show();
-        $(".ss-my-jrny-offrd-dtls1").hide();
-      });
+            $(".ss-jb-offrd-dv2").click(function() {
+                $(".ss-my-jrny-offrd-dtls2").show();
+                $(".ss-my-jrny-offrd-dtls1").hide();
+            });
 
 
-    });
-
-</script>
+        });
+    </script>
 
 
 
 
     <script>
-     function myFunction(e) {
-      if (document.querySelector('#navList a.active') !== null) {
-        document.querySelector('#navList a.active').classList.remove('active');
-      }
-      e.target.className = "active";
-    }
+        function myFunction(e) {
+            if (document.querySelector('#navList a.active') !== null) {
+                document.querySelector('#navList a.active').classList.remove('active');
+            }
+            e.target.className = "active";
+        }
     </script>
 @stop
