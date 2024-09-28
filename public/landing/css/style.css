@@ -1,182 +1,184 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-Black.woff2') format('woff2'),
-        url('fonts/NeueKabel-Black.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-Black.woff2") format("woff2"),
+        url("fonts/NeueKabel-Black.woff") format("woff");
     font-weight: 900;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-Bold.woff2') format('woff2'),
-        url('fonts/NeueKabel-Bold.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-Bold.woff2") format("woff2"),
+        url("fonts/NeueKabel-Bold.woff") format("woff");
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-BlackItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-BlackItalic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-BlackItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-BlackItalic.woff") format("woff");
     font-weight: 900;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-BoldItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-BoldItalic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-BoldItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-BoldItalic.woff") format("woff");
     font-weight: bold;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel Book';
-    src: url('fonts/NeueKabel-BookItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-BookItalic.woff') format('woff');
+    font-family: "Neue Kabel Book";
+    src: url("fonts/NeueKabel-BookItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-BookItalic.woff") format("woff");
     font-weight: 500;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel Book';
-    src: url('fonts/NeueKabel-Book.woff2') format('woff2'),
-        url('fonts/NeueKabel-Book.woff') format('woff');
+    font-family: "Neue Kabel Book";
+    src: url("fonts/NeueKabel-Book.woff2") format("woff2"),
+        url("fonts/NeueKabel-Book.woff") format("woff");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-ExtraBoldItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-ExtraBoldItalic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-ExtraBoldItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-ExtraBoldItalic.woff") format("woff");
     font-weight: bold;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-ExtraBold.woff2') format('woff2'),
-        url('fonts/NeueKabel-ExtraBold.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-ExtraBold.woff2") format("woff2"),
+        url("fonts/NeueKabel-ExtraBold.woff") format("woff");
     font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-ExtraLight.woff2') format('woff2'),
-        url('fonts/NeueKabel-ExtraLight.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-ExtraLight.woff2") format("woff2"),
+        url("fonts/NeueKabel-ExtraLight.woff") format("woff");
     font-weight: 200;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-ExtraLightItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-ExtraLightItalic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-ExtraLightItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-ExtraLightItalic.woff") format("woff");
     font-weight: 200;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-Light.woff2') format('woff2'),
-        url('fonts/NeueKabel-Light.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-Light.woff2") format("woff2"),
+        url("fonts/NeueKabel-Light.woff") format("woff");
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-Italic.woff2') format('woff2'),
-        url('fonts/NeueKabel-Italic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-Italic.woff2") format("woff2"),
+        url("fonts/NeueKabel-Italic.woff") format("woff");
     font-weight: normal;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-LightItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-LightItalic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-LightItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-LightItalic.woff") format("woff");
     font-weight: 300;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-Medium.woff2') format('woff2'),
-        url('fonts/NeueKabel-Medium.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-Medium.woff2") format("woff2"),
+        url("fonts/NeueKabel-Medium.woff") format("woff");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-Thin.woff2') format('woff2'),
-        url('fonts/NeueKabel-Thin.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-Thin.woff2") format("woff2"),
+        url("fonts/NeueKabel-Thin.woff") format("woff");
     font-weight: 100;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-MediumItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-MediumItalic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-MediumItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-MediumItalic.woff") format("woff");
     font-weight: 500;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-Regular.woff2') format('woff2'),
-        url('fonts/NeueKabel-Regular.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-Regular.woff2") format("woff2"),
+        url("fonts/NeueKabel-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Neue Kabel';
-    src: url('fonts/NeueKabel-ThinItalic.woff2') format('woff2'),
-        url('fonts/NeueKabel-ThinItalic.woff') format('woff');
+    font-family: "Neue Kabel";
+    src: url("fonts/NeueKabel-ThinItalic.woff2") format("woff2"),
+        url("fonts/NeueKabel-ThinItalic.woff") format("woff");
     font-weight: 100;
     font-style: italic;
     font-display: swap;
 }
 
-@font-face{
+@font-face {
     font-family: "Neue Kabel W01 Bold";
     src: url("fonts/600ab0b5dbeba51a9434c9461db82573.eot");
-    src: url("fonts/600ab0b5dbeba51a9434c9461db82573.eot?#iefix")format("embedded-opentype"),
-        url("fonts/600ab0b5dbeba51a9434c9461db82573.woff")format("woff"),
-        url("fonts/600ab0b5dbeba51a9434c9461db82573.woff2")format("woff2"),
-        url("fonts/600ab0b5dbeba51a9434c9461db82573.ttf")format("truetype"),
-        url("fonts/600ab0b5dbeba51a9434c9461db82573.svg#Neue Kabel W01 Bold")format("svg");
-    font-weight:normal;
-    font-style:normal;
-    font-display:swap;
+    src: url("fonts/600ab0b5dbeba51a9434c9461db82573.eot?#iefix")
+            format("embedded-opentype"),
+        url("fonts/600ab0b5dbeba51a9434c9461db82573.woff") format("woff"),
+        url("fonts/600ab0b5dbeba51a9434c9461db82573.woff2") format("woff2"),
+        url("fonts/600ab0b5dbeba51a9434c9461db82573.ttf") format("truetype"),
+        url("fonts/600ab0b5dbeba51a9434c9461db82573.svg#Neue Kabel W01 Bold")
+            format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-.ss-hm-header-sec .nav-item a{
-    font-family: 'Neue Kabel';
+.ss-hm-header-sec .nav-item a {
+    font-family: "Neue Kabel";
     font-size: 20px;
     color: #323232 !important;
     padding: 0 15px !important;
@@ -193,29 +195,31 @@
     text-decoration: none;
 }
 
-.ss-log-div-sec ul li:nth-child(2) a {background: #3D2C39;color: #FFEDEE;padding: 10px 30px;border-radius: 100px;}
+.ss-log-div-sec ul li:nth-child(2) a {
+    background: #3d2c39;
+    color: #ffedee;
+    padding: 10px 30px;
+    border-radius: 100px;
+}
 section.ss-hm-header-sec {
-    box-shadow: 0px 4px 4px 0px #C8C8C829;
+    box-shadow: 0px 4px 4px 0px #c8c8c829;
     padding: 5px 0;
 }
 .ss-log-div-sec a {
     font-size: 20px;
 }
 
-
-p{
-    font-family: 'Neue Kabel';
+p {
+    font-family: "Neue Kabel";
     margin-bottom: 0;
     color: #696969;
     font-size: 16px;
 }
 
-
 /*footer sec */
 
-
-.ss-foot-sec{
-    background: #3D2C39;
+.ss-foot-sec {
+    background: #3d2c39;
     padding: 50px 0 30px;
 }
 
@@ -226,11 +230,11 @@ p{
     margin-top: 20px;
 }
 
-body{
-    font-family: 'Neue Kabel';
+body {
+    font-family: "Neue Kabel";
 }
 
-a{
+a {
     color: #000;
     text-decoration: none;
 }
@@ -241,7 +245,10 @@ a{
     padding-bottom: 2px;
 }
 
-.ss-foot-link-sec ul {list-style-type: none;padding: 0;}
+.ss-foot-link-sec ul {
+    list-style-type: none;
+    padding: 0;
+}
 
 .ss-foot-link-sec a {
     color: #fff;
@@ -265,7 +272,7 @@ a{
     gap: 10px;
     align-items: center;
 }
-.ss-fot-scl-link .fa{
+.ss-fot-scl-link .fa {
     background: #52dec1;
     width: 40px;
     color: #3d2c39;
@@ -279,23 +286,23 @@ ul.ss-fot-scl-link {
     gap: 18px;
     margin-top: 35px;
 }
-.ss-fot-env-sec a{
+.ss-fot-env-sec a {
     color: #fff;
     font-size: 18px;
 }
 
-.ss-foot-btm-sec p{
-color: #fff;
+.ss-foot-btm-sec p {
+    color: #fff;
 }
 
-.ss-foot-btm-sec ul{
+.ss-foot-btm-sec ul {
     display: flex;
-list-style: none;
-gap: 10px;
-float: right;
+    list-style: none;
+    gap: 10px;
+    float: right;
 }
 
-.ss-foot-btm-sec a{
+.ss-foot-btm-sec a {
     color: #fff;
 }
 
@@ -326,10 +333,15 @@ section.ss-foot-btm-sign-sec a {
     padding: 9px 35px;
     border-radius: 100px;
 }
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin-bottom: 0;
 }
-h2{
+h2 {
     font-size: 48px;
     font-family: "Neue Kabel W01 Bold";
 }
@@ -346,7 +358,7 @@ span.ss-fnt-nrml {
 
 .ss-downld-app-txt-hed h4:after {
     content: "";
-    background: #3D2C39;
+    background: #3d2c39;
     width: 145px;
     height: 2px;
     left: 0;
@@ -360,15 +372,14 @@ span.ss-fnt-nrml {
     line-height: 58px;
     text-transform: capitalize;
     /* font-weight: 500; */
-    color: #3D2C39;
+    color: #3d2c39;
     padding-right: 38px;
     padding-bottom: 16px;
 }
 
 span.ss-clr-pink {
-    color: #B5649E;
+    color: #b5649e;
 }
-
 
 .ss-downld-app-txt-hed p {
     padding-right: 110px;
@@ -392,8 +403,8 @@ span.ss-clr-pink {
 
 .ss-downld-ap-dv p {
     padding-right: 0;
-    color: #3D2C39;
-    font-family: 'Poppins', sans-serif;
+    color: #3d2c39;
+    font-family: "Poppins", sans-serif;
 }
 
 .ss-downld-ap-dv i {
@@ -409,24 +420,24 @@ span.ss-clr-pink {
 .ss-downld-ap-dv h6 {
     font-size: 16px;
     padding-top: 2px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 600;
 }
-.ss-hm-dwnld-app-sec .row{
+.ss-hm-dwnld-app-sec .row {
     align-items: center;
 }
 
-.ss-hm-hed-sec h4{
+.ss-hm-hed-sec h4 {
     font-size: 16px;
     position: relative;
     padding-left: 160px;
     margin-bottom: 12px;
-    color: #006BC9;
+    color: #006bc9;
 }
 
 .ss-hm-hed-sec h4:after {
     content: "";
-    background: #3D2C39;
+    background: #3d2c39;
     width: 145px;
     height: 2px;
     left: 0;
@@ -438,7 +449,7 @@ span.ss-clr-pink {
 .ss-mn-value-sec .ss-hm-hed-sec h2 {
     text-transform: capitalize;
     width: 60%;
-      color: #3D2C39;
+    color: #3d2c39;
 }
 section.ss-mn-value-sec {
     background: #fff8fd;
@@ -447,7 +458,7 @@ section.ss-mn-value-sec {
 
 .ss-feed-slid-bx {
     border: 2px solid #111011;
-    box-shadow: 8px 8px 0px 0px #403B4BE5;
+    box-shadow: 8px 8px 0px 0px #403b4be5;
     margin-bottom: 20px;
     border-radius: 5px;
     padding: 22px 15px;
@@ -462,11 +473,11 @@ section.ss-hm-dwnld-app-sec {
     list-style: none;
     padding: 0;
     display: inline-flex;
-    color: #006BC9;
+    color: #006bc9;
     gap: 7px;
     margin-top: 12px;
 }
-.ss-hm-img-abt img{
+.ss-hm-img-abt img {
     width: 100%;
 }
 
@@ -511,11 +522,10 @@ button.owl-dot {
 .owl-dots {
     text-align: center;
 }
-button.owl-dot.active{
+button.owl-dot.active {
     border: 3px solid #52dec1 !important;
     background: #fff !important;
 }
-
 
 section.ss-hm-about-sec p {
     margin-top: 35px;
@@ -567,7 +577,6 @@ section.ss-what-we-ofr-sec h4:after {
     background: #fff;
 }
 
-
 .ss-hm-what-icn-bx {
     background: #fff;
     padding: 15px 8px;
@@ -580,7 +589,7 @@ section.ss-what-we-ofr-sec h4:after {
     height: 80px;
     border: 2px;
     margin: auto;
-    background: #52DEC1;
+    background: #52dec1;
     border-radius: 100px;
     margin-top: -52px;
     border: 2px solid #fff;
@@ -597,12 +606,12 @@ section.ss-what-we-ofr-sec h4:after {
 
 .ss-hm-what-icn-bx-mn p {
     color: #696969 !important;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 11px;
 }
 
 .ss-hm-what-icn-bx h6 {
-    color: #B5649E;
+    color: #b5649e;
     font-weight: 500;
     padding: 5px 0;
 }
@@ -621,7 +630,7 @@ section.ss-what-we-ofr-sec h4:after {
 
 .ss-what-offer-div2 p {
     color: #696969 !important;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 11px;
 }
 
@@ -641,7 +650,7 @@ section.ss-what-we-ofr-sec h4:after {
 
 .ss-hm-banner-txt-bx p {
     font-size: 20px;
-    color: #4D4D4D;
+    color: #4d4d4d;
 }
 
 .ss-hm-banner-txt-bx ul {
@@ -653,15 +662,15 @@ section.ss-what-we-ofr-sec h4:after {
 }
 
 .ss-hm-banner-txt-bx a {
-    background: #3D2C39;
+    background: #3d2c39;
     padding: 9px 25px;
     display: inline-block;
     border-radius: 100px;
     font-size: 16px;
-    color: #F8F8F8;
+    color: #f8f8f8;
 }
 
-ul{
+ul {
     padding: 0;
 }
 
@@ -669,7 +678,7 @@ ul{
     content: "";
     width: 500px;
     height: 13px;
-    background: #CBEFE6;
+    background: #cbefe6;
     position: absolute;
     bottom: 2px;
     right: 16px;
@@ -684,7 +693,7 @@ section.ss-hm-banner-sec {
 }
 
 ul.ss-ban-top-map-txt {
-    box-shadow: 0px 100px 80px 0px #0000000D;
+    box-shadow: 0px 100px 80px 0px #0000000d;
     background: #fff;
     border-radius: 5px;
     display: flex;
@@ -696,23 +705,24 @@ ul.ss-ban-top-map-txt {
     top: 103px;
 }
 
-ul.ss-ban-top-map-txt {}
+ul.ss-ban-top-map-txt {
+}
 
 .ss-hm-baner-img-dv {
     position: relative;
 }
 
-.ss-hm-banner-sec .row{
+.ss-hm-banner-sec .row {
     align-items: center;
 }
 
-.ss-hm-banner-sec{
+.ss-hm-banner-sec {
     padding: 40px 0;
     overflow: hidden;
 }
 
 ul.ss-ban-top-map-txt2 {
-    box-shadow: 0px 100px 80px 0px #0000000D;
+    box-shadow: 0px 100px 80px 0px #0000000d;
     background: #fff;
     border-radius: 5px;
     display: flex;
@@ -729,16 +739,16 @@ ul.ss-ban-top-map-txt2 {
     padding: 30px 0 50px;
 }
 
-.ss-hm-join-hed-tx-sec h6{
+.ss-hm-join-hed-tx-sec h6 {
     font-size: 16px;
     position: relative;
     padding-left: 160px;
     margin-bottom: 12px;
 }
 
-.ss-hm-join-hed-tx-sec h6:after{
-        content: "";
-    background: #3D2C39;
+.ss-hm-join-hed-tx-sec h6:after {
+    content: "";
+    background: #3d2c39;
     width: 145px;
     height: 2px;
     left: 0;
@@ -751,12 +761,11 @@ ul.ss-ban-top-map-txt2 {
 .ss-hm-join-hed-tx-sec h2 {
     line-height: 44px;
     text-transform: capitalize;
-    color: #3D2C39;
+    color: #3d2c39;
     font-size: 40px;
     padding-bottom: 16px;
     font-family: "Neue Kabel W01 Bold";
 }
-
 
 .ss-hm-join-hed-tx-sec h5 {
     font-size: 28px;
@@ -767,30 +776,28 @@ ul.ss-ban-top-map-txt2 {
 .ss-hm-join-rit-p-sc p {
     font-size: 24px;
     line-height: 30px;
-    color: #4D4D4D;
+    color: #4d4d4d;
 }
 
-.ss-hmjoin-sec{
- background: #FFF8FD;
- padding: 40px 0;
+.ss-hmjoin-sec {
+    background: #fff8fd;
+    padding: 40px 0;
 }
-
 
 .ss-join-icon-div-sec {
     text-align: center;
 }
 
 .ss-join-icon-div-sec h5 {
-    color: #B5649E;
+    color: #b5649e;
     font-size: 16px;
     font-family: "Neue Kabel W01 Bold";
 }
 
 .ss-join-icon-div-sec p {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 14px;
 }
-
 
 .ss-hm-popu-jb-hed {
     text-align: center;
@@ -808,10 +815,11 @@ ul.ss-ban-top-map-txt2 {
     height: 2px;
     right: 125px;
     top: 8px;
-    background: #006BC9;
+    background: #006bc9;
 }
 
-.ss-hm-popu-jb-hed h6:before {}
+.ss-hm-popu-jb-hed h6:before {
+}
 
 .ss-hm-popu-jb-hed h6:before {
     content: "";
@@ -820,7 +828,7 @@ ul.ss-ban-top-map-txt2 {
     height: 2px;
     left: 125px;
     top: 8px;
-    background: #006BC9;
+    background: #006bc9;
 }
 
 .ss-hm-popu-jb-hed h2 {
@@ -828,8 +836,8 @@ ul.ss-ban-top-map-txt2 {
 }
 
 .ss-job-prfle-sec {
-    box-shadow: 10px 10px 0px 0px #403B4BE5;
-    border: 2px solid #3D2C39;
+    box-shadow: 10px 10px 0px 0px #403b4be5;
+    border: 2px solid #3d2c39;
     padding: 15px;
     border-bottom: 5px;
     margin-top: 30px;
@@ -855,14 +863,14 @@ ul.ss-ban-top-map-txt2 {
     gap: 9px;
 }
 
-.ss-job-prfle-sec ul li{
-    background: #FFEEEF;
+.ss-job-prfle-sec ul li {
+    background: #ffeeef;
     padding: 3px 11px;
     border-radius: 100px;
 }
 
 .ss-job-prfle-sec a {
-    background: #FFEEEF;
+    background: #ffeeef;
     padding: 3px 11px;
     border-radius: 100px;
     font-size: 13px;
@@ -891,12 +899,12 @@ ul.ss-ban-top-map-txt2 {
 
 .ss-job-prfle-sec p {
     font-size: 15px;
-    color: #B5649E;
+    color: #b5649e;
     padding-bottom: 8px;
 }
 
 .ss-job-prfle-sec p span {
-    color: #006BC9;
+    color: #006bc9;
     font-size: 12px;
 }
 .ss-job-prfle-sec .icon_cards {
@@ -909,7 +917,7 @@ ul.ss-ban-top-map-txt2 {
 }
 
 .ss-hm-job-prfile-red-sec a {
-    background: #3D2C39;
+    background: #3d2c39;
     color: #fff;
     padding: 12px 42px;
     display: inline-block;
@@ -921,27 +929,24 @@ ul.ss-ban-top-map-txt2 {
     margin-top: 40px;
 }
 
-.ss-mobile-show{
+.ss-mobile-show {
     display: none;
 }
 
-.ss-hm-about-sec .ss-hm-hed-sec h4{
-        color: #1B1B1B;
+.ss-hm-about-sec .ss-hm-hed-sec h4 {
+    color: #1b1b1b;
 }
 
 /*home css end*/
 
-
-
-
 /********* Explore Jobs*********/
 
 .ss-ex-pg-srch-ban-sec {
-    background: #FFF8FD;
+    background: #fff8fd;
     padding: 40px 0;
 }
 
-.ss-expl-srch-bxhed .input-group{
+.ss-expl-srch-bxhed .input-group {
     position: relative;
     flex-wrap: wrap;
     align-items: stretch;
@@ -949,15 +954,14 @@ ul.ss-ban-top-map-txt2 {
     display: block;
 }
 
-.ss-expl-srch-bxhed input{
-    border: 1px solid #3D2C39;
+.ss-expl-srch-bxhed input {
+    border: 1px solid #3d2c39;
     width: 100%;
     padding: 13px;
-    box-shadow: 10px 10px 0px 0px #3D2C39;
+    box-shadow: 10px 10px 0px 0px #3d2c39;
 }
 
-
-.ss-expl-srch-bxhed button{
+.ss-expl-srch-bxhed button {
     position: absolute !important;
     top: 0;
     right: 0px;
@@ -969,12 +973,12 @@ ul.ss-ban-top-map-txt2 {
 }
 
 #776974.ss-expl-srch-bxhed h6 {
-    color: #B5649E;
+    color: #b5649e;
     font-size: 16px;
 }
 
 .ss-expl-srch-bxhed h2 {
-    font-family: 'Neue Kabel';
+    font-family: "Neue Kabel";
 }
 
 .ss-expl-srch-bxhed p {
@@ -986,7 +990,7 @@ ul.ss-ban-top-map-txt2 {
 }
 
 .ss-expl-srch-bxhed h6 {
-    color: #B5649E;
+    color: #b5649e;
     padding-bottom: 6px;
     font-size: 18px;
 }
@@ -1008,26 +1012,25 @@ ul.ss-ban-top-map-txt2 {
     line-height: 23px;
     color: #151313;
 }
-.ss-expl-pg-bn-ul-sc{
+.ss-expl-pg-bn-ul-sc {
     display: flex;
     gap: 70px;
     align-items: center;
 }
 
-.ss-ex-pg-srch-ban-sec .row{
+.ss-ex-pg-srch-ban-sec .row {
     align-items: end;
 }
 
-
 .ss-expl-filtr-lft-dv-bx {
-    border: 1px solid #3D2C391A;
+    border: 1px solid #3d2c391a;
     border-radius: 5px;
     padding: 15px;
 }
 
 .ss-expl-filtr-lft-dv-bx h5 {
     font-size: 32px;
-    color: #1A2530;
+    color: #1a2530;
     padding-bottom: 0;
 }
 
@@ -1035,9 +1038,9 @@ ul.ss-ban-top-map-txt2 {
     width: 100%;
     border-radius: 10px;
     padding: 12px 5px;
-    box-shadow: 10px 10px 0px 0px #403B4BE5;
+    box-shadow: 10px 10px 0px 0px #403b4be5;
     margin-top: 5px;
-    border: 2px solid #3D2C39;
+    border: 2px solid #3d2c39;
 }
 
 .ss-expl-filtr-lft-dv-bx label {
@@ -1047,16 +1050,15 @@ ul.ss-ban-top-map-txt2 {
     padding-bottom: 4px;
 }
 
-
 ul.ks-cboxtags {
     list-style: none;
     padding: 8px 0 0;
     margin-bottom: 0;
 }
-ul.ks-cboxtags li{
-  display: inline;
+ul.ks-cboxtags li {
+    display: inline;
 }
-ul.ks-cboxtags li label{
+ul.ks-cboxtags li label {
     display: inline-block;
     background-color: #fff;
     border: 1px solid #e5e5e5;
@@ -1070,7 +1072,7 @@ ul.ks-cboxtags li label{
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 ul.ks-cboxtags li label {
@@ -1102,135 +1104,135 @@ ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
 }
 */
 ul.ks-cboxtags li input[type="checkbox"]:checked + label {
-    border: 1px solid #3D2C39;
-    background-color: #3D2C39;
+    border: 1px solid #3d2c39;
+    background-color: #3d2c39;
     color: #fff;
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 ul.ks-cboxtags li input[type="checkbox"] {
-  display: absolute;
+    display: absolute;
 }
 ul.ks-cboxtags li input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
+    position: absolute;
+    opacity: 0;
 }
 ul.ks-cboxtags li input[type="checkbox"]:focus + label {
-  border: 2px solid #e9a1ff;
+    border: 2px solid #e9a1ff;
 }
 
 /* From here you can start to copy */
 
 .calendar {
-  padding:8px;
-  background: #ffffff;
-  border-radius: 4px;
-  font-size:18px;
-  border: 1px solid #333333;
-  box-shadow: 0px 20px 40px rgba(59,60,56,0.05);
+    padding: 8px;
+    background: #ffffff;
+    border-radius: 4px;
+    font-size: 18px;
+    border: 1px solid #333333;
+    box-shadow: 0px 20px 40px rgba(59, 60, 56, 0.05);
 }
 .ui-datepicker {
-  background: #ffffff;
-  border-radius: 15px;
+    background: #ffffff;
+    border-radius: 15px;
 }
 .ui-datepicker-header {
-  height: 50px;
-  line-height: 50px;
-  color: #ffffff;
-  background: #31639c;
-  margin-bottom: 10px;
+    height: 50px;
+    line-height: 50px;
+    color: #ffffff;
+    background: #31639c;
+    margin-bottom: 10px;
 }
 .ui-datepicker-prev,
 .ui-datepicker-next {
-  width: 20px;
-  height: 20px;
-  text-indent: 9999px;
-  border-radius: 100%;
-  cursor: pointer;
-  overflow: hidden;
-  margin-top: 12px;
+    width: 20px;
+    height: 20px;
+    text-indent: 9999px;
+    border-radius: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    margin-top: 12px;
 }
 .ui-datepicker-prev {
-  float: left;
-  margin-left: 12px;
+    float: left;
+    margin-left: 12px;
 }
 .ui-datepicker-prev:after {
-  transform: rotate(45deg);
-  margin: -43px 0px 0px 8px;
+    transform: rotate(45deg);
+    margin: -43px 0px 0px 8px;
 }
 .ui-datepicker-next {
-  float: right;
-  margin-right: 12px;
+    float: right;
+    margin-right: 12px;
 }
 .ui-datepicker-next:after {
-  transform: rotate(-135deg);
-  margin: -43px 0px 0px 6px;
+    transform: rotate(-135deg);
+    margin: -43px 0px 0px 6px;
 }
 .ui-datepicker-prev:after,
 .ui-datepicker-next:after {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-left: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
+    content: "";
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
 }
 .ui-datepicker-prev:hover,
 .ui-datepicker-next:hover,
 .ui-datepicker-prev:hover:after,
 .ui-datepicker-next:hover:after {
-  border-color: #333333;
+    border-color: #333333;
 }
 .ui-datepicker-title {
-  text-align: center;
-  font-size:25px;
+    text-align: center;
+    font-size: 25px;
 }
 .ui-datepicker-calendar {
-  width: 100%;
-  text-align: center;
+    width: 100%;
+    text-align: center;
 }
 .ui-datepicker-calendar thead tr th span {
-  display: block;
-  width: 40px;
-  color: #31639c;
-  margin-bottom: 5px;
-  font-size: 18px;
+    display: block;
+    width: 40px;
+    color: #31639c;
+    margin-bottom: 5px;
+    font-size: 18px;
 }
 .ui-state-default {
-  display: block;
-  text-decoration: none;
-  color: #333333;
-  line-height: 40px;
-  font-size: 16px;
+    display: block;
+    text-decoration: none;
+    color: #333333;
+    line-height: 40px;
+    font-size: 16px;
 }
 .ui-state-default:hover {
-  color: #ffffff;
-  background:#31639c;
-  border-radius:50px;
-  transition: all 0.25s cubic-bezier(0.7, -0.12, 0.2, 1.12);
+    color: #ffffff;
+    background: #31639c;
+    border-radius: 50px;
+    transition: all 0.25s cubic-bezier(0.7, -0.12, 0.2, 1.12);
 }
 .ui-state-highlight {
-  color: #ffffff;
-  background-color:#31639c;
-  border-radius:50px;
+    color: #ffffff;
+    background-color: #31639c;
+    border-radius: 50px;
 }
 
 .ui-state-active {
-  color: #ffffff;
-  background-color:#31639c;
-  border-radius:50px;
+    color: #ffffff;
+    background-color: #31639c;
+    border-radius: 50px;
 }
 .ui-datepicker-unselectable .ui-state-default {
-  color: #eee;
-  border: 2px solid transparent;
+    color: #eee;
+    border: 2px solid transparent;
 }
 
 .icon {
     margin-left: -30px;
     margin-top: 13px;
     color: #554752;
-    font-size:16px;
+    font-size: 16px;
     position: relative;
     top: -3px;
 }
@@ -1242,29 +1244,21 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     overflow: hidden;
 }
 
-.ss-explr-datepkr input{
+.ss-explr-datepkr input {
     margin-bottom: 10px;
     width: 95%;
-    border: 2px solid #3D2C39;
-    box-shadow: 5px 5px 0px 0px #403B4BE5;
+    border: 2px solid #3d2c39;
+    box-shadow: 5px 5px 0px 0px #403b4be5;
     border-radius: 12px;
 }
 
-
-
-
 /********* Explore Jobs*********/
 
+/*********for-organizations*******/
 
-
-
-
-
-/*********for-employers*******/
-
-.ss-for-emply-pg-ban-sec h2{
+.ss-for-emply-pg-ban-sec h2 {
     font-weight: 500;
-    font-family: 'Neue Kabel';
+    font-family: "Neue Kabel";
     font-size: 50px;
 }
 .ss-benefit-hed-sed {
@@ -1284,7 +1278,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     height: 2px;
     right: 155px;
     top: 8px;
-    background: #006BC9;
+    background: #006bc9;
 }
 
 .ss-benefit-hed-sed h6:before {
@@ -1294,7 +1288,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     height: 2px;
     left: 155px;
     top: 8px;
-    background: #006BC9;
+    background: #006bc9;
 }
 
 .ss-benefit-hed-sed h2 {
@@ -1311,14 +1305,11 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     padding: 20px 0px;
 }
 
-.ss-for-recrutr-pg-ban-sec h2{
-     font-weight: 500;
-    font-family: 'Neue Kabel';
+.ss-for-recrutr-pg-ban-sec h2 {
+    font-weight: 500;
+    font-family: "Neue Kabel";
     font-size: 48px;
 }
-
-
-
 
 /*********OTP*******/
 
@@ -1328,7 +1319,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 .ss-verification-mn-div p {
     font-size: 17px;
-    color: #3D2C39;
+    color: #3d2c39;
 }
 
 .ss-verification-mn-div h4 {
@@ -1338,7 +1329,6 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 ul.ss-otp-v-ul {
-
     list-style: none;
     width: 100%;
 }
@@ -1351,7 +1341,7 @@ ul.ss-otp-v-ul li {
 
 ul.ss-otp-v-ul input {
     border: 2px solid #111011;
-    box-shadow: 8px 8px 0px 0px #403B4BE5;
+    box-shadow: 8px 8px 0px 0px #403b4be5;
     padding: 12px 15px;
     border-radius: 10px;
     width: 100%;
@@ -1399,9 +1389,9 @@ ul.ss-otp-re-send li:nth-child(1) {
 
 /*********about Us *****/
 
-.ss-about-count-sec{
-background: #FFF8FD;
-padding: 50px 0;
+.ss-about-count-sec {
+    background: #fff8fd;
+    padding: 50px 0;
 }
 
 .ss-count-div {
@@ -1414,7 +1404,10 @@ padding: 50px 0;
     padding-bottom: 38px;
 }
 
-.ss-about-count-sec p {font-size: 18px;font-weight: 500;}
+.ss-about-count-sec p {
+    font-size: 18px;
+    font-weight: 500;
+}
 
 .ss-abut-stry-hed h6 {
     font-size: 24px;
@@ -1433,14 +1426,13 @@ section.ss-about-story-sec .row {
     align-items: center;
 }
 
-
 .ss-abt-miss-txt {
     margin-top: 40px;
 }
 
 .ss-team-div-sec {
     border: 2px solid #111011;
-    box-shadow: 8px 8px 0px 0px #403B4BE5;
+    box-shadow: 8px 8px 0px 0px #403b4be5;
     margin-bottom: 20px;
     padding: 40px 15px;
     text-align: center;
@@ -1451,19 +1443,17 @@ section.ss-about-story-sec .row {
 .ss-team-div-sec h5 {
     font-size: 20px;
     padding: 15px 0 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
-
 
 .ss-our-tem-sec h2 {
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
-.ss-our-tem-sec{
+.ss-our-tem-sec {
     background: #fff8fd;
     padding: 40px 0;
 }
-
 
 /******job details******/
 .ss-job-dtl-div.ss-job-prfle-sec h5 {
@@ -1503,7 +1493,7 @@ section.ss-about-story-sec .row {
 
 .ss-abt-jb-div h5 {
     font-size: 16px;
-    color: #B5649E;
+    color: #b5649e;
 }
 
 .ss-jb-dtl-disc-sec h6 {
@@ -1536,12 +1526,12 @@ section.ss-jb-dts-sec {
     align-items: center;
 }
 
-.ss-jb-dtl-popu-hed  li {
+.ss-jb-dtl-popu-hed li {
     width: 50%;
     list-style: none;
 }
 
-.ss-jb-dtl-popu-hed      li:nth-child(2) {
+.ss-jb-dtl-popu-hed li:nth-child(2) {
     text-align: right;
 }
 
@@ -1555,47 +1545,54 @@ section.ss-jb-dts-sec {
 section.ss-jb-detlspopular {
     padding: 40px 0px;
 }
-#slider{
+#slider {
     margin-bottom: 30px;
- }
+}
 
- #slider2{
+#slider2 {
     margin-bottom: 30px;
- }
+}
 .value {
-  position: absolute;
-  top: 15px;
-  left: 50%;
-  margin: 0 0 0 -20px;
-  width: 40px;
-  text-align: center;
-  display: block;
-  font-weight: normal;
-  font-family: Verdana,Arial,sans-serif;
-  font-size: 14px;
-  color: #333;
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    margin: 0 0 0 -20px;
+    width: 40px;
+    text-align: center;
+    display: block;
+    font-weight: normal;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
 }
 
 .price-range-both.value {
-  width: 100px;
-  margin: 0 0 0 -50px;
-  top: 26px;
+    width: 100px;
+    margin: 0 0 0 -50px;
+    top: 26px;
 }
 
 .price-range-both {
-  display: none;
+    display: none;
 }
 
 .value i {
-  font-style: normal;
+    font-style: normal;
 }
 .ui-slider-range.ui-widget-header {
     background: #3d2c39;
 }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
     background: #2ecaf9 !important;
 }
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
     background: #fff !important;
     border-radius: 50%;
     font-size: 14px;
@@ -1609,10 +1606,8 @@ span.ui-slider-handle.ui-corner-all.ui-state-default:focus {
     background: #f4f6f7;
     color: #000000;
     height: 7px;
-    border:0;
+    border: 0;
 }
-
-
 
 button.ss-fliter-btn {
     border: 0;
@@ -1628,25 +1623,24 @@ button.ss-fliter-btn {
     margin-top: 25px;
 }
 
-.value2{
+.value2 {
     position: absolute;
-  top: 15px;
-  left: 50%;
-  margin: 0 0 0 -20px;
-  width: 40px;
-  text-align: center;
-  display: block;
-  font-weight: normal;
-  font-family: Verdana,Arial,sans-serif;
-  font-size: 14px;
-  color: #333;
+    top: 15px;
+    left: 50%;
+    margin: 0 0 0 -20px;
+    width: 40px;
+    text-align: center;
+    display: block;
+    font-weight: normal;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
 }
 
-
-.ss-last-hour-sec-open{
+.ss-last-hour-sec-open {
     display: none;
 }
-.ss-this-week-open-dv{
+.ss-this-week-open-dv {
     display: none;
 }
 
@@ -1745,7 +1739,7 @@ section.ss-login-work-sec {
     margin: 45px 0;
 }
 
-.ss-login-work-sec:after{
+.ss-login-work-sec:after {
     content: "";
     width: 50%;
     background: #fdf5f5;
@@ -1754,7 +1748,7 @@ section.ss-login-work-sec {
     top: 0;
     bottom: 0;
     z-index: 0;
-    margin:auto 0;
+    margin: auto 0;
 }
 
 .ss-login-work-dv {
@@ -1764,8 +1758,8 @@ section.ss-login-work-sec {
 }
 
 .ss-login-work-dv input {
-   border: 2px solid #111011;
-    box-shadow: 8px 8px 0px 0px #403B4BE5;
+    border: 2px solid #111011;
+    box-shadow: 8px 8px 0px 0px #403b4be5;
     padding: 12px 15px;
     border-radius: 10px;
     width: 60%;
@@ -1793,14 +1787,14 @@ section.ss-login-work-sec .row {
     color: #b5649e;
 }
 
-.ss-login-work-dv p{
-margin-top: 20px;
-font-size: 17px;
-color: #000;
+.ss-login-work-dv p {
+    margin-top: 20px;
+    font-size: 17px;
+    color: #000;
 }
 
-.ss-login-work-dv a{
-color: #b5649e;
+.ss-login-work-dv a {
+    color: #b5649e;
 }
 
 .ss-skipfor-div {
@@ -1816,8 +1810,8 @@ color: #b5649e;
     font-weight: 500;
 }
 
-.ss-login-work-logo-div p{
-   font-size: 25px;
+.ss-login-work-logo-div p {
+    font-size: 25px;
     color: #000;
     width: 80%;
     line-height: 30px;
@@ -1826,7 +1820,7 @@ color: #b5649e;
     margin-bottom: 20px;
 }
 
-.ss-admin-login-sed .ss-login-logo-dv{
+.ss-admin-login-sed .ss-login-logo-dv {
     margin-top: 0;
 }
 .ss-log-forgt-pass {
@@ -1844,16 +1838,15 @@ color: #b5649e;
     margin-bottom: 14px;
 }
 
-.ss-admin-login-sed .ss-login-work-dv button{
+.ss-admin-login-sed .ss-login-work-dv button {
     margin-top: 18px;
 }
 
-.ss-signup-worker-sec .ss-form-group{
+.ss-signup-worker-sec .ss-form-group {
     margin-bottom: 20px;
 }
 
-
-.ss-signup-worker-sec .ss-skipfor-div{
+.ss-signup-worker-sec .ss-skipfor-div {
     top: 0;
     margin-top: 20px;
 }
@@ -1861,294 +1854,288 @@ color: #b5649e;
 /***********media Screen Start*******************/
 /***********media Screen Start*******************/
 
-@media only screen and (min-width: 320px) and (max-width: 767px){
-.ss-mobile-show{
-    display: block;
-}
-.ss-hm-popu-jb-hed h2 {
-    padding: 0 0px;
-}
-h2 {
-    font-size: 30px;
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .ss-mobile-show {
+        display: block;
+    }
+    .ss-hm-popu-jb-hed h2 {
+        padding: 0 0px;
+    }
+    h2 {
+        font-size: 30px;
     }
     .ss-hm-baner-img-dv {
-    display: none;
-}
-.ss-hm-header-sec .navbar .container-fluid{
-    padding: 0;
-}
-.navbar-light .navbar-toggler{
-    border:0;
-}
-section.ss-hm-banner-sec {
-    padding-left: 0;
-}
-.ss-hm-banner-txt-bx h2 {
-    font-size: 40px;
-    line-height: 44px;
-    width: 85%;
+        display: none;
+    }
+    .ss-hm-header-sec .navbar .container-fluid {
+        padding: 0;
+    }
+    .navbar-light .navbar-toggler {
+        border: 0;
+    }
+    section.ss-hm-banner-sec {
+        padding-left: 0;
+    }
+    .ss-hm-banner-txt-bx h2 {
+        font-size: 40px;
+        line-height: 44px;
+        width: 85%;
         margin-bottom: 9px;
-}
-.ss-hm-banner-txt-bx h2:after {
-    content: "";
-    width: 165px;
-    height: 13px;
-    background: #CBEFE6;
-    position: absolute;
-    bottom: 20px;
-    right: 12px;
-    z-index: -1;
-}
-
-.ss-hm-banner-txt-bx ul {
-    list-style: none;
-    display: block;
-    margin-top: 25px;
+    }
+    .ss-hm-banner-txt-bx h2:after {
+        content: "";
+        width: 165px;
+        height: 13px;
+        background: #cbefe6;
+        position: absolute;
+        bottom: 20px;
+        right: 12px;
+        z-index: -1;
     }
 
-.ss-hm-banner-txt-bx a {
-    margin-bottom: 15px;
-}
-.ss-ban-mob-txt h2 {
-    position: relative;
-    padding-bottom: 20px;
-}
+    .ss-hm-banner-txt-bx ul {
+        list-style: none;
+        display: block;
+        margin-top: 25px;
+    }
 
-.ss-ban-mob-txt h2:after {}
+    .ss-hm-banner-txt-bx a {
+        margin-bottom: 15px;
+    }
+    .ss-ban-mob-txt h2 {
+        position: relative;
+        padding-bottom: 20px;
+    }
 
-.ss-ban-mob-txt h2:after {
-    content: "";
-    width: 193px;
-    height: 13px;
-    background: #CBEFE6;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
+    .ss-ban-mob-txt h2:after {
+    }
 
-.ss-ban-mob-txt p {
-    font-size: 24px;
-    color: #4D4D4D;
-    line-height: 36px;
-    margin-top: 20px;
-}
-.ss-ban-mob-txt{
-    margin-top: 30px;
-}
-.ss-app-img-dv{
-    display: none;
-}
-.ss-hm-about-sec .ss-hm-hed-sec h4{
-    margin-top: 20px;
-}
-section.ss-hm-about-sec p {
-    margin-top: 18px;
-    font-size: 17px;
-    text-align: justify;
-}
+    .ss-ban-mob-txt h2:after {
+        content: "";
+        width: 193px;
+        height: 13px;
+        background: #cbefe6;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+    }
 
-.ss-hm-hed-sec h4{
-    padding-left: 125px;
-    font-size: 15px;
-}
-.ss-hm-hed-sec h4:after{
-    width: 110px;
-}
-section.ss-what-we-ofr-sec h2{
-    padding-right: 30px;
-}
+    .ss-ban-mob-txt p {
+        font-size: 24px;
+        color: #4d4d4d;
+        line-height: 36px;
+        margin-top: 20px;
+    }
+    .ss-ban-mob-txt {
+        margin-top: 30px;
+    }
+    .ss-app-img-dv {
+        display: none;
+    }
+    .ss-hm-about-sec .ss-hm-hed-sec h4 {
+        margin-top: 20px;
+    }
+    section.ss-hm-about-sec p {
+        margin-top: 18px;
+        font-size: 17px;
+        text-align: justify;
+    }
 
-.ss-what-we-ofr-sec .ss-hm-hed-sec p{
+    .ss-hm-hed-sec h4 {
+        padding-left: 125px;
+        font-size: 15px;
+    }
+    .ss-hm-hed-sec h4:after {
+        width: 110px;
+    }
+    section.ss-what-we-ofr-sec h2 {
+        padding-right: 30px;
+    }
+
+    .ss-what-we-ofr-sec .ss-hm-hed-sec p {
         padding-right: 0;
-}
+    }
 
-.ss-hm-what-icn-bx p {
-    color: #000 !important;
-}
+    .ss-hm-what-icn-bx p {
+        color: #000 !important;
+    }
 
-.ss-hm-what-icn-bx {
-    margin-top: 90px;
-}
+    .ss-hm-what-icn-bx {
+        margin-top: 90px;
+    }
 
-section.ss-hmjoin-sec {
-    display: none;
-}
+    section.ss-hmjoin-sec {
+        display: none;
+    }
 
-.ss-desktop-show{
-    display: none;
-}
+    .ss-desktop-show {
+        display: none;
+    }
 
-.ss-hm-popu-jb-hed h6:after{
-    width: 100px;
-}
-.ss-hm-popu-jb-hed h6:before{
-    width: 100px;
-}
+    .ss-hm-popu-jb-hed h6:after {
+        width: 100px;
+    }
+    .ss-hm-popu-jb-hed h6:before {
+        width: 100px;
+    }
 
-.ss-downld-ap-dv {
-    display: block;
-}
-.ss-job-prfle-sec a{
-    font-size: 11px;
-}
-.ss-job-prfle-sec ul{
-    margin-top: 0;
-}
-.ss-mn-value-sec .ss-hm-hed-sec h2{
-    width: 100%;
-}
-section.ss-foot-btm-sign-sec h2{
+    .ss-downld-ap-dv {
+        display: block;
+    }
+    .ss-job-prfle-sec a {
+        font-size: 11px;
+    }
+    .ss-job-prfle-sec ul {
+        margin-top: 0;
+    }
+    .ss-mn-value-sec .ss-hm-hed-sec h2 {
+        width: 100%;
+    }
+    section.ss-foot-btm-sign-sec h2 {
         font-size: 28px;
-    width: 100%;
-}
+        width: 100%;
+    }
 
-.ss-foot-link-sec {
-   margin-top: 40px;
-    overflow: hidden;
-}
+    .ss-foot-link-sec {
+        margin-top: 40px;
+        overflow: hidden;
+    }
 
-.ss-foot-link-sec ul li {
-    width: 35%;
-    float: left;
-}
+    .ss-foot-link-sec ul li {
+        width: 35%;
+        float: left;
+    }
 
-.ss-foot-scl-sec {
-    margin-top: 30px;
-}
+    .ss-foot-scl-sec {
+        margin-top: 30px;
+    }
 
-.ss-privacy-link-mob ul li {
-    display: inline-block;
-    margin-right: 24px;
-    line-height: 40px;
-}
+    .ss-privacy-link-mob ul li {
+        display: inline-block;
+        margin-right: 24px;
+        line-height: 40px;
+    }
 
-.ss-privacy-link-mob ul li a {
-    color: #fff;
-    text-decoration: underline;
-}
+    .ss-privacy-link-mob ul li a {
+        color: #fff;
+        text-decoration: underline;
+    }
 
-.ss-hm-header-sec .nav-item {
-    line-height: 48px;
-    border-bottom: 1px solid #e5e5e5;
-}
-.ss-log-div-sec ul{
-    align-items: center;
-}
-.ss-hm-header-sec .nav-item a {
-    font-family: 'Neue Kabel';
-    font-size: 17px;
-    color: #323232 !important;
-    padding: 0 2px !important;
-}
+    .ss-hm-header-sec .nav-item {
+        line-height: 48px;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .ss-log-div-sec ul {
+        align-items: center;
+    }
+    .ss-hm-header-sec .nav-item a {
+        font-family: "Neue Kabel";
+        font-size: 17px;
+        color: #323232 !important;
+        padding: 0 2px !important;
+    }
 
-.ss-log-div-sec ul li:nth-child(2) a {
-    background: #3D2C39;
-    color: #FFEDEE;
-    padding: 6px 22px;
-    font-size: 16px;
-    border-radius: 100px;
-}
+    .ss-log-div-sec ul li:nth-child(2) a {
+        background: #3d2c39;
+        color: #ffedee;
+        padding: 6px 22px;
+        font-size: 16px;
+        border-radius: 100px;
+    }
 
+    /*********explore jobs***/
 
+    section.ss-ex-pg-srch-ban-sec {
+        display: none;
+    }
+    .ss-expl-filtr-lft-dv-bx {
+        border-radius: 0;
+    }
 
-/*********explore jobs***/
+    section.ss-explore-job-mn-sec {
+        padding: 15px 0;
+    }
 
+    section.ss-ex-pg-srch-ban-sec {
+        display: none;
+    }
 
-section.ss-ex-pg-srch-ban-sec {
-    display: none;
-}
-.ss-expl-filtr-lft-dv-bx{
-    border-radius: 0;
-}
+    .ss-jobtype-dv {
+        display: none;
+    }
 
+    .ss-explr-datepkr {
+        display: none;
+    }
 
-section.ss-explore-job-mn-sec {
-    padding: 15px 0;
-}
+    .ss-price-week-sec {
+        display: none;
+    }
 
+    .ss-expl-jobs-box-mn-sec {
+        display: none;
+    }
 
-section.ss-ex-pg-srch-ban-sec {
-    display: none;
-}
+    .ss-popularadd-job h2 {
+        text-align: center;
+    }
 
-.ss-jobtype-dv {
-    display: none;
-}
+    .ss-popularadd-job {
+        margin-top: 50px;
+    }
 
-.ss-explr-datepkr {
-    display: none;
-}
+    /*About Us-css*/
 
-.ss-price-week-sec {
-    display: none;
-}
+    .ss-abut-stry-img-dv img {
+        width: 85%;
+        margin: auto;
+        text-align: center;
+    }
 
-.ss-expl-jobs-box-mn-sec {
-    display: none;
-}
+    .ss-abut-stry-img-dv {
+        text-align: center;
+    }
 
-.ss-popularadd-job h2 {
-    text-align: center;
-}
+    .ss-abut-stry-hed {
+        margin-top: 30px;
+    }
 
-.ss-popularadd-job {
-    margin-top: 50px;
-}
+    section.ss-about-story-sec {
+        padding: 0px 0 40px;
+    }
 
-/*About Us-css*/
-
-.ss-abut-stry-img-dv img {
-    width: 85%;
-    margin: auto;
-    text-align: center;
-}
-
-.ss-abut-stry-img-dv {
-    text-align: center;
-}
-
-.ss-abut-stry-hed {
-    margin-top: 30px;
-}
-
-section.ss-about-story-sec {
-    padding: 0px 0 40px;
-}
-
-.ss-about-count-sec h4 {
-    font-size: 20px;}
+    .ss-about-count-sec h4 {
+        font-size: 20px;
+    }
 
     .ss-count-div {
-    text-align: center;
-    margin-bottom: 40px !important;
-}
-
-.ss-for-emply-pg-ban-sec h2{
-    font-size: 30px;
-}
-.ss-ban-mob-txt h2{
-    font-size: 30px;
-}
-.ss-flower-img-div {
-    text-align: center;
-}
-.ss-benefit-hed-sed h2{
-    width: 100%;
-}
-
-/********** Admin login*******/
- .ss-login-work-sec{
-    position: relative !important;
- }
-
-
-
-}
-    @media only screen and (min-width: 481px) and (max-width: 767px){ }
-@media only screen and (min-width: 767px) and (max-width: 1023px){
-    .ipad{
-        width:100%;
-    }
+        text-align: center;
+        margin-bottom: 40px !important;
     }
 
+    .ss-for-emply-pg-ban-sec h2 {
+        font-size: 30px;
+    }
+    .ss-ban-mob-txt h2 {
+        font-size: 30px;
+    }
+    .ss-flower-img-div {
+        text-align: center;
+    }
+    .ss-benefit-hed-sed h2 {
+        width: 100%;
+    }
+
+    /********** Admin login*******/
+    .ss-login-work-sec {
+        position: relative !important;
+    }
+}
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+}
+@media only screen and (min-width: 767px) and (max-width: 1023px) {
+    .ipad {
+        width: 100%;
+    }
+}

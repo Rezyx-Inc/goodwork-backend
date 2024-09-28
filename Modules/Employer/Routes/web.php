@@ -11,75 +11,76 @@
 |
 */
 
-Route::prefix('employer')->group(function() {
-    
+Route::prefix('organization')->group(function () {
 
 
 
-    Route::middleware(['employer_not_logged_in'])->group(function () {
-        Route::get('/login', ['uses' => 'EmployerAuthController@get_login', 'as' => 'employer.login']);
-        Route::post('employer-login', ['uses' => 'EmployerAuthController@post_login', 'as' => 'employer-login']);
-        Route::get('/verify', ['uses' => 'EmployerAuthController@verify', 'as' => 'employer.verify']);
-        Route::post('employer-otp', ['uses' => 'EmployerAuthController@submit_otp', 'as' => 'employer.otp']);
-        Route::get('/signup', ['uses' => 'EmployerAuthController@get_signup', 'as' => 'employer-signup']);
-        Route::post('signup', ['uses' => 'EmployerAuthController@post_signup', 'as' => 'employer.signup']);
+
+    Route::middleware(['organization_not_logged_in'])->group(function () {
+        Route::get('/login', ['uses' => 'OrganizationAuthController@get_login', 'as' => 'organization.login']);
+        Route::post('organization-login', ['uses' => 'OrganizationAuthController@post_login', 'as' => 'organization-login']);
+        Route::get('/verify', ['uses' => 'OrganizationAuthController@verify', 'as' => 'organization.verify']);
+        Route::post('organization-otp', ['uses' => 'OrganizationAuthController@submit_otp', 'as' => 'organization.otp']);
+        Route::get('/signup', ['uses' => 'OrganizationAuthController@get_signup', 'as' => 'organization-signup']);
+        Route::post('signup', ['uses' => 'OrganizationAuthController@post_signup', 'as' => 'organization.signup']);
     });
 
-    Route::middleware(['employer_logged_in'])->group(function () {
-        Route::get('/', 'EmployerController@index');
-        Route::get('employer-logout', ['uses' => 'EmployerAuthController@logout', 'as' => 'employer-logout']);
-        Route::get('employer-dashboard', ['uses' => 'EmployerController@index', 'as' => 'employer-dashboard']);
-        Route::get('add-job', ['uses' => 'EmployerController@addJob', 'as' => 'employer-add-job']);
-        Route::post('add-job', ['uses' => 'EmployerController@addJobStore', 'as' => 'employer-addJob.store']);
-        Route::get('home', ['uses' => 'EmployerController@home', 'as' => 'home']);
-        Route::get('explore-employees', ['uses' => 'EmployerController@explore_employees', 'as' => 'explore-employees']);
-        Route::get('employer-opportunities-manager', ['uses' => 'EmployerController@opportunities_manager', 'as' => 'employer-opportunities-manager']);
-        Route::get('employer-create-job-request', ['uses' => 'EmployerController@create_job_request', 'as' => 'employer-create-job-request']);
-        Route::get('employer-messages/{idWorker}', ['uses' => 'EmployerController@get_messages', 'as' => 'employer-messages']);
-        //Route::get('messages', ['uses' => 'EmployerController@get_messages', 'as' => 'employer-messages']);
-        Route::get('/getMessages', ['uses'=>'EmployerController@get_private_messages', 'as'=>'EmployergetPrivateMessages']);
-        Route::get('profile', ['uses' => 'EmployerController@get_profile', 'as' => 'employer-profile']);
+    Route::middleware(['organization_logged_in'])->group(
+        function () {
+            Route::get('/', 'OrganizationController@index');
+            Route::get('organization-logout', ['uses' => 'OrganizationAuthController@logout', 'as' => 'organization-logout']);
+            Route::get('organization-dashboard', ['uses' => 'OrganizationController@index', 'as' => 'organization-dashboard']);
+            Route::get('add-job', ['uses' => 'OrganizationController@addJob', 'as' => 'organization-add-job']);
+            Route::post('add-job', ['uses' => 'OrganizationController@addJobStore', 'as' => 'organization-addJob.store']);
+            Route::get('home', ['uses' => 'OrganizationController@home', 'as' => 'home']);
+            Route::get('explore-employees', ['uses' => 'OrganizationController@explore_employees', 'as' => 'explore-employees']);
+            Route::get('organization-opportunities-manager', ['uses' => 'OrganizationController@opportunities_manager', 'as' => 'organization-opportunities-manager']);
+            Route::get('organization-create-job-request', ['uses' => 'OrganizationController@create_job_request', 'as' => 'organization-create-job-request']);
+            Route::get('organization-messages/{idWorker}', ['uses' => 'OrganizationController@get_messages', 'as' => 'organization-messages']);
+            //Route::get('messages', ['uses' => 'OrganizationController@get_messages', 'as' => 'organization-messages']);
+            Route::get('/getMessages', ['uses' => 'OrganizationController@get_private_messages', 'as' => 'OrganizationgetPrivateMessages']);
+            Route::get('profile', ['uses' => 'OrganizationController@get_profile', 'as' => 'organization-profile']);
 
-        // added apis from recruiter module
+            // added apis from recruiter module
 
-        // Route::get('employer-messages', ['uses' => 'EmployerDashboardController@communication', 'as' => 'employer-messages']);
-        // Route::get('employer-profile', ['uses' => 'EmployerDashboardController@profile', 'as' => 'employer-profile']);
-        Route::post('help-and-support', ['uses' => 'EmployerDashboardController@helpAndSupport', 'as' => 'employer-help-and-support']);
-        Route::post('employer-update-profile', ['uses' => 'EmployerDashboardController@updateProfile', 'as' => 'employer-update-profile']);
-        Route::post('employer-remove-qualities', ['uses' => 'EmployerDashboardController@employerRemoveQualities', 'as' => 'employer-remove-qualities']);
+            // Route::get('organization-messages', ['uses' => 'OrganizationDashboardController@communication', 'as' => 'organization-messages']);
+            // Route::get('organization-profile', ['uses' => 'OrganizationDashboardController@profile', 'as' => 'organization-profile']);
+            Route::post('help-and-support', ['uses' => 'OrganizationDashboardController@helpAndSupport', 'as' => 'organization-help-and-support']);
+            Route::post('organization-update-profile', ['uses' => 'OrganizationDashboardController@updateProfile', 'as' => 'organization-update-profile']);
+            Route::post('organization-remove-qualities', ['uses' => 'OrganizationDashboardController@organizationRemoveQualities', 'as' => 'organization-remove-qualities']);
 
-        Route::get('employer-application',  ['uses' => 'ApplicationController@application', 'as' => 'employer-application']);
-        Route::post('get-application-listing', ['uses' => 'ApplicationController@getApplicationListing', 'as' => 'employer-get-application-listing']);
-        // Route::get('employer-single-job/{id}', ['uses' => 'EmployerDashboardController@getSinglejob', 'as' => 'employer-single-job']);
-        Route::post('update-application-status', ['uses' => 'ApplicationController@updateApplicationStatus', 'as' => 'employer-update-application-status']);
-        Route::post('employer-send-job-offer', ['uses' => 'ApplicationController@sendJobOffer', 'as' => 'employer-send-job-offer']);
+            Route::get('organization-application', ['uses' => 'ApplicationController@application', 'as' => 'organization-application']);
+            Route::post('get-application-listing', ['uses' => 'ApplicationController@getApplicationListing', 'as' => 'organization-get-application-listing']);
+            // Route::get('organization-single-job/{id}', ['uses' => 'OrganizationDashboardController@getSinglejob', 'as' => 'organization-single-job']);
+            Route::post('update-application-status', ['uses' => 'ApplicationController@updateApplicationStatus', 'as' => 'organization-update-application-status']);
+            Route::post('organization-send-job-offer', ['uses' => 'ApplicationController@sendJobOffer', 'as' => 'organization-send-job-offer']);
 
-        //Route::get('opportunities-manager', ['uses' => 'OpportunitiesController@index', 'as' => 'employer-opportunities-manager']);
-        Route::get('employer-create-opportunity', ['uses' => 'OpportunitiesController@create', 'as' => 'employer-create-opportunity']);
-        Route::post('employer-create-opportunity/{check_type}', ['uses' => 'OpportunitiesController@store', 'as' => 'employer-create-opportunity-store']);
-        Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'employer-get-job-listing']);
+            //Route::get('opportunities-manager', ['uses' => 'OpportunitiesController@index', 'as' => 'organization-opportunities-manager']);
+            Route::get('organization-create-opportunity', ['uses' => 'OpportunitiesController@create', 'as' => 'organization-create-opportunity']);
+            Route::post('organization-create-opportunity/{check_type}', ['uses' => 'OpportunitiesController@store', 'as' => 'organization-create-opportunity-store']);
+            Route::post('get-job-listing', ['uses' => 'OpportunitiesController@getJobListing', 'as' => 'organization-get-job-listing']);
 
 
 
-        Route::post('remove/{id}', ['uses' => 'OpportunitiesController@employerRemoveInfo', 'as' => 'employer-remove-info']);
+            Route::post('remove/{id}', ['uses' => 'OpportunitiesController@organizationRemoveInfo', 'as' => 'organization-remove-info']);
 
-        Route::post('ask-employer-notification', ['uses' => 'EmployerDashboardController@askEmployerNotification', 'as' => 'ask-employer-notification']);
+            Route::post('ask-organization-notification', ['uses' => 'OrganizationDashboardController@askOrganizationNotification', 'as' => 'ask-organization-notification']);
 
-        Route::get('get-single-nurse-details/{id}', ['uses' => 'EmployerDashboardController@getSingleNurseDetails', 'as' => 'employer-get-single-nurse-details']);
+            Route::get('get-single-nurse-details/{id}', ['uses' => 'OrganizationDashboardController@getSingleNurseDetails', 'as' => 'organization-get-single-nurse-details']);
 
-        Route::post('send-job-offer-employer', ['uses' => 'ApplicationController@sendJobOfferEmployer', 'as' => 'send-job-offer-employer']);
+            Route::post('send-job-offer-organization', ['uses' => 'ApplicationController@sendJobOfferOrganization', 'as' => 'send-job-offer-organization']);
 
-        //api keys
-        Route::get('keys', ['uses' => 'EmployerController@keys', 'as' => 'employer-keys']);
+            //api keys
+            // Route::get('keys', ['uses' => 'OrganizationController@keys', 'as' => 'organization-keys']);
 
-        Route::post('/get-api-key',['uses'=>'EmployerController@getapikey','as'=>'getApiKey']);
-        Route::post('/delete_apikey',['uses'=>'EmployerController@deleteapikey','as'=>'deleteApiKey']);
+            // Route::post('/get-api-key',['uses'=>'OrganizationController@getapikey','as'=>'getApiKey']);
+            // Route::post('/delete_apikey',['uses'=>'OrganizationController@deleteapikey','as'=>'deleteApiKey']);
 
-        // test messaging
-        Route::post('/send-message', ['uses' => 'EmployerController@sendMessages', 'as' => 'EmployerSendMessage']);
-        Route::get('/get-messages', ['uses' => 'EmployerController@getMessages', 'as' => 'GetMessages']);
-        Route::get('/get-rooms', ['uses' => 'EmployerController@get_rooms', 'as' => 'GetRooms']);
-    }
+            // test messaging
+            Route::post('/send-message', ['uses' => 'OrganizationController@sendMessages', 'as' => 'OrganizationSendMessage']);
+            Route::get('/get-messages', ['uses' => 'OrganizationController@getMessages', 'as' => 'GetMessages']);
+            Route::get('/get-rooms', ['uses' => 'OrganizationController@get_rooms', 'as' => 'GetRooms']);
+        }
 
     );
 });

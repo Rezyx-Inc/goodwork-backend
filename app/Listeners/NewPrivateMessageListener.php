@@ -28,7 +28,7 @@ class NewPrivateMessageListener
     public function handle($event)
     {
 
-        $employerId = $event->EmployerId;
+        $organizationId = $event->OrganizationId;
         $recruiterId = $event->RecruiterId;
         $workerId = $event->WorkerId;
         $message = $event->message;
@@ -37,13 +37,13 @@ class NewPrivateMessageListener
         $type = $event->type;
         $fileName = $event->fileName;
 
-        
-        // Find existing chat between the employer and worker
-        $chat = Chat::where('employerId', $employerId)
-                     ->where('workerId', $workerId)
-                     ->where('recruiterId', $recruiterId)
-                     ->first();
-        
+
+        // Find existing chat between the organization and worker
+        $chat = Chat::where('organizationId', $organizationId)
+            ->where('workerId', $workerId)
+            ->where('recruiterId', $recruiterId)
+            ->first();
+
         if ($chat) {
             // If chat exists, add new message to the start of the messages array
             $newMessage = [
@@ -58,7 +58,7 @@ class NewPrivateMessageListener
         } else {
             // If chat doesn't exist, create a new one
             $chat = new Chat;
-            $chat->employerId = $employerId;
+            $chat->organizationId = $organizationId;
             $chat->workerId = $workerId;
             $chat->recruiterId = $recruiterId;
             $chat->messages = [
@@ -72,26 +72,26 @@ class NewPrivateMessageListener
                 ]
             ];
         }
-        
+
         $chat->lastMessage = now()->toDateTimeString();
         $chat->isActive = true;
         $chat->save();
 
-// store uncomming messages in the db
+        // store uncomming messages in the db
 
-// $employerId = $event->EmployerId;
+        // $organizationId = $event->OrganizationId;
 // $workerId = $event->WorkerId;
 // $message = $event->message;
 // $senderRole = $event->senderRole;
 // $messageTime = $event->messageTime;
 
-// $chat = Chat::firstOrCreate(
-//     ['employerId' => $employerId, 'workerId' => $workerId],
+        // $chat = Chat::firstOrCreate(
+//     ['organizationId' => $organizationId, 'workerId' => $workerId],
 //     ['lastMessage' => now()->toDateTimeString(), 'isActive' => true],
 //     ['messages' => []],
 // );
 
-// $newMessage = [
+        // $newMessage = [
 //     'id' => uniqid(),
 //     'sender' => $senderRole,
 //     'type' => 'text',
@@ -101,16 +101,16 @@ class NewPrivateMessageListener
 // ];
 
 
-// // Get the current messages, or initialize as an empty array if null
+        // // Get the current messages, or initialize as an empty array if null
 // $messages = $chat->messages ?? [];
 
-// // Prepend the new message
+        // // Prepend the new message
 // array_unshift($messages, $newMessage);
 
-// // Set the messages attribute to the new array
+        // // Set the messages attribute to the new array
 // $chat->messages = $messages;
 
-// $chat->lastMessage = now()->toDateTimeString();
+        // $chat->lastMessage = now()->toDateTimeString();
 // $chat->save();
 
         //broadcast(new NewPrivatePrivateMessage($message, $receiverId))->toOthers();

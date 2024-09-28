@@ -10,7 +10,7 @@ use Hash;
 use App\Enums\Role;
 use File;
 /** Models */
-use App\Models\{User, Worker, NurseReference, NurseAsset,Keyword, Facility, Availability, Countries, States, Cities, Nurse, Professions, Specialties,Speciality,Profession};
+use App\Models\{User, Worker, NurseReference, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, Nurse, Professions, Specialties, Speciality, Profession};
 
 class UserController extends Controller
 {
@@ -35,44 +35,44 @@ class UserController extends Controller
         // $data['states'] = $state = States::select('id','name')->where(['flag'=>'1', 'country_id'=>$model->country])->orderBy('name','ASC')->get();
         // $data['cities'] = Cities::select('id','name')->where(['flag'=>'1', 'state_id'=>$model->state])->orderBy('name','ASC')->get();
 
-        $data['countries'] = Countries::where('flag','1')
-        ->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")
-        ->orderBy('name','ASC')->get();
-        $data['usa'] = $usa =  Countries::where(['iso3'=>'USA'])->first();
+        $data['countries'] = Countries::where('flag', '1')
+            ->orderByRaw("CASE WHEN iso3 = 'USA' THEN 1 WHEN iso3 = 'CAN' THEN 2 ELSE 3 END")
+            ->orderBy('name', 'ASC')->get();
+        $data['usa'] = $usa = Countries::where(['iso3' => 'USA'])->first();
         $data['us_states'] = States::where('country_id', $usa->id)->get();
         $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
 
-        $data['types'] = Keyword::where(['filter'=>'SettingType','active'=>'1'])->get();
-        $data['terms'] = Keyword::where(['filter'=>'jobType','active'=>'1'])->get();
+        $data['types'] = Keyword::where(['filter' => 'SettingType', 'active' => '1'])->get();
+        $data['terms'] = Keyword::where(['filter' => 'jobType', 'active' => '1'])->get();
         $data['specialities'] = Speciality::select('full_name')->get();
         $data['professions'] = Profession::select('full_name')->get();
-        $data['vaccinations'] = Keyword::where(['filter'=>'Vaccinations','active'=>'1'])->get();
-        $data['prefered_shifts'] = Keyword::where(['filter'=>'PreferredShift','active'=>'1'])->get();
-        $data['license_types'] = Keyword::where(['filter'=>'LicenseType','active'=>'1'])->get();
-        $data['msps'] = Keyword::where(['filter'=>'MSP','active'=>'1'])->get();
-        $data['vmss'] = Keyword::where(['filter'=>'VMS','active'=>'1'])->get();
-        $data['assignment_durations'] = Keyword::where(['filter'=>'AssignmentDuration','active'=>'1'])->get();
-        $data['contract_policies'] = Keyword::where(['filter'=>'ContractTerminationPolicy','active'=>'1'])->get();
-        $data['emrs'] = Keyword::where(['filter'=>'EMR','active'=>'1'])->get();
-        $data['shift_tile_of_day'] = Keyword::where(['filter'=>'shift_time_of_day','active'=>'1'])->get();
+        $data['vaccinations'] = Keyword::where(['filter' => 'Vaccinations', 'active' => '1'])->get();
+        $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
+        $data['license_types'] = Keyword::where(['filter' => 'LicenseType', 'active' => '1'])->get();
+        $data['msps'] = Keyword::where(['filter' => 'MSP', 'active' => '1'])->get();
+        $data['vmss'] = Keyword::where(['filter' => 'VMS', 'active' => '1'])->get();
+        $data['assignment_durations'] = Keyword::where(['filter' => 'AssignmentDuration', 'active' => '1'])->get();
+        $data['contract_policies'] = Keyword::where(['filter' => 'ContractTerminationPolicy', 'active' => '1'])->get();
+        $data['emrs'] = Keyword::where(['filter' => 'EMR', 'active' => '1'])->get();
+        $data['shift_tile_of_day'] = Keyword::where(['filter' => 'shift_time_of_day', 'active' => '1'])->get();
 
-        $data['visions'] = Keyword::where(['filter'=>'Vision','active'=>'1'])->get();
-        $data['insurances'] = Keyword::where(['filter'=>'HealthInsurance','active'=>'1'])->get();
-        $data['four_zero_1k'] = Keyword::where(['filter'=>'401k','active'=>'1'])->get();
-        $data['dentals'] = Keyword::where(['filter'=>'Dental','active'=>'1'])->get();
+        $data['visions'] = Keyword::where(['filter' => 'Vision', 'active' => '1'])->get();
+        $data['insurances'] = Keyword::where(['filter' => 'HealthInsurance', 'active' => '1'])->get();
+        $data['four_zero_1k'] = Keyword::where(['filter' => '401k', 'active' => '1'])->get();
+        $data['dentals'] = Keyword::where(['filter' => 'Dental', 'active' => '1'])->get();
 
-        $data['references'] = NurseReference::where(['nurse_id'=>$id])->get();
-        $data['covidVac'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'covid'])->whereNull('deleted_at')->first();
-        $data['fluVac'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'flu'])->whereNull('deleted_at')->first();
+        $data['references'] = NurseReference::where(['nurse_id' => $id])->get();
+        $data['covidVac'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'covid'])->whereNull('deleted_at')->first();
+        $data['fluVac'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'flu'])->whereNull('deleted_at')->first();
         // dd($data['covidVac']);
-        $data['palsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'PALS'])->whereNull('deleted_at')->first();
-        $data['blsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'BLS'])->whereNull('deleted_at')->first();
-        $data['aclsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'ACLS'])->whereNull('deleted_at')->first();
-        $data['otherCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'Other'])->whereNull('deleted_at')->first();
-        $data['diplomaCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'diploma'])->whereNull('deleted_at')->first();
-        $data['driving_license'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'driving_license'])->whereNull('deleted_at')->first();
-        $data['skillsCer'] = NurseAsset::where(['nurse_id'=> $id,'filter'=> 'skill'])->whereNull('deleted_at')->get();
-        $data['facilities'] = Facility::whereNull('deleted_at')->where(['active'=>'1'])->orderBy('name','DESC')->get();
+        $data['palsCer'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'PALS'])->whereNull('deleted_at')->first();
+        $data['blsCer'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'BLS'])->whereNull('deleted_at')->first();
+        $data['aclsCer'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'ACLS'])->whereNull('deleted_at')->first();
+        $data['otherCer'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'Other'])->whereNull('deleted_at')->first();
+        $data['diplomaCer'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'diploma'])->whereNull('deleted_at')->first();
+        $data['driving_license'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'driving_license'])->whereNull('deleted_at')->first();
+        $data['skillsCer'] = NurseAsset::where(['nurse_id' => $id, 'filter' => 'skill'])->whereNull('deleted_at')->get();
+        $data['facilities'] = Facility::whereNull('deleted_at')->where(['active' => '1'])->orderBy('name', 'DESC')->get();
         $view = '';
         switch (request()->route()->getName()) {
             case 'my-profile':
@@ -115,7 +115,7 @@ class UserController extends Controller
                 break;
         }
 
-        return view('user.'.$view, $data);
+        return view('user.' . $view, $data);
     }
 
     public function update(Request $request)
@@ -123,9 +123,9 @@ class UserController extends Controller
         return $request->all();
         // dd($request->input());
         $user = auth()->guard('frontend')->user();
-        
+
         $id = $user->id;
-        $model = Nurse::where('user_id',$id)->first();
+        $model = Nurse::where('user_id', $id)->first();
         $inputFields = collect($request->all())->filter(function ($value) {
             return $value !== null;
         });
@@ -134,7 +134,7 @@ class UserController extends Controller
         // dd($inputFields);
         $model->fill($inputFields->all());
         $model->save();
-        return new JsonResponse(['success' => true, 'msg'=>'Updated successfully.'], 200);
+        return new JsonResponse(['success' => true, 'msg' => 'Updated successfully.'], 200);
 
     }
 
@@ -142,7 +142,7 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             if ($request->has('ids')) {
-                for($i=0; $i<count($request->ids); $i++){
+                for ($i = 0; $i < count($request->ids); $i++) {
                     $worker = Worker::findOrFail($request->ids[$i]);
                     $user = $worker->user;
                     $delete_date = Carbon::now();
@@ -155,7 +155,7 @@ class UserController extends Controller
                     $user->updated_at = $delete_date;
                     $user->save();
                 }
-                $response = array('success'=>true,'msg'=>'Deleted Successfully!');
+                $response = array('success' => true, 'msg' => 'Deleted Successfully!');
                 // dd($request->ids);
                 return $response;
             }
@@ -163,55 +163,56 @@ class UserController extends Controller
     }
 
     /* Invite Workers */
-    public function invite(Request $request){
+    public function invite(Request $request)
+    {
 
         if ($request->ajax()) {
             if ($request->has('ids')) {
-                for($i=0; $i<count($request->ids); $i++){
+                for ($i = 0; $i < count($request->ids); $i++) {
                     $worker = Worker::findOrFail($request->ids[$i]);
                     $resp = $this->sendInvite($worker->user);
                 }
-                $response = array('success'=>$resp['success'],'msg'=>$resp['msg']);
+                $response = array('success' => $resp['success'], 'msg' => $resp['msg']);
                 return $response;
             }
         }
     }
 
-    public function get_state(Request $request){
+    public function get_state(Request $request)
+    {
 
         if ($request->ajax()) {
             if ($request->has('country_id')) {
                 $states = $this->get_states($request->country_id);
                 $content = '';
                 if ($states->count()) {
-                    foreach($states as $s)
-                    {
-                        $content .= '<option value="'.$s->id.'">'.$s->name.'</option>';
+                    foreach ($states as $s) {
+                        $content .= '<option value="' . $s->id . '">' . $s->name . '</option>';
                     }
-                }else{
+                } else {
                     $content .= '<option>No state found.</option>';
                 }
-                $response = array('success'=>true ,'content'=>$content);
+                $response = array('success' => true, 'content' => $content);
                 return $response;
             }
         }
     }
 
-    public function get_city(Request $request){
+    public function get_city(Request $request)
+    {
 
         if ($request->ajax()) {
             if ($request->has('state_id')) {
                 $cities = $this->get_cities($request->state_id);
                 $content = '';
                 if ($cities->count()) {
-                    foreach($cities as $c)
-                    {
-                        $content .= '<option value="'.$c->id.'">'.$c->name.'</option>';
+                    foreach ($cities as $c) {
+                        $content .= '<option value="' . $c->id . '">' . $c->name . '</option>';
                     }
-                }else{
+                } else {
                     $content .= '<option>No city found.</option>';
                 }
-                $response = array('success'=>true ,'content'=>$content);
+                $response = array('success' => true, 'content' => $content);
                 return $response;
             }
         }
@@ -220,86 +221,84 @@ class UserController extends Controller
     public function post_references(Request $request)
     {
 
-            $user = auth()->guard('frontend')->user();
-            $id = $user->nurse->id;
-            if ($request->has('old_ids')) {
-                $to_be_deleted = NurseReference::where(['nurse_id'=>$id])->whereNotIn('id',$request->old_ids)->get();
-                foreach ($to_be_deleted as $key => $m) {
-                    if (!empty($m->image)) {
-                        if(file_exists(public_path('images/nurses/reference/' . $m->image)))
-                        {
-                            File::delete(public_path('images/nurses/reference/' . $m->image));
-                        }
+        $user = auth()->guard('frontend')->user();
+        $id = $user->nurse->id;
+        if ($request->has('old_ids')) {
+            $to_be_deleted = NurseReference::where(['nurse_id' => $id])->whereNotIn('id', $request->old_ids)->get();
+            foreach ($to_be_deleted as $key => $m) {
+                if (!empty($m->image)) {
+                    if (file_exists(public_path('images/nurses/reference/' . $m->image))) {
+                        File::delete(public_path('images/nurses/reference/' . $m->image));
                     }
-                    $m->delete();
-                    // NurseReference::find($m->id)->forceDelete();
                 }
-                // dd($request->input());
-                foreach ($request->old_ids as $k => $v) {
-                    $model = NurseReference::findOrFail($v);
-                    $input = [];
-                    $input['name'] = $request->old_name[$k];
-                    $input['email'] = $request->old_email[$k];
-                    $input['phone'] = $request->old_phone[$k];
-                    $input['date_referred'] = $request->old_date_referred[$k];
-                    $input['min_title_of_reference'] = $request->old_min_title_of_reference[$k];
-                    $input['recency_of_reference'] = $request->old_recency_of_reference[$k];
-                    if ($request->hasFile('old_image')) {
-                        $old_images = $request->file('old_image');
-                        if (array_key_exists($k,$old_images)) {
-                            if ($old_images[$k]->isValid()) {
-                                if (!empty($model->image)) {
-                                    if(file_exists(public_path('images/nurses/reference/' . $model->image)))
-                                    {
-                                        File::delete(public_path('images/nurses/reference/' . $model->image));
-                                    }
-                                }
-                                $reference_name = $old_images[$k]->getClientOriginalName();
-                                $reference_ext = $old_images[$k]->getClientOriginalExtension();
-                                $img_name = $reference_name.'_'.time().'.'.$reference_ext;
-
-                                $old_images[$k]->move(public_path('images/nurses/reference/'), $img_name);
-                                $input['image'] = $img_name;
-                            }
-                        }
-                    }
-                    $model->update($input);
-                }
+                $m->delete();
+                // NurseReference::find($m->id)->forceDelete();
             }
+            // dd($request->input());
+            foreach ($request->old_ids as $k => $v) {
+                $model = NurseReference::findOrFail($v);
+                $input = [];
+                $input['name'] = $request->old_name[$k];
+                $input['email'] = $request->old_email[$k];
+                $input['phone'] = $request->old_phone[$k];
+                $input['date_referred'] = $request->old_date_referred[$k];
+                $input['min_title_of_reference'] = $request->old_min_title_of_reference[$k];
+                $input['recency_of_reference'] = $request->old_recency_of_reference[$k];
+                if ($request->hasFile('old_image')) {
+                    $old_images = $request->file('old_image');
+                    if (array_key_exists($k, $old_images)) {
+                        if ($old_images[$k]->isValid()) {
+                            if (!empty($model->image)) {
+                                if (file_exists(public_path('images/nurses/reference/' . $model->image))) {
+                                    File::delete(public_path('images/nurses/reference/' . $model->image));
+                                }
+                            }
+                            $reference_name = $old_images[$k]->getClientOriginalName();
+                            $reference_ext = $old_images[$k]->getClientOriginalExtension();
+                            $img_name = $reference_name . '_' . time() . '.' . $reference_ext;
 
-            if ($request->has('name')) {
-                foreach ($request->name as $k => $value) {
-                    $input = [];
-                    $input['nurse_id'] = $id;
-                    $input['name'] = $value;
-                    $input['email'] = $request->email[$k];
-                    $input['phone'] = $request->phone[$k];
-                    $input['date_referred'] = $request->date_referred[$k];
-                    $input['min_title_of_reference'] = $request->min_title_of_reference[$k];
-                    $input['recency_of_reference'] = $request->recency_of_reference[$k];
-                    if ($request->hasFile('image')) {
-                        $images = $request->file('image');
-                        if ($images[$k]->isValid()) {
-                            $reference_name = $images[$k]->getClientOriginalName();
-                                $reference_ext = $images[$k]->getClientOriginalExtension();
-                                $img_name = $reference_name.'_'.time().'.'.$reference_ext;
-                            $images[$k]->move(public_path('images/nurses/reference/'), $img_name);
+                            $old_images[$k]->move(public_path('images/nurses/reference/'), $img_name);
                             $input['image'] = $img_name;
                         }
                     }
-                    NurseReference::create($input);
                 }
+                $model->update($input);
             }
-            // dd($request->worker_number_of_references);
-            // Nurse::findOrFail($id)->update(['worker_number_of_references'=>$request->worker_number_of_references]);
-            $response = array('success'=>true,'msg'=>'Updated Successfully!');
-            return $response;
-        
+        }
+
+        if ($request->has('name')) {
+            foreach ($request->name as $k => $value) {
+                $input = [];
+                $input['nurse_id'] = $id;
+                $input['name'] = $value;
+                $input['email'] = $request->email[$k];
+                $input['phone'] = $request->phone[$k];
+                $input['date_referred'] = $request->date_referred[$k];
+                $input['min_title_of_reference'] = $request->min_title_of_reference[$k];
+                $input['recency_of_reference'] = $request->recency_of_reference[$k];
+                if ($request->hasFile('image')) {
+                    $images = $request->file('image');
+                    if ($images[$k]->isValid()) {
+                        $reference_name = $images[$k]->getClientOriginalName();
+                        $reference_ext = $images[$k]->getClientOriginalExtension();
+                        $img_name = $reference_name . '_' . time() . '.' . $reference_ext;
+                        $images[$k]->move(public_path('images/nurses/reference/'), $img_name);
+                        $input['image'] = $img_name;
+                    }
+                }
+                NurseReference::create($input);
+            }
+        }
+        // dd($request->worker_number_of_references);
+        // Nurse::findOrFail($id)->update(['worker_number_of_references'=>$request->worker_number_of_references]);
+        $response = array('success' => true, 'msg' => 'Updated Successfully!');
+        return $response;
+
     }
 
-    
 
-   
+
+
     public function vaccination_submit(Request $request)
     {
         $user = auth()->guard('frontend')->user();
@@ -316,7 +315,7 @@ class UserController extends Controller
             // Delete old vaccination record
             $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
             if ($old_vac) {
-                $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+                $oldFilePath = public_path($destinationPath . '/' . $old_vac->name);
                 if (file_exists($oldFilePath)) {
                     File::delete($oldFilePath);
                 }
@@ -325,7 +324,7 @@ class UserController extends Controller
 
             // Handle file upload
             $file = $request->file($vacc_file);
-            $filename = $type.'_'.$id.'_vaccination_'.$file->getClientOriginalExtension();
+            $filename = $type . '_' . $id . '_vaccination_' . $file->getClientOriginalExtension();
             $file->move(public_path($destinationPath), $filename);
 
             NurseAsset::create([
@@ -335,27 +334,27 @@ class UserController extends Controller
                 'filter' => 'vaccination'
             ]);
 
-            $response = array('success'=>true, 'msg'=> $type . ' Updated Successfully!');
+            $response = array('success' => true, 'msg' => $type . ' Updated Successfully!');
             return $response;
         } else {
             // Check and handle vaccination record removal if applicable
             $old_vac = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
             if ($old_vac) {
-                $oldFilePath = public_path($destinationPath.'/'.$old_vac->name);
+                $oldFilePath = public_path($destinationPath . '/' . $old_vac->name);
                 if (file_exists($oldFilePath)) {
                     File::delete($oldFilePath);
                 }
                 $old_vac->forceDelete();
-                $response = array('success'=>true, 'msg'=>$type . ' Removed Successfully!');
+                $response = array('success' => true, 'msg' => $type . ' Removed Successfully!');
                 return $response;
             }
         }
 
-        $response = array('success'=>false, 'msg'=>'No vaccination record selected!');
+        $response = array('success' => false, 'msg' => 'No vaccination record selected!');
         return $response; // Return the response
     }
-    
-    
+
+
     public function certification_submit(Request $request)
     {
         $user = auth()->guard('frontend')->user();
@@ -364,51 +363,51 @@ class UserController extends Controller
 
         // certif type
         $type = $request->type;
-            $cert_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
-            $cert_file = $cert_field;
-            $cert_flag = $cert_field . '_cer';
-    
-            if ($request->$cert_flag == 'Yes' && $request->hasFile($cert_file)) {
-                // Delete old certificate
-                $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
-                if ($old_cer) {
-                    $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
-                    if (file_exists($oldFilePath)) {
-                        File::delete($oldFilePath);
-                    }
-                    $old_cer->forceDelete();
+        $cert_field = strtolower(str_replace(['.', '(', ')', ' '], '', $type));
+        $cert_file = $cert_field;
+        $cert_flag = $cert_field . '_cer';
+
+        if ($request->$cert_flag == 'Yes' && $request->hasFile($cert_file)) {
+            // Delete old certificate
+            $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_cer) {
+                $oldFilePath = public_path($destinationPath . '/' . $old_cer->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
                 }
-    
-                // Handle file upload
-                $file = $request->file($cert_file);
-                $filename = $type.'_'.$id.'_certificate_'.$file->getClientOriginalExtension();
-                $file->move(public_path($destinationPath), $filename);
-    
-                NurseAsset::create([
-                    'nurse_id' => $id,
-                    'file_name' => $filename,
-                    'name' => $type,
-                    'filter' => 'certificate'
-                ]);
-    
-                //$responses[] = ['success' => true, 'msg' => $certificate . ' Updated Successfully!'];
-                $response = array('success'=>true,'msg'=> $type . ' Updated Successfully!');
-                return $response;
-            } else {
-                // Check and handle certificate removal if applicable
-                $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
-                if ($old_cer) {
-                    $oldFilePath = public_path($destinationPath.'/'.$old_cer->name);
-                    if (file_exists($oldFilePath)) {
-                        File::delete($oldFilePath);
-                    }
-                    $old_cer->forceDelete();
-                    $response = array('success'=>true,'msg'=>$type . ' Removed Successfully!');
-                    return $response;
-                }
+                $old_cer->forceDelete();
             }
-        
-        $response = array('success'=>false,'msg'=>'No certificate selected!');
+
+            // Handle file upload
+            $file = $request->file($cert_file);
+            $filename = $type . '_' . $id . '_certificate_' . $file->getClientOriginalExtension();
+            $file->move(public_path($destinationPath), $filename);
+
+            NurseAsset::create([
+                'nurse_id' => $id,
+                'file_name' => $filename,
+                'name' => $type,
+                'filter' => 'certificate'
+            ]);
+
+            //$responses[] = ['success' => true, 'msg' => $certificate . ' Updated Successfully!'];
+            $response = array('success' => true, 'msg' => $type . ' Updated Successfully!');
+            return $response;
+        } else {
+            // Check and handle certificate removal if applicable
+            $old_cer = NurseAsset::where('nurse_id', $id)->where('name', $type)->first();
+            if ($old_cer) {
+                $oldFilePath = public_path($destinationPath . '/' . $old_cer->name);
+                if (file_exists($oldFilePath)) {
+                    File::delete($oldFilePath);
+                }
+                $old_cer->forceDelete();
+                $response = array('success' => true, 'msg' => $type . ' Removed Successfully!');
+                return $response;
+            }
+        }
+
+        $response = array('success' => false, 'msg' => 'No certificate selected!');
         return $responses; // Return all responses after processing all certificates
     }
 
@@ -423,27 +422,25 @@ class UserController extends Controller
         // Upload driving license
         if ($request->has('dl_cer')) {
             if ($request->dl_cer == 'Yes') {
-                if ($request->hasFile('driving_license'))
-                {
+                if ($request->hasFile('driving_license')) {
 
                     NurseAsset::where('nurse_id', $id)->where('filter', 'driving_license')->forceDelete();
                     if (!empty($worker->driving_license)) {
-                        if(file_exists(public_path('images/nurses/driving_license/').$worker->driving_license))
-                        {
-                            File::delete(public_path('images/nurses/driving_license/').$worker->driving_license);
+                        if (file_exists(public_path('images/nurses/driving_license/') . $worker->driving_license)) {
+                            File::delete(public_path('images/nurses/driving_license/') . $worker->driving_license);
                         }
                     }
 
                     $driving_license_name_full = $request->file('driving_license')->getClientOriginalName();
                     $driving_license_name = pathinfo($driving_license_name_full, PATHINFO_FILENAME);
                     $driving_license_ext = $request->file('driving_license')->getClientOriginalExtension();
-                    $driving_license = $driving_license_name.'_'.time().'.'.$driving_license_ext;
+                    $driving_license = $driving_license_name . '_' . time() . '.' . $driving_license_ext;
                     $destinationPath = 'images/nurses/driving_license';
                     $request->file('driving_license')->move(public_path($destinationPath), $driving_license);
 
                     // write image name in worker table
                     $worker->driving_license = $driving_license;
-                    $license_expiration_date = isset($request->license_expiration_date)?$request->license_expiration_date:'';
+                    $license_expiration_date = isset($request->license_expiration_date) ? $request->license_expiration_date : '';
                     $driving_license_asset = NurseAsset::create([
                         'nurse_id' => $id,
                         'name' => $driving_license,
@@ -451,13 +448,11 @@ class UserController extends Controller
                         //'using_date' => $license_expiration_date,
                     ]);
                 }
-            }
-            else {
+            } else {
                 NurseAsset::where('nurse_id', $id)->where('filter', 'driving_license')->forceDelete();
                 if (!empty($worker->driving_license)) {
-                    if(file_exists(public_path('images/nurses/driving_license/').$worker->driving_license))
-                    {
-                        File::delete(public_path('images/nurses/driving_license/').$worker->driving_license);
+                    if (file_exists(public_path('images/nurses/driving_license/') . $worker->driving_license)) {
+                        File::delete(public_path('images/nurses/driving_license/') . $worker->driving_license);
                     }
                 }
                 $worker->driving_license = '';
@@ -467,22 +462,20 @@ class UserController extends Controller
         // Upload diploma
         if ($request->has('diploma_cer')) {
             if ($request->diploma_cer == 'Yes') {
-                
-                if ($request->hasFile('diploma'))
-                {
-                    
+
+                if ($request->hasFile('diploma')) {
+
                     NurseAsset::where('nurse_id', $id)->where('filter', 'diploma')->forceDelete();
                     if (!empty($worker->diploma)) {
-                        if(file_exists(public_path('images/nurses/diploma/').$worker->diploma))
-                        {
-                            File::delete(public_path('images/nurses/diploma/').$worker->diploma);
+                        if (file_exists(public_path('images/nurses/diploma/') . $worker->diploma)) {
+                            File::delete(public_path('images/nurses/diploma/') . $worker->diploma);
                         }
                     }
 
                     $diploma_name_full = $request->file('diploma')->getClientOriginalName();
                     $diploma_name = pathinfo($diploma_name_full, PATHINFO_FILENAME);
                     $diploma_ext = $request->file('diploma')->getClientOriginalExtension();
-                    $diploma = $diploma_name.'_'.time().'.'.$diploma_ext;
+                    $diploma = $diploma_name . '_' . time() . '.' . $diploma_ext;
                     $destinationPath = 'images/nurses/diploma';
                     $request->file('diploma')->move(public_path($destinationPath), $diploma);
 
@@ -497,9 +490,8 @@ class UserController extends Controller
             } else {
                 NurseAsset::where('nurse_id', $id)->where('filter', 'diploma')->forceDelete();
                 if (!empty($worker->diploma)) {
-                    if(file_exists(public_path('images/nurses/diploma/').$worker->diploma))
-                    {
-                        File::delete(public_path('images/nurses/diploma/').$worker->diploma);
+                    if (file_exists(public_path('images/nurses/diploma/') . $worker->diploma)) {
+                        File::delete(public_path('images/nurses/diploma/') . $worker->diploma);
                     }
                 }
                 $worker->diploma = '';
@@ -510,11 +502,10 @@ class UserController extends Controller
         $skills_img = explode(',', $worker->skills_checklists);
         if ($request->has('old_skills_ids')) {
             $skills = NurseAsset::where('nurse_id', $id)->where('filter', 'skill')->whereNotIn('id', $request->old_skills_ids)->get();
-            foreach($skills as $img){
+            foreach ($skills as $img) {
                 if (!empty($img->name)) {
-                    if(file_exists(public_path('images/nurses/skill/').$img->name))
-                    {
-                        File::delete(public_path('images/nurses/skill/').$img->name);
+                    if (file_exists(public_path('images/nurses/skill/') . $img->name)) {
+                        File::delete(public_path('images/nurses/skill/') . $img->name);
                     }
                     $keyToDelete = array_search($img->name, $skills_img);
                     if ($keyToDelete !== false) {
@@ -529,17 +520,16 @@ class UserController extends Controller
                 $skill = NurseAsset::findOrFail($value);
                 if ($request->hasFile('old_skill')) {
                     $old_skills = $request->file('old_skill');
-                    if (array_key_exists($k,$old_skills)) {
+                    if (array_key_exists($k, $old_skills)) {
                         if ($old_skills[$k]->isValid()) {
                             if (!empty($skill->name)) {
-                                if(file_exists(public_path('images/nurses/skill/' . $skill->name)))
-                                {
+                                if (file_exists(public_path('images/nurses/skill/' . $skill->name))) {
                                     File::delete(public_path('images/nurses/skill/' . $skill->name));
                                 }
                             }
                             $name = $old_skills[$k]->getClientOriginalName();
                             $ext = $old_skills[$k]->getClientOriginalExtension();
-                            $img_name = $name.'_'.time().'.'.$ext;
+                            $img_name = $name . '_' . time() . '.' . $ext;
                             $keyToDelete = array_search($skill->name, $skills_img);
                             if ($keyToDelete !== false) {
                                 $skills_img[$keyToDelete] = $img_name;
@@ -557,17 +547,16 @@ class UserController extends Controller
         if ($request->hasFile('skill')) {
             $images = $request->file('skill');
 
-            foreach($images as $k=>$image)
-            {
+            foreach ($images as $k => $image) {
                 $skill_name = $image->getClientOriginalName();
                 $skill_ext = $image->getClientOriginalExtension();
-                $skill = $skill_name.'_'.time().'.'.$skill_ext;
+                $skill = $skill_name . '_' . time() . '.' . $skill_ext;
                 $destinationPath = 'images/nurses/skill';
                 $image->move(public_path($destinationPath), $skill);
-                $skills_img[]=$skill;
+                $skills_img[] = $skill;
 
                 // write image name in worker table
-                $completion_date = isset($request->completion_date[$k])?$request->completion_date[$k]:'';
+                $completion_date = isset($request->completion_date[$k]) ? $request->completion_date[$k] : '';
                 $skill_asset = NurseAsset::create([
                     'nurse_id' => $id,
                     'name' => $skill,
@@ -593,7 +582,7 @@ class UserController extends Controller
             //'skills_checklists' => $worker->skills_checklists,
             'diploma' => $worker->diploma,
         ]);
-        $response = array('success'=>true,'msg'=>'Updated Successfully!');
+        $response = array('success' => true, 'msg' => 'Updated Successfully!');
         return $response;
 
     }
@@ -623,12 +612,13 @@ class UserController extends Controller
             'worker_facility_parent_system' => $request->worker_facility_parent_system,
             'avg_rating_by_facilities' => $request->avg_rating_by_facilities,
             'worker_avg_rating_by_recruiters' => $request->worker_avg_rating_by_recruiters,
-            'worker_avg_rating_by_employers' => $request->worker_avg_rating_by_employers,
+            'worker_avg_rating_by_organizations' => $request->worker_avg_rating_by_organizations,
             'clinical_setting_you_prefer' => $request->clinical_setting_you_prefer
         ]);
     }
 
-    public function patient_ratio_submit(Request $request, $id){
+    public function patient_ratio_submit(Request $request, $id)
+    {
         $model = NURSE::findOrFail($id);
         $model->update([
             'worker_patient_ratio' => $request->worker_patient_ratio,
@@ -687,9 +677,9 @@ class UserController extends Controller
             'worker_orientation_rate' => $request->worker_orientation_rate,
             'worker_weekly_taxable_amount' => $request->worker_weekly_taxable_amount,
             'worker_weekly_non_taxable_amount' => $request->worker_weekly_non_taxable_amount,
-            'worker_employer_weekly_amount' => $request->worker_employer_weekly_amount,
+            'worker_organization_weekly_amount' => $request->worker_organization_weekly_amount,
             'worker_goodwork_weekly_amount' => $request->worker_goodwork_weekly_amount,
-            'worker_total_employer_amount' => $request->worker_total_employer_amount,
+            'worker_total_organization_amount' => $request->worker_total_organization_amount,
             'worker_total_goodwork_amount' => $request->worker_total_goodwork_amount,
             'worker_total_contract_amount' => $request->worker_total_contract_amount,
         ]);
@@ -699,11 +689,11 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             $request->validate([
-                'id'=>'required|integer'
+                'id' => 'required|integer'
             ]);
             $response = [];
             $user = auth()->guard('frontend')->user();
-            $contact = UserMaster::where(['company'=>$user->id,'id'=>$request->id,'status'=>'1'])->first();
+            $contact = UserMaster::where(['company' => $user->id, 'id' => $request->id, 'status' => '1'])->first();
             $response['msg'] = 'The user deleted sucessfully.';
             $response['success'] = false;
             if (!empty($contact)) {

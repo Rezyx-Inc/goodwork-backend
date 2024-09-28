@@ -233,7 +233,7 @@ class JobController extends Controller
 
                 $j_data['job_location'] = isset($job->job_location) ? $job->job_location : '';
                 $j_data['position_available'] = isset($job->position_available) ? $job->position_available : '';
-                $j_data['employer_weekly_amount'] = isset($job->employer_weekly_amount) ? $job->employer_weekly_amount : '';
+                $j_data['organization_weekly_amount'] = isset($job->organization_weekly_amount) ? $job->organization_weekly_amount : '';
                 $j_data['weekly_pay'] = isset($job->weekly_pay) ? $job->weekly_pay : '';
                 $j_data['hours_per_week'] = isset($job->hours_per_week) ? $job->hours_per_week : 0;
 
@@ -545,7 +545,7 @@ class JobController extends Controller
             'job_name' => $job->job_name,
             'type' => $job->job_type,
             'terms' => $job->terms,
-            'proffesion' => $job->proffesion,
+            'profession' => $job->profession,
             'block_scheduling' => $job->block_scheduling,
             'float_requirement' => $job->float_requirement,
             'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
@@ -582,8 +582,8 @@ class JobController extends Controller
             'hours_shift' => $job->hours_shift,
             'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
             'weekly_taxable_amount' => $job->weekly_taxable_amount,
-            'employer_weekly_amount' => $job->employer_weekly_amount,
-            'total_employer_amount' => $job->total_employer_amount,
+            'organization_weekly_amount' => $job->organization_weekly_amount,
+            'total_organization_amount' => $job->total_organization_amount,
             'weekly_pay' => $job->weekly_pay,
             'tax_status' => $job->tax_status,
             'status' => 'Apply',
@@ -723,7 +723,7 @@ class JobController extends Controller
 
     public function fetch_job_content(Request $request)
     {
-        
+
         try {
             if ($request->ajax()) {
                 $request->validate([
@@ -772,7 +772,7 @@ class JobController extends Controller
                         $data['recruiter'] = $recruiter;
                         // return $data;
                         $response['content'] = view('ajax.counter_details', $data)->render();
-                return new JsonResponse($response, 200);
+                        return new JsonResponse($response, 200);
                         $view = 'offered';
                         break;
                     case 'past':
@@ -818,11 +818,11 @@ class JobController extends Controller
 
     public function store_counter_offer(Request $request)
     {
-        
+
         $user = auth()->guard('frontend')->user();
         $nurse = Nurse::where('user_id', $user->id)->first();
         $job_data = Job::where('id', $request->jobid)->first();
-       // return response()->json(['success' => false, 'message' => $job_data]);
+        // return response()->json(['success' => false, 'message' => $job_data]);
         $update_array['job_name'] = $job_data->job_name != $request->job_name ? $request->job_name : $job_data->job_name;
         $update_array['type'] = $job_data->type != $request->type ? $request->type : $job_data->type;
         $update_array['terms'] = $job_data->terms != $request->terms ? $request->terms : $job_data->terms;
@@ -866,9 +866,9 @@ class JobController extends Controller
         $update_array['weekly_non_taxable_amount'] = $job_data->weekly_non_taxable_amount != $request->weekly_non_taxable_amount ? $request->weekly_non_taxable_amount : $job_data->weekly_non_taxable_amount;
         $update_array['description'] = $job_data->description != $request->description ? $request->description : $job_data->description;
         $update_array['weekly_taxable_amount'] = 0;
-        $update_array['employer_weekly_amount'] = 0;
+        $update_array['organization_weekly_amount'] = 0;
         $update_array['goodwork_weekly_amount'] = 0;
-        $update_array['total_employer_amount'] = 0;
+        $update_array['total_organization_amount'] = 0;
         $update_array['total_goodwork_amount'] = 0;
         $update_array['total_contract_amount'] = 0;
         $update_array['weekly_pay'] = $job_data->weekly_pay;
@@ -882,41 +882,40 @@ class JobController extends Controller
             ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
             ->first();
 
-          // return response()->json(['offer'=>$offerexist]);
-          
-          if ($offerexist) {
-              $job = DB::table('offers')
-                  ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
-                  ->first();
-          
-              if ($job) {
-                  DB::table('offers')
-                      ->where('id', $job->id)
-                      ->update($update_array);
-          
-                 // return response()->json(['offer'=>$job]);
-          
-                  $offers_log = OffersLogs::create([
-                      'original_offer_id' => $job->id,
-                      'status' => 'Counter',
-                      'employer_recruiter_id' => $job->created_by,
-                      'nurse_id' => $nurse->id,
-                      'details' => 'more infos',
-                  ]);    
-              }
-          }
-          else {
+        // return response()->json(['offer'=>$offerexist]);
+
+        if ($offerexist) {
+            $job = DB::table('offers')
+                ->where(['job_id' => $request->jobid, 'worker_user_id' => $nurse->id, 'recruiter_id' => $job_data->created_by])
+                ->first();
+
+            if ($job) {
+                DB::table('offers')
+                    ->where('id', $job->id)
+                    ->update($update_array);
+
+                // return response()->json(['offer'=>$job]);
+
+                $offers_log = OffersLogs::create([
+                    'original_offer_id' => $job->id,
+                    'status' => 'Counter',
+                    'organization_recruiter_id' => $job->created_by,
+                    'nurse_id' => $nurse->id,
+                    'details' => 'more infos',
+                ]);
+            }
+        } else {
             $job = Offer::create($update_array);
             $offers_log = OffersLogs::create([
                 'original_offer_id' => $job->id,
                 'status' => 'Counter',
-                'employer_recruiter_id' => $job->created_by,
+                'organization_recruiter_id' => $job->created_by,
                 'nurse_id' => $nurse->id,
                 'details' => 'more infos',
                 'counter_offer_by' => 'nurse'
 
 
-            ]); 
+            ]);
         }
         return response()->json(['success' => true, 'msg' => 'Counter offer created successfully']);
     }
