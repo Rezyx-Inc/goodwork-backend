@@ -42,7 +42,9 @@ use App\Models\{
 
 use App\Models\NotificationMessage as NotificationMessageModel;
 
-define('USER_IMG', asset('frontend/img/profile-pic-big.png'));
+if (!defined('USER_IMG')) {
+  define('USER_IMG', asset('frontend/img/profile-pic-big.png'));
+}
 
 class WorkerController extends Controller
 {

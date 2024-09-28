@@ -17,7 +17,7 @@ class CreateNurseTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->foreign('user_id')
-                ->references('id')->on('users');
+            ->references('id')->on('users');
             $table->string('nursing_license_state')->nullable();
             $table->string('specialty', 100)->nullable();
             $table->string('nursing_license_number', 190)->unique()->nullable();

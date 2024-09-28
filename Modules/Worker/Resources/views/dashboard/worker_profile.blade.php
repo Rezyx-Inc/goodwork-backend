@@ -256,6 +256,15 @@
                                     <!-- second form slide Professional Information -->
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
+                                            {{-- Licence number --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Licence number</label>
+                                                <input type="text" id="nursing_license_number" name="nursing_license_number"
+                                                    placeholder="Enter licence number"
+                                                    value="{{ !empty($worker->nursing_license_number) ? $worker->nursing_license_number : '' }}">
+                                            </div>
+                                            <span class="help-block-licence"></span>
+
                                             {{-- Profession --}}
                                             <div class="ss-form-group col-11">
                                                 <label>Profession</label>
@@ -389,7 +398,6 @@
                                                     name="contract_termination_policy"
                                                     placeholder="Enter Contract Termination Policy"
                                                     value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
-                                                >
                                             </div>
                                             <span class="help-block-contract_termination_policy"></span>
                                             {{-- end Contract Termination Policy --}}
@@ -693,8 +701,8 @@
                                                     {{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : 'Select an option') }}
                                                     </option>
                                                     <option value="">Select an option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="2">No</option>
                                                 </select>
                                                 <span class="help-block-worker_health_insurance"></span>
                                             </div>
@@ -2177,10 +2185,6 @@
         });
 
 
-
-
-
-
         var regexPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
 
         // validation basic information -ELH-
@@ -2241,6 +2245,7 @@
         // end validation basic information
         // validation professional information
         function validateProfessionalInfo() {
+        
                 let isValid = true;
 
 
@@ -2286,8 +2291,12 @@
                     { field: worker_call_back, errorClass: 'help-block-worker_call_back', errorMessage: 'Please enter worker on call back rate' },
                     { field: worker_orientation_rate, errorClass: 'help-block-worker_orientation_rate', errorMessage: 'Please enter worker orientation rate' },
                     { field: worker_benefits, errorClass: 'help-block-worker_benefits', errorMessage: 'Please enter worker benefits' },
-                    { field: nurse_classification, errorClass: 'help-block-nurse_classification', errorMessage: 'Please enter nurse classification' }
+                    { field: nurse_classification, errorClass: 'help-block-nurse_classification', errorMessage: 'Please enter a worker classification' },
+                    { field: nursing_license_number, errorClass: 'help-block-licence', errorMessage: 'Please enter a licence number' }
                 ];
+                
+    
+            }
 
                 // Validate fields
                 fields.forEach(({ field, errorClass, errorMessage }) => {
@@ -2298,6 +2307,7 @@
                         $(`.${errorClass}`).text('').removeClass('text-danger');
                     }
                 });
+
 
                 return isValid;
         }
@@ -2472,6 +2482,7 @@
                     profession: profession.value,
                     specialty: specialty.value,
                     terms: terms.value,
+                    nursing_license_number: nursing_license_number.value,
                     worker_job_type: worker_job_type.value,
                     block_scheduling: block_scheduling.value,
                     float_requirement: float_requirement.value,

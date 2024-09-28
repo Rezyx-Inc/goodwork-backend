@@ -40,8 +40,9 @@ use App\Models\{User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Ke
 define('default_max_step', 5);
 define('min_increment', 1);
 
-define('USER_IMG', asset('public/frontend/img/profile-pic-big.png'));
-
+if (!defined('USER_IMG')) {
+  define('USER_IMG', asset('public/frontend/img/profile-pic-big.png'));
+}
 class WorkerDashboardController extends Controller
 {
     use HelperTrait;
@@ -144,6 +145,8 @@ class WorkerDashboardController extends Controller
             if ($request->InfoType == 'ProfessionalInformation') {
                 // Validate fields for ProfessionalInformation
                 $request->validate([
+
+                    'nursing_license_number' => 'string',
                     'specialty' => 'required|string',
                     'profession' => 'required|string',
                     'terms' => 'required|string',
@@ -183,6 +186,7 @@ class WorkerDashboardController extends Controller
 
 
 
+                isset($request->nursing_license_number) ? ($nurse_data['nursing_license_number'] = $request->nursing_license_number) : '';
                 isset($request->specialty) ? ($nurse_data['specialty'] = $request->specialty) : '';
                 isset($request->profession) ? ($nurse_data['profession'] = $request->profession) : '';
                 isset($request->terms) ? ($nurse_data['terms'] = $request->terms) : '';
@@ -259,9 +263,8 @@ class WorkerDashboardController extends Controller
 
             return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
         } catch (\Exception $e) {
-            return response()->json(['msg' => $e->getMessage(), 'status' => false]);
-            //return response()->json(['msg' => $request->all(), 'status' => false]);
-            // return response()->json(['msg'=>'"Something was wrong please try later !"', 'status'=>false]);
+          
+            return response()->json(['msg'=>$e->getMessage(), 'status'=>false]);
         }
     }
 

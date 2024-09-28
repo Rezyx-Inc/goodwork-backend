@@ -124,6 +124,7 @@ class ApplicationController extends Controller
         }
 
         return response()->json(['status' => true, 'message' => 'Please add a payment method']);
+
     }
 
     public function checkPaymentMethod($recruiter_id)
