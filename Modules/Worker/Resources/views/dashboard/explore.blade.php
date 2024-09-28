@@ -4,45 +4,49 @@
     <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
 @stop
 @section('content')
-    <!--Main layout-->
-    <main style="padding-top: 130px" class="ss-main-body-sec">
-        <div class="container">
 
-            <!--------Explore Jobs------->
+<!--Main layout-->
+<main style="padding-top: 130px" class="ss-main-body-sec">
+    <div class="container">
 
-            <div class="ss-dsh-explre-jb-mn-dv">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Explore</h2>
-                    </div>
+      <!--------Explore Jobs------->
 
-                    <div class="col-lg-4">
-                        <div class="ss-dash-explr-job-dv" style="padding:40px !important;">
-                            <h4>Filters</h4>
-                            <form method="get" action="{{ route('worker.explore') }}" id="filter_form">
+    <div class="ss-dsh-explre-jb-mn-dv">
+      <div class="row">
+        <div class="col-lg-12">
+          <h2>Explore</h2>
+        </div>
 
-                                <div class="ss-input-slct-grp">
-                                    <label for="cars">Profession</label>
-                                    <select name="profession">
-                                        <option value="">Select</option>
-                                        @foreach ($professions as $v)
-                                            <option value="{{ $v->full_name }}" data-id="{{ $v->full_name }}"
-                                                {{ $profession == $v->full_name ? 'selected' : '' }}>{{ $v->full_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+        <div class="col-lg-4">
+          <div class="ss-dash-explr-job-dv" style="padding:40px !important;">
+            <h4>Filters</h4>
+            <form method="get" action="{{route('worker.explore')}}" id="filter_form"> @csrf
 
-                                <div class="ss-input-slct-grp">
-                                    <label>Specialty</label>
-                                    <select name="speciality" id="speciality">
-                                        <option value="">Select Specialty</option>
-                                        @foreach ($specialities as $speciality)
-                                            <option value="{{ $speciality->full_name }}">{{ $speciality->full_name }}
-                                            </option>
-                                        @endforeach
+              <div class="ss-input-slct-grp">
+                <label for="cars">Good Work number</label>
+                <div class="form-outline">
+                    <input type="text" id="gw" class="gw" name="gw" placeholder="Search by Good Work number"   value="{{ request('gw') }}">
+                </div>
+                <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div> <!-- Error message display -->
+              </div>
+              <div class="ss-input-slct-grp">
+                <label for="cars">Profession</label>
+                <select name="profession">
+                    <option value="">Select</option>
+                    @foreach($professions as $v)
+                    <option value="{{$v->full_name}}" data-id="{{$v->full_name}}" {{ ($profession == $v->full_name) ? 'selected': ''}}>{{$v->full_name}}</option>
+                    @endforeach
+                </select>
+              </div>
 
-                                    </select>
+              <div class="ss-input-slct-grp">
+                    <label>Specialty</label>
+                    <select name="speciality" id="speciality">
+                        <option value="">Select Specialty</option>
+                        @foreach($specialities as $speciality)
+                        <option value="{{$speciality->full_name}}">{{$speciality->full_name}}</option>
+                        @endforeach
+                    </select>
                                 </div>
 
 
@@ -99,38 +103,38 @@
                 </ul>
               </div> --}}
 
+              <!-----price range------->
 
-                                <!-----price range------->
-
-                                <!-- partial:index.partial.html -->
-                                <div class="ss-price-week-sec">
-                                    <label>Weekly Pay</label>
-                                    <div id="slider"></div>
-                                </div>
-                                <!-- partial -->
-
-
-                                <!-- partial:index.partial.html -->
-                                <div class="ss-price-week-sec">
-                                    <label>Hours Per Shift</label>
-                                    <div id="slider2"></div>
-                                </div>
-                                <!-- partial -->
-                                <!-- partial:index.partial.html -->
-                                <div class="ss-price-week-sec">
-                                    <label>Hours Per Week</label>
-                                    <div id="slider3"></div>
-                                </div>
-                                <!-- partial -->
-                                <!-- partial:index.partial.html -->
-                                {{-- <div class="ss-price-week-sec">
-            <label>Assignment Length</label>
-            <div id="slider4"></div>
-        </div> --}}
-                                <!-- partial -->
+              <!-- partial:index.partial.html -->
+                <div class="ss-price-week-sec">
+                <label>Weekly Pay</label>
+                    <div id="slider"></div>
+                </div>
+              <!-- partial -->
 
 
-                                {{-- <div class="ss-jobtype-dv ss-shift-type-inpy">
+                       <!-- partial:index.partial.html -->
+                          <div class="ss-price-week-sec">
+                              <label>Hours Per Shift</label>
+                              <div id="slider2"></div>
+                          </div>
+                      <!-- partial -->
+                          <!-- partial:index.partial.html -->
+                          <div class="ss-price-week-sec" >
+                              <label>Hours Per Week</label>
+                              <div id="slider3"></div>
+                          </div>
+                      <!-- partial -->
+                      <!-- partial:index.partial.html -->
+                      {{-- <div class="ss-price-week-sec">
+                          <label>Assignment Length</label>
+                          <div id="slider4"></div>
+                      </div> --}}
+                  <!-- partial -->
+
+
+                {{-- <div class="ss-jobtype-dv ss-shift-type-inpy">
+
                 <label>Shift type</label>
                      <ul class="ks-cboxtags">
                         @foreach ($prefered_shifts as $k => $v)
@@ -154,8 +158,9 @@
                                 <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
                                     id="hpw_maxval">
                                 {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
-                <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
+                                <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
                             </form>
+
                         </div>
                     </div>
 
@@ -401,7 +406,7 @@
                     }
 
                 }
-            });
+              });
 
             $('#slider .ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider(
                 'values', 0) + ' - $' + $('#slider').slider('values', 1) + '</i></span>');
@@ -506,56 +511,49 @@
             $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3')
                 .slider('values', 1) + '</span>');
 
+            $('#slider3 .ui-slider-handle:eq(1)').append('<span class="price-range-max-3 value">' + $('#slider3').slider('values', 1) + '</span>');
 
-            // $('#slider4').slider({
-            //     range: true,
-            //     min: 10,
-            //     max: 150,
-            //     step: 1,
-            //     values: [$('#al_minval').val() ? $('#al_minval').val() : 10, $('#al_maxval').val() ? $('#al_maxval').val() : 100],
+      });
+ 
+</script>
 
-            //     slide: function (event, ui) {
 
-            //         $('#slider4 .ui-slider-handle:eq(0) .price-range-min-4').html( ui.values[ 0 ] + 'wk');
-            //         $('#slider4 .ui-slider-handle:eq(1) .price-range-max-4').html( ui.values[ 1 ] + 'wk');
-            //         $('#slider4 .price-range-both-4').html('<i>' + ui.values[ 0 ] + 'wk - '+ ui.values[ 1 ]+' wk</i>');
 
-            //         // get values of min and max
-            //         $("#al_minval").val(ui.values[0]);
-            //         $("#al_maxval").val(ui.values[1]);
 
-            //         if (ui.values[0] == ui.values[1]) {
-            //             $('#slider4 .price-range-both-4 i').css('display', 'none');
-            //         } else {
-            //             $('#slider4 .price-range-both-4 i').css('display', 'inline');
-            //         }
 
-            //         if (collision($('#slider4 .price-range-min-4'), $('#slider4 .price-range-max-4')) == true) {
-            //             $('#slider4 .price-range-min-4, .price-range-max-4').css('opacity', '0');
-            //             $('#slider4 .price-range-both-4').css('display', 'block');
-            //         } else {
-            //             $('#slider4 .price-range-min-4, .price-range-max-4').css('opacity', '1');
-            //             $('#slider4 .price-range-both-4').css('display', 'none');
-            //         }
+<script>
+    $(document).ready(function() {
+        $("#filter_form").submit(function(e) {
+            e.preventDefault(); 
+            
+            // Clear previous error message
+            $('#gwError').hide().text('');
 
-            //     }
-            // });
+            // Get the value of the gw input
+            var gwValue = $('#gw').val();
 
-            // $('#slider4 .ui-slider-range').append('<span class="price-range-both-4 value"><i>' + $('#slider4').slider('values', 0) + 'wk - ' + $('#slider4').slider('values', 1) + ' wk</i></span>');
-
-            // $('#slider4 .ui-slider-handle:eq(0)').append('<span class="price-range-min-4 value">' + $('#slider4').slider('values', 0) + 'wk </span>');
-
-            // $('#slider4 .ui-slider-handle:eq(1)').append('<span class="price-range-max-4 value">' + $('#slider4').slider('values', 1) + 'wk</span>');
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("#filter_form").submit(function(e) {
-                e.preventDefault(); // Prevent the form from submitting initially
+            // Validation checks
+            if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
+                  // First character should be 'G' or 'g'
+                  $('#gwError').text('The GoodWork Number must start with "G".').show();
+              } else if (gwValue.length > 1 && gwValue[1].toLowerCase() !== 'w') {
+                  // Second character should be 'W' or 'w'
+                  $('#gwError').text('The GoodWork Number must start with "GW".').show();
+              } else if (gwValue.length > 2 && gwValue[2].toLowerCase() !== 'j') {
+                  // Third character should be 'J' or 'j'
+                  $('#gwError').text('The GoodWork Number must start with "GWJ".').show();
+              } else if (gwValue.length > 3 && !/^\d+$/.test(gwValue.slice(3))) {
+                  // After the third character, it should only be numbers
+                  $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
+              } else {
+                // Check if terms input is empty and remove it
+                var termsInput = $('input[name="terms"]');
+                if (termsInput.length && termsInput.val() === '') {
+                    termsInput.remove();  // Remove the empty terms input
+                }
 
                 // Get all selected checkboxes with the name "categories[]"
                 const selectedCategories = $("input[name='terms[]']:checked");
-
 
                 // Extract the values (category names) and join them into a comma-separated string
                 const categoriesString = selectedCategories.map(function() {
@@ -564,38 +562,27 @@
                 // Set the categoriesString as the value of the hidden input field
                 $("#job_type").val(categoriesString);
 
-                // const shiftTypes = $("input[name='shift[]']:checked");
-                // const shiftString = shiftTypes.map(function() {
-                // 	return $(this).val();
-                // }).get().join('-');
-                // Set the categoriesString as the value of the hidden input field
-                // $("#shift").val(shiftString);
                 $(this).find("input[name='terms[]']").remove();
-                // $(this).find("input[name='shift[]']").remove();
 
                 // Change the value of the profession select to the text of the selected option
                 const professionSelect = $("select[name='profession']");
                 const selectedOptionText = professionSelect.find("option:selected").text();
 
                 // Add a hidden input to the form with the text of the selected option
-                $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText +
-                    '">');
 
+                $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
+                
 
-                // Now, you can submit the form programmatically
-                console.log('my form');
-                console.log($(this).serializeArray());
-                // setInterval(() => {
-                //   this.submit();
-                // }, 500000);
-
-                this.submit();
-            });
+                this.submit(); // Submit the form
+            }
         });
-    </script>
-    <style>
-        .value {
-            left: 0%;
-        }
-    </style>
+    });
+</script>
+
+<style>
+    .value{
+        left: 0%;
+    }
+</style>
+
 @stop

@@ -17,10 +17,19 @@
                     <h2>Search for Nursing Jobs</h2>
                     <p>Set your specialty and preferred locations to find the perfect match.</p>
 
+                        <div class="input-group">
+                        <form method="get" action="{{ route('explore-jobs') }}" id="filter_form"> @csrf
 
-                    <div class="input-group">
-                        <div class="form-outline">
-                            <input type="search" id="form1" class="form-control" placeholder="Search anything..." />
+                            <div class="form-outline">
+                                <input type="text" id="gw" class="gw" name="gw" placeholder="Search by Good Work number"   value="{{ request('gw') }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                🔍
+                            </button>
+                            <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div> <!-- Error message display -->
+                        
+                        </form>
+
                         </div>
                         <button type="button" class="btn btn-primary">
                             <i class="fas fa-search"></i>
@@ -572,6 +581,66 @@
 
             this.submit();
         });
+
+    </script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#filter_form").submit(function(e) {
+            e.preventDefault(); 
+            
+            // Clear previous error message
+            $('#gwError').hide().text('');
+
+            // Get the value of the gw input
+            var gwValue = $('#gw').val();
+
+            // Validation checks
+            if (gwValue.length > 0 && gwValue[0].toLowerCase() !== 'g') {
+                  // First character should be 'G' or 'g'
+                  $('#gwError').text('The GoodWork Number must start with "G".').show();
+              } else if (gwValue.length > 1 && gwValue[1].toLowerCase() !== 'w') {
+                  // Second character should be 'W' or 'w'
+                  $('#gwError').text('The GoodWork Number must start with "GW".').show();
+              } else if (gwValue.length > 2 && gwValue[2].toLowerCase() !== 'j') {
+                  // Third character should be 'J' or 'j'
+                  $('#gwError').text('The GoodWork Number must start with "GWJ".').show();
+              } else if (gwValue.length > 3 && !/^\d+$/.test(gwValue.slice(3))) {
+                  // After the third character, it should only be numbers
+                  $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
+              } else {
+                // Check if terms input is empty and remove it
+                var termsInput = $('input[name="terms"]');
+                if (termsInput.length && termsInput.val() === '') {
+                    termsInput.remove();  // Remove the empty terms input
+                }
+
+                // Get all selected checkboxes with the name "categories[]"
+                const selectedCategories = $("input[name='terms[]']:checked");
+
+                // Extract the values (category names) and join them into a comma-separated string
+                const categoriesString = selectedCategories.map(function() {
+                    return $(this).val();
+                }).get().join('-');
+                // Set the categoriesString as the value of the hidden input field
+                $("#job_type").val(categoriesString);
+
+                // Change the value of the profession select to the text of the selected option
+                const professionSelect = $("select[name='profession']");
+                const selectedOptionText = professionSelect.find("option:selected").text();
+
+                // Add a hidden input to the form with the text of the selected option
+                $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
+
+                // Now, you can submit the form programmatically
+                console.log('my form');
+                console.log($(this).serializeArray());
+
+                this.submit(); // Submit the form
+            }
+        });
     });
 </script>
+
 @stop

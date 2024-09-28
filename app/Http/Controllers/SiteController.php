@@ -124,26 +124,26 @@ class SiteController extends Controller
         $data['hours_per_week_to'] = isset($request->hours_per_week_to) ? $request->hours_per_week_to : 100;
 
 
-        // $user = auth()->guard('frontend')->user();
+         // GW Number
+        $gwNumber = $request->input('gw', '');
 
-        // $nurse = NURSE::where('user_id', $user->id)->first();
-        // $jobs_id = Offer::where('worker_user_id', $nurse->id)
-        //     ->select('job_id')
-        //     ->get();
+        // Build the query
+        $query = Job::where('active', '1');
 
-
-        $whereCond = [
-            'active' => '1'
-        ];
-
-        $ret = Job::select('*')
-            ->where($whereCond)
-        ;
-
+        // Filter by GW number (partial match using 'like')
+        if (!empty($gwNumber)) {
+          $query->where('id', $gwNumber);  // Use partial match for 'id'
+        }
 
         if ($data['profession']) {
 
             $ret->where('profession', '=', $data['profession']);
+
+        }
+      
+       if ($data['specialty']) {
+
+            $ret->where('specialty', '=', $data['specialty']);
 
         }
 
@@ -151,12 +151,6 @@ class SiteController extends Controller
 
             $ret->whereIn('terms', $data['terms']);
         }
-
-        // if (isset($request->start_date)) {
-
-        //     $ret->where('start_date', '>=', $data['start_date']);
-        //     //$ret->where('end_date', '>=', $data['start_date']);
-        // }
 
         if (isset($request->start_date)) {
 
@@ -210,10 +204,14 @@ class SiteController extends Controller
 
         return view('site.explore_jobs', $data);
 
-
-
     }
 
+    // Get the filtered jobs
+    $data['jobs'] = $query->get();
+    // Return the view with the $data array
+    return view('site.explore_jobs', $data);
+}
+  
     /** contact us page */
     public function contact_us(Request $request)
     {
