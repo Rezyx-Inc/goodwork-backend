@@ -1,27 +1,3 @@
-const mongoose = require('mongoose');
-
-const OrganizationsSchema = mongoose.Schema({
-
-    orgId: {
-        type: String,
-        required: true
-    },
-    recruiters: [
-        {
-            id : {type: String, required: true},
-            worksAssigned: {type: Number, required: false},
-            upNext: {type: Boolean, required: false},
-        }
-    ],
-    preferences: {
-        requiredToApply : {type: Array, required: false},
-    }
-});
-
-const organizationsDB = mongoose.connection.useDb(process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
-module.exports = organizationsDB.model('Organizations', OrganizationsSchema);
-
-
 const express = require('express');
 const router = express.Router();
 const Organizations = require('../models/Orgs');
@@ -45,13 +21,12 @@ router.post('/addRecruiter/:orgId', async (req, res) => {
     }
 
     try {
-        const org = await Organizations.findOne({ orgId: req.params.orgId });
-        if (!org) {
-            return res.status(404).send("Organization not found.");
-        }
+        const org = await Organizations.findOneAndUpdate(
+            { orgId: req.params.orgId },
+            { $push: { recruiters: req.body } },
+            { new: true, upsert: true } 
+        );
 
-        org.recruiters.push(req.body);
-        await org.save();
         res.status(200).send("Recruiter added successfully.");
     } catch (err) {
         console.error("Unable to save organization.", err);

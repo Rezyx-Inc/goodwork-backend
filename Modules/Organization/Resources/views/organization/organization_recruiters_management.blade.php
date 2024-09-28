@@ -30,7 +30,7 @@
                         <th scope="col">Last Active</th>
                         <th scope="col">Invited At</th>
                         <th scope="col"># Of Works</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col" style="text-align: center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,9 @@
                             <td>{{ isset($item->last_login_at) ?  $item->last_login_at : 'Not yet signin'}}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>{{ $item->assignedJobs()->count() }}</td>
-                            <td><button type="button" class="delete" data-id="{{ $item->id }}">Delete Rceruiter</button>
+                            <td style="text-align: center">
+                                <button type="button" id="edit" class="delete" data-id="{{ $item->id }}">Edit Rceruiter</button>
+                                <button type="button" id="delete" class="delete" data-id="{{ $item->id }}">Delete Rceruiter</button>
                             </td>
                         </tr>
                     @endforeach
@@ -116,17 +118,17 @@
             <div class="modal-dialog modal-sm modal-dialog-centered">
                 <div class="modal-content">
                     <div class="ss-pop-cls-vbtn">
-                        <button type="button" class="btn-close" data-target="#text_modal" onclick="close_modal('#text_modal')"
-                            aria-label="Close"></button>
+                        {{-- <button type="button" class="btn-close" data-target="#text_modal" onclick="close_modal('#text_modal')"
+                            aria-label="Close"></button> --}}
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="padding: 15px;">
                         <div class="ss-job-dtl-pop-form">
 
                             <!--------login form------->
                             <div class="ss-login-work-dv">
                                 <h4><span>Invitation</span> sent !</h4>
-                                <p>
-                                    An invitation to join your organization has been sen to <span id="recruiter_email"><span> , please ask
+                                <p style="text-align: center">
+                                    An invitation to join your organization has been sen to <span id="recruiter_email">mohammedamineelharchi@gmail.com</span> , please ask
                                     them to check their spams if they do not receive it in 10 minutes.
                                 </p>
 
@@ -138,6 +140,14 @@
         </div>
     </main>
     <style>
+        .ss-main-body-sec table td
+        {
+            text-align: center;
+        }
+        .ss-main-body-sec table th
+        {
+            text-align: center;
+        }
         .add {
             border: 1px solid #3D2C39 !important;
             color: #fff !important;
@@ -267,7 +277,7 @@
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('.delete').click(function() {
+            $('#delete').click(function() {
                 const keyId = $(this).data('id');
                 $.ajax({
                     url: '/organization/delete-recruiter',
@@ -355,6 +365,9 @@
             }
             if (access) {
 
+                $('#loading').removeClass('d-none');
+                $('#sign').addClass('d-none');
+
 
                 $.ajax({
                     url: '/organization/recruiter-registration',
@@ -373,11 +386,12 @@
                             $('#submitBtn').find('input, button').prop('disabled', false);
                             notie.alert({
                                 type: 'success',
-                                text: '<i class="fa fa-times"></i> '+response.msg,
+                                text: '<i class="fa fa-check"></i> '+response.msg,
                                 time: 3
                             });
 
                             close_modal('#input_modal');
+                            document.getElementById('recruiter_email').innerHTML = email;
                             open_modal('#text_modal');
                             return;
                         }else if(response.success == false){

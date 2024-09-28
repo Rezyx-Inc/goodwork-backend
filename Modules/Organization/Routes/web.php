@@ -122,5 +122,11 @@ Route::prefix('organization')->group(function () {
 
             Route::post('delete-recruiter', ['uses' => 'OrganizationController@delete_recruiter', 'as' => 'delete_recruiter']);
 
+            // get One recruiter data 
+            Route::post('get-recruiter-data', ['uses' => 'OrganizationController@get_recruiter_data', 'as' => 'get_recruiter_data']);
+
+            // update recruiter data 
+            Route::post('recruiter-edit', ['uses' => 'OrganizationController@recruiter_edit', 'as' => 'recruiter_edit']);
+
     });
 });

@@ -16,11 +16,13 @@ app.use(cors({
 const docsRoute = require('./src/routes/docs');
 const integrationsRoute = require('./src/routes/integrations');
 const paymentsRoute = require('./src/routes/Payments');
+const orgsRoute = require('./src/routes/orgs')
 
 app.use(bodyParser.json({ limit: '130mb' }));
 app.use(process.env.FILE_API_BASE_PATH, docsRoute);
 app.use(process.env.INTEGRATIONS_API_BASE_PATH, integrationsRoute);
 app.use(process.env.PAYMENTS_API_BASE_PATH, paymentsRoute);
+app.use(process.env.ORGANIZATIONS_API_BASE_PATH, orgsRoute);
 
 // Root Route
 app.get('/', (req, res) => {

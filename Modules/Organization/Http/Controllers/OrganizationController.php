@@ -1389,17 +1389,50 @@ class OrganizationController extends Controller
     }
 
 
-    public function recruiters_management()
-    {
-        $ids = ['GWU000012', 'GWU000011', 'GWU000010'];
-        $recruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
-        return view('organization::organization.organization_recruiters_management', compact('recruiters'));
+   
+public function recruiters_management()
+{
+    $orgId = Auth::guard('organization')->user()->id;
+
+    $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
+
+    if ($scriptResponse->failed()) {
+        $data = [];
+        $data['msg'] = $scriptResponse->json()['message'];
+        $data['success'] = false;
+        return response()->json($data);
     }
+
+    $responseData = $scriptResponse->json();
+    $ids = array_map(function($recruiter) {
+        return $recruiter['id'];
+    }, $responseData);
+
+    $recruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
+
+    return view('organization::organization.organization_recruiters_management', compact('recruiters'));
+}
 
     public function delete_recruiter(Request $request)
     {
+        
         $recruiter_id = $request->recruiter_id;
         $recruiter = User::find($recruiter_id);
+
+        $orgId = Auth::guard('organization')->user()->id;
+
+        $scriptResponse = Http::post('http://localhost:4545/organizations/deleteRecruiter/' . $orgId, [
+            'id' => $recruiter_id,
+        ]);
+
+        //return $scriptResponse;
+
+        if ($scriptResponse->failed()) {
+            $data = [];
+            $data['msg'] = "error 99";
+            $data['success'] = false;
+            return response()->json($data);
+        }
         if ($recruiter === null) {
             return response()->json(['success' => false, 'message' => 'Recruiter not found']);
         }
@@ -1493,7 +1526,9 @@ class OrganizationController extends Controller
     public function recruiter_registration(Request $request)
     {
         try{
-            $orgId = Auth::guard('organization')->user()->id;
+                $orgId = Auth::guard('organization')->user()->id;
+
+                
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                     'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
@@ -1525,18 +1560,20 @@ class OrganizationController extends Controller
                     ]);
 
 
-                    // $response = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId, [
-                    //     'id' => $model->id,
-                    //     'worksAssigned' => 0,
-                    //     'upNext' => false,
-                    // ]);
+                    $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId, [
+                        'id' => $model->id,
+                        'worksAssigned' => 0,
+                        'upNext' => false,
+                    ]);
 
-                    // if ($response->failed()) {
-                    //     $data = [];
-                    //     $data['msg'] = $response->json()['message'];
-                    //     $data['success'] = false;
-                    //     return response()->json($data);
-                    // }
+                    //return $scriptResponse;
+
+                    if ($scriptResponse->failed()) {
+                        $data = [];
+                        $data['msg'] = $response->json()['message'];
+                        $data['success'] = false;
+                        return response()->json($data);
+                    }
 
                     $response['msg'] = 'Registered successfully!';
                     $response['success'] = true;
@@ -1545,10 +1582,101 @@ class OrganizationController extends Controller
 
         }catch(\Exception $e){
             $data = [];
-           // $data['msg'] = $e->getMessage();
-           $data['msg'] ='We encountered an error. Please try again later.';
+            $data['msg'] = $e->getMessage();
+           //$data['msg'] ='We encountered an error. Please try again later.';
             $data['success'] = false;
             return response()->json($data);
+        }
+    }
+
+    
+    public function recruiter_edit(Request $request)
+    {
+        try {
+            $orgId = Auth::guard('organization')->user()->id;
+        
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:users,id',
+                'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+                'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+                'mobile' => ['nullable', 'regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                'email' => 'required|email:rfc,dns'
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json([
+                    'msg' => $validator->errors()->first(),
+                    'success' => false
+                ]);
+            }
+        
+            $recruiter = User::where('id', $request->id)->where('role', 'RECRUITER')->first();
+        
+            if (!$recruiter) {
+                return response()->json([
+                    'msg' => 'Recruiter not found.',
+                    'success' => false
+                ]);
+            }
+        
+            $recruiter->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'mobile' => $request->mobile,
+                'email' => $request->email,
+                'user_name' => $request->email,
+            ]);
+        
+            return response()->json([
+                'msg' => 'Recruiter updated successfully!',
+                'success' => true
+            ]);
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                'msg' => $e->getMessage(),
+                'success' => false
+            ]);
+        }
+    }
+
+    public function get_recruiter_data(Request $request)
+    {
+        try {
+            
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:users,id',
+            ]);
+        
+            if ($validator->fails()) {
+                return response()->json([
+                    'msg' => $validator->errors()->first(),
+                    'success' => false
+                ]);
+            }
+        
+            
+            $recruiter = User::where('id', $request->id)->where('role', 'RECRUITER')->first();
+        
+            if (!$recruiter) {
+                return response()->json([
+                    'msg' => 'Recruiter not found.',
+                    'success' => false
+                ]);
+            }
+        
+            
+            return response()->json([
+                'msg' => 'Recruiter data retrieved successfully!',
+                'success' => true,
+                'data' => $recruiter
+            ]);
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                'msg' => $e->getMessage(),
+                'success' => false
+            ]);
         }
     }
 
