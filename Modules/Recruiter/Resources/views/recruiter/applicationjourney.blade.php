@@ -7,62 +7,60 @@
             <div class="row mt-4 applicants-header text-center">
                 {{-- New Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Apply')" id="Apply">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Apply')" id="Apply">
                         <p>New</p>
                         <span>{{ $statusCounts['Apply'] }} Applicants</span>
                     </div>
                 </div>
                 {{-- Screening Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Screening')" id="Screening">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Screening')" id="Screening">
                         <p>Screening</p>
                         <span>{{ $statusCounts['Screening'] }} Applicants</span>
                     </div>
                 </div>
-                {{-- Offered Applicants --}}
-                <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Offered')" id="Offered">
-                        <p>Offered</p>
-                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
-                    </div>
-                </div>
                 {{-- Submitted Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Submitted')" id="Submitted">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Submitted')" id="Submitted">
                         <p>Submitted</p>
                         <span>{{ $statusCounts['Submitted'] }} Applicants</span>
                     </div>
                 </div>
-                {{-- On Hold Applicants --}}
+                {{-- Offered Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Hold')" id="Hold">
-                        <p>Hold</p>
-                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Offered')" id="Offered">
+                        <p>Offered</p>
+                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
                     </div>
                 </div>
-
-
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Onboarding')" id="Onboarding">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
                         <span>{{ $statusCounts['Onboarding'] }} Applicants</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Working')" id="Working">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
                         <p>Working</p>
                         <span>{{ $statusCounts['Working'] }} Applicants</span>
                     </div>
                 </div>
                 {{-- Done Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="applicationType('Done')" id="Done">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Done')" id="Done">
                         <p>Done</p>
                         <span>{{ $statusCounts['Done'] }} Applicants</span>
                     </div>
                 </div>
+                {{-- On Hold Applicants --}}
+                {{-- <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Hold')" id="Hold">
+                        <p>Hold</p>
+                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
+                    </div>
+                </div> --}}
 
 
             </div>
@@ -73,11 +71,14 @@
                     </div>
                     <div class="col-lg-6">
                         <ul>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Done')" id="child_done">Done</a>
+                            <li><a href="javascript:void(0)" onclick="selectOfferCycleState('Done')" id="child_done">Done</a>
                             </li>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Rejected')"
+                            <li><a href="javascript:void(0)" onclick="selectOfferCycleState('Rejected')"
                                     id="Rejected">Rejected</a></li>
-                            <li><a href="javascript:void(0)" onclick="applicationType('Blocked')" id="Blocked">Blocked</a>
+                            <li><a href="javascript:void(0)" onclick="selectOfferCycleState('Blocked')" id="Blocked">Blocked</a>
+                            </li>
+                            <li><a href="javascript:void(0)" onclick="selectOfferCycleState('Hold')"
+                                id="Hold">Hold</a>
                             </li>
                         </ul>
                     </div>
@@ -87,7 +88,7 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="ss-account-form-lft-1">
-                            <h5 class="mb-4" id="listingname">New applications</h5>
+                            <h5 class="mb-4 d-none" id="listingname">New applications</h5>
                             <div id="application-list">
                             </div>
                         </div>
@@ -170,9 +171,9 @@
     </main>
     <script>
 
-const AddStripe = document.getElementById("AddStripe");
+        const AddStripe = document.getElementById("AddStripe");
 
-AddStripe.addEventListener("click", function(event) {
+        AddStripe.addEventListener("click", function(event) {
             event.preventDefault();
 
             $('#loading').removeClass('d-none');
@@ -278,7 +279,7 @@ AddStripe.addEventListener("click", function(event) {
             return access;
         }
 
-        function applicationType(type, id = "", formtype, jobid = "") {
+        function applicationType(type, id = "", formtype, jobid = "", nurseId = "") {
 
             window.scrollTo({
                 top: 0,
@@ -381,13 +382,13 @@ AddStripe.addEventListener("click", function(event) {
             if (activeElement) {
                 activeElement.classList.add("active");
                 childDoneElement.classList.add("active");
-                if (type == 'Rejected' || type == 'Blocked') {
+                if (type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
                     childDoneElement.classList.remove("active");
                     doneElement.classList.add("active");
                 }
             }
             document.getElementById('listingname').innerHTML = type + ' Applications';
-            if (type == 'Done' || type == 'Rejected' || type == 'Blocked') {
+            if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
             } else {
@@ -407,7 +408,8 @@ AddStripe.addEventListener("click", function(event) {
                         'type': type,
                         'id': id,
                         'formtype': formtype,
-                        'jobid': jobid
+                        'jobid': jobid,
+                        'nurse_id':nurseId
                     },
                     type: 'POST',
                     dataType: 'json',
@@ -426,6 +428,7 @@ AddStripe.addEventListener("click", function(event) {
                         var tbody = $('tbody');
                         tbody.empty(); // Clear the table body
                         // Add a row for each file
+                        if (files) {
                         for (var i = 0; i < files.length; i++) {
                                 var file = files[i];
                                 var base64String = file.content;
@@ -451,6 +454,7 @@ AddStripe.addEventListener("click", function(event) {
                                 row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
                                 tbody.append(row);
                         }
+                    }
                     },
                     error: function(error) {
                         console.log(error);
@@ -468,14 +472,12 @@ AddStripe.addEventListener("click", function(event) {
         function sendOffer(type, userid, jobid) {
             document.getElementById("offer-form").classList.remove("d-none");
             document.getElementById("application-details").classList.add("d-none");
-        }
-        $(document).ready(function() {
-            applicationType('Apply')
-        });
+            }
 
-        var addmoreexperience = document.querySelector('.add-more-experience');
 
-        if (addmoreexperience) {
+            var addmoreexperience = document.querySelector('.add-more-experience');
+
+            if (addmoreexperience) {
             addmoreexperience.onclick = function() {
                 var allExperienceDiv = document.getElementById('all-experience');
                 var newExperienceDiv = document.querySelector('.experience-inputs').cloneNode(true);
@@ -515,66 +517,9 @@ AddStripe.addEventListener("click", function(event) {
             formfieldcertificate.appendChild(newField);
         }
 
-        function applicationStatus(applicationstatus, type, id, jobid) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
 
-                    url: "{{ url('recruiter/update-application-status') }}",
-                    data: {
-                        'token': csrfToken,
-                        'type': type,
-                        'id': id,
-                        'formtype': applicationstatus,
-                        'jobid': jobid,
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
-
-
-
-                        notie.alert({
-                            type: 'success',
-                            text: result.message,
-                            time: 5
-                        });
-
-                        $("#Apply span").text(result.statusCounts['Apply'] + " Applicants");
-                        $("#Screening span").text(result.statusCounts['Screening'] + " Applicants");
-                        $("#Submitted span").text(result.statusCounts['Submitted'] + " Applicants");
-                        $("#Offered span").text(result.statusCounts['Offered'] + " Applicants");
-                        $("#Onboarding span").text(result.statusCounts['Onboarding'] + " Applicants");
-                        $("#Working span").text(result.statusCounts['Working'] + " Applicants");
-                        $("#Rejected span").text(result.statusCounts['Rejected'] + " Applicants");
-                        $("#Blocked span").text(result.statusCounts['Blocked'] + " Applicants");
-                        $("#Hold span").text(result.statusCounts['Hold'] + " Applicants");
-                        $("#application-list").html(result.applicationlisting);
-                        $("#application-details").html(result.applicationdetails);
-                        setTimeout(() => {
-                            console.log(result.type);
-                            applicationType(result.type);
-                        }, 3000);
-
-                    },
-                    error: function(result) {
-                        notie.alert({
-                            type: 'error',
-                            text: result.responseJSON.message,
-                            time: 5
-                        });
-
-                        open_stripe_modal();
-                    }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
-        }
         $(document).ready(function() {
+
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
                 var $form = $('#send-job-offer');
@@ -655,40 +600,9 @@ AddStripe.addEventListener("click", function(event) {
             }
         }
 
-        function offerSend(id, jobid, type) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('recruiter/send-job-offer-recruiter') }}",
-                    data: {
-                        'token': csrfToken,
-                        'id': id,
-                        'jobid': jobid,
-                        'type': type,
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> ' + result.message,
-                            time: 5
-                        });
-                        // setTimeout(() => {
-                        //     location.reload();
-                        // }, 3000);
-                    },
-                    error: function(error) {
-                        // Handle errors
-                    }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
-        }
+
+
+
         setInterval(function() {
             $(document).ready(function() {
                 $('.application-job-slider-owl').owlCarousel({
@@ -1073,35 +987,35 @@ AddStripe.addEventListener("click", function(event) {
                 }
             });
         }
-        $(document).ready(function() {
-            let formData = {
-                'country_id': '233',
-                'api_key': '123',
-            }
-            $.ajax({
-                type: 'POST',
-                url: "{{ url('api/get-states') }}",
-                data: formData,
-                dataType: 'json',
-                success: function(data) {
-                    var stateSelect = $('#facility-state-code');
-                    stateSelect.empty();
-                    stateSelect.append($('<option>', {
-                        value: "",
-                        text: "Select Facility State Code"
-                    }));
-                    $.each(data.data, function(index, state) {
-                        stateSelect.append($('<option>', {
-                            value: state.state_id,
-                            text: state.name
-                        }));
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
+        // $(document).ready(function() {
+        //     let formData = {
+        //         'country_id': '233',
+        //         'api_key': '123',
+        //     }
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: "{{ url('api/get-states') }}",
+        //         data: formData,
+        //         dataType: 'json',
+        //         success: function(data) {
+        //             var stateSelect = $('#facility-state-code');
+        //             stateSelect.empty();
+        //             stateSelect.append($('<option>', {
+        //                 value: "",
+        //                 text: "Select Facility State Code"
+        //             }));
+        //             $.each(data.data, function(index, state) {
+        //                 stateSelect.append($('<option>', {
+        //                     value: state.state_id,
+        //                     text: state.name
+        //                 }));
+        //             });
+        //         },
+        //         error: function(error) {
+        //             console.log(error);
+        //         }
+        //     });
+        // });
 
         function searchCity(e) {
             var selectedValue = e.value;
@@ -1201,11 +1115,320 @@ AddStripe.addEventListener("click", function(event) {
             let target = '#stripe_modal';
             $(target).modal('hide');
         }
-    </script>
 
+        function counterOffer(offerId){
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/get-offer-information') }}",
+                    data: {
+                        'token': csrfToken,
+                        'offer_id' : offerId,
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        $("#application-details").html(result.content);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
+        function selectOfferCycleState(type){
+            applicationStatusToggle(type);
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/get-offers-by-type') }}",
+                    data: {
+                        'token': csrfToken,
+                        'type' : type,
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        $("#application-list").html(result.content);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
+        function applicationStatusToggle(type){
+            noApplicationDetailsContent();
+            $("#listingname").removeClass("d-none");
+            var applyElement = document.getElementById('Apply');
+            var screeningElement = document.getElementById('Screening');
+            var submittedElement = document.getElementById('Submitted');
+            var offeredElement = document.getElementById('Offered');
+            var onboardingElement = document.getElementById('Onboarding');
+            var workingElement = document.getElementById('Working');
+            var doneElement = document.getElementById('Done');
+            var holdElement = document.getElementById('Hold');
+            var rejectedElement = document.getElementById('Rejected');
+            var blockedElement = document.getElementById('Blocked');
+            var childDoneElement = document.getElementById('child_done');
+            if (applyElement.classList.contains("active")) {
+                applyElement.classList.remove("active");
+            }
+            if (screeningElement.classList.contains("active")) {
+                screeningElement.classList.remove("active");
+            }
+            if (submittedElement.classList.contains("active")) {
+                submittedElement.classList.remove("active");
+            }
+            if (offeredElement.classList.contains("active")) {
+                offeredElement.classList.remove("active");
+            }
+            if (onboardingElement.classList.contains("active")) {
+                onboardingElement.classList.remove("active");
+            }
+            if (workingElement.classList.contains("active")) {
+                workingElement.classList.remove("active");
+            }
+            if (doneElement.classList.contains("active")) {
+                doneElement.classList.remove("active");
+            }
+            if (rejectedElement.classList.contains("active")) {
+                rejectedElement.classList.remove("active");
+            }
+            if (blockedElement.classList.contains("active")) {
+                blockedElement.classList.remove("active");
+            }
+            if (holdElement.classList.contains("active")) {
+                holdElement.classList.remove("active");
+            }
+            var activeElement = document.getElementById(type);
+            if (activeElement) {
+                activeElement.classList.add("active");
+                childDoneElement.classList.add("active");
+                if (type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
+                    childDoneElement.classList.remove("active");
+                    doneElement.classList.add("active");
+                }
+            }
+            document.getElementById('listingname').innerHTML = type + ' Applications';
+            if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
+
+                document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
+            } else {
+                document.getElementById("ss-appli-done-hed-btn-dv").classList.add("d-none");
+            }
+        }
+
+        function getOffersOfEachWorker(type,nurseId){
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/get-offers-of-each-worker') }}",
+                    data: {
+                        'token': csrfToken,
+                        'type' : type,
+                        'nurse_id': nurseId
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                         $("#application-details").html(result.content);
+                        console.log(result.content);
+
+                        var files = result.files;
+                        console.log(files);
+                        var tbody = $('tbody');
+                        tbody.empty(); // Clear the table body
+                        // Add a row for each file
+                        if (files) {
+                        for (var i = 0; i < files.length; i++) {
+                                var file = files[i];
+                                var base64String = file.content;
+
+                                const mimeType = base64String.match(/^data:(.+);base64,/)[1];
+                                const base64Data = base64String.split(',')[1];
+                                const byteCharacters = atob(base64Data);
+                                const byteNumbers = new Array(byteCharacters.length);
+                                for (let j = 0; j < byteCharacters.length; j++) {
+                                    byteNumbers[j] = byteCharacters.charCodeAt(j);
+                                }
+                                const byteArray = new Uint8Array(byteNumbers);
+                                const blob = new Blob([byteArray], { type: mimeType });
+                                const blobUrl = URL.createObjectURL(blob);
+                                const downloadLink = document.createElement('a');
+                                downloadLink.href = blobUrl;
+                                const extension = mimeType.split('/')[1];
+                                downloadLink.setAttribute('download', `document.${extension}`);
+                                var row = $('<tr></tr>');
+                                row.append('<td>' + file.name + '</td>');
+                                row.append('<td>' + file.type + '</td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                tbody.append(row);
+                        }
+                    }
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+        function getOneOfferInformation(offerId){
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/get-one-offer-information') }}",
+                    data: {
+                        'token': csrfToken,
+                        'offer_id': offerId
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                         $("#application-details").html(result.content);
+                        console.log(result.content);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
+        function applicationStatus(applicationstatus, id) {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+
+                    url: "{{ url('recruiter/update-application-status') }}",
+                    data: {
+                        'token': csrfToken,
+                        'id': id,
+                        'status': applicationstatus,
+
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(result) {
+                        notie.alert({
+                            type: 'success',
+                            text: result.message,
+                            time: 5
+                        });
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+
+                        statusKeys.forEach(key => {
+                            $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
+                        });
+
+                        setTimeout(() => {
+                            applicationStatusToggle(applicationstatus);
+                            $('#' + applicationstatus).click();
+                        }, 1000);
+
+                    },
+                    error: function(result) {
+                        notie.alert({
+                            type: 'error',
+                            text: 'Oops ! Try again later. ',
+                            time: 5
+                        });
+
+                        // open_stripe_modal();
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
+        function AcceptOrRejectJobOffer(id, jobid, type) {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/accept-reject-job-offer') }}",
+                    data: {
+                        'token': csrfToken,
+                        'id': id,
+                        'jobid': jobid,
+                        'type': type,
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(result) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i>Updated successfully',
+                            time: 5
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    },
+                    error: function(error) {
+                        // Handle errors
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
+        $(document).ready(function() {
+            noApplicationDetailsContent();
+            noApplicationWorkerListContent();
+        });
+
+        function noApplicationWorkerListContent(){
+            $("#application-list").html("<div class='text-center no_details'><span>Select an application status</span></div>");
+        }
+        function noApplicationDetailsContent(){
+            $("#application-details").html("<div class='text-center no_details'><span>Select a worker application</span></div>");
+        }
+
+    </script>
     <style>
         .ss-job-prfle-sec:after {
             background-image: none;
+        }
+        .no_details{
+            margin-top:15vh;
+            margin-bottom:15vh;
+        }
+        #application-details{
+            height: fit-content;
+        }
+        #application-list{
+            height: fit-content;
         }
     </style>
 @endsection

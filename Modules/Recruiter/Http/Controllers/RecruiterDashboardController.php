@@ -125,7 +125,7 @@ public function index()
         $user = auth()->guard('recruiter')->user();
 
         $data['specialities'] = Speciality::select('full_name')->get();
-        $data['proffesions'] = Profession::select('full_name')->get();
+        $data['professions'] = Profession::select('full_name')->get();
         // send the states
         $distinctFilters = Keyword::distinct()->pluck('filter');
         $allKeywords = [];
@@ -407,6 +407,7 @@ public function index()
 
     public function send_amount(Request $request)
     {
+        
         try {
             $user = Auth::guard('recruiter')->user();
             $user_email = $user->email;

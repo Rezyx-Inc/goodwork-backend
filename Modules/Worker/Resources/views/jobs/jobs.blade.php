@@ -15,7 +15,7 @@
         <div class="ss-my-work-tab-div">
             {{-- <ul onclick="myFunction(event)" id='navList'> --}}
             <ul>
-                  <li><a href="{{route('saved-jobs')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'saved-jobs' ) ? 'active' :'' }}">Saved</a></li>
+                <li><a href="{{route('saved-jobs')}}" class="ss-saved-btn {{ ( request()->route()->getName() == 'saved-jobs' ) ? 'active' :'' }}">Saved</a></li>
                 <li><a href="{{route('applied-jobs')}}" class="ss-applied-btn {{ ( request()->route()->getName() == 'applied-jobs' ) ? 'active' :'' }}">Applied</a></li>
                 <li><a href="{{route('offered-jobs')}}" class="ss-offered-btn {{ ( request()->route()->getName() == 'offered-jobs' ) ? 'active' :'' }}">Offered</a></li>
                 <li><a href="{{route('hired-jobs')}}" class="ss-hired-btn {{ ( request()->route()->getName() == 'hired-jobs' ) ? 'active' :'' }}">Hired</a></li>
@@ -298,6 +298,40 @@ AddStripe.addEventListener("click", function(event) {
                                 location.reload();
                             }, 2000);
 
+                    },
+                    error: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                    }
+                });
+
+        }
+
+
+        function store_counter_offer(obj)
+        {
+                ajaxindicatorstart();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/worker/post-counter-offer',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        jid: $(obj).data('id'),
+                        type: $(obj).data('type')
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        ajaxindicatorstop();
+                        if (resp.success) {
+
+                            $('.job-content').html(resp.content);
+                            $(obj).addClass('active')
+                        }
                     },
                     error: function (resp) {
                         console.log(resp);

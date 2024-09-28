@@ -144,7 +144,8 @@ class FacilityController extends Controller
                 $vimeoID = $this->parse_vimeo($request->video_link);
                 $embedURL = 'https://player.vimeo.com/video/' . $vimeoID[1];
             }
-            if ($embedURL != "") $update_array['video_embed_url'] = $embedURL;
+            if ($embedURL != "")
+                $update_array['video_embed_url'] = $embedURL;
 
             /* required */
             $update_array['name'] = $request->name;
@@ -162,43 +163,69 @@ class FacilityController extends Controller
             /* required */
 
             $facility_id = "";
-            if (isset($request->facility_id) && $request->facility_id != "") $facility_id = $request->facility_id;
-            if (isset($request->facility_email) && $request->facility_email != "") $update_array["facility_email"] = $request->facility_email;
-            if (isset($request->facebook) && $request->facebook != "") $update_array["facebook"] = $request->facebook;
-            if (isset($request->twitter) && $request->twitter != "") $update_array["twitter"] = $request->twitter;
-            if (isset($request->linkedin) && $request->linkedin != "") $update_array["linkedin"] = $request->linkedin;
-            if (isset($request->instagram) && $request->instagram != "") $update_array["instagram"] = $request->instagram;
-            if (isset($request->pinterest) && $request->pinterest != "") $update_array["pinterest"] = $request->pinterest;
-            if (isset($request->tiktok) && $request->tiktok != "") $update_array["tiktok"] = $request->tiktok;
-            if (isset($request->sanpchat) && $request->sanpchat != "") $update_array["sanpchat"] = $request->sanpchat;
-            if (isset($request->youtube) && $request->youtube != "") $update_array["youtube"] = $request->youtube;
-            if (isset($request->facility_website) && $request->facility_website != "") $update_array["facility_website"] = $request->facility_website;
-            if (isset($request->trauma) && $request->trauma != "") $update_array["trauma_designation"] = $request->trauma;
-            if (isset($request->senior_leader_message) && $request->senior_leader_message != "") $update_array["cno_message"] = $request->senior_leader_message;
-            if (isset($request->about_facility) && $request->about_facility != "") $update_array["about_facility"] = $request->about_facility;
+            if (isset($request->facility_id) && $request->facility_id != "")
+                $facility_id = $request->facility_id;
+            if (isset($request->facility_email) && $request->facility_email != "")
+                $update_array["facility_email"] = $request->facility_email;
+            if (isset($request->facebook) && $request->facebook != "")
+                $update_array["facebook"] = $request->facebook;
+            if (isset($request->twitter) && $request->twitter != "")
+                $update_array["twitter"] = $request->twitter;
+            if (isset($request->linkedin) && $request->linkedin != "")
+                $update_array["linkedin"] = $request->linkedin;
+            if (isset($request->instagram) && $request->instagram != "")
+                $update_array["instagram"] = $request->instagram;
+            if (isset($request->pinterest) && $request->pinterest != "")
+                $update_array["pinterest"] = $request->pinterest;
+            if (isset($request->tiktok) && $request->tiktok != "")
+                $update_array["tiktok"] = $request->tiktok;
+            if (isset($request->sanpchat) && $request->sanpchat != "")
+                $update_array["sanpchat"] = $request->sanpchat;
+            if (isset($request->youtube) && $request->youtube != "")
+                $update_array["youtube"] = $request->youtube;
+            if (isset($request->facility_website) && $request->facility_website != "")
+                $update_array["facility_website"] = $request->facility_website;
+            if (isset($request->trauma) && $request->trauma != "")
+                $update_array["trauma_designation"] = $request->trauma;
+            if (isset($request->senior_leader_message) && $request->senior_leader_message != "")
+                $update_array["cno_message"] = $request->senior_leader_message;
+            if (isset($request->about_facility) && $request->about_facility != "")
+                $update_array["about_facility"] = $request->about_facility;
 
-            if (isset($request->f_emr) && $request->f_emr != "") $update_array["f_emr"] = $request->f_emr;
+            if (isset($request->f_emr) && $request->f_emr != "")
+                $update_array["f_emr"] = $request->f_emr;
             if (isset($update_array["f_emr"]) && ($update_array["f_emr"] == "other" || $update_array["f_emr"] == "0")) {
-                if (isset($update_array["f_emr_other"]) && $update_array["f_emr_other"] != "")  $request->f_emr_other;
-            } else $update_array["f_emr_other"] = "";
+                if (isset($update_array["f_emr_other"]) && $update_array["f_emr_other"] != "")
+                    $request->f_emr_other;
+            } else
+                $update_array["f_emr_other"] = "";
 
             if (isset($update_array["f_bcheck_provider"]) && ($update_array["f_bcheck_provider"] == "other" || $update_array["f_bcheck_provider"] == "0")) {
-                if (isset($request->f_bcheck_provider_other) && $request->f_bcheck_provider_other != "") $update_array["f_bcheck_provider_other"] = $request->f_bcheck_provider_other;
-            } else $update_array["f_bcheck_provider_other"] = "";
+                if (isset($request->f_bcheck_provider_other) && $request->f_bcheck_provider_other != "")
+                    $update_array["f_bcheck_provider_other"] = $request->f_bcheck_provider_other;
+            } else
+                $update_array["f_bcheck_provider_other"] = "";
 
             if (isset($update_array["nurse_cred_soft"]) && ($update_array["nurse_cred_soft"] == "other" || $update_array["nurse_cred_soft"] == "0")) {
-                if (isset($request->nurse_cred_soft_other) && $request->nurse_cred_soft_other != "") $update_array["nurse_cred_soft_other"] = $request->nurse_cred_soft_other;
-            } else $update_array["nurse_cred_soft_other"] = "";
+                if (isset($request->nurse_cred_soft_other) && $request->nurse_cred_soft_other != "")
+                    $update_array["nurse_cred_soft_other"] = $request->nurse_cred_soft_other;
+            } else
+                $update_array["nurse_cred_soft_other"] = "";
 
             if (isset($update_array["nurse_scheduling_sys"]) && ($update_array["nurse_scheduling_sys"] == "other" || $update_array["nurse_scheduling_sys"] == "0")) {
-                if (isset($request->nurse_scheduling_sys_other) && $request->nurse_scheduling_sys_other != "") $update_array["nurse_scheduling_sys_other"] = $request->nurse_scheduling_sys_other;
-            } else $update_array["nurse_scheduling_sys_other"] = "";
+                if (isset($request->nurse_scheduling_sys_other) && $request->nurse_scheduling_sys_other != "")
+                    $update_array["nurse_scheduling_sys_other"] = $request->nurse_scheduling_sys_other;
+            } else
+                $update_array["nurse_scheduling_sys_other"] = "";
 
             if (isset($update_array["time_attend_sys"]) && ($update_array["time_attend_sys"] == "other" || $update_array["time_attend_sys"] == "0")) {
-                if (isset($request->time_attend_sys_other) && $request->time_attend_sys_other != "") $update_array["time_attend_sys_other"] = $request->time_attend_sys_other;
-            } else $update_array["time_attend_sys_other"] = "";
+                if (isset($request->time_attend_sys_other) && $request->time_attend_sys_other != "")
+                    $update_array["time_attend_sys_other"] = $request->time_attend_sys_other;
+            } else
+                $update_array["time_attend_sys_other"] = "";
 
-            if (isset($request->licensed_beds) && $request->licensed_beds != "") $update_array["licensed_beds"] = $request->licensed_beds;
+            if (isset($request->licensed_beds) && $request->licensed_beds != "")
+                $update_array["licensed_beds"] = $request->licensed_beds;
 
             if ($request->hasFile('facility_logo')) {
                 $facility_logo_name_full = $request->file('facility_logo')->getClientOriginalName();
@@ -340,7 +367,7 @@ class FacilityController extends Controller
         $search_bill_rate_from = (isset($request->search_bill_rate_from) && $request->search_bill_rate_from != "") ? $request->search_bill_rate_from : "";
         $search_bill_rate_to = (isset($request->search_bill_rate_to) && $request->search_bill_rate_to != "") ? $request->search_bill_rate_to : "";
         if ($search_bill_rate_from != "" && $search_bill_rate_to != "") {
-            $ret->where(function (Builder $query) use ($search_bill_rate_from,  $search_bill_rate_to) {
+            $ret->where(function (Builder $query) use ($search_bill_rate_from, $search_bill_rate_to) {
                 $query->whereBetween('facility_hourly_pay_rate', array(intval($search_bill_rate_from), intval($search_bill_rate_to)));
             });
         }
@@ -436,7 +463,7 @@ class FacilityController extends Controller
             $nurse_data = $ret->get();
             // $nurse_data = $ret->paginate($limit);
             $nurse_info['data'] = $this->nurseInfo($nurse_data);
-            $nurse_info['total_pages_available'] =  strval($total_pages);
+            $nurse_info['total_pages_available'] = strval($total_pages);
             $nurse_info["current_page"] = (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) ? $_REQUEST['page'] : "1";
             $nurse_info['results_per_page'] = strval($limit);
 
@@ -485,9 +512,12 @@ class FacilityController extends Controller
                 $user = $user_info->first();
 
                 $page = (isset($request->page_number) && $request->page_number != "") ? $request->page_number : "1";
-                if ($type == "active")  $where = ['active' => '1', 'created_by' => $user->id, 'status' => 'Active'];
-                elseif ($type == "completed") $where = ['active' => '1', 'created_by' => $user->id, 'status' => 'Active'];
-                else $where = ['active' => '1', 'created_by' => $user->id, 'status' => 'Pending'];
+                if ($type == "active")
+                    $where = ['active' => '1', 'created_by' => $user->id, 'status' => 'Active'];
+                elseif ($type == "completed")
+                    $where = ['active' => '1', 'created_by' => $user->id, 'status' => 'Active'];
+                else
+                    $where = ['active' => '1', 'created_by' => $user->id, 'status' => 'Pending'];
 
                 $limit = 25;
                 $offers_info = Offer::where($where)
@@ -496,7 +526,7 @@ class FacilityController extends Controller
                     ->get();
 
                 $total_pages = ceil($offers_info->count() / $limit);
-                $offered['total_pages_available'] =  strval($total_pages);
+                $offered['total_pages_available'] = strval($total_pages);
                 $offered["current_page"] = (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) ? $_REQUEST['page'] : "1";
                 $offered['results_per_page'] = strval($limit);
 
@@ -529,7 +559,7 @@ class FacilityController extends Controller
                         $o['nurse_image'] = $image;
                         // $o['nurse_image_base'] = $image_base;
 
-                        if($off->job){
+                        if ($off->job) {
 
                             $o['preferred_shift'] = (isset($off->job->preferred_shift) && $off->job->preferred_shift != "") ? strval($off->job->preferred_shift) : "";
                             $o['preferred_shift_definition'] = (isset($preferredShifts[$off->job->preferred_shift]) && $preferredShifts[$off->job->preferred_shift] != "") ? $preferredShifts[$off->job->preferred_shift] : "";
@@ -539,7 +569,7 @@ class FacilityController extends Controller
                             $o['preferred_specialty_definition'] = (isset($specialties[$off->job->preferred_specialty]) && $specialties[$off->job->preferred_specialty] != "") ? $specialties[$off->job->preferred_specialty] : "";
                             $o['preferred_assignment_duration'] = (isset($off->job->preferred_assignment_duration) && $off->job->preferred_assignment_duration != "") ? strval($off->job->preferred_assignment_duration) : "0";
                             $o['preferred_assignment_duration_definition'] = (isset($assignmentDurations[$off->job->preferred_assignment_duration]) && $assignmentDurations[$off->job->preferred_assignment_duration] != "") ? $assignmentDurations[$off->job->preferred_assignment_duration] : "0";
-                            if(isset($o['preferred_assignment_duration_definition'])){
+                            if (isset($o['preferred_assignment_duration_definition'])) {
                                 $assignment = explode(" ", $assignmentDurations[$off->job->preferred_assignment_duration]);
                                 $o['preferred_assignment_duration_definition'] = $assignment[0]; // 12 Week
                             }
@@ -553,13 +583,20 @@ class FacilityController extends Controller
                                 $day_s = explode(",", $off->job->preferred_days_of_the_week);
                                 if (is_array($day_s) && !empty($day_s)) {
                                     foreach ($day_s as $day) {
-                                        if ($day == "Sunday") $days[] = "Su";
-                                        elseif ($day == "Monday") $days[] = "M";
-                                        elseif ($day == "Tuesday") $days[] = "T";
-                                        elseif ($day == "Wednesday") $days[] = "W";
-                                        elseif ($day == "Thursday") $days[] = "Th";
-                                        elseif ($day == "Friday") $days[] = "F";
-                                        elseif ($day == "Saturday") $days[] = "Sa";
+                                        if ($day == "Sunday")
+                                            $days[] = "Su";
+                                        elseif ($day == "Monday")
+                                            $days[] = "M";
+                                        elseif ($day == "Tuesday")
+                                            $days[] = "T";
+                                        elseif ($day == "Wednesday")
+                                            $days[] = "W";
+                                        elseif ($day == "Thursday")
+                                            $days[] = "Th";
+                                        elseif ($day == "Friday")
+                                            $days[] = "F";
+                                        elseif ($day == "Saturday")
+                                            $days[] = "Sa";
                                     }
                                 }
                             }
@@ -659,10 +696,10 @@ class FacilityController extends Controller
             $check_offer = Offer::where(['nurse_id' => $request->nurse_id, 'job_id' => $request->job_id])->get()->first();
             $today = date('Y-m-d H:i:s');
 
-            if(isset($check_offer) && $check_offer['expiration'] > $today){
+            if (isset($check_offer) && $check_offer['expiration'] > $today) {
                 $this->check = "0";
                 $this->message = "You are already apply for this job";
-            }else{
+            } else {
                 DB::table('offers')->where('nurse_id', $request->nurse_id)->where('job_id', $request->job_id)->delete();
                 $offer = Offer::create($insert_offer);
                 Follows::create($insert_follow);
@@ -840,7 +877,7 @@ class FacilityController extends Controller
                         $o['preferred_specialty_definition'] = (isset($specialties[$job->preferred_specialty]) && $specialties[$job->preferred_specialty] != "") ? $specialties[$job->preferred_specialty] : "";
                         $o['preferred_assignment_duration'] = (isset($job->preferred_assignment_duration) && $job->preferred_assignment_duration != "") ? strval($job->preferred_assignment_duration) : "0";
                         $o['preferred_assignment_duration_definition'] = (isset($assignmentDurations[$job->preferred_assignment_duration]) && $assignmentDurations[$job->preferred_assignment_duration] != "") ? $assignmentDurations[$job->preferred_assignment_duration] : "0";
-                        if(isset($o['preferred_assignment_duration_definition'])){
+                        if (isset($o['preferred_assignment_duration_definition'])) {
                             $assignment = explode(" ", $assignmentDurations[$job->preferred_assignment_duration]);
                             $o['preferred_assignment_duration_definition'] = $assignment[0]; // 12 Week
                         }
@@ -851,13 +888,20 @@ class FacilityController extends Controller
                             $day_s = explode(",", $job->preferred_days_of_the_week);
                             if (is_array($day_s) && !empty($day_s)) {
                                 foreach ($day_s as $day) {
-                                    if ($day == "Sunday") $days[] = "Su";
-                                    elseif ($day == "Monday") $days[] = "M";
-                                    elseif ($day == "Tuesday") $days[] = "T";
-                                    elseif ($day == "Wednesday") $days[] = "W";
-                                    elseif ($day == "Thursday") $days[] = "Th";
-                                    elseif ($day == "Friday") $days[] = "F";
-                                    elseif ($day == "Saturday") $days[] = "Sa";
+                                    if ($day == "Sunday")
+                                        $days[] = "Su";
+                                    elseif ($day == "Monday")
+                                        $days[] = "M";
+                                    elseif ($day == "Tuesday")
+                                        $days[] = "T";
+                                    elseif ($day == "Wednesday")
+                                        $days[] = "W";
+                                    elseif ($day == "Thursday")
+                                        $days[] = "Th";
+                                    elseif ($day == "Friday")
+                                        $days[] = "F";
+                                    elseif ($day == "Saturday")
+                                        $days[] = "Sa";
                                 }
                             }
                         }
@@ -934,7 +978,7 @@ class FacilityController extends Controller
                                 }
                             }
                         }
-                        $o['rating_comment'] = (!empty($comment)) ? $comment : (object)array();
+                        $o['rating_comment'] = (!empty($comment)) ? $comment : (object) array();
 
                         /* offered nurse id */
 
@@ -959,15 +1003,18 @@ class FacilityController extends Controller
                         $o['end_date'] = date('d F Y', strtotime($job->end_date));
 
                         if ($type == "posted" && ((empty($job->offers[0])) || (isset($job->offers[0]->status) && $job->offers[0]->status == "Pending"))) {
-                            if ($tot_res == 0) $tot_res += 1; //initialized first page`
+                            if ($tot_res == 0)
+                                $tot_res += 1; //initialized first page`
                             $tot_res += 1;
                             $my_jobs['data'][] = $o;
                         } elseif ($type == "active" && (isset($job->offers[0]->status) && $job->offers[0]->status == "Active" && ($job->end_date >= date('Y-m-d')))) {
-                            if ($tot_res == 0) $tot_res += 1; //initialized first page`
+                            if ($tot_res == 0)
+                                $tot_res += 1; //initialized first page`
                             $tot_res += 1;
                             $my_jobs['data'][] = $o;
                         } elseif ($type == "completed" && (isset($job->offers[0]->status) && $job->offers[0]->status == "Active" && ($job->end_date < date('Y-m-d')))) {
-                            if ($tot_res == 0) $tot_res += 1; //initialized first page`
+                            if ($tot_res == 0)
+                                $tot_res += 1; //initialized first page`
                             $tot_res += 1;
                             $rating_info = NurseRating::where(['job_id' => $job->id]);
                             $o['rating_flag'] = ($rating_info->count() > 0) ? "1" : "0";
@@ -981,7 +1028,7 @@ class FacilityController extends Controller
                     $this->message = "Currently nothing " . $type;
                 }
                 $total_pages = ceil($tot_res / $limit);
-                $my_jobs['total_pages_available'] =  strval($total_pages);
+                $my_jobs['total_pages_available'] = strval($total_pages);
                 $my_jobs["current_page"] = (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) ? $_REQUEST['page'] : "1";
                 $my_jobs['results_per_page'] = strval($limit);
 
@@ -1036,7 +1083,8 @@ class FacilityController extends Controller
                             'duration' => $job->preferred_assignment_duration ? \App\Providers\AppServiceProvider::keywordTitle($job->preferred_assignment_duration) : 'N/A',
                             'shift' => $job->preferred_shift_duration ? \App\Providers\AppServiceProvider::keywordTitle($job->preferred_shift_duration) : 'N/A',
                             'workdays' => $job->preferred_days_of_the_week ?: 'N/A',
-                        ], 'terms' => '<p><strong>TERMS ACKNOWLEDGMENT</strong></p> <p>By clicking on the &ldquo;Make an Offer&rdquo; your facility agrees to pay the hourly bill rate reflected on the nurse&rsquo;s profile page per the terms established in the Goodwork vendor agreement</p> <p><strong>NEXT STEPS</strong></p> <ul> <li><strong>Webo User</strong>&nbsp;will have 48 hours to accept your booking request</li> <li>You will receive an email notice after the nurse accepts or rejects the request</li> <li>Assuming the nurse accepts, a Goodwork Consultant will contact you to coordinate onboarding logistics</li> <li>If the nurse rejects, we will provide additional nurses that may meet your need</li> <li>Contact us anytime at&nbsp;<a href="mailto:info@goodwork.app">info@goodwork.app</a></li> </ul>'
+                        ],
+                        'terms' => '<p><strong>TERMS ACKNOWLEDGMENT</strong></p> <p>By clicking on the &ldquo;Make an Offer&rdquo; your facility agrees to pay the hourly bill rate reflected on the nurse&rsquo;s profile page per the terms established in the Goodwork vendor agreement</p> <p><strong>NEXT STEPS</strong></p> <ul> <li><strong>Webo User</strong>&nbsp;will have 48 hours to accept your booking request</li> <li>You will receive an email notice after the nurse accepts or rejects the request</li> <li>Assuming the nurse accepts, a Goodwork Consultant will contact you to coordinate onboarding logistics</li> <li>If the nurse rejects, we will provide additional nurses that may meet your need</li> <li>Contact us anytime at&nbsp;<a href="mailto:info@goodwork.app">info@goodwork.app</a></li> </ul>'
                     ];
                 }
 
@@ -1106,7 +1154,7 @@ class FacilityController extends Controller
                 $nurses_applied = $check_exists->get();
                 $response = [];
                 foreach ($nurses_applied as $key => $applied) {
-                    $data['nurse_user_id']  = (isset($applied->creator->id) && $applied->creator->id != "") ? $applied->creator->id : "";
+                    $data['nurse_user_id'] = (isset($applied->creator->id) && $applied->creator->id != "") ? $applied->creator->id : "";
                     $nurse_info = NURSE::where(['user_id' => $data['nurse_user_id']]);
 
                     $data['nurse_id'] = "";
@@ -1219,8 +1267,11 @@ class FacilityController extends Controller
 
     public function removeJobDocument(Request $request)
     {
-        $validator = \Validator::make($request->all(), ['job_id' => 'required', 'asset_id' => 'required',
-        'api_key' => 'required',]);
+        $validator = \Validator::make($request->all(), [
+            'job_id' => 'required',
+            'asset_id' => 'required',
+            'api_key' => 'required',
+        ]);
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
@@ -1326,7 +1377,8 @@ class FacilityController extends Controller
             foreach ($notifications as $notification) {
                 $user = USER::where(['id' => $notification->nurse->user_id])->first();
                 $n[] = [
-                    "notification_id" => $notification->id, "message" => "You have sent a new offer to " . $user->first_name . ' ' . $user->last_name . " that matches your <b style='color:#2BE3BD'> " . \App\Providers\AppServiceProvider::keywordTitle($notification->job->preferred_specialty) . " </b> job assignment preference and or profile."
+                    "notification_id" => $notification->id,
+                    "message" => "You have sent a new offer to " . $user->first_name . ' ' . $user->last_name . " that matches your <b style='color:#2BE3BD'> " . \App\Providers\AppServiceProvider::keywordTitle($notification->job->preferred_specialty) . " </b> job assignment preference and or profile."
                 ];
             }
             $this->check = "1";
@@ -1352,27 +1404,27 @@ class FacilityController extends Controller
         } else {
 
             $whereCond = [
-                    'facilities.active' => true,
-                    'jobs.id' => $request->job_id
-                ];
+                'facilities.active' => true,
+                'jobs.id' => $request->job_id
+            ];
 
             $respond = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'jobs.created_at as posted_on')
-                            ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
-                            ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
-                            ->where($whereCond);
+                ->leftJoin('offers', 'offers.job_id', '=', 'jobs.id')
+                ->leftJoin('facilities', 'jobs.facility_id', '=', 'facilities.id')
+                ->where($whereCond);
             $job_data = $respond->groupBy('jobs.id')->first();
 
-            if(empty($job_data)){
-                $whereCond1 =  [
+            if (empty($job_data)) {
+                $whereCond1 = [
                     'facilities.active' => true,
                     'jobs.id' => $request->job_id,
                 ];
 
                 $worker_jobs = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*', 'offers.job_id as job_id', 'facilities.name as facility_name', 'facilities.city as facility_city', 'facilities.state as facility_state', 'jobs.created_at as posted_on')
 
-                ->leftJoin('offers','offers.job_id', '=', 'jobs.id')
-                ->leftJoin('facilities','jobs.facility_id', '=', 'facilities.id')
-                ->where($whereCond1)->groupBy('jobs.id')->first();
+                    ->leftJoin('offers', 'offers.job_id', '=', 'jobs.id')
+                    ->leftJoin('facilities', 'jobs.facility_id', '=', 'facilities.id')
+                    ->where($whereCond1)->groupBy('jobs.id')->first();
                 $job_data['workers_applied'] = $worker_jobs['workers_applied'];
                 $job_data['worker_contract_termination_policy'] = $worker_jobs['contract_termination_policy'];
                 $job_data['job_id'] = $worker_jobs['job_id'];
@@ -1382,60 +1434,59 @@ class FacilityController extends Controller
                 // $job_data['posted_on'] = $worker_jobs['posted_on'];
             }
             $job_data['posted_on'] = $job_data['created_at'];
-            if(isset($job_data['recruiter_id']) && !empty($job_data['recruiter_id'])){
+            if (isset($job_data['recruiter_id']) && !empty($job_data['recruiter_id'])) {
                 $recruiter_info = USER::where('id', $job_data['recruiter_id'])->get()->first();
-                $recruiter_name = $recruiter_info->first_name.' '.$recruiter_info->last_name;
-            }else{
+                $recruiter_name = $recruiter_info->first_name . ' ' . $recruiter_info->last_name;
+            } else {
                 $recruiter_name = '';
             }
 
             $job = Job::select(DB::raw("(SELECT COUNT(id) AS applied_people FROM offers WHERE offers.job_id=jobs.id) as workers_applied"), 'jobs.*')->where('id', $request->job_id)->first();
             // Check total job hire
-            $is_vacancy = DB::select("SELECT COUNT(id) as hired_jobs, job_id FROM `offers` WHERE status = 'Onboarding' AND job_id = ".'"'.$job['id'].'"');
-            if(isset($is_vacancy)){
+            $is_vacancy = DB::select("SELECT COUNT(id) as hired_jobs, job_id FROM `offers` WHERE status = 'Onboarding' AND job_id = " . '"' . $job['id'] . '"');
+            if (isset($is_vacancy)) {
                 $is_vacancy = $is_vacancy[0]->hired_jobs;
-            }else{
+            } else {
                 $is_vacancy = '0';
             }
             $worker_reference_name = '';
-            $worker_reference_title ='';
-            $worker_reference_recency_reference ='';
+            $worker_reference_title = '';
+            $worker_reference_recency_reference = '';
 
             // Jobs speciality with experience
-            $speciality = explode(',',$job['preferred_specialty']);
-            $experiences = explode(',',$job['preferred_experience']);
+            $speciality = explode(',', $job['preferred_specialty']);
+            $experiences = explode(',', $job['preferred_experience']);
             $exp = [];
             $spe = [];
             $specialities = [];
             $i = 0;
-            foreach($speciality as $special){
+            foreach ($speciality as $special) {
                 $spe[] = $special;
                 $i++;
             }
-            foreach($experiences as $experience){
+            foreach ($experiences as $experience) {
                 $exp[] = $experience;
             }
 
-            for($j=0; $j< $i; $j++){
+            for ($j = 0; $j < $i; $j++) {
                 $specialities[$j]['spe'] = $spe[$j];
                 $specialities[$j]['exp'] = $exp[$j];
             }
 
             // Jobs Certificate
-            $certificate = explode(',',$job['certificate']);
+            $certificate = explode(',', $job['certificate']);
             $worker_certificate = [];
             // $skills_checklists = [];
-            $vaccinations = explode(',',$job['vaccinations']);
+            $vaccinations = explode(',', $job['vaccinations']);
             $worker_vaccination = json_decode($job_data['worker_vaccination']);
             $worker_certificate_name = json_decode($job_data['worker_certificate_name']);
             $worker_certificate = json_decode($job_data['worker_certificate']);
             $skills_checklists = explode(',', $job_data['skills_checklists']);
-            $i=0;
-            foreach($skills_checklists as $rec)
-            {
-                if(isset($rec) && !empty($rec)){
+            $i = 0;
+            foreach ($skills_checklists as $rec) {
+                if (isset($rec) && !empty($rec)) {
                     $i++;
-                    $skills_checklists[$i] = url('public/images/nurses/skill/'.$rec);
+                    $skills_checklists[$i] = url('public/images/nurses/skill/' . $rec);
                 }
 
             }
@@ -1443,89 +1494,89 @@ class FacilityController extends Controller
             // $cert_image = NurseAsset::where(['filter' => 'certificate', 'nurse_id' => $worker->id])->get();
             $vacc_image = '';
             $cert_image = '';
-            $certificate = explode(',',$job['certificate']);
-            if(isset($job_data['recruiter_id'])){
+            $certificate = explode(',', $job['certificate']);
+            if (isset($job_data['recruiter_id'])) {
                 $recruiter_info = User::where('id', $job_data['recruiter_id'])->first();
-            }else{
+            } else {
                 $recruiter_info = User::where('id', $job['recruiter_id'])->first();
             }
 
             $result = [];
-            $result['job_id'] = isset($job['id'])?$job['id']:"";
-            $result['description'] = isset($job['description'])?$job['description']:"";
-            $result['posted_on'] = isset($job_data['posted_on'])?$job_data['posted_on']:"";
-            $result['type'] = isset($job['type'])?$job['type']:"";
-            $result['terms'] = isset($job['terms'])?$job['terms']:"";
-            $result['job_name'] = isset($job['job_name'])?$job['job_name']:"";
-            $result['total_applied'] = isset($job['workers_applied'])?$job['workers_applied']:"";
-            $result['department'] = isset($job['Department'])?$job['Department']:"";
-            $result['worker_name'] = isset($worker_name)?$worker_name:"";
-            $result['worker_image'] = isset($worker_img)?$worker_img:"";
+            $result['job_id'] = isset($job['id']) ? $job['id'] : "";
+            $result['description'] = isset($job['description']) ? $job['description'] : "";
+            $result['posted_on'] = isset($job_data['posted_on']) ? $job_data['posted_on'] : "";
+            $result['type'] = isset($job['type']) ? $job['type'] : "";
+            $result['terms'] = isset($job['terms']) ? $job['terms'] : "";
+            $result['job_name'] = isset($job['job_name']) ? $job['job_name'] : "";
+            $result['total_applied'] = isset($job['workers_applied']) ? $job['workers_applied'] : "";
+            $result['department'] = isset($job['Department']) ? $job['Department'] : "";
+            $result['worker_name'] = isset($worker_name) ? $worker_name : "";
+            $result['worker_image'] = isset($worker_img) ? $worker_img : "";
             $result['recruiter_name'] = $recruiter_name;
-            if(isset($job_data['worked_at_facility_before']) && ($job_data['worked_at_facility_before'] == 'yes')){
+            if (isset($job_data['worked_at_facility_before']) && ($job_data['worked_at_facility_before'] == 'yes')) {
                 $recs = true;
-            }else{
+            } else {
                 $recs = false;
             }
 
-            if(isset($job_data['license_type']) && ($job_data['license_type'] != null) && ($job_data['profession'] == $job_data['license_type'])){
+            if (isset($job_data['license_type']) && ($job_data['license_type'] != null) && ($job_data['profession'] == $job_data['license_type'])) {
                 $profession = true;
-            }else{
+            } else {
                 $profession = false;
             }
-            if(isset($job_data['specialty']) && ($job_data['specialty'] != null) && ($job_data['preferred_specialty'] == $job_data['specialty'])){
+            if (isset($job_data['specialty']) && ($job_data['specialty'] != null) && ($job_data['preferred_specialty'] == $job_data['specialty'])) {
                 $speciality = true;
-            }else{
+            } else {
                 $speciality = false;
             }
-            if(isset($job_data['experience']) && ($job_data['experience'] != null) && ($job_data['preferred_experience'] == $job_data['experience'])){
+            if (isset($job_data['experience']) && ($job_data['experience'] != null) && ($job_data['preferred_experience'] == $job_data['experience'])) {
                 $experience = true;
-            }else{
+            } else {
                 $experience = false;
             }
-            $countable = explode(',',$worker_reference_name);
+            $countable = explode(',', $worker_reference_name);
             $num = [];
-            foreach($countable as $rec){
-                if(!empty($rec)){
+            foreach ($countable as $rec) {
+                if (!empty($rec)) {
                     $num[] = $rec;
                 }
             }
             $countable = count($num);
-            if($job_data['number_of_references'] == $countable){
+            if ($job_data['number_of_references'] == $countable) {
                 $worker_ref_num = true;
-            }else{
+            } else {
                 $worker_ref_num = false;
             }
 
             $worker_info = [];
             // $data =  [];
             $data['job'] = 'College Diploma';
-            $data['match'] = !empty($job_data['diploma'])?true:false;
-            $data['worker'] = !empty($job_data['diploma'])?url('public/images/nurses/diploma/'.$job_data['diploma']):"";
+            $data['match'] = !empty($job_data['diploma']) ? true : false;
+            $data['worker'] = !empty($job_data['diploma']) ? url('public/images/nurses/diploma/' . $job_data['diploma']) : "";
             $data['name'] = 'Diploma';
             $data['update_key'] = 'diploma';
             $data['type'] = 'files';
             $data['worker_title'] = 'Did you really graduate?';
             $data['job_title'] = 'College Diploma Required';
-            $data['worker_image'] = !empty($job_data['diploma'])?url('public/images/nurses/diploma/'.$job_data['diploma']):"";
+            $data['worker_image'] = !empty($job_data['diploma']) ? url('public/images/nurses/diploma/' . $job_data['diploma']) : "";
             $worker_info[] = $data;
             $data['worker_image'] = '';
 
             $data['job'] = 'Drivers License';
-            $data['match'] = !empty($job_data['driving_license'])?true:false;
-            $data['worker'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
+            $data['match'] = !empty($job_data['driving_license']) ? true : false;
+            $data['worker'] = !empty($job_data['driving_license']) ? url('public/images/nurses/driving_license/' . $job_data['driving_license']) : "";
             $data['name'] = 'driving_license';
             $data['update_key'] = 'driving_license';
             $data['type'] = 'files';
             $data['worker_title'] = 'Are you really allowed to drive?';
             $data['job_title'] = 'Drivers License';
-            $data['worker_image'] = !empty($job_data['driving_license'])?url('public/images/nurses/driving_license/'.$job_data['driving_license']):"";
+            $data['worker_image'] = !empty($job_data['driving_license']) ? url('public/images/nurses/driving_license/' . $job_data['driving_license']) : "";
             $worker_info[] = $data;
             $data['worker_image'] = '';
 
-            $data['job'] = !empty($job['job_worked_at_facility_before'])?$job['job_worked_at_facility_before']:"";
+            $data['job'] = !empty($job['job_worked_at_facility_before']) ? $job['job_worked_at_facility_before'] : "";
             $data['match'] = $recs;
-            $data['worker'] = !empty($job_data['worked_at_facility_before'])?$job_data['worked_at_facility_before']:"";
+            $data['worker'] = !empty($job_data['worked_at_facility_before']) ? $job_data['worked_at_facility_before'] : "";
             $data['name'] = 'Working at Facility Before';
             $data['update_key'] = 'worked_at_facility_before';
             $data['type'] = 'checkbox';
@@ -1534,8 +1585,8 @@ class FacilityController extends Controller
             $worker_info[] = $data;
 
             $data['job'] = "Last 4 digit of SS# to submit";
-            $data['match'] = !empty($job_data['worker_ss_number'])?true:false;
-            $data['worker'] = !empty($job_data['worker_ss_number'])?$job_data['worker_ss_number']:"";
+            $data['match'] = !empty($job_data['worker_ss_number']) ? true : false;
+            $data['worker'] = !empty($job_data['worker_ss_number']) ? $job_data['worker_ss_number'] : "";
             $data['name'] = 'SS Card Number';
             $data['update_key'] = 'worker_ss_number';
             $data['type'] = 'input';
@@ -1543,61 +1594,68 @@ class FacilityController extends Controller
             $data['job_title'] = 'Last 4 digit of SS# to submit';
             $worker_info[] = $data;
 
-            if($job['profession'] == $job_data['highest_nursing_degree']){ $val = true; }else{ $val = false; }
-            $data['job'] = isset($job['profession'])?$job['profession']:"";
+            if ($job['profession'] == $job_data['highest_nursing_degree']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['profession']) ? $job['profession'] : "";
             $data['match'] = $val;
-            $data['worker'] = !empty($job_data['highest_nursing_degree'])?$job_data['highest_nursing_degree']:"";
+            $data['worker'] = !empty($job_data['highest_nursing_degree']) ? $job_data['highest_nursing_degree'] : "";
             $data['name'] = 'Profession';
             $data['update_key'] = 'highest_nursing_degree';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'What kind of Professional are you?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Profession';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Profession';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['preferred_specialty'])?$job['preferred_specialty']:"";
+            $data['job'] = isset($job['preferred_specialty']) ? $job['preferred_specialty'] : "";
             $data['match'] = $speciality;
-            $data['worker'] = !empty($job_data['specialty'])?$job_data['specialty']:"";
+            $data['worker'] = !empty($job_data['specialty']) ? $job_data['specialty'] : "";
             $data['name'] = 'Speciality';
             $data['update_key'] = 'specialty';
             $data['type'] = 'dropdown';
             $data['worker_title'] = "What's your specialty?";
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Specialty';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Specialty';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['preferred_experience'])?$job['preferred_experience']:"";
+            $data['job'] = isset($job['preferred_experience']) ? $job['preferred_experience'] : "";
             $data['match'] = $experience;
-            $data['worker'] = !empty($job_data['experience'])?$job_data['experience']:"";
+            $data['worker'] = !empty($job_data['experience']) ? $job_data['experience'] : "";
             $data['name'] = 'Experience';
             $data['update_key'] = 'experience';
             $data['type'] = 'input';
             $data['worker_title'] = 'How long have you done this?';
-            $data['job_title'] = $data['job'].' Years';
+            $data['job_title'] = $data['job'] . ' Years';
             $worker_info[] = $data;
 
-            if($job_data['nursing_license_state'] == $job['job_location']){ $val = true; }else{ $val = false; }
-            $data['job'] = isset($job['job_location'])?$job['job_location']:"";
+            if ($job_data['nursing_license_state'] == $job['job_location']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['job_location']) ? $job['job_location'] : "";
             $data['match'] = $val;
-            $data['worker'] = !empty($job_data['nursing_license_state'])?$job_data['nursing_license_state']:"";
+            $data['worker'] = !empty($job_data['nursing_license_state']) ? $job_data['nursing_license_state'] : "";
             $data['name'] = 'License State';
             $data['update_key'] = 'nursing_license_state';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'Where are you licensed?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Professional Licensure';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Professional Licensure';
             $worker_info[] = $data;
 
             $i = 0;
-            foreach($vaccinations as $job_vacc)
-            {
-                $data['job'] = isset($vaccinations[$i])?$vaccinations[$i]:"Vaccinations & Immunizations";
-                $data['match'] = !empty($worker_vaccination[$i])?true:false;
-                $data['worker'] = isset($worker_vaccination[$i])?$worker_vaccination[$i]:"";
-                $data['worker_image'] = isset($vacc_image[$i]['name'])?url('public/images/nurses/vaccination/'.$vacc_image[$i]['name']):"";
-                $data['name'] = $data['worker'].' vaccination';
+            foreach ($vaccinations as $job_vacc) {
+                $data['job'] = isset($vaccinations[$i]) ? $vaccinations[$i] : "Vaccinations & Immunizations";
+                $data['match'] = !empty($worker_vaccination[$i]) ? true : false;
+                $data['worker'] = isset($worker_vaccination[$i]) ? $worker_vaccination[$i] : "";
+                $data['worker_image'] = isset($vacc_image[$i]['name']) ? url('public/images/nurses/vaccination/' . $vacc_image[$i]['name']) : "";
+                $data['name'] = $data['worker'] . ' vaccination';
                 $data['match_title'] = 'Vaccinations & Immunizations';
                 $data['update_key'] = 'worker_vaccination';
                 $data['type'] = 'file';
-                $data['worker_title'] = 'Did you get the '.$data['worker'].' Vaccines?';
-                $data['job_title'] = !empty($data['job'])?$data['job'].' Required':'Vaccinations & Immunizations';
+                $data['worker_title'] = 'Did you get the ' . $data['worker'] . ' Vaccines?';
+                $data['job_title'] = !empty($data['job']) ? $data['job'] . ' Required' : 'Vaccinations & Immunizations';
                 $worker_info[] = $data;
                 $i++;
                 // $data['worker_image'] = '';
@@ -1624,51 +1682,50 @@ class FacilityController extends Controller
             // $data['job_title'] = !empty($data['job'])?$data['job'].' Required':'Vaccinations & Immunizations name';
             // $worker_info[] = $data;
 
-            $data['job'] = isset($job['number_of_references'])?$job['number_of_references']:"";
+            $data['job'] = isset($job['number_of_references']) ? $job['number_of_references'] : "";
             $data['match'] = $worker_ref_num;
-            $data['worker'] = isset($worker_reference_name)?$worker_reference_name:"";
+            $data['worker'] = isset($worker_reference_name) ? $worker_reference_name : "";
             $data['name'] = 'Reference';
             $data['update_key'] = 'worker_reference_name';
             $data['type'] = 'multiple';
             $data['worker_title'] = 'Who are your References?';
-            $data['job_title'] = !empty($data['job'])?$data['job'].' References':'number of references';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] . ' References' : 'number of references';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['min_title_of_reference'])?$job['min_title_of_reference']:"";
-            $data['match'] = !empty($worker_reference_title)?true:false;
-            $data['worker'] = isset($worker_reference_title)?$worker_reference_title:"";
+            $data['job'] = isset($job['min_title_of_reference']) ? $job['min_title_of_reference'] : "";
+            $data['match'] = !empty($worker_reference_title) ? true : false;
+            $data['worker'] = isset($worker_reference_title) ? $worker_reference_title : "";
             $data['name'] = 'Reference title';
             $data['update_key'] = 'worker_reference_title';
             $data['type'] = 'multiple';
             $data['worker_title'] = 'What was their title?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'min title of reference';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'min title of reference';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['recency_of_reference'])?$job['recency_of_reference']:"";
-            $data['match'] = !empty($worker_reference_recency_reference)?true:false;
-            $data['worker'] = isset($worker_reference_recency_reference)?$worker_reference_recency_reference:"";
+            $data['job'] = isset($job['recency_of_reference']) ? $job['recency_of_reference'] : "";
+            $data['match'] = !empty($worker_reference_recency_reference) ? true : false;
+            $data['worker'] = isset($worker_reference_recency_reference) ? $worker_reference_recency_reference : "";
             $data['name'] = 'Recency Reference Assignment';
             $data['update_key'] = 'worker_reference_recency_reference';
             $data['type'] = 'multiple';
             $data['worker_title'] = 'Is this from your last assignment?';
-            $data['job_title'] = !empty($data['job'])?$data['job'].' months':'recency of reference';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] . ' months' : 'recency of reference';
             $worker_info[] = $data;
 
             $i = 0;
-            foreach($certificate as $job_cert)
-            {
-                $data['job'] = isset($certificate[$i])?$certificate[$i]:"Certifications";
-                $data['match'] = !empty($worker_certificate_name[$i])?true:false;
-                $data['worker'] = isset($worker_certificate_name[$i])?$worker_certificate_name[$i]:"";
-                if(isset($worker_certificate_name[$i])){
-                    $data['worker_image'] = isset($cert_image[$i]['name'])?url('public/images/nurses/certificate/'.$cert_image[$i]['name']):"";
+            foreach ($certificate as $job_cert) {
+                $data['job'] = isset($certificate[$i]) ? $certificate[$i] : "Certifications";
+                $data['match'] = !empty($worker_certificate_name[$i]) ? true : false;
+                $data['worker'] = isset($worker_certificate_name[$i]) ? $worker_certificate_name[$i] : "";
+                if (isset($worker_certificate_name[$i])) {
+                    $data['worker_image'] = isset($cert_image[$i]['name']) ? url('public/images/nurses/certificate/' . $cert_image[$i]['name']) : "";
                 }
                 $data['name'] = $data['worker'];
                 $data['match_title'] = 'Certifications';
                 $data['update_key'] = 'worker_certificate';
                 $data['type'] = 'file';
-                $data['worker_title'] = 'No '.$data['worker'];
-                $data['job_title'] = !empty($data['job'])?$data['job'].' Required':'Certifications';
+                $data['worker_title'] = 'No ' . $data['worker'];
+                $data['job_title'] = !empty($data['job']) ? $data['job'] . ' Required' : 'Certifications';
                 $worker_info[] = $data;
                 $i++;
             }
@@ -1714,23 +1771,27 @@ class FacilityController extends Controller
             // $data['job_title'] = !empty($data['job'])?$data['job'].' Required':'Certifications other';
             // $worker_info[] = $data;
 
-            $data['job'] = isset($job['skills'])?$job['skills']:"";
-            $data['match'] = !empty($job_data['skills_checklists'])?true:false;
-            $data['worker'] = isset($job_data['skills_checklists'])?$job_data['skills_checklists']:"";
-            if(isset($job_data['skills'])){
-                $data['worker_image'] = isset($skills_checklists)?$skills_checklists[0]:"";
+            $data['job'] = isset($job['skills']) ? $job['skills'] : "";
+            $data['match'] = !empty($job_data['skills_checklists']) ? true : false;
+            $data['worker'] = isset($job_data['skills_checklists']) ? $job_data['skills_checklists'] : "";
+            if (isset($job_data['skills'])) {
+                $data['worker_image'] = isset($skills_checklists) ? $skills_checklists[0] : "";
             }
             $data['name'] = 'Skills';
             $data['update_key'] = 'skills_checklists';
             $data['type'] = 'file';
             $data['worker_title'] = 'Upload your latest skills checklist';
-            $data['job_title'] = $data['job'].' Skills checklist';
+            $data['job_title'] = $data['job'] . ' Skills checklist';
             $worker_info[] = $data;
 
-            if($job_data['eligible_work_in_us'] == 'yes'){ $eligible_work_in_us = true; }else{ $eligible_work_in_us = false; }
+            if ($job_data['eligible_work_in_us'] == 'yes') {
+                $eligible_work_in_us = true;
+            } else {
+                $eligible_work_in_us = false;
+            }
             $data['job'] = "Eligible work in the us";
             $data['match'] = $eligible_work_in_us;
-            $data['worker'] = isset($job_data['eligible_work_in_us'])?$job_data['eligible_work_in_us']:"";
+            $data['worker'] = isset($job_data['eligible_work_in_us']) ? $job_data['eligible_work_in_us'] : "";
             $data['name'] = 'eligible_work_in_us';
             $data['update_key'] = 'eligible_work_in_us';
             $data['type'] = 'checkbox';
@@ -1738,289 +1799,315 @@ class FacilityController extends Controller
             $data['job_title'] = 'Eligible to work in the US Required?';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['urgency'])?$job['urgency']:"";
-            if(isset($data['job']) && $data['job'] == '1'){ $data['job'] = 'Auto Offer'; }else{
+            $data['job'] = isset($job['urgency']) ? $job['urgency'] : "";
+            if (isset($data['job']) && $data['job'] == '1') {
+                $data['job'] = 'Auto Offer';
+            } else {
                 $data['job'] = 'Urgency';
             }
             // $data['job_title'] = $data['job'];
-            $data['job_title'] = !empty($job['urgency'])?$job['urgency']:"Urgency";
-            $data['match'] = !empty($job_data['worker_urgency'])?true:false;
-            $data['worker'] = isset($job_data['worker_urgency'])?$job_data['worker_urgency']:"";
+            $data['job_title'] = !empty($job['urgency']) ? $job['urgency'] : "Urgency";
+            $data['match'] = !empty($job_data['worker_urgency']) ? true : false;
+            $data['worker'] = isset($job_data['worker_urgency']) ? $job_data['worker_urgency'] : "";
             $data['name'] = 'worker_urgency';
             $data['update_key'] = 'worker_urgency';
             $data['type'] = 'input';
             $data['worker_title'] = "How quickly can you be ready to submit?";
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['position_available'])?$job['position_available']:"";
-            $data['match'] = !empty($job_data["available_position"])?true:false;
-            $data['worker'] = isset($job_data["available_position"])?$job_data["available_position"]:"";
+            $data['job'] = isset($job['position_available']) ? $job['position_available'] : "";
+            $data['match'] = !empty($job_data["available_position"]) ? true : false;
+            $data['worker'] = isset($job_data["available_position"]) ? $job_data["available_position"] : "";
             $data['name'] = 'available_position';
             $data['update_key'] = 'available_position';
             $data['type'] = 'input';
             $data['worker_title'] = 'You have applied to # jobs?';
-            $data['job_title'] = !empty($data['job'])?$is_vacancy.' of '.$data['job']:'# of Positions Available';
+            $data['job_title'] = !empty($data['job']) ? $is_vacancy . ' of ' . $data['job'] : '# of Positions Available';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['msp'])?$job['msp']:"";
-            $data['match'] = !empty($job_data['MSP'])?true:false;
-            $data['worker'] = isset($job_data['MSP'])?$job_data['MSP']:"";
+            $data['job'] = isset($job['msp']) ? $job['msp'] : "";
+            $data['match'] = !empty($job_data['MSP']) ? true : false;
+            $data['worker'] = isset($job_data['MSP']) ? $job_data['MSP'] : "";
             $data['name'] = 'MSP';
             $data['update_key'] = 'MSP';
             $data['worker_title'] = 'Any MSPs you prefer to avoid?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'MSP';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'MSP';
             $data['type'] = 'dropdown';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['vms'])?$job['vms']:"";
-            $data['match'] = !empty($job_data['VMS'])?true:false;
-            $data['worker'] = isset($job_data['VMS'])?$job_data['VMS']:"";
+            $data['job'] = isset($job['vms']) ? $job['vms'] : "";
+            $data['match'] = !empty($job_data['VMS']) ? true : false;
+            $data['worker'] = isset($job_data['VMS']) ? $job_data['VMS'] : "";
             $data['name'] = 'VMS';
             $data['update_key'] = 'VMS';
             $data['type'] = 'dropdown';
             $data['worker_title'] = "Who's your favorite VMS?";
-            $data['job_title'] = !empty($data['job'])?$data['job']:'VMS';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'VMS';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['submission_of_vms'])?$job['submission_of_vms']:"";
-            $data['match'] = !empty($job_data['submission_VMS'])?true:false;
-            $data['worker'] = isset($job_data['submission_VMS'])?$job_data['submission_VMS']:"";
+            $data['job'] = isset($job['submission_of_vms']) ? $job['submission_of_vms'] : "";
+            $data['match'] = !empty($job_data['submission_VMS']) ? true : false;
+            $data['worker'] = isset($job_data['submission_VMS']) ? $job_data['submission_VMS'] : "";
             $data['name'] = 'submission_VMS';
             $data['update_key'] = 'submission_VMS';
             $data['type'] = 'input';
             $data['worker_title'] = '# of Submissions in VMS';
-            $data['job_title'] = (isset($data['job']) && !empty($data['job']))?$data['job']:'# of Submissions in VMS';
+            $data['job_title'] = (isset($data['job']) && !empty($data['job'])) ? $data['job'] : '# of Submissions in VMS';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['block_scheduling'])?$job['block_scheduling']:"";
-            $data['match'] = !empty($job_data['worker_block_scheduling'])?true:false;
-            $data['worker'] = isset($job_data['worker_block_scheduling'])?$job_data['worker_block_scheduling']:"";
+            $data['job'] = isset($job['block_scheduling']) ? $job['block_scheduling'] : "";
+            $data['match'] = !empty($job_data['worker_block_scheduling']) ? true : false;
+            $data['worker'] = isset($job_data['worker_block_scheduling']) ? $job_data['worker_block_scheduling'] : "";
             $data['name'] = 'Block_scheduling';
             $data['update_key'] = 'block_scheduling';
             $data['type'] = 'input';
             $data['worker_title'] = 'Do you want block scheduling?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Block Scheduling';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Block Scheduling';
             $worker_info[] = $data;
 
-            if($job_data['worker_float_requirement'] == 'Yes'){ $val = true; }else{ $val = false; }
-            $data['job'] = isset($job['float_requirement'])?$job['float_requirement']:"";
+            if ($job_data['worker_float_requirement'] == 'Yes') {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['float_requirement']) ? $job['float_requirement'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_float_requirement'])?$job_data['worker_float_requirement']:"";
+            $data['worker'] = isset($job_data['worker_float_requirement']) ? $job_data['worker_float_requirement'] : "";
             $data['name'] = 'Float Requirement';
             $data['update_key'] = 'float_requirement';
             $data['type'] = 'checkbox';
             $data['worker_title'] = 'Are you willing float to?';
-            $data['job_title'] = !empty($job['float_requirement'])?$job['float_requirement']:'Float requirements';
+            $data['job_title'] = !empty($job['float_requirement']) ? $job['float_requirement'] : 'Float requirements';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['facility_shift_cancelation_policy'])?$job['facility_shift_cancelation_policy']:"";
-            $data['match'] = !empty($job_data['worker_facility_shift_cancelation_policy'])?true:false;
-            $data['worker'] = isset($job_data['worker_facility_shift_cancelation_policy'])?$job_data['worker_facility_shift_cancelation_policy']:"";
+            $data['job'] = isset($job['facility_shift_cancelation_policy']) ? $job['facility_shift_cancelation_policy'] : "";
+            $data['match'] = !empty($job_data['worker_facility_shift_cancelation_policy']) ? true : false;
+            $data['worker'] = isset($job_data['worker_facility_shift_cancelation_policy']) ? $job_data['worker_facility_shift_cancelation_policy'] : "";
             $data['name'] = 'Facility Shift Cancelation Policy';
             $data['update_key'] = 'facility_shift_cancelation_policy';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'What terms do you prefer?';
-            $data['job_title'] = !empty($job['facility_shift_cancelation_policy'])?$job['facility_shift_cancelation_policy']:'Facility Shift Cancellation Policy';
+            $data['job_title'] = !empty($job['facility_shift_cancelation_policy']) ? $job['facility_shift_cancelation_policy'] : 'Facility Shift Cancellation Policy';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['contract_termination_policy'])?$job['contract_termination_policy']:"";
-            $data['match'] = !empty($job_data['worker_contract_termination_policy'])?true:false;
-            $data['worker'] = isset($job_data['worker_contract_termination_policy'])?$job_data['worker_contract_termination_policy']:"";
+            $data['job'] = isset($job['contract_termination_policy']) ? $job['contract_termination_policy'] : "";
+            $data['match'] = !empty($job_data['worker_contract_termination_policy']) ? true : false;
+            $data['worker'] = isset($job_data['worker_contract_termination_policy']) ? $job_data['worker_contract_termination_policy'] : "";
             $data['name'] = 'Contract Terminology';
             $data['update_key'] = 'contract_termination_policy';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'What terms do you prefer?';
-            $data['job_title'] = !empty($job['contract_termination_policy'])?$job['contract_termination_policy']:'Contract Termination Policy';
+            $data['job_title'] = !empty($job['contract_termination_policy']) ? $job['contract_termination_policy'] : 'Contract Termination Policy';
             $worker_info[] = $data;
 
-            if(isset($job_data['distance_from_your_home']) && ($job_data['distance_from_your_home'] != 0) ){
+            if (isset($job_data['distance_from_your_home']) && ($job_data['distance_from_your_home'] != 0)) {
                 $data['worker'] = $job_data['distance_from_your_home'];
-            }else{
+            } else {
                 $data['worker'] = "";
             }
-            if($job['traveler_distance_from_facility'] == $job_data['distance_from_your_home']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['traveler_distance_from_facility'])?$job['traveler_distance_from_facility']:"";
+            if ($job['traveler_distance_from_facility'] == $job_data['distance_from_your_home']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['traveler_distance_from_facility']) ? $job['traveler_distance_from_facility'] : "";
             $data['match'] = $val;
             // $data['worker'] = isset($job_data['distance_from_your_home'])?$job_data['distance_from_your_home']:"";
             $data['name'] = 'distance from facility';
             $data['update_key'] = 'distance_from_your_home';
             $data['type'] = 'input';
             $data['worker_title'] = 'Where does the IRS think you live?';
-            $data['job_title'] = !empty($data['job'])?$data['job'].' miles Distance From Facility':'Traveler Distance From Facility';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] . ' miles Distance From Facility' : 'Traveler Distance From Facility';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['facility'])?$job['facility']:"";
-            $data['match'] = !empty($job_data['facilities_you_like_to_work_at'])?true:false;
-            $data['worker'] = isset($job_data['facilities_you_like_to_work_at'])?$job_data['facilities_you_like_to_work_at']:"";
+            $data['job'] = isset($job['facility']) ? $job['facility'] : "";
+            $data['match'] = !empty($job_data['facilities_you_like_to_work_at']) ? true : false;
+            $data['worker'] = isset($job_data['facilities_you_like_to_work_at']) ? $job_data['facilities_you_like_to_work_at'] : "";
             $data['name'] = 'Facility available upon request';
             $data['update_key'] = 'facilities_you_like_to_work_at';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'What facilities have you worked at?';
-            $data['job_title'] = !empty($job['facility'])?$job['facility']:'Facility';
+            $data['job_title'] = !empty($job['facility']) ? $job['facility'] : 'Facility';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['facilitys_parent_system'])?$job['facilitys_parent_system']:"";
-            $data['match'] = !empty($job_data['worker_facility_parent_system'])?true:false;
-            $data['worker'] = isset($job_data['worker_facility_parent_system'])?$job_data['worker_facility_parent_system']:"";
+            $data['job'] = isset($job['facilitys_parent_system']) ? $job['facilitys_parent_system'] : "";
+            $data['match'] = !empty($job_data['worker_facility_parent_system']) ? true : false;
+            $data['worker'] = isset($job_data['worker_facility_parent_system']) ? $job_data['worker_facility_parent_system'] : "";
             $data['name'] = 'facility parent system';
             $data['update_key'] = 'worker_facility_parent_system';
             $data['type'] = 'input';
             $data['worker_title'] = 'What facilities would you like to work at?';
-            $data['job_title'] = !empty($job['facilitys_parent_system'])?$job['facilitys_parent_system']:"Facility's Parent System";
+            $data['job_title'] = !empty($job['facilitys_parent_system']) ? $job['facilitys_parent_system'] : "Facility's Parent System";
             $worker_info[] = $data;
 
-            if(isset($job_data['avg_rating_by_facilities']) && ($job_data['avg_rating_by_facilities'] != 0) ){
+            if (isset($job_data['avg_rating_by_facilities']) && ($job_data['avg_rating_by_facilities'] != 0)) {
                 $data['worker'] = $job_data['avg_rating_by_facilities'];
-            }else{
+            } else {
                 $data['worker'] = "";
             }
-            $data['job'] = isset($job['facility_average_rating'])?$job['facility_average_rating']:"";
-            $data['match'] = !empty($job_data['avg_rating_by_facilities'])?true:false;
+            $data['job'] = isset($job['facility_average_rating']) ? $job['facility_average_rating'] : "";
+            $data['match'] = !empty($job_data['avg_rating_by_facilities']) ? true : false;
             // $data['worker'] = isset($job_data['avg_rating_by_facilities'])?$job_data['avg_rating_by_facilities']:"";
             $data['name'] = 'facility average rating';
             $data['update_key'] = 'avg_rating_by_facilities';
             $data['type'] = 'input';
             $data['worker_title'] = 'Your average rating by your facilities';
-            $data['job_title'] = !empty($job['facility_average_rating'])?$job['facility_average_rating']:'Facility Average Rating';
+            $data['job_title'] = !empty($job['facility_average_rating']) ? $job['facility_average_rating'] : 'Facility Average Rating';
             $worker_info[] = $data;
 
-            if(isset($job_data['worker_avg_rating_by_recruiters']) && ($job_data['worker_avg_rating_by_recruiters'] != 0) ){
+            if (isset($job_data['worker_avg_rating_by_recruiters']) && ($job_data['worker_avg_rating_by_recruiters'] != 0)) {
                 $data['worker'] = $job_data['worker_avg_rating_by_recruiters'];
-            }else{
+            } else {
                 $data['worker'] = "";
             }
-            $data['job'] = isset($job['recruiter_average_rating'])?$job['recruiter_average_rating']:"";
-            $data['match'] = !empty($job_data['worker_avg_rating_by_recruiters'])?true:false;
+            $data['job'] = isset($job['recruiter_average_rating']) ? $job['recruiter_average_rating'] : "";
+            $data['match'] = !empty($job_data['worker_avg_rating_by_recruiters']) ? true : false;
             // $data['worker'] = isset($job_data['worker_avg_rating_by_recruiters'])?$job_data['worker_avg_rating_by_recruiters']:"";
             $data['name'] = 'recruiter average rating';
             $data['update_key'] = 'worker_avg_rating_by_recruiters';
             $data['type'] = 'input';
             $data['worker_title'] = 'Your average rating by your recruiters';
-            $data['job_title'] = !empty($job['recruiter_average_rating'])?$job['recruiter_average_rating']:'Recruiter Average Rating';
+            $data['job_title'] = !empty($job['recruiter_average_rating']) ? $job['recruiter_average_rating'] : 'Recruiter Average Rating';
             $worker_info[] = $data;
 
-            if(isset($job_data['worker_avg_rating_by_employers']) && ($job_data['worker_avg_rating_by_employers'] != 0) ){
-                $data['worker'] = $job_data['worker_avg_rating_by_employers'];
-            }else{
+            if (isset($job_data['worker_avg_rating_by_organizations']) && ($job_data['worker_avg_rating_by_organizations'] != 0)) {
+                $data['worker'] = $job_data['worker_avg_rating_by_organizations'];
+            } else {
                 $data['worker'] = "";
             }
-            $data['job'] = isset($job['employer_average_rating'])?$job['employer_average_rating']:"";
-            $data['match'] = !empty($job_data['worker_avg_rating_by_employers'])?true:false;
-            // $data['worker'] = isset($job_data['worker_avg_rating_by_employers'])?$job_data['worker_avg_rating_by_employers']:"";
-            $data['name'] = 'employer average rating';
-            $data['update_key'] = 'worker_avg_rating_by_employers';
+            $data['job'] = isset($job['organization_average_rating']) ? $job['organization_average_rating'] : "";
+            $data['match'] = !empty($job_data['worker_avg_rating_by_organizations']) ? true : false;
+            // $data['worker'] = isset($job_data['worker_avg_rating_by_organizations'])?$job_data['worker_avg_rating_by_organizations']:"";
+            $data['name'] = 'organization average rating';
+            $data['update_key'] = 'worker_avg_rating_by_organizations';
             $data['type'] = 'input';
-            $data['worker_title'] = 'Your average rating by your employers';
-            $data['job_title'] = !empty($job['employer_average_rating'])?$job['employer_average_rating']:'Employer Average Rating';
+            $data['worker_title'] = 'Your average rating by your organizations';
+            $data['job_title'] = !empty($job['organization_average_rating']) ? $job['organization_average_rating'] : 'Organization Average Rating';
             $worker_info[] = $data;
 
-            if($job['clinical_setting'] == $job_data['clinical_setting_you_prefer']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['clinical_setting'])?$job['clinical_setting']:"";
+            if ($job['clinical_setting'] == $job_data['clinical_setting_you_prefer']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['clinical_setting']) ? $job['clinical_setting'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['clinical_setting_you_prefer'])?$job_data['clinical_setting_you_prefer']:"";
+            $data['worker'] = isset($job_data['clinical_setting_you_prefer']) ? $job_data['clinical_setting_you_prefer'] : "";
             $data['name'] = 'Clinical Setting';
             $data['update_key'] = 'clinical_setting_you_prefer';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'What setting do you prefer?';
-            $data['job_title'] = (isset($data['job']) && !empty($data['job']))?$data['job']:' Clinical Setting';
+            $data['job_title'] = (isset($data['job']) && !empty($data['job'])) ? $data['job'] : ' Clinical Setting';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['Patient_ratio'])?$job['Patient_ratio']:"";
-            $data['match'] = !empty($job_data['worker_patient_ratio'])?true:false;
-            $data['worker'] = isset($job_data['worker_patient_ratio'])?$job_data['worker_patient_ratio']:"";
+            $data['job'] = isset($job['Patient_ratio']) ? $job['Patient_ratio'] : "";
+            $data['match'] = !empty($job_data['worker_patient_ratio']) ? true : false;
+            $data['worker'] = isset($job_data['worker_patient_ratio']) ? $job_data['worker_patient_ratio'] : "";
             $data['name'] = 'patient ratio';
             $data['update_key'] = 'worker_patient_ratio';
             $data['type'] = 'input';
             $data['worker_title'] = 'How many patients can you handle?';
-            $data['job_title'] = !empty($job['Patient_ratio'])?$job['Patient_ratio']:'Patient ratio';
+            $data['job_title'] = !empty($job['Patient_ratio']) ? $job['Patient_ratio'] : 'Patient ratio';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['emr'])?$job['emr']:"";
-            $data['match'] = !empty($job_data['worker_emr'])?true:false;
-            $data['worker'] = isset($job_data['worker_emr'])?$job_data['worker_emr']:"";
+            $data['job'] = isset($job['emr']) ? $job['emr'] : "";
+            $data['match'] = !empty($job_data['worker_emr']) ? true : false;
+            $data['worker'] = isset($job_data['worker_emr']) ? $job_data['worker_emr'] : "";
             $data['name'] = 'EMR';
             $data['update_key'] = 'worker_emr';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'What EMRs have you used?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'EMR';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'EMR';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['Unit'])?$job['Unit']:"";
-            $data['match'] = !empty($job_data['worker_unit'])?true:false;
-            $data['worker'] = isset($job_data['worker_unit'])?$job_data['worker_unit']:"";
+            $data['job'] = isset($job['Unit']) ? $job['Unit'] : "";
+            $data['match'] = !empty($job_data['worker_unit']) ? true : false;
+            $data['worker'] = isset($job_data['worker_unit']) ? $job_data['worker_unit'] : "";
             $data['name'] = 'Unit';
             $data['update_key'] = 'worker_unit';
             $data['type'] = 'input';
             $data['worker_title'] = 'Fav Unit?';
-            $data['job_title'] = !empty($job['Unit'])?$job['Unit']:'Unit';
+            $data['job_title'] = !empty($job['Unit']) ? $job['Unit'] : 'Unit';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['Department'])?$job['Department']:"";
-            $data['match'] = !empty($job_data['worker_department'])?true:false;
-            $data['worker'] = isset($job_data['worker_department'])?$job_data['worker_department']:"";
+            $data['job'] = isset($job['Department']) ? $job['Department'] : "";
+            $data['match'] = !empty($job_data['worker_department']) ? true : false;
+            $data['worker'] = isset($job_data['worker_department']) ? $job_data['worker_department'] : "";
             $data['name'] = 'Department';
             $data['update_key'] = 'worker_department';
             $data['type'] = 'input';
             $data['worker_title'] = 'Fav department?';
-            $data['job_title'] = !empty($job['Department'])?$job['Department']:'Department';
+            $data['job_title'] = !empty($job['Department']) ? $job['Department'] : 'Department';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['Bed_Size'])?$job['Bed_Size']:"";
-            $data['match'] = !empty($job_data['worker_bed_size'])?true:false;
-            $data['worker'] = isset($job_data['worker_bed_size'])?$job_data['worker_bed_size']:"";
+            $data['job'] = isset($job['Bed_Size']) ? $job['Bed_Size'] : "";
+            $data['match'] = !empty($job_data['worker_bed_size']) ? true : false;
+            $data['worker'] = isset($job_data['worker_bed_size']) ? $job_data['worker_bed_size'] : "";
             $data['name'] = 'Bed Size';
             $data['update_key'] = 'worker_bed_size';
             $data['type'] = 'input';
             $data['worker_title'] = 'king or california king ?';
-            $data['job_title'] = !empty($job['Bed_Size'])?$job['Bed_Size']:'Bed Size';
+            $data['job_title'] = !empty($job['Bed_Size']) ? $job['Bed_Size'] : 'Bed Size';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['Trauma_Level'])?$job['Trauma_Level']:"";
-            $data['match'] = !empty($job_data['worker_trauma_level'])?true:false;
-            $data['worker'] = isset($job_data['worker_trauma_level'])?$job_data['worker_trauma_level']:"";
+            $data['job'] = isset($job['Trauma_Level']) ? $job['Trauma_Level'] : "";
+            $data['match'] = !empty($job_data['worker_trauma_level']) ? true : false;
+            $data['worker'] = isset($job_data['worker_trauma_level']) ? $job_data['worker_trauma_level'] : "";
             $data['name'] = 'Trauma Level';
             $data['update_key'] = 'worker_trauma_level';
             $data['type'] = 'input';
             $data['worker_title'] = 'Ideal trauma level?';
-            $data['job_title'] = !empty($job['Trauma_Level'])?$job['Trauma_Level']:'Trauma Level';
+            $data['job_title'] = !empty($job['Trauma_Level']) ? $job['Trauma_Level'] : 'Trauma Level';
             $worker_info[] = $data;
 
-            if($job['scrub_color'] == $job_data['worker_scrub_color']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['scrub_color'])?$job['scrub_color']:"";
+            if ($job['scrub_color'] == $job_data['worker_scrub_color']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['scrub_color']) ? $job['scrub_color'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_scrub_color'])?$job_data['worker_scrub_color']:"";
+            $data['worker'] = isset($job_data['worker_scrub_color']) ? $job_data['worker_scrub_color'] : "";
             $data['name'] = 'Scrub color';
             $data['update_key'] = 'worker_scrub_color';
             $data['type'] = 'input';
             $data['worker_title'] = 'Fav Scrub Brand?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Scrub Color';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Scrub Color';
             $worker_info[] = $data;
 
-            if($job['job_state'] == $job_data['worker_facility_state_code']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['job_state'])?$job['job_state']:"";
+            if ($job['job_state'] == $job_data['worker_facility_state_code']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['job_state']) ? $job['job_state'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_facility_state_code'])?$job_data['worker_facility_state_code']:"";
+            $data['worker'] = isset($job_data['worker_facility_state_code']) ? $job_data['worker_facility_state_code'] : "";
             $data['name'] = 'Facility state';
             $data['update_key'] = 'worker_facility_state_code';
             $data['type'] = 'dropdown';
             $data['worker_title'] = "States you'd like to work?";
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Facility State Code';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Facility State Code';
             $worker_info[] = $data;
 
-            if($job['job_city'] == $job_data['worker_facility_city']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['job_city'])?$job['job_city']:"";
+            if ($job['job_city'] == $job_data['worker_facility_city']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['job_city']) ? $job['job_city'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_facility_city'])?$job_data['worker_facility_city']:"";
+            $data['worker'] = isset($job_data['worker_facility_city']) ? $job_data['worker_facility_city'] : "";
             $data['name'] = 'Facility City';
             $data['update_key'] = 'worker_facility_city';
             $data['type'] = 'dropdown';
             $data['worker_title'] = "cities you'd like to work?";
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Facility City';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Facility City';
             $worker_info[] = $data;
 
             $data['job'] = "InterviewDates";
-            $data['match'] = !empty($job_data['worker_interview_dates'])?true:false;
-            $data['worker'] = isset($job_data['worker_interview_dates'])?$job_data['worker_interview_dates']:"";
+            $data['match'] = !empty($job_data['worker_interview_dates']) ? true : false;
+            $data['worker'] = isset($job_data['worker_interview_dates']) ? $job_data['worker_interview_dates'] : "";
             $data['name'] = 'Interview dates';
             $data['update_key'] = 'worker_interview_dates';
             $data['type'] = 'Interview dates';
@@ -2028,348 +2115,432 @@ class FacilityController extends Controller
             $data['job_title'] = 'InterviewDates';
             $worker_info[] = $data;
 
-            if(isset($job['as_soon_as']) && ($job['as_soon_as'] == '1')){
+            if (isset($job['as_soon_as']) && ($job['as_soon_as'] == '1')) {
                 $data['job'] = "As Soon As";
-            }else{
-                $data['job'] = isset($job['start_date'])?$job['start_date']:"";
+            } else {
+                $data['job'] = isset($job['start_date']) ? $job['start_date'] : "";
             }
-            if(isset($job_data['worker_as_soon_as_posible']) && ($job_data['worker_as_soon_as_posible'] == '1')){
+            if (isset($job_data['worker_as_soon_as_posible']) && ($job_data['worker_as_soon_as_posible'] == '1')) {
                 $data['worker'] = "As Soon As";
-            }else{
-                $data['worker'] = isset($job_data['worker_start_date'])?$job_data['worker_start_date']:"";
+            } else {
+                $data['worker'] = isset($job_data['worker_start_date']) ? $job_data['worker_start_date'] : "";
             }
-            if($data['worker'] == $data['job']){ $data['match'] = true;}else{ $data['match'] = false; }
+            if ($data['worker'] == $data['job']) {
+                $data['match'] = true;
+            } else {
+                $data['match'] = false;
+            }
             $data['name'] = 'As Soon As';
             $data['update_key'] = 'worker_as_soon_as_posible';
             $data['type'] = 'checkbox';
             $data['worker_title'] = 'When can you start?';
-            $data['job_title'] = (isset($data['job']) && !empty($data['job']))?$data['job']:'Start Date';
+            $data['job_title'] = (isset($data['job']) && !empty($data['job'])) ? $data['job'] : 'Start Date';
             $worker_info[] = $data;
 
-            if($job['rto'] == $job_data['worker_rto']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['rto'])?$job['rto']:"";
+            if ($job['rto'] == $job_data['worker_rto']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['rto']) ? $job['rto'] : "";
             $data['match'] = $val;
             $data['worker'] = "";
             $data['name'] = 'RTO';
             $data['update_key'] = 'clinical_setting_you_prefer';
             $data['type'] = 'input';
-            $data['worker_title'] = !empty($data['worker'])?$data['worker']:'Any time off?';
-            $data['job_title'] = (isset($data['job']) && !empty($data['job']))?$data['job']:'RTO';
+            $data['worker_title'] = !empty($data['worker']) ? $data['worker'] : 'Any time off?';
+            $data['job_title'] = (isset($data['job']) && !empty($data['job'])) ? $data['job'] : 'RTO';
             $worker_info[] = $data;
 
-            if($job['preferred_shift'] == $job_data['worker_shift_time_of_day']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['preferred_shift'])?$job['preferred_shift']:"";
+            if ($job['preferred_shift'] == $job_data['worker_shift_time_of_day']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['preferred_shift']) ? $job['preferred_shift'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_shift_time_of_day'])?$job_data['worker_shift_time_of_day']:"";
+            $data['worker'] = isset($job_data['worker_shift_time_of_day']) ? $job_data['worker_shift_time_of_day'] : "";
             $data['name'] = 'Shift';
             $data['update_key'] = 'worker_shift_time_of_day';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'Fav Shift?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Shift Time of Day';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Shift Time of Day';
             $worker_info[] = $data;
 
 
-            if($job['hours_per_week'] == $job_data['worker_hours_per_week']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['hours_per_week'])?$job['hours_per_week']:"";
+            if ($job['hours_per_week'] == $job_data['worker_hours_per_week']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['hours_per_week']) ? $job['hours_per_week'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_hours_per_week'])?$job_data['worker_hours_per_week']:"";
+            $data['worker'] = isset($job_data['worker_hours_per_week']) ? $job_data['worker_hours_per_week'] : "";
             $data['name'] = 'Hours/week';
             $data['update_key'] = 'worker_hours_per_week';
             $data['type'] = 'input';
             $data['worker_title'] = 'Ideal Hours per week?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Hours/Week';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Hours/Week';
             $worker_info[] = $data;
 
-            if($job['guaranteed_hours'] == $job_data['worker_guaranteed_hours']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['guaranteed_hours'])?$job['guaranteed_hours']:"";
+            if ($job['guaranteed_hours'] == $job_data['worker_guaranteed_hours']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['guaranteed_hours']) ? $job['guaranteed_hours'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_guaranteed_hours'])?$job_data['worker_guaranteed_hours']:"";
+            $data['worker'] = isset($job_data['worker_guaranteed_hours']) ? $job_data['worker_guaranteed_hours'] : "";
             $data['name'] = 'Guaranteed Hours';
             $data['update_key'] = 'worker_guaranteed_hours';
             $data['type'] = 'input';
             $data['worker_title'] = 'Open to jobs with no guaranteed hours?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Guaranteed Hours';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Guaranteed Hours';
             $worker_info[] = $data;
 
-            if($job['hours_shift'] == $job_data['worker_hours_shift']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['hours_shift'])?$job['hours_shift']:"";
+            if ($job['hours_shift'] == $job_data['worker_hours_shift']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['hours_shift']) ? $job['hours_shift'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_hours_shift'])?$job_data['worker_hours_shift']:"";
+            $data['worker'] = isset($job_data['worker_hours_shift']) ? $job_data['worker_hours_shift'] : "";
             $data['name'] = 'Shift Hours';
             $data['update_key'] = 'worker_hours_shift';
             $data['type'] = 'input';
             $data['worker_title'] = 'Preferred hours per shift';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Hours/Shift';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Hours/Shift';
             $worker_info[] = $data;
 
-            if($job['preferred_assignment_duration'] == $job_data['worker_weeks_assignment']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['preferred_assignment_duration'])?$job['preferred_assignment_duration']:"";
+            if ($job['preferred_assignment_duration'] == $job_data['worker_weeks_assignment']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['preferred_assignment_duration']) ? $job['preferred_assignment_duration'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_weeks_assignment'])?$job_data['worker_weeks_assignment']:"";
+            $data['worker'] = isset($job_data['worker_weeks_assignment']) ? $job_data['worker_weeks_assignment'] : "";
             $data['name'] = 'Assignment in weeks';
             $data['update_key'] = 'worker_weeks_assignment';
             $data['type'] = 'input';
             $data['worker_title'] = 'How many weeks?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Weeks/Assignment';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Weeks/Assignment';
             $worker_info[] = $data;
 
-            if($job['weeks_shift'] == $job_data['worker_shifts_week']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['weeks_shift'])?$job['weeks_shift']:"";
+            if ($job['weeks_shift'] == $job_data['worker_shifts_week']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['weeks_shift']) ? $job['weeks_shift'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_shifts_week'])?$job_data['worker_shifts_week']:"";
+            $data['worker'] = isset($job_data['worker_shifts_week']) ? $job_data['worker_shifts_week'] : "";
             $data['name'] = 'Shift Week';
             $data['update_key'] = 'worker_shifts_week';
             $data['type'] = 'input';
             $data['worker_title'] = 'ideal shifts per week';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Shifts/Week';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Shifts/Week';
             $worker_info[] = $data;
 
-            if($job['referral_bonus'] == $job_data['worker_referral_bonus']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['referral_bonus'])?$job['referral_bonus']:"";
+            if ($job['referral_bonus'] == $job_data['worker_referral_bonus']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['referral_bonus']) ? $job['referral_bonus'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_referral_bonus'])?$job_data['worker_referral_bonus']:"";
+            $data['worker'] = isset($job_data['worker_referral_bonus']) ? $job_data['worker_referral_bonus'] : "";
             $data['name'] = 'Refferel Bonus';
             $data['update_key'] = 'worker_referral_bonus';
             $data['type'] = 'input';
             $data['worker_title'] = '# of people you have referred';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Referral Bonus';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Referral Bonus';
             $worker_info[] = $data;
 
-            if(($job['sign_on_bonus'] == $job_data['worker_sign_on_bonus']) && (!empty($job_data['worker_sign_on_bonus']))){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['sign_on_bonus'])?$job['sign_on_bonus']:"";
+            if (($job['sign_on_bonus'] == $job_data['worker_sign_on_bonus']) && (!empty($job_data['worker_sign_on_bonus']))) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['sign_on_bonus']) ? $job['sign_on_bonus'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_sign_on_bonus'])?$job_data['worker_sign_on_bonus']:"";
+            $data['worker'] = isset($job_data['worker_sign_on_bonus']) ? $job_data['worker_sign_on_bonus'] : "";
             $data['name'] = 'Sign On Bonus';
             $data['update_key'] = 'worker_sign_on_bonus';
             $data['type'] = 'input';
             $data['worker_title'] = 'What kind of bonus do you expect?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Sign-On Bonus';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Sign-On Bonus';
             $worker_info[] = $data;
 
-            if($job['completion_bonus'] == $job_data['worker_completion_bonus']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['completion_bonus'])?$job['completion_bonus']:"";
+            if ($job['completion_bonus'] == $job_data['worker_completion_bonus']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['completion_bonus']) ? $job['completion_bonus'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_completion_bonus'])?$job_data['worker_completion_bonus']:"";
+            $data['worker'] = isset($job_data['worker_completion_bonus']) ? $job_data['worker_completion_bonus'] : "";
             $data['name'] = 'Completion Bonus';
             $data['update_key'] = 'worker_completion_bonus';
             $data['type'] = 'input';
             $data['worker_title'] = 'What kind of bonus do you deserve?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Completion Bonus';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Completion Bonus';
             $worker_info[] = $data;
 
-            if($job['extension_bonus'] == $job_data['worker_extension_bonus']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['extension_bonus'])?$job['extension_bonus']:"";
+            if ($job['extension_bonus'] == $job_data['worker_extension_bonus']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['extension_bonus']) ? $job['extension_bonus'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_extension_bonus'])?$job_data['worker_extension_bonus']:"";
+            $data['worker'] = isset($job_data['worker_extension_bonus']) ? $job_data['worker_extension_bonus'] : "";
             $data['name'] = 'extension bonus';
             $data['update_key'] = 'worker_extension_bonus';
             $data['type'] = 'input';
             $data['worker_title'] = 'What are you comparing this too?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Extension Bonus';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Extension Bonus';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['other_bonus'])?$job['other_bonus']:"";
-            $data['match'] = !empty($job_data['worker_other_bonus'])?true:false;
-            $data['worker'] = isset($job_data['worker_other_bonus'])?$job_data['worker_other_bonus']:"";
+            $data['job'] = isset($job['other_bonus']) ? $job['other_bonus'] : "";
+            $data['match'] = !empty($job_data['worker_other_bonus']) ? true : false;
+            $data['worker'] = isset($job_data['worker_other_bonus']) ? $job_data['worker_other_bonus'] : "";
             $data['name'] = 'Other Bonus';
             $data['update_key'] = 'worker_other_bonus';
             $data['type'] = 'input';
             $data['worker_title'] = 'Other bonuses you want?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Other Bonus';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Other Bonus';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['four_zero_one_k'])?$job['four_zero_one_k']:"";
-            $data['match'] = !empty($job_data['how_much_k'])?true:false;
-            $data['worker'] = isset($job_data['how_much_k'])?$job_data['how_much_k']:"";
+            $data['job'] = isset($job['four_zero_one_k']) ? $job['four_zero_one_k'] : "";
+            $data['match'] = !empty($job_data['how_much_k']) ? true : false;
+            $data['worker'] = isset($job_data['how_much_k']) ? $job_data['how_much_k'] : "";
             $data['name'] = '401k';
             $data['update_key'] = 'how_much_k';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'How much do you want this?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'401K';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : '401K';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['health_insaurance'])?$job['health_insaurance']:"";
-            $data['match'] = !empty($job_data['worker_health_insurance'])?true:false;
-            $data['worker'] = isset($job_data['worker_health_insurance'])?$job_data['worker_health_insurance']:"";
+            $data['job'] = isset($job['health_insaurance']) ? $job['health_insaurance'] : "";
+            $data['match'] = !empty($job_data['worker_health_insurance']) ? true : false;
+            $data['worker'] = isset($job_data['worker_health_insurance']) ? $job_data['worker_health_insurance'] : "";
             $data['name'] = 'Health Insaurance';
             $data['update_key'] = 'worker_health_insurance';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'How much do you want this?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Health Insurance';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Health Insurance';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['dental'])?$job['dental']:"";
-            $data['match'] = !empty($job_data['worker_dental'])?true:false;
-            $data['worker'] = isset($job_data['worker_dental'])?$job_data['worker_dental']:"";
+            $data['job'] = isset($job['dental']) ? $job['dental'] : "";
+            $data['match'] = !empty($job_data['worker_dental']) ? true : false;
+            $data['worker'] = isset($job_data['worker_dental']) ? $job_data['worker_dental'] : "";
             $data['name'] = 'Dental';
             $data['update_key'] = 'worker_dental';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'How much do you want this?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Dental';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Dental';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['vision'])?$job['vision']:"";
-            $data['match'] = !empty($job_data['worker_vision'])?true:false;
-            $data['worker'] = isset($job_data['worker_vision'])?$job_data['worker_vision']:"";
+            $data['job'] = isset($job['vision']) ? $job['vision'] : "";
+            $data['match'] = !empty($job_data['worker_vision']) ? true : false;
+            $data['worker'] = isset($job_data['worker_vision']) ? $job_data['worker_vision'] : "";
             $data['name'] = 'Vision';
             $data['update_key'] = 'worker_vision';
             $data['type'] = 'dropdown';
             $data['worker_title'] = 'How much do you want this?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Vision';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Vision';
             $worker_info[] = $data;
 
-            if($job['actual_hourly_rate'] == $job_data['worker_actual_hourly_rate']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['actual_hourly_rate'])?$job['actual_hourly_rate']:"";
+            if ($job['actual_hourly_rate'] == $job_data['worker_actual_hourly_rate']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['actual_hourly_rate']) ? $job['actual_hourly_rate'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_actual_hourly_rate'])?$job_data['worker_actual_hourly_rate']:"";
+            $data['worker'] = isset($job_data['worker_actual_hourly_rate']) ? $job_data['worker_actual_hourly_rate'] : "";
             $data['name'] = 'Actually Rate';
             $data['update_key'] = 'worker_actual_hourly_rate';
             $data['type'] = 'input';
             $data['worker_title'] = 'What range is fair?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Actual Hourly rate';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Actual Hourly rate';
             $worker_info[] = $data;
 
-            if($job['feels_like_per_hour'] == $job_data['worker_feels_like_hour']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['feels_like_per_hour'])?$job['feels_like_per_hour']:"";
+            if ($job['feels_like_per_hour'] == $job_data['worker_feels_like_hour']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['feels_like_per_hour']) ? $job['feels_like_per_hour'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_feels_like_hour'])?$job_data['worker_feels_like_hour']:"";
+            $data['worker'] = isset($job_data['worker_feels_like_hour']) ? $job_data['worker_feels_like_hour'] : "";
             $data['name'] = 'feels/$hr';
             $data['update_key'] = 'worker_feels_like_hour';
             $data['type'] = 'input';
             $data['worker_title'] = 'Does this seem fair based on the market?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Feels Like $/hr';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Feels Like $/hr';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['overtime'])?$job['overtime']:"";
-            $data['match'] = !empty($job_data['worker_overtime'])?true:false;
-            $data['worker'] = isset($job_data['worker_overtime'])?$job_data['worker_overtime']:"";
+            $data['job'] = isset($job['overtime']) ? $job['overtime'] : "";
+            $data['match'] = !empty($job_data['worker_overtime']) ? true : false;
+            $data['worker'] = isset($job_data['worker_overtime']) ? $job_data['worker_overtime'] : "";
             $data['name'] = 'Overtime';
             $data['update_key'] = 'worker_overtime';
             $data['type'] = 'checkbox';
             $data['worker_title'] = 'Would you work more overtime for a higher OT rate?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Overtime';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Overtime';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['holiday'])?$job['holiday']:"";
-            $data['match'] = !empty($job_data['worker_holiday'])?true:false;
-            $data['worker'] = isset($job_data['worker_holiday'])?$job_data['worker_holiday']:"";
+            $data['job'] = isset($job['holiday']) ? $job['holiday'] : "";
+            $data['match'] = !empty($job_data['worker_holiday']) ? true : false;
+            $data['worker'] = isset($job_data['worker_holiday']) ? $job_data['worker_holiday'] : "";
             $data['name'] = 'Holiday';
             $data['update_key'] = 'worker_holiday';
             $data['type'] = 'date';
             $data['worker_title'] = 'Any Holiday to refuse your work?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Holiday';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Holiday';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['on_call'])?$job['on_call']:"";
-            $data['match'] = !empty($job_data['worker_holiday'])?true:false;
-            $data['worker'] = isset($job_data['worker_on_call'])?$job_data['worker_on_call']:"";
+            $data['job'] = isset($job['on_call']) ? $job['on_call'] : "";
+            $data['match'] = !empty($job_data['worker_holiday']) ? true : false;
+            $data['worker'] = isset($job_data['worker_on_call']) ? $job_data['worker_on_call'] : "";
             $data['name'] = 'On call';
             $data['update_key'] = 'worker_on_call';
             $data['type'] = 'checkbox';
             $data['worker_title'] = 'Will you do call?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'On Call';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'On Call';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['call_back'])?$job['call_back']:"";
-            $data['match'] = !empty($job_data['worker_call_back'])?true:false;
-            $data['worker'] = isset($job_data['worker_call_back'])?$job_data['worker_call_back']:"";
+            $data['job'] = isset($job['call_back']) ? $job['call_back'] : "";
+            $data['match'] = !empty($job_data['worker_call_back']) ? true : false;
+            $data['worker'] = isset($job_data['worker_call_back']) ? $job_data['worker_call_back'] : "";
             $data['name'] = 'Call Back';
             $data['update_key'] = 'worker_call_back';
             $data['type'] = 'checkbox';
             $data['worker_title'] = 'Is this rate reasonable?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Call Back';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Call Back';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['orientation_rate'])?$job['orientation_rate']:"";
-            $data['match'] = !empty($job_data['worker_orientation_rate'])?true:false;
-            $data['worker'] = isset($job_data['worker_orientation_rate'])?$job_data['worker_orientation_rate']:"";
+            $data['job'] = isset($job['orientation_rate']) ? $job['orientation_rate'] : "";
+            $data['match'] = !empty($job_data['worker_orientation_rate']) ? true : false;
+            $data['worker'] = isset($job_data['worker_orientation_rate']) ? $job_data['worker_orientation_rate'] : "";
             $data['name'] = 'Orientation Rate';
             $data['update_key'] = 'worker_orientation_rate';
             $data['type'] = 'input';
             $data['worker_title'] = 'Is this rate reasonable?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Orientation Rate';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Orientation Rate';
             $worker_info[] = $data;
 
-            if($job['weekly_taxable_amount'] == $job_data['worker_weekly_taxable_amount']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['weekly_taxable_amount'])?$job['weekly_taxable_amount']:"";
+            if ($job['weekly_taxable_amount'] == $job_data['worker_weekly_taxable_amount']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['weekly_taxable_amount']) ? $job['weekly_taxable_amount'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_weekly_taxable_amount'])?$job_data['worker_weekly_taxable_amount']:"";
+            $data['worker'] = isset($job_data['worker_weekly_taxable_amount']) ? $job_data['worker_weekly_taxable_amount'] : "";
             $data['name'] = 'Weekly Taxable amount';
             $data['update_key'] = 'worker_weekly_taxable_amount';
             $data['type'] = 'input';
             $data['worker_title'] = '';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Weekly Taxable Amount';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Weekly Taxable Amount';
             $worker_info[] = $data;
 
-            if($job['weekly_non_taxable_amount'] == $job_data['worker_weekly_non_taxable_amount']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['weekly_non_taxable_amount'])?$job['weekly_non_taxable_amount']:"";
+            if ($job['weekly_non_taxable_amount'] == $job_data['worker_weekly_non_taxable_amount']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['weekly_non_taxable_amount']) ? $job['weekly_non_taxable_amount'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_weekly_non_taxable_amount'])?$job_data['worker_weekly_non_taxable_amount']:"";
+            $data['worker'] = isset($job_data['worker_weekly_non_taxable_amount']) ? $job_data['worker_weekly_non_taxable_amount'] : "";
             $data['name'] = 'Weekly Non Taxable Amount';
             $data['update_key'] = 'worker_weekly_non_taxable_amount';
             $data['type'] = 'input';
             $data['worker_title'] = 'Are you going to duplicate expenses?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Weekly non-taxable amount';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Weekly non-taxable amount';
             $worker_info[] = $data;
 
-            if($job['employer_weekly_amount'] == $job_data['worker_employer_weekly_amount']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['employer_weekly_amount'])?$job['employer_weekly_amount']:"";
+            if ($job['organization_weekly_amount'] == $job_data['worker_organization_weekly_amount']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['organization_weekly_amount']) ? $job['organization_weekly_amount'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_employer_weekly_amount'])?$job_data['worker_employer_weekly_amount']:"";
-            $data['name'] = 'Employer Weekly Amount';
-            $data['update_key'] = 'worker_employer_weekly_amount';
+            $data['worker'] = isset($job_data['worker_organization_weekly_amount']) ? $job_data['worker_organization_weekly_amount'] : "";
+            $data['name'] = 'Organization Weekly Amount';
+            $data['update_key'] = 'worker_organization_weekly_amount';
             $data['type'] = 'input';
             $data['worker_title'] = 'What range is reasonable?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Employer Weekly Amount';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Organization Weekly Amount';
             $worker_info[] = $data;
 
-            if($job['goodwork_weekly_amount'] == $job_data['worker_goodwork_weekly_amount']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['goodwork_weekly_amount'])?$job['goodwork_weekly_amount']:"";
+            if ($job['goodwork_weekly_amount'] == $job_data['worker_goodwork_weekly_amount']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['goodwork_weekly_amount']) ? $job['goodwork_weekly_amount'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_goodwork_weekly_amount'])?$job_data['worker_goodwork_weekly_amount']:"";
+            $data['worker'] = isset($job_data['worker_goodwork_weekly_amount']) ? $job_data['worker_goodwork_weekly_amount'] : "";
             $data['name'] = 'Goodwork Weekly Amount';
             $data['update_key'] = 'worker_goodwork_weekly_amount';
             $data['type'] = 'input';
             $data['worker_title'] = 'You only have (count down time) left before your rate drops from 5% to 2%';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Goodwork Weekly Amount';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Goodwork Weekly Amount';
             $worker_info[] = $data;
 
-            if($job['total_employer_amount'] == $job_data['worker_total_employer_amount']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['total_employer_amount'])?$job['total_employer_amount']:"";
+            if ($job['total_organization_amount'] == $job_data['worker_total_organization_amount']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['total_organization_amount']) ? $job['total_organization_amount'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_total_employer_amount'])?$job_data['worker_total_employer_amount']:"";
-            $data['name'] = 'Total Employer Amount';
-            $data['update_key'] = 'worker_total_employer_amount';
+            $data['worker'] = isset($job_data['worker_total_organization_amount']) ? $job_data['worker_total_organization_amount'] : "";
+            $data['name'] = 'Total Organization Amount';
+            $data['update_key'] = 'worker_total_organization_amount';
             $data['type'] = 'input';
             $data['worker_title'] = '';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Total Employer Amount';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Total Organization Amount';
             $worker_info[] = $data;
 
-            if($job['total_goodwork_amount'] == $job_data['worker_total_goodwork_amount']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['total_goodwork_amount'])?$job['total_goodwork_amount']:"";
+            if ($job['total_goodwork_amount'] == $job_data['worker_total_goodwork_amount']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['total_goodwork_amount']) ? $job['total_goodwork_amount'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_total_goodwork_amount'])?$job_data['worker_total_goodwork_amount']:"";
+            $data['worker'] = isset($job_data['worker_total_goodwork_amount']) ? $job_data['worker_total_goodwork_amount'] : "";
             $data['name'] = 'Total Goodwork Amount';
             $data['update_key'] = 'worker_total_goodwork_amount';
             $data['type'] = 'input';
             $data['worker_title'] = 'How would you spend those extra funds?';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Total Goodwork Amount';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Total Goodwork Amount';
             $worker_info[] = $data;
 
-            if($job['total_contract_amount'] == $job_data['worker_total_contract_amount']){ $val = true; }else{$val = false;}
-            $data['job'] = isset($job['total_contract_amount'])?$job['total_contract_amount']:"";
+            if ($job['total_contract_amount'] == $job_data['worker_total_contract_amount']) {
+                $val = true;
+            } else {
+                $val = false;
+            }
+            $data['job'] = isset($job['total_contract_amount']) ? $job['total_contract_amount'] : "";
             $data['match'] = $val;
-            $data['worker'] = isset($job_data['worker_total_contract_amount'])?$job_data['worker_total_contract_amount']:"";
+            $data['worker'] = isset($job_data['worker_total_contract_amount']) ? $job_data['worker_total_contract_amount'] : "";
             $data['name'] = 'Total Contract Amount';
             $data['update_key'] = 'worker_total_contract_amount';
             $data['type'] = 'input';
             $data['worker_title'] = '';
-            $data['job_title'] = !empty($data['job'])?$data['job']:'Total Contract Amount';
+            $data['job_title'] = !empty($data['job']) ? $data['job'] : 'Total Contract Amount';
             $worker_info[] = $data;
 
             $data['job'] = "Goodwork Number";
-            $data['match'] = !empty($job_data['worker_goodwork_number'])?true:false;
-            $data['worker'] = isset($job_data['worker_goodwork_number'])?$job_data['worker_goodwork_number']:"";
+            $data['match'] = !empty($job_data['worker_goodwork_number']) ? true : false;
+            $data['worker'] = isset($job_data['worker_goodwork_number']) ? $job_data['worker_goodwork_number'] : "";
             $data['name'] = 'goodwork number';
             $data['update_key'] = 'worker_goodwork_number';
             $data['type'] = 'input';
@@ -2556,10 +2727,10 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            if(isset($request->role)){
+            if (isset($request->role)) {
                 $user = User::where('id', $request->user_id)->first();
                 $nurse = Nurse::where('id', $request->nurse_id)->first();
-            }else{
+            } else {
                 $user = User::where('id', $request->user_id)->first();
                 $nurse = Nurse::where('user_id', $request->user_id)->first();
             }
@@ -2569,14 +2740,22 @@ class FacilityController extends Controller
 
 
                 /*  Nurse */
-                if (isset($request->nursing_license_number) && $request->nursing_license_number != "") $nurse->nursing_license_number = $request->nursing_license_number;
-                if (isset($request->nursing_license_state) && $request->nursing_license_state != "") $nurse->nursing_license_state = $request->nursing_license_state;
-                if (isset($request->license_expiry_date) && $request->license_expiry_date != "") $nurse->license_expiry_date = $request->license_expiry_date;
-                if (isset($request->license_issue_date) && $request->license_issue_date != "") $nurse->license_issue_date = $request->license_issue_date;
-                if (isset($request->license_renewal_date) && $request->license_renewal_date != "") $nurse->license_renewal_date = $request->license_renewal_date;
-                if (isset($request->license_status) && $request->license_status != "") $nurse->license_status = $request->license_status;
-                if (isset($request->license_type) && $request->license_type != "") $nurse->license_type = $request->license_type;
-                if (isset($request->authority_Issue) && $request->authority_Issue != "") $nurse->authority_Issue = $request->authority_Issue;
+                if (isset($request->nursing_license_number) && $request->nursing_license_number != "")
+                    $nurse->nursing_license_number = $request->nursing_license_number;
+                if (isset($request->nursing_license_state) && $request->nursing_license_state != "")
+                    $nurse->nursing_license_state = $request->nursing_license_state;
+                if (isset($request->license_expiry_date) && $request->license_expiry_date != "")
+                    $nurse->license_expiry_date = $request->license_expiry_date;
+                if (isset($request->license_issue_date) && $request->license_issue_date != "")
+                    $nurse->license_issue_date = $request->license_issue_date;
+                if (isset($request->license_renewal_date) && $request->license_renewal_date != "")
+                    $nurse->license_renewal_date = $request->license_renewal_date;
+                if (isset($request->license_status) && $request->license_status != "")
+                    $nurse->license_status = $request->license_status;
+                if (isset($request->license_type) && $request->license_type != "")
+                    $nurse->license_type = $request->license_type;
+                if (isset($request->authority_Issue) && $request->authority_Issue != "")
+                    $nurse->authority_Issue = $request->authority_Issue;
                 $n = $nurse->update();
                 /*  Nurse */
 
@@ -2599,7 +2778,8 @@ class FacilityController extends Controller
 
     }
 
-    public function addUserActivity(Request $request){
+    public function addUserActivity(Request $request)
+    {
         // echo $request->user_id;exit;
         // print_r($request->all());exit;
         if (
@@ -2609,22 +2789,22 @@ class FacilityController extends Controller
             isset($request->device_type) && $request->device_type != ""
         ) {
 
-                $insert = array(
-                    "user_id" => $request->user_id,
-                    'activity_type' => $request->activity_type,
-                    'ip' => $request->ip,
-                    'device_type' => $request->device_type,
-                    'device_company' => $request->device_company,
-                    'device_version' => $request->device_version,
-                    'device_location' => $request->device_location,
-                    'device_lat' => $request->device_lat,
-                    'device_lang' => $request->device_lang
-                );
-                \DB::table('user_activity')->insert($insert);
+            $insert = array(
+                "user_id" => $request->user_id,
+                'activity_type' => $request->activity_type,
+                'ip' => $request->ip,
+                'device_type' => $request->device_type,
+                'device_company' => $request->device_company,
+                'device_version' => $request->device_version,
+                'device_location' => $request->device_location,
+                'device_lat' => $request->device_lat,
+                'device_lang' => $request->device_lang
+            );
+            \DB::table('user_activity')->insert($insert);
 
-                $this->check = "1";
-                $this->message = "User activity has been added successfully";
-                $this->return_data = $insert;
+            $this->check = "1";
+            $this->message = "User activity has been added successfully";
+            $this->return_data = $insert;
 
         } else {
             $this->message = $this->param_missing;
@@ -2665,9 +2845,10 @@ class FacilityController extends Controller
             $ret->where('jobs.preferred_experience', '=', $request->preferred_experience);
         }
 
-        if (isset($request->search_location) && $request->search_location != "") $ret->search(['job_city', 'job_state'], $request->search_location);
+        if (isset($request->search_location) && $request->search_location != "")
+            $ret->search(['job_city', 'job_state'], $request->search_location);
 
-        if(isset($request->job_type) && $request->job_type != ""){
+        if (isset($request->job_type) && $request->job_type != "") {
             $ret->where('jobs.job_type', '=', $request->job_type);
         }
 
@@ -2686,7 +2867,7 @@ class FacilityController extends Controller
         $weekly_pay_from = (isset($request->weekly_pay_from) && $request->weekly_pay_from != "") ? $request->weekly_pay_from : "";
         $weekly_pay_to = (isset($request->weekly_pay_to) && $request->weekly_pay_to != "") ? $request->weekly_pay_to : "";
         if ($weekly_pay_from != "" && $weekly_pay_to != "") {
-            $ret->where(function (Builder $query) use ($weekly_pay_from,  $weekly_pay_to) {
+            $ret->where(function (Builder $query) use ($weekly_pay_from, $weekly_pay_to) {
                 $query->whereBetween('weekly_pay', array(intval($weekly_pay_from), intval($weekly_pay_to)));
             });
         }
@@ -2694,7 +2875,7 @@ class FacilityController extends Controller
         $hourly_pay_from = (isset($request->hourly_pay_from) && $request->hourly_pay_from != "") ? $request->hourly_pay_from : "";
         $hourly_pay_to = (isset($request->hourly_pay_to) && $request->hourly_pay_to != "") ? $request->hourly_pay_to : "";
         if ($hourly_pay_from != "" && $hourly_pay_to != "") {
-            $ret->where(function (Builder $query) use ($hourly_pay_from,  $hourly_pay_to) {
+            $ret->where(function (Builder $query) use ($hourly_pay_from, $hourly_pay_to) {
                 $query->whereBetween('hours_shift', array(intval($hourly_pay_from), intval($hourly_pay_to)));
             });
         }
@@ -2702,7 +2883,7 @@ class FacilityController extends Controller
         $hours_per_week_from = (isset($request->hours_per_week_from) && $request->hours_per_week_from != "") ? $request->hours_per_week_from : "";
         $hours_per_week_to = (isset($request->hours_per_week_to) && $request->hours_per_week_to != "") ? $request->hours_per_week_to : "";
         if ($hours_per_week_from != "" && $hours_per_week_to != "") {
-            $ret->where(function (Builder $query) use ($hours_per_week_from,  $hours_per_week_to) {
+            $ret->where(function (Builder $query) use ($hours_per_week_from, $hours_per_week_to) {
                 $query->whereBetween('hours_per_week', array(intval($hours_per_week_from), intval($hours_per_week_to)));
             });
         }
@@ -2710,7 +2891,7 @@ class FacilityController extends Controller
         $assignment_from = (isset($request->assignment_from) && $request->assignment_from != "") ? $request->assignment_from : "";
         $assignment_to = (isset($request->assignment_to) && $request->assignment_to != "") ? $request->assignment_to : "";
         if ($assignment_from != "" && $assignment_to != "") {
-            $ret->where(function (Builder $query) use ($assignment_from,  $assignment_to) {
+            $ret->where(function (Builder $query) use ($assignment_from, $assignment_to) {
                 $query->whereBetween('preferred_assignment_duration', array(intval($assignment_from), intval($assignment_to)));
             });
         }
@@ -2720,53 +2901,51 @@ class FacilityController extends Controller
         $data = [];
         $newDate = '';
         if (isset($request->start_date) && $request->start_date != "") {
-            foreach($job_data as $val)
-            {
-                $newDate = isset($val['start_date'])?date("Y-m-d", strtotime($val['start_date'])):'';
-                if(($newDate >= $request->start_date) && ($val['start_date'] != '')){
-                    $result['start_date'] = isset($val['start_date'])?$val['start_date']:"";
-                    $result['job_id'] = isset($val['job_id'])?$val['job_id']:"";
-                    $result['job_type'] = isset($val['job_type'])?$val['job_type']:"";
-                    $result['type'] = isset($val['type'])?$val['type']:"";
-                    $result['job_name'] = isset($val['job_name'])?$val['job_name']:"";
-                    $result['job_location'] = isset($val['job_location'])?$val['job_location']:"";
-                    $result['city'] = isset($val['job_city'])?$val['job_city']:"";
-                    $result['state'] = isset($val['job_state'])?$val['job_state']:"";
-                    $result['preferred_shift'] = isset($val['preferred_shift'])?$val['preferred_shift']:"";
-                    $result['preferred_shift_duration'] = isset($val['preferred_shift'])?$val['preferred_shift']:"";
-                    $result['preferred_assignment_duration'] = isset($val['preferred_assignment_duration'])?$val['preferred_assignment_duration']:"";
-                    $result['employer_weekly_amount'] = isset($val['employer_weekly_amount'])?$val['employer_weekly_amount']:"";
-                    $result['weekly_pay'] = isset($val['weekly_pay'])?$val['weekly_pay']:"";
-                    $result['hours_per_week'] = isset($val['hours_per_week'])?$val['hours_per_week']:"";
-                    $result['created_at'] = isset($val['created_at'])? date('d-F-Y h:i A', strtotime($val['created_at'])) :"";
+            foreach ($job_data as $val) {
+                $newDate = isset($val['start_date']) ? date("Y-m-d", strtotime($val['start_date'])) : '';
+                if (($newDate >= $request->start_date) && ($val['start_date'] != '')) {
+                    $result['start_date'] = isset($val['start_date']) ? $val['start_date'] : "";
+                    $result['job_id'] = isset($val['job_id']) ? $val['job_id'] : "";
+                    $result['job_type'] = isset($val['job_type']) ? $val['job_type'] : "";
+                    $result['type'] = isset($val['type']) ? $val['type'] : "";
+                    $result['job_name'] = isset($val['job_name']) ? $val['job_name'] : "";
+                    $result['job_location'] = isset($val['job_location']) ? $val['job_location'] : "";
+                    $result['city'] = isset($val['job_city']) ? $val['job_city'] : "";
+                    $result['state'] = isset($val['job_state']) ? $val['job_state'] : "";
+                    $result['preferred_shift'] = isset($val['preferred_shift']) ? $val['preferred_shift'] : "";
+                    $result['preferred_shift_duration'] = isset($val['preferred_shift']) ? $val['preferred_shift'] : "";
+                    $result['preferred_assignment_duration'] = isset($val['preferred_assignment_duration']) ? $val['preferred_assignment_duration'] : "";
+                    $result['organization_weekly_amount'] = isset($val['organization_weekly_amount']) ? $val['organization_weekly_amount'] : "";
+                    $result['weekly_pay'] = isset($val['weekly_pay']) ? $val['weekly_pay'] : "";
+                    $result['hours_per_week'] = isset($val['hours_per_week']) ? $val['hours_per_week'] : "";
+                    $result['created_at'] = isset($val['created_at']) ? date('d-F-Y h:i A', strtotime($val['created_at'])) : "";
                     $time_difference = time() - strtotime($val['created_at']);
-                    if($time_difference > 3599){
-                        $j_data["created_at_definition"] = isset($val['created_at']) ?$this->timeAgo(date(strtotime($val['created_at']))) : "";
-                    }else{
-                        $j_data["created_at_definition"] = isset($val['created_at']) ?'Recently Added' : "";
+                    if ($time_difference > 3599) {
+                        $j_data["created_at_definition"] = isset($val['created_at']) ? $this->timeAgo(date(strtotime($val['created_at']))) : "";
+                    } else {
+                        $j_data["created_at_definition"] = isset($val['created_at']) ? 'Recently Added' : "";
                     }
                     // $result['created_at_definition'] = 'Recently Added';
                     $data[] = $result;
                 }
             }
-        }else{
-            foreach($job_data as $val)
-            {
-                $result['start_date'] = isset($val['start_date'])?$val['start_date']:"";
-                $result['job_id'] = isset($val['job_id'])?$val['job_id']:"";
-                $result['job_type'] = isset($val['job_type'])?$val['job_type']:"";
-                $result['type'] = isset($val['type'])?$val['type']:"";
-                $result['job_name'] = isset($val['job_name'])?$val['job_name']:"";
-                $result['job_location'] = isset($val['job_location'])?$val['job_location']:"";
-                $result['city'] = isset($val['job_city'])?$val['job_city']:"";
-                $result['state'] = isset($val['job_state'])?$val['job_state']:"";
-                $result['preferred_shift'] = isset($val['preferred_shift'])?$val['preferred_shift']:"";
-                $result['preferred_shift_duration'] = isset($val['preferred_shift'])?$val['preferred_shift']:"";
-                $result['preferred_assignment_duration'] = isset($val['preferred_assignment_duration'])?$val['preferred_assignment_duration']:"";
-                $result['employer_weekly_amount'] = isset($val['employer_weekly_amount'])?$val['employer_weekly_amount']:"";
-                $result['weekly_pay'] = isset($val['weekly_pay'])?$val['weekly_pay']:"";
-                $result['hours_per_week'] = isset($val['hours_per_week'])?$val['hours_per_week']:"";
-                $result['created_at'] = isset($val['created_at'])? date('d-F-Y h:i A', strtotime($val['created_at'])) :"";
+        } else {
+            foreach ($job_data as $val) {
+                $result['start_date'] = isset($val['start_date']) ? $val['start_date'] : "";
+                $result['job_id'] = isset($val['job_id']) ? $val['job_id'] : "";
+                $result['job_type'] = isset($val['job_type']) ? $val['job_type'] : "";
+                $result['type'] = isset($val['type']) ? $val['type'] : "";
+                $result['job_name'] = isset($val['job_name']) ? $val['job_name'] : "";
+                $result['job_location'] = isset($val['job_location']) ? $val['job_location'] : "";
+                $result['city'] = isset($val['job_city']) ? $val['job_city'] : "";
+                $result['state'] = isset($val['job_state']) ? $val['job_state'] : "";
+                $result['preferred_shift'] = isset($val['preferred_shift']) ? $val['preferred_shift'] : "";
+                $result['preferred_shift_duration'] = isset($val['preferred_shift']) ? $val['preferred_shift'] : "";
+                $result['preferred_assignment_duration'] = isset($val['preferred_assignment_duration']) ? $val['preferred_assignment_duration'] : "";
+                $result['organization_weekly_amount'] = isset($val['organization_weekly_amount']) ? $val['organization_weekly_amount'] : "";
+                $result['weekly_pay'] = isset($val['weekly_pay']) ? $val['weekly_pay'] : "";
+                $result['hours_per_week'] = isset($val['hours_per_week']) ? $val['hours_per_week'] : "";
+                $result['created_at'] = isset($val['created_at']) ? date('d-F-Y h:i A', strtotime($val['created_at'])) : "";
                 $result['created_at_definition'] = 'Recently Added';
                 $data[] = $result;
             }
@@ -2786,11 +2965,11 @@ class FacilityController extends Controller
             isset($request->job_id) && $request->job_id != "" &&
             isset($request->api_key) && $request->api_key != ""
         ) {
-            if(!empty($request->role)){
+            if (!empty($request->role)) {
                 $record = NURSE::where(['id' => $request->nurse_id])->get()->first();
                 $nurse_id = $record->user_id;
                 $user_id = $record->user_id;
-            }else{
+            } else {
                 $nurse_id = $request->nurse_id;
                 $user_id = $request->nurse_id;
             }
@@ -2802,14 +2981,14 @@ class FacilityController extends Controller
 
             $check = DB::table('job_saved')->where($whereCond)->first();
 
-            if($check){
+            if ($check) {
                 // $this->message = "Job already exist";
                 // DB::table('job_saved')->insert($insert);
                 DB::table('job_saved')->where('id', $check->id)->delete();
 
                 $this->check = "1";
                 $this->message = "Remove saved job successfully";
-            }else{
+            } else {
                 $insert = array(
                     "nurse_id" => $nurse_id,
                     'job_id' => $request->job_id,
@@ -2842,7 +3021,7 @@ class FacilityController extends Controller
 
             if (!is_null($product)) {
                 \DB::table('job_saved')->where('nurse_id', $nurse->user_id)->where('job_id', $request->job_id)->update(['is_delete' => '1']);
-            }else{
+            } else {
                 $insert = array(
                     "nurse_id" => $nurse->user_id,
                     'job_id' => $request->job_id,
@@ -2852,10 +3031,10 @@ class FacilityController extends Controller
                 DB::table('job_saved')->insert($insert);
             }
             $check = \DB::table('job_saved')->where('nurse_id', $nurse->user_id)->where('job_id', $request->job_id)->first();
-            if($check){
+            if ($check) {
                 $this->check = "1";
                 $this->message = "Data removed successfully";
-            }else{
+            } else {
                 $this->message = "Data not found";
             }
 
@@ -2887,12 +3066,11 @@ class FacilityController extends Controller
                 $result = array();
                 $nurse = $nurse_info->first();
                 $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
-                if(isset($checkoffer))
-                {
+                if (isset($checkoffer)) {
                     $this->check = "1";
                     $this->message = "This Worker Blocked by Recruiter";
                     $this->return_data = [];
-                }else{
+                } else {
                     $whereCond = [
                         'job_saved.nurse_id' => $request->user_id,
                         'jobs.is_closed' => "0"
@@ -2900,21 +3078,21 @@ class FacilityController extends Controller
 
                     $limit = 10;
                     $ret = \DB::table('job_saved')
-                            ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
-                            ->where($whereCond)
-                            ->select('jobs.*' ,'job_saved.*');
+                        ->join('jobs', 'jobs.id', '=', 'job_saved.job_id')
+                        ->where($whereCond)
+                        ->select('jobs.*', 'job_saved.*');
 
-                            // ->paginate($limit);
-                            $jobdata = $ret->get();
-                            $result = $this->my_saved_jobData($jobdata, $request->user_id);
-                            // IS SAVED JOBS
-                            $data = [];
-                            foreach($result as $val){
-                                if($val['is_saved'] != '1'){
-                                    continue;
-                                }
-                                $data[] = $val;
-                            }
+                    // ->paginate($limit);
+                    $jobdata = $ret->get();
+                    $result = $this->my_saved_jobData($jobdata, $request->user_id);
+                    // IS SAVED JOBS
+                    $data = [];
+                    foreach ($result as $val) {
+                        if ($val['is_saved'] != '1') {
+                            continue;
+                        }
+                        $data[] = $val;
+                    }
 
                     $this->check = "1";
                     $this->message = "Saved jobs listed successfully";
@@ -2961,24 +3139,23 @@ class FacilityController extends Controller
                 ];
 
                 $ret = Job::select('jobs.id as job_id', 'jobs.created_at as created_at', 'jobs.updated_at as updated_at', 'facilities.*', 'jobs.*')
-                ->leftJoin('facilities', function ($join) {
-                    $join->on('facilities.id', '=', 'jobs.facility_id');
-                })
-                ->Join('job_saved', function ($join) {
-                    $join->on('job_saved.job_id', '=', 'jobs.id');
-                })
-                ->where($whereCond)
-                ->orderBy('jobs.created_at', 'desc');
+                    ->leftJoin('facilities', function ($join) {
+                        $join->on('facilities.id', '=', 'jobs.facility_id');
+                    })
+                    ->Join('job_saved', function ($join) {
+                        $join->on('job_saved.job_id', '=', 'jobs.id');
+                    })
+                    ->where($whereCond)
+                    ->orderBy('jobs.created_at', 'desc');
 
-                $user_id =  isset($request->user_id)?$request->user_id:'';
+                $user_id = isset($request->user_id) ? $request->user_id : '';
                 $jobdata = $ret->get();
                 // $jobdata = $ret->paginate(10);
                 $result = $this->save_jobData($jobdata, $user_id);
                 $n_c = 0;
-                foreach($result as $rec)
-                {
-                    $result[$n_c]['city'] = isset($rec['job_city'])?$rec['job_city']:'';
-                    $result[$n_c]['state'] = isset($rec['job_state'])?$rec['job_state']:'';
+                foreach ($result as $rec) {
+                    $result[$n_c]['city'] = isset($rec['job_city']) ? $rec['job_city'] : '';
+                    $result[$n_c]['state'] = isset($rec['job_state']) ? $rec['job_state'] : '';
                     $result[$n_c]['description'] = strip_tags($rec['description']);
                     $result[$n_c]['responsibilities'] = strip_tags($rec['responsibilities']);
                     $result[$n_c]['qualifications'] = strip_tags($rec['qualifications']);
@@ -2988,8 +3165,8 @@ class FacilityController extends Controller
                 }
 
                 $data = [];
-                foreach($result as $val){
-                    if($val['is_applied'] != '0'){
+                foreach ($result as $val) {
+                    if ($val['is_applied'] != '0') {
                         continue;
                     }
                     $data[] = $val;
@@ -3028,12 +3205,11 @@ class FacilityController extends Controller
 
                     $nurse = $nurse_info->get()->first();
                     $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
-                    if(isset($checkoffer))
-                    {
+                    if (isset($checkoffer)) {
                         $this->check = "1";
                         $this->message = "This Worker Blocked by Recruiter";
                         $this->return_data = [];
-                    }else{
+                    } else {
                         $whereCond = [
                             'facilities.active' => true,
                             // 'jobs.is_open' => "1",
@@ -3050,13 +3226,13 @@ class FacilityController extends Controller
                             ->where($whereCond)
                             ->orderBy('offers.created_at', 'desc');
 
-                            $job_data = $ret->get();
-                            // $job_data = $ret->paginate(10);
+                        $job_data = $ret->get();
+                        // $job_data = $ret->paginate(10);
 
                         $result = $this->jobData($job_data, $request->user_id);
 
                         $num = 0;
-                        foreach($result as $rec){
+                        foreach ($result as $rec) {
                             $result[$num]['description'] = strip_tags($rec['description']);
                             $result[$num]['responsibilities'] = strip_tags($rec['responsibilities']);
                             $result[$num]['qualifications'] = strip_tags($rec['qualifications']);
@@ -3070,7 +3246,7 @@ class FacilityController extends Controller
                         $this->return_data = $result;
                     }
 
-                }else{
+                } else {
                     $this->check = "1";
                     $this->message = "Nurse not exist";
                 }
@@ -3100,12 +3276,11 @@ class FacilityController extends Controller
                     $result = array();
                     $nurse = $nurse_info->get()->first();
                     $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
-                    if(isset($checkoffer))
-                    {
+                    if (isset($checkoffer)) {
                         $this->check = "1";
                         $this->message = "This Worker Blocked by Recruiter";
                         $this->return_data = [];
-                    }else{
+                    } else {
                         $whereCond = [
                             'facilities.active' => true,
                             'jobs.active' => "1",
@@ -3127,7 +3302,7 @@ class FacilityController extends Controller
                         $job_data = $ret->get();
                         $result = $this->jobData($job_data, $request->user_id);
                         $num = 0;
-                        foreach($result as $rec){
+                        foreach ($result as $rec) {
                             $result[$num]['description'] = strip_tags($rec['description']);
                             $result[$num]['responsibilities'] = strip_tags($rec['responsibilities']);
                             $result[$num]['qualifications'] = strip_tags($rec['qualifications']);
@@ -3139,7 +3314,7 @@ class FacilityController extends Controller
                         $this->message = "Jobs listed successfully";
                         $this->return_data = $result;
                     }
-                }else{
+                } else {
                     $this->check = "1";
                     $this->message = "Nurse not exist";
                 }
@@ -3172,12 +3347,11 @@ class FacilityController extends Controller
 
                     $nurse = $nurse_info->get()->first();
                     $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
-                    if(isset($checkoffer))
-                    {
+                    if (isset($checkoffer)) {
                         $this->check = "1";
                         $this->message = "This Worker Blocked by Recruiter";
                         $this->return_data = [];
-                    }else{
+                    } else {
 
                         $whereCond = [
                             'facilities.active' => true,
@@ -3190,32 +3364,32 @@ class FacilityController extends Controller
                         // new code
                         // $ret = DB::table('jobs')
                         $ret = Job::where($whereCond)
-                        ->leftJoin('facilities', 'facilities.id', '=', 'jobs.facility_id')
-                        ->leftJoin('offers', 'jobs.id', '=', 'offers.job_id')
-                        ->select('offers.status AS offers_status','offers.id AS offer_id', 'jobs.created_at AS start_date', 'jobs.id as job_id', 'jobs.*', 'jobs.created_at as created_at')
+                            ->leftJoin('facilities', 'facilities.id', '=', 'jobs.facility_id')
+                            ->leftJoin('offers', 'jobs.id', '=', 'offers.job_id')
+                            ->select('offers.status AS offers_status', 'offers.id AS offer_id', 'jobs.created_at AS start_date', 'jobs.id as job_id', 'jobs.*', 'jobs.created_at as created_at')
 
-                        ->orderBy('jobs.created_at', 'desc');
+                            ->orderBy('jobs.created_at', 'desc');
                         // $jobdata = $ret->paginate(10);
                         $jobdata = $ret->get();
                         $result = [];
-                        foreach($jobdata as $rec){
+                        foreach ($jobdata as $rec) {
                             $res['type'] = $rec['type'];
                             $res['job_id'] = $rec['job_id'];
                             $res['worker_id'] = $nurse->id;
                             $res['worker_user_id'] = $nurse->user_id;
                             $res['job_name'] = $rec['job_name'];
-                            $res['Worker_name'] = $nurse->first_name.' '.$nurse->last_name;
+                            $res['Worker_name'] = $nurse->first_name . ' ' . $nurse->last_name;
                             $res['profession'] = $rec['profession'];
                             $res['specialty'] = $rec['preferred_specialty'];
                             $res['experience'] = $rec['preferred_experience'];
-                            $res['weekly_pay'] = $rec['employer_weekly_amount'];
+                            $res['weekly_pay'] = $rec['organization_weekly_amount'];
                             $res['preferred_assignment_duration'] = $rec['preferred_assignment_duration'];
                             $res['preferred_shift'] = $rec['preferred_shift'];
                             $res['city'] = $rec['job_city'];
                             $res['state'] = $rec['job_state'];
 
-                            $res['created_at_definition'] = isset($rec['created_at']) ? "Start Date: " .date('M j, Y', strtotime($rec['created_at'])) : "";
-                            $result[] =$res;
+                            $res['created_at_definition'] = isset($rec['created_at']) ? "Start Date: " . date('M j, Y', strtotime($rec['created_at'])) : "";
+                            $result[] = $res;
                         }
 
 
@@ -3223,7 +3397,7 @@ class FacilityController extends Controller
                         $this->message = "Hired Jobs listed successfully";
                         $this->return_data = $result;
                     }
-                }else{
+                } else {
                     $this->check = "1";
                     $this->message = "Nurse not exist";
                 }
@@ -3253,19 +3427,18 @@ class FacilityController extends Controller
                     $result = array();
                     $nurse = $nurse_info->get()->first();
                     $checkoffer = DB::table('blocked_users')->where('worker_id', $nurse['id'])->first();
-                    if(isset($checkoffer))
-                    {
+                    if (isset($checkoffer)) {
                         $this->check = "1";
                         $this->message = "This Worker Blocked by Recruiter";
                         $this->return_data = [];
-                    }else{
+                    } else {
                         $whereCond = [
                             'facilities.active' => true,
                             'offers.status' => 'Done',
                             'jobs.is_closed' => "0",
                             'offers.nurse_id' => $nurse->id
                         ];
-                        $ret = Job::select('offers.id AS offer_id','jobs.id as job_id', 'jobs.*', 'offers.start_date as start_date', 'offers.expiration as end_date', 'jobs.created_at as created_at')
+                        $ret = Job::select('offers.id AS offer_id', 'jobs.id as job_id', 'jobs.*', 'offers.start_date as start_date', 'offers.expiration as end_date', 'jobs.created_at as created_at')
                             ->leftJoin('facilities', function ($join) {
                                 $join->on('facilities.id', '=', 'jobs.facility_id');
                             })
@@ -3278,26 +3451,26 @@ class FacilityController extends Controller
                         $job_data = $ret->get();
 
                         $result = [];
-                        foreach($job_data as $rec){
+                        foreach ($job_data as $rec) {
                             $res['type'] = $rec['type'];
                             $res['job_id'] = $rec['job_id'];
                             $res['worker_id'] = $nurse->id;
                             $res['worker_user_id'] = $nurse->user_id;
                             $res['job_name'] = $rec['job_name'];
-                            $res['Worker_name'] = $nurse->first_name.' '.$nurse->last_name;
+                            $res['Worker_name'] = $nurse->first_name . ' ' . $nurse->last_name;
                             $res['profession'] = $rec['profession'];
                             $res['specialty'] = $rec['preferred_specialty'];
                             $res['experience'] = $rec['preferred_experience'];
-                            $res['weekly_pay'] = $rec['employer_weekly_amount'];
+                            $res['weekly_pay'] = $rec['organization_weekly_amount'];
                             $res['preferred_assignment_duration'] = $rec['preferred_assignment_duration'];
                             $res['preferred_shift'] = $rec['preferred_shift'];
                             $res['city'] = $rec['job_city'];
                             $res['state'] = $rec['job_state'];
 
-                            $res['start_date'] = isset($rec['start_date']) ? "Start Date: " .date('M j Y', strtotime($rec['start_date'])) : "";
-                            $res['end_date'] = isset($rec['end_date']) ? "End Date: " .date('M j Y', strtotime($rec['end_date'])) : "";
-                            $res['posted_on'] = isset($rec['created_at']) ?date('M j Y', strtotime($rec['created_at'])) : "";
-                            $result[] =$res;
+                            $res['start_date'] = isset($rec['start_date']) ? "Start Date: " . date('M j Y', strtotime($rec['start_date'])) : "";
+                            $res['end_date'] = isset($rec['end_date']) ? "End Date: " . date('M j Y', strtotime($rec['end_date'])) : "";
+                            $res['posted_on'] = isset($rec['created_at']) ? date('M j Y', strtotime($rec['created_at'])) : "";
+                            $result[] = $res;
                         }
                         // $result = $this->jobData($job_data, $request->user_id);
                         // $num = 0;
@@ -3313,7 +3486,7 @@ class FacilityController extends Controller
                         $this->message = "Past Jobs listed successfully";
                         $this->return_data = $result;
                     }
-                }else{
+                } else {
                     $this->check = "1";
                     $this->message = "Nurse not exist";
                 }
@@ -3337,9 +3510,12 @@ class FacilityController extends Controller
             $return_data = [];
             if ($user) {
                 /* User */
-                if (isset($request->date_of_birth) && $request->date_of_birth != "") $user->date_of_birth = $request->date_of_birth;
-                if (isset($request->driving_license) && $request->driving_license != "") $user->driving_license = $request->driving_license;
-                if (isset($request->security_number) && $request->security_number != "") $user->security_number = $request->security_number;
+                if (isset($request->date_of_birth) && $request->date_of_birth != "")
+                    $user->date_of_birth = $request->date_of_birth;
+                if (isset($request->driving_license) && $request->driving_license != "")
+                    $user->driving_license = $request->driving_license;
+                if (isset($request->security_number) && $request->security_number != "")
+                    $user->security_number = $request->security_number;
 
                 $u = $user->update();
                 /* User */
@@ -3389,9 +3565,9 @@ class FacilityController extends Controller
                 DB::table('offers')->where('nurse_id', '=', $nurse_id)->delete();
                 DB::table('nurse_ratings')->where('nurse_id', '=', $nurse_id)->delete();
                 DB::table('notifications')->where('created_by', '=', $nurse_id)->delete();
-                if($nurse_deleted && $user_deleted){
+                if ($nurse_deleted && $user_deleted) {
                     $this->message = "Nurse record deleted successfully";
-                }else{
+                } else {
                     $this->message = "Nurse record not deleted";
                 }
 
@@ -3414,10 +3590,10 @@ class FacilityController extends Controller
             $this->message = $validator->errors()->first();
         } else {
 
-            if(isset($request->role)){
+            if (isset($request->role)) {
                 $user = User::where('id', $request->user_id)->first();
                 $nurse = Nurse::where('id', $request->nurse_id)->first();
-            }else{
+            } else {
                 $user = User::where('id', $request->user_id)->first();
                 $nurse = Nurse::where('user_id', $request->user_id)->first();
             }
@@ -3427,23 +3603,26 @@ class FacilityController extends Controller
             if ($user) {
 
                 /*  Nurse */
-                if (isset($request->college_uni_name) && $request->college_uni_name != "") $nurse->college_uni_name = $request->college_uni_name;
-                if (isset($request->study_area) && $request->study_area != "") $nurse->study_area = $request->study_area;
-                if (isset($request->graduation_date) && $request->graduation_date != "") $nurse->graduation_date = $request->graduation_date;
+                if (isset($request->college_uni_name) && $request->college_uni_name != "")
+                    $nurse->college_uni_name = $request->college_uni_name;
+                if (isset($request->study_area) && $request->study_area != "")
+                    $nurse->study_area = $request->study_area;
+                if (isset($request->graduation_date) && $request->graduation_date != "")
+                    $nurse->graduation_date = $request->graduation_date;
                 // if (isset($request->highest_nursing_degree ) && $request->highest_nursing_degree  != "") $nurse->highest_nursing_degree  = $request->highest_nursing_degree ;
-                if (isset($request->highest_nursing_degree ) && $request->highest_nursing_degree  != ""){
+                if (isset($request->highest_nursing_degree) && $request->highest_nursing_degree != "") {
 
                     // nurse degree changed into id
-                    if($request->highest_nursing_degree == 'Master of Science in Nursing (MSN)'){
-                        $nurse->highest_nursing_degree  = '23';
-                    }else if($request->highest_nursing_degree == 'Associate Degree in Nursing (ADN)'){
-                        $nurse->highest_nursing_degree  = '21';
-                    }else if($request->highest_nursing_degree == 'Bachelor of Science in Nursing (BSN)'){
-                        $nurse->highest_nursing_degree  = '22';
-                    }else{
-                        $nurse->highest_nursing_degree  = '24';
+                    if ($request->highest_nursing_degree == 'Master of Science in Nursing (MSN)') {
+                        $nurse->highest_nursing_degree = '23';
+                    } else if ($request->highest_nursing_degree == 'Associate Degree in Nursing (ADN)') {
+                        $nurse->highest_nursing_degree = '21';
+                    } else if ($request->highest_nursing_degree == 'Bachelor of Science in Nursing (BSN)') {
+                        $nurse->highest_nursing_degree = '22';
+                    } else {
+                        $nurse->highest_nursing_degree = '24';
                     }
-                // end nurse degree convert into id
+                    // end nurse degree convert into id
                 }
 
                 $n = $nurse->update();
@@ -3490,18 +3669,18 @@ class FacilityController extends Controller
         if ($validator->fails()) {
             $this->message = $validator->errors()->first();
         } else {
-            if(isset($request->role)){
+            if (isset($request->role)) {
                 $nurse = Nurse::where('id', '=', $request->nurse_id)->first();
-            }else{
+            } else {
                 $nurse = Nurse::where('user_id', '=', $request->user_id)->first();
             }
 
             $check = Experience::where('nurse_id', '=', $nurse->id)->get()->first();
-            if(isset($check)){
+            if (isset($check)) {
                 $this->check = "1";
                 $this->message = "Nurse record already exist";
                 $this->return_data = $check;
-            }else{
+            } else {
 
                 if (isset($nurse)) {
 
@@ -3530,11 +3709,11 @@ class FacilityController extends Controller
                         $cert_data["type"] = (isset($cert_ret->type) && $cert_ret->type != "") ? $cert_ret->type : "";
                         $cert_data["type_definition"] = (isset($experiences[$cert_ret->type]) && $experiences[$cert_ret->type] != "") ? $experiences[$cert_ret->type] : "";
                         $cert_data["position_title"] = (isset($cert_ret->position_title) && $cert_ret->position_title != "") ? $cert_ret->position_title : "";
-                        $cert_data["start_date"] = (isset($cert_ret->start_date) && $cert_ret->start_date != "") ?  date('m/d/Y', strtotime($cert_ret->start_date)) : "";
-                        $cert_data["end_date"] = (isset($cert_ret->end_date) && $cert_ret->end_date != "") ?  date('m/d/Y', strtotime($cert_ret->end_date)) : "";
+                        $cert_data["start_date"] = (isset($cert_ret->start_date) && $cert_ret->start_date != "") ? date('m/d/Y', strtotime($cert_ret->start_date)) : "";
+                        $cert_data["end_date"] = (isset($cert_ret->end_date) && $cert_ret->end_date != "") ? date('m/d/Y', strtotime($cert_ret->end_date)) : "";
                         $cert_data["unit"] = (isset($cert_ret->unit) && $cert_ret->unit != "") ? $cert_ret->unit : "";
-                        $cert_data["created_at"] = (isset($cert_ret->created_at) && $cert_ret->created_at != "") ?  date('m/d/Y H:i:s', strtotime($cert_ret->created_at)) : "";
-                        $cert_data["is_current_job"] = (isset($cert_ret->is_current_job) && $cert_ret->is_current_job != "") ?  $cert_ret->is_current_job : "";
+                        $cert_data["created_at"] = (isset($cert_ret->created_at) && $cert_ret->created_at != "") ? date('m/d/Y H:i:s', strtotime($cert_ret->created_at)) : "";
+                        $cert_data["is_current_job"] = (isset($cert_ret->is_current_job) && $cert_ret->is_current_job != "") ? $cert_ret->is_current_job : "";
                         /* experience data */
 
                         $this->check = "1";
@@ -3609,11 +3788,11 @@ class FacilityController extends Controller
                     $cert_data["type"] = (isset($cert_ret->type) && $cert_ret->type != "") ? $cert_ret->type : "";
                     $cert_data["type_definition"] = (isset($experiences[$cert_ret->type]) && $experiences[$cert_ret->type] != "") ? $experiences[$cert_ret->type] : "";
                     $cert_data["position_title"] = (isset($cert_ret->position_title) && $cert_ret->position_title != "") ? $cert_ret->position_title : "";
-                    $cert_data["start_date"] = (isset($cert_ret->start_date) && $cert_ret->start_date != "") ?  date('m/d/Y', strtotime($cert_ret->start_date)) : "";
-                    $cert_data["end_date"] = (isset($cert_ret->end_date) && $cert_ret->end_date != "") ?  date('m/d/Y', strtotime($cert_ret->end_date)) : "";
+                    $cert_data["start_date"] = (isset($cert_ret->start_date) && $cert_ret->start_date != "") ? date('m/d/Y', strtotime($cert_ret->start_date)) : "";
+                    $cert_data["end_date"] = (isset($cert_ret->end_date) && $cert_ret->end_date != "") ? date('m/d/Y', strtotime($cert_ret->end_date)) : "";
                     $cert_data["unit"] = (isset($cert_ret->unit) && $cert_ret->unit != "") ? $cert_ret->unit : "";
-                    $cert_data["created_at"] = (isset($cert_ret->created_at) && $cert_ret->created_at != "") ?  date('m/d/Y H:i:s', strtotime($cert_ret->created_at)) : "";
-                    $cert_data["is_current_job"] = (isset($cert_ret->is_current_job) && $cert_ret->is_current_job != "") ?  $cert_ret->is_current_job : "";
+                    $cert_data["created_at"] = (isset($cert_ret->created_at) && $cert_ret->created_at != "") ? date('m/d/Y H:i:s', strtotime($cert_ret->created_at)) : "";
+                    $cert_data["is_current_job"] = (isset($cert_ret->is_current_job) && $cert_ret->is_current_job != "") ? $cert_ret->is_current_job : "";
                     /* experience data */
 
                     $this->check = "1";
@@ -3633,7 +3812,8 @@ class FacilityController extends Controller
 
     }
 
-    public function experienceTpesOptions(Request $request){
+    public function experienceTpesOptions(Request $request)
+    {
         $validator = \Validator::make($request->all(), [
             'api_key' => 'required',
         ]);
@@ -3655,10 +3835,10 @@ class FacilityController extends Controller
 
     public function getfacilities(Request $request)
     {
-        $facilities = Facility::where('active','=', true)->select('id','name')->get();
+        $facilities = Facility::where('active', '=', true)->select('id', 'name')->get();
 
         $this->check = "1";
-        $this->message = "Employer has been listed successfully";
+        $this->message = "Organization has been listed successfully";
         $this->return_data = $facilities;
 
         return response()->json(["api_status" => $this->check, "message" => $this->message, "data" => $this->return_data], 200);
@@ -3680,7 +3860,7 @@ class FacilityController extends Controller
             })
             ->where($whereCond);
 
-        if (isset($request->facility_type) && $request->facility_type  != "") {
+        if (isset($request->facility_type) && $request->facility_type != "") {
             $type = $request->facility_type;
             $ret->where(function (Builder $query) use ($type) {
                 $query->whereIn('type', $type);

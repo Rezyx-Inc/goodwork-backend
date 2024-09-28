@@ -52,9 +52,9 @@ return [
             'driver' => 'session',
             'provider' => 'recruiter',
         ],
-        'employer' => [
+        'organization' => [
             'driver' => 'session',
-            'provider' => 'employer',
+            'provider' => 'organization',
         ],
 
         'api' => [
@@ -98,7 +98,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'employer' => [
+        'organization' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],

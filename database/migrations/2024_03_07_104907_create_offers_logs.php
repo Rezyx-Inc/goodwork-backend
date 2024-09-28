@@ -17,11 +17,11 @@ class CreateOffersLogs extends Migration
             $table->uuid('id')->primary();
             $table->uuid('original_offer_id');
             $table->foreign('original_offer_id')->references('id')->on('offers');
-            $table->enum('counter_offer_by', ['Nurse', 'Employer']);
+            $table->enum('counter_offer_by', ['Nurse', 'Organization']);
             $table->uuid('nurse_id');
             $table->foreign('nurse_id')->references('id')->on('nurses');
-            $table->uuid('employer_recruiter_id')->nullable();
-            $table->foreign('employer_recruiter_id')->references('id')->on('users');
+            $table->uuid('organization_recruiter_id')->nullable();
+            $table->foreign('organization_recruiter_id')->references('id')->on('users');
             // $table->uuid('job_id');
             // $table->foreign('job_id')->references('id')->on('jobs');
             $table->text('details');

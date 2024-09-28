@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{User, Nurse, Availability,API_KEY};
+use App\Models\{User, Nurse, Availability, API_KEY};
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +18,7 @@ class AuthController extends Controller
     }
     // public function register(Request $request)
     // {
-    //     try{  
+    //     try{
     //             $validator = Validator::make($request->all(), [
     //                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
     //                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
@@ -28,7 +28,7 @@ class AuthController extends Controller
     //             if ($validator->fails()) {
     //                 $data = [];
     //                 $data['msg'] =$validator->errors()->first();;
-                     
+
     //                  return response()->json($data);
     //             }else{
     //                 $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
@@ -36,7 +36,7 @@ class AuthController extends Controller
     //                     $data = [];
     //                     $data['msg'] ='Already exist.';
     //                     return response()->json($data);
-    //                 }     
+    //                 }
     //                 $model = User::create([
     //                     'first_name' => $request->first_name,
     //                     'last_name' => $request->last_name,
@@ -46,9 +46,9 @@ class AuthController extends Controller
     //                     // we should add facility id
     //                     'facility_id'=>'1',
     //                     'active' => '1',
-    //                     'role' => 'EMPLOYER',
+    //                     'role' => 'ORGANIZATION',
     //                 ]);
-    //                 $tokenResult = $model->createToken('authToken')->accessToken;    
+    //                 $tokenResult = $model->createToken('authToken')->accessToken;
     //                 return response()->json(['token'=>$tokenResult,'user'=>$model]);
     //         }
     //     }catch(\Exception $e){
@@ -60,9 +60,9 @@ class AuthController extends Controller
     public function authorize_access(Request $request)
     {
         $email = $request->input('email');
-        
 
-        
+
+
         // Check if the user exists
         $user = User::where('email', $email)->first();
         if (!$user) {
@@ -70,7 +70,7 @@ class AuthController extends Controller
         }
 
         $key = $request->input('api_key');
-        $api_key  = API_KEY::where('key', $key)->first();
+        $api_key = API_KEY::where('key', $key)->first();
         // Check if is a valid api key
         if (!$api_key) {
             return response()->json(['error' => 'Unauthorized'], 401);

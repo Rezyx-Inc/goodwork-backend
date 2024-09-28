@@ -1,6 +1,6 @@
 {
     "Admin": true,
     "Recruiter": true,
-    "Employer": true,
+    "Organization": true,
     "Worker": true
 }

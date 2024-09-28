@@ -93,7 +93,7 @@ class RecruiterController extends Controller
 
     public function get_private_messages(Request $request)
     {
-        $idEmployer = $request->query('employerId');
+        $idOrganization = $request->query('organizationId');
         $idWorker = $request->query('workerId');
         $page = $request->query('page', 1);
 
@@ -106,12 +106,12 @@ class RecruiterController extends Controller
 
         $chat = DB::connection('mongodb')
             ->collection('chat')
-            ->raw(function ($collection) use ($idEmployer, $idRecruiter, $idWorker, $skip) {
+            ->raw(function ($collection) use ($idOrganization, $idRecruiter, $idWorker, $skip) {
                 return $collection
                     ->aggregate([
                         [
                             '$match' => [
-                                'employerId' => $idEmployer,
+                                'organizationId' => $idOrganization,
                                 // 'recruiterId'=> $idRecruiter,
                                 // for now until get the offer works
                                 'recruiterId' => $idRecruiter,
@@ -129,13 +129,13 @@ class RecruiterController extends Controller
                     ])
                     ->toArray();
             });
-            
+
         return $chat[0];
     }
 
     public function get_direct_private_messages(Request $request)
     {
-        $idEmployer = $request->query('employerId');
+        $idOrganization = $request->query('organizationId');
         $idWorker = $request->query('workerId');
         $page = $request->query('page', 1);
 
@@ -148,12 +148,12 @@ class RecruiterController extends Controller
 
         $chat = DB::connection('mongodb')
             ->collection('chat')
-            ->raw(function ($collection) use ($idEmployer, $idRecruiter, $idWorker, $skip) {
+            ->raw(function ($collection) use ($idOrganization, $idRecruiter, $idWorker, $skip) {
                 return $collection
                     ->aggregate([
                         [
                             '$match' => [
-                                'employerId' => $idEmployer,
+                                'organizationId' => $idOrganization,
                                 // 'recruiterId'=> $idRecruiter,
                                 // for now until get the offer works
                                 'recruiterId' => $idRecruiter,
@@ -171,9 +171,9 @@ class RecruiterController extends Controller
                     ])
                     ->toArray();
             });
-           // {{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['employerId'] }}')"
-           $direct = true;
-           $id = Auth::guard('recruiter')->user()->id;
+        // {{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')"
+        $direct = true;
+        $id = Auth::guard('recruiter')->user()->id;
 
         $rooms = DB::connection('mongodb')
             ->collection('chat')
@@ -189,7 +189,7 @@ class RecruiterController extends Controller
                         ],
                         [
                             '$project' => [
-                                'employerId' => 1,
+                                'organizationId' => 1,
                                 'workerId' => 1,
                                 'recruiterId' => 1,
                                 'lastMessage' => 1,
@@ -223,24 +223,24 @@ class RecruiterController extends Controller
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['workerId'] = $room->workerId;
             $data_User['isActive'] = $room->isActive;
-            $data_User['employerId'] = $room->employerId;
+            $data_User['organizationId'] = $room->organizationId;
             $data_User['messages'] = $room->messages;
 
             array_push($data, $data_User);
         }
         $worker = User::select('first_name', 'last_name')
-                ->where('id', $idWorker)
-                ->get()
-                ->first();
+            ->where('id', $idWorker)
+            ->get()
+            ->first();
 
-            if ($worker) {
-                $nameworker = $user->fullName;
-            } else {
-                // Handle the case where no user is found
-                $nameworker = 'Default Name';
-            }
-            return view('recruiter::recruiter/messages', compact('idWorker','idEmployer','direct','id','data','nameworker'));
-        
+        if ($worker) {
+            $nameworker = $user->fullName;
+        } else {
+            // Handle the case where no user is found
+            $nameworker = 'Default Name';
+        }
+        return view('recruiter::recruiter/messages', compact('idWorker', 'idOrganization', 'direct', 'id', 'data', 'nameworker'));
+
     }
 
     public function get_rooms(Request $request)
@@ -259,7 +259,7 @@ class RecruiterController extends Controller
                         ],
                         [
                             '$project' => [
-                                'employerId' => 1,
+                                'organizationId' => 1,
                                 'recruiterId' => 1,
                                 'workerId' => 1,
                                 'lastMessage' => 1,
@@ -284,7 +284,7 @@ class RecruiterController extends Controller
             $data_User['fullName'] = $user[0]->last_name;
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['workerId'] = $room->workerId;
-            $data_User['employerId'] = $room->employerId;
+            $data_User['organizationId'] = $room->organizationId;
             $data_User['isActive'] = $room->isActive;
             $data_User['messages'] = $room->messages;
 
@@ -296,31 +296,31 @@ class RecruiterController extends Controller
 
     public function get_messages(Request $request)
     {
-        
+
         $worker_id = $request->input('worker_id');
         $recruiter_id = Auth::guard('recruiter')->user()->id;
 
-        
-    
+
+
         if (isset($worker_id)) {
             $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
             // Check if a room with the given worker_id and recruiter_id already exists
             $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('recruiterId', $recruiter_id)->first();
-    
+
             // If the room doesn't exist, create a new one
             if (!$room) {
                 DB::connection('mongodb')->collection('chat')->insert([
                     'workerId' => $nurse_user_id,
                     'recruiterId' => $recruiter_id,
-                    'employerId' => $recruiter_id, // Replace this with the actual employerId
+                    'organizationId' => $recruiter_id, // Replace this with the actual organizationId
                     'lastMessage' => $this->timeAgo(now()),
                     'isActive' => true,
                     'messages' => [],
                 ]);
-    
+
                 // Call the get_private_messages function
                 $request->query->set('workerId', $nurse_user_id);
-                $request->query->set('employerId', $recruiter_id); // Replace this with the actual employerId
+                $request->query->set('organizationId', $recruiter_id); // Replace this with the actual organizationId
                 return $this->get_direct_private_messages($request);
             }
         }
@@ -341,7 +341,7 @@ class RecruiterController extends Controller
                         ],
                         [
                             '$project' => [
-                                'employerId' => 1,
+                                'organizationId' => 1,
                                 'workerId' => 1,
                                 'recruiterId' => 1,
                                 'lastMessage' => 1,
@@ -375,7 +375,7 @@ class RecruiterController extends Controller
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['workerId'] = $room->workerId;
             $data_User['isActive'] = $room->isActive;
-            $data_User['employerId'] = $room->employerId;
+            $data_User['organizationId'] = $room->organizationId;
             $data_User['messages'] = $room->messages;
 
             array_push($data, $data_User);
@@ -383,8 +383,8 @@ class RecruiterController extends Controller
         $direct = false;
         $nameworker = '';
         $idWorker = '';
-        $idEmployer = '';
-        return view('recruiter::recruiter/messages', compact('id', 'data','direct','idWorker','idEmployer','nameworker'));
+        $idOrganization = '';
+        return view('recruiter::recruiter/messages', compact('id', 'data', 'direct', 'idWorker', 'idOrganization', 'nameworker'));
     }
 
     public function timeAgo($time = null)
@@ -476,17 +476,17 @@ class RecruiterController extends Controller
         $type = $request->type;
         $fileName = $request->fileName;
 
-        // if i located the recruiter dash i should get the id of the employer from the request
+        // if i located the recruiter dash i should get the id of the organization from the request
         // we will use this id for now : "GWU000005"
 
         $full_name = $user->first_name . ' ' . $user->last_name;
-       
 
-        $idEmployer = $request->idEmployer;
+
+        $idOrganization = $request->idOrganization;
 
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message, $idEmployer, $id, $idWorker, $role, $time, $type, $fileName));
-        event(new NotificationMessage($message,false,$time,$idWorker,$id,$full_name));
+        event(new NewPrivateMessage($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName));
+        event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
 
         return true;
     }
@@ -500,19 +500,19 @@ class RecruiterController extends Controller
     public function addJobStore(Request $request)
     {
         // return $request->all();
-         // return $request->input('active');
+        // return $request->input('active');
         try {
 
             $created_by = Auth::guard('recruiter')->user()->id;
             // Validate the form data
 
             $active = $request->input('active');
-            
+
             // $active = $activeRequest['active'];
             $validatedData = [];
 
             if ($active == 'false') {
-               
+
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
                     'job_name' => 'nullable|string',
@@ -535,7 +535,7 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-                   
+
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -548,36 +548,35 @@ class RecruiterController extends Controller
                     'orientation_rate' => 'nullable|string',
                     'on_call' => 'nullable|string',
                     'on_call_rate' => 'nullable|string',
-                    'on_call_back' => 'nullable|string',
-                    'call_back_rate' => 'nullable|string', 
+                    'call_back_rate' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|string',
-                    'proffesion' => 'nullable|string',
-                    
+                    'profession' => 'nullable|string',
+
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
-                    'block_scheduling'  => 'nullable|string',
-                    'contract_termination_policy' => 'nullable|string', 
-                    
+                    'block_scheduling' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string',
+
                     'job_location' => 'nullable|string',
-                        'vaccinations' => 'nullable|string',
-                        'number_of_references' => 'nullable|integer',
-                        'min_title_of_reference' => 'nullable|string',
-                        'eligible_work_in_us' => 'nullable|boolean',
-                        'recency_of_reference' => 'nullable|integer',
-                        'certificate' => 'nullable|string',
-                        'skills' => 'nullable|string',
-                        'urgency' => 'nullable|string',
-                        'facilitys_parent_system' => 'nullable|string',
-                        'facility_name' => 'nullable|string',
-                        'nurse_classification' => 'nullable|string',
-                        'pay_frequency' => 'nullable|string',
-                        'benefits' => 'nullable|string',
-                        'feels_like_per_hour' => 'nullable|string',
-                        'preferred_shift_duration' => 'nullable|string'
+                    'vaccinations' => 'nullable|string',
+                    'number_of_references' => 'nullable|integer',
+                    'min_title_of_reference' => 'nullable|string',
+                    'eligible_work_in_us' => 'nullable|boolean',
+                    'recency_of_reference' => 'nullable|integer',
+                    'certificate' => 'nullable|string',
+                    'skills' => 'nullable|string',
+                    'urgency' => 'nullable|string',
+                    'facilitys_parent_system' => 'nullable|string',
+                    'facility_name' => 'nullable|string',
+                    'nurse_classification' => 'nullable|string',
+                    'pay_frequency' => 'nullable|string',
+                    'benefits' => 'nullable|string',
+                    'feels_like_per_hour' => 'nullable|string',
+                    'preferred_shift_duration' => 'nullable|string'
                 ]);
-                
+
                 $job = new Job();
-                
+
                 try {
 
                     if (isset($validatedData['job_type'])) {
@@ -685,17 +684,14 @@ class RecruiterController extends Controller
                     if (isset($validatedData['on_call_rate'])) {
                         $job->on_call_rate = $validatedData['on_call_rate'];
                     }
-                    if(isset($validatedData['call_back_rate'])){
+                    if (isset($validatedData['call_back_rate'])) {
                         $job->call_back_rate = $validatedData['call_back_rate'];
-                    }
-                    if(isset($validatedData['on_call_back'])){
-                        $job->on_call_back = $validatedData['on_call_back'];
                     }
                     if (isset($validatedData['weekly_non_taxable_amount'])) {
                         $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
                     }
-                    if (isset($validatedData['proffesion'])) {
-                        $job->proffesion = $validatedData['proffesion'];
+                    if (isset($validatedData['profession'])) {
+                        $job->profession = $validatedData['profession'];
                     }
                     if (isset($validatedData['preferred_specialty'])) {
                         $job->specialty = $validatedData['preferred_specialty'];
@@ -717,8 +713,8 @@ class RecruiterController extends Controller
                     if (isset($validatedData['Emr'])) {
                         $job->Emr = $validatedData['Emr'];
                     }
-                    
-                    
+
+
                     // added fields from sheets
                     if (isset($validatedData['job_location'])) {
                         $job->job_location = $validatedData['job_location'];
@@ -756,7 +752,7 @@ class RecruiterController extends Controller
                     if (isset($validatedData['facility_name'])) {
                         $job->facility_name = $validatedData['facility_name'];
                     }
-                    
+
                     if (isset($validatedData['nurse_classification'])) {
                         $job->nurse_classification = $validatedData['nurse_classification'];
                     }
@@ -766,19 +762,19 @@ class RecruiterController extends Controller
                     if (isset($validatedData['benefits'])) {
                         $job->benefits = $validatedData['benefits'];
                     }
-                    if(isset($validatedData['feels_like_per_hour'])){
+                    if (isset($validatedData['feels_like_per_hour'])) {
                         $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
                     }
                     // end added fields from sheets
 
 
                     //return $job;
-                
-                }catch (Exception $e) {
-                
+
+                } catch (Exception $e) {
+
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
-            
+
                 $job->recruiter_id = $created_by;
                 $job->created_by = $created_by;
                 $job->active = false;
@@ -788,9 +784,9 @@ class RecruiterController extends Controller
 
             } elseif ($active == "true") {
                 //return request()->all();
-               
+
                 $validatedData = $request->validate([
-                    
+
                     'job_type' => 'required|string',
                     'job_name' => 'required|string',
                     'job_city' => 'required|string',
@@ -810,7 +806,7 @@ class RecruiterController extends Controller
                     'Unit' => 'nullable|string',
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
-                    'guaranteed_hours' => 'nullable|string',   
+                    'guaranteed_hours' => 'nullable|string',
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -824,13 +820,12 @@ class RecruiterController extends Controller
                     'on_call' => 'nullable|string',
                     'on_call_rate' => 'nullable|string',
                     'call_back_rate' => 'nullable|string',
-                    'on_call_back' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|string',
-                    'proffesion' => 'nullable|string',
+                    'profession' => 'nullable|string',
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
-                    'block_scheduling'  => 'nullable|string',
-                    'contract_termination_policy' => 'nullable|string', 
+                    'block_scheduling' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string',
                     'job_location' => 'nullable|string',
                     'vaccinations' => 'nullable|string',
                     'number_of_references' => 'nullable|integer',
@@ -881,9 +876,8 @@ class RecruiterController extends Controller
                 $job->orientation_rate = $validatedData['orientation_rate'];
                 $job->on_call = $validatedData['on_call'];
                 $job->call_back_rate = $validatedData['call_back_rate'];
-                $job->on_call_back = $validatedData['on_call_back'];
                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-                $job->proffesion = $validatedData['proffesion'];
+                $job->profession = $validatedData['profession'];
                 $job->specialty = $validatedData['preferred_specialty'];
                 $job->recruiter_id = $created_by;
                 $job->created_by = $created_by;
@@ -896,7 +890,7 @@ class RecruiterController extends Controller
                 $job->contract_termination_policy = $validatedData['contract_termination_policy'];
                 $job->Emr = $validatedData['Emr'];
                 $job->on_call_rate = $validatedData['on_call_rate'];
-                
+
                 // added fields from sheets
                 if (isset($validatedData['job_location'])) {
                     $job->job_location = $validatedData['job_location'];
@@ -934,7 +928,7 @@ class RecruiterController extends Controller
                 if (isset($validatedData['facility_name'])) {
                     $job->facility_name = $validatedData['facility_name'];
                 }
-               
+
 
                 if (isset($validatedData['nurse_classification'])) {
                     $job->nurse_classification = $validatedData['nurse_classification'];
@@ -945,23 +939,23 @@ class RecruiterController extends Controller
                 if (isset($validatedData['benefits'])) {
                     $job->benefits = $validatedData['benefits'];
                 }
-                if(isset($validatedData['feels_like_per_hour'])){
+                if (isset($validatedData['feels_like_per_hour'])) {
                     $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
                 }
                 // end added fields from sheets
 
-                
 
 
-                
+
+
                 $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
-                $job->employer_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
-                $job->total_employer_amount  =  ($job->preferred_assignment_duration * $job->employer_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus) ;
-                $job->goodwork_weekly_amount  = ($job->employer_weekly_amount) * 0.05;
-                $job->total_goodwork_amount  = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
-                $job->total_contract_amount = $job->total_goodwork_amount  + $job->total_employer_amount ;
-                
+                $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
+                $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
+                $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
+                $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
+                $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
+
                 // Save the job data to the database
                 $job->save();
 
@@ -974,7 +968,7 @@ class RecruiterController extends Controller
 
             //return response()->json(['success' => true, 'message' => $request->all()]);
             // Create a new Job instance with the validated data
-           
+
 
             //return response()->json(['success' => true, 'message' => 'Job added successfully!']);
 
@@ -1095,297 +1089,297 @@ class RecruiterController extends Controller
         }
     }
 
-    
-        function get_job_to_edit(Request $request){
-            
-            try {
-                $validated = $request->validate([
-                    'id' => 'required',
-                ]);
-            
-                $job_id = $request->id;
-                $job = Job::find($job_id);
-            
-                if ($job === null) {
-                    return response()->json(['error' => "Job not found"], 404);
-                }
-            
-                return response()->json($job);
-            } catch (\Exception $e) {
-                return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+
+    function get_job_to_edit(Request $request)
+    {
+
+        try {
+            $validated = $request->validate([
+                'id' => 'required',
+            ]);
+
+            $job_id = $request->id;
+            $job = Job::find($job_id);
+
+            if ($job === null) {
+                return response()->json(['error' => "Job not found"], 404);
             }
+
+            return response()->json($job);
+        } catch (\Exception $e) {
+            return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
         }
-
-        function edit_job(Request $request){
-            //return $request->all();
-             $created_by = Auth::guard('recruiter')->user()->id;
-             // Validate the form data
- 
-             $active = $request->input('active');
-             
-             // $active = $activeRequest['active'];
-             $validatedData = [];
-             try {
-                 $validatedData = $request->validate([
-                     'job_type' => 'required|string',
-                     'job_name' => 'required|string',
-                     'job_city' => 'required|string',
-                     'job_state' => 'required|string',
-                     'weekly_pay' => 'required|numeric',
-                     'preferred_specialty' => 'required|string',
-                     'preferred_work_location' => 'nullable|string',
-                     'description' => 'nullable|string',
-                     'terms' => 'nullable|string',
-                     'start_date' => 'nullable|date',
-                     'hours_shift' => 'nullable|integer',
-                     'facility_shift_cancelation_policy' => 'nullable|string',
-                     'traveler_distance_from_facility' => 'nullable|string',
-                     'clinical_setting' => 'nullable|string',
-                     'Patient_ratio' => 'nullable|string',
-                     'Unit' => 'nullable|string',
-                     'scrub_color' => 'nullable|string',
-                     'preferred_experience' => 'nullable|integer',
-                     'rto' => 'nullable|string',
-                     'guaranteed_hours' => 'nullable|string',   
-                     'weeks_shift' => 'nullable|string',
-                     'referral_bonus' => 'nullable|string',
-                     'sign_on_bonus' => 'nullable|string',
-                     'completion_bonus' => 'nullable|numeric',
-                     'extension_bonus' => 'nullable|numeric',
-                     'other_bonus' => 'nullable|numeric',
-                     'actual_hourly_rate' => 'nullable|numeric',
-                     'overtime' => 'nullable|string',
-                     'holiday' => 'nullable|string',
-                     'orientation_rate' => 'nullable|string',
-                     'on_call' => 'nullable|string',
-                     'call_back_rate' => 'nullable|string',
-                     'on_call_back' => 'nullable|string',
-                     'weekly_non_taxable_amount' => 'nullable|string',
-                     'proffesion' => 'nullable|string',
-                     'Emr' => 'nullable|string',
-                     'preferred_assignment_duration' => 'nullable|string',
-                     'block_scheduling'  => 'nullable|string',
-                     'contract_termination_policy' => 'nullable|string', 
-                     'on_call_rate' => 'nullable|string',
-                     'job_location' => 'nullable|string',
-                     'vaccinations' => 'nullable|string',
-                     'number_of_references' => 'nullable|integer',
-                     'min_title_of_reference' => 'nullable|string',
-                     'eligible_work_in_us' => 'nullable|boolean',
-                     'recency_of_reference' => 'nullable|integer',
-                     'certificate' => 'nullable|string',
-                     'preferred_shift_duration' => 'nullable|string',
-                     'skills' => 'nullable|string',
-                     'urgency' => 'nullable|string',
-                     'facilitys_parent_system' => 'nullable|string',
-                     'facility_name' => 'nullable|string',
-                     'nurse_classification' => 'nullable|string',
-                     'pay_frequency' => 'nullable|string',
-                     'benefits' => 'nullable|string',
-                     'feels_like_per_hour' => 'nullable|string',
-                        
-                 ]);
- 
-                 $job = Job::find($request->job_id);
-                 
-                 if ($job === null) {
-                     return response()->json(['error' => "Job not found"], 404);
-                 }
-                 
-                 $job->job_type = $validatedData['job_type'];
-                 $job->type = $validatedData['job_type'];
-                 $job->job_name = $validatedData['job_name'];
-                 $job->job_city = $validatedData['job_city'];
-                 $job->job_state = $validatedData['job_state'];
-                 $job->weekly_pay = $validatedData['weekly_pay'];
-                 $job->preferred_experience = $validatedData['preferred_experience'];
-                 $job->preferred_specialty = $validatedData['preferred_specialty'];
-                 $job->description = $validatedData['description'];
-                 $job->start_date = $validatedData['start_date'];
-                 $job->hours_shift = $validatedData['hours_shift'];
-                 $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
-                 $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
-                 $job->clinical_setting = $validatedData['clinical_setting'];
-                 $job->Patient_ratio = $validatedData['Patient_ratio'];
-                 $job->Unit = $validatedData['Unit'];
-                 $job->scrub_color = $validatedData['scrub_color'];
-                 $job->rto = $validatedData['rto'];
-                 $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-                 $job->weeks_shift = $validatedData['weeks_shift'];
-                 $job->referral_bonus = $validatedData['referral_bonus'];
-                 $job->sign_on_bonus = $validatedData['sign_on_bonus'];
-                 $job->completion_bonus = $validatedData['completion_bonus'];
-                 $job->extension_bonus = $validatedData['extension_bonus'];
-                 $job->other_bonus = $validatedData['other_bonus'];
-                 $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
-                 $job->overtime = $validatedData['overtime'];
-                 $job->holiday = $validatedData['holiday'];
-                 $job->orientation_rate = $validatedData['orientation_rate'];
-                 $job->on_call = $validatedData['on_call'];
-                 $job->call_back_rate = $validatedData['call_back_rate'];
-                 $job->on_call_back = $validatedData['on_call_back'];
-                 $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-                 $job->proffesion = $validatedData['proffesion'];
-                 $job->specialty = $validatedData['preferred_specialty'];
-                 $job->recruiter_id = $created_by;
-                 $job->created_by = $created_by;
-                 $job->active = true;
-                 $job->is_open = true;
-                 $job->terms = $validatedData['terms'];
-                 $job->preferred_work_location = $validatedData['preferred_work_location'];
-                 $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
-                 $job->block_scheduling = $validatedData['block_scheduling'];
-                 $job->contract_termination_policy = $validatedData['contract_termination_policy'];
-                 $job->Emr = $validatedData['Emr'];
-                 $job->on_call_rate = $validatedData['on_call_rate'];
-                // added field from sheets 
-                 $job->job_location = $validatedData['job_location'];
-                 $job->vaccinations = $validatedData['vaccinations'];
-                 $job->number_of_references = $validatedData['number_of_references'];
-                 $job->min_title_of_reference = $validatedData['min_title_of_reference'];
-                 $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
-                 $job->recency_of_reference = $validatedData['recency_of_reference'];
-                 $job->certificate = $validatedData['certificate'];
-                 $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
-                 $job->skills = $validatedData['skills'];
-                 $job->urgency = $validatedData['urgency'];
-                 $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
-                 $job->facility_name = $validatedData['facility_name'];
-                 $job->nurse_classification = $validatedData['nurse_classification'];
-                 $job->pay_frequency = $validatedData['pay_frequency'];
-                 $job->benefits = $validatedData['benefits'];
-                 $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
-                // end added field from sheets 
-
-                 $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
-                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
-                 $job->employer_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
-                 $job->total_employer_amount  =  ($job->preferred_assignment_duration * $job->employer_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus) ;
-                 $job->goodwork_weekly_amount  = ($job->employer_weekly_amount) * 0.05;
-                 $job->total_goodwork_amount  = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
-                 $job->total_contract_amount = $job->total_goodwork_amount  + $job->total_employer_amount ;
-                 
-                 // update the job data to the database
-                 $job->save();
- 
-                 return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
- 
-                 return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
-             
-                 //return response()->json($job);
-             } catch (\Exception $e) {
-                 return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
-             }
-         }
-
-
-public function read_recruiter_offer_notification(Request $request)
-{
-    $sender = $request->senderId;
-    $offerId = $request->offerId; 
-    $user = Auth::guard('recruiter')->user();
-    $receiver = $user->id;
-
-    try {
-        $updateResult = NotificationOfferModel::raw()->updateMany(
-            [
-                'receiver' => $receiver,
-                'all_offers_notifs.sender' => $sender,
-                'all_offers_notifs.notifs_of_one_sender.offer_id' => $offerId, 
-                'all_offers_notifs.notifs_of_one_sender.seen' => false 
-            ],
-            [
-                '$set' => [
-                    'all_offers_notifs.$[].notifs_of_one_sender.$[notif].seen' => true
-                ]
-            ],
-            [
-                'arrayFilters' => [
-                    ['notif.offer_id' => $offerId, 'notif.seen' => false]
-                ],
-                'multi' => true
-            ]
-        );
-
-        if ($updateResult->getModifiedCount() > 0) {
-            return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'No notifications to update']);
-        }
-    } catch (\Exception $e) {
-        return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
     }
-}
 
-        public function read_recruiter_message_notification(Request $request)
-        {
-            
-            $sender = $request->sender; 
-            $receiver = Auth::guard('recruiter')->user()->id; 
-        
-            try {
-                
-                
-                $updateResult = NotificationMessageModel::raw()->updateMany(
-                    [
-                        'receiver' => $receiver,
-                        'all_messages_notifs.sender' => $sender
-                    ],
-                    [
-                        '$set' => [
-                            'all_messages_notifs.$[elem].notifs_of_one_sender.$[].seen' => true
-                        ]
-                    ],
-                    [
-                        'arrayFilters' => [
-                            ['elem.sender' => $sender]
-                        ]
-                    ]
-                );
-        
-                        if ($updateResult->getModifiedCount() > 0) {
-                            return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
-                        } else {
-                            return response()->json(['success' => false, 'message' => 'No notifications to update']);
-                        }
-                    } catch (\Exception $e) {
-                        return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
-                    }
-        }
+    function edit_job(Request $request)
+    {
+        //return $request->all();
+        $created_by = Auth::guard('recruiter')->user()->id;
+        // Validate the form data
 
-        public function read_recruiter_job_notification(Request $request)
-        {
-            $sender = $request->sender;
-            $job_id = $request->jobId; 
-            $receiver = Auth::guard('recruiter')->user()->id; 
-        
-            try {
-                $updateResult = NotificationJobModel::raw()->updateMany(
-                    [
-                        'receiver' => $receiver,
-                        'all_jobs_notifs.sender' => $sender
-                    ],
-                    [
-                        '$set' => [
-                            'all_jobs_notifs.$[elem].notifs_of_one_sender.$[notif].seen' => true
-                        ]
-                    ],
-                    [
-                        'arrayFilters' => [
-                            ['elem.sender' => $sender],
-                            ['notif.jobId' => $job_id] // Target the specific jobId within notifs_of_one_sender
-                        ]
-                    ]
-                );
-        
-                if ($updateResult->getModifiedCount() > 0) {
-                    return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
-                } else {
-                    return response()->json(['success' => false, 'message' => 'No notifications to update']);
-                }
-            } catch (\Exception $e) {
-                return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+        $active = $request->input('active');
+
+        // $active = $activeRequest['active'];
+        $validatedData = [];
+        try {
+            $validatedData = $request->validate([
+                'job_type' => 'required|string',
+                'job_name' => 'required|string',
+                'job_city' => 'required|string',
+                'job_state' => 'required|string',
+                'weekly_pay' => 'required|numeric',
+                'preferred_specialty' => 'required|string',
+                'preferred_work_location' => 'nullable|string',
+                'description' => 'nullable|string',
+                'terms' => 'nullable|string',
+                'start_date' => 'nullable|date',
+                'hours_shift' => 'nullable|integer',
+                'facility_shift_cancelation_policy' => 'nullable|string',
+                'traveler_distance_from_facility' => 'nullable|string',
+                'clinical_setting' => 'nullable|string',
+                'Patient_ratio' => 'nullable|string',
+                'Unit' => 'nullable|string',
+                'scrub_color' => 'nullable|string',
+                'preferred_experience' => 'nullable|integer',
+                'rto' => 'nullable|string',
+                'guaranteed_hours' => 'nullable|string',
+                'weeks_shift' => 'nullable|string',
+                'referral_bonus' => 'nullable|string',
+                'sign_on_bonus' => 'nullable|string',
+                'completion_bonus' => 'nullable|numeric',
+                'extension_bonus' => 'nullable|numeric',
+                'other_bonus' => 'nullable|numeric',
+                'actual_hourly_rate' => 'nullable|numeric',
+                'overtime' => 'nullable|string',
+                'holiday' => 'nullable|string',
+                'orientation_rate' => 'nullable|string',
+                'on_call' => 'nullable|string',
+                'call_back_rate' => 'nullable|string',
+                'weekly_non_taxable_amount' => 'nullable|string',
+                'profession' => 'nullable|string',
+                'Emr' => 'nullable|string',
+                'preferred_assignment_duration' => 'nullable|string',
+                'block_scheduling' => 'nullable|string',
+                'contract_termination_policy' => 'nullable|string',
+                'on_call_rate' => 'nullable|string',
+                'job_location' => 'nullable|string',
+                'vaccinations' => 'nullable|string',
+                'number_of_references' => 'nullable|integer',
+                'min_title_of_reference' => 'nullable|string',
+                'eligible_work_in_us' => 'nullable|boolean',
+                'recency_of_reference' => 'nullable|integer',
+                'certificate' => 'nullable|string',
+                'preferred_shift_duration' => 'nullable|string',
+                'skills' => 'nullable|string',
+                'urgency' => 'nullable|string',
+                'facilitys_parent_system' => 'nullable|string',
+                'facility_name' => 'nullable|string',
+                'nurse_classification' => 'nullable|string',
+                'pay_frequency' => 'nullable|string',
+                'benefits' => 'nullable|string',
+                'feels_like_per_hour' => 'nullable|string',
+
+            ]);
+
+            $job = Job::find($request->job_id);
+
+            if ($job === null) {
+                return response()->json(['error' => "Job not found"], 404);
             }
+
+            $job->job_type = $validatedData['job_type'];
+            $job->type = $validatedData['job_type'];
+            $job->job_name = $validatedData['job_name'];
+            $job->job_city = $validatedData['job_city'];
+            $job->job_state = $validatedData['job_state'];
+            $job->weekly_pay = $validatedData['weekly_pay'];
+            $job->preferred_experience = $validatedData['preferred_experience'];
+            $job->preferred_specialty = $validatedData['preferred_specialty'];
+            $job->description = $validatedData['description'];
+            $job->start_date = $validatedData['start_date'];
+            $job->hours_shift = $validatedData['hours_shift'];
+            $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
+            $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
+            $job->clinical_setting = $validatedData['clinical_setting'];
+            $job->Patient_ratio = $validatedData['Patient_ratio'];
+            $job->Unit = $validatedData['Unit'];
+            $job->scrub_color = $validatedData['scrub_color'];
+            $job->rto = $validatedData['rto'];
+            $job->guaranteed_hours = $validatedData['guaranteed_hours'];
+            $job->weeks_shift = $validatedData['weeks_shift'];
+            $job->referral_bonus = $validatedData['referral_bonus'];
+            $job->sign_on_bonus = $validatedData['sign_on_bonus'];
+            $job->completion_bonus = $validatedData['completion_bonus'];
+            $job->extension_bonus = $validatedData['extension_bonus'];
+            $job->other_bonus = $validatedData['other_bonus'];
+            $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
+            $job->overtime = $validatedData['overtime'];
+            $job->holiday = $validatedData['holiday'];
+            $job->orientation_rate = $validatedData['orientation_rate'];
+            $job->on_call = $validatedData['on_call'];
+            $job->call_back_rate = $validatedData['call_back_rate'];
+            $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
+            $job->profession = $validatedData['profession'];
+            $job->specialty = $validatedData['preferred_specialty'];
+            $job->recruiter_id = $created_by;
+            $job->created_by = $created_by;
+            $job->active = true;
+            $job->is_open = true;
+            $job->terms = $validatedData['terms'];
+            $job->preferred_work_location = $validatedData['preferred_work_location'];
+            $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
+            $job->block_scheduling = $validatedData['block_scheduling'];
+            $job->contract_termination_policy = $validatedData['contract_termination_policy'];
+            $job->Emr = $validatedData['Emr'];
+            $job->on_call_rate = $validatedData['on_call_rate'];
+            // added field from sheets
+            $job->job_location = $validatedData['job_location'];
+            $job->vaccinations = $validatedData['vaccinations'];
+            $job->number_of_references = $validatedData['number_of_references'];
+            $job->min_title_of_reference = $validatedData['min_title_of_reference'];
+            $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
+            $job->recency_of_reference = $validatedData['recency_of_reference'];
+            $job->certificate = $validatedData['certificate'];
+            $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
+            $job->skills = $validatedData['skills'];
+            $job->urgency = $validatedData['urgency'];
+            $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
+            $job->facility_name = $validatedData['facility_name'];
+            $job->nurse_classification = $validatedData['nurse_classification'];
+            $job->pay_frequency = $validatedData['pay_frequency'];
+            $job->benefits = $validatedData['benefits'];
+            $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
+            // end added field from sheets
+
+            $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
+            $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
+            $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
+            $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
+            $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
+            $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
+            $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
+
+            // update the job data to the database
+            $job->save();
+
+            return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
+
+            return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
+
+            //return response()->json($job);
+        } catch (\Exception $e) {
+            return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
         }
+    }
+
+
+    public function read_recruiter_offer_notification(Request $request)
+    {
+        $sender = $request->senderId;
+        $offerId = $request->offerId;
+        $user = Auth::guard('recruiter')->user();
+        $receiver = $user->id;
+
+        try {
+            $updateResult = NotificationOfferModel::raw()->updateMany(
+                [
+                    'receiver' => $receiver,
+                    'all_offers_notifs.sender' => $sender,
+                    'all_offers_notifs.notifs_of_one_sender.offer_id' => $offerId,
+                    'all_offers_notifs.notifs_of_one_sender.seen' => false
+                ],
+                [
+                    '$set' => [
+                        'all_offers_notifs.$[].notifs_of_one_sender.$[notif].seen' => true
+                    ]
+                ],
+                [
+                    'arrayFilters' => [
+                        ['notif.offer_id' => $offerId, 'notif.seen' => false]
+                    ],
+                    'multi' => true
+                ]
+            );
+
+            if ($updateResult->getModifiedCount() > 0) {
+                return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'No notifications to update']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+        }
+    }
+
+    public function read_recruiter_message_notification(Request $request)
+    {
+
+        $sender = $request->sender;
+        $receiver = Auth::guard('recruiter')->user()->id;
+
+        try {
+
+
+            $updateResult = NotificationMessageModel::raw()->updateMany(
+                [
+                    'receiver' => $receiver,
+                    'all_messages_notifs.sender' => $sender
+                ],
+                [
+                    '$set' => [
+                        'all_messages_notifs.$[elem].notifs_of_one_sender.$[].seen' => true
+                    ]
+                ],
+                [
+                    'arrayFilters' => [
+                        ['elem.sender' => $sender]
+                    ]
+                ]
+            );
+
+            if ($updateResult->getModifiedCount() > 0) {
+                return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'No notifications to update']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+        }
+    }
+
+    public function read_recruiter_job_notification(Request $request)
+    {
+        $sender = $request->sender;
+        $job_id = $request->jobId;
+        $receiver = Auth::guard('recruiter')->user()->id;
+
+        try {
+            $updateResult = NotificationJobModel::raw()->updateMany(
+                [
+                    'receiver' => $receiver,
+                    'all_jobs_notifs.sender' => $sender
+                ],
+                [
+                    '$set' => [
+                        'all_jobs_notifs.$[elem].notifs_of_one_sender.$[notif].seen' => true
+                    ]
+                ],
+                [
+                    'arrayFilters' => [
+                        ['elem.sender' => $sender],
+                        ['notif.jobId' => $job_id] // Target the specific jobId within notifs_of_one_sender
+                    ]
+                ]
+            );
+
+            if ($updateResult->getModifiedCount() > 0) {
+                return response()->json(['success' => true, 'message' => 'Notifications marked as read successfully']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'No notifications to update']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => "Something went wrong, please try again later!"]);
+        }
+    }
 
 }

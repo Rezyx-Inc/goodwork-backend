@@ -291,6 +291,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Job::class, 'created_by');
     }
 
+    public function assignedJobs()
+    {
+        return $this->hasMany(Job::class, 'recruiter_id');
+    }
+
     public function createdDepartments()
     {
         return $this->hasMany(Department::class, 'created_by');

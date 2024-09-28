@@ -12,13 +12,13 @@ class OffersLogs extends Model
     protected $table = 'offers_logs';
 
     protected static function boot()
-	{
-		parent::boot();
+    {
+        parent::boot();
 
-		static::creating(function ($model) {
-			$model->{$model->getKeyName()} = $model->generateCustomId();
-		});
-	}
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = $model->generateCustomId();
+        });
+    }
 
     public function generateCustomId()
     {
@@ -34,19 +34,19 @@ class OffersLogs extends Model
     }
 
     public function getIncrementing()
-	{
-		return false;
-	}
+    {
+        return false;
+    }
 
-	public function getKeyType()
-	{
-		return 'string';
-	}
-    
-    protected $fillable = [ 
+    public function getKeyType()
+    {
+        return 'string';
+    }
+
+    protected $fillable = [
         'original_offer_id',
         'nurse_id',
-        'employer_recruiter_id',
+        'organization_recruiter_id',
         'details',
         'status',
         'counter_offer_by',
