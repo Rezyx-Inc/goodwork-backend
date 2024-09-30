@@ -281,7 +281,7 @@ router.get("/onboarding-status", async (req, res) => {
   }
 });
 
-/* test new subscription method */
+// Create a subscription/payment
 router.post("/customer/subscription", async (req, res) => {
   if (!Object.keys(req.body).length) {
     return res.status(400).send({ status: false, message: "Empty request" });
@@ -292,35 +292,100 @@ router.post("/customer/subscription", async (req, res) => {
   }
   var date = moment();
   var amount = Number(req.body.amount) / Number(req.body.length);
+
   try {
-    const subscriptionSchedule = await stripe.subscriptionSchedules.create({
-      customer: req.body.stripeId,
-      start_date: date.weekday(5).unix(),
-      end_behavior: "cancel",
-      phases: [
-        {
-          items: [
-            {
-              price_data: {
-                currency: "usd",
-                product: "prod_PtG5UvZ5zItdI0",
-                recurring: {
-                  interval: "week",
+    if (amount % 1 != 0) {
+      var subscriptionScheduleOptions = {
+        customer: req.body.stripeId,
+        start_date: date.weekday(5).unix(),
+        end_behavior: "cancel",
+        phases: [
+          {
+            items: [
+              {
+                price_data: {
+                  currency: "usd",
+                  product: "prod_PtG5UvZ5zItdI0",
+                  recurring: {
+                    interval: "week",
+                  },
+                  unit_amount: Math.floor(amount, 2),
                 },
-                unit_amount: Math.floor(amount, 2),
+                quantity: 1,
               },
-              quantity: 1,
+            ],
+            iterations: Number(req.body.length) - 1,
+            collection_method: "charge_automatically",
+            metadata: {
+              offerId: req.body.offerId,
+              customer_name: req.body.fullName,
             },
-          ],
-          iterations: Number(req.body.length),
-          collection_method: "charge_automatically",
-          metadata: {
-            offerId: req.body.offerId,
-            customer_name: req.body.fullName,
           },
-        },
-      ],
-    });
+          {
+            items: [
+              {
+                price_data: {
+                  currency: "usd",
+                  product: "prod_PtG5UvZ5zItdI0",
+                  recurring: {
+                    interval: "week",
+                  },
+                  unit_amount:
+                    Number(req.body.amount) -
+                    Math.floor(amount, 2) * Number(req.body.length) +
+                    Math.floor(amount, 2),
+                },
+                quantity: 1,
+              },
+            ],
+            iterations: 1,
+            collection_method: "charge_automatically",
+            metadata: {
+              offerId: req.body.offerId,
+              customer_name: req.body.fullName,
+            },
+          },
+        ],
+      };
+    } else if (amount % 1 == 0) {
+      var subscriptionScheduleOptions = {
+        customer: req.body.stripeId,
+        start_date: date.weekday(5).unix(),
+        end_behavior: "cancel",
+        phases: [
+          {
+            items: [
+              {
+                price_data: {
+                  currency: "usd",
+                  product: "prod_PtG5UvZ5zItdI0",
+                  recurring: {
+                    interval: "week",
+                  },
+                  unit_amount: Math.floor(amount, 2),
+                },
+                quantity: 1,
+              },
+            ],
+            iterations: Number(req.body.length),
+            collection_method: "charge_automatically",
+            metadata: {
+              offerId: req.body.offerId,
+              customer_name: req.body.fullName,
+            },
+          },
+        ],
+      };
+    } else {
+      return res.status(400).send({
+        status: false,
+        message: "Unable to figuyre a subscription schedule",
+      });
+    }
+
+    const subscriptionSchedule = await stripe.subscriptionSchedules.create(
+      subscriptionScheduleOptions
+    );
 
     return res.status(200).send({
       status: true,
@@ -330,6 +395,16 @@ router.post("/customer/subscription", async (req, res) => {
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }
+});
+
+// List subscriptions
+router.post("/customer/subscription/list", async (req, res) => {
+  var listOptions = {};
+  re;
+
+  const subscriptionSchedules = await stripe.subscriptionSchedules.list({
+    limit: 10,
+  });
 });
 
 module.exports = router;
