@@ -57,6 +57,7 @@ class Job extends Model
      */
     public $fillable = [
         'job_name',
+        'job_id',
         'type',
         'compact',
         'terms',
