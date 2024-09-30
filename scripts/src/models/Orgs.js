@@ -15,6 +15,7 @@ const OrganizationsSchema = mongoose.Schema({
     ],
     preferences: {
         requiredToApply : {type: Array, required: false},
+        requiredToSubmit : {type: Array, required:false},
     }
 });
 
