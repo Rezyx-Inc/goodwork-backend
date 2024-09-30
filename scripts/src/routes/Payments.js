@@ -400,11 +400,74 @@ router.post("/customer/subscription", async (req, res) => {
 // List subscriptions
 router.post("/customer/subscription/list", async (req, res) => {
   var listOptions = {};
-  re;
+  if (req.body.stripeId && req.body.stripeId.length > 3) {
+    listOptions.customer = req.body.stripeId;
+  }
+  if (req.body.limit && req.body.stripeId.limit >= 0) {
+    listOptions.limit = req.body.limit;
+  }
 
-  const subscriptionSchedules = await stripe.subscriptionSchedules.list({
-    limit: 10,
-  });
+  try {
+    const subscriptionSchedules = await stripe.subscriptionSchedules.list(
+      listOptions
+    );
+    return res
+      .status(200)
+      .send({ status: true, message: subscriptionSchedules.data });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).send({ status: false, message: e.message });
+  }
+});
+
+// Retrieve a Subscription
+router.post("/customer/subscription/ret", async (req, res) => {
+  if (!Object.keys(req.body).length) {
+    return res.status(400).send({ status: false, message: "Empty body" });
+  } else if (!req.body.subscriptionScheduleId) {
+    return res
+      .status(400)
+      .send({ status: false, message: "Missing subscription schedule ID." });
+  }
+
+  try {
+    const subscriptionSchedule = await stripe.subscriptionSchedules.retrieve(
+      req.body.subscriptionScheduleId
+    );
+    return res
+      .status(200)
+      .send({ status: true, message: subscriptionSchedule });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).send({ status: false, message: e.message });
+  }
+});
+
+// Cancel a Subscription
+router.post("/customer/subscription/cancel", async (req, res) => {
+  if (!Object.keys(req.body).length) {
+    return res.status(400).send({ status: false, message: "Empty body" });
+  } else if (!req.body.subscriptionScheduleId) {
+    return res
+      .status(400)
+      .send({ status: false, message: "Missing subscription schedule ID." });
+  }
+
+  try {
+    const subscriptionSchedule = await stripe.subscriptionSchedules.cancel(
+      req.body.subscriptionScheduleId,
+      {
+        prorate: false,
+        invoice_now: false,
+      }
+    );
+    return res
+      .status(200)
+      .send({ status: true, message: subscriptionSchedule.status });
+  } catch (e) {
+    console.log(e);
+    return res.status(400).send({ status: false, message: e.message });
+  }
 });
 
 module.exports = router;
