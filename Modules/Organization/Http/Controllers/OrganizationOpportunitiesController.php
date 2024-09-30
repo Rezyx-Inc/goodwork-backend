@@ -21,6 +21,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\Http;
 
 class OrganizationOpportunitiesController extends Controller
 {
@@ -1758,8 +1759,71 @@ class OrganizationOpportunitiesController extends Controller
                 ';
         } elseif ($request->type == 'drafts') {
         } else {
+            $orgId = Auth::guard('organization')->user()->id;
+            $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
+            $responseData = $scriptResponse->json();
+            $allRecruiters = [];
+            $ids = [];
+            if(isset($responseData)) {
+                $ids = array_map(function($recruiter) {
+                return $recruiter['id'];
+                }, $responseData);
+            }
+            $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
+
+            //$allRecruiters = User::where('role', 'recruiter')->select('id', 'first_name', 'last_name','email')->get();
+            //return response()->json(['allRecruiters' => $allRecruiters]);
+
             $data2 .=
                 '
+                    <div class="ss-jb-apply-on-disc-txt col-md-12 mt-4 mb-3">';
+            if (isset($jobdetails->recruiter_id)) {
+                $recruiter = User::where('id', $jobdetails->recruiter_id)->first();
+                $data2 .=
+                    '<h5>Recruiter Assigned: </h5> <p>' .
+                    $recruiter->first_name .
+                    ' ' .
+                    $recruiter->last_name .
+                    '</p>';
+            } else {
+                $data2 .= '<h5>Recruiter Assigned: </h5> <p>Not Assigned</p>';
+            }
+            $data2 .=
+                '</div>
+                        <div id="assign-container" class="row">
+                            <div class="col-md-5">
+                                <select data-jid="'.$jobdetails->id.'" name="recruiter_id" id="recruiter_id">
+                                    <option value="" hidden>Select Recruiter</option>
+                                    ';
+            foreach ($allRecruiters as $key => $value) {
+                $data2 .=
+
+                    '<option value="' .
+                    $value->id .
+                    '">' .
+                    $value->full_name .
+                    '</option>';
+            }
+            $data2 .=
+                '
+                                </select>
+                                </div>
+                                <div class="col-md-5">
+                            <button id="recruiter-assigned" class="ss-counter-button w-100" onclick="assignRecruiter()">
+                            ';
+
+            if (isset($jobdetails->recruiter_id)) {
+                $data2 .= 'Reassign Recruiter';
+            } else {
+                $data2 .= 'Assign Recruiter';
+            }
+
+            $data2 .=
+                '
+                            </button>
+                            </div>
+                            </div>
+                        </div>
                     <div width="50px" height="50px" class="ss-job-apply-on-tx-bx-hed-dv">
                         <ul style="display:block;">
                             <li>
