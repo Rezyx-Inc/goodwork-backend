@@ -389,7 +389,7 @@ router.post("/customer/subscription", async (req, res) => {
 
     return res.status(200).send({
       status: true,
-      message: "Payment schedule started",
+      message: subscriptionSchedule.id,
     });
   } catch (e) {
     console.log(e);
