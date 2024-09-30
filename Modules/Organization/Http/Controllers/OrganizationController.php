@@ -502,7 +502,7 @@ class OrganizationController extends Controller
 
     public function addJobStore(Request $request)
     {
-        // return $request->all();
+         return $request->all();
         // return $request->input('active');
         try {
 
@@ -998,7 +998,7 @@ class OrganizationController extends Controller
             Log::error('Error saving job: ' . $e->getMessage());
 
             // Handle the error gracefully - display a generic error message or redirect with an error status
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            //return response()->json(['success' => false, 'message' => $e->getMessage()]);
             return redirect()->route('organization-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
             // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
         } catch (\Exception $e) {
@@ -1006,7 +1006,7 @@ class OrganizationController extends Controller
             Log::error('Exception: ' . $e->getMessage());
 
             // Display a generic error message or redirect with an error status
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+            //return response()->json(['success' => false, 'message' => $e->getMessage()]);
             return redirect()->route('organization-opportunities-manager')->with('error', 'Try again later');
             //return response()->json(['success' => false, 'message' => $request->input('') ]);
         }
