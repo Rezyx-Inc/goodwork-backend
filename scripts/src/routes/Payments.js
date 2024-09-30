@@ -291,7 +291,7 @@ router.post("/customer/subscription", async (req, res) => {
       .send({ status: false, message: "Missing parameters." });
   }
   var date = moment();
-  var amount = parseFloat(req.body.amount) * req.body.length;
+  var amount = Number(req.body.amount) / Number(req.body.length);
   try {
     const subscriptionSchedule = await stripe.subscriptionSchedules.create({
       customer: req.body.stripeId,
@@ -307,12 +307,12 @@ router.post("/customer/subscription", async (req, res) => {
                 recurring: {
                   interval: "week",
                 },
-                unit_amount_decimal: amount.toFixed(2),
+                unit_amount: Math.floor(amount, 2),
               },
               quantity: 1,
             },
           ],
-          iterations: req.body.length,
+          iterations: Number(req.body.length),
           collection_method: "charge_automatically",
           metadata: {
             offerId: req.body.offerId,
