@@ -17,6 +17,7 @@ class CreateJobsTable extends Migration
             // only job name is required since in the job saving process no required fields are required
 
             $table->uuid('id')->primary();
+            $table->string('job_id')->nullable();
             // type of speciallity changed from unsignedBigInteger to string since we have no relation between specialities and jobs table and we need the name of speciality in jobs table
             $table->string('preferred_specialty')->nullable();
             $table->string('import_id')->nullable();
