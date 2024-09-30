@@ -31,12 +31,16 @@ $user = auth()->guard('organization')->user();
         </a>
 
         <a href="{{ route('organization-keys') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('organization/organization-profile') ? 'active' : '' }}">
-        <img src="{{URL::asset('organization/assets/images/plus-icon-white.png')}}" /><span>Check you API keys</span>
+        <img src="{{URL::asset('organization/assets/images/manage_api_keys.svg')}}" /><span>Check your API keys</span>
         </a>
 
         <a href="{{ route('organization-recruiters-management') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('organization/organization-profile') ? 'active' : '' }}">
-            <img src="{{URL::asset('organization/assets/images/plus-icon-white.png')}}" /><span>Manage you recruiters</span>
+            <img src="{{URL::asset('organization/assets/images/manage_recruiters.svg')}}" /><span>Manage your recruiters</span>
             </a>
+
+            <a href="{{ route('get_preferences') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('organization/organization-profile') ? 'active' : '' }}">
+                <img src="{{URL::asset('organization/assets/images/manage_rules.svg')}}" /><span>Manage your rules</span>
+                </a>
     </div>
     </div>
     <div class="ss-dash-logout-sec">
