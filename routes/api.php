@@ -1773,6 +1773,7 @@ Route::post('organization-working', [ApiOrganizationController::class, 'organiza
 Route::post('organization-rejected', [ApiOrganizationController::class, 'organizationRejectedList']);
 Route::post('organization-blocked', [ApiOrganizationController::class, 'organizationBlockedList']);
 Route::post('organization-worker-info', [ApiOrganizationController::class, 'workerInfo']);
+Route::post('organization-add-job', [ApiOrganizationController::class, 'addJobStore']);
 
 
 // Strip Payment gateway
@@ -1807,7 +1808,3 @@ Route::middleware(['auth:api', 'ThrottleMiddleware:60,1', 'controllHeaders', 'au
 
 // Route::post('/session', 'ApiController@session')->name('session');
 // Route::post('/make-payment', 'ApiController@make_payment')->name('make_payment');
-
-
-
-
