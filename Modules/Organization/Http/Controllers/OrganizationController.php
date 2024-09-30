@@ -20,6 +20,8 @@ use App\Models\NotificationMessage as NotificationMessageModel;
 use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
+
 
 class OrganizationController extends Controller
 {
@@ -960,6 +962,18 @@ class OrganizationController extends Controller
                 // Save the job data to the database
                 $job->save();
 
+                $AssignmentResponse = Http::post('http://localhost:4545/organizations/assignUpNextRecruiter', [
+                    'id' => $job->organization_id,
+                ]);
+
+                if ($AssignmentResponse->status() == 200) {
+                    $recruiterId = $AssignmentResponse->body();
+                    $job->recruiter_id = $recruiterId;
+                    $job->save();
+                } 
+
+               
+
             } else {
 
                 //return response()->json(['success' => false, 'message' => $active]);
@@ -974,6 +988,8 @@ class OrganizationController extends Controller
             //return response()->json(['success' => true, 'message' => 'Job added successfully!']);
 
             // Redirect back to the add job form with a success message
+
+
             return redirect()->route('organization-opportunities-manager')->with('success', 'Job added successfully!');
 
             // return response()->json(['success' => true, 'message' => 'Job added successfully!']);
@@ -1396,20 +1412,19 @@ public function recruiters_management()
 
     $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
 
-    if ($scriptResponse->failed()) {
-        $data = [];
-        $data['msg'] = $scriptResponse->json()['message'];
-        $data['success'] = false;
-        return response()->json($data);
-    }
+   
 
     $responseData = $scriptResponse->json();
+    if(isset($responseData)) {
+    
     $ids = array_map(function($recruiter) {
         return $recruiter['id'];
     }, $responseData);
 
     $recruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
-
+    } else {
+        $recruiters = [];
+    }
     return view('organization::organization.organization_recruiters_management', compact('recruiters'));
 }
 
@@ -1563,7 +1578,7 @@ public function recruiters_management()
                     $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId, [
                         'id' => $model->id,
                         'worksAssigned' => 0,
-                        'upNext' => false,
+                        'upNext' => true,
                     ]);
 
                     //return $scriptResponse;
@@ -1596,10 +1611,11 @@ public function recruiters_management()
             $orgId = Auth::guard('organization')->user()->id;
         
             $validator = Validator::make($request->all(), [
-                'id' => 'required|exists:users,id',
+                'recruiter_id' => 'required|exists:users,id',
                 'first_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
                 'last_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
-                'mobile' => ['nullable', 'regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
+                
                 'email' => 'required|email:rfc,dns'
             ]);
         
@@ -1610,7 +1626,7 @@ public function recruiters_management()
                 ]);
             }
         
-            $recruiter = User::where('id', $request->id)->where('role', 'RECRUITER')->first();
+            $recruiter = User::where('id', $request->recruiter_id)->where('role', 'RECRUITER')->first();
         
             if (!$recruiter) {
                 return response()->json([
@@ -1624,7 +1640,6 @@ public function recruiters_management()
                 'last_name' => $request->last_name,
                 'mobile' => $request->mobile,
                 'email' => $request->email,
-                'user_name' => $request->email,
             ]);
         
             return response()->json([
@@ -1655,9 +1670,8 @@ public function recruiters_management()
                 ]);
             }
         
-            
             $recruiter = User::where('id', $request->id)->where('role', 'RECRUITER')->first();
-        
+
             if (!$recruiter) {
                 return response()->json([
                     'msg' => 'Recruiter not found.',
@@ -1665,7 +1679,6 @@ public function recruiters_management()
                 ]);
             }
         
-            
             return response()->json([
                 'msg' => 'Recruiter data retrieved successfully!',
                 'success' => true,
@@ -1677,6 +1690,70 @@ public function recruiters_management()
                 'msg' => $e->getMessage(),
                 'success' => false
             ]);
+        }
+    }
+
+    public function get_preferences(Request $request){
+        try{    
+
+            $columns = Schema::getColumnListing('jobs');
+            $columns = array_diff($columns, ['id','import_id','facility_id','created_at','updated_at','created_by','deleted_at','recruiter_id','organization_id']);
+            $orgId = Auth::guard('organization')->user()->id;
+
+            $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+                'id' => $orgId,
+            ]);
+            $requiredFields = $requiredFields->json();
+            // return response()->json(['columns'=>$columns]);
+            return view('organization::organization.organization_rules_management', compact('columns','requiredFields'));
+
+        }catch(\Exception $ex){
+
+            return response()->json([
+                'msg' => $e->getMessage(),
+                'success' => false
+            ]);
+
+        }
+    }
+
+
+    public function add_preferences(Request $request){
+        try{
+
+            $orgId = Auth::guard('organization')->user()->id;
+            $response = Http::post('http://localhost:4545/organizations/add-preferences', [
+                'id' => $orgId,
+                'preferences' => $request->preferences,
+            ]);
+            return $response;
+
+        }catch(\Exeption $ex ){
+
+            return response()->json([
+                'msg' => $e->getMessage(),
+                'success' => false
+            ]);
+
+        }
+    }
+
+    public function assign_recruiter_to_job(Request $request)
+    {
+        try{
+
+            $jobId = $request->job_id;
+            $recruiterId = $request->recruiter_id;
+            $job = Job::where('id', $jobId)->update(['recruiter_id' => $recruiterId]);
+
+            if (!$job) {
+                return response()->json(['error' => "Job not found"], 404);
+            }
+
+            return response()->json(['success' => true, 'message' => 'Recruiter assigned successfully']);
+
+        }catch(\Exception $e){
+            return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
         }
     }
 

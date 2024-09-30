@@ -1470,7 +1470,7 @@
                                     @csrf
                                     {{-- driving license --}}
                                     <div id="driving_license">
-                                        <div class="container-multiselect">
+                                        <div class="container-multiselect" style="justify-content: center;display: flex;margin-bottom: 30px;">
                                             <div class="ss-form-group fileUploadInput"
                                                 style="
                                         display: flex;
@@ -1478,7 +1478,7 @@
                                         align-items: center;
                                     ">
                                                 <input name="driving_license" displayName="Driving Licence"
-                                                    type="file" class="files-upload">
+                                                    type="file" class="files-upload" style="padding: 0px;">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="driving licence"
                                                         class="item">
@@ -1550,7 +1550,7 @@
                                     {{-- driving license --}}
                                     <div id="diploma">
 
-                                        <div class="container-multiselect">
+                                        <div class="container-multiselect" style="justify-content: center;display: flex;margin-bottom: 30px;">
                                             <div class="ss-form-group fileUploadInput"
                                                 style="
                                                                 display: flex !important;

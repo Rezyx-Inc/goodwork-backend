@@ -74,6 +74,76 @@ router.post('/deleteRecruiter/:orgId', async (req, res) => {
     }
 });
 
+
+
+router.post('/manuelRecruiterAssignment/:orgId', async (req, res) => {
+
+    if (!Object.keys(req.body).length) {
+        return res.status(400).send("Empty request");
+    }
+
+    try {
+
+        const org = await Organizations.findOne({ orgId: req.params.orgId });
+
+        if (!org) {
+            return res.status(404).send("Organization not found.");
+        }
+
+        const recruiter = org.recruiters.find((recruiter) => recruiter.id === req.body.id);
+
+        if (!recruiter) {
+            return res.status(404).send("Recruiter not found.");
+        }
+
+        recruiter.worksAssigned = recruiter.worksAssigned + 1;
+        recruiter.upNext = false;
+
+        await org.save();
+        res.status(200).send("Recruiter assigned successfully.");
+    } catch (err) {
+        console.error("Unable to save organization.", err);
+        res.status(500).send("Unable to save organization.");
+    }
+}
+);
+
+
+router.post('/assignUpNextRecruiter', async (req, res) => {
+    if (!Object.keys(req.body).length) {
+        return res.status(400).send("Empty request");
+    }
+
+    try {
+        const org = await Organizations.findOne({ orgId: req.body.id });
+        if (!org) {
+            return res.status(404).send("Organization not found.");
+        }
+
+        const upNextRecruiter = org.recruiters.find((recruiter) => recruiter.upNext === true);
+
+        if (!upNextRecruiter) {
+            return res.status(404).send("Up next recruiter not found.");
+        }
+
+        upNextRecruiter.worksAssigned = upNextRecruiter.worksAssigned + 1;
+        upNextRecruiter.upNext = false;
+
+        await org.save();
+
+        // i want to return it with the recruiter id
+        res.status(200).send(upNextRecruiter.id);
+
+    } catch (err) {
+
+        console.error("Unable to save organization.", err);
+        res.status(500).send("Unable to save organization.");
+    }
+}
+);
+
+    
+
 router.post('/updatePreferences/:orgId', async (req, res) => {
     if (!Object.keys(req.body).length) {
         return res.status(400).send("Empty request");
@@ -88,6 +158,36 @@ router.post('/updatePreferences/:orgId', async (req, res) => {
         org.preferences = req.body;
         await org.save();
         res.status(200).send("Preferences updated successfully.");
+    } catch (err) {
+        console.error("Unable to save organization.", err);
+        res.status(500).send("Unable to save organization.");
+    }
+});
+
+router.post('/get-preferences', async (req, res) => {
+    try {
+        const org = await Organizations.findOne({ orgId: req.body.id });
+        if (!org) {
+            return res.status(404).send({"requiredToSubmit":[],"requiredToApply":[]});
+        }
+        res.status(200).send(org.preferences);
+    } catch (err) {
+        console.error("Unexpected error", err);
+        res.status(500).send("Unexpected error.");
+    }
+});
+
+router.post('/add-preferences', async (req, res) => {
+    if (!Object.keys(req.body).length) {
+        return res.status(400).send("Empty request");
+    }
+    try {
+        const org = await Organizations.findOneAndUpdate(
+            { orgId: req.body.id },
+            { $set: { preferences: req.body.preferences } },
+            { new: true, upsert: true }
+        );
+        res.status(200).send("Preferences added successfully.");
     } catch (err) {
         console.error("Unable to save organization.", err);
         res.status(500).send("Unable to save organization.");

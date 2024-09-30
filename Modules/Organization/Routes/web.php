@@ -108,25 +108,36 @@ Route::prefix('organization')->group(function () {
         Route::post('organization-counter-offer', ['uses' => 'OrganizationApplicationController@organization_counter_offer', 'as'=> 'organization-counter-offer']);
 
           //api keys
-          Route::get('keys', ['uses' => 'OrganizationController@keys', 'as' => 'organization-keys']);
+        Route::get('keys', ['uses' => 'OrganizationController@keys', 'as' => 'organization-keys']);
 
-          Route::post('/get-api-key',['uses'=>'OrganizationController@getapikey','as'=>'getApiKey']);
-          Route::post('/delete_apikey',['uses'=>'OrganizationController@deleteapikey','as'=>'deleteApiKey']);
+        Route::post('/get-api-key',['uses'=>'OrganizationController@getapikey','as'=>'getApiKey']);
+        Route::post('/delete_apikey',['uses'=>'OrganizationController@deleteapikey','as'=>'deleteApiKey']);
 
-          // recruiters management
-            Route::get('recruiters-management', ['uses' => 'OrganizationController@recruiters_management', 'as' => 'organization-recruiters-management']);
+        // recruiters management
+        Route::get('recruiters-management', ['uses' => 'OrganizationController@recruiters_management', 'as' => 'organization-recruiters-management']);
 
-            Route::post('recruiter-registration', ['uses' => 'OrganizationController@recruiter_registration', 'as' => 'recruiter_registration']);
+        Route::post('recruiter-registration', ['uses' => 'OrganizationController@recruiter_registration', 'as' => 'recruiter_registration']);
 
-            // delete recruiter
+        // delete recruiter
+        Route::post('delete-recruiter', ['uses' => 'OrganizationController@delete_recruiter', 'as' => 'delete_recruiter']);
 
-            Route::post('delete-recruiter', ['uses' => 'OrganizationController@delete_recruiter', 'as' => 'delete_recruiter']);
+        // get One recruiter data 
+        Route::post('get-recruiter-data', ['uses' => 'OrganizationController@get_recruiter_data', 'as' => 'get_recruiter_data']);
 
-            // get One recruiter data 
-            Route::post('get-recruiter-data', ['uses' => 'OrganizationController@get_recruiter_data', 'as' => 'get_recruiter_data']);
+        // update recruiter data 
+        Route::post('recruiter-edit', ['uses' => 'OrganizationController@recruiter_edit', 'as' => 'recruiter_edit']);
 
-            // update recruiter data 
-            Route::post('recruiter-edit', ['uses' => 'OrganizationController@recruiter_edit', 'as' => 'recruiter_edit']);
+        // get fields names & rules
+
+        Route::get('get-preferences',['uses'=>'OrganizationController@get_preferences','as'=>'get_preferences']);
+
+        // update fields rules 
+
+        Route::post('add-preferences',['uses'=>'OrganizationController@add_preferences', 'as' =>'add_preferences']);
+
+        // assign recruiter to job
+
+        Route::post('assign-recruiter-to-job',['uses'=>'OrganizationController@assign_recruiter_to_job','as'=>'assign_recruiter_to_job']);
 
     });
 });

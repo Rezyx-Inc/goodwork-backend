@@ -2701,7 +2701,7 @@
 
 
                         <!-- published details start-->
-
+                        
                         <div class="col-lg-7 d-none" id="details_published">
                             <div class="ss-journy-svd-jbdtl-dv">
                                 <div class="ss-job-dtls-view-bx" style="border:2px solid #111011; padding-bottom:10px;">
@@ -7098,6 +7098,43 @@
             });
         }
     }
+
+    function assignRecruiter(){
+        var selectRecruiterElement = document.getElementById('recruiter_id');
+        var recruiterIdValue = selectRecruiterElement.options[selectRecruiterElement.selectedIndex].value;
+        var jobId = selectRecruiterElement.getAttribute('data-jid');
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var data = {
+            _token: csrfToken,
+            recruiter_id: recruiterIdValue,
+            job_id: jobId
+        };
+
+        $.ajax({
+            url: "{{ route('assign_recruiter_to_job') }}",
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                if (response.success) {
+                    notie.alert({
+                        type: 'success',
+                        text: '<i class="fa fa-check"></i> Recruiter assigned successfully.',
+                        time: 3
+                    });
+                } else {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-times"></i> Error assigning recruiter.',
+                        time: 3
+                    });
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+        
+    }
 </script>
 
 
@@ -7402,6 +7439,29 @@
 
     .saveDrftBtnDraft {
         margin-right: 3px;
+    }
+
+    #assign-container{
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+    }
+
+    #recruiter-assigned {
+        background: #3d2c39;
+        color: #fff;
+        border-radius: 100px;
+        width: fit-content;
+        padding: 2px 15px;
+    }
+
+    #recruiter_id {
+        border: 2px solid #3d2c39;
+        width: 100%;
+        padding: 2px 10px;
+        border-radius: 100px;
+        font-size: 14px;
+        font-weight: 500;
     }
 </style>
 @endsection
