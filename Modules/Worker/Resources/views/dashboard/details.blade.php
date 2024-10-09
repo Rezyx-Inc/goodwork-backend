@@ -653,7 +653,7 @@
                                     </ul>
                                 @endif
 
-                                @if (isset($model->as_soon_as))
+                                @if (isset($model->as_soon_as) && $model->as_soon_as == '1')
                                     <ul id="worker_as_soon_as"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['as_soon_as']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
@@ -666,9 +666,7 @@
                                                 soon as possible?</p>
                                         </li>
                                     </ul>
-                                @endif
-
-                                @if (isset($model->start_date))
+                                @else 
                                     <ul id="worker_start_date"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['start_date']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>

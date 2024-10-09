@@ -515,6 +515,7 @@ class RecruiterController extends Controller
 
                 $validatedData = $request->validate([
                     'job_type' => 'nullable|string',
+                    'job_id' => 'nullable|string',
                     'job_name' => 'nullable|string',
                     'job_city' => 'nullable|string',
                     'job_state' => 'nullable|string',
@@ -572,223 +573,52 @@ class RecruiterController extends Controller
                     'pay_frequency' => 'nullable|string',
                     'benefits' => 'nullable|string',
                     'feels_like_per_hour' => 'nullable|string',
-                    'preferred_shift_duration' => 'nullable|string'
+                    'preferred_shift_duration' => 'nullable|string',
+                    'as_soon_as' => 'nullable|integer',
+                    'professional_state_licensure' => 'nullable|string',
                 ]);
 
                 $job = new Job();
 
                 try {
-
-                    if (isset($validatedData['job_type'])) {
-                        $job->job_type = $validatedData['job_type'];
+                    $fields = [
+                        'job_type', 'type', 'job_id', 'job_name', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
+                        'active', 'description', 'start_date', 'hours_shift', 'hours_per_week', 'preferred_experience',
+                        'facility_shift_cancelation_policy', 'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio',
+                        'Unit', 'scrub_color', 'rto', 'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus',
+                        'completion_bonus', 'extension_bonus', 'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday',
+                        'orientation_rate', 'on_call', 'on_call_rate', 'call_back_rate', 'weekly_non_taxable_amount', 'profession',
+                        'specialty', 'terms', 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy',
+                        'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
+                        'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
+                        'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
+                        'professional_state_licensure'
+                    ];
+                
+                    foreach ($fields as $field) {
+                        if (isset($validatedData[$field])) {
+                            $job->$field = $validatedData[$field];
+                        }
                     }
-                    if (isset($validatedData['job_type'])) {
-                        $job->type = $validatedData['job_type'];
-                    }
-                    if (isset($validatedData['job_name'])) {
-                        $job->job_name = $validatedData['job_name'];
-                    }
-                    if (isset($validatedData['job_city'])) {
-                        $job->job_city = $validatedData['job_city'];
-                    }
-                    if (isset($validatedData['job_state'])) {
-                        $job->job_state = $validatedData['job_state'];
-                    }
-                    if (isset($validatedData['weekly_pay'])) {
-                        $job->weekly_pay = $validatedData['weekly_pay'];
-                    }
-                    if (isset($validatedData['preferred_specialty'])) {
-                        $job->preferred_specialty = $validatedData['preferred_specialty'];
-                    }
-                    if (isset($validatedData['active'])) {
-                        $job->active = $validatedData['active'];
-                    }
-                    if (isset($validatedData['description'])) {
-                        $job->description = $validatedData['description'];
-                    }
-                    if (isset($validatedData['start_date'])) {
-                        $job->start_date = $validatedData['start_date'];
-                    }
-                    if (isset($validatedData['hours_shift'])) {
-                        $job->hours_shift = $validatedData['hours_shift'];
-                    }
-                    if (isset($validatedData['hours_per_week'])) {
-                        $job->hours_per_week = $validatedData['hours_per_week'];
-                    }
-                    if (isset($validatedData['preferred_experience'])) {
-                        $job->preferred_experience = $validatedData['preferred_experience'];
-                    }
-                    if (isset($validatedData['facility_shift_cancelation_policy'])) {
-                        $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
-                    }
-                    if (isset($validatedData['traveler_distance_from_facility'])) {
-                        $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
-                    }
-                    if (isset($validatedData['clinical_setting'])) {
-                        $job->clinical_setting = $validatedData['clinical_setting'];
-                    }
-                    if (isset($validatedData['Patient_ratio'])) {
-                        $job->Patient_ratio = $validatedData['Patient_ratio'];
-                    }
-                    if (isset($validatedData['Unit'])) {
-                        $job->Unit = $validatedData['Unit'];
-                    }
-                    if (isset($validatedData['scrub_color'])) {
-                        $job->scrub_color = $validatedData['scrub_color'];
-                    }
-                    if (isset($validatedData['rto'])) {
-                        $job->rto = $validatedData['rto'];
-                    }
-                    if (isset($validatedData['guaranteed_hours'])) {
-                        $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-                    }
-                    if (isset($validatedData['hours_per_week'])) {
-                        $job->hours_per_week = $validatedData['hours_per_week'];
-                    }
-                    if (isset($validatedData['hours_shift'])) {
-                        $job->hours_shift = $validatedData['hours_shift'];
-                    }
-                    if (isset($validatedData['weeks_shift'])) {
-                        $job->weeks_shift = $validatedData['weeks_shift'];
-                    }
-                    if (isset($validatedData['referral_bonus'])) {
-                        $job->referral_bonus = $validatedData['referral_bonus'];
-                    }
-                    if (isset($validatedData['sign_on_bonus'])) {
-                        $job->sign_on_bonus = $validatedData['sign_on_bonus'];
-                    }
-                    if (isset($validatedData['completion_bonus'])) {
-                        $job->completion_bonus = $validatedData['completion_bonus'];
-                    }
-                    if (isset($validatedData['extension_bonus'])) {
-                        $job->extension_bonus = $validatedData['extension_bonus'];
-                    }
-                    if (isset($validatedData['other_bonus'])) {
-                        $job->other_bonus = $validatedData['other_bonus'];
-                    }
-                    if (isset($validatedData['actual_hourly_rate'])) {
-                        $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
-                    }
-                    if (isset($validatedData['overtime'])) {
-                        $job->overtime = $validatedData['overtime'];
-                    }
-                    if (isset($validatedData['holiday'])) {
-                        $job->holiday = $validatedData['holiday'];
-                    }
-                    if (isset($validatedData['orientation_rate'])) {
-                        $job->orientation_rate = $validatedData['orientation_rate'];
-                    }
-                    if (isset($validatedData['on_call'])) {
-                        $job->on_call = $validatedData['on_call'];
-                    }
-                    if (isset($validatedData['on_call_rate'])) {
-                        $job->on_call_rate = $validatedData['on_call_rate'];
-                    }
-                    if (isset($validatedData['call_back_rate'])) {
-                        $job->call_back_rate = $validatedData['call_back_rate'];
-                    }
-                    if (isset($validatedData['weekly_non_taxable_amount'])) {
-                        $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-                    }
-                    if (isset($validatedData['profession'])) {
-                        $job->profession = $validatedData['profession'];
-                    }
-                    if (isset($validatedData['preferred_specialty'])) {
-                        $job->specialty = $validatedData['preferred_specialty'];
-                    }
-                    if (isset($validatedData['terms'])) {
-                        $job->terms = $validatedData['terms'];
-                    }
-                    if (isset($validatedData['preferred_assignment_duration'])) {
-                        $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
-                    }
-                    if (isset($validatedData['block_scheduling'])) {
-                        $job->block_scheduling = $validatedData['block_scheduling'];
-                    }
-
-                    if (isset($validatedData['contract_termination_policy'])) {
-                        $job->contract_termination_policy = $validatedData['contract_termination_policy'];
-                    }
-
-                    if (isset($validatedData['Emr'])) {
-                        $job->Emr = $validatedData['Emr'];
-                    }
-
-
-                    // added fields from sheets
-                    if (isset($validatedData['job_location'])) {
-                        $job->job_location = $validatedData['job_location'];
-                    }
-                    if (isset($validatedData['vaccinations'])) {
-                        $job->vaccinations = $validatedData['vaccinations'];
-                    }
-                    if (isset($validatedData['number_of_references'])) {
-                        $job->number_of_references = $validatedData['number_of_references'];
-                    }
-                    if (isset($validatedData['min_title_of_reference'])) {
-                        $job->min_title_of_reference = $validatedData['min_title_of_reference'];
-                    }
-                    if (isset($validatedData['eligible_work_in_us'])) {
-                        $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
-                    }
-                    if (isset($validatedData['recency_of_reference'])) {
-                        $job->recency_of_reference = $validatedData['recency_of_reference'];
-                    }
-                    if (isset($validatedData['certificate'])) {
-                        $job->certificate = $validatedData['certificate'];
-                    }
-                    if (isset($validatedData['preferred_shift_duration'])) {
-                        $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
-                    }
-                    if (isset($validatedData['skills'])) {
-                        $job->skills = $validatedData['skills'];
-                    }
-                    if (isset($validatedData['urgency'])) {
-                        $job->urgency = $validatedData['urgency'];
-                    }
-                    if (isset($validatedData['facilitys_parent_system'])) {
-                        $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
-                    }
-                    if (isset($validatedData['facility_name'])) {
-                        $job->facility_name = $validatedData['facility_name'];
-                    }
-
-                    if (isset($validatedData['nurse_classification'])) {
-                        $job->nurse_classification = $validatedData['nurse_classification'];
-                    }
-                    if (isset($validatedData['pay_frequency'])) {
-                        $job->pay_frequency = $validatedData['pay_frequency'];
-                    }
-                    if (isset($validatedData['benefits'])) {
-                        $job->benefits = $validatedData['benefits'];
-                    }
-                    if (isset($validatedData['feels_like_per_hour'])) {
-                        $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
-                    }
-                    // end added fields from sheets
-
-
-                    //return $job;
-
+                
+                    $job->recruiter_id = $created_by;
+                    $job->created_by = $created_by;
+                    $job->active = false;
+                    $job->is_open = false;
+                
+                    $job->save();
                 } catch (Exception $e) {
-
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
-
-                $job->recruiter_id = $created_by;
-                $job->created_by = $created_by;
-                $job->active = false;
-                $job->is_open = false;
-
-                $job->save();
 
             } elseif ($active == "true") {
                 //return request()->all();
 
                 $validatedData = $request->validate([
-
+                    
                     'job_type' => 'required|string',
-                    'job_name' => 'required|string',
+                    'job_name' => 'nullable|string',
+                    'job_id' => 'nullable|string',
                     'job_city' => 'required|string',
                     'job_state' => 'required|string',
                     'weekly_pay' => 'required|numeric',
@@ -842,112 +672,36 @@ class RecruiterController extends Controller
                     'pay_frequency' => 'nullable|string',
                     'benefits' => 'nullable|string',
                     'feels_like_per_hour' => 'nullable|string',
+                    'as_soon_as' => 'nullable|integer',
+                    'professional_state_licensure' => 'nullable|string',
                 ]);
 
                 $job = new Job();
-                $job->job_type = $validatedData['job_type'];
-                $job->type = $validatedData['job_type'];
-                $job->job_name = $validatedData['job_name'];
-                $job->job_city = $validatedData['job_city'];
-                $job->job_state = $validatedData['job_state'];
-                $job->weekly_pay = $validatedData['weekly_pay'];
-                $job->preferred_specialty = $validatedData['preferred_specialty'];
-                $job->description = $validatedData['description'];
-                $job->start_date = $validatedData['start_date'];
-                $job->hours_shift = $validatedData['hours_shift'];
-                $job->preferred_experience = $validatedData['preferred_experience'];
-                $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
-                $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
-                $job->clinical_setting = $validatedData['clinical_setting'];
-                $job->Patient_ratio = $validatedData['Patient_ratio'];
-                $job->Unit = $validatedData['Unit'];
-                $job->scrub_color = $validatedData['scrub_color'];
-                $job->rto = $validatedData['rto'];
-                $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-                $job->weeks_shift = $validatedData['weeks_shift'];
-                $job->referral_bonus = $validatedData['referral_bonus'];
-                $job->sign_on_bonus = $validatedData['sign_on_bonus'];
-                $job->completion_bonus = $validatedData['completion_bonus'];
-                $job->extension_bonus = $validatedData['extension_bonus'];
-                $job->other_bonus = $validatedData['other_bonus'];
-                $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
-                $job->overtime = $validatedData['overtime'];
-                $job->holiday = $validatedData['holiday'];
-                $job->orientation_rate = $validatedData['orientation_rate'];
-                $job->on_call = $validatedData['on_call'];
-                $job->call_back_rate = $validatedData['call_back_rate'];
-                $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-                $job->profession = $validatedData['profession'];
-                $job->specialty = $validatedData['preferred_specialty'];
+                $fields = [
+                    'job_type', 'type', 'job_name', 'job_id', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
+                    'description', 'start_date', 'hours_shift', 'preferred_experience', 'facility_shift_cancelation_policy',
+                    'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio', 'Unit', 'scrub_color', 'rto',
+                    'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus', 'completion_bonus', 'extension_bonus',
+                    'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday', 'orientation_rate', 'on_call', 'call_back_rate',
+                    'weekly_non_taxable_amount', 'profession', 'specialty', 'terms', 'preferred_work_location',
+                    'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy', 'Emr', 'on_call_rate',
+                    'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
+                    'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
+                    'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
+                    'professional_state_licensure'
+                ];
+                
+                foreach ($fields as $field) {
+                    if (isset($validatedData[$field])) {
+                        $job->$field = $validatedData[$field];
+                    }
+                }
+                
                 $job->recruiter_id = $created_by;
                 $job->created_by = $created_by;
                 $job->active = true;
                 $job->is_open = true;
-                $job->terms = $validatedData['terms'];
-                $job->preferred_work_location = $validatedData['preferred_work_location'];
-                $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
-                $job->block_scheduling = $validatedData['block_scheduling'];
-                $job->contract_termination_policy = $validatedData['contract_termination_policy'];
-                $job->Emr = $validatedData['Emr'];
-                $job->on_call_rate = $validatedData['on_call_rate'];
-
-                // added fields from sheets
-                if (isset($validatedData['job_location'])) {
-                    $job->job_location = $validatedData['job_location'];
-                }
-                if (isset($validatedData['vaccinations'])) {
-                    $job->vaccinations = $validatedData['vaccinations'];
-                }
-                if (isset($validatedData['number_of_references'])) {
-                    $job->number_of_references = $validatedData['number_of_references'];
-                }
-                if (isset($validatedData['min_title_of_reference'])) {
-                    $job->min_title_of_reference = $validatedData['min_title_of_reference'];
-                }
-                if (isset($validatedData['eligible_work_in_us'])) {
-                    $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
-                }
-                if (isset($validatedData['recency_of_reference'])) {
-                    $job->recency_of_reference = $validatedData['recency_of_reference'];
-                }
-                if (isset($validatedData['certificate'])) {
-                    $job->certificate = $validatedData['certificate'];
-                }
-                if (isset($validatedData['preferred_shift_duration'])) {
-                    $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
-                }
-                if (isset($validatedData['skills'])) {
-                    $job->skills = $validatedData['skills'];
-                }
-                if (isset($validatedData['urgency'])) {
-                    $job->urgency = $validatedData['urgency'];
-                }
-                if (isset($validatedData['facilitys_parent_system'])) {
-                    $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
-                }
-                if (isset($validatedData['facility_name'])) {
-                    $job->facility_name = $validatedData['facility_name'];
-                }
-
-
-                if (isset($validatedData['nurse_classification'])) {
-                    $job->nurse_classification = $validatedData['nurse_classification'];
-                }
-                if (isset($validatedData['pay_frequency'])) {
-                    $job->pay_frequency = $validatedData['pay_frequency'];
-                }
-                if (isset($validatedData['benefits'])) {
-                    $job->benefits = $validatedData['benefits'];
-                }
-                if (isset($validatedData['feels_like_per_hour'])) {
-                    $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
-                }
-                // end added fields from sheets
-
-
-
-
-
+                
                 $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
                 $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
@@ -955,7 +709,7 @@ class RecruiterController extends Controller
                 $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
                 $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
                 $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
-
+                
                 // Save the job data to the database
                 $job->save();
 
@@ -1001,69 +755,96 @@ class RecruiterController extends Controller
             $facility_id = Auth::guard('recruiter')->user()->facility_id;
             // Validate the form data
             $validatedData = $request->validate([
-                'job_type' => 'nullable|string',
-                'job_name' => 'nullable|string',
-                'job_city' => 'nullable|string',
-                'job_state' => 'nullable|string',
-                'preferred_assignment_duration' => 'nullable|string',
-                'weekly_pay' => 'nullable|numeric',
-                'preferred_specialty' => 'nullable|string',
-                'preferred_work_location' => 'nullable|string',
-                'description' => 'nullable|string',
+                    'job_type' => 'nullable|string',
+                    'job_name' => 'nullable|string',
+                    'job_id' => 'nullable|string',
+                    'job_city' => 'nullable|string',
+                    'job_state' => 'nullable|string',
+                    'weekly_pay' => 'nullable|numeric',
+                    'preferred_specialty' => 'nullable|string',
+                    'preferred_work_location' => 'nullable|string',
+                    'preferred_experience' => 'nullable|integer',
+                    'description' => 'nullable|string',
+                    'terms' => 'nullable|string',
+                    'start_date' => 'nullable|date',
+                    'hours_shift' => 'nullable|integer',
+                    'facility_shift_cancelation_policy' => 'nullable|string',
+                    'traveler_distance_from_facility' => 'nullable|string',
+                    'clinical_setting' => 'nullable|string',
+                    'Patient_ratio' => 'nullable|string',
+                    'Unit' => 'nullable|string',
+                    'scrub_color' => 'nullable|string',
+                    'rto' => 'nullable|string',
+                    'guaranteed_hours' => 'nullable|string',
+                    'weeks_shift' => 'nullable|string',
+                    'referral_bonus' => 'nullable|string',
+                    'sign_on_bonus' => 'nullable|string',
+                    'completion_bonus' => 'nullable|numeric',
+                    'extension_bonus' => 'nullable|numeric',
+                    'other_bonus' => 'nullable|numeric',
+                    'actual_hourly_rate' => 'nullable|numeric',
+                    'overtime' => 'nullable|string',
+                    'holiday' => 'nullable|string',
+                    'orientation_rate' => 'nullable|string',
+                    'on_call' => 'nullable|string',
+                    'on_call_rate' => 'nullable|string',
+                    'call_back_rate' => 'nullable|string',
+                    'weekly_non_taxable_amount' => 'nullable|string',
+                    'profession' => 'nullable|string',
+                    'Emr' => 'nullable|string',
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'block_scheduling' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string',
+                    'job_location' => 'nullable|string',
+                    'vaccinations' => 'nullable|string',
+                    'number_of_references' => 'nullable|integer',
+                    'min_title_of_reference' => 'nullable|string',
+                    'eligible_work_in_us' => 'nullable|boolean',
+                    'recency_of_reference' => 'nullable|integer',
+                    'certificate' => 'nullable|string',
+                    'preferred_shift_duration' => 'nullable|string',
+                    'skills' => 'nullable|string',
+                    'urgency' => 'nullable|string',
+                    'facilitys_parent_system' => 'nullable|string',
+                    'facility_name' => 'nullable|string',
+                    'nurse_classification' => 'nullable|string',
+                    'pay_frequency' => 'nullable|string',
+                    'benefits' => 'nullable|string',
+                    'feels_like_per_hour' => 'nullable|string',
+                    'as_soon_as' => 'nullable|integer',
+                    'active' => '0',
+                    'professional_state_licensure' => 'nullable|string',
 
-                'preferred_shift_duration' => 'nullable|string',
-                'preferred_work_area' => 'nullable|string',
-                'preferred_days_of_the_week' => 'nullable|string',
-                'preferred_hourly_pay_rate' => 'nullable|string',
-                'preferred_experience' => 'nullable|integer',
-                'preferred_shift' => 'nullable|string',
-                'job_function' => 'nullable|string',
-                'job_cerner_exp' => 'nullable|string',
-                'job_meditech_exp' => 'nullable|string',
-
-                'seniority_level' => 'nullable|string',
-                'job_other_exp' => 'nullable|string',
-                'start_date' => 'nullable|date',
-                'end_date' => 'nullable|date',
-                'hours_shift' => 'nullable|integer',
-                'hours_per_week' => 'nullable|integer',
-                'responsibilities' => 'nullable|string',
-                'qualifications' => 'nullable|string',
-                'active' => '0',
             ]);
 
             // Create a new Job instance with the validated data
             $job = new Job();
-            $job->job_type = $validatedData['job_type'];
-            $job->job_name = $validatedData['job_name'];
-            $job->job_city = $validatedData['job_city'];
-            $job->job_state = $validatedData['job_state'];
-            $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
-            $job->weekly_pay = $validatedData['weekly_pay'];
-            $job->preferred_specialty = $validatedData['preferred_specialty'];
-            $job->description = $validatedData['description'];
-            $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
-            $job->preferred_work_area = $validatedData['preferred_work_area'];
-            $job->preferred_days_of_the_week = $validatedData['preferred_days_of_the_week'];
-            $job->preferred_hourly_pay_rate = $validatedData['preferred_hourly_pay_rate'];
-            $job->preferred_experience = $validatedData['preferred_experience'];
-            $job->preferred_shift = $validatedData['preferred_shift'];
-            $job->job_function = $validatedData['job_function'];
-            $job->job_cerner_exp = $validatedData['job_cerner_exp'];
-            $job->job_meditech_exp = $validatedData['job_meditech_exp'];
-
-            $job->seniority_level = $validatedData['seniority_level'];
-            $job->job_other_exp = $validatedData['job_other_exp'];
-            $job->start_date = $validatedData['start_date'];
-            $job->end_date = $validatedData['end_date'];
-            $job->hours_shift = $validatedData['hours_shift'];
-            $job->hours_per_week = $validatedData['hours_per_week'];
-            $job->responsibilities = $validatedData['responsibilities'];
-            $job->qualifications = $validatedData['qualifications'];
-
-            // facility id should be null for now since we dont add a facility with the recruiter signup
-            // $job->facility_id = $facility_id;
-
+            $fields = [
+                'job_type', 'job_id', 'job_name', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
+                'preferred_work_location', 'description', 'terms', 'start_date', 'hours_shift',
+                'facility_shift_cancelation_policy', 'traveler_distance_from_facility', 'clinical_setting',
+                'Patient_ratio', 'Unit', 'scrub_color', 'rto', 'guaranteed_hours', 'weeks_shift',
+                'referral_bonus', 'sign_on_bonus', 'completion_bonus', 'extension_bonus', 'other_bonus',
+                'actual_hourly_rate', 'overtime', 'holiday', 'orientation_rate', 'on_call', 'on_call_rate',
+                'call_back_rate', 'weekly_non_taxable_amount', 'profession', 'Emr', 'preferred_assignment_duration',
+                'block_scheduling', 'contract_termination_policy', 'job_location', 'vaccinations',
+                'number_of_references', 'min_title_of_reference', 'eligible_work_in_us', 'recency_of_reference',
+                'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
+                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour',
+                'as_soon_as', 'professional_state_licensure'
+            ];
+            
+            foreach ($fields as $field) {
+                if (isset($validatedData[$field])) {
+                    $job->$field = $validatedData[$field];
+                }
+            }
+            
+            $job->recruiter_id = Auth::guard('recruiter')->user()->id;
+            $job->created_by = Auth::guard('recruiter')->user()->id;
+            $job->active = false;
+            $job->is_open = false;
+            
             // Save the job data to the database
             $job->save();
 
@@ -1092,7 +873,7 @@ class RecruiterController extends Controller
 
     function get_job_to_edit(Request $request)
     {
-
+       
         try {
             $validated = $request->validate([
                 'id' => 'required',
@@ -1125,6 +906,7 @@ class RecruiterController extends Controller
             $validatedData = $request->validate([
                 'job_type' => 'required|string',
                 'job_name' => 'required|string',
+                'job_id' => 'nullable|string',
                 'job_city' => 'required|string',
                 'job_state' => 'required|string',
                 'weekly_pay' => 'required|numeric',
@@ -1178,79 +960,41 @@ class RecruiterController extends Controller
                 'pay_frequency' => 'nullable|string',
                 'benefits' => 'nullable|string',
                 'feels_like_per_hour' => 'nullable|string',
+                'as_soon_as' => 'nullable|integer',
+                'professional_state_licensure' => 'nullable|string',
 
             ]);
 
-            $job = Job::find($request->job_id);
+            $job = Job::find($request->id);
 
             if ($job === null) {
                 return response()->json(['error' => "Job not found"], 404);
             }
 
-            $job->job_type = $validatedData['job_type'];
-            $job->type = $validatedData['job_type'];
-            $job->job_name = $validatedData['job_name'];
-            $job->job_city = $validatedData['job_city'];
-            $job->job_state = $validatedData['job_state'];
-            $job->weekly_pay = $validatedData['weekly_pay'];
-            $job->preferred_experience = $validatedData['preferred_experience'];
-            $job->preferred_specialty = $validatedData['preferred_specialty'];
-            $job->description = $validatedData['description'];
-            $job->start_date = $validatedData['start_date'];
-            $job->hours_shift = $validatedData['hours_shift'];
-            $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
-            $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
-            $job->clinical_setting = $validatedData['clinical_setting'];
-            $job->Patient_ratio = $validatedData['Patient_ratio'];
-            $job->Unit = $validatedData['Unit'];
-            $job->scrub_color = $validatedData['scrub_color'];
-            $job->rto = $validatedData['rto'];
-            $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-            $job->weeks_shift = $validatedData['weeks_shift'];
-            $job->referral_bonus = $validatedData['referral_bonus'];
-            $job->sign_on_bonus = $validatedData['sign_on_bonus'];
-            $job->completion_bonus = $validatedData['completion_bonus'];
-            $job->extension_bonus = $validatedData['extension_bonus'];
-            $job->other_bonus = $validatedData['other_bonus'];
-            $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
-            $job->overtime = $validatedData['overtime'];
-            $job->holiday = $validatedData['holiday'];
-            $job->orientation_rate = $validatedData['orientation_rate'];
-            $job->on_call = $validatedData['on_call'];
-            $job->call_back_rate = $validatedData['call_back_rate'];
-            $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-            $job->profession = $validatedData['profession'];
-            $job->specialty = $validatedData['preferred_specialty'];
+            $fields = [
+                'job_type', 'type', 'job_name', 'job_id', 'job_city', 'job_state', 'weekly_pay', 'preferred_experience',
+                'preferred_specialty', 'description', 'start_date', 'hours_shift', 'facility_shift_cancelation_policy',
+                'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio', 'Unit', 'scrub_color', 'rto',
+                'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus', 'completion_bonus', 'extension_bonus',
+                'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday', 'orientation_rate', 'on_call', 'call_back_rate',
+                'weekly_non_taxable_amount', 'profession', 'specialty', 'terms', 'preferred_work_location',
+                'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy', 'Emr', 'on_call_rate',
+                'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
+                'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
+                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as' , 'professional_state_licensure'
+            ];
+            
+            foreach ($fields as $field) {
+                if (isset($validatedData[$field])) {
+                    $job->$field = $validatedData[$field];
+                }
+            }
+            
             $job->recruiter_id = $created_by;
             $job->created_by = $created_by;
             $job->active = true;
             $job->is_open = true;
-            $job->terms = $validatedData['terms'];
-            $job->preferred_work_location = $validatedData['preferred_work_location'];
-            $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
-            $job->block_scheduling = $validatedData['block_scheduling'];
-            $job->contract_termination_policy = $validatedData['contract_termination_policy'];
-            $job->Emr = $validatedData['Emr'];
-            $job->on_call_rate = $validatedData['on_call_rate'];
-            // added field from sheets
-            $job->job_location = $validatedData['job_location'];
-            $job->vaccinations = $validatedData['vaccinations'];
-            $job->number_of_references = $validatedData['number_of_references'];
-            $job->min_title_of_reference = $validatedData['min_title_of_reference'];
-            $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
-            $job->recency_of_reference = $validatedData['recency_of_reference'];
-            $job->certificate = $validatedData['certificate'];
-            $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
-            $job->skills = $validatedData['skills'];
-            $job->urgency = $validatedData['urgency'];
-            $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
-            $job->facility_name = $validatedData['facility_name'];
-            $job->nurse_classification = $validatedData['nurse_classification'];
-            $job->pay_frequency = $validatedData['pay_frequency'];
-            $job->benefits = $validatedData['benefits'];
-            $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
-            // end added field from sheets
-
+            
             $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
             $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
             $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
@@ -1258,7 +1002,7 @@ class RecruiterController extends Controller
             $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
             $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
             $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
-
+            
             // update the job data to the database
             $job->save();
 

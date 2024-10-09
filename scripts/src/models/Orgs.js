@@ -19,5 +19,37 @@ const OrganizationsSchema = mongoose.Schema({
     }
 });
 
+
+const globalRuleFieldsSchema = mongoose.Schema({
+    ruleFields: [{
+    fieldID: {
+        type: String,
+        required: true
+    },
+    displayName: {
+        type: String,
+        required: true
+    },
+    publishDisabled: {
+        type: Boolean,
+        required: true
+    },
+    applyDisabled: {
+        type: Boolean,
+        required: true
+    }
+}]
+}
+);
+
+
+
+
 const organizationsDB = mongoose.connection.useDb(process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
-module.exports = organizationsDB.model('Organizations', OrganizationsSchema);
+const globalRulesDb = mongoose.connection.useDb(process.env.MONGODB_ORGANIZATIONS_DATABASE_NAME);
+
+const Organizations = organizationsDB.model('Organizations', OrganizationsSchema);
+const GlobalRuleFields = globalRulesDb.model('GlobalRuleFields', globalRuleFieldsSchema);
+
+
+module.exports = { Organizations, GlobalRuleFields };

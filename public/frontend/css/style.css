@@ -1242,6 +1242,7 @@ button.ss-fliter-btn {
     display: inline-block;
     font-weight: 500;
     color: #3b71ca;
+    height: fit-content;
 }
 
 .ss-job-prfle-sec a {

@@ -1825,7 +1825,7 @@ class OrganizationOpportunitiesController extends Controller
                             </div>
                         </div>
                     <div width="50px" height="50px" class="ss-job-apply-on-tx-bx-hed-dv">
-                        <ul style="display:block;">
+                        <ul style="display:block; text-align:justify;">
                             <li>
                                 <p>organization</p>
                             </li>
@@ -1848,7 +1848,9 @@ class OrganizationOpportunitiesController extends Controller
                             <li>
                                 <span>' .
                 $jobdetails->id .
-                '</span>
+                '</span><h6>Job Id - ' .
+                $jobdetails->job_id .
+                '</h6>
                                 <h6>' .
                 $jobappliedcount .
                 ' Applied</h6>
@@ -1884,87 +1886,7 @@ class OrganizationOpportunitiesController extends Controller
                             </li>
                         </ul>
                     </div>
-                    <div class="ss-jb-aap-on-txt-abt-dv">
-                        <div class="application-job-slider">
-                            <div class="ss-chng-appli-slider-mn-dv" style="width:auto;">
-                                <h5>Workers Applied (' .
-                $jobappliedcount .
-                ')</h5>
-                                <div class="' .
-                ($jobappliedcount > 1 ? 'owl-carousel application-job-slider-owl' : '') .
-                ' application-job-slider">
-                                    ';
-            //return response()->json([ 'data' => $jobapplieddetails]);
-            foreach ($jobapplieddetails as $key => $value) {
-                $nursedetails = Nurse::join('users', 'nurses.user_id', '=', 'users.id')
-                    ->where('nurses.id', $value->worker_user_id)
-                    ->select('nurses.*', 'users.*')
-                    ->first();
-
-                // $totalexp = 0;
-                // $allexp = explode(",", $nursedetails->experience);
-                // $totalexp = 0;
-                // foreach ($allexp as $valuee) {
-                //     $totalexp += (int)$valuee;
-                // }
-
-                $data2 .=
-                    '
-                                    <div style="width:auto;" class="ss-chng-appli-slider-sml-dv ss-expl-applicion-div-box" onclick="opportunitiesType(\'' .
-                    $type .
-                    '\', \'' .
-                    $value->id .
-                    '\', \'useralldetails\')"">
-                                        <div class="ss-job-id-no-name">
-                                            <ul>
-                                                <li class="w-50"><span>' .
-                    $value->worker_user_id .
-                    '</span></li>
-                                                <li class="w-50">
-                                                    <p>Recently Added</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <ul class="ss-expl-applicion-ul1">
-                                            <li class="w-auto">
-                                                <img width="50px" height="50px" src="' .
-                    asset('uploads/' . $userdetails->image) .
-                    '" onerror="this.onerror=null;this.src=' .
-                    '\'' .
-                    asset('frontend/img/profile-pic-big.png') .
-                    '\'' .
-                    ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
-                                            </li>
-                                            <li class="w-auto">
-                                                <h6>' .
-                    $userdetails->first_name .
-                    ' ' .
-                    $nursedetails->last_name .
-                    '</h6>
-                                            </li>
-                                        </ul>
-                                        <ul class="ss-expl-applicion-ul2 d-block">
-                                            <li class="w-auto"><a href="#">' .
-                    $nursedetails->highest_nursing_degree .
-                    '</a></li>
-                                            <li class="w-auto"><a href="#">' .
-                    $nursedetails->specialty .
-                    '</a></li>
-                                            <li class="w-auto"><a href="#">' .
-                    $nursedetails->worker_shift_time_of_day .
-                    '</a></li>
-
-                                        </ul>
-                                    </div>
-                                    ';
-            }
-
-            $data2 .=
-                '
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="ss-jb-apply-on-disc-txt col-md-12 mt-4 mb-3">
                         <h5>Description</h5>
                         <p class="mb-3">' .
@@ -1976,7 +1898,9 @@ class OrganizationOpportunitiesController extends Controller
             $data2 .=
                 '
             <div class="ss-job-ap-on-offred-new-dv">
-                <ul class="row ss-s-jb-apl-on-inf-txt-ul">
+                <ul class="row ss-s-jb-apl-on-inf-txt-ul" style="display: flex;
+                    justify-content: center;
+                    align-items: center;">
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <p class="mt-3">Profession</p>
                         <h6>' .
@@ -2348,12 +2272,105 @@ class OrganizationOpportunitiesController extends Controller
                         <h6>' .
                 ($jobdetails->goodwork_number ?? '----') .
                 '</h6>
+                    </div><div class="ss-jb-aap-on-txt-abt-dv">
+                        <div class="application-job-slider" style="text-align: justify;">
+                            <div class="ss-chng-appli-slider-mn-dv" style="width:auto;">
+                                <h5>Workers Applied (' .
+                $jobappliedcount .
+                ')</h5>
+                                <div class="' .
+                ($jobappliedcount > 1 ? 'owl-carousel application-job-slider-owl' : '') .
+                ' application-job-slider">
+                                    ';
+            //return response()->json([ 'data' => $jobapplieddetails]);
+            foreach ($jobapplieddetails as $key => $value) {
+                $nursedetails = Nurse::join('users', 'nurses.user_id', '=', 'users.id')
+                    ->where('nurses.id', $value->worker_user_id)
+                    ->select('nurses.*', 'users.*')
+                    ->first();
+
+                // $totalexp = 0;
+                // $allexp = explode(",", $nursedetails->experience);
+                // $totalexp = 0;
+                // foreach ($allexp as $valuee) {
+                //     $totalexp += (int)$valuee;
+                // }
+
+                $data2 .=
+                    '
+                                    <div style="width:auto;" class="ss-chng-appli-slider-sml-dv ss-expl-applicion-div-box" onclick="opportunitiesType(\'' .
+                    $type .
+                    '\', \'' .
+                    $value->id .
+                    '\', \'useralldetails\')"">
+                                        <div class="ss-job-id-no-name">
+                                            <ul>
+                                                <li class="w-50"><span>' .
+                    $value->worker_user_id .
+                    '</span></li>
+                                                <li class="w-50">
+                                                    <p>Recently Added</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <ul class="ss-expl-applicion-ul1">
+                                            <li class="w-auto">
+                                                <img width="50px" height="50px" src="' .
+                    asset('uploads/' . $userdetails->image) .
+                    '" onerror="this.onerror=null;this.src=' .
+                    '\'' .
+                    asset('frontend/img/profile-pic-big.png') .
+                    '\'' .
+                    ';" id="preview" width="50px" height="50px" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                            </li>
+                                            <li class="w-auto">
+                                                <h6>' .
+                    $nursedetails->first_name .
+                    ' ' .
+                    $nursedetails->last_name .
+                    '</h6>
+                                            </li>
+                                        </ul>
+                                        <ul class="ss-expl-applicion-ul2 d-block">
+                                           
+                    ';
+                    if(isset($nursedetails->highest_nursing_degree)) {$data2 .= '<li class="w-auto">
+                        <a href="#">' . $nursedetails->highest_nursing_degree . '</a>
+                   </li>';}
+                   else {
+                    $data2 .= '<li class="w-auto"></li>';
+                }
+                    $data2 .='<li class="w-auto">';
+
+                    if(isset($nursedetails->specialty)) {
+                        $data2 .= ' <li class="w-auto"><a href="#">' . $nursedetails->specialty . '</a> </li>';
+                    } else {
+                        $data2 .= '<li class="w-auto"></li>';
+                    }
+                    if(isset($nursedetails->worker_shift_time_of_day)) {
+                        $data2 .= '<li class="w-auto"><a href="#">' . $nursedetails->worker_shift_time_of_day . '</a></li>';
+                    } else {
+                        $data2 .= '<li class="w-auto"></li>';
+                    }
+                    $data2 .= '</ul>
+
+                                    </div>
+                                    ';                
+            }
+
+            $data2 .=
+                '
+                                </div>
+                            </div>
+                        </div>
                     </div>';
 
             if ($type != 'closed') {
                 $data2 .= '
-                        <div class="col-md-12">
-                            <div class="row">';
+                <div class="col-md-12" style="margin-bottom:30px;">
+                            <div class="row" style="    display: flex;
+    justify-content: center;
+    align-items: center;">';
 
                 if ($type == 'onhold') {
                     $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhold Job</a></div>';
