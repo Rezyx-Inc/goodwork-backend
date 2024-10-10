@@ -8,8 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Notifications\NurseifyRestPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Mail;
@@ -17,13 +16,15 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Laravel\Passport\HasApiTokens;
 use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\LogOptions;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Authenticatable implements HasMedia
 {
     use Notifiable;
     use SoftDeletes;
     use HasRoles;
-    use HasMediaTrait;
+    use InteractsWithMedia;
     use LogsActivity;
     use HasApiTokens;
     use HasFactory;
@@ -328,4 +329,11 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->getKey();
     }
+    public function getActivitylogOptions(): LogOptions
+{
+    return LogOptions::defaults()
+        ->useLogName('User')
+        ->setDescriptionForEvent(fn(string $eventName) => "User has been {$eventName}");
+}
+
 }
