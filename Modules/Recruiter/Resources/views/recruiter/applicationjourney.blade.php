@@ -1169,6 +1169,34 @@
             }
         }
 
+        function selectOfferCycleStateToScreening(type,workerId){
+            applicationStatusToggle(type);
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/get-offers-by-type') }}",
+                    data: {
+                        'token': csrfToken,
+                        'type' : type,
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        $("#application-list").html(result.content);
+                        activeWorkerClass(workerId);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
         function applicationStatusToggle(type){
             noApplicationDetailsContent();
             $("#listingname").removeClass("d-none");
@@ -1415,6 +1443,106 @@
             $("#application-details").html("<div class='text-center no_details'><span>Select a worker application</span></div>");
         }
 
+
+         
+    
+     function applicationStatusToScreening(applicationstatus, workerId, offerId) {
+        console.log('applicationStatusToScreening');
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+
+                    url: "{{ url('recruiter/update-application-status') }}",
+                    data: {
+                        'token': csrfToken,
+                        'id': offerId,
+                        'status': applicationstatus,
+
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(result) {
+                        notie.alert({
+                            type: 'success',
+                            text: result.message,
+                            time: 5
+                        });
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+
+                        statusKeys.forEach(key => {
+                            $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
+                        });
+
+                        setTimeout(() => {
+                            applicationStatusToggle('Screening');
+                            getOneOfferInformationToScreening(offerId);
+                            selectOfferCycleStateToScreening('Screening', workerId);
+                        }, 1000);
+                        
+
+                    },
+                    error: function(result) {
+                        notie.alert({
+                            type: 'error',
+                            text: 'Oops ! Try again later. ',
+                            time: 5
+                        });
+
+                        // open_stripe_modal();
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+
+    }
+
+    async function getOneOfferInformationToScreening(offerId) {
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        if (!csrfToken) {
+            console.error('CSRF token not found.');
+            return;
+        }
+
+        const url = new URL("{{ url('recruiter/get-one-offer-information') }}");
+        url.searchParams.append('token', csrfToken);
+        url.searchParams.append('offer_id', offerId);
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            $("#application-details").html(result.content);
+            activeWorkerClass('GWW000001');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            activeWorkerClass('GWW000001');
+        }
+    }
+
+    
+
+    function activeWorkerClass(workerUserId) {
+
+        var element = document.getElementById(workerUserId);
+        console.log('element', element);
+        element.classList.add('active');
+        
+    }
     </script>
     <style>
         .ss-job-prfle-sec:after {

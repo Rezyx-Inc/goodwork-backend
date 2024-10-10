@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Organizations = require('../models/Orgs');
+const {Organizations} = require('../models/Orgs');
+const {GlobalRuleFields} = require('../models/Orgs');
 
 router.get('/getRecruiters/:orgId', async (req, res) => {
     try {
@@ -192,6 +193,29 @@ router.post('/add-preferences', async (req, res) => {
         console.error("Unable to save organization.", err);
         res.status(500).send("Unable to save organization.");
     }
+});
+
+// get fields rules for the organization
+
+router.get('/getFieldsRules', async (req, res) => {
+
+    try {
+
+        const globalRuleFields = await GlobalRuleFields.find({});
+            if (!globalRuleFields) {
+            
+                return res.status(404).send("Global rule fields not found.");
+                
+            }
+        res.status(200).send(globalRuleFields);
+
+    } catch (err) {
+
+        console.error("Unexpected error", err);
+        res.status(500).send(err);
+
+    }
+
 });
 
 module.exports = router;

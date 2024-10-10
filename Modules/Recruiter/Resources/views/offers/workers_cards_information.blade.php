@@ -2,7 +2,7 @@
     <div class="text-center"><span>No Application</span></div>
 @else
 @foreach ($offerData as $data)
-<div id="{{$data['workerUserId']}}" class="ss-job-prfle-sec cards" onclick="toggleActiveClass('{{$data['workerUserId']}}'); getOffersOfEachWorker('{{$data['type']}}','{{ $data['workerUserId'] }}')">
+<div id="{{$data['workerUserId']}}" class="ss-job-prfle-sec cards"  onclick="toggleActiveClass('{{$data['workerUserId']}}'); getOffersOfEachWorker('{{$data['type']}}','{{ $data['workerUserId'] }}')">
         <div class="ss-job-id-no-name">
             <ul>
                 <li class="w-50">
@@ -35,7 +35,7 @@
                 <li class="col-6"><a href="#">{{ $data['specialty'] }}</a></li>
             @endif
         </ul>
-    </div>
+</div>
 @endforeach
 @endif
 

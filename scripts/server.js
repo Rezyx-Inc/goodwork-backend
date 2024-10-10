@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-
 const express = require("express");
 var bodyParser = require("body-parser");
 const cors = require("cors");
@@ -35,11 +34,17 @@ app.get("/", (req, res) => {
 mongoose
   .connect(process.env.MONGODB_FILES_URI)
   .then(() => {
+
     console.log("Connected to MongoDB");
+    const createGlobalRuleFields = require('./src/functions/createGlobalRuleFields.js');
+    createGlobalRuleFields();
+
   })
   .catch((error) => {
+
     console.error("Error connecting to MongoDB:", error);
-    report("Unable to connect MongoDB in server.js");
+    report(error);
+
   });
 
 app.listen(process.env.FILE_API_PORT);
@@ -47,7 +52,7 @@ app.listen(process.env.FILE_API_PORT);
 // catches uncaught exceptions
 process.on("uncaughtException", async function (ercc) {
   console.log(ercc);
-  report("Unexpected Server exit | uncaughtException");
+ // report("Unexpected Server exit | uncaughtException");
 });
 
 /*

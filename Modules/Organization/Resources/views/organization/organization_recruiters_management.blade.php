@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12 recruiters-manage-tl">
                 <div class="ss-dash-wel-div">
-                    <h5><span class="title-span">Recruiters</span> Management</h5>
+                    <h5><span class="title-span">Recruiter</span> Management</h5>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
             <table style="font-size: 16px;" class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Filds</th>
+                        <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Email Address</th>
                         <th scope="col">Last Active</th>

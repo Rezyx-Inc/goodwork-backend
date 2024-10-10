@@ -94,7 +94,30 @@ class OrganizationApplicationController extends Controller
      */
     public function application()
     {
+        // auto move to working 
         $organization = Auth::guard('organization')->user();
+        $id = $organization->id;
+        $offers = Offer::where('status', 'Onboarding')->where('created_by', $id)->get();
+
+        foreach ($offers as $offer) {
+
+            if($offer->as_soon_as == '1'){
+                $offer->status = 'Working';
+                $offer->save();
+                continue;
+            }
+
+            $job = Job::where('id', $offer->job_id)->first();
+            $start_date = new DateTime($offer->start_date);
+            $today = new DateTime();
+
+            if ($start_date <= $today) {
+                $offer->status = 'Working';
+                $offer->save();
+            }
+
+        } 
+
         $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];

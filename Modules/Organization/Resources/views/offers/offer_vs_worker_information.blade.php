@@ -1,4 +1,3 @@
-{{-- useralldetails in getApplicationListing in Application Controller --}}
 <ul class="ss-cng-appli-hedpfl-ul">
     <li>
         <span>
@@ -928,7 +927,7 @@
         <div class="col-md-12">
             <h6>{{ number_format($offerdetails->total_contract_amount) ?? '----' }}</h6>
         </div>
-        @if ($offerdetails->status == 'Offered' || $offerdetails->status == 'Apply')
+        @if ($offerdetails->status == 'Offered' || $offerdetails->status == 'Screening')
             <div class="ss-counter-buttons-div">
                 <button class="counter-save-for-button"
                     onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
@@ -943,9 +942,25 @@
                 Offer</button>
         @endif
 
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-        <script></script>
+        var workerId = @json($offerdetails['worker_user_id']);
+        console.log(workerId);
+        console.log('workerId', workerId);
 
-        <style>
+        function activeWorkerClass(workerUserId) {
 
-        </style>
+            var element = document.getElementById(workerUserId);
+            console.log('element', element);
+            element.classList.add('active');
+
+        }
+        
+    });
+</script>
+
+<style>
+
+</style>

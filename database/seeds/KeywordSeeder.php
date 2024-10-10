@@ -557,6 +557,7 @@ class KeywordSeeder extends Seeder
             'Terms'=>[
                 'Shift (PRN, Per Diem)',
                 'Perm (Direct)',
+                'Contract'
             ],
             'EMR'=>[
                 'EPIC',
