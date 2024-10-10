@@ -1,8 +1,10 @@
 <?php
+namespace Database\Factories;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use App\Enums\Role;
@@ -18,28 +20,28 @@ use Illuminate\Support\Facades\Hash;
 | model instances for testing / seeding your application's database.
 |
 */
+class UserFactory extends Factory
+{
+    protected $model = User::class;
 
-$factory->define(User::class, function (Faker $faker) {
-
-
-
-    return [
-        'id' => Str::uuid(),
-        'role' => Role::getKey(Role::FULLADMIN),
-        // 'first_name' => $faker->firstName,
-        // 'last_name' => $faker->lastName,
-        'first_name' => $faker->fantasyName('first_name'),
-        'last_name' => $faker->fantasyName('last_name'),
-        'image' => null,
-        'email' => $faker->unique()->safeEmail,
-        'user_name' => $faker->userName,
-        'password' => Hash::make('password'), // password
-        'date_of_birth' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'mobile' => $faker->phoneNumber,
-        'email_notification' => true,
-        'sms_notification' => true,
-        'active' => true,
-        'email_verified_at' => now(),
-        'remember_token' => Str::random(10),
-    ];
-});
+    public function definition()
+    {
+        return [
+            'id' => Str::uuid(),
+            'role' => Role::getKey(Role::FULLADMIN),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'image' => null,
+            'email' => $this->faker->unique()->safeEmail,
+            'user_name' => $this->faker->userName,
+            'password' => Hash::make('password'), // password
+            'date_of_birth' => $this->faker->date('Y-m-d', 'now'),
+            'mobile' => $this->faker->phoneNumber,
+            'email_notification' => true,
+            'sms_notification' => true,
+            'active' => true,
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+        ];
+    }
+}

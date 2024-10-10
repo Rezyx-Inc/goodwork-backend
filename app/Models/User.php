@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Laravel\Passport\HasApiTokens;
 use DB;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -25,6 +26,7 @@ class User extends Authenticatable implements HasMedia
     use HasMediaTrait;
     use LogsActivity;
     use HasApiTokens;
+    use HasFactory;
 
     protected static function boot()
 	{
