@@ -14,7 +14,6 @@ app.use(
     origin: ["http://127.0.0.1:8000", "http://localhost:8000"],
   })
 );
-
 const docsRoute = require('./src/routes/docs');
 const integrationsRoute = require('./src/routes/integrations');
 const paymentsRoute = require('./src/routes/Payments');
@@ -36,19 +35,25 @@ mongoose
   .connect(process.env.MONGODB_FILES_URI)
   .then(() => {
     console.log("Connected to MongoDB");
+
+    const createGlobalRuleFields = require('./src/models/GlobalRules');
+    createGlobalRuleFields();
   })
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
-    report("Unable to connect MongoDB in server.js");
+    report(error);
   });
 
 app.listen(process.env.FILE_API_PORT);
 
+
+
 // catches uncaught exceptions
 process.on("uncaughtException", async function (ercc) {
   console.log(ercc);
-  report("Unexpected Server exit | uncaughtException");
+ // report("Unexpected Server exit | uncaughtException");
 });
+
 
 /*
 some notes:

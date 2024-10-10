@@ -168,6 +168,7 @@ class Job extends Model
         'facility_state',
         'pay_frequency',
         'benefits',
+        'professional_state_licensure'
 
     ];
 

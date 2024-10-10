@@ -225,10 +225,11 @@
           </div>
           <div class="col-5 d-flex justify-content-end">
             <ul>
-              @if(isset($j->preferred_assignment_duration))
+              @if(isset($j->preferred_assignment_duration) && isset($j->terms) && $j->terms == 'Contract') 
               <li><a href="#"><img class="icon_cards"
                     src="{{ URL::asset('frontend/img/calendar.png') }}">
-                  {{ $j->preferred_assignment_duration }} wks</a></li>
+                        {{ $j->preferred_assignment_duration }} wks / assignment
+                  </a></li>
               @endif
               @if(isset($j->hours_per_week))
               <li><a href="#"><img class="icon_cards"
@@ -299,13 +300,21 @@
         {{-- row 5 --}}
         <div class="row">
           {{-- <div class="col-6"><h5>Recently Added</h5></div> --}}
-          <div class="col-12 d-flex justify-content-end">
+        
+          <div class="col-6 d-flex justify-content-start">
+              @if ($j->start_date < date('Y-m-d'))
+                  <p class="col-12" style="padding-bottom: 0px; padding-top: 8px;">
+                      As soon as possible</p>
+              @endif
+          </div>
+          <div class="col-6 d-flex justify-content-end">
             @if ($j->urgency == 'Auto Offer' || $j->as_soon_as == true)
             <p class="col-2 text-center"
               style="padding-bottom: 0px; padding-top: 8px;">Urgent</p>
             @endif
           </div>
         </div>
+        
 
         <a href="javascript:void(0)" data-id="{{ $j->id }}"
           onclick="save_jobs(this, event)" class="ss-jb-prfl-save-ico">

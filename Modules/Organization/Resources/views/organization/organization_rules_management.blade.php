@@ -8,7 +8,7 @@ $faker = app('Faker\Generator');
     <div class="row">
         <div class="col-12 rules-manage-tl">
             <div class="ss-dash-wel-div">
-                <h5><span class="title-span" >Rules</span> Management</h5>
+                <h5><span class="title-span" >Rule</span> Management</h5>
             </div>
         </div>
     </div>
@@ -19,23 +19,23 @@ $faker = app('Faker\Generator');
                 <tr>
                     <th scope="col">Fields Name</th>
                     <th scope="col">Required To Apply</th>
-                    <th scope="col">Required To Submit</th>
+                    <th scope="col">Required To Publish</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($columns as $item)
                 <tr>
-                    <th scope="row">{{$item}}</th>
+                    <th scope="row">{{$item["displayName"]}}</th>
                     <td>
                         <div class="form-check">
-                            <input id="apply_{{$item}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                                type="checkbox" name="requiredToApply[]" value="{{$item}}">
+                            <input id="apply_{{$item["fieldID"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
+                            @if($item['applyDisabled']) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["fieldID"]}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-check">
-                            <input id="submit_{{$item}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                                type="checkbox" name="requiredToSubmit[]" value="{{$item}}">
+                            <input id="submit_{{$item["fieldID"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
+                            @if ($item['publishDisabled']) disabled @endif  type="checkbox" name="requiredToSubmit[]" value="{{$item["fieldID"]}}">
                         </div>
                     </td>
                 </tr>

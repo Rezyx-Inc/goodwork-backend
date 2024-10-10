@@ -201,7 +201,12 @@
     <div class="{{ $jobappliedcount > 1 ? 'owl-carousel application-job-slider-owl' : '' }} application-job-slider">
         @foreach ($offerdetails as $value)
             <div style="width:100%;" class="ss-chng-appli-slider-sml-dv"
-                onclick="getOneOfferInformation('{{ $value->id }}')">
+            @if ($value['status'] == 'Apply')
+               onclick="applicationStatusToScreening('Screening','{{ $value->worker_user_id }}', '{{ $value->id }}')"
+            @else
+                onclick="getOneOfferInformation('{{ $value->id }}')"
+            @endif
+            >
                 <ul class="ss-cng-appli-slid-ul1">
                     <li class="d-flex">
                         <p>{{ $value->terms }}</p>
@@ -226,3 +231,7 @@
         @endforeach
     </div>
 </div>
+
+<script>
+   
+</script>
