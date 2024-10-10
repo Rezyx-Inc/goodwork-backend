@@ -5,6 +5,7 @@ use App\Models\Keyword;
 use App\Models\User;
 use App\Models\State;
 use App\Models\Cities;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class KeywordSeeder extends Seeder
 {
@@ -27,7 +28,7 @@ class KeywordSeeder extends Seeder
         $keywords = $this->keywordData();
         foreach ($keywords as $key => $value) {
             foreach($value as $item){
-                factory(Keyword::class)->create([
+                Keyword::factory()->create([
                     'created_by' => $mainSuperUserId,
                     'filter' => $key,
                     'title' => $item,
