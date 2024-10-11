@@ -6,7 +6,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
 
     const isValid = await validateFields(jobData);
     if (!isValid) {
-      console.log("iinvalid field");
+      console.log("invalid field");
       return;
     }
 
