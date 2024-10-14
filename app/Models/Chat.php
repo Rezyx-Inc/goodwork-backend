@@ -2,18 +2,26 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model;
 
 class Chat extends Model
 {
     protected $connection = 'mongodb';
     protected $collection = 'chat';
 
-    // protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'organization', 'messages'];
-    protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'organization', 'messages', 'organizationId', 'workerId', 'recruiterId'];
+    protected $fillable = [
+        'lastMessage', 
+        'isActive', 
+        'worker', 
+        'recruiter', 
+        'organization', 
+        'messages', 
+        'organizationId', 
+        'workerId', 
+        'recruiterId'
+    ];
 
     protected $casts = [
         'isActive' => 'boolean',
-
     ];
 }
