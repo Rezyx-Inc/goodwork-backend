@@ -410,9 +410,7 @@
                                                 <label>Preferred Work Location</label>
                                                 <input type="text" name="preferred_work_location"
                                                     id="preferred_work_location" placeholder="Enter Work Location">
-                                                <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                    (Location not required)
-                                                </span>
+                                                <span class="help-block-preferred_work_location"></span>
                                             </div>
 
                                             <div class="ss-form-group col-md-4">
@@ -472,9 +470,7 @@
                                             <div class="ss-form-group col-md-4">
                                                 <label>Work Description</label>
                                                 <textarea type="text" name="description" id="description" placeholder="Enter Work Description"></textarea>
-                                                <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                    (Description not required)
-                                                </span>
+                                                <span class="help-block-description"></span>
                                             </div>
 
                                             <div class="field btns col-12 d-flex justify-content-center">
@@ -671,14 +667,7 @@
                                                                 style="box-shadow: none;">
                                                         </div>
                                                     </div>
-                                              
-                                                <ul>
-                                                    <li class="row w-100 p-0 m-0">
-                                                        <div class="ps-0">
-                                                            {{-- Removed the select element and its options --}}
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                                <span class="help-block-professional_state_licensure"></span>
                                             </div>
 
                                             <div class="field btns col-12 d-flex justify-content-center">
@@ -768,7 +757,9 @@
                                                                     class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <span class="help-block-nurse_classification"></span>
                                             </div>
+                                            
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>EMR</label>
@@ -795,6 +786,7 @@
                                                                     aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <span class="help-block-Emr"></span>
                                             </div>
 
                                             <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
@@ -822,6 +814,7 @@
                                                                     aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <span class="help-block-benefits"></span>
                                             </div>
 
 
@@ -852,6 +845,7 @@
                                                                     class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <span class="help-block-certificate"></span>
                                             </div>
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Vaccinations & Immunizations name</label>
@@ -880,6 +874,7 @@
                                                                     class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <span class="help-block-vaccinations"></span>
                                             </div>
 
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -907,6 +902,7 @@
                                                                     aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <span class="help-block-skills"></span>
                                             </div>
 
                                             <div class="field btns col-12 d-flex justify-content-center">
@@ -1442,9 +1438,7 @@
                                                         <label>Preferred Work Location</label>
                                                         <input type="text" name="preferred_work_location" id="preferred_work_locationDraft"
                                                             placeholder="Enter Work Location">
-                                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                            (Location not required)
-                                                        </span>
+                                                        <span class="help-block-preferred_work_locationDraft"></span>
                                                     </div>
                                        
                                                     <div class="ss-form-group col-md-4">
@@ -1501,9 +1495,7 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Work Description</label>
                                                         <textarea type="text" name="description" id="descriptionDraft" placeholder="Enter Work Description"></textarea>
-                                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                            (Description not required)
-                                                        </span>
+                                                        <span class="help-block-descriptionDraft"></span>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -1587,8 +1579,8 @@
                                        
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Shift Cancellation Policy</label>
-                                                        <input type="text" name="facility_shift_cancelation_policyDraft"
-                                                            id="facility_shift_cancelation_policy" placeholder="Select your shift cancellation policy">
+                                                        <input type="text" name="facility_shift_cancelation_policy"
+                                                            id="facility_shift_cancelation_policyDraft" placeholder="Select your shift cancellation policy">
                                                         <span class="help-block-facility_shift_cancelation_policyDraft"></span>
                                                     </div>
                                        
@@ -1788,6 +1780,7 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-nurse_classificationDraft"></span>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -1814,6 +1807,7 @@
                                                                         onclick="addEmr('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-EmrDraft"></span>
                                                     </div>
                                        
                                                     <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
@@ -1841,6 +1835,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-benefitsDraft"></span>
                                                     </div>
                                        
                                        
@@ -1870,6 +1865,7 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-certificateDraft"></span>
                                                     </div>
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Vaccinations & Immunizations name</label>
@@ -1897,6 +1893,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-vaccinationsDraft"></span>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -1924,6 +1921,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-skillsDraft"></span>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2252,7 +2250,7 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
-                                                        <span class="help-block-professional_licensure"></span>
+                                                        <span class="help-block-professional_licensureEdit"></span>
                                                     </div>
                                        
                                        
@@ -2281,7 +2279,7 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
-                                                        <span class="help-block-shift_time_of_day"></span>
+                                                        <span class="help-block-shift_time_of_dayEdit"></span>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2355,9 +2353,7 @@
                                                         <label>Preferred Work Location</label>
                                                         <input type="text" name="preferred_work_location" id="preferred_work_locationEdit"
                                                             placeholder="Enter Work Location">
-                                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                            (Location not required)
-                                                        </span>
+                                                        <span class="help-block-preferred_work_locationEdit"></span>
                                                     </div>
                                        
                                                     <div class="ss-form-group col-md-4">
@@ -2414,11 +2410,9 @@
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Work Description</label>
                                                         <textarea type="text" name="description" id="descriptionEdit" placeholder="Enter Work Description"></textarea>
-                                                        <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                            (Description not required)
-                                                        </span>
+                                                        <span class="help-block-descriptionEdit"></span>
                                                     </div>
-                                       
+                                                                         
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnEdit">Save as draft</button>
                                                         <button class="prev-1Edit prev">Previous</button>
@@ -2500,8 +2494,8 @@
                                        
                                                     <div class="ss-form-group col-md-4">
                                                         <label>Shift Cancellation Policy</label>
-                                                        <input type="text" name="facility_shift_cancelation_policyEdit"
-                                                            id="facility_shift_cancelation_policy" placeholder="Select your shift cancellation policy">
+                                                        <input type="text" name="facility_shift_cancelation_policy"
+                                                            id="facility_shift_cancelation_policyEdit" placeholder="Select your shift cancellation policy">
                                                         <span class="help-block-facility_shift_cancelation_policyEdit"></span>
                                                     </div>
                                        
@@ -2613,6 +2607,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-professional_state_licensureEdit"></span>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2701,6 +2696,7 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-nurse_classificationEdit"></span>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -2727,6 +2723,7 @@
                                                                         onclick="addEmr('from_edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-EmrEdit"></span>
                                                     </div>
                                        
                                                     <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
@@ -2754,6 +2751,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-benefitsEdit"></span>
                                                     </div>
                                        
                                        
@@ -2783,6 +2781,7 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-certificateEdit"></span>
                                                     </div>
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Vaccinations & Immunizations name</label>
@@ -2810,6 +2809,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-vaccinationsEdit"></span>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -2837,6 +2837,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <span class="help-block-skillsEdit"></span>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2954,7 +2955,9 @@
 {{-- script managing certifs  --}}
 
 <script>
-   
+
+    const requiredToSubmit = @json($requiredFieldsToSubmit);
+    
    function toggleActiveClass(workerUserId,type) {
             console.log("test");
             console.log(workerUserId);
@@ -3107,7 +3110,7 @@
                 var optionText = selectedOption.textContent;
 
                 vaccinations[id.val()] = optionText;
-                vaccinationStr = Object.values(vaccinations).join(', ');
+                vaccinationsStr = Object.values(vaccinations).join(', ');
                 id.val('');
                 list_vaccinations();
             }
@@ -3149,7 +3152,7 @@
     function remove_vaccinations(obj, key) {
         if (vaccinations.hasOwnProperty(key)) {
             delete vaccinations[key]; // Remove the vaccination from the object
-            vaccinationStr = Object.values(vaccinations).join(', '); // Update the hidden input value
+            vaccinationsStr = Object.values(vaccinations).join(', '); // Update the hidden input value
             list_vaccinations(); // Refresh the list to reflect the deletion
             notie.alert({
                 type: 'success',
@@ -3729,6 +3732,7 @@
 </script>
 
     <script>
+        
          var certificate = {};
          var vaccinations = {};
          var skills = {};
@@ -3851,7 +3855,7 @@
             const selectedState = $(jobState).find(':selected').attr('id');
             // console.log('id : ', selectedState);
             // console.log('value : ', selectedJobState);
-// 
+            // 
             // await $.get(`/api/cities/${selectedState}`, function(cities) {
                 // console.log('cities :', cities);
                 // citiesData = [];
@@ -3991,7 +3995,10 @@
                 'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amountDraft', type: 'number' },
                 'start_date': { id: 'start_dateDraft', type: 'date' },
                 'preferred_experience': { id: 'preferred_experienceDraft', type: 'number' },
-                'professional_state_licensure': { id: 'professional_state_licensure_pendingDraft', type: 'radio' }
+                'professional_state_licensure': { id: 'professional_state_licensure_pendingDraft', type: 'radio' },
+                'description': { id: 'descriptionDraft', type: 'text' },
+                'preferred_work_location': { id: 'preferred_work_locationDraft', type: 'text' },
+                'as_soon_as': { id: 'as_soon_asDraft', type: 'checkbox' },
             };
 
             for (const [key, field] of Object.entries(fields)) {
@@ -4011,7 +4018,8 @@
 
                     }
                 } else if (field.type === 'checkbox') {
-                    element.checked = result[key] === 'Auto Offer';
+                    field.id === 'urgencyDraft' ? element.checked = result[key] === 'Auto Offer' : element.checked = result[key] === '1';
+                    console.log('checkbox test', result[key]);
                 }
                 else if (field.type === 'radio') {
                     console.log('radio', result[key]);
@@ -4215,7 +4223,7 @@
 
 
         var certificateStr = '';
-        var vaccinationStr = '';
+        var vaccinationsStr = '';
         var skillsStr = '';
         var shifttimeofdayStr = '';
         var benefitsStr = '';
@@ -4225,7 +4233,7 @@
 
         // from edited job
         var certificateStrEdit = '';
-        var vaccinationStrEdit = '';
+        var vaccinationsStrEdit = '';
         var skillsStrEdit = '';
         var shifttimeofdayStrEdit = '';
         var benefitsStrEdit = '';
@@ -4280,7 +4288,6 @@
 
         function request_job_form_appear() {
            
-
             certificate = {};
             vaccinations = {};
             skills = {};
@@ -4522,7 +4529,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     type: 'POST',
-                    url: "{{ url('organization/organization-create-opportunity') }}/update",
+                    url: "{{ url('recruiter/recruiter-create-opportunity') }}/update",
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -4737,7 +4744,7 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             type: 'POST',
-                            url: "{{ url('organization/remove') }}/" + removetype,
+                            url: "{{ url('recruiter/remove') }}/" + removetype,
                             data: formData,
                             dataType: 'json',
                             success: function(data) {
@@ -4794,124 +4801,7 @@
             $('.speciality-content').html(str);
         }
     </script>
-    <script>
-        var vaccinations = {};
-
-        function addvacc() {
-
-            // var container = document.getElementById('add-more-certifications');
-
-            // var newSelect = document.createElement('select');
-            // newSelect.name = 'certificate';
-            // newSelect.className = 'mb-3';
-
-            // var originalSelect = document.getElementById('certificate');
-            // var options = originalSelect.querySelectorAll('option');
-            // for (var i = 0; i < options.length; i++) {
-            //     var option = options[i].cloneNode(true);
-            //     newSelect.appendChild(option);
-            // }
-            // container.querySelector('.col-md-11').appendChild(newSelect);
-
-            if (!$('#vaccinations').val()) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Select the vaccinations please.',
-                    time: 3
-                });
-            } else {
-                if (!vaccinations.hasOwnProperty($('#vaccinations').val())) {
-
-                    var select = document.getElementById("vaccinations");
-                    var selectedOption = select.options[select.selectedIndex];
-                    var optionText = selectedOption.textContent;
-
-                    vaccinations[$('#vaccinations').val()] = optionText;
-                    $('#vaccinations').val('');
-                    list_vaccinations();
-                }
-            }
-        }
-
-        function list_vaccinations() {
-            var str = '';
-            if (window.allvaccinations) {
-                vaccinations = Object.assign({}, vaccinations, window.allvaccinations);
-            }
-            for (const key in vaccinations) {
-                let vaccinationsname = "";
-                var select = document.getElementById("vaccinations");
-
-                var allspcldata = [];
-                for (var i = 0; i < select.options.length; i++) {
-                    var obj = {
-                        'id': select.options[i].value,
-                        'title': select.options[i].textContent,
-                    };
-                    allspcldata.push(obj);
-                }
-
-                if (vaccinations.hasOwnProperty(key)) {
-
-                    allspcldata.forEach(function(item) {
-                        if (key == item.id) {
-                            vaccinationsname = item.title;
-                        }
-                    });
-                    const value = vaccinations[key];
-                    str += '<ul>';
-                    str += '<li class="w-50">' + vaccinationsname + '</li>';
-                    str += '<li class="w-50 text-end"><button type="button"  id="remove-vaccinations" data-key="' + key +
-                        '" onclick="remove_vaccinations(this, ' + key +
-                        ')"><img src="{{ URL::asset('frontend/img/delete-img.png') }}" /></button></li>';
-                    str += '</ul>';
-                }
-            }
-            $('.vaccinations-content').html(str);
-        }
-
-        function remove_vaccinations(obj, key) {
-            if (vaccinations.hasOwnProperty($(obj).data('key'))) {
-
-                var element = document.getElementById("remove-vaccinations");
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                if (csrfToken) {
-                    event.preventDefault();
-                    if (document.getElementById('job_id').value) {
-                        let formData = {
-                            'job_id': document.getElementById('job_id').value,
-                            'vaccinations': key,
-                        }
-                        let removetype = 'vaccinations';
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken
-                            },
-                            type: 'POST',
-                            url: "{{ url('organization/remove') }}/" + removetype,
-                            data: formData,
-                            dataType: 'json',
-                            success: function(data) {
-                                // notie.alert({
-                                //     type: 'success',
-                                //     text: '<i class="fa fa-check"></i> ' + data.message,
-                                //     time: 5
-                                // });
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                    }
-                    delete window.allvaccinations[$(obj).data('key')];
-                    delete vaccinations[$(obj).data('key')];
-                } else {
-                    console.error('CSRF token not found.');
-                }
-                list_vaccinations();
-            }
-        }
-    </script>
+    
 
     <script>
         function askWorker(e, type, workerid, jobid) {
@@ -5130,7 +5020,10 @@
                 'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amountDraft', type: 'number' },
                 'start_date': { id: 'start_dateDraft', type: 'date' },
                 'preferred_experience': { id: 'preferred_experienceDraft', type: 'number' },
-                'professional_state_licensure': { id: 'professional_state_licensure_pendingDraft', type: 'radio' }
+                'professional_state_licensure': { id: 'professional_state_licensure_pendingDraft', type: 'radio' },
+                'description': { id: 'descriptionDraft', type: 'text' },
+                'preferred_work_location': { id: 'preferred_work_locationDraft', type: 'text' },
+                'as_soon_as': { id: 'as_soon_asDraft', type: 'checkbox' },
             };
 
             for (const [key, field] of Object.entries(fields)) {
@@ -5150,7 +5043,8 @@
 
                     }
                 } else if (field.type === 'checkbox') {
-                    element.checked = result[key] === 'Auto Offer';
+                    field.id === 'urgencyDraft' ? element.checked = result[key] === 'Auto Offer' : element.checked = result[key] === '1';
+                    console.log('checkbox test', result[key]);
                 }
                 else if (field.type === 'radio') {
                     console.log('radio', result[key]);
@@ -5559,331 +5453,89 @@
         }
     }
 
-    function validateseconde() {
-        var access = true;
-        // edits
-        var facility_shift_cancelation_policy = document.getElementById("facility_shift_cancelation_policy").value;
-        var traveler_distance_from_facility = document.getElementById("traveler_distance_from_facility").value;
-        var clinical_setting = document.getElementById("clinical_setting").value;
-        var Patient_ratio = document.getElementById("Patient_ratio").value;
-        var Unit = document.getElementById("Unit").value;
-        var scrub_color = document.getElementById("scrub_color").value;
-        var rto = document.getElementById("rto").value;
-       
 
-        if (facility_shift_cancelation_policy.trim() === '') {
-            $('.help-block-facility_shift_cancelation_policy').text(
-                'Please enter the Shift Cancellation Policy');
-            $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
-            access = false;
-        } else {
+    function validateRequiredFieldsToSubmit(slideFields){
 
-            $('.help-block-facility_shift_cancelation_policy').text('');
-        }
+        let access = true;
+        const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
 
-        if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
-            $('.help-block-traveler_distance_from_facility').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-traveler_distance_from_facility').text('');
-        }
+                    if(commonElements.length > 0) {
 
-        if (clinical_setting.trim() === '') {
-            $('.help-block-clinical_setting').text('Please enter the clinical setting');
-            $('.help-block-clinical_setting').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-clinical_setting').text('');
-        }
+                        commonElements.forEach(element => {
 
+                            if(element === 'professional_state_licensure'){
+                                const activeElementHtml = document.getElementById('professional_state_licensure_active');
+                                const pendingElementHtml = document.getElementById('professional_state_licensure_pending');
 
-        if (Patient_ratio.trim() === '') {
-            $('.help-block-Patient_ratio').text('Please enter the patient ratio');
-            $('.help-block-Patient_ratio').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-Patient_ratio').text('');
-        }
+                                if(!activeElementHtml.checked && !pendingElementHtml.checked) {
+                                    $(`.help-block-professional_state_licensure`).text(`This field is required`);
+                                    $(`.help-block-professional_state_licensure`).addClass('text-danger');
+                                    access = false;
+                                } else {
+                                    $(`.help-block-professional_state_licensure`).text('');
+ 
+                                }
 
+                                return;
+                            }
 
-        if (Unit.trim() === '') {
-            $('.help-block-Unit').text('Please enter the unit');
-            $('.help-block-Unit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-Unit').text('');
-        }
+                            if (element === 'urgency') {
 
-        if (scrub_color.trim() === '') {
-            $('.help-block-scrub_color').text('Please enter the scrub color');
-            $('.help-block-scrub_color').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-scrub_color').text('');
-        }
+                                const urgencyElementHtml = document.getElementById('urgency');
+                                if(!urgencyElementHtml.checked) {
+                                    $(`.help-block-urgency`).text(`This field is required`);
+                                    $(`.help-block-urgency`).addClass('text-danger');
+                                    access = false;
+                                } else {
+                                    $(`.help-block-urgency`).text('');
+                                }
 
-        if (rto.trim() === '') {
-            $('.help-block-rto').text('Please enter the rto');
-            $('.help-block-rto').addClass('text-danger');
-            access = false;
+                                return;
+                            }
 
-        } else {
-            $('.help-block-rto').text('');
-        }
+                            const elementHtml = document.getElementById(element);
+                            const elementValue = elementHtml.value;
+                            if(elementValue.trim() === '') {
 
-        
+                                $(`.help-block-${element}`).text(`This field is required`);
+                                $(`.help-block-${element}`).addClass('text-danger');
+                                access = false;
+                               
+                            } else {
 
+                                $(`.help-block-${element}`).text('');
 
+                            }
 
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+                        });
+                    }
 
-    function validateThird() {
-        var access = true;
-        var referral_bonus = document.getElementById("referral_bonus").value;
-        var sign_on_bonus = document.getElementById("sign_on_bonus").value;
-        var completion_bonus = document.getElementById("completion_bonus").value;
-        var extension_bonus = document.getElementById("extension_bonus").value;
-        var other_bonus = document.getElementById("other_bonus").value;
-      
-       
-        var holiday = document.getElementById("holiday").value;
-        var orientation_rate = document.getElementById("orientation_rate").value;
-        var on_call = document.getElementById("on_call").value;
-        var on_call_rate = document.getElementById("on_call_rate").value;
-        var block_scheduling = document.getElementById("block_scheduling").value;
-
-        var float_requirement = document.getElementById("float_requirement").value;
-
-        if (referral_bonus.trim() === '') {
-            $('.help-block-referral_bonus').text('Please enter the referral bonus');
-            $('.help-block-referral_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-referral_bonus').text('');
-        }
-
-        if (sign_on_bonus.trim() === '') {
-            $('.help-block-sign_on_bonus').text('Please enter the sign on bonus');
-            $('.help-block-sign_on_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-sign_on_bonus').text('');
-        }
-
-        if (completion_bonus.trim() === '') {
-            $('.help-block-completion_bonus').text('Please enter the completion bonus');
-            $('.help-block-completion_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-completion_bonus').text('');
-        }
-
-        if (extension_bonus.trim() === '') {
-            $('.help-block-extension_bonus').text('Please enter the extension bonus');
-            $('.help-block-extension_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-extension_bonus').text('');
-        }
-
-        if (other_bonus.trim() === '') {
-            $('.help-block-other_bonus').text('Please enter the other bonus');
-            $('.help-block-other_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-other_bonus').text('');
-        }
-
-       
-
-       
-
-        if (holiday.trim() === '') {
-            $('.help-block-holiday').text('Please enter the holiday');
-            $('.help-block-holiday').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-holiday').text('');
-        }
-
-        if (orientation_rate.trim() === '') {
-            $('.help-block-orientation_rate').text('Please enter the orientation rate');
-            $('.help-block-orientation_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-orientation_rate').text('');
-        }
-        if (on_call.trim() === '') {
-            $('.help-block-on_call').text('Please enter the on call rate');
-            $('.help-block-on_call').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call').text('');
-        }
-
-        if (on_call_rate.trim() === '') {
-            $('.help-block-on_call_rate').text('Please enter the on call rate');
-            $('.help-block-on_call_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call_rate').text('');
-        }
-
-
-
-        if (block_scheduling.trim() === '') {
-            $('.help-block-block_scheduling').text('Please enter the block scheduling');
-            $('.help-block-block_scheduling').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-block_scheduling').text('');
-        }
-
-
-
-        if (float_requirement.trim() === '') {
-            $('.help-block-float_requirement').text('Please enter the float requirement');
-            $('.help-block-float_requirement').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-float_requirement').text('');
-        }
-
-
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    function validateForth() {
-        var access = true;
-        var contract_termination_policy = document.getElementById("contract_termination_policy").value;
-        var four_zero_one_k = document.getElementById("four_zero_one_k").value;
-        var health_insaurance = document.getElementById("health_insaurance").value;
-        var feels_like_per_hour = document.getElementById("feels_like_per_hour").value;
-        var call_back_rate = document.getElementById("call_back_rate").value;
-        //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
-       
-        // var hours_per_week = document.getElementById("hours_per_week").value;
-        var hours_shift = document.getElementById("hours_shift").value;
-        var start_date = document.getElementById("start_date").value;
-        var as_soon_as = document.getElementById("as_soon_as").value;
-
-
-        if (contract_termination_policy.trim() === '') {
-            $('.help-block-contract_termination_policy').text('Please enter the contract termination policy');
-            $('.help-block-contract_termination_policy').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-contract_termination_policy').text('');
-        }
-
-
-
-        if (four_zero_one_k.trim() === '') {
-            $('.help-block-four_zero_one_k').text('Please enter the four zero one k');
-            $('.help-block-four_zero_one_k').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-four_zero_one_k').text('');
-        }
-
-
-        if (health_insaurance.trim() === '') {
-            $('.help-block-health_insaurance').text('Please enter the health insurance');
-            $('.help-block-health_insaurance').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-health_insaurance').text('');
-        }
-
-
-
-        if (feels_like_per_hour.trim() === '') {
-            $('.help-block-feels_like_per_hour').text('Please enter the feels like per hour');
-            $('.help-block-feels_like_per_hour').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-feels_like_per_hour').text('');
-        }
-
-        if (call_back_rate.trim() === '') {
-            $('.help-block-call_back_rate').text('Please enter the call back');
-            $('.help-block-call_back_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-call_back_rate').text('');
-        }
-
-
-
-        // if (weekly_taxable_amount.trim() === '') {
-        //     $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
-        //     $('.help-block-weekly_taxable_amount').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-weekly_taxable_amount').text('');
-        // }
-
-        
-
-        // if (hours_per_week.trim() === '') {
-        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
-        //     $('.help-block-hours_per_week').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-hours_per_week').text('');
-        // }
-
-        if (hours_shift.trim() === '') {
-            $('.help-block-hours_shift').text('Please enter the hours shift');
-            $('.help-block-hours_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_shift').text('');
-        }
-
-        if (start_date.trim() === '') {
-            $('.help-block-start_date').text('Please enter the start date');
-            $('.help-block-start_date').addClass('text-danger');
-            access = false;
-            if (as_soon_as.trim() === '') {
-                $('.help-block-as_soon_as').text('Please enter the as soon as possible');
-                $('.help-block-as_soon_as').addClass('text-danger');
-                access = false;
-            } else {
-                $('.help-block-as_soon_as').text('');
-            }
-        } else {
-            $('.help-block-start_date').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    function validateFifth() {
-        var access = true;
         return access;
-        // if (access) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
+    }
+
+    function validateRequiredMultiCheckFieldsToSubmit(slideFields) {
+        let access = true;
+        const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
+
+        if(commonElements.length > 0) {
+
+            commonElements.forEach(element => {
+
+                const elementStr = element;
+                const elementValue = window[elementStr];
+                console.log(elementValue);
+
+                if(Object.keys(elementValue).length === 0) {
+                    $(`.help-block-${element}`).text(`This field is required`);
+                    $(`.help-block-${element}`).addClass('text-danger');
+                    access = false;
+                } else {
+                    $(`.help-block-${element}`).text('');
+                }
+            });
+        }
+
+        return access;
     }
 
 
@@ -5900,23 +5552,69 @@
 
     });
     nextBtnSec.addEventListener("click", function(event) {
+
         event.preventDefault();
-        
+
+        const SecondSlideFields = [
+                              "traveler_distance_from_facility",
+                              "clinical_setting",
+                              "Patient_ratio",
+                              "Unit",
+                              "scrub_color",
+                              "rto",
+                              "job_id",
+                              "job_name",
+                              "preferred_work_location",
+                              "referral_bonus",
+                              "sign_on_bonus",
+                              "completion_bonus",
+                              "extension_bonus",
+                              "other_bonus",
+                              "on_call",
+                              "on_call_rate",
+                              "description"
+                            ];
+
+        if(validateRequiredFieldsToSubmit(SecondSlideFields)) { 
             slidePage.style.marginLeft = "-40%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
             current += 1;
+        }
         
     });
+
     nextBtnThird.addEventListener("click", function(event) {
         event.preventDefault();
-       
+
+        const ThirdSlideFields = [
+            "holiday",
+            "orientation_rate",
+            "block_scheduling",
+            "float_requirement",
+            "number_of_references",
+            "facilitys_parent_system",
+            "facility_name",
+            "contract_termination_policy",
+            "facility_shift_cancelation_policy",
+            "four_zero_one_k",
+            "health_insaurance",
+            "feels_like_per_hour",
+            "call_back_rate",
+            "as_soon_as",
+            "start_date",
+            "urgency",
+            "professional_state_licensure"
+        ];
+
+        if(validateRequiredFieldsToSubmit(ThirdSlideFields)) {
             slidePage.style.marginLeft = "-60%";
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
             current += 1;
+        }
         
     });
     
@@ -5949,7 +5647,7 @@
         }
         let vaccin_all_values = document.getElementById("vaccinationsAllValues");
         if (vaccin_all_values) {
-            vaccin_all_values.value = vaccinationStr;
+            vaccin_all_values.value = vaccinationsStr;
         }
         let skills_all_values = document.getElementById("skillsAllValues");
         if (skills_all_values) {
@@ -5961,18 +5659,25 @@
             shifttimeofday_all_values.value = shifttimeofdayStr;
         }
 
-        if (validateFirst()) {
+        const slideFields = [
+            "nurse_classification",
+            "Emr",
+            "benefits",
+            "certificate",
+            "vaccinations",
+            "skills"
+        ];
+
+        if(validateRequiredMultiCheckFieldsToSubmit(slideFields)) {
             bullet[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
             current += 1;
             document.getElementById("active").value = true;
             document.getElementById("is_open").value = true;
+            
             event.target.form.submit();
         }
-
-
-
 
     });
 
@@ -6005,7 +5710,7 @@
         }
         let vaccin_all_values = document.getElementById("vaccinationsAllValues");
         if (vaccin_all_values) {
-            vaccin_all_values.value = vaccinationStr;
+            vaccin_all_values.value = vaccinationsStr;
         }
         let skills_all_values = document.getElementById("skillsAllValues");
         if (skills_all_values) {
@@ -6269,381 +5974,88 @@
         }
     }
 
-    function validatesecondeDraft() {
-        var access = true;
-        // edits
-        var facility_shift_cancelation_policy = document.getElementById("facility_shift_cancelation_policyDraft").value;
-        var traveler_distance_from_facility = document.getElementById("traveler_distance_from_facilityDraft").value;
-        var clinical_setting = document.getElementById("clinical_settingDraft").value;
-        var Patient_ratio = document.getElementById("Patient_ratioDraft").value;
-        var Unit = document.getElementById("UnitDraft").value;
-        var scrub_color = document.getElementById("scrub_colorDraft").value;
-        var rto = document.getElementById("rtoDraft").value;
-        var guaranteed_hours = document.getElementById("guaranteed_hoursDraft").value;
-        var hours_per_week = document.getElementById("hours_per_weekDraft").value;
-        var hours_shift = document.getElementById("hours_shiftDraft").value;
-        var weeks_shift = document.getElementById("weeks_shiftDraft").value;
 
+    function validateRequiredFieldsToSubmitDraft(slideFields){
 
-        if (facility_shift_cancelation_policy.trim() === '') {
-            $('.help-block-facility_shift_cancelation_policy').text(
-                'Please enter the Shift Cancellation Policy');
-            $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
-            access = false;
-        } else {
+            let access = true;
+            const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
 
-            $('.help-block-facility_shift_cancelation_policy').text('');
-        }
-
-        if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
-            $('.help-block-traveler_distance_from_facility').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-traveler_distance_from_facility').text('');
-        }
-
-        if (clinical_setting.trim() === '') {
-            $('.help-block-clinical_setting').text('Please enter the clinical setting');
-            $('.help-block-clinical_setting').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-clinical_setting').text('');
-        }
-
-
-        if (Patient_ratio.trim() === '') {
-            $('.help-block-Patient_ratio').text('Please enter the patient ratio');
-            $('.help-block-Patient_ratio').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-Patient_ratio').text('');
-        }
-
-
-        if (Unit.trim() === '') {
-            $('.help-block-Unit').text('Please enter the unit');
-            $('.help-block-Unit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-Unit').text('');
-        }
-
-        if (scrub_color.trim() === '') {
-            $('.help-block-scrub_color').text('Please enter the scrub color');
-            $('.help-block-scrub_color').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-scrub_color').text('');
-        }
-
-        if (rto.trim() === '') {
-            $('.help-block-rto').text('Please enter the rto');
-            $('.help-block-rto').addClass('text-danger');
-            access = false;
-
-        } else {
-            $('.help-block-rto').text('');
-        }
-
-        if (guaranteed_hours.trim() === '') {
-            $('.help-block-guaranteed_hours').text('Please enter the guaranteed hours');
-            $('.help-block-guaranteed_hours').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-guaranteed_hours').text('');
-        }
-
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_week').text('Please enter the hours per week');
-            $('.help-block-hours_per_week').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_week').text('');
-        }
-
-        if (hours_shift.trim() === '') {
-            $('.help-block-hours_shift').text('Please enter the hours shift');
-            $('.help-block-hours_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_shift').text('');
-        }
-
-        if (weeks_shift.trim() === '') {
-            $('.help-block-weeks_shift').text('Please enter the weeks shift');
-            $('.help-block-weeks_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weeks_shift').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
+                        if(commonElements.length > 0) {
+                        
+                            commonElements.forEach(element => {
+                            
+                                if(element === 'professional_state_licensure'){
+                                    const activeElementHtml = document.getElementById('professional_state_licensure_activeDraft');
+                                    const pendingElementHtml = document.getElementById('professional_state_licensure_pendingDraft');
+                                
+                                    if(!activeElementHtml.checked && !pendingElementHtml.checked) {
+                                        $(`.help-block-professional_state_licensureDraft`).text(`This field is required`);
+                                        $(`.help-block-professional_state_licensureDraft`).addClass('text-danger');
+                                        access = false;
+                                    } else {
+                                        $(`.help-block-professional_state_licensureDraft`).text('');
+                                    
+                                    }
+                                
+                                    return;
+                                }
+                            
+                                if (element === 'urgency') {
+                                
+                                    const urgencyElementHtml = document.getElementById('urgencyDraft');
+                                    if(!urgencyElementHtml.checked) {
+                                        $(`.help-block-urgencyDraft`).text(`This field is required`);
+                                        $(`.help-block-urgencyDraft`).addClass('text-danger');
+                                        access = false;
+                                    } else {
+                                        $(`.help-block-urgencyDraft`).text('');
+                                    }
+                                
+                                    return;
+                                }
+                            
+                                const elementHtml = document.getElementById(element+'Draft');
+                                const elementValue = elementHtml.value;
+                                if(elementValue.trim() === '') {
+                                
+                                    $(`.help-block-${element}Draft`).text(`This field is required`);
+                                    $(`.help-block-${element}Draft`).addClass('text-danger');
+                                    access = false;
+                                
+                                } else {
+                                
+                                    $(`.help-block-${element}Draft`).text('');
+                                
+                                }
+                            
+                            });
+                        }
+                    
+            return access;
     }
 
-    function validateThirdDraft() {
-        var access = true;
-        var referral_bonus = document.getElementById("referral_bonusDraft").value;
-        var sign_on_bonus = document.getElementById("sign_on_bonusDraft").value;
-        var completion_bonus = document.getElementById("completion_bonusDraft").value;
-        var extension_bonus = document.getElementById("extension_bonusDraft").value;
-        var other_bonus = document.getElementById("other_bonusDraft").value;
-        var actual_hourly_rate = document.getElementById("actual_hourly_rateDraft").value;
-        var overtime = document.getElementById("overtimeDraft").value;
-        var holiday = document.getElementById("holidayDraft").value;
-        var orientation_rate = document.getElementById("orientation_rateDraft").value;
-        var on_call = document.getElementById("on_callDraft").value;
-        var on_call_rate = document.getElementById("on_call_rateDraft").value;
-        var block_scheduling = document.getElementById("block_schedulingDraft").value;
-
-        var float_requirement = document.getElementById("float_requirementDraft").value;
-
-        if (referral_bonus.trim() === '') {
-            $('.help-block-referral_bonus').text('Please enter the referral bonus');
-            $('.help-block-referral_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-referral_bonus').text('');
+    function validateRequiredMultiCheckFieldsToSubmitDraft(slideFields) {
+        let access = true;
+        const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
+        
+        if(commonElements.length > 0) {
+        
+            commonElements.forEach(element => {
+            
+                const elementStr = element;
+                const elementValue = window[elementStr];
+                console.log(elementValue);
+            
+                if(Object.keys(elementValue).length === 0) {
+                    $(`.help-block-${element}Draft`).text(`This field is required`);
+                    $(`.help-block-${element}Draft`).addClass('text-danger');
+                    access = false;
+                } else {
+                    $(`.help-block-${element}Draft`).text('');
+                }
+            });
         }
 
-        if (sign_on_bonus.trim() === '') {
-            $('.help-block-sign_on_bonus').text('Please enter the sign on bonus');
-            $('.help-block-sign_on_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-sign_on_bonus').text('');
-        }
-
-        if (completion_bonus.trim() === '') {
-            $('.help-block-completion_bonus').text('Please enter the completion bonus');
-            $('.help-block-completion_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-completion_bonus').text('');
-        }
-
-        if (extension_bonus.trim() === '') {
-            $('.help-block-extension_bonus').text('Please enter the extension bonus');
-            $('.help-block-extension_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-extension_bonus').text('');
-        }
-
-        if (other_bonus.trim() === '') {
-            $('.help-block-other_bonus').text('Please enter the other bonus');
-            $('.help-block-other_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-other_bonus').text('');
-        }
-
-        if (actual_hourly_rate.trim() === '') {
-            $('.help-block-actual_hourly_rate').text('Please enter the actual hourly rate');
-            $('.help-block-actual_hourly_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-actual_hourly_rate').text('');
-        }
-
-        if (overtime.trim() === '') {
-            $('.help-block-overtime').text('Please enter the overtime');
-            $('.help-block-overtime').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-overtime').text('');
-        }
-
-
-        if (holiday.trim() === '') {
-            $('.help-block-holiday').text('Please enter the holiday');
-            $('.help-block-holiday').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-holiday').text('');
-        }
-
-        if (orientation_rate.trim() === '') {
-            $('.help-block-orientation_rate').text('Please enter the orientation rate');
-            $('.help-block-orientation_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-orientation_rate').text('');
-        }
-        if (on_call.trim() === '') {
-            $('.help-block-on_call').text('Please enter the on call rate');
-            $('.help-block-on_call').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call').text('');
-        }
-
-        if (on_call_rate.trim() === '') {
-            $('.help-block-on_call_rate').text('Please enter the on call rate');
-            $('.help-block-on_call_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call_rate').text('');
-        }
-
-        if (block_scheduling.trim() === '') {
-            $('.help-block-block_scheduling').text('Please enter the block scheduling');
-            $('.help-block-block_scheduling').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-block_scheduling').text('');
-        }
-
-
-
-        if (float_requirement.trim() === '') {
-            $('.help-block-float_requirement').text('Please enter the float requirement');
-            $('.help-block-float_requirement').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-float_requirement').text('');
-        }
-
-
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    function validateForthDraft() {
-        var access = true;
-        var contract_termination_policy = document.getElementById("contract_termination_policyDraft").value;
-        var emr = document.getElementById("emrDraft").value;
-        var four_zero_one_k = document.getElementById("four_zero_one_kDraft").value;
-        var health_insaurance = document.getElementById("health_insauranceDraft").value;
-        var feels_like_per_hour = document.getElementById("feels_like_per_hourDraft").value;
-        var call_back_rate = document.getElementById("call_back_rateDraft").value;
-        //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
-        var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountDraft").value;
-        // var hours_per_week = document.getElementById("hours_per_week").value;
-        var hours_shift = document.getElementById("hours_shiftDraft").value;
-        var start_date = document.getElementById("start_dateDraft").value;
-        var as_soon_as = document.getElementById("as_soon_asDraft").value;
-
-
-        if (contract_termination_policy.trim() === '') {
-            $('.help-block-contract_termination_policy').text('Please enter the contract termination policy');
-            $('.help-block-contract_termination_policy').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-contract_termination_policy').text('');
-        }
-
-        if (emr.trim() === '') {
-            $('.help-block-emr').text('Please enter the emr');
-            $('.help-block-emr').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-emr').text('');
-        }
-
-        if (four_zero_one_k.trim() === '') {
-            $('.help-block-four_zero_one_k').text('Please enter the four zero one k');
-            $('.help-block-four_zero_one_k').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-four_zero_one_k').text('');
-        }
-
-
-        if (health_insaurance.trim() === '') {
-            $('.help-block-health_insaurance').text('Please enter the health insurance');
-            $('.help-block-health_insaurance').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-health_insaurance').text('');
-        }
-
-
-
-        if (feels_like_per_hour.trim() === '') {
-            $('.help-block-feels_like_per_hourDraft').text('Please enter the feels like per hour');
-            $('.help-block-feels_like_per_hourDraft').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-feels_like_per_hourDraft').text('');
-        }
-
-        if (call_back_rate.trim() === '') {
-            $('.help-block-call_back_rate').text('Please enter the call back');
-            $('.help-block-call_back_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-call_back_rate').text('');
-        }
-
-
-
-        // if (weekly_taxable_amount.trim() === '') {
-        //     $('.help-block-weekly_taxable_amount').text('Please enter the weekly taxable amount');
-        //     $('.help-block-weekly_taxable_amount').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-weekly_taxable_amount').text('');
-        // }
-
-        if (weekly_non_taxable_amount.trim() === '') {
-            $('.help-block-weekly_non_taxable_amount').text('Please enter the weekly non taxable amount');
-            $('.help-block-weekly_non_taxable_amount').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_non_taxable_amount').text('');
-        }
-
-        // if (hours_per_week.trim() === '') {
-        //     $('.help-block-hours_per_week').text('Please enter the hours per week');
-        //     $('.help-block-hours_per_week').addClass('text-danger');
-        //     access = false;
-        // } else {
-        //     $('.help-block-hours_per_week').text('');
-        // }
-
-        if (hours_shift.trim() === '') {
-            $('.help-block-hours_shift').text('Please enter the hours shift');
-            $('.help-block-hours_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_shift').text('');
-        }
-
-        if (start_date.trim() === '') {
-            $('.help-block-start_date').text('Please enter the start date');
-            $('.help-block-start_date').addClass('text-danger');
-            access = false;
-            if (as_soon_as.trim() === '') {
-                $('.help-block-as_soon_as').text('Please enter the as soon as possible');
-                $('.help-block-as_soon_as').addClass('text-danger');
-                access = false;
-            } else {
-                $('.help-block-as_soon_as').text('');
-            }
-        } else {
-            $('.help-block-start_date').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    function validateFifthDraft() {
-        var access = true;
         return access;
     }
 
@@ -6661,24 +6073,65 @@
     });
     nextBtnSecDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        //if (validatesecondeDraft()) {
+        
+        const SecondSlideFields = [
+                                "traveler_distance_from_facility",
+                                "clinical_setting",
+                                "Patient_ratio",
+                                "Unit",
+                                "scrub_color",
+                                "rto",
+                                "job_id",
+                                "job_name",
+                                "preferred_work_location",
+                                "referral_bonus",
+                                "sign_on_bonus",
+                                "completion_bonus",
+                                "extension_bonus",
+                                "other_bonus",
+                                "on_call",
+                                "on_call_rate",
+                                "description"
+        ];
+        if(validateRequiredFieldsToSubmitDraft(SecondSlideFields)) { 
             slidePageDraft.style.marginLeft = "-40%";
             bulletDraft[currentDraft - 1].classList.add("active");
             progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
-        //}
+        }
 
     });
     nextBtnThirdDraft.addEventListener("click", function(event) {
         event.preventDefault();
-        //if (validateThirdDraft()) {
+        const ThirdSlideFields = [
+            "holiday",
+            "orientation_rate",
+            "block_scheduling",
+            "float_requirement",
+            "number_of_references",
+            "facilitys_parent_system",
+            "facility_name",
+            "contract_termination_policy",
+            "facility_shift_cancelation_policy",
+            "four_zero_one_k",
+            "health_insaurance",
+            "feels_like_per_hour",
+            "call_back_rate",
+            "as_soon_as",
+            "start_date",
+            "urgency",
+            "professional_state_licensure"
+        ];
+
+        if(validateRequiredFieldsToSubmitDraft(ThirdSlideFields)) {
             slidePageDraft.style.marginLeft = "-60%";
             bulletDraft[currentDraft - 1].classList.add("active");
             progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
-        //}
+        }
+        
     });
     
     submitBtnDraft.addEventListener("click", function(event) {
@@ -6712,7 +6165,7 @@
         }
         let vaccin_all_values = document.getElementById("vaccinationsAllValuesDraft");
         if (vaccin_all_values) {
-            vaccin_all_values.value = vaccinationStr;
+            vaccin_all_values.value = vaccinationsStr;
         }
         let skills_all_values = document.getElementById("skillsAllValuesDraft");
         if (skills_all_values) {
@@ -6724,14 +6177,23 @@
         }
 
 
-        //if (validateForthDraft()) {
+        const slideFields = [
+            "nurse_classification",
+            "Emr",
+            "benefits",
+            "certificate",
+            "vaccinations",
+            "skills"
+        ];
+        
+        if (validateRequiredMultiCheckFieldsToSubmitDraft(slideFields)) {
             bulletDraft[currentDraft - 1].classList.add("active");
             progressCheckDraft[currentDraft - 1].classList.add("active");
             progressTextDraft[currentDraft - 1].classList.add("active");
             currentDraft += 1;
 
             event.target.form.submit();
-        //}
+        }
     });
 
     saveDrftBtnDraft.forEach(function(saveDrftBtnDraft) {
@@ -6763,7 +6225,7 @@
         }
         let vaccin_all_values = document.getElementById("vaccinationsAllValuesDraft");
         if (vaccin_all_values) {
-            vaccin_all_values.value = vaccinationStr;
+            vaccin_all_values.value = vaccinationsStr;
         }
         let skills_all_values = document.getElementById("skillsAllValuesDraft");
         if (skills_all_values) {
@@ -7016,9 +6478,6 @@
             $('.help-block-professional_licensure').text('');
         }
 
-
-
-
         if (access) {
             return true;
         } else {
@@ -7026,365 +6485,89 @@
         }
     }
 
-    function validatesecondeEdit() {
-        var access = true;
-        // edits
-        var facility_shift_cancelation_policy = document.getElementById("facility_shift_cancelation_policyEdit").value;
-        var traveler_distance_from_facility = document.getElementById("traveler_distance_from_facilityEdit").value;
-        var clinical_setting = document.getElementById("clinical_settingEdit").value;
-        var Patient_ratio = document.getElementById("Patient_ratioEdit").value;
-        var Unit = document.getElementById("UnitEdit").value;
-        var scrub_color = document.getElementById("scrub_colorEdit").value;
-        var rto = document.getElementById("rtoEdit").value;
-        var guaranteed_hours = document.getElementById("guaranteed_hoursEdit").value;
-        var hours_per_week = document.getElementById("hours_per_weekEdit").value;
-        var hours_shift = document.getElementById("hours_shiftEdit").value;
-        var weeks_shift = document.getElementById("weeks_shiftEdit").value;
 
+    function validateRequiredFieldsToSubmitEdit(slideFields){
 
-        if (facility_shift_cancelation_policy.trim() === '') {
-            $('.help-block-facility_shift_cancelation_policy').text(
-                'Please enter the Shift Cancellation Policy');
-            $('.help-block-facility_shift_cancelation_policy').addClass('text-danger');
-            access = false;
-        } else {
+        let access = true;
+        const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
 
-            $('.help-block-facility_shift_cancelation_policy').text('');
-        }
-
-        if (traveler_distance_from_facility.trim() === '') {
-            $('.help-block-traveler_distance_from_facility').text('Please enter the min distance from facility');
-            $('.help-block-traveler_distance_from_facility').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-traveler_distance_from_facility').text('');
-        }
-
-        if (clinical_setting.trim() === '') {
-            $('.help-block-clinical_setting').text('Please enter the clinical setting');
-            $('.help-block-clinical_setting').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-clinical_setting').text('');
-        }
-
-
-        if (Patient_ratio.trim() === '') {
-            $('.help-block-Patient_ratio').text('Please enter the patient ratio');
-            $('.help-block-Patient_ratio').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-Patient_ratio').text('');
-        }
-
-
-        if (Unit.trim() === '') {
-            $('.help-block-Unit').text('Please enter the unit');
-            $('.help-block-Unit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-Unit').text('');
-        }
-
-        if (scrub_color.trim() === '') {
-            $('.help-block-scrub_color').text('Please enter the scrub color');
-            $('.help-block-scrub_color').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-scrub_color').text('');
-        }
-
-        if (rto.trim() === '') {
-            $('.help-block-rto').text('Please enter the rto');
-            $('.help-block-rto').addClass('text-danger');
-            access = false;
-
-        } else {
-            $('.help-block-rto').text('');
-        }
-
-        if (guaranteed_hours.trim() === '') {
-            $('.help-block-guaranteed_hours').text('Please enter the guaranteed hours');
-            $('.help-block-guaranteed_hours').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-guaranteed_hours').text('');
-        }
-
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_week').text('Please enter the hours per week');
-            $('.help-block-hours_per_week').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_week').text('');
-        }
-
-        if (hours_shift.trim() === '') {
-            $('.help-block-hours_shift').text('Please enter the hours shift');
-            $('.help-block-hours_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_shift').text('');
-        }
-
-        if (weeks_shift.trim() === '') {
-            $('.help-block-weeks_shift').text('Please enter the weeks shift');
-            $('.help-block-weeks_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weeks_shift').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    function validateThirdEdit() {
-        var access = true;
-        var referral_bonus = document.getElementById("referral_bonusEdit").value;
-        var sign_on_bonus = document.getElementById("sign_on_bonusEdit").value;
-        var completion_bonus = document.getElementById("completion_bonusEdit").value;
-        var extension_bonus = document.getElementById("extension_bonusEdit").value;
-        var other_bonus = document.getElementById("other_bonusEdit").value;
-        var actual_hourly_rate = document.getElementById("actual_hourly_rateEdit").value;
-        var overtime = document.getElementById("overtimeEdit").value;
-        var holiday = document.getElementById("holidayEdit").value;
-        var orientation_rate = document.getElementById("orientation_rateEdit").value;
-        var on_call = document.getElementById("on_callEdit").value;
-        var on_call_rate = document.getElementById("on_call_rateEdit").value;
-        var block_scheduling = document.getElementById("block_schedulingEdit").value;
-
-        var float_requirement = document.getElementById("float_requirementEdit").value;
-
-        if (referral_bonus.trim() === '') {
-            $('.help-block-referral_bonus').text('Please enter the referral bonus');
-            $('.help-block-referral_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-referral_bonus').text('');
-        }
-
-        if (sign_on_bonus.trim() === '') {
-            $('.help-block-sign_on_bonus').text('Please enter the sign on bonus');
-            $('.help-block-sign_on_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-sign_on_bonus').text('');
-        }
-
-        if (completion_bonus.trim() === '') {
-            $('.help-block-completion_bonus').text('Please enter the completion bonus');
-            $('.help-block-completion_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-completion_bonus').text('');
-        }
-
-        if (extension_bonus.trim() === '') {
-            $('.help-block-extension_bonus').text('Please enter the extension bonus');
-            $('.help-block-extension_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-extension_bonus').text('');
-        }
-
-        if (other_bonus.trim() === '') {
-            $('.help-block-other_bonus').text('Please enter the other bonus');
-            $('.help-block-other_bonus').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-other_bonus').text('');
-        }
-
-        if (actual_hourly_rate.trim() === '') {
-            $('.help-block-actual_hourly_rate').text('Please enter the actual hourly rate');
-            $('.help-block-actual_hourly_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-actual_hourly_rate').text('');
-        }
-
-        if (overtime.trim() === '') {
-            $('.help-block-overtime').text('Please enter the overtime');
-            $('.help-block-overtime').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-overtime').text('');
-        }
-
-
-        if (holiday.trim() === '') {
-            $('.help-block-holiday').text('Please enter the holiday');
-            $('.help-block-holiday').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-holiday').text('');
-        }
-
-        if (orientation_rate.trim() === '') {
-            $('.help-block-orientation_rate').text('Please enter the orientation rate');
-            $('.help-block-orientation_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-orientation_rate').text('');
-        }
-        if (on_call.trim() === '') {
-            $('.help-block-on_call').text('Please enter the on call rate');
-            $('.help-block-on_call').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call').text('');
-        }
-        if (on_call_rate.trim() === '') {
-            $('.help-block-on_call_rate').text('Please enter the on call rate');
-            $('.help-block-on_call_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-on_call_rate').text('');
-        }
-
-
-
-        if (block_scheduling.trim() === '') {
-            $('.help-block-block_scheduling').text('Please enter the block scheduling');
-            $('.help-block-block_scheduling').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-block_scheduling').text('');
-        }
-
-
-
-        if (float_requirement.trim() === '') {
-            $('.help-block-float_requirement').text('Please enter the float requirement');
-            $('.help-block-float_requirement').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-float_requirement').text('');
-        }
-
-
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    function validateForthEdit() {
-        var access = true;
-        var contract_termination_policy = document.getElementById("contract_termination_policyEdit").value;
-        var four_zero_one_k = document.getElementById("four_zero_one_kEdit").value;
-        var health_insaurance = document.getElementById("health_insauranceEdit").value;
-        var feels_like_per_hour = document.getElementById("feels_like_per_hourEdit").value;
-        var call_back_rate = document.getElementById("call_back_rateEdit").value;
-        //var weekly_taxable_amount = document.getElementById("weekly_taxable_amount").value;
-        var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amountEdit").value;
-        // var hours_per_week = document.getElementById("hours_per_week").value;
-        var hours_shift = document.getElementById("hours_shiftEdit").value;
-        var start_date = document.getElementById("start_dateEdit").value;
-        var as_soon_as = document.getElementById("as_soon_asEdit").value;
-
-
-        if (contract_termination_policy.trim() === '') {
-            $('.help-block-contract_termination_policy').text('Please enter the contract termination policy');
-            $('.help-block-contract_termination_policy').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-contract_termination_policy').text('');
-        }
-
-        if (four_zero_one_k.trim() === '') {
-            $('.help-block-four_zero_one_k').text('Please enter the four zero one k');
-            $('.help-block-four_zero_one_k').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-four_zero_one_k').text('');
-        }
-
-
-        if (health_insaurance.trim() === '') {
-            $('.help-block-health_insaurance').text('Please enter the health insurance');
-            $('.help-block-health_insaurance').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-health_insaurance').text('');
-        }
-
-
-
-        if (feels_like_per_hour.trim() === '') {
-            $('.help-block-feels_like_per_hourEdit').text('Please enter the feels like per hour');
-            $('.help-block-feels_like_per_hourEdit').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-feels_like_per_hour').text('');
-        }
-
-
-
-        if (call_back_rate.trim() === '') {
-            $('.help-block-call_back_rate').text('Please enter the call back');
-            $('.help-block-call_back_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-call_back_rate').text('');
-        }
-
-
-
-
-
-        if (weekly_non_taxable_amount.trim() === '') {
-            $('.help-block-weekly_non_taxable_amount').text('Please enter the weekly non taxable amount');
-            $('.help-block-weekly_non_taxable_amount').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_non_taxable_amount').text('');
-        }
-
-
-
-        if (hours_shift.trim() === '') {
-            $('.help-block-hours_shift').text('Please enter the hours shift');
-            $('.help-block-hours_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_shift').text('');
-        }
-
-        if (start_date.trim() === '') {
-            $('.help-block-start_date').text('Please enter the start date');
-            $('.help-block-start_date').addClass('text-danger');
-            access = false;
-            if (as_soon_as.trim() === '') {
-                $('.help-block-as_soon_as').text('Please enter the as soon as possible');
-                $('.help-block-as_soon_as').addClass('text-danger');
-                access = false;
-            } else {
-                $('.help-block-as_soon_as').text('');
-            }
-        } else {
-            $('.help-block-start_date').text('');
-        }
-
-        if (access) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    function validateFifthEdit() {
-        var access = true;
+                    if(commonElements.length > 0) {
+                    
+                        commonElements.forEach(element => {
+                        
+                            if(element === 'professional_state_licensure'){
+                                const activeElementHtml = document.getElementById('professional_state_licensure_activeEdit');
+                                const pendingElementHtml = document.getElementById('professional_state_licensure_pendingEdit');
+                            
+                                if(!activeElementHtml.checked && !pendingElementHtml.checked) {
+                                    $(`.help-block-professional_state_licensureEdit`).text(`This field is required`);
+                                    $(`.help-block-professional_state_licensureEdit`).addClass('text-danger');
+                                    access = false;
+                                } else {
+                                    $(`.help-block-professional_state_licensureEdit`).text('');
+                                
+                                }
+                            
+                                return;
+                            }
+                        
+                            if (element === 'urgency') {
+                            
+                                const urgencyElementHtml = document.getElementById('urgencyEdit');
+                                if(!urgencyElementHtml.checked) {
+                                    $(`.help-block-urgencyEdit`).text(`This field is required`);
+                                    $(`.help-block-urgencyEdit`).addClass('text-danger');
+                                    access = false;
+                                } else {
+                                    $(`.help-block-urgencyEdit`).text('');
+                                }
+                            
+                                return;
+                            }
+                        
+                            const elementHtml = document.getElementById(element+'Edit');
+                            const elementValue = elementHtml.value;
+                            if(elementValue.trim() === '') {
+                            
+                                $(`.help-block-${element}Edit`).text(`This field is required`);
+                                $(`.help-block-${element}Edit`).addClass('text-danger');
+                                access = false;
+                            
+                            } else {
+                            
+                                $(`.help-block-${element}Edit`).text('');
+                            
+                            }
+                        
+                        });
+                    }
+                
         return access;
+    }
 
+    function validateRequiredMultiCheckFieldsToSubmitEdit(slideFields) {
+        let access = true;
+        const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
+
+        if(commonElements.length > 0) {
+
+            commonElements.forEach(element => {
+
+                const elementStr = element;
+                const elementValue = window[elementStr];
+                console.log(elementValue);
+
+                if(Object.keys(elementValue).length === 0) {
+                    $(`.help-block-${element}Edit`).text(`This field is required`);
+                    $(`.help-block-${element}Edit`).addClass('text-danger');
+                    access = false;
+                } else {
+                    $(`.help-block-${element}Edit`).text('');
+                }
+            });
+        }
+
+        return access;
     }
 
 
@@ -7402,28 +6585,70 @@
 
     });
     nextBtnSecEdit.addEventListener("click", function(event) {
+
         event.preventDefault();
-        // if (validatesecondeEdit()) {
+        const SecondSlideFields = [
+                                "traveler_distance_from_facility",
+                                "clinical_setting",
+                                "Patient_ratio",
+                                "Unit",
+                                "scrub_color",
+                                "rto",
+                                "job_id",
+                                "job_name",
+                                "preferred_work_location",
+                                "referral_bonus",
+                                "sign_on_bonus",
+                                "completion_bonus",
+                                "extension_bonus",
+                                "other_bonus",
+                                "on_call",
+                                "on_call_rate",
+                                "description"
+                                ];
+
+        if(validateRequiredFieldsToSubmitEdit(SecondSlideFields)) { 
             slidePageEdit.style.marginLeft = "-40%";
             bulletEdit[currentEdit - 1].classList.add("active");
             progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
-        // }
+        }
 
     });
     nextBtnThirdEdit.addEventListener("click", function(event) {
         event.preventDefault();
-        // if (validateThirdEdit()) {
+        const ThirdSlideFields = [
+            "holiday",
+            "orientation_rate",
+            "block_scheduling",
+            "float_requirement",
+            "number_of_references",
+            "facilitys_parent_system",
+            "facility_name",
+            "contract_termination_policy",
+            "facility_shift_cancelation_policy",
+            "four_zero_one_k",
+            "health_insaurance",
+            "feels_like_per_hour",
+            "call_back_rate",
+            "as_soon_as",
+            "start_date",
+            "urgency",
+            "professional_state_licensure"
+        ];
+
+        if(validateRequiredFieldsToSubmitEdit(ThirdSlideFields)) {
             slidePageEdit.style.marginLeft = "-60%";
             bulletEdit[currentEdit - 1].classList.add("active");
             progressCheck[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
-        // }
+         }
     });
    
     submitBtnEdit.addEventListener("click", function(event) {
+
         event.preventDefault();
         let nurse_classification_all_values = document.getElementById("nurse_classificationAllValuesEdit");
         if (nurse_classification_all_values) {
@@ -7451,7 +6676,7 @@
         }
         let vaccin_all_values = document.getElementById("vaccinationsAllValuesEdit");
         if (vaccin_all_values) {
-            vaccin_all_values.value = vaccinationStr;
+            vaccin_all_values.value = vaccinationsStr;
         }
         let skills_all_values = document.getElementById("skillsAllValuesEdit");
         if (skills_all_values) {
@@ -7464,13 +6689,25 @@
         document.getElementById("activeEdit").value = true;
         document.getElementById("is_openEdit").value = true;
 
-        // if (validateForthEdit()) {
+        console.log(EmrStr);
+        console.log('edit' + nurse_classificationStr);
+
+        const slideFields = [
+            "nurse_classification",
+            "Emr",
+            "benefits",
+            "certificate",
+            "vaccinations",
+            "skills"
+        ];
+
+        if (validateRequiredMultiCheckFieldsToSubmitEdit(slideFields)) {
             bulletEdit[currentEdit - 1].classList.add("active");
             progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
             event.target.form.submit();
-        // }
+        }
     });
 
 
@@ -7503,7 +6740,7 @@
         }
         let vaccin_all_values = document.getElementById("vaccinationsAllValuesEdit");
         if (vaccin_all_values) {
-            vaccin_all_values.value = vaccinationStr;
+            vaccin_all_values.value = vaccinationsStr;
         }
         let skills_all_values = document.getElementById("skillsAllValuesEdit");
         if (skills_all_values) {
@@ -7625,7 +6862,10 @@
             'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amountEdit', type: 'number' },
             'start_date': { id: 'start_dateEdit', type: 'date' },
             'preferred_experience': { id: 'preferred_experienceEdit', type: 'number' },
-            'professional_state_licensure': { id: 'professional_state_licensure_pendingEdit', type: 'radio' }
+            'professional_state_licensure': { id: 'professional_state_licensure_pendingEdit', type: 'radio' },
+            'description': { id: 'descriptionEdit', type: 'text' },
+            'preferred_work_location': { id: 'preferred_work_locationEdit', type: 'text' },
+            'as_soon_as': { id: 'as_soon_asEdit', type: 'checkbox' },
         };
 
         for (const [key, field] of Object.entries(fields)) {
@@ -7645,7 +6885,9 @@
                     
                 }
             } else if (field.type === 'checkbox') {
-                element.checked = result[key] === 'Auto Offer';
+                // one for the urgency and one for the as soon as
+                field.id === 'urgencyEdit' ? element.checked = result[key] === 'Auto Offer' : element.checked = result[key] === '1';
+                    console.log('checkbox test', result[key]);
             }
             else if (field.type === 'radio') {
                 console.log('radio', result[key]);
@@ -7846,6 +7088,7 @@
         }
 
     }
+   
 </script>
 
 
@@ -8155,6 +7398,20 @@
 
     .saveDrftBtnDraft {
         margin-right: 3px;
+    }
+
+    #assign-container{
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+    }
+
+    .ss-form-group {
+        display: grid;
+    }
+
+    .ss-form-group span {
+        margin-top: 10px;
     }
 </style>
 @endsection

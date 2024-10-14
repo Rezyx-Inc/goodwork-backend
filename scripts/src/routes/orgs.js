@@ -3,6 +3,8 @@ const router = express.Router();
 const {Organizations} = require('../models/Orgs');
 const {GlobalRuleFields} = require('../models/Orgs');
 
+
+
 router.get('/getRecruiters/:orgId', async (req, res) => {
     try {
         const org = await Organizations.findOne({ orgId: req.params.orgId });
@@ -15,6 +17,24 @@ router.get('/getRecruiters/:orgId', async (req, res) => {
         res.status(500).send("Unexpected error.");
     }
 });
+
+// check if a recruiter is in on one of the organizations without the orgId
+router.post('/checkRecruiter', async (req, res) => {
+    if (!Object.keys(req.body).length) {
+        return res.status(400).send("Empty request");
+    }
+    try {
+        const org = await Organizations.find({ recruiters: { $elemMatch: { id: req.body.id } } });
+        if (!org) {
+            return res.status(404).send("Organization not found.");
+        }
+        res.status(200).send(org);
+    } catch (err) {
+        console.error("Unexpected error", err);
+        res.status(500).send("Unexpected error.");
+    }
+});
+
 
 router.post('/addRecruiter/:orgId', async (req, res) => {
     if (!Object.keys(req.body).length) {
@@ -203,9 +223,9 @@ router.get('/getFieldsRules', async (req, res) => {
 
         const globalRuleFields = await GlobalRuleFields.find({});
             if (!globalRuleFields) {
-            
+
                 return res.status(404).send("Global rule fields not found.");
-                
+
             }
         res.status(200).send(globalRuleFields);
 
