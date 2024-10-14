@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use DB;
+use Spatie\Activitylog\LogOptions;
 
 class Facility extends Model implements HasMedia
 {
     use SoftDeletes;
-    use HasMediaTrait;
+    use InteractsWithMedia;
     use LogsActivity;
 
     /**
@@ -387,5 +388,13 @@ class Facility extends Model implements HasMedia
     public function facilityAssets()
 	{
 		return $this->hasMany(FacilityAsset::class);
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('Facility')
+            ->setDescriptionForEvent(fn(string $eventName) => "This Facility has been {$eventName}.")
+            ->logFillable();
     }
 }

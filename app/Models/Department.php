@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Department extends UuidModel
@@ -99,4 +100,12 @@ class Department extends UuidModel
 	{
 		return $this->belongsToMany(User::class, 'department_users');
 	}
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('Department')
+            ->setDescriptionForEvent(fn(string $eventName) => "This Department has been {$eventName}.")
+            ->logFillable();
+    }
 }

@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
 
 class NurseReference extends UuidModel
 {
     use SoftDeletes;
-    // use HasMediaTrait;
     use LogsActivity;
 
     /**
@@ -66,5 +66,13 @@ class NurseReference extends UuidModel
     public function nurse()
     {
         return $this->belongsTo(Nurse::class);
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('NurseReference')
+            ->setDescriptionForEvent(fn(string $eventName) => "This NurseReference has been {$eventName}.")
+            ->logFillable();
     }
 }

@@ -3,19 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use DB;
 use App\Models\Nurse;
 use App\Models\NurseAsset;
+use Spatie\Activitylog\LogOptions;
 
 class Job extends Model
 {
     use SoftDeletes;
-    // use HasMediaTrait;
     use LogsActivity;
 
     public static function boot()
@@ -795,5 +795,13 @@ class Job extends Model
 
 
 
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('Job')
+            ->setDescriptionForEvent(fn(string $eventName) => "This Job has been {$eventName}.")
+            ->logFillable();
     }
 }

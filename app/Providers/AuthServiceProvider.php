@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // passport routes
-        Passport::routes();
+        // Passport::routes();
 
         // ttl time 30 minutes
         //Passport::personalAccessTokensExpireIn(now()->addMinutes(30));

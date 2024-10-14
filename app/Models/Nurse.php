@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use DB;
+use Spatie\Activitylog\LogOptions;
 
 class Nurse extends Model implements HasMedia
 {
     use SoftDeletes;
-    use HasMediaTrait;
+    use InteractsWithMedia;
     use LogsActivity;
 
     protected static function boot()
@@ -272,5 +273,13 @@ class Nurse extends Model implements HasMedia
     public function profile_percentage()
     {
 
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('Nurse')
+            ->setDescriptionForEvent(fn(string $eventName) => "This nurse has been {$eventName}.")
+            ->logFillable();
     }
 }

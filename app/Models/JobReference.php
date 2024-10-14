@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\LogOptions;
 
 class JobReference extends UuidModel implements HasMedia
 {
     use SoftDeletes;
-    use HasMediaTrait;
+    use InteractsWithMedia;
     use LogsActivity;
 
 
@@ -38,5 +39,13 @@ class JobReference extends UuidModel implements HasMedia
     public function job()
     {
         return $this->belongsTo(Job::class);
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('JobReference')
+            ->setDescriptionForEvent(fn(string $eventName) => "This JobReference has been {$eventName}.")
+            ->logFillable();
     }
 }
