@@ -198,16 +198,24 @@ router.post('/add-preferences', async (req, res) => {
 // get fields rules for the organization
 
 router.get('/getFieldsRules', async (req, res) => {
+
     try {
+
         const globalRuleFields = await GlobalRuleFields.find({});
-        if (!globalRuleFields) {
-            return res.status(404).send("Global rule fields not found.");
-        }
+            if (!globalRuleFields) {
+            
+                return res.status(404).send("Global rule fields not found.");
+                
+            }
         res.status(200).send(globalRuleFields);
+
     } catch (err) {
+
         console.error("Unexpected error", err);
         res.status(500).send(err);
+
     }
+
 });
 
 module.exports = router;

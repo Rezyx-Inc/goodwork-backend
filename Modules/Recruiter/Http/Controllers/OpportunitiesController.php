@@ -2309,7 +2309,7 @@ class OpportunitiesController extends Controller
     align-items: center;">';
 
                 if ($type == 'onhold') {
-                    $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhold Job</a></div>';
+                    $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Publish Job</a></div>';
                 } else {
                     $data2 .= '<div class="col-md-5"><a href="javascript:void(0)" class="ss-reject-offer-btn d-block" onclick="changeStatus(\'hidejob\', \'' . $jobdetails->id . '\')">Hide Job</a>';
                     $data2 .=

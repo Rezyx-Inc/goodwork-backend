@@ -945,17 +945,19 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        
         var workerId = @json($offerdetails['worker_user_id']);
         console.log(workerId);
         console.log('worker id', workerId);
 
         function activeWorkerClass(workerUserId) {
 
-var element = document.getElementById(workerUserId);
-console.log('element', element);
-element.classList.add('active');
+            var element = document.getElementById(workerUserId);
+            console.log('element', element);
+            element.classList.add('active');
 
-}
+        }
+
     });
 </script>
 

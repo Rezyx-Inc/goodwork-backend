@@ -31,6 +31,7 @@ class OrganizationOpportunitiesController extends Controller
      */
     public function index()
     {
+        
         $organization_id = Auth::guard('organization')->user()->id;
         $draftJobs = Job::where('organization_id', $organization_id)->where('active', 0)->get();
         $publishedJobs = Job::where('organization_id', $organization_id)->where('active', 1)->where('is_hidden', '0')->where('is_closed', '0')->where('is_open', '1')->get();
@@ -2373,7 +2374,7 @@ class OrganizationOpportunitiesController extends Controller
     align-items: center;">';
 
                 if ($type == 'onhold') {
-                    $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Unhold Job</a></div>';
+                    $data2 .= '<div class="col-md-12"><a href="javascript:void(0)" class="ss-send-offer-btn d-block" onclick="changeStatus(\'unhidejob\', \'' . $jobdetails->id . '\')">Publish Job</a></div>';
                 } else {
                     $data2 .= '<div class="col-md-5"><a href="javascript:void(0)" class="ss-reject-offer-btn d-block" onclick="changeStatus(\'hidejob\', \'' . $jobdetails->id . '\')">Hide Job</a>';
                     $data2 .=

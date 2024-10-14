@@ -477,12 +477,6 @@
                                                 </span>
                                             </div>
 
-                                            
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                ( The above fields are not required )
-                                            </span>
-
-                                            
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
                                                 <button class="prev-1 prev">Previous</button>
@@ -618,11 +612,11 @@
 
                                             <div class="ss-form-group col-md-12">
                                                 <div class="row">
-                                                    <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                                    <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12" style="margin: 20px 0px;">
                                                         <label>Start Date</label>
                                                     </div>
                                                     <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12"
-                                                        style="display: flex; justify-content: end;">
+                                                        style="display: flex; justify-content: end; align-items:center;">
                                                         <input id="as_soon_as" name="as_soon_as" value="1"
                                                             type="checkbox" style="box-shadow:none; width:auto;"
                                                             class="col-6">
@@ -636,8 +630,8 @@
                                             </div>
                                             <span class="help-block-start_date"></span>
 
-                                            <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px;">
-                                                <label style="padding-bottom: 5px">Urgency</label>
+                                            <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
                                                 <div class="row justify-content-center" style="display:flex; align-items:end;">
                                                     <label class="col-6" for="urgency"
                                                         style="display:flex; justify-content:end;">Auto Offer</label>
@@ -650,12 +644,11 @@
                                                 <span class="help-block-urgency"></span>
                                             </div>
                                             
-                                                <div class="vr p-0" style="margin-left: 17px; margin-bottom: 10px;"></div>
+                                            <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div>
                                               
                                               
-                                            <div
-                                                class="row ss-form-group d-flex justify-content-end col-md-8">
-                                                <label style="padding-bottom: 5px" >Professional State Licensure</label>
+                                            <div class="row ss-form-group d-flex justify-content-end col-md-7" style="padding-bottom: 20px;">
+                                                <label style="padding-bottom: 25px; padding-top: 25px;">Professional State Licensure</label>
                                                 
                                                     <div class="row col-6 justify-content-center align-items-end">
                                                         <label class="col-7" for="professional_state_licensure_pending">Accept
@@ -687,17 +680,6 @@
                                                     </li>
                                                 </ul>
                                             </div>
-
-
-                                            
-
-                                            
-
-
-
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                ( The above fields are not required )
-                                            </span>
 
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
@@ -927,16 +909,6 @@
                                                 </ul>
                                             </div>
 
-
-                                          
-                                           
-
-
-                                           
-
-                                            <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                ( The above fields are not required )
-                                            </span>
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
                                                 <button class="prev-3 prev">Previous</button>
@@ -1534,12 +1506,6 @@
                                                         </span>
                                                     </div>
                                        
-                                       
-                                                    <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                        ( The above fields are not required )
-                                                    </span>
-                                       
-                                       
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnDraft">Save as draft</button>
                                                         <button class="prev-1Draft prev">Previous</button>
@@ -1670,11 +1636,11 @@
                                        
                                                     <div class="ss-form-group col-md-12">
                                                         <div class="row">
-                                                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12" style="margin: 20px 0px;">
                                                                 <label>Start Date</label>
                                                             </div>
                                                             <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12"
-                                                                style="display: flex; justify-content: end;">
+                                                                style="display: flex; justify-content: end; align-items:center;">
                                                                 <input id="as_soon_asDraft" name="as_soon_as" value="1" type="checkbox"
                                                                     style="box-shadow:none; width:auto;" class="col-6">
                                                                 <label class="col-6">
@@ -1687,8 +1653,8 @@
                                                     </div>
                                                     <span class="help-block-start_dateDraft"></span>
                                        
-                                                    <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px;">
-                                                        <label style="padding-bottom: 5px">Urgency</label>
+                                                    <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                        <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
                                                         <div class="row justify-content-center" style="display:flex; align-items:end;">
                                                             <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto
                                                                 Offer</label>
@@ -1701,11 +1667,11 @@
                                                         <span class="help-block-urgencyDraft"></span>
                                                     </div>
                                        
-                                                    <div class="vr p-0" style="margin-left: 17px; margin-bottom: 10px;"></div>
+                                                    <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div>
                                        
                                        
-                                                    <div class="row ss-form-group d-flex justify-content-end col-md-8">
-                                                        <label style="padding-bottom: 5px">Professional State Licensure</label>
+                                                    <div class="row ss-form-group d-flex justify-content-end col-md-7" style="padding-bottom: 20px;">
+                                                        <label style="padding-bottom: 25px; padding-top: 25px;">Professional State Licensure</label>
                                        
                                                         <div class="row col-6 justify-content-center align-items-end">
                                                             <label class="col-7" for="professional_state_licensure_pending">Accept
@@ -1735,17 +1701,6 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                                    <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                        ( The above fields are not required )
-                                                    </span>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnDraft">Save as draft</button>
@@ -1971,16 +1926,6 @@
                                                         </ul>
                                                     </div>
                                        
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                                    <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                        ( The above fields are not required )
-                                                    </span>
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnDraft">Save as draft</button>
                                                         <button class="prev-3Draft prev">Previous</button>
@@ -2474,12 +2419,6 @@
                                                         </span>
                                                     </div>
                                        
-                                       
-                                                    <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                        ( The above fields are not required )
-                                                    </span>
-                                       
-                                       
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnEdit">Save as draft</button>
                                                         <button class="prev-1Edit prev">Previous</button>
@@ -2610,11 +2549,11 @@
                                        
                                                     <div class="ss-form-group col-md-12">
                                                         <div class="row">
-                                                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12">
+                                                            <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12" style="margin: 20px 0px;">
                                                                 <label>Start Date</label>
                                                             </div>
                                                             <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12"
-                                                                style="display: flex; justify-content: end;">
+                                                                style="display: flex; justify-content: end; align-items:center;">
                                                                 <input id="as_soon_asEdit" name="as_soon_as" value="1" type="checkbox"
                                                                     style="box-shadow:none; width:auto;" class="col-6">
                                                                 <label class="col-6">
@@ -2627,8 +2566,8 @@
                                                     </div>
                                                     <span class="help-block-start_dateEdit"></span>
                                        
-                                                    <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px;">
-                                                        <label style="padding-bottom: 5px">Urgency</label>
+                                                    <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                        <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
                                                         <div class="row justify-content-center" style="display:flex; align-items:end;">
                                                             <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto
                                                                 Offer</label>
@@ -2641,11 +2580,11 @@
                                                         <span class="help-block-urgencyEdit"></span>
                                                     </div>
                                        
-                                                    <div class="vr p-0" style="margin-left: 17px; margin-bottom: 10px;"></div>
+                                                    <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div>
                                        
                                        
-                                                    <div class="row ss-form-group d-flex justify-content-end col-md-8">
-                                                        <label style="padding-bottom: 5px">Professional State Licensure</label>
+                                                    <div class="row ss-form-group d-flex justify-content-end col-md-7" style="padding-bottom: 20px;">
+                                                        <label style="padding-bottom: 25px; padding-top: 25px;">Professional State Licensure</label>
                                        
                                                         <div class="row col-6 justify-content-center align-items-end">
                                                             <label class="col-7" for="professional_state_licensure_pending">Accept
@@ -2675,17 +2614,6 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                                    <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                        ( The above fields are not required )
-                                                    </span>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnEdit">Save as draft</button>
@@ -2911,16 +2839,6 @@
                                                         </ul>
                                                     </div>
                                        
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                                    <span style="color:#b5649e;" id="passwordHelpInline" class="form-text">
-                                                        ( The above fields are not required )
-                                                    </span>
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnEdit">Save as draft</button>
                                                         <button class="prev-3Edit prev">Previous</button>
