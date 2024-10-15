@@ -715,6 +715,16 @@ class OrganizationController extends Controller
                 // Save the job data to the database
                 $job->save();
 
+                $AssignmentResponse = Http::post('http://localhost:4545/organizations/assignUpNextRecruiter', [
+                    'id' => $job->organization_id,
+                ]);
+
+                if ($AssignmentResponse->status() == 200) {
+                    $recruiterId = $AssignmentResponse->body();
+                    $job->recruiter_id = $recruiterId;
+                    $job->save();
+                } 
+
             } else {
 
                 //return response()->json(['success' => false, 'message' => $active]);
@@ -1476,21 +1486,32 @@ public function recruiters_management()
 
             $jobId = $request->job_id;
             $recruiterId = $request->recruiter_id;
-            $job = Job::where('id', $jobId)->update(['recruiter_id' => $recruiterId]);
+            $job = Job::where('id', $jobId)->first();
+            $orgId = Auth::guard('organization')->user()->id;
 
-            if (!$job) {
-                return response()->json(['error' => "Job not found"], 404);
+            $AssignmentResponse = Http::post('http://localhost:4545/organizations/manuelRecruiterAssignment/' . $orgId, [
+                'id' => $recruiterId,
+            ]);
+
+            if ($AssignmentResponse->status() == 200) {
+
+                $recruiterId = $AssignmentResponse->body();
+                $job->recruiter_id = $recruiterId;
+                $job->save();
+
+            } else {
+
+                return response()->json(['error' => "An error occurred: " . $AssignmentResponse->body()], 500);
+
             }
 
             return response()->json(['success' => true, 'message' => 'Recruiter assigned successfully']);
 
         }catch(\Exception $e){
+
             return response()->json(['error' => "An error occurred: " . $e->getMessage()], 500);
+
         }
     }
-
-
-
-
-
+    
 }
