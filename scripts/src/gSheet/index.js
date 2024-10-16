@@ -5,13 +5,10 @@ const fs = require('fs');
 const sha256 = require('sha256');
 const { lineUpdated, lineAdded, lineDeleted } = require('./funcSheet');
 var _ = require('lodash');
-const { updated } = require('../mysql/sheet');
 const { json } = require('body-parser');
 const { exit } = require('process');
 
 const queries = require("../mysql/sheet.js");
-
-
 
 const SCOPES = [
   'https://www.googleapis.com/auth/spreadsheets',
@@ -19,39 +16,56 @@ const SCOPES = [
   'https://www.googleapis.com/auth/drive'
 ];
 
+
 const TOKEN_PATH = path.join(__dirname, 'token.json');
 const CREDENTIALS_PATH = path.join(__dirname, 'credentials.json');
 
 async function loadSavedCredentialsIfExist() {
+
   try {
+
     const content = await fs.promises.readFile(TOKEN_PATH);
     const credentials = JSON.parse(content);
     return google.auth.fromJSON(credentials);
+
   } catch (err) {
+
     console.error('Error loading saved credentials:', err.message);
     return null;
+
   }
 }
 
 async function saveCredentials(client) {
+
   try {
+
     const content = await fs.promises.readFile(CREDENTIALS_PATH);
     const keys = JSON.parse(content);
     const key = keys.installed || keys.web;
+
     const payload = JSON.stringify({
+
       type: 'authorized_user',
       client_id: key.client_id,
       client_secret: key.client_secret,
       refresh_token: client.credentials.refresh_token,
+
     });
+
     await fs.promises.writeFile(TOKEN_PATH, payload);
+
   } catch (err) {
+
     console.error('Error saving credentials:', err.message);
+
   }
 }
 
 async function authorize() {
+
   try {
+
     let client = await loadSavedCredentialsIfExist();
     if (client) {
       return client;
@@ -70,30 +84,33 @@ async function authorize() {
   }
 }
 
-const SPREADSHEET_ID = '1z4bz97OHwfM0dyVYge5-BmJurduTSDGIHFOV7m7yKxM';
-const SHEET_NAME = 'Sheet1'; // Update this to the correct sheet name if necessary
-
-// Function to get data from the Google Sheet and save it as JSON
-async function getDataAndSaveAsJson(auth) {
+async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
   try {
     const sheets = google.sheets({ version: 'v4', auth });
     const res = await sheets.spreadsheets.values.get({
-      spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A:N`,
+      spreadsheetId: spreadsheetId,
+      range: `Sheet1!A:N`,
+      auth: auth,
     });
-    const rows = res.data.values;
-    if (!rows.length) {
+
+    // Access the rows from the values property
+    const rows = res.data; // Access the rows correctly
+
+    // Process the response here
+    console.log('Fetched rows:', rows);
+
+    if (!rows || rows.length === 0) {
       console.log('No data found.');
       return;
     }
 
     // Extract headers and data
-    const headers = rows[0];
-    // Remove the first row, which contains headers
-    const data = rows.slice(1);
+    const headers = res.headers;
+    // const data = rows.slice(1);
+
 
     // Transform the data into an array of objects
-    const jsonData = data.map(row => {
+    const jsonData = rows.map(row => {
       const rowObject = {};
 
 
@@ -117,12 +134,12 @@ async function getDataAndSaveAsJson(auth) {
 
 
 
-
-
     // filename
-    const orgName = 'ORGNAME';
-    const goodWorkOrgId = 'GOODWORKORGID';
-    const fileName = `${orgName}-${goodWorkOrgId}.json`;
+    // const orgName = 'ORGNAME';
+    // const goodWorkOrgId = 'GOODWORKORGID';
+    // const fileName = `${spreadsheetName}-${spreadsheetId}.json`;
+
+    const fileName = `${spreadsheetName.replace(/[<>:"/\\|?*]/g, '_')}-${spreadsheetId}.json`;
 
 
 
@@ -186,25 +203,24 @@ async function getDataAndSaveAsJson(auth) {
 
 
     // Insert data into the database
-
-    // let newOgraId = 1;
-    // for (const job of jsonData) {
-    //   try {
-    //     const result = await queries.insertJob(newOgraId, job);
-    //     console.log(`Job with ID ${job.jobId} inserted successfully`, result);
-    //     newOgraId += 1;
-    //   } catch (err) {
-    //     console.error(`Error inserting job with ID ${job.jobId}:`, err);
-    //   }
-    // }
+    /*
+    let newOgraId = 1;
+    for (const job of jsonData) {
+      try {
+        const result = await queries.insertJob(newOgraId, job);
+        console.log(`Job with ID ${job.jobId} inserted successfully`, result);
+        newOgraId += 1;
+      } catch (err) {
+        console.error(`Error inserting job with ID ${job.jobId}:`, err);
+      }
+    }
+    */
 
     // Update data in the database
     let getOgraId = 1;
     for (const job of jsonData) {
       try {
-
         await queries.updateJob(getOgraId, job);
-
         getOgraId += 1;
       } catch (err) {
         console.error(`Error updating job with ID ${job.jobId}:`, err);
@@ -244,13 +260,59 @@ async function addData(auth) {
 }
 */
 
+// write a function to get all spread sheet ids
+async function listSpreadsheetIds(auth) {
+  const drive = google.drive({ version: 'v3', auth });
+  try {
+    const res = await drive.files.list({
+      q: "mimeType='application/vnd.google-apps.spreadsheet'",
+      fields: 'files(id, name)',
+    });
+
+    const files = res.data.files;
+    if (files.length) {
+      // console.log('Spreadsheets found:');
+      // files.forEach(file => {
+      //   console.log(`${file.name} (${file.id})`);
+      // });
+      return files;
+    } else {
+      // console.log('No spreadsheets found.');
+      return [];
+    }
+  } catch (err) {
+    console.error('Error listing spreadsheets:', err.message);
+    throw err;
+  }
+}
+
+async function processAllSpreadsheets(auth) {
+  try {
+    // Step 1: Get all spreadsheet IDs
+    const spreadsheets = await listSpreadsheetIds(auth);
+
+    if (spreadsheets.length === 0) {
+      console.log('No spreadsheets to process.');
+      return;
+    }
+
+    // Step 2: Loop through each spreadsheet and get the data
+    for (const spreadsheet of spreadsheets) {
+      console.log(`Processing spreadsheet: ${spreadsheet.name} (${spreadsheet.id})`);
+
+      // Call your function to get data and save it as JSON
+      await getDataAndSaveAsJson(auth, spreadsheet.id, spreadsheet.name);
+    }
+  } catch (err) {
+    console.error('Error processing spreadsheets:', err.message);
+  }
+}
 async function main() {
   try {
     const auth = await authorize();
 
-    await getDataAndSaveAsJson(auth);
+    await processAllSpreadsheets(auth);
     // await addData(auth);
-
 
 
   } catch (err) {
@@ -260,5 +322,5 @@ async function main() {
 
 main().catch(console.error);
 
-module.exports = { main };
+module.exports = { authorize, main };
 

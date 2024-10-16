@@ -69,10 +69,8 @@ async function getNewJobId() {
   }
 }
 
-
 module.exports.updateJob = async function (orgaId, jobData) {
   try {
-
 
     const [existJob] = await pool.query(
       `SELECT * FROM jobs WHERE job_id = ? AND organization_id = ?`,
@@ -81,7 +79,7 @@ module.exports.updateJob = async function (orgaId, jobData) {
 
 
     if (existJob.length === 0) {
-      report(`no job with ID ${jobData.jobId} exist`);
+      console.log(`no job with ID ${jobData.jobId} exist`);
       return;
     }
 
@@ -135,8 +133,6 @@ module.exports.updateJob = async function (orgaId, jobData) {
     throw err;
   }
 };
-
-
 
 async function validateFields(jobData) {
   try {

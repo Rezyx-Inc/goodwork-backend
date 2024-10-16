@@ -15,21 +15,21 @@ if (process.env.ENABLE_CRON) {
   // Check newly added integrations every 10 minutes
   cron.schedule("*/10 * * * *", () => {
     console.log("Checking new integrations");
-    laboredge.init();
+    // laboredge.init();
   });
 
 
   // Check updates every hour
   cron.schedule("0 * * * *", () => {
     console.log("Checking job updates");
-    laboredge.update();
+    // laboredge.update();
     main();
   });
 
   // Check other updates every day at 1 am
   cron.schedule("0 1 * * *", () => {
     console.log("Checking other updates");
-    laboredge.updateOthers();
+    //laboredge.updateOthers();
   });
 
   process.on("SIGTERM", function () {
