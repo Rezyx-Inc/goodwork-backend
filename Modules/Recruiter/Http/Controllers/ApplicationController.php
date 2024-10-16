@@ -341,7 +341,8 @@ class ApplicationController extends Controller
                 $noApplications = false;
             }
             $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
-            return new JsonResponse($response, 200);
+            return response()->json($response, 200);
+            // return new JsonResponse($response, 200);
 
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
@@ -377,8 +378,10 @@ class ApplicationController extends Controller
             }
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
-            //return response()->json(['response'=>$response]);
-            return new JsonResponse($response, 200);
+            return response()->json($response, 200);
+            
+            // return response()->json(['response'=>$response]);
+            // return new JsonResponse($response, 200);
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }

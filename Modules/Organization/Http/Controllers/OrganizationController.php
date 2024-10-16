@@ -21,7 +21,7 @@ use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
-
+use MongoDB\Client;
 
 class OrganizationController extends Controller
 {
@@ -99,199 +99,183 @@ class OrganizationController extends Controller
         $idOrganization = $request->query('organizationId');
         $idWorker = $request->query('workerId');
         $page = $request->query('page', 1);
-
+    
+        // Get the authenticated organization's ID
         $idorganization = Auth::guard('organization')->user()->id;
-
+    
         // Calculate the number of messages to skip
         $skip = ($page - 1) * 10;
+    
+        // Build the MongoDB URI
+        $mongoUri = env('MONGODB_URI') . '/' . env('YOUR_DATABASE_NAME');
+    
+        // Create a new MongoDB client
+        $client = new Client($mongoUri);
+        $collection = $client->selectCollection(env('YOUR_DATABASE_NAME'), 'chat');
+    
 
-        // we need to set the organization static since we dont have a relation between those three roles yet so we choose "GWU000005"
+        // Run the aggregation query directly
+        $cursor = $collection->aggregate([
+            [
+                '$match' => [
+                    'organizationId' => $idOrganization,
+                    'workerId' => $idWorker,
+                    // Uncomment the next line if you need to match by the authenticated organization
+                    // 'organizationId' => $idorganization,
+                ],
+            ],
+            [
+                '$project' => [
+                    'messages' => [
+                        '$slice' => ['$messages', $skip, 10],
+                    ],
+                ],
+            ],
+        ]);
 
-        $chat = DB::connection('mongodb')
-            ->collection('chat')
-            ->raw(function ($collection) use ($idOrganization, $idorganization, $idWorker, $skip) {
-                return $collection
-                    ->aggregate([
-                        [
-                            '$match' => [
-                                'organizationId' => $idOrganization,
-                                // 'organizationId'=> $idorganization,
-                                // for now until get the offer works
-                                'organizationId' => $idorganization,
-
-                                'workerId' => $idWorker,
-                            ],
-                        ],
-                        [
-                            '$project' => [
-                                'messages' => [
-                                    '$slice' => ['$messages', $skip, 10],
-                                ],
-                            ],
-                        ],
-                    ])
-                    ->toArray();
-            });
-
-        return $chat[0];
+        // Convert the cursor to an array
+        $chat = iterator_to_array($cursor);
+        
+        return $chat[0] ?? null; // Return null if there's no chat
     }
 
     public function get_direct_private_messages(Request $request)
-    {
-        $idOrganization = $request->query('organizationId');
-        $idWorker = $request->query('workerId');
-        $page = $request->query('page', 1);
+{
+    $idOrganization = $request->query('organizationId');
+    $idWorker = $request->query('workerId');
+    $page = $request->query('page', 1);
 
-        $idorganization = Auth::guard('organization')->user()->id;
+    $idorganization = Auth::guard('organization')->user()->id;
+    $id = $idorganization;
+    // Calculate the number of messages to skip
+    $skip = ($page - 1) * 10;
 
-        // Calculate the number of messages to skip
-        $skip = ($page - 1) * 10;
+    // MongoDB URI and Database
+    $mongoUri = env('MONGODB_URI');
+    $databaseName = env('YOUR_DATABASE_NAME');
+    $mongoDB = new Client($mongoUri);
+    $collection = $mongoDB->selectCollection($databaseName, 'chat');
 
-        // we need to set the organization static since we dont have a relation between those three roles yet so we choose "GWU000005"
+    // Get chat messages
+    $chat = $collection->aggregate([
+        [
+            '$match' => [
+                'organizationId' => $idOrganization,
+                'workerId' => $idWorker,
+            ],
+        ],
+        [
+            '$project' => [
+                'messages' => [
+                    '$slice' => ['$messages', $skip, 10],
+                ],
+            ],
+        ],
+    ]);
 
-        $chat = DB::connection('mongodb')
-            ->collection('chat')
-            ->raw(function ($collection) use ($idOrganization, $idorganization, $idWorker, $skip) {
-                return $collection
-                    ->aggregate([
-                        [
-                            '$match' => [
-                                'organizationId' => $idOrganization,
-                                // 'organizationId'=> $idorganization,
-                                // for now until get the offer works
-                                'organizationId' => $idorganization,
+    // Convert cursor to array
+    $chat = iterator_to_array($chat);
 
-                                'workerId' => $idWorker,
-                            ],
-                        ],
-                        [
-                            '$project' => [
-                                'messages' => [
-                                    '$slice' => ['$messages', $skip, 10],
-                                ],
-                            ],
-                        ],
-                    ])
-                    ->toArray();
-            });
-        // {{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')"
-        $direct = true;
-        $id = Auth::guard('organization')->user()->id;
+    // Get additional room details
+    $direct = true;
+    $rooms = $collection->aggregate([
+        [
+            '$match' => [
+                'organizationId' => $idorganization,
+            ],
+        ],
+        [
+            '$project' => [
+                'organizationId' => 1,
+                'workerId' => 1,
+                'lastMessage' => 1,
+                'isActive' => 1,
+                'messages' => [
+                    '$slice' => ['$messages', 1],
+                ],
+            ],
+        ],
+    ]);
 
-        $rooms = DB::connection('mongodb')
-            ->collection('chat')
-            ->raw(function ($collection) use ($id) {
-                return $collection
-                    ->aggregate([
-                        [
-                            '$match' => [
-                                //'organizationId' => $id,
-                                // for now until get the offer works
-                                'organizationId' => $id,
-                            ],
-                        ],
-                        [
-                            '$project' => [
-                                'organizationId' => 1,
-                                'workerId' => 1,
-                                'organizationId' => 1,
-                                'lastMessage' => 1,
-                                'isActive' => 1,
-                                'messages' => [
-                                    '$slice' => ['$messages', 1],
-                                ],
-                            ],
-                        ],
-                    ])
-                    ->toArray();
-            });
-
-        $data = [];
-        $data_User = [];
-        foreach ($rooms as $room) {
-            //$user = User:select :where('id', $room->workerId);
-            $user = User::select('first_name', 'last_name')
-                ->where('id', $room->workerId)
-                ->get()
-                ->first();
-
-            if ($user) {
-                $name = $user->fullName;
-            } else {
-                // Handle the case where no user is found
-                $name = 'Default Name';
-            }
-
-            $data_User['fullName'] = $name;
-            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-            $data_User['workerId'] = $room->workerId;
-            $data_User['isActive'] = $room->isActive;
-            $data_User['organizationId'] = $room->organizationId;
-            $data_User['messages'] = $room->messages;
-
-            array_push($data, $data_User);
-        }
-        $worker = User::select('first_name', 'last_name')
-            ->where('id', $idWorker)
-            ->get()
+    $data = [];
+    foreach (iterator_to_array($rooms) as $room) {
+        $user = User::select('first_name', 'last_name')
+            ->where('id', $room['workerId'])
             ->first();
 
-        if ($worker) {
-            $nameworker = $user->fullName;
-        } else {
-            // Handle the case where no user is found
-            $nameworker = 'Default Name';
-        }
-        return view('organization::organization/messages', compact('idWorker', 'idOrganization', 'direct', 'id', 'data', 'nameworker'));
+        $name = $user ? $user->first_name . ' ' . $user->last_name : 'Default Name';
 
+        $data[] = [
+            'fullName' => $name,
+            'lastMessage' => $this->timeAgo($room['lastMessage']),
+            'workerId' => $room['workerId'],
+            'isActive' => $room['isActive'],
+            'organizationId' => $room['organizationId'],
+            'messages' => $room['messages'],
+        ];
     }
+
+    // Get worker details
+    $worker = User::select('first_name', 'last_name')
+        ->where('id', $idWorker)
+        ->first();
+
+    $nameworker = $worker ? $worker->first_name . ' ' . $worker->last_name : 'Default Name';
+
+    return view('organization::organization/messages', compact('idWorker', 'idOrganization', 'direct', 'id', 'data', 'nameworker'));
+    
+}
 
     public function get_rooms(Request $request)
     {
         $idorganization = Auth::guard('organization')->user()->id;
 
-        $rooms = DB::connection('mongodb')
-            ->collection('chat')
-            ->raw(function ($collection) use ($idorganization) {
-                return $collection
-                    ->aggregate([
-                        [
-                            '$match' => [
-                                'organizationId' => $idorganization,
-                            ],
-                        ],
-                        [
-                            '$project' => [
-                                'organizationId' => 1,
-                                'organizationId' => 1,
-                                'workerId' => 1,
-                                'lastMessage' => 1,
-                                'isActive' => 1,
-                                'messages' => [
-                                    '$slice' => ['$messages', 1],
-                                ],
-                            ],
-                        ],
-                    ])
-                    ->toArray();
-            });
+        // MongoDB URI and Database
+        $mongoUri = env('MONGODB_URI');
+        $databaseName = env('YOUR_DATABASE_NAME');
+        $mongoDB = new Client($mongoUri);
+        $collection = $mongoDB->selectCollection($databaseName, 'chat');
 
-        $users = [];
+        // Get chat rooms
+        $rooms = $collection->aggregate([
+            [
+                '$match' => [
+                    'organizationId' => $idorganization,
+                ],
+            ],
+            [
+                '$project' => [
+                    'organizationId' => 1,
+                    'workerId' => 1,
+                    'lastMessage' => 1,
+                    'isActive' => 1,
+                    'messages' => [
+                        '$slice' => ['$messages', 1],
+                    ],
+                ],
+            ],
+        ]);
+
+        // Convert cursor to array
+        $rooms = iterator_to_array($rooms);
+        
         $data = [];
         foreach ($rooms as $room) {
             $user = User::where('id', $room->workerId)
                 ->where('role', 'NURSE')
                 ->select('first_name', 'last_name')
-                ->get();
+                ->first();
 
-            $data_User['fullName'] = $user[0]->last_name;
-            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-            $data_User['workerId'] = $room->workerId;
-            $data_User['organizationId'] = $room->organizationId;
-            $data_User['isActive'] = $room->isActive;
-            $data_User['messages'] = $room->messages;
+            $data_User = [
+                'fullName' => $user ? "{$user->first_name} {$user->last_name}" : 'Default Name',
+                'lastMessage' => $this->timeAgo($room['lastMessage']),
+                'workerId' => $room['workerId'],
+                'organizationId' => $room['organizationId'],
+                'isActive' => $room['isActive'],
+                'messages' => $room['messages'],
+            ];
 
-            array_push($data, $data_User);
+            $data[] = $data_User;
         }
 
         return response()->json($data);
@@ -301,87 +285,78 @@ class OrganizationController extends Controller
     {
 
         $worker_id = $request->input('worker_id');
-        $organization_id = Auth::guard('organization')->user()->id;
-
-
-
+        $id = Auth::guard('organization')->user()->id;
+    
+        // Create MongoDB connection
+        $mongoUri = env('MONGODB_URI');
+        $databaseName = env('YOUR_DATABASE_NAME');
+        $mongoDB = new Client($mongoUri);
+        $collection = $mongoDB->selectCollection($databaseName, 'chat');
+    
         if (isset($worker_id)) {
             $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
-            // Check if a room with the given worker_id and organization_id already exists
-            $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('organizationId', $organization_id)->first();
-
+    
+            // Check if a room with the given worker_id and id already exists
+            $room = $collection->findOne([
+                'workerId' => $nurse_user_id,
+                'organizationId' => $id,
+            ]);
+    
             // If the room doesn't exist, create a new one
             if (!$room) {
-                DB::connection('mongodb')->collection('chat')->insert([
+                $collection->insertOne([
                     'workerId' => $nurse_user_id,
-                    'organizationId' => $organization_id,
-                    'organizationId' => $organization_id, // Replace this with the actual organizationId
+                    'organizationId' => $id,
                     'lastMessage' => $this->timeAgo(now()),
                     'isActive' => true,
                     'messages' => [],
                 ]);
-
-                // Call the get_private_messages function
+    
+                // Call the get_direct_private_messages function
                 $request->query->set('workerId', $nurse_user_id);
-                $request->query->set('organizationId', $organization_id); // Replace this with the actual organizationId
+                $request->query->set('organizationId', $id); // Replace this with the actual organizationId
                 return $this->get_direct_private_messages($request);
             }
         }
-
-        $id = Auth::guard('organization')->user()->id;
-
-        $rooms = DB::connection('mongodb')
-            ->collection('chat')
-            ->raw(function ($collection) use ($id) {
-                return $collection
-                    ->aggregate([
-                        [
-                            '$match' => [
-                                //'organizationId' => $id,
-                                // for now until get the offer works
-                                'organizationId' => $id,
-                            ],
-                        ],
-                        [
-                            '$project' => [
-                                'organizationId' => 1,
-                                'workerId' => 1,
-                                'organizationId' => 1,
-                                'lastMessage' => 1,
-                                'isActive' => 1,
-                                'messages' => [
-                                    '$slice' => ['$messages', 1],
-                                ],
-                            ],
-                        ],
-                    ])
-                    ->toArray();
-            });
+    
+        // Fetch rooms for the organization
+        $rooms = $collection->aggregate([
+            [
+                '$match' => [
+                    'organizationId' => $id,
+                ],
+            ],
+            [
+                '$project' => [
+                    'organizationId' => 1,
+                    'workerId' => 1,
+                    'lastMessage' => 1,
+                    'isActive' => 1,
+                    'messages' => [
+                        '$slice' => ['$messages', 1],
+                    ],
+                ],
+            ],
+        ]);
+        
+        $rooms = iterator_to_array($rooms);
 
         $data = [];
-        $data_User = [];
         foreach ($rooms as $room) {
-            //$user = User:select :where('id', $room->workerId);
             $user = User::select('first_name', 'last_name')
-                ->where('id', $room->workerId)
-                ->get()
+                ->where('id', $room['workerId'])
                 ->first();
-
-            if ($user) {
-                $name = $user->fullName;
-            } else {
-                // Handle the case where no user is found
-                $name = 'Default Name';
-            }
-
-            $data_User['fullName'] = $name;
-            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-            $data_User['workerId'] = $room->workerId;
-            $data_User['isActive'] = $room->isActive;
-            $data_User['organizationId'] = $room->organizationId;
-            $data_User['messages'] = $room->messages;
-
-            array_push($data, $data_User);
+    
+            $data_User = [
+                'fullName' => $user ? "{$user->first_name} {$user->last_name}" : 'Default Name',
+                'lastMessage' => $this->timeAgo($room['lastMessage']),
+                'workerId' => $room['workerId'],
+                'isActive' => $room['isActive'],
+                'organizationId' => $room['organizationId'],
+                'messages' => $room['messages'],
+            ];
+    
+            $data[] = $data_User;
         }
         $direct = false;
         $nameworker = '';

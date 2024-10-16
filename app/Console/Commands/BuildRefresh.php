@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use DB;
+use MongoDB\Client;
 
 class BuildRefresh extends Command
 {
@@ -41,17 +42,20 @@ class BuildRefresh extends Command
 
         $this->info('Application refreshed successfully.');
     }
-
     protected function clearMongoDB()
     {
         // Clear the chats MongoDB database
-    $mongoDB = DB::connection('mongodb');
-    $mongoDB->getMongoDB()->drop();
-    $this->info('Chat MongoDB database cleared.');
-
-    // Clear the notifications MongoDB database
-    $mongoDBNotification = DB::connection('mongodb_notification');
-    $mongoDBNotification->getMongoDB()->drop();
-    $this->info('Notifications MongoDB database cleared.');
+        $mongoUri = env('MONGODB_URI');
+        $databaseName = env('YOUR_DATABASE_NAME');
+        $mongoDB = new Client($mongoUri);
+        $mongoDB->selectDatabase($databaseName)->drop();
+    
+        $this->info('Chat MongoDB database cleared.');
+    
+        // Clear the notifications MongoDB database
+        $notificationDBName = env('NOTIFICATION_DB', 'Notifications');
+        $mongoDB->selectDatabase($notificationDBName)->drop();
+    
+        $this->info('Notifications MongoDB database cleared.');
     }
 }

@@ -17,6 +17,7 @@ use App\Events\NotificationJob;
 use App\Events\NotificationOffer;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use MongoDB\Client;
 
 use DB;
 use Exception;
@@ -173,32 +174,36 @@ class WorkerController extends Controller
         // Calculate the number of messages to skip
         $skip = ($page - 1) * 10;
 
+        // Create MongoDB connection
+        $mongoUri = env('MONGODB_URI');
+        $databaseName = env('YOUR_DATABASE_NAME');
+        $mongoDB = new Client($mongoUri);
+        $collection = $mongoDB->selectCollection($databaseName, 'chat');
 
-        $chat = DB::connection('mongodb')->collection('chat')
-            ->raw(function ($collection) use ($idOrganization, $idWorker, $idRecruiter, $skip) {
-                return $collection->aggregate([
-                    [
-                        '$match' => [
-                            'recruiterId' => $idRecruiter,
-                            'organizationId' => $idOrganization,
-                            'workerId' => $idWorker
-                        ]
+        $chatCursor = $collection->aggregate([
+            [
+                '$match' => [
+                    'recruiterId' => $idRecruiter,
+                    'organizationId' => $idOrganization,
+                    'workerId' => $idWorker,
+                ],
+            ],
+            [
+                '$project' => [
+                    'messages' => [
+                        '$slice' => [
+                            '$messages',
+                            $skip,
+                            10,
+                        ],
                     ],
-                    [
-                        '$project' => [
-                            'messages' => [
-                                '$slice' => [
-                                    '$messages',
-                                    $skip,
-                                    10
-                                ]
-                            ]
-                        ]
-                    ]
-                ])->toArray();
-            });
-        return $chat[0];
+                ],
+            ],
+        ]);
 
+        $chat = iterator_to_array($chatCursor);
+
+        return $chat[0] ?? null; // Return null if no chat is found
     }
 
     // Why is it still here ??????????????????
@@ -207,60 +212,53 @@ class WorkerController extends Controller
 
         $idWorker = Auth::guard('frontend')->user()->id;
 
-        $rooms = DB::connection('mongodb')->collection('chat')
-            ->raw(function ($collection) use ($idWorker) {
-                return $collection->aggregate([
-                    [
-                        '$match' => [
+        // Create MongoDB connection
+        $mongoUri = env('MONGODB_URI');
+        $databaseName = env('YOUR_DATABASE_NAME');
+        $mongoDB = new Client($mongoUri);
+        $collection = $mongoDB->selectCollection($databaseName, 'chat');
 
-                            'workerId' => $idWorker,
-
-                        ]
+        $roomsCursor = $collection->aggregate([
+            [
+                '$match' => [
+                    'workerId' => $idWorker,
+                ],
+            ],
+            [
+                '$project' => [
+                    'organizationId' => 1,
+                    'workerId' => 1,
+                    'recruiterId' => 1,
+                    'lastMessage' => 1,
+                    'isActive' => 1,
+                    'messages' => [
+                        '$slice' => ['$messages', 1],
                     ],
-                    [
-                        '$project' => [
-                            'organizationId' => 1,
-                            'workerId' => 1,
-                            'recruiterId' => 1,
-                            'lastMessage' => 1,
-                            'isActive' => 1,
-                            'messages' => [
-                                '$slice' => [
-                                    '$messages',
-                                    1
-                                ]
-                            ]
-                        ]
-                    ]
-                ])->toArray();
-            });
+                ],
+            ],
+        ]);
 
-
-        $users = [];
+        $rooms = iterator_to_array($roomsCursor);
+        
         $data = [];
         foreach ($rooms as $room) {
-            //$user = User::where('id', $room->organizationId)->select("first_name", "last_name")->get();
             $user = User::select('first_name', 'last_name')
                 ->where('id', $room->organizationId)
-                ->get()
                 ->first();
-            if ($user) {
-                $name = $user->last_name;
-            } else {
-                // Handle the case where no user is found
-                $name = 'Default Name';
-            }
-            $data_User['fullName'] = $name;
-            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
-            $data_User['organizationId'] = $room->organizationId;
-            $data_User['recruiterId'] = $room->recruiterId;
-            $data_User['isActive'] = $room->isActive;
-            $data_User['messages'] = $room->messages;
 
-            array_push($data, $data_User);
+            $name = $user ? $user->last_name : 'Default Name';
 
+            $data_User = [
+                'fullName' => $name,
+                'lastMessage' => $this->timeAgo($room->lastMessage),
+                'organizationId' => $room->organizationId,
+                'recruiterId' => $room->recruiterId,
+                'isActive' => $room->isActive,
+                'messages' => $room->messages,
+            ];
+
+            $data[] = $data_User;
         }
-
 
         return response()->json($data);
     }
@@ -271,9 +269,15 @@ class WorkerController extends Controller
 
         $id = Auth::guard('frontend')->user()->id;
 
-        $rooms = DB::connection('mongodb')->collection('chat')
-            ->raw(function ($collection) use ($id) {
-                return $collection->aggregate([
+        // Build the MongoDB URI
+        $mongoUri = env('MONGODB_URI') . '/' . env('YOUR_DATABASE_NAME');
+
+        // Create a new MongoDB client
+        $client = new Client($mongoUri);
+        $collection = $client->selectCollection(env('YOUR_DATABASE_NAME'), 'chat');
+    
+        // Run the aggregation query
+        $rooms = $collection->aggregate([
                     [
                         '$match' => [
                             'workerId' => $id,
@@ -309,8 +313,9 @@ class WorkerController extends Controller
 
                         ]
                     ]
-                ])->toArray();
-            });
+                ]) ;
+
+        $rooms = iterator_to_array($rooms);
 
         $data = [];
         foreach ($rooms as $room) {

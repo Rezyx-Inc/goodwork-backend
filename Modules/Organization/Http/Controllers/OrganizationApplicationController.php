@@ -339,7 +339,7 @@ class OrganizationApplicationController extends Controller
                 $noApplications = false;
             }
             $response['content'] = view('organization::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
-            return new JsonResponse($response, 200);
+            return response()->json($response);
 
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
@@ -376,7 +376,8 @@ class OrganizationApplicationController extends Controller
             $response['content'] = view('organization::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
             //return response()->json(['response'=>$response]);
-            return new JsonResponse($response, 200);
+            return response()->json($response);
+
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
