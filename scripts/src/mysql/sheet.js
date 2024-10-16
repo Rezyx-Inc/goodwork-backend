@@ -1,5 +1,4 @@
 const { pool } = require('./mysql.js');
-const { report } = require('../set.js')
 
 module.exports.insertJob = async function (orgaId, jobData) {
   try {

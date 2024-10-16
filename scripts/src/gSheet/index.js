@@ -84,6 +84,7 @@ async function authorize() {
   }
 }
 
+
 async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
   try {
     const sheets = google.sheets({ version: 'v4', auth });
@@ -94,25 +95,17 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     });
 
     // Access the rows from the values property
-    const rows = res.data; // Access the rows correctly
-
-    // Process the response here
-    console.log('Fetched rows:', rows);
+    var rows = res.data.values;
+    const headers = rows.shift();
 
     if (!rows || rows.length === 0) {
       console.log('No data found.');
       return;
     }
 
-    // Extract headers and data
-    const headers = res.headers;
-    // const data = rows.slice(1);
-
-
     // Transform the data into an array of objects
     const jsonData = rows.map(row => {
       const rowObject = {};
-
 
       headers.forEach((header, index) => {
         let value = row[index] || '';
@@ -121,46 +114,40 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
           value = parseFloat(value) || 0;
         }
 
-        // if (header === "start date" || header === "end date") {
-        //   const parsedDate = new Date(value);
-        //   value = isNaN(parsedDate.getTime()) ? null : parsedDate;  
-        // }
-
+        // for date parsing is required 
+        /*
+        if (header === "start date" || header === "end date") {
+          const parsedDate = new Date(value);
+          value = isNaN(parsedDate.getTime()) ? null : parsedDate;  
+        }
+        */
 
         rowObject[header] = value;
       });
       return rowObject;
     });
 
+    // Prepare filename
+    const fileName = `${spreadsheetName.replace(/[<>:"/\\|?*]/g, '_')}.json`;
+    const folderPath = path.join(__dirname, 'jsons');
+    const filePath = path.join(folderPath, fileName);
 
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath);
+    }
 
-    // filename
-    // const orgName = 'ORGNAME';
-    // const goodWorkOrgId = 'GOODWORKORGID';
-    // const fileName = `${spreadsheetName}-${spreadsheetId}.json`;
-
-    const fileName = `${spreadsheetName.replace(/[<>:"/\\|?*]/g, '_')}-${spreadsheetId}.json`;
-
-
-
-    // check if file exist
-    const existFile = await fs.existsSync(fileName);
-
+    // Check if the JSON file already exists
+    const existFile = fs.existsSync(filePath);
 
     if (existFile) {
-
-      // get old file
-      const oldFile = await fs.readFileSync(fileName, 'utf8');
+      // Read the existing file
+      const oldFile = await fs.promises.readFile(filePath, 'utf8');
       const old_File_Parsed = JSON.parse(oldFile);
 
-
       if (_.isEqual(old_File_Parsed, jsonData)) {
-        console.log('nno changes');
-
-
+        console.log('No changes');
       } else {
-
-        // update & add
+        // Update & add rows
         for (let i in jsonData) {
           let newRow = jsonData[i];
           let id = newRow.jobId;
@@ -168,7 +155,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
 
           if (oldRow) {
             if (_.isEqual(newRow, oldRow)) {
-              exit
+              continue; // No changes in this row
             } else {
               console.log('Row updated:', newRow);
             }
@@ -177,7 +164,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
           }
         }
 
-        // delete
+        // Delete rows
         for (let i in old_File_Parsed) {
           let oldRow = old_File_Parsed[i];
           let id = oldRow.jobId;
@@ -188,35 +175,17 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
           }
         }
 
-
+        // Save the updated data
+        await fs.promises.writeFile(filePath, JSON.stringify(jsonData, null, 2));
+        console.log(`Updated data saved to ${filePath}`);
       }
-
-
-
     } else {
-      const filePath = path.join(__dirname, fileName);
+      // Save the JSON data to a new file in the jsons folder
       await fs.promises.writeFile(filePath, JSON.stringify(jsonData, null, 2));
       console.log(`Data saved to ${filePath}`);
-
-
     }
 
-
-    // Insert data into the database
-    /*
-    let newOgraId = 1;
-    for (const job of jsonData) {
-      try {
-        const result = await queries.insertJob(newOgraId, job);
-        console.log(`Job with ID ${job.jobId} inserted successfully`, result);
-        newOgraId += 1;
-      } catch (err) {
-        console.error(`Error inserting job with ID ${job.jobId}:`, err);
-      }
-    }
-    */
-
-    // Update data in the database
+    // Update data in the database (assuming `queries.updateJob` is a valid function)
     let getOgraId = 1;
     for (const job of jsonData) {
       try {
@@ -231,6 +200,8 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     console.error('Error fetching or saving data:', err);
   }
 }
+
+
 
 // Function to add data to the Google Sheet
 /*
