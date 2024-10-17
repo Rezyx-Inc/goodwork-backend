@@ -17,15 +17,15 @@
                 Consult worker files
             </a>
         </li>
-        <li>
+        {{-- <li>
             <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->job_id }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
-        </li>
+        </li> --}}
     @else
-        <li>
+        {{-- <li>
             <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->job_id }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
-        </li>
+        </li> --}}
     @endif
 </ul>
 <div class="ss-appli-cng-abt-inf-dv">

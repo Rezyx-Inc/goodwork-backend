@@ -58,17 +58,23 @@ class OpportunitiesController extends Controller
 
         }
 
-        
         $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
             'id' => $recruiter_id,
         ]);
+
         $requiredFields = $requiredFields->json();
+
+        if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToSubmit'])) {
+
         $requiredFieldsToSubmit = $requiredFields[0]['preferences']['requiredToSubmit'];
 
-        //return $requiredFieldsToSubmit;
+        } else {
+
+            $requiredFieldsToSubmit = [];
+
+        }
+
         return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
-        //return response()->json(['success' => false, 'message' =>  $states]);
-        //return view('recruiter::recruiter/opportunitiesmanager');
     }
 
     public function get_cities(Request $request)

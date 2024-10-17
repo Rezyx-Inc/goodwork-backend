@@ -97,7 +97,7 @@ class OrganizationApplicationController extends Controller
         // auto move to working 
         $organization = Auth::guard('organization')->user();
         $id = $organization->id;
-        $offers = Offer::where('status', 'Onboarding')->where('created_by', $id)->get();
+        $offers = Offer::where('status', 'Onboarding')->where('organization_id', $id)->get();
 
         foreach ($offers as $offer) {
 
@@ -125,7 +125,7 @@ class OrganizationApplicationController extends Controller
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        $statusCountsQuery = Offer::where('created_by', $organization->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+        $statusCountsQuery = Offer::where('organization_id', $organization->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
             if ($statusCount) {
                 $statusCounts[$statusCount->status] = $statusCount->count;
@@ -310,7 +310,7 @@ class OrganizationApplicationController extends Controller
         try {
             $type = $request->type;
             $organization = Auth::guard('organization')->user();
-            $offerLists = Offer::where('status', $type)->where('created_by', $organization->id)->get();
+            $offerLists = Offer::where('status', $type)->where('organization_id', $organization->id)->get();
 
             $nurses = [];
             $offerData = [];
@@ -355,8 +355,8 @@ class OrganizationApplicationController extends Controller
             $type = $request->type;
             $nurse = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $nurse->user_id)->first();
-            $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'created_by' => $organization->id])->get();
-            $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'created_by' => $organization->id])->count();
+            $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'organization_id' => $organization->id])->get();
+            $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'organization_id' => $organization->id])->count();
             // file availablity check
             $hasFile = false;
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
@@ -423,7 +423,7 @@ class OrganizationApplicationController extends Controller
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
                 }
-                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('created_by', $organization_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $organization_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;

@@ -108,7 +108,7 @@ class CreateNurseTable extends Migration
             $table->string('worker_scrub_color')->nullable();
             $table->string('worker_interview_dates')->nullable();
             $table->string('worker_start_date', 40)->nullable();
-            $table->string('worker_as_soon_as_posible', 40)->nullable();
+            $table->boolean('worker_as_soon_as_possible')->default(false);
             $table->string('worker_shift_time_of_day')->nullable();
             $table->integer('worker_hours_per_week')->nullable();
             $table->decimal('worker_guaranteed_hours', 8, 2)->nullable();
@@ -126,7 +126,7 @@ class CreateNurseTable extends Migration
             $table->boolean('worker_vision')->nullable();
             $table->decimal('worker_actual_hourly_rate', 8, 2)->nullable();
             $table->decimal('worker_overtime', 8, 2)->nullable();
-            $table->dateTime('worker_holiday')->nullable();
+            $table->date('worker_holiday')->nullable();
             $table->decimal('worker_on_call', 8, 2)->nullable();
             $table->decimal('worker_call_back', 8, 2)->nullable();
             $table->decimal('worker_orientation_rate', 8, 2)->nullable();
