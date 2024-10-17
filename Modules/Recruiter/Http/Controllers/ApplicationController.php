@@ -299,7 +299,8 @@ class ApplicationController extends Controller
             $user_id = $offerdetails->created_by;
             $userdetails = User::where('id', $user_id)->first();
             $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails])->render();
-            return new JsonResponse($response, 200);
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
 
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
