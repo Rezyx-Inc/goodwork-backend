@@ -342,8 +342,8 @@ class ApplicationController extends Controller
                 $noApplications = false;
             }
             $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
-            return new JsonResponse($response, 200);
-
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -379,7 +379,8 @@ class ApplicationController extends Controller
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
             //return response()->json(['response'=>$response]);
-            return new JsonResponse($response, 200);
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -396,7 +397,8 @@ class ApplicationController extends Controller
             $user = User::where('id', $worker_details->user_id)->first();
             $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
             $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
-            return new JsonResponse($response, 200);
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
