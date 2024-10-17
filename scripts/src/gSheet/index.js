@@ -283,6 +283,7 @@ async function main() {
     const auth = await authorize();
 
     await processAllSpreadsheets(auth);
+    
     // await addData(auth);
 
 
