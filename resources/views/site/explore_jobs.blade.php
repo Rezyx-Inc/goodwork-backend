@@ -31,33 +31,31 @@
             </form>
 
           </div>
-          <button type="button" class="btn btn-primary">
-            <i class="fas fa-search"></i>
-          </button>
         </div>
       </div>
-    </div>
 
 
-    <div class="col-lg-6">
-      <div class="ss-expl-pg-bn-ul-sc">
-        <ul>
-          <li>
-            <h6>76+</h6>
-          </li>
-          <li>
-            <p>Nurse <br>Registered</p>
-          </li>
-        </ul>
 
-        <ul>
-          <li>
-            <h6>125+</h6>
-          </li>
-          <li>
-            <p>jobs <br>Added</p>
-          </li>
-        </ul>
+      <div class="col-lg-6">
+        <div class="ss-expl-pg-bn-ul-sc">
+          <ul>
+            <li>
+              <h6>76+</h6>
+            </li>
+            <li>
+              <p>Nurse <br>Registered</p>
+            </li>
+          </ul>
+
+          <ul>
+            <li>
+              <h6>125+</h6>
+            </li>
+            <li>
+              <p>jobs <br>Added</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -615,35 +613,35 @@
       //   // After the third character, it should only be numbers
       //   $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
       // } else {
-      
-        // Check if terms input is empty and remove it
-        var termsInput = $('input[name="terms"]');
-        if (termsInput.length && termsInput.val() === '') {
-          termsInput.remove(); // Remove the empty terms input
-        }
 
-        // Get all selected checkboxes with the name "categories[]"
-        const selectedCategories = $("input[name='terms[]']:checked");
+      // Check if terms input is empty and remove it
+      var termsInput = $('input[name="terms"]');
+      if (termsInput.length && termsInput.val() === '') {
+        termsInput.remove(); // Remove the empty terms input
+      }
 
-        // Extract the values (category names) and join them into a comma-separated string
-        const categoriesString = selectedCategories.map(function() {
-          return $(this).val();
-        }).get().join('-');
-        // Set the categoriesString as the value of the hidden input field
-        $("#job_type").val(categoriesString);
+      // Get all selected checkboxes with the name "categories[]"
+      const selectedCategories = $("input[name='terms[]']:checked");
 
-        // Change the value of the profession select to the text of the selected option
-        const professionSelect = $("select[name='profession']");
-        const selectedOptionText = professionSelect.find("option:selected").text();
+      // Extract the values (category names) and join them into a comma-separated string
+      const categoriesString = selectedCategories.map(function() {
+        return $(this).val();
+      }).get().join('-');
+      // Set the categoriesString as the value of the hidden input field
+      $("#job_type").val(categoriesString);
 
-        // Add a hidden input to the form with the text of the selected option
-        $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
+      // Change the value of the profession select to the text of the selected option
+      const professionSelect = $("select[name='profession']");
+      const selectedOptionText = professionSelect.find("option:selected").text();
 
-        // Now, you can submit the form programmatically
-        console.log('my form');
-        console.log($(this).serializeArray());
+      // Add a hidden input to the form with the text of the selected option
+      $(this).append('<input type="hidden" name="profession_text" value="' + selectedOptionText + '">');
 
-        this.submit(); // Submit the form
+      // Now, you can submit the form programmatically
+      console.log('my form');
+      console.log($(this).serializeArray());
+
+      this.submit(); // Submit the form
       // }
     });
   });
