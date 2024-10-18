@@ -154,7 +154,7 @@ class WorkerController extends Controller
 
         $full_name = $user->first_name . ' ' . $user->last_name;
 
-
+        
         $time = now()->toDateTimeString();
         event(new NewPrivateMessage($message, $idOrganization, $idRecruiter, $id, 'WORKER', $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idRecruiter, $id, $full_name));
@@ -178,7 +178,7 @@ class WorkerController extends Controller
         $mongoUri = env('MONGODB_URI');
         $databaseName = env('YOUR_DATABASE_NAME');
         $mongoDB = new Client($mongoUri);
-        $collection = $mongoDB->selectCollection($databaseName, 'chat');
+        $collection = $mongoDB->selectCollection($databaseName, 'chats');
 
         $chatCursor = $collection->aggregate([
             [
@@ -216,7 +216,7 @@ class WorkerController extends Controller
         $mongoUri = env('MONGODB_URI');
         $databaseName = env('YOUR_DATABASE_NAME');
         $mongoDB = new Client($mongoUri);
-        $collection = $mongoDB->selectCollection($databaseName, 'chat');
+        $collection = $mongoDB->selectCollection($databaseName, 'chats');
 
         $roomsCursor = $collection->aggregate([
             [
@@ -274,7 +274,7 @@ class WorkerController extends Controller
 
         // Create a new MongoDB client
         $client = new Client($mongoUri);
-        $collection = $client->selectCollection(env('YOUR_DATABASE_NAME'), 'chat');
+        $collection = $client->selectCollection(env('YOUR_DATABASE_NAME'), 'chats');
     
         // Run the aggregation query
         $rooms = $collection->aggregate([

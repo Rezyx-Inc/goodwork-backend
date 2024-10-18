@@ -47,7 +47,10 @@
         function getPrivateMessages(idWorker, fullName, idOrganization) {
 
             // Leave the current channel
-            window.Echo.leave(PrivateChannel);
+            if (PrivateChannel) {
+                window.Echo.leave(PrivateChannel);
+            }
+
 
 
             const data = {

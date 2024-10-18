@@ -66,15 +66,17 @@ if (token) {
 
 // for deployment :
 
-import Echo from 'laravel-echo';
-import io from 'socket.io-client';
-window.io = io;
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname,
-    transports: ['websocket'],
-    path: '/websocket/socket.io'
-});
+
+
+// import Echo from 'laravel-echo';
+// import io from 'socket.io-client';
+// window.io = io;
+// window.Echo = new Echo({
+//     broadcaster: 'socket.io',
+//     host: window.location.hostname,
+//     transports: ['websocket'],
+//     path: '/websocket/socket.io'
+// });
 
 // for local development :
 
@@ -86,3 +88,25 @@ window.Echo = new Echo({
 //     broadcaster: 'socket.io',
 //     host: window.location.hostname + ':6001',
 // });
+
+
+
+
+import Echo from 'laravel-echo';
+
+// window.Echo = new Echo({
+//     broadcaster: 'reverb',
+//     key: env('REVERB_APP_KEY'),
+//     host: `${env('REVERB_SCHEME')}://${env('REVERB_HOST')}:${env('REVERB_PORT')}`,
+//     encrypted: env('REVERB_SCHEME') === 'https',
+// });
+
+
+// Make sure that Echo is properly configured with Reverb
+window.Echo = new Echo({
+    broadcaster: 'reverb',
+    key: process.env.REVERB_APP_KEY,  // Ensure this is defined
+    wsHost: `${process.env.REVERB_SCHEME}://${process.env.REVERB_HOST}:${process.env.REVERB_PORT}`,     // WebSocket host
+    encrypted:  process.env.REVERB_SCHEME === 'https',   // Encrypted connection for HTTPS
+    disableStats: true                                      // Optionally disable stats for performance
+});

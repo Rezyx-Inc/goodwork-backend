@@ -48,7 +48,10 @@
         function getPrivateMessages(idRecruiter, idOrganization, fullName) {
 
             // Leave the current private channel
-            window.Echo.leave(PrivateChannel);
+            if (PrivateChannel) {
+                alert("ssss",PrivateChannel);
+                Echo.leave(PrivateChannel);
+            }
 
             const data = {
                 sender: idRecruiter,
@@ -125,7 +128,7 @@
             }
 
             // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
-            window.Echo.channel('goodwork_database_messages')
+            Echo.channel('goodwork_database_messages')
                 .listen('NewMessage', (event) => {
                     console.log('New message:', event.message);
                 });
@@ -346,7 +349,7 @@
 
         window.onload = function() {
             // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
-            window.Echo.channel('goodwork_database_messages')
+            Echo.channel('goodwork_database_messages')
                 .listen('NewMessage', (event) => {
                     console.log('New message:', event.message);
                 });
@@ -357,6 +360,7 @@
         function sendMessage(type) {
             console.log(type);
             let id = @json($id);
+            alert("zssss")
             PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + idRecruiter_Global + '.' + id;
             console.log(PrivateChannel);
             let messageInput = document.getElementById('messageEnvoye');

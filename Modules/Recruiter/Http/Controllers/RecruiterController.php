@@ -150,7 +150,7 @@ class RecruiterController extends Controller
         $mongoUri = env('MONGODB_URI');
         $databaseName = env('YOUR_DATABASE_NAME');
         $mongoDB = new Client($mongoUri);
-        $collection = $mongoDB->selectCollection($databaseName, 'chat');
+        $collection = $mongoDB->selectCollection($databaseName, 'chats');
 
         // Fetch chat messages
         $chatCursor = $collection->aggregate([
@@ -235,7 +235,7 @@ class RecruiterController extends Controller
         $mongoUri = env('MONGODB_URI');
         $databaseName = env('YOUR_DATABASE_NAME');
         $mongoDB = new Client($mongoUri);
-        $collection = $mongoDB->selectCollection($databaseName, 'chat');
+        $collection = $mongoDB->selectCollection($databaseName, 'chats');
 
         // Fetch rooms
         $roomsCursor = $collection->aggregate([
@@ -293,7 +293,7 @@ class RecruiterController extends Controller
         $mongoUri = env('MONGODB_URI');
         $databaseName = env('YOUR_DATABASE_NAME');
         $mongoDB = new Client($mongoUri);
-        $collection = $mongoDB->selectCollection($databaseName, 'chat');
+        $collection = $mongoDB->selectCollection($databaseName, 'chats');
 
         if (isset($worker_id)) {
             $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
@@ -468,6 +468,7 @@ class RecruiterController extends Controller
         $idOrganization = $request->idOrganization;
 
         $time = now()->toDateTimeString();
+        // dd($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName);
         event(new NewPrivateMessage($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
 
