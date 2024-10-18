@@ -411,7 +411,7 @@ class WorkerDashboardController extends Controller
       }
 
       $data['jobs'] = $ret->get();
-      return view('site.explore_jobs', $data);
+      return view('worker::dashboard.explore', $data);
     }
 
 
