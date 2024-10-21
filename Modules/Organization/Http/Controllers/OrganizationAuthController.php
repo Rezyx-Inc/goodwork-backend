@@ -210,6 +210,7 @@ class OrganizationAuthController extends Controller
           }
           $response = [];
           $model = User::create([
+            'organization_name' => $request->organization_name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'mobile' => $request->mobile,
@@ -239,7 +240,8 @@ class OrganizationAuthController extends Controller
           // call local api to create spreadsheet
           $response = Http::post('http://localhost:4545/sheets/createSheet', [
             'organizationId' => $model->id,
-            'organizationName' => $model->first_name . ' ' . $model->last_name 
+            // 'organizationName' => $model->first_name . ' ' . $model->last_name 
+            'organizationName' => $model->organization_name
           ]);
 
           if ($response->json()['success']) {
