@@ -23,7 +23,7 @@
                         </h4>
                         <form method="post" action="{{ route('worker-login') }}" id="login-form" class="">
                             <div class="ss-form-group">
-                                <input type="text" name="id" placeholder="Enter phone number or email id"><br>
+                                <input type="text" name="id" placeholder="Enter phone number or email"><br>
                                 <span class="help-block-email"></span>
                             </div>
                             <div>
