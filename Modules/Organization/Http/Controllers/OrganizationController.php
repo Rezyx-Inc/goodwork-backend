@@ -1495,7 +1495,7 @@ public function recruiters_management()
 
             if ($AssignmentResponse->status() == 200) {
 
-                $recruiterId = $recruiterId;
+
                 $job->recruiter_id = $recruiterId;
                 $job->save();
 
