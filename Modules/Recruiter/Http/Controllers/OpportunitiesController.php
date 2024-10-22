@@ -81,8 +81,11 @@ class OpportunitiesController extends Controller
     {
         $id = $request->id;
 
-        $cities = Cities::select('id', 'name')->where('state_id', $id)->get();
-
+        $cities = Cities::select('id', 'name')
+                            ->where('state_id', $id)
+                            ->orderBy('name', 'asc') 
+                            ->get();
+                            
         return response()->json($cities);
     }
 
