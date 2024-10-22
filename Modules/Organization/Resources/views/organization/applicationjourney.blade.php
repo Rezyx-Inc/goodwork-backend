@@ -938,6 +938,7 @@
     </script>
     <script>
         function askWorker(e, type, workerid, jobid) {
+            return false;
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');

@@ -298,7 +298,7 @@ class Job extends Model
                 };
                 $value = $nurse->highest_nursing_degree;
                 $type = 'dropdown';
-                $name = 'highest_nursing_degree';
+                $name = 'profession';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
 
@@ -500,10 +500,10 @@ class Job extends Model
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'as_soon_as' => function () use ($job, $nurse) {
-                $match = ($job->as_soon_as == $nurse->worker_as_soon_as);
-                $value = $nurse->worker_as_soon_as;
+                $match = ($job->as_soon_as == $nurse->worker_as_soon_as_possible);
+                $value = $nurse->worker_as_soon_as_possible;
                 $type = 'input';
-                $name = 'worker_as_soon_as';
+                $name = 'worker_as_soon_as_possible';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'traveler_distance_from_facility' => function () use ($job, $nurse) {
@@ -669,24 +669,24 @@ class Job extends Model
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'on_call' => function () use ($job, $nurse) {
-                $match = ($nurse->worker_on_call_check == true);
+                $match = ($nurse->worker_on_call_check == $job->on_call);
                 $value = $nurse->worker_on_call_check;
                 $type = 'input';
                 $name = 'worker_on_call_check';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'on_call_rate' => function () use ($job, $nurse) {
-                $match = ($job->on_call_rate == $nurse->worker_on_call_rate);
-                $value = $nurse->worker_on_call_rate;
+                $match = ($job->on_call_rate == $nurse->worker_on_call);
+                $value = $nurse->worker_on_call;
                 $type = 'input';
-                $name = 'worker_on_call_rate';
+                $name = 'worker_on_call';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'call_back_rate' => function () use ($job, $nurse) {
-                $match = ($nurse->worker_call_back_rate == $job->call_back_rate);
-                $value = $nurse->worker_call_back_rate;
+                $match = ($nurse->worker_call_back_check == '1');
+                $value = $nurse->worker_call_back_check;
                 $type = 'input';
-                $name = 'worker_call_back_rate';
+                $name = 'worker_call_back_check';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'orientation_rate' => function () use ($job, $nurse) {
@@ -701,7 +701,7 @@ class Job extends Model
                 $match = ($nurse->worker_weekly_non_taxable_amount_check == '1');
                 $value = $nurse->worker_weekly_non_taxable_amount_check;
                 $type = 'input';
-                $name = 'worker_field';
+                $name = 'worker_weekly_non_taxable_amount_check';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'organization_weekly_amount' => function () use ($job, $nurse) {
@@ -721,9 +721,9 @@ class Job extends Model
             },
             'Unit' => function () use ($job, $nurse) {
                 $match = ($job->Unit == $nurse->worker_unit);
-                $value = $nurse->worker_field;
+                $value = $nurse->worker_unit;
                 $type = 'input';
-                $name = 'worker_field';
+                $name = 'worker_unit';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
 
@@ -768,7 +768,7 @@ class Job extends Model
                 $match = ($job->facility_shift_cancelation_policy == $nurse->facility_shift_cancelation_policy);
                 $value = $nurse->facility_shift_cancelation_policy;
                 $type = 'input';
-                $name = 'worker_field';
+                $name = 'facility_shift_cancelation_policy';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'facilitys_parent_system' => function () use ($job, $nurse) {

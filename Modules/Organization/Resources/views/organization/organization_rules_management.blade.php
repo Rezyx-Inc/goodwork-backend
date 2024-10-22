@@ -28,14 +28,14 @@ $faker = app('Faker\Generator');
                     <th scope="row">{{$item["displayName"]}}</th>
                     <td>
                         <div class="form-check">
-                            <input id="apply_{{$item["fieldID"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                            @if($item['applyDisabled']) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["fieldID"]}}">
+                            <input id="apply_{{$item["workerFieldIdMatch"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
+                            @if($item['applyDisabled']) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["workerFieldIdMatch"]}}">
                         </div>
                     </td>
                     <td>
                         <div class="form-check">
                             <input id="submit_{{$item["fieldID"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                            @if ($item['publishDisabled']) disabled @endif  type="checkbox" name="requiredToSubmit[]" value="{{$item["fieldID"]}}">
+                            @if ($item['publishDisabled']) checked disabled @endif  type="checkbox" name="requiredToSubmit[]" value="{{$item["fieldID"]}}">
                         </div>
                     </td>
                 </tr>
@@ -51,8 +51,13 @@ $faker = app('Faker\Generator');
 <script>
 
     function get_requiredfields(){
+
         let requiredToApply = Array.from(document.querySelectorAll('input[name="requiredToApply[]"]:checked')).map(input => input.value);
         let requiredToSubmit = Array.from(document.querySelectorAll('input[name="requiredToSubmit[]"]:checked')).map(input => input.value);
+
+        let ExcludeFieldsFromRequiredToSubmit = ["preferred_specialty","preferred_experience","profession","job_city","job_state","job_type","weekly_pay","hours_shift","hours_per_week","guaranteed_hours","weeks_shift","actual_hourly_rate","overtime","weekly_non_taxable_amount","terms","eligible_work_in_us","pay_frequency"];
+        requiredToSubmit = requiredToSubmit.filter(item => !ExcludeFieldsFromRequiredToSubmit.includes(item));
+
         let preferences = {
             requiredToApply: requiredToApply,
             requiredToSubmit: requiredToSubmit
@@ -77,33 +82,36 @@ $faker = app('Faker\Generator');
                     }
         });
 
-
-        console.log("requiredToApply", requiredToApply);
-        console.log("requiredToSubmit", requiredToSubmit);
-
     }
 
     var requiredFields = @json($requiredFields);
-    console.log('requiredFields', requiredFields);
+    // console.log('requiredFields', requiredFields);
     var requiredFieldsToApply = requiredFields.requiredToApply;
     var requiredFieldsToSubmit = requiredFields.requiredToSubmit;
 
     for (const column of requiredFieldsToSubmit) {
        
-        console.log(column);
-    var checkbox = document.getElementById('submit_' + column);
-    if (checkbox) {
-        checkbox.checked = true;
-    }
+        // console.log(column);
+        var checkbox = document.getElementById('submit_' + column);
+
+        if (checkbox) {
+
+            checkbox.checked = true;
+
+        }
+
     }
     
     for (const column of requiredFieldsToApply) {
-        console.log(column);
-        
-    var checkbox = document.getElementById('apply_' + column);
-    if (checkbox) {
-        checkbox.checked = true;
-    }
+
+        // console.log(column);
+        var checkbox = document.getElementById('apply_' + column);
+
+        if (checkbox) {
+
+            checkbox.checked = true;
+
+        }
 
     }
 

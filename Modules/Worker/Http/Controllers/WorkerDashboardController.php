@@ -600,7 +600,8 @@ class WorkerDashboardController extends Controller
         'weekly_pay' => $job->weekly_pay,
         'tax_status' => $job->tax_status,
         'status' => 'Apply',
-        'recruiter_id' => $job->created_by,
+        'recruiter_id' => $job->recruiter_id,
+        'organization_id' => $job->organization_id,
       ];
       if (empty($rec)) {
         offer::create($input);

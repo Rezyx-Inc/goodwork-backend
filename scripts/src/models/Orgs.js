@@ -28,6 +28,10 @@ const globalRuleFieldsSchema = mongoose.Schema({
                         type: String,
                         required: true
                     },
+                    workerFieldIdMatch : {
+                        type: String,
+                        required: false
+                    },
                     displayName: {
                         type: String,
                         required: true

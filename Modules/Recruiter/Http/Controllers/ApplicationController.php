@@ -97,7 +97,7 @@ class ApplicationController extends Controller
         // auto move to working 
         $recruiter = Auth::guard('recruiter')->user();
         $id = $recruiter->id;
-        $offers = Offer::where('status', 'Onboarding')->where('created_by', $id)->get();
+        $offers = Offer::where('status', 'Onboarding')->where('recruiter_id', $id)->get();
 
         foreach ($offers as $offer) {
 
@@ -126,7 +126,7 @@ class ApplicationController extends Controller
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        $statusCountsQuery = Offer::where('created_by', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+        $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
             if ($statusCount) {
                 $statusCounts[$statusCount->status] = $statusCount->count;
@@ -299,7 +299,8 @@ class ApplicationController extends Controller
             $user_id = $offerdetails->created_by;
             $userdetails = User::where('id', $user_id)->first();
             $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails])->render();
-            return new JsonResponse($response, 200);
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
 
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
@@ -312,7 +313,7 @@ class ApplicationController extends Controller
         try {
             $type = $request->type;
             $recruiter = Auth::guard('recruiter')->user();
-            $offerLists = Offer::where('status', $type)->where('created_by', $recruiter->id)->get();
+            $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
 
             $nurses = [];
             $offerData = [];
@@ -341,8 +342,8 @@ class ApplicationController extends Controller
                 $noApplications = false;
             }
             $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
-            return new JsonResponse($response, 200);
-
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -357,8 +358,8 @@ class ApplicationController extends Controller
             $type = $request->type;
             $nurse = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $nurse->user_id)->first();
-            $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'created_by' => $recruiter->id])->get();
-            $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'created_by' => $recruiter->id])->count();
+            $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'recruiter_id' => $recruiter->id])->get();
+            $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'recruiter_id' => $recruiter->id])->count();
             // file availablity check
             $hasFile = false;
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
@@ -378,7 +379,8 @@ class ApplicationController extends Controller
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
             //return response()->json(['response'=>$response]);
-            return new JsonResponse($response, 200);
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -395,7 +397,8 @@ class ApplicationController extends Controller
             $user = User::where('id', $worker_details->user_id)->first();
             $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
             $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
-            return new JsonResponse($response, 200);
+            //return new JsonResponse($response, 200);
+            return response()->json($response);
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -425,7 +428,7 @@ class ApplicationController extends Controller
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
                 }
-                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('created_by', $recruiter_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('recruiter_id', $recruiter_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;

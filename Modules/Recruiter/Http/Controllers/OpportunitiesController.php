@@ -21,6 +21,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\Http;
 
 class OpportunitiesController extends Controller
 {
@@ -57,9 +58,23 @@ class OpportunitiesController extends Controller
 
         }
 
-        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount'));
-        //return response()->json(['success' => false, 'message' =>  $states]);
-        //return view('recruiter::recruiter/opportunitiesmanager');
+        $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
+            'id' => $recruiter_id,
+        ]);
+
+        $requiredFields = $requiredFields->json();
+
+        if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToSubmit'])) {
+
+        $requiredFieldsToSubmit = $requiredFields[0]['preferences']['requiredToSubmit'];
+
+        } else {
+
+            $requiredFieldsToSubmit = [];
+
+        }
+
+        return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
     }
 
     public function get_cities(Request $request)

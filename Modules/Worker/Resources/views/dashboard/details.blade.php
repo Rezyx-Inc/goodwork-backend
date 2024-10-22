@@ -473,7 +473,7 @@
                                             <h6>{{ $model->facility_shift_cancelation_policy }} </h6>
                                         </li>
                                         <li>
-                                            <p data-target="dropdown" data-title="What terms do you prefer?"
+                                            <p data-target="input" data-title="What terms do you prefer?"
                                                 data-filter="AssignmentDuration"
                                                 data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">
                                                 What terms do you prefer?</p>
@@ -531,7 +531,7 @@
 
                                 @if (isset($model->facilitys_parent_system))
                                     <ul id="worker_facilitys_parent_system"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['facilitys_parent_system']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} ">
+                                        class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Facility's Parent System</span>
                                             <h6>{{ $model->facilitys_parent_system }}</h6>
@@ -654,7 +654,7 @@
                                 @endif
 
                                 @if (isset($model->as_soon_as) && $model->as_soon_as == '1')
-                                    <ul id="worker_as_soon_as"
+                                    <ul id="worker_as_soon_as_possible"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['as_soon_as']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Start date</span>
@@ -662,7 +662,7 @@
                                         </li>
                                         <li>
                                             <p data-target="binary" data-title="Can you start as soon as possible?"
-                                                data-name="worker_as_soon_as" onclick="open_modal(this)">Can you start as
+                                                data-name="worker_as_soon_as_possible" onclick="open_modal(this)">Can you start as
                                                 soon as possible?</p>
                                         </li>
                                     </ul>
@@ -1036,7 +1036,7 @@
                                     </ul>
                                 @endif
                                 @if (isset($model->on_call_rate))
-                                    <ul id="worker_on_call_rate"
+                                    <ul id="worker_on_call"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>On Call Rate</span>
@@ -1044,14 +1044,14 @@
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What rate is fair?"
-                                                data-placeholder="What rate is fair?" data-name="worker_on_call_rate"
+                                                data-placeholder="What rate is fair?" data-name="worker_on_call"
                                                 onclick="open_modal(this)">What rate is fair?</p>
                                         </li>
                                     </ul>
                                 @endif
 
                                 @if (isset($model->call_back_rate))
-                                    <ul id="worker_call_back_rate"
+                                    <ul id="worker_call_back_check"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['call_back_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>On Call Back Rate</span>
@@ -1059,7 +1059,7 @@
                                         </li>
                                         <li>
                                             <p data-target="binary" data-title="Is this rate reasonable?"
-                                                data-name="worker_call_back_rate" onclick="open_modal(this)">Is this rate
+                                                data-name="worker_call_back_check" onclick="open_modal(this)">Is this rate
                                                 reasonable?</p>
                                         </li>
                                     </ul>
@@ -1172,7 +1172,7 @@
 
                                 <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                     <li>
-                                        <span>(*) : Required Fields</span>
+                                        <span style="font-size: larger">(*) : Required Fields</span>
                                     </li>
                                 </ul>
 
@@ -1598,7 +1598,7 @@
                                     </div>
                                     <h4></h4>
                                     <div class="ss-form-group">
-                                        <input type="number" name="" placeholder="">
+                                        <input type="number" name="" step='0.01' placeholder="">
                                         <span class="help-block"></span>
                                     </div>
                                     <button type="submit" class="ss-job-dtl-pop-sv-btn"
@@ -2158,6 +2158,18 @@
 @section('js')
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
     <script>
+        let userMatch = @json($matches);
+        let workerMatch = [];
+        for (let key in userMatch) {
+        if (userMatch.hasOwnProperty(key)) {
+            workerMatch[userMatch[key].name] = {
+                match : userMatch[key].match,
+            };
+            }
+        }
+
+        console.log('workerMatch', workerMatch);
+        
         var Emr = {};
 
         function addEmr(type) {
@@ -2536,7 +2548,7 @@
                 console.log(data); // Handle success
                 notie.alert({
                     type: 'success',
-                    text: '<i class="fa fa-check"></i>' + data.message,
+                    text: '<i class="fa fa-check"></i>' + "Uploaded Successfully",
                     time: 3
                 });
             } catch (error) {
@@ -2604,6 +2616,26 @@
     <script>
         var dataToSend = {};
         var EmrStr = '';
+        var requiredFieldsToApply = @json($requiredFieldsToApply);
+
+        console.log('required fields : ', requiredFieldsToApply);
+        requiredFieldsToApply.forEach(function(field) {
+
+            var element = document.getElementById(field);
+            console.log(element);
+            
+            if (element) {
+
+                var spanElement = element.querySelector('span');
+
+                if (spanElement) {
+
+                    spanElement.innerHTML += ' (*)';
+
+                }
+            }
+
+        });
 
         function matchWithWorker(workerField, InsertedValue) {
             let match = false;
@@ -2680,7 +2712,7 @@
                         match = true;
                     }
                     break;
-                case 'worker_as_soon_as':
+                case 'worker_as_soon_as_possible':
                     if (job['as_soon_as'] == InsertedValue) {
                         match = true;
                     }
@@ -2701,7 +2733,7 @@
                     }
                     break;
                 case 'worker_emr':
-                    if (job['Emr'] == InsertedValue) {
+                    if (job['Emr'] == EmrStr.trim('')) {
                         match = true;
                     }
                     break;
@@ -2716,7 +2748,7 @@
                     }
                     break;
                 case 'worker_guaranteed_hours':
-                    if (job['guaranteed_hours'] == InsertedValue) {
+                    if (Number(job['guaranteed_hours']) == InsertedValue) {
                         match = true;
                     }
                     break;
@@ -2726,32 +2758,32 @@
                     }
                     break;
                 case 'worker_shifts_week':
-                    if (job['weeks_shift'] == InsertedValue) {
+                    if (Number(job['weeks_shift']) == InsertedValue) {
                         match = true;
                     }
                     break;
                 case 'worker_referral_bonus':
-                    if (job['referral_bonus'] == InsertedValue) {
+                    if (Number(job['referral_bonus']) == InsertedValue) {
                         match = true;
                     }
                     break;
                 case 'worker_sign_on_bonus':
-                    if (job['sign_on_bonus'] == InsertedValue) {
+                    if (Number(job['sign_on_bonus']) == InsertedValue) {
                         match = true;
                     }
                     break;
                 case 'worker_completion_bonus':
-                    if (job['completion_bonus'] == InsertedValue) {
+                    if (Number(job['completion_bonus']) == InsertedValue) {
                         match = true;
                     }
                     break;
                 case 'worker_extension_bonus':
-                    if (job['extension_bonus'] == InsertedValue) {
+                    if (Number(job['extension_bonus']) == InsertedValue) {
                         match = true;
                     }
                     break;
                 case 'worker_other_bonus':
-                    if (job['other_bonus'] == InsertedValue) {
+                    if (Number(job['other_bonus']) == InsertedValue) {
                         match = true;
                     }
                     break;
@@ -2761,7 +2793,7 @@
                     }
                     break;
                 case 'worker_actual_hourly_rate':
-                    if (job['actual_hourly_rate'] == InsertedValue) {
+                    if (Number(job['actual_hourly_rate']) == InsertedValue) {
                         match = true;
                     }
                     break;
@@ -2796,13 +2828,13 @@
                     }
                     break;
                 case 'worker_on_call_check':
-                    job['on_call'] = job['on_call'] == 'Yes' ? '1' : '0';
+                    // job['on_call'] = job['on_call'] == 'Yes' ? '1' : '0';
                     if (job['on_call'] == InsertedValue) {
                         match = true;
                     }
                     break;
-                case 'worker_on_call_rate':
-                    if (job['on_call_rate'] == InsertedValue) {
+                case 'worker_on_call':
+                    if (Number(job['on_call_rate']) == InsertedValue) {
                         match = true;
                     }
                     break;
@@ -2811,13 +2843,8 @@
                         match = true;
                     }
                     break;
-                case 'worker_call_back_rate':
-                    if (job['call_back_rate'] == InsertedValue) {
-                        match = true;
-                    }
-                    break;
                 case 'worker_orientation_rate':
-                    if (InsertedValue == job['orientation_rate']) {
+                    if (InsertedValue == Number(job['orientation_rate'])) {
                         match = true;
                     }
                     break;
@@ -2827,12 +2854,12 @@
                     }
                     break;
                 case 'worker_organization_weekly_amount':
-                    if (job['organization_weekly_amount'] == InsertedValue) {
+                    if (Number(job['organization_weekly_amount']) == InsertedValue) {
                         match = true;
                     }
                     break;
                 case 'worker_patient_ratio':
-                    if (job['Patient_ratio'] == InsertedValue) {
+                    if (Number(job['Patient_ratio']) == InsertedValue) {
                         match = true;
                     }
                     break;
@@ -3054,6 +3081,80 @@
 
 
         async function check_required_files_before_sent(obj) {
+            let access = true;
+            console.log('requiredFieldsToApply',requiredFieldsToApply);
+            for (const requiredField of requiredFieldsToApply) {
+                console.log('requiredField', requiredField);
+                if (requiredField == 'certification') {
+                    console.log('you need certification !');
+                    let certificate = await get_all_files_displayName_by_type('certification');
+                    if (certificate.length == 0) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
+                            time: 3
+                        });
+                        access = false;
+                        break;
+                    }                    
+                } else if (requiredField == 'vaccination') {
+                    console.log('you need vaccination !');
+                    let vaccination = await get_all_files_displayName_by_type('vaccination');
+                    if (vaccination.length == 0) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
+                            time: 3
+                        });
+                        access = false;
+                        break;
+                    }
+                } else if (requiredField == 'references') {
+                    console.log('you need references !');
+                    let references = await get_all_files_displayName_by_type('references');
+                    if (references.length == 0) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
+                            time: 3
+                        });
+                        access = false;
+                        break;
+                    }
+                } else if (requiredField == 'skills') {
+                    console.log('you need skills !');
+                    let skills = await get_all_files_displayName_by_type('skills');
+                    if (skills.length == 0) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Please upload all required files',
+                            time: 3
+                        });
+                        access = false;
+                        break;
+                    }
+                } else {
+                    let fieldValue = dataToSend[requiredField];
+                    console.log(workerMatch);
+                    console.log('the field' , requiredField);
+                    if (fieldValue == null && workerMatch[requiredField].match == false) {
+                        
+                        console.log('the nurse match ',workerMatch[requiredField].match);
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Please fill the required fields',
+                            time: 3
+                        });
+                        access = false;
+                        break;
+                    }
+                    
+                }
+            };
+            if (access == false) {
+                console.log('access', access);
+                return false;
+            }
             let diploma = [];
             let driving_license = [];
 

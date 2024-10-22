@@ -59,7 +59,14 @@ class OrganizationOpportunitiesController extends Controller
 
         }
 
-        return view('organization::organization/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount'));
+        $orgId = Auth::guard('organization')->user()->id;
+        $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+            'id' => $orgId,
+        ]);
+        $requiredFields = $requiredFields->json();
+        $requiredFieldsToSubmit = $requiredFields['requiredToSubmit'];
+        
+        return view('organization::organization/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
         //return response()->json(['success' => false, 'message' =>  $states]);
         //return view('organization::organization/opportunitiesmanager');
     }
