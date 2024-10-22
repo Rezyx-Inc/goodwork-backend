@@ -2119,7 +2119,7 @@
                                        
                                        
                                                         <label> Work City </label>
-                                                        <select name="job_city" id="job_cityEdit">
+                                                        <select name="job_city" id="job_cityEdit" class="searchable-select">
                                                             <option value="">Select a city</option>
                                                         </select>
                                        
@@ -7194,24 +7194,58 @@
 
     }
 
-    .ss-account-form-lft-1 .ss-form-group select {
+    /* Select field styling */
+    .ss-account-form-lft-1 .ss-form-group select,
+    .ss-account-form-lft-1 select,
+    form .page .field select {
         border: 2px solid #3D2C39 !important;
         width: 90%;
         padding: 10px !important;
         box-shadow: 10px 10px 0px 0px #3D2C39;
         border-radius: 12px;
         background: #fff !important;
+        font-size: 17px;
+        font-weight: 500;
+        margin-bottom: 2px;
     }
 
-    .ss-account-form-lft-1 input,
-    .ss-account-form-lft-1 select {
+    .select2-container .select2-selection--single {
+        height: 75% ;
         border: 2px solid #3D2C39 !important;
-        width: 90%;
+        border-radius: 12px !important;
         padding: 10px !important;
-        box-shadow: 10px 10px 0px 0px #3D2C39;
-        border-radius: 12px;
-        background: #fff !important;
-        margin-bottom: 2px !important;
+        box-shadow: 10px 10px 0px 0px #3D2C39 !important;
+        background-color: #fff !important;
+        width: 90% !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #000;
+        padding-left: 10px;
+        font-size: 17px;
+        font-weight: 500;
+    }
+    
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 50%;
+        right: 27px;
+        transform: translateY(-50%);
+    }
+
+    .select2-dropdown {
+        border: 2px solid #3D2C39 !important;
+        box-shadow: 10px 10px 0px 0px #3D2C39 !important;
+    }
+
+    .select2-results__option {
+        padding: 10px;
+        font-size: 17px;
+    }
+
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #3D2C39 !important;
+        color: white !important;
     }
 
     textarea {
@@ -7222,15 +7256,6 @@
         border-radius: 12px;
         background: #fff !important;
     }
-
-
-    form .page .field select {
-        width: 100%;
-        padding-left: 10px;
-        font-size: 17px;
-        font-weight: 500;
-    }
-
     form .page .field button {
         width: fit-content;
         height: calc(100% + 5px);
