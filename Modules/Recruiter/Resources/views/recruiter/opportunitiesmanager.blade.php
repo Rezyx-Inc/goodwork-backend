@@ -42,45 +42,38 @@
                     <div class="bodyAll">
                         <div class="ss-account-form-lft-1 container">
                             <header><span style="color: #b5649e;">Create</span> Work Request</header>
-                            <div class="row progress-bar-item d-none">
+                            <div class="row progress-bar-item">
                                 <div class="col-3 step">
-                                    <p>Work information</p>
+                                    <!-- <p>Step 1</p> -->
                                     <div class="bullet">
-                                        <span>1</span>
+                                        <span>Step 1</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
 
-                                <div class=" col-2 step">
-                                    <p>Preferences and Requirements</p>
+                                <div class=" col-3 step">
+                                    <!-- <p>Step 2</p> -->
                                     <div class="bullet">
-                                        <span>2</span>
+                                        <span>Step 2</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
-                                <div class="col-2 step">
-                                    <p>Work Details</p>
+                                <div class="col-3 step">
+                                    <!-- <p>Step 3</p> -->
                                     <div class="bullet">
-                                        <span>3</span>
-                                    </div>
-                                    <div class="check fas fa-check"></div>
-                                </div>
-
-                                <div class="col-2 step">
-                                    <p>other information</p>
-                                    <div class="bullet">
-                                        <span>4</span>
+                                        <span>Step 3</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
 
                                 <div class="col-3 step">
-                                    <p>Work Schedule & Requirements</p>
+                                    <!-- <p>Step 4</p> -->
                                     <div class="bullet">
-                                        <span>5</span>
+                                        <span>Step 4</span>
                                     </div>
                                     <div class="check fas fa-check"></div>
                                 </div>
+
                             </div>
                             <div class="form-outer">
                                 <form method="post" id="create_job_form" action="{{ route('addJob.store') }}">
@@ -7321,17 +7314,37 @@
 
     .progress-bar-item .step .bullet {
         height: 25px;
-        width: 25px;
+        width: 100px;
         border: 2px solid #000;
         display: inline-block;
-        border-radius: 50%;
+        border-radius: 10%;
         position: relative;
         transition: 0.2s;
         font-weight: 500;
         font-size: 17px;
         line-height: 25px;
+        background-color: #fff;
+    }
+    /* Progress bar container */
+    .progress-bar-item {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        padding: 0 15px;
+        margin-bottom: 40px;
     }
 
+    /* Style for the line connecting the steps */
+    .progress-bar-item::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: #e0e0e0; /* Line color when not completed */
+        z-index: 0;
+    }
     .progress-bar-item .step .bullet.active {
         border-color: #b5649e;
         background: #b5649e;
@@ -7344,7 +7357,7 @@
     }
 
     .progress-bar-item .step .bullet.active span {
-        display: none;
+        /* display: none; */
     }
 
     /* transition progress line */
