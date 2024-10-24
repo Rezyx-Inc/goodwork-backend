@@ -87,14 +87,7 @@ async function authorize() {
 
 async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
   try {
-    // skip a specific spreadsheet
-    if (spreadsheetId === "1Q5e9vVb1dApdBkoeg8rqwwWlNJEk51SV7W36qBeuP_c"
-      || spreadsheetId === "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-      || spreadsheetId === "1DoTKZgapb-OHHDpDOI1FSDuGfs1D0SlmMKp55KJZk24"
-    ) {
-      console.log("skip this");
-      return;
-    }
+
 
     const sheets = google.sheets({ version: 'v4', auth });
     const res = await sheets.spreadsheets.values.get({
@@ -102,8 +95,8 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
       range: `Sheet1!A:BI`,
       auth: auth,
     });
-    
-    
+
+
     // Access the rows from the values property
     var rows = res.data.values;
 
@@ -127,7 +120,10 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         const isBoolean = value.toLowerCase() === 'true' || value.toLowerCase() === 'false';
 
         // Assign based on type
-        if (isNumeric) {
+        // Skip conversion for 'job_id' and assign it directly as a string
+        if (header === 'job_id') {
+          rowObject[header] = value; // Keep 'job_id' as a string
+        } else if (isNumeric) {
           rowObject[header] = parseFloat(value); // Convert to number if fully numeric
         } else if (isBoolean) {
           rowObject[header] = value.toLowerCase() === 'true'; // Convert to boolean (true or false)
@@ -154,7 +150,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
 
     // Check if the JSON file already exists
     const existFile = fs.existsSync(filePath);
-    /*
+
     if (existFile) {
       // Read the existing file
       const oldFile = await fs.promises.readFile(filePath, 'utf8');
@@ -162,71 +158,138 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
 
       if (_.isEqual(old_File_Parsed, jsonData)) {
         console.log('No changes');
+
       } else {
-        // Update & add rows
-        for (let i in jsonData) {
-          let newRow = jsonData[i];
-          let id = newRow.jobId;
-          let oldRow = old_File_Parsed.find((j) => j.jobId === id);
-
-          if (oldRow) {
-            if (_.isEqual(newRow, oldRow)) {
-              continue; // No changes in this row
-            } else {
-              console.log('Row updated:', newRow);
-            }
-          } else {
-            console.log('Row added:', newRow);
-          }
-        }
-
         // Delete rows
         for (let i in old_File_Parsed) {
           let oldRow = old_File_Parsed[i];
-          let id = oldRow.jobId;
-          let newRow = jsonData.find((newRow) => newRow.jobId === id);
+          let id = oldRow.job_id;
+          let newRow = jsonData.find((newRow) => newRow.job_id === id);
 
           if (!newRow) {
-            console.log('Row deleted:', oldRow);
+            console.log('Row deleted:', oldRow.job_id);
+
+            let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
+            try {
+              await queries.deleteJob(OrgaId, oldRow.job_id);
+
+            } catch (err) {
+              console.error(`Error in job with ID ${job.job_id}:`, err);
+            }
+
           }
         }
+
+        // Update & add rows
+        for (let i in jsonData) {
+          let newRow = jsonData[i];
+          let id = newRow.job_id;
+          let oldRow = old_File_Parsed.find((j) => j.job_id === id);
+
+
+          if (oldRow) {
+            if (_.isEqual(newRow, oldRow)) {
+              continue;
+            } else {
+              console.log('Row updated:', newRow.job_id);
+              // update data in the database
+              // get the organization ID
+              let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
+
+              for (const job of jsonData) {
+                try {
+                  await queries.updateJob(OrgaId, job);
+
+                  // // Extract the numeric part from OrgaId (e.g., "000002")
+                  // let numericPart = OrgaId.substring(3); // Get "000002"
+
+                  // // Increment the numeric part
+                  // let newNumber = (parseInt(numericPart) + 1).toString();
+
+                  // // Add leading zeros back based on the length of the new number
+                  // OrgaId = `GWU${newNumber.padStart(6, '0')}`;
+
+                } catch (err) {
+                  console.error(`Error in job with ID ${job.job_id}:`, err);
+                }
+              }
+            }
+          } else {
+            console.log('Row added:', newRow.job_id);
+
+            // insert data in the database
+            // get the organization ID
+            let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
+            try {
+              await queries.insertJob(OrgaId, newRow);
+
+            } catch (err) {
+              console.error(`Error in job with ID ${job.job_id}:`, err);
+            }
+
+          }
+        }
+
+
 
         // Save the updated data
         await fs.promises.writeFile(filePath, JSON.stringify(jsonData, null, 2));
         console.log(`Updated data saved to ${filePath}`);
       }
     } else {
-     */
-    // Save the JSON data to a new file in the jsons folder
-    await fs.promises.writeFile(filePath, JSON.stringify(jsonData, null, 2));
-    console.log(`Data saved to ${filePath}`);
-    //}
+
+      // Save the JSON data to a new file in the jsons folder
+      await fs.promises.writeFile(filePath, JSON.stringify(jsonData, null, 2));
+      console.log(`Data saved to ${filePath}`);
+
+
+      // insert data in the database
+      // get the organization ID
+      let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
+
+      for (const job of jsonData) {
+        try {
+          await queries.insertJob(OrgaId, job);
+
+          // Extract the numeric part from OrgaId (e.g., "000002")
+          let numericPart = OrgaId.substring(3); // Get "000002"
+
+          // Increment the numeric part
+          let newNumber = (parseInt(numericPart) + 1).toString();
+
+          // Add leading zeros back based on the length of the new number
+          OrgaId = `GWU${newNumber.padStart(6, '0')}`;
+
+        } catch (err) {
+          console.error(`Error in job with ID ${job.job_id}:`, err);
+        }
+      }
+    }
 
 
 
 
-    // insert data in the database
-    // let getOgraId = 1;
+
+    // let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
     // for (const job of jsonData) {
     //   try {
-    //     await queries.insertJob(getOgraId, job);
-    //     getOgraId += 1;
+    //     await queries.insertJob(OrgaId, job);
+    //     OrgaId += 1;
     //   } catch (err) {
     //     console.error(`Error in job with ID ${job.job_id}:`, err);
     //   }
     // }
 
-
     // update data in the database
-    let getOgrId = 1;
-    for (const job of jsonData) {
-      try {
-        await queries.updateJob(getOgrId, job);
-        getOgrId += 1;
-      } catch (err) {
-        console.error(`Error in job with ID ${job.job_id}:`, err);
-      }
-    }
+    // let getOgrId = 1;
+    // for (const job of jsonData) {
+    //   try {
+    //     await queries.updateJob(getOgrId, job);
+    //     getOgrId += 1;
+    //   } catch (err) {
+    //     console.error(`Error in job with ID ${job.job_id}:`, err);
+    //   }
+    // }
 
   } catch (err) {
     console.error('Error fetching or saving data:', err);
@@ -269,13 +332,23 @@ async function processAllSpreadsheets(auth) {
       console.log('No spreadsheets to process.');
       return;
     }
-    
+
     // Step 2: Loop through each spreadsheet and get the data
     for (const spreadsheet of spreadsheets) {
-      console.log(`Processing spreadsheet: ${spreadsheet.name} (${spreadsheet.id})`);
+      // skip a specific spreadsheet
+      if (spreadsheet.id === "1Q5e9vVb1dApdBkoeg8rqwwWlNJEk51SV7W36qBeuP_c"
+        || spreadsheet.id === "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
+        || spreadsheet.id === "1DoTKZgapb-OHHDpDOI1FSDuGfs1D0SlmMKp55KJZk24"
+      ) {
+        //  console.log("skip this");
+        exit
+      } else {
+        console.log(`Processing spreadsheet: ${spreadsheet.name} (${spreadsheet.id})`);
 
-      // Call your function to get data and save it as JSON
-      await getDataAndSaveAsJson(auth, spreadsheet.id, spreadsheet.name);
+        // Call your function to get data and save it as JSON
+        await getDataAndSaveAsJson(auth, spreadsheet.id, spreadsheet.name);
+      }
+
     }
   } catch (err) {
     console.error('Error processing spreadsheets:', err.message);
@@ -427,12 +500,12 @@ async function main() {
 
     await processAllSpreadsheets(auth);
 
-    const id_for_add = "1iX3uO-xeld9kHl1zx2QbFFeFPvNUgW7GbsMZMTSQxl4"
+    const id_for_add = "1P4PxtT-S6c42-jGHz-Mo2jpV1dYmCfRi2-a4aO3JNHk"
     //await addDataToSpreadsheet(auth , id_for_add);
 
     //await deleteAllSpreadsheets(auth);
 
-    const idd_for_delete = "1YB51Wli-Ud0Gy7VmXEpfVyzL_fBgfODmoEOna-GK7hE"
+    const idd_for_delete = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
     //await deleteSpreadsheetById(auth , idd_for_delete);
 
 
