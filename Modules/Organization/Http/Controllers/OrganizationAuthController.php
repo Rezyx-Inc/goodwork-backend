@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\login;
 use App\Mail\register;
 use App\Events\UserCreated;
+use Illuminate\Support\Facades\Http;
+
 
 class OrganizationAuthController extends Controller
 {
@@ -240,7 +242,6 @@ class OrganizationAuthController extends Controller
           // call local api to create spreadsheet
           $response = Http::post('http://localhost:4545/sheets/createSheet', [
             'organizationId' => $model->id,
-            // 'organizationName' => $model->first_name . ' ' . $model->last_name 
             'organizationName' => $model->organization_name
           ]);
 
@@ -253,7 +254,9 @@ class OrganizationAuthController extends Controller
           } else {
             return response()->json([
               'msg' => 'Registration successful but failed to create spreadsheet.',
-              'success' => true
+              'success' => true,
+              'link' => Route('organization.verify')
+              
             ]);
           }
         }

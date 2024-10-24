@@ -1,13 +1,13 @@
 [
   {
-    "job_id": "N12345",
-    "job_name": "ICU Nur",
+    "job_id": "1",
+    "job_name": "ICU Nurse",
     "job_city": "New York",
     "job_type": "Travel Nurse",
     "type": "Contract",
     "job_state": "NY",
     "weekly_pay": 1500,
-    "preferred_specialty": "n555",
+    "preferred_specialty": "ddddddd",
     "active": true,
     "description": "Responsible",
     "start_date": "2024-11-01",
