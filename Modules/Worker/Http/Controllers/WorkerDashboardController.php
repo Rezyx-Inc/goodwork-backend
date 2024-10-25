@@ -113,45 +113,45 @@ class WorkerDashboardController extends Controller
         // Validate fields for ProfessionalInformation
         $request->validate([
 
-          'nursing_license_number' => 'string',
-          'specialty' => 'required|string',
-          'profession' => 'required|string',
-          'terms' => 'required|string',
-          'block_scheduling' => 'required|string',
-          'float_requirement' => 'required|string',
-          'facility_shift_cancelation_policy' => 'required|string',
-          'contract_termination_policy' => 'required|string',
-          'traveler_distance_from_facility' => 'required|string',
-          'clinical_setting' => 'required|string',
-          'Patient_ratio' => 'required|string',
-          'emr' => 'required|string',
-          'Unit' => 'required|string',
-          'scrub_color' => 'required|string',
-          'rto' => 'required|string',
-          'shift_of_day' => 'required|string',
-          'hours_shift' => 'required|string',
-          'preferred_assignment_duration' => 'required|string',
-          'weeks_shift' => 'required|string',
-          'worker_experience' => 'required|string',
-          'worker_eligible_work_in_us' => 'required|string',
-          'worker_facility_city' => 'required|string',
-          'worker_facility_state' => 'required|string',
-          'worker_four_zero_one_k' => 'required|string',
-          'worker_dental' => 'required|string',
-          'worker_overtime_rate' => 'required|string',
-          'worker_on_call' => 'required|string',
-          'worker_call_back' => 'required|string',
-          'worker_on_call_check' => 'required|string',
-          'worker_benefits' => 'required|string',
-          'nurse_classification' => 'required|string',
-          'worker_holiday' => 'required|date',
-          'worker_job_type' => 'required|string',
-          'worker_vision' => 'required|string',
+          'nursing_license_number' => 'nullable|string',
+          'specialty' => 'nullable|string',
+          'profession' => 'nullable|string',
+          'terms' => 'nullable|string',
+          'block_scheduling' => 'nullable|string',
+          'float_requirement' => 'nullable|string',
+          'facility_shift_cancelation_policy' => 'nullable|string',
+          'contract_termination_policy' => 'nullable|string',
+          'traveler_distance_from_facility' => 'nullable|string',
+          'clinical_setting' => 'nullable|string',
+          'Patient_ratio' => 'nullable|string',
+          'emr' => 'nullable|string',
+          'Unit' => 'nullable|string',
+          'scrub_color' => 'nullable|string',
+          'rto' => 'nullable|string',
+          'shift_of_day' => 'nullable|string',
+          'hours_shift' => 'nullable|string',
+          'preferred_assignment_duration' => 'nullable|string',
+          'weeks_shift' => 'nullable|string',
+          'worker_experience' => 'nullable|string',
+          'worker_eligible_work_in_us' => 'nullable|string',
+          'worker_facility_city' => 'nullable|string',
+          'worker_facility_state' => 'nullable|string',
+          'worker_four_zero_one_k' => 'nullable|string',
+          'worker_dental' => 'nullable|string',
+          'worker_overtime_rate' => 'nullable|string',
+          'worker_on_call' => 'nullable|string',
+          'worker_call_back' => 'nullable|string',
+          'worker_on_call_check' => 'nullable|string',
+          'worker_benefits' => 'nullable|string',
+          'nurse_classification' => 'nullable|string',
+          'worker_holiday' => 'nullable|date',
+          'worker_job_type' => 'nullable|string',
+          'worker_vision' => 'nullable|string',
         ]);
 
         $nurse_data = [];
 
-
+        
 
         isset($request->nursing_license_number) ? ($nurse_data['nursing_license_number'] = $request->nursing_license_number) : '';
         isset($request->specialty) ? ($nurse_data['specialty'] = $request->specialty) : '';
@@ -230,7 +230,8 @@ class WorkerDashboardController extends Controller
 
       return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
     } catch (\Exception $e) {
-
+      
+      // dd($e->errors());
       return response()->json(['msg' => $e->getMessage(), 'status' => false]);
     }
   }
