@@ -87,7 +87,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
       console.log("Invalid field");
       return;
     }
-
+    
     const lastJobId = await getNewJobId();
 
     const [result] = await pool.query(
@@ -339,6 +339,32 @@ module.exports.updateJob = async function (orgaId, jobData) {
     return result;
   } catch (err) {
     console.error('Error updating job:', err.message);
+    throw err;
+  }
+};
+
+module.exports.deleteJob = async function (orgaId, jobId) {
+  try {
+    // if the job exists
+    const [existJob] = await pool.query(
+      `SELECT * FROM jobs WHERE job_id = ? AND organization_id = ?`,
+      [jobId, orgaId]
+    );
+
+    if (existJob.length === 0) {
+      console.log(`No job with ID ${jobId} exists for organization ${orgaId}`);
+      return;
+    }
+
+    const [result] = await pool.query(
+      `DELETE FROM jobs WHERE job_id = ? AND organization_id = ?`,
+      [jobId, orgaId]
+    );
+
+    console.log('Job deleted successfully:', jobId);
+    return result;
+  } catch (err) {
+    console.error('Error deleting job:', err.message);
     throw err;
   }
 };
