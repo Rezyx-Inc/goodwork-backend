@@ -1445,41 +1445,41 @@
                 $('.help-block-last_name').text('');
             }
 
-            if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
-                $('.help-block-mobile').text('Please enter a mobile number');
-                $('.help-block-mobile').addClass('text-danger');
-                isValid = false;
-            }else{
-                $('.help-block-mobile').text('');
-            }
-            if (address.value === '') {
-                $('.help-block-address').text('Please enter an address');
-                $('.help-block-address').addClass('text-danger');
-                isValid = false;
-            } else{
-                $('.help-block-address').text('');
-            }
-            if (city.value === '') {
-                $('.help-block-city').text('Please enter a city');
-                $('.help-block-city').addClass('text-danger');
-                isValid = false;
-            } else{
-                $('.help-block-city').text('');
-            }
-            if (state.value === '') {
-                $('.help-block-state').text('Please enter a state');
-                $('.help-block-state').addClass('text-danger');
-                isValid = false;
-            }   else{
-                $('.help-block-state').text('');
-            }
-            if (zip_code.value === '') {
-                $('.help-block-zip_code').text('Please enter a zip code');
-                $('.help-block-zip_code').addClass('text-danger');
-                isValid = false;
-            }   else{
-                $('.help-block-zip_code').text('');
-            }
+            // if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
+            //     $('.help-block-mobile').text('Please enter a mobile number');
+            //     $('.help-block-mobile').addClass('text-danger');
+            //     isValid = false;
+            // }else{
+            //     $('.help-block-mobile').text('');
+            // }
+            // if (address.value === '') {
+            //     $('.help-block-address').text('Please enter an address');
+            //     $('.help-block-address').addClass('text-danger');
+            //     isValid = false;
+            // } else{
+            //     $('.help-block-address').text('');
+            // }
+            // if (city.value === '') {
+            //     $('.help-block-city').text('Please enter a city');
+            //     $('.help-block-city').addClass('text-danger');
+            //     isValid = false;
+            // } else{
+            //     $('.help-block-city').text('');
+            // }
+            // if (state.value === '') {
+            //     $('.help-block-state').text('Please enter a state');
+            //     $('.help-block-state').addClass('text-danger');
+            //     isValid = false;
+            // }   else{
+            //     $('.help-block-state').text('');
+            // }
+            // if (zip_code.value === '') {
+            //     $('.help-block-zip_code').text('Please enter a zip code');
+            //     $('.help-block-zip_code').addClass('text-danger');
+            //     isValid = false;
+            // }   else{
+            //     $('.help-block-zip_code').text('');
+            // }
             return isValid;
         }
         // end validation basic information
@@ -1641,9 +1641,9 @@
         SaveBaiscInformation.addEventListener("click", function(event) {
             event.preventDefault();
             // inputs validation
-            // if (!validateBasicInfo()) {
-            //     return;
-            // }
+            if (!validateBasicInfo()) {
+                return;
+            }
             console.log(first_name.value);
             $.ajaxSetup({
                 headers: {

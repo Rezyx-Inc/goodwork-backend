@@ -152,42 +152,41 @@ class WorkerDashboardController extends Controller
         $nurse_data = [];
 
         
-
-        isset($request->nursing_license_number) ? ($nurse_data['nursing_license_number'] = $request->nursing_license_number) : '';
-        isset($request->specialty) ? ($nurse_data['specialty'] = $request->specialty) : '';
-        isset($request->profession) ? ($nurse_data['profession'] = $request->profession) : '';
-        isset($request->terms) ? ($nurse_data['terms'] = $request->terms) : '';
-        isset($request->worker_job_type) ? ($nurse_data['worker_job_type'] = $request->worker_job_type) : '';
-        isset($request->block_scheduling) ? ($nurse_data['block_scheduling'] = $request->block_scheduling) : '';
-        isset($request->float_requirement) ? ($nurse_data['float_requirement'] = $request->float_requirement) : '';
-        isset($request->facility_shift_cancelation_policy) ? ($nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy) : '';
-        isset($request->contract_termination_policy) ? ($nurse_data['contract_termination_policy'] = $request->contract_termination_policy) : '';
-        isset($request->traveler_distance_from_facility) ? ($nurse_data['distance_from_your_home'] = $request->traveler_distance_from_facility) : '';
-        isset($request->clinical_setting) ? ($nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting) : '';
-        isset($request->Patient_ratio) ? ($nurse_data['worker_patient_ratio'] = $request->Patient_ratio) : '';
-        isset($request->emr) ? ($nurse_data['worker_emr'] = $request->emr) : '';
-        isset($request->Unit) ? ($nurse_data['worker_unit'] = $request->Unit) : '';
-        isset($request->scrub_color) ? ($nurse_data['worker_scrub_color'] = $request->scrub_color) : '';
-        isset($request->rto) ? ($nurse_data['rto'] = $request->rto) : '';
-        isset($request->shift_of_day) ? ($nurse_data['worker_shift_time_of_day'] = $request->shift_of_day) : '';
-        isset($request->hours_per_week) ? ($nurse_data['worker_hours_per_week'] = $request->hours_per_week) : '';
-        isset($request->hours_shift) ? ($nurse_data['worker_hours_shift'] = $request->hours_shift) : '';
-        isset($request->preferred_assignment_duration) ? ($nurse_data['worker_weeks_assignment'] = $request->preferred_assignment_duration) : '';
-        isset($request->weeks_shift) ? ($nurse_data['worker_shifts_week'] = $request->weeks_shift) : '';
-        isset($request->worker_experience) ? ($nurse_data['worker_experience'] = $request->worker_experience) : '';
-        isset($request->worker_eligible_work_in_us) ? ($nurse_data['worker_eligible_work_in_us'] = $request->worker_eligible_work_in_us) : '';
-        isset($request->worker_facility_city) ? ($nurse_data['worker_facility_city'] = $request->worker_facility_city) : '';
-        isset($request->worker_facility_state) ? ($nurse_data['worker_facility_state'] = $request->worker_facility_state) : '';
-        isset($request->worker_four_zero_one_k) ? ($nurse_data['worker_four_zero_one_k'] = $request->worker_four_zero_one_k) : '';
-        isset($request->worker_dental) ? ($nurse_data['worker_dental'] = $request->worker_dental) : '';
-        isset($request->worker_overtime_rate) ? ($nurse_data['worker_overtime_rate'] = $request->worker_overtime_rate) : '';
-        isset($request->worker_on_call) ? ($nurse_data['worker_on_call'] = $request->worker_on_call) : '';
-        isset($request->worker_on_call_check) ? ($nurse_data['worker_on_call_check'] = $request->worker_on_call_check) : '';
-        isset($request->worker_call_back) ? ($nurse_data['worker_call_back'] = $request->worker_call_back) : '';
-        isset($request->worker_benefits) ? ($nurse_data['worker_benefits'] = $request->worker_benefits) : '';
-        isset($request->nurse_classification) ? ($nurse_data['nurse_classification'] = $request->nurse_classification) : '';
-        isset($request->worker_holiday) ? ($nurse_data['worker_holiday'] = $request->worker_holiday) : '';
-        isset($request->worker_vision) ? ($nurse_data['worker_vision'] = $request->worker_vision) : '';
+        $nurse_data['nursing_license_number'] = $request->nursing_license_number;
+        $nurse_data['specialty'] = $request->specialty;
+        $nurse_data['profession'] = $request->profession;
+        $nurse_data['terms'] = $request->terms;
+        $nurse_data['worker_job_type'] = $request->worker_job_type;
+        $nurse_data['block_scheduling'] = $request->block_scheduling;
+        $nurse_data['float_requirement'] = $request->float_requirement;
+        $nurse_data['facility_shift_cancelation_policy'] = $request->facility_shift_cancelation_policy;
+        $nurse_data['contract_termination_policy'] = $request->contract_termination_policy;
+        $nurse_data['distance_from_your_home'] = $request->traveler_distance_from_facility;
+        $nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting;
+        $nurse_data['worker_patient_ratio'] = $request->Patient_ratio;
+        $nurse_data['worker_emr'] = $request->emr;
+        $nurse_data['worker_unit'] = $request->Unit;
+        $nurse_data['worker_scrub_color'] = $request->scrub_color;
+        $nurse_data['rto'] = $request->rto;
+        $nurse_data['worker_shift_time_of_day'] = $request->shift_of_day;
+        $nurse_data['worker_hours_per_week'] = $request->hours_per_week;
+        $nurse_data['worker_hours_shift'] = $request->hours_shift;
+        $nurse_data['worker_weeks_assignment'] = $request->preferred_assignment_duration;
+        $nurse_data['worker_shifts_week'] = $request->weeks_shift;
+        $nurse_data['worker_experience'] = $request->worker_experience;
+        $nurse_data['worker_eligible_work_in_us'] = $request->worker_eligible_work_in_us;
+        $nurse_data['worker_facility_city'] = $request->worker_facility_city;
+        $nurse_data['worker_facility_state'] = $request->worker_facility_state;
+        $nurse_data['worker_four_zero_one_k'] = $request->worker_four_zero_one_k;
+        $nurse_data['worker_dental'] = $request->worker_dental;
+        $nurse_data['worker_overtime_rate'] = $request->worker_overtime_rate;
+        $nurse_data['worker_on_call'] = $request->worker_on_call;
+        $nurse_data['worker_on_call_check'] = $request->worker_on_call_check;
+        $nurse_data['worker_call_back'] = $request->worker_call_back;
+        $nurse_data['worker_benefits'] = $request->worker_benefits;
+        $nurse_data['nurse_classification'] = $request->nurse_classification;
+        $nurse_data['worker_holiday'] = $request->worker_holiday;
+        $nurse_data['worker_vision'] = $request->worker_vision;
 
         $nurse->update($nurse_data);
       }
@@ -195,24 +194,24 @@ class WorkerDashboardController extends Controller
       if ($request->InfoType == 'BasicInformation') {
         //return $request->all();
         $request->validate([
-          'first_name' => 'required|string',
-          'last_name' => 'required|string',
-          'mobile' => 'required|string',
+          'first_name' => 'nullable|string',
+          'last_name' => 'nullable|string',
+          'mobile' => 'nullable|string',
           //'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
-          'zip_code' => 'required|string',
-          'state' => 'required|string',
-          'city' => 'required|string',
-          'address' => 'required|string',
+          'zip_code' => 'nullable|string',
+          'state' => 'nullable|string',
+          'city' => 'nullable|string',
+          'address' => 'nullable|string',
         ]);
         $user_data = [];
         $nurse_data = [];
         isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
         isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
-        isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';
-        isset($request->zip_code) ? ($user_data['zip_code'] = $request->zip_code) : '';
-        isset($request->state) ? ($nurse_data['state'] = $request->state) : '';
-        isset($request->city) ? ($nurse_data['city'] = $request->city) : '';
-        isset($request->address) ? ($nurse_data['address'] = $request->address) : '';
+        $user_data['mobile'] = $request->mobile;
+        $user_data['zip_code'] = $request->zip_code;
+        $nurse_data['state'] = $request->state;
+        $nurse_data['city'] = $request->city;
+        $nurse_data['address'] = $request->address;
 
         if ($request->hasFile('profile_pic')) {
           $file = $request->file('profile_pic');
@@ -231,8 +230,7 @@ class WorkerDashboardController extends Controller
       return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
     } catch (\Exception $e) {
       
-      // dd($e->errors());
-      return response()->json(['msg' => $e->getMessage(), 'status' => false]);
+      return response()->json(['msg' => $e->getMessage(), 'status' => false], 500);
     }
   }
 
