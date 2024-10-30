@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_FILES_URI+process.env.MONGODB_INTEGRATIONS_
 })
 .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
-    report("src/crons/laboredge.js error on mongodb connection");
+    //report("src/crons/laboredge.js error on mongodb connection");
 });
 
 // Need to refresh the data and check the hourlyPay changes

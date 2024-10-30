@@ -92,7 +92,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     const sheets = google.sheets({ version: 'v4', auth });
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
-      range: `Sheet1!A:BI`,
+      range: `Sheet1!A:BH`,
       auth: auth,
     });
 
@@ -200,15 +200,6 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
                 try {
                   await queries.updateJob(OrgaId, job);
 
-                  // // Extract the numeric part from OrgaId (e.g., "000002")
-                  // let numericPart = OrgaId.substring(3); // Get "000002"
-
-                  // // Increment the numeric part
-                  // let newNumber = (parseInt(numericPart) + 1).toString();
-
-                  // // Add leading zeros back based on the length of the new number
-                  // OrgaId = `GWU${newNumber.padStart(6, '0')}`;
-
                 } catch (err) {
                   console.error(`Error in job with ID ${job.job_id}:`, err);
                 }
@@ -265,9 +256,6 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         }
       }
     }
-
-
-
 
 
     // let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
@@ -444,7 +432,6 @@ async function addDataToSpreadsheet(auth, idForAdd) {
         "25n",                                  // call_back_rate
         "25n",                                 // weekly_non_taxable_amount
         'Registered Nurse',                   // profession
-        'ICU',                               // specialty
         'Contract',                          // terms
         '1 month',                           // preferred_assignment_duration
 
@@ -481,7 +468,7 @@ async function addDataToSpreadsheet(auth, idForAdd) {
 
     const res = await sheets.spreadsheets.values.append({
       spreadsheetId: idForAdd,
-      range: `Sheet1!A:BI`, // Adjust this range based on the number of fields
+      range: `Sheet1!A:BH`, // Adjust this range based on the number of fields
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       resource,
@@ -498,15 +485,15 @@ async function main() {
   try {
     const auth = await authorize();
 
-    await processAllSpreadsheets(auth);
+    //await processAllSpreadsheets(auth);
 
     const id_for_add = "1P4PxtT-S6c42-jGHz-Mo2jpV1dYmCfRi2-a4aO3JNHk"
     //await addDataToSpreadsheet(auth , id_for_add);
 
     //await deleteAllSpreadsheets(auth);
 
-    const idd_for_delete = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-    //await deleteSpreadsheetById(auth , idd_for_delete);
+    const idd_for_delete = "1YkzbHYkDc8EVTL2ED8aFQ5r1-p37JjeXgD4KWZM-hK0"
+    await deleteSpreadsheetById(auth , idd_for_delete);
 
 
   } catch (err) {

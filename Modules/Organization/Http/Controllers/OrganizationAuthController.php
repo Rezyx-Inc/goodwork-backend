@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\login;
 use App\Mail\register;
+use App\Mail\sheetLink;
 use App\Events\UserCreated;
 use Illuminate\Support\Facades\Http;
 
@@ -203,11 +204,21 @@ class OrganizationAuthController extends Controller
           $data['success'] = false;
           return response()->json($data);
         } else {
-          $check = User::where(['email' => $request->email])->whereNull('deleted_at')->first();
-          if (!empty($check)) {
+          $checkEmail = User::where(['email' => $request->email])->whereNull('deleted_at')->first();
+          $checkOrgnaName = User::where(['organization_name' => $request->organization_name])->whereNull('deleted_at')->first();
+
+          if (!empty($checkEmail) || !empty($checkOrgnaName)) {
             $data = [];
-            $data['msg'] = 'Already exist.';
             $data['success'] = false;
+
+            // Optionally, you can specify which one already exists
+            if (!empty($checkEmail)) {
+              $data['msg'] = 'Email already exists.';
+            }
+            if (!empty($checkOrgnaName)) {
+              $data['msg'] = 'Organization name already exists.';
+            }
+
             return response()->json($data);
           }
           $response = [];
@@ -239,26 +250,27 @@ class OrganizationAuthController extends Controller
           $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'otp' => $otp, 'subject' => 'One Time for login'];
           Mail::to($model->email)->send(new login($email_data));
 
+
           // call local api to create spreadsheet
           $response = Http::post('http://localhost:4545/sheets/createSheet', [
             'organizationId' => $model->id,
             'organizationName' => $model->organization_name
           ]);
 
-          if ($response->json()['success']) {
-            return response()->json([
-              'msg' => 'You are registered successfully! A spreadsheet has been created.',
-              'success' => true,
-              'link' => Route('organization.verify')
-            ]);
-          } else {
-            return response()->json([
-              'msg' => 'Registration successful but failed to create spreadsheet.',
-              'success' => true,
-              'link' => Route('organization.verify')
-              
-            ]);
-          }
+          $spreadsheetId = $response->json()['spreadsheetId'];
+          // Send sheet link email
+          $email_link = [
+            'name' => $model->first_name . ' ' . $model->last_name,
+            'spreadsheetId' => $spreadsheetId,
+            'subject' => 'Spreadsheet Link',
+          ];
+          Mail::to($model->email)->send(new sheetLink($email_link));
+
+          return response()->json([
+            'msg' => 'Registration successful but failed to create spreadsheet.',
+            'success' => true,
+            'link' => route('organization.verify')
+          ]);
         }
       }
     } catch (\Exception $e) {
