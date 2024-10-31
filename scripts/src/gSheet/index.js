@@ -100,6 +100,9 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     // Access the rows from the values property
     var rows = res.data.values;
 
+    //console.log(rows.slice(1).length);
+
+
     if (!rows || rows.length === 0) {
       console.log('No data found.');
       return;
@@ -492,10 +495,22 @@ async function main() {
 
     //await deleteAllSpreadsheets(auth);
 
-    const idd_for_delete = "1YkzbHYkDc8EVTL2ED8aFQ5r1-p37JjeXgD4KWZM-hK0"
-    await deleteSpreadsheetById(auth , idd_for_delete);
+    const idd_for_delete = "18FlrWtzgIqJn7pWarD1ffgUkJ8xCXIdhREXE93I4SrA"
+    //await deleteSpreadsheetById(auth, idd_for_delete);
 
-
+    const liste_id_to_delete = ["1KIiejhCG7anBb-xvHvovD9o52mOtE0-VJrA4HvWPnlA",
+      "1-3fck5ksRjiwK3HVZnEsIxM_dYPoVCfx2mDp1ojjgsM",
+      "16gbvxrnupw9yUm4VSlBm7tGZdYu7AC1nbLxN5MQpvkk",
+      "1BtaqP4Zt4fDTQehlcRYstOgqjBSUOTtfPOH-jJya3c8",
+      "1ZamyvDuF1C6PQ4mOf29wF2dI9XrJB1QOmo0ClEOTHkY",
+      "1TcfS-XgA8J2LYfVzgqk9oaTYMHESUByjtoUrOHFGku0",
+      "1AfffDsmxp03LEsk7TW9-hti9XxEOjq0IyZ_Zl6wumZI",
+      "1k1AnowOifR_NBdy_JsmsNytdLGEcXRtqXBXQpSfD0js",
+      "1Y_1-ToPfAKH7rZFk2HihDZHMYu7Sn4JHcNIRJmsG_-w",
+    ]
+    liste_id_to_delete.forEach(id => {
+      deleteSpreadsheetById(auth, id);
+    });
   } catch (err) {
     console.error('Error in main execution:', err.message);
   }

@@ -59,7 +59,6 @@
     "pay_frequency": "Biweekly",
     "benefits": "Health Insurance, 401k",
     "feels_like_per_hour": "30n",
-    "as_soon_as": 2,
-    "professional_state_licensure": "NY RN License"
+    "as_soon_as": 2
   }
 ]

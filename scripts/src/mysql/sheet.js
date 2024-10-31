@@ -91,7 +91,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
     const [result] = await pool.query(
       `INSERT INTO jobs 
             (id, organization_id, job_id, job_name, description, type, terms, preferred_assignment_duration, actual_hourly_rate, profession, job_city, job_state, weekly_pay, preferred_specialty, start_date, hours_shift, hours_per_week, preferred_experience, facility_shift_cancelation_policy, traveler_distance_from_facility, clinical_setting, patient_ratio, unit, scrub_color, rto, guaranteed_hours, weeks_shift, referral_bonus, sign_on_bonus, completion_bonus, extension_bonus, other_bonus, overtime, holiday, orientation_rate, on_call, on_call_rate, call_back_rate, weekly_non_taxable_amount, emr, job_location, vaccinations, number_of_references, min_title_of_reference, eligible_work_in_us, recency_of_reference, certificate, skills, urgency, facilitys_parent_system, facility_name, nurse_classification, pay_frequency, benefits, feels_like_per_hour, preferred_shift_duration, as_soon_as, professional_state_licensure) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         lastJobId,
         orgaId,

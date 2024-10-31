@@ -29,15 +29,15 @@ router.post('/createSheet', async (req, res) => {
     const auth = await authorize();
 
     // Check if a spreadsheet with the organizationId already exists
-    const existingSpreadsheet = await checkIfSpreadsheetExists(auth, organizationId);
+    //const existingSpreadsheet = await checkIfSpreadsheetExists(auth, organizationId);
 
-    if (existingSpreadsheet) {
-      return res.status(400).json({
-        success: false,
-        message: `Spreadsheet already exists for organization ID: ${organizationId}`,
-        spreadsheetId: existingSpreadsheet.id
-      });
-    }
+    // if (existingSpreadsheet) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Spreadsheet already exists for organization ID: ${organizationId}`,
+    //     spreadsheetId: existingSpreadsheet.id
+    //   });
+    // }
 
     const sheets = google.sheets({ version: 'v4', auth });
 
@@ -68,6 +68,8 @@ router.post('/createSheet', async (req, res) => {
       'professional_state_licensure'
     ];
 
+
+
     // Write the fields as headers in the first row of the sheet
     await sheets.spreadsheets.values.update({
       spreadsheetId,
@@ -80,13 +82,14 @@ router.post('/createSheet', async (req, res) => {
 
     return res.status(200).json({
       success: true,
+      link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`,
       spreadsheetId,
       message: 'Spreadsheet created and initialized successfully'
     });
 
   } catch (error) {
     console.error('Error creating spreadsheet:', error);
-    report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
+    //report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
     return res.status(500).json({
       success: false,
       message: 'Internal server error'
