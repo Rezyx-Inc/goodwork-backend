@@ -124,7 +124,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
 
         // Assign based on type
         // Skip conversion for 'job_id' and assign it directly as a string
-        if (header === 'job_id') {
+        if (header === 'Job ID') {
           rowObject[header] = value; // Keep 'job_id' as a string
         } else if (isNumeric) {
           rowObject[header] = parseFloat(value); // Convert to number if fully numeric
@@ -166,18 +166,18 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         // Delete rows
         for (let i in old_File_Parsed) {
           let oldRow = old_File_Parsed[i];
-          let id = oldRow.job_id;
-          let newRow = jsonData.find((newRow) => newRow.job_id === id);
+          let id = oldRow["Org Job Id"];
+          let newRow = jsonData.find((newRow) => newRow["Org Job Id"] === id);
 
           if (!newRow) {
-            console.log('Row deleted:', oldRow.job_id);
+            console.log('Row deleted:', oldRow["Org Job Id"]);
 
             let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
             try {
-              await queries.deleteJob(OrgaId, oldRow.job_id);
+              await queries.deleteJob(OrgaId, oldRow["Org Job Id"],);
 
             } catch (err) {
-              console.error(`Error in job with ID ${job.job_id}:`, err);
+              console.error(`Error in job with ID ${oldRow["Org Job Id"]}:`, err);
             }
 
           }
@@ -186,30 +186,24 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         // Update & add rows
         for (let i in jsonData) {
           let newRow = jsonData[i];
-          let id = newRow.job_id;
-          let oldRow = old_File_Parsed.find((j) => j.job_id === id);
+          let id = newRow["Org Job Id"];
+          let oldRow = old_File_Parsed.find((j) => j["Org Job Id"] === id);
 
 
           if (oldRow) {
             if (_.isEqual(newRow, oldRow)) {
               continue;
             } else {
-              console.log('Row updated:', newRow.job_id);
+              console.log('Row updated:', newRow["Org Job Id"]);
               // update data in the database
               // get the organization ID
               let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
 
-              for (const job of jsonData) {
-                try {
-                  await queries.updateJob(OrgaId, job);
+              await queries.updateJob(OrgaId, newRow);
 
-                } catch (err) {
-                  console.error(`Error in job with ID ${job.job_id}:`, err);
-                }
-              }
             }
           } else {
-            console.log('Row added:', newRow.job_id);
+            console.log('Row added:', newRow["Org Job Id"]);
 
             // insert data in the database
             // get the organization ID
@@ -218,7 +212,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
               await queries.insertJob(OrgaId, newRow);
 
             } catch (err) {
-              console.error(`Error in job with ID ${job.job_id}:`, err);
+              console.error(`Error add job with ID ${OrgaId}:`, err);
             }
 
           }
@@ -245,42 +239,14 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         try {
           await queries.insertJob(OrgaId, job);
 
-          // Extract the numeric part from OrgaId (e.g., "000002")
-          let numericPart = OrgaId.substring(3); // Get "000002"
-
-          // Increment the numeric part
-          let newNumber = (parseInt(numericPart) + 1).toString();
-
-          // Add leading zeros back based on the length of the new number
-          OrgaId = `GWU${newNumber.padStart(6, '0')}`;
 
         } catch (err) {
-          console.error(`Error in job with ID ${job.job_id}:`, err);
+          console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
         }
       }
     }
 
 
-    // let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
-    // for (const job of jsonData) {
-    //   try {
-    //     await queries.insertJob(OrgaId, job);
-    //     OrgaId += 1;
-    //   } catch (err) {
-    //     console.error(`Error in job with ID ${job.job_id}:`, err);
-    //   }
-    // }
-
-    // update data in the database
-    // let getOgrId = 1;
-    // for (const job of jsonData) {
-    //   try {
-    //     await queries.updateJob(getOgrId, job);
-    //     getOgrId += 1;
-    //   } catch (err) {
-    //     console.error(`Error in job with ID ${job.job_id}:`, err);
-    //   }
-    // }
 
   } catch (err) {
     console.error('Error fetching or saving data:', err);
@@ -331,7 +297,7 @@ async function processAllSpreadsheets(auth) {
         || spreadsheet.id === "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
         || spreadsheet.id === "1DoTKZgapb-OHHDpDOI1FSDuGfs1D0SlmMKp55KJZk24"
       ) {
-        //  console.log("skip this");
+        console.log("skip this");
         exit
       } else {
         console.log(`Processing spreadsheet: ${spreadsheet.name} (${spreadsheet.id})`);
@@ -397,69 +363,62 @@ async function addDataToSpreadsheet(auth, idForAdd) {
     // Example data to insert
     const values = [
       [
-        'N12345',                            // job_id
-        'ICU Nurse',                         // job_name
-        'New York',                          // job_city
-        'Travel Nurse',                      // job_type
-        'Contract',                          // type
-        'NY',                                // job_state
-        1500,                                // weekly_pay
-        "n555",                                // preferred_specialty
-        true,                                // active (assuming true; change if needed)
-        'Responsible',                       // description
-        '2024-11-01',                        // start_date
-        12,                                  // hours_shift
-        36,                                  // hours_per_week
-        2,                                   // preferred_experience
-        '24-hour notice for cancellations',  // facility_shift_cancelation_policy
-        '30 miles',                          // traveler_distance_from_facility
-        'Critical Care',                     // clinical_setting
-        '1:4',                               // Patient_ratio
-        'N/A',                               // Unit
-        'Blue',                              // scrub_color
-
-        'None',                              // rto
-        'Guaranteed',                        // guaranteed_hours
-        '4 weeks',                           // weeks_shift
-        '500n',                               // referral_bonus
-        '2000n',                              // sign_on_bonus
-        '1500n',                              // completion_bonus
-        '1000n',                              // extension_bonus
-        '750n',                               // other_bonus
-        "40nn",                                  // actual_hourly_rate
-        'Time and a half',                   // overtime
-        'No holiday work required',          // holiday
-        'Orientation pay at 50/hr',         // orientation_rate
-        'Yes',                               // on_call
-        "25n",                                  // on_call_rate
-        "25n",                                  // call_back_rate
-        "25n",                                 // weekly_non_taxable_amount
-        'Registered Nurse',                   // profession
-        'Contract',                          // terms
-        '1 month',                           // preferred_assignment_duration
-
-        'Flexible',                          // block_scheduling
-        '2 weeks notice',                    // contract_termination_policy
-        'EMR example',                       // emr
-        'City General Hospital',             // job_location
-        'Required',                          // vaccinations
-        3,                                   // number_of_references
-        'Manager',                           // min_title_of_reference
-        true,                                // eligible_work_in_us
-        1,                                   // recency_of_reference
-        'BLS Certification',                 // certificate
-        '1 week',                            // preferred_shift_duration
-        'IV Certification, ACLS',            // skills
-        'Immediate',                         // urgency
-        'Healthcare System A',               // facilitys_parent_system
-        'City General',                      // facility_name
-        'RN',                                // nurse_classification
-        'Biweekly',                          // pay_frequency
-        'Health Insurance, 401k',           // benefits
-        '30n',                                // feels_like_per_hour
-        2,                                   // as_soon_as
-
-        'NY RN License',                     // professional_state_licensure
+        '',
+        'Clinical',
+        'Contract',
+        'RN',
+        'Peds CVICU',
+        50,
+        2.899,
+        36,
+        'TX',
+        'Austin',
+        0,
+        0,
+        12,
+        3,
+        13,
+        'ASAP',
+        'ASAP',
+        'Not Allowed',
+        'Time and a half',
+        "25n",
+        "25n",
+        50,
+        1.800,
+        1.099,
+        81,
+        116,
+        1,
+        0,
+        1.2,
+        37.687,
+        1.507,
+        39.194,
+        'Weekly',
+        'options',
+        'options',
+        'Morocco',
+        "St. David's North Austin",
+        'HCA',
+        'Up to 3 shifts per 13 week assignment can be canceled with no guaranteed pay for any of those 3 canceled shifts',
+        '2 weeks of guaranteed pay unless canceled for cause',
+        '75 miles',
+        'TX',
+        'Options',
+        'description',
+        'no auto offer',
+        '3 years',
+        "N_references",
+        'Peds CVICU RN Skills checklist',
+        'yes',
+        'not allowed',
+        'yes',
+        3,
+        'Options',
+        "m",                    //Unit
+        'w-2',
+        'Options',
       ],
     ];
 
@@ -488,29 +447,20 @@ async function main() {
   try {
     const auth = await authorize();
 
-    //await processAllSpreadsheets(auth);
+    await processAllSpreadsheets(auth);
 
-    const id_for_add = "1P4PxtT-S6c42-jGHz-Mo2jpV1dYmCfRi2-a4aO3JNHk"
-    //await addDataToSpreadsheet(auth , id_for_add);
+    const id_for_add = "1z7ivZsDfK80ZIf_WrReHK2P3y-M3qjTqy-ts6IcG5i4"
+    //await addDataToSpreadsheet(auth, id_for_add);
 
     //await deleteAllSpreadsheets(auth);
 
-    const idd_for_delete = "18FlrWtzgIqJn7pWarD1ffgUkJ8xCXIdhREXE93I4SrA"
+    const idd_for_delete = "1Q5e9vVb1dApdBkoeg8rqwwWlNJEk51SV7W36qBeuP_c"
     //await deleteSpreadsheetById(auth, idd_for_delete);
 
-    const liste_id_to_delete = ["1KIiejhCG7anBb-xvHvovD9o52mOtE0-VJrA4HvWPnlA",
-      "1-3fck5ksRjiwK3HVZnEsIxM_dYPoVCfx2mDp1ojjgsM",
-      "16gbvxrnupw9yUm4VSlBm7tGZdYu7AC1nbLxN5MQpvkk",
-      "1BtaqP4Zt4fDTQehlcRYstOgqjBSUOTtfPOH-jJya3c8",
-      "1ZamyvDuF1C6PQ4mOf29wF2dI9XrJB1QOmo0ClEOTHkY",
-      "1TcfS-XgA8J2LYfVzgqk9oaTYMHESUByjtoUrOHFGku0",
-      "1AfffDsmxp03LEsk7TW9-hti9XxEOjq0IyZ_Zl6wumZI",
-      "1k1AnowOifR_NBdy_JsmsNytdLGEcXRtqXBXQpSfD0js",
-      "1Y_1-ToPfAKH7rZFk2HihDZHMYu7Sn4JHcNIRJmsG_-w",
+    const liste_id_to_delete = [
+      "1KIiejhCG7anBb-xvHvovD9o52mOtE0-VJrA4HvWPnlA",
     ]
-    liste_id_to_delete.forEach(id => {
-      deleteSpreadsheetById(auth, id);
-    });
+    //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth, id);});
   } catch (err) {
     console.error('Error in main execution:', err.message);
   }

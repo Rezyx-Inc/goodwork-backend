@@ -29,15 +29,15 @@ router.post('/createSheet', async (req, res) => {
     const auth = await authorize();
 
     // Check if a spreadsheet with the organizationId already exists
-    //const existingSpreadsheet = await checkIfSpreadsheetExists(auth, organizationId);
+    const existingSpreadsheet = await checkIfSpreadsheetExists(auth, organizationId);
 
-    // if (existingSpreadsheet) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: `Spreadsheet already exists for organization ID: ${organizationId}`,
-    //     spreadsheetId: existingSpreadsheet.id
-    //   });
-    // }
+    if (existingSpreadsheet) {
+      return res.status(400).json({
+        success: false,
+        message: `Spreadsheet already exists for organization ID: ${organizationId}`,
+        spreadsheetId: existingSpreadsheet.id
+      });
+    }
 
     const sheets = google.sheets({ version: 'v4', auth });
 
@@ -55,17 +55,62 @@ router.post('/createSheet', async (req, res) => {
 
     // Define the fields to be initialized in the sheet
     const fields = [
-      'job_id', 'job_name', 'job_city', 'job_type', 'type', 'job_state', 'weekly_pay', 'preferred_specialty',
-      'active', 'description', 'start_date', 'hours_shift', 'hours_per_week', 'preferred_experience',
-      'facility_shift_cancelation_policy', 'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio',
-      'Unit', 'scrub_color', 'rto', 'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus',
-      'completion_bonus', 'extension_bonus', 'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday',
-      'orientation_rate', 'on_call', 'on_call_rate', 'call_back_rate', 'weekly_non_taxable_amount', 'profession',
-      'terms', 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy',
-      'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
-      'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
-      'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-      'professional_state_licensure'
+      'Org Job Id',
+      'Type',
+      'Terms *',
+      'Profession *',
+      'Specialty *',
+      '$/hr *',
+      '$/Wk *',
+      'Hrs/Wk *',
+      'State *',
+      'City *',
+      'Shift Time',
+      'Guaranteed Hrs/wk',
+      'Hrs/Shift',
+      'Shifts/Wk',
+      'Wks/Contract',
+      'Start Date',
+      'End Date',
+      'RTO',
+      'OT $/Hr',
+      'On Call $/Hr',
+      'Call Back $/Hr',
+      'Orientation $/Hr',
+      'Taxable/Wk',
+      'Non-taxable/Wk',
+      'Feels Like $/hr',
+      'Gw$/Wk',
+      'Referral Bonus',
+      'Sign-On Bonus',
+      'Extension Bonus',
+      '$/Org',
+      '$/Gw ',
+      'Total $',
+      'Pay Frequency',
+      'Benefits',
+      'Clinical Setting',
+      'Adress',
+      'Facility',
+      "Facility's Parent System",
+      'Facility Shift Cancellation Policy',
+      'Contract Termination Policy',
+      'Min Miles Must Live From Facility',
+      'Professional Licensure',
+      'Certifications',
+      'Description',
+      'Auto Offer',
+      'Experience',
+      'References',
+      'Skills checklist',
+      'On Call?',
+      'Block scheduling',
+      'Floating Required',
+      'Patient Ratio Max',
+      'EMR',
+      'Unit',
+      'Classification',
+      'Vaccinations & Immunizations',
     ];
 
 
@@ -82,14 +127,14 @@ router.post('/createSheet', async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`,
+      //link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`,
       spreadsheetId,
       message: 'Spreadsheet created and initialized successfully'
     });
 
   } catch (error) {
     console.error('Error creating spreadsheet:', error);
-    //report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
+    report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
     return res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -99,3 +144,4 @@ router.post('/createSheet', async (req, res) => {
 
 
 module.exports = router;
+
