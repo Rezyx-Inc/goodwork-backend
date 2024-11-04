@@ -296,6 +296,7 @@ async function processAllSpreadsheets(auth) {
       if (spreadsheet.id === "1Q5e9vVb1dApdBkoeg8rqwwWlNJEk51SV7W36qBeuP_c"
         || spreadsheet.id === "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
         || spreadsheet.id === "1DoTKZgapb-OHHDpDOI1FSDuGfs1D0SlmMKp55KJZk24"
+        || spreadsheet.id === "1DxvWVsTSEdBaMfNLQ8aZ9uy0OCEosRnh7b6vd3iAPtA"
       ) {
         console.log("skip this");
         exit
@@ -449,16 +450,17 @@ async function main() {
 
     await processAllSpreadsheets(auth);
 
-    const id_for_add = "1z7ivZsDfK80ZIf_WrReHK2P3y-M3qjTqy-ts6IcG5i4"
+    const id_for_add = "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4"
     //await addDataToSpreadsheet(auth, id_for_add);
 
     //await deleteAllSpreadsheets(auth);
 
-    const idd_for_delete = "1Q5e9vVb1dApdBkoeg8rqwwWlNJEk51SV7W36qBeuP_c"
+    const idd_for_delete = "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4"
     //await deleteSpreadsheetById(auth, idd_for_delete);
 
     const liste_id_to_delete = [
-      "1KIiejhCG7anBb-xvHvovD9o52mOtE0-VJrA4HvWPnlA",
+      "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4",
+      "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4",
     ]
     //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth, id);});
   } catch (err) {
