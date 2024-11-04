@@ -297,6 +297,7 @@ async function processAllSpreadsheets(auth) {
         || spreadsheet.id === "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
         || spreadsheet.id === "1DoTKZgapb-OHHDpDOI1FSDuGfs1D0SlmMKp55KJZk24"
         || spreadsheet.id === "1DxvWVsTSEdBaMfNLQ8aZ9uy0OCEosRnh7b6vd3iAPtA"
+        || spreadsheet.id === "1hNhV3CD4dGyCEDhbALrO5JFE-hfPZm6GcWNFo70bVa0"
       ) {
         console.log("skip this");
         exit
@@ -455,12 +456,11 @@ async function main() {
 
     //await deleteAllSpreadsheets(auth);
 
-    const idd_for_delete = "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4"
+    const idd_for_delete = "10FTneX13j-8ClFi3C7hlDiBcBF1AvkDwF2LaLsRLU9o"
     //await deleteSpreadsheetById(auth, idd_for_delete);
 
     const liste_id_to_delete = [
-      "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4",
-      "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4",
+      "1G06RvZ9WDDz2r9sNkZjK5AJuHKhSg9YRiRipmzoTvcQ",
     ]
     //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth, id);});
   } catch (err) {

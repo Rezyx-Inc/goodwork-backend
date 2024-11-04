@@ -125,9 +125,36 @@ router.post('/createSheet', async (req, res) => {
       },
     });
 
+    // await sheets.spreadsheets.batchUpdate({
+    //   spreadsheetId,
+    //   resource: {
+    //     requests: [
+    //       {
+    //         setDataValidation: {
+    //           range: {
+    //             sheetId: 0, // Assumes Sheet1 is the first sheet
+    //             startRowIndex: 1, // Skip the header row
+    //             endRowIndex: 1000, // Adjust the row limit as needed
+    //             startColumnIndex: 1, // Column B
+    //             endColumnIndex: 2,
+    //           },
+    //           rule: {
+    //             condition: {
+    //               type: 'ONE_OF_LIST',
+    //               values: [{ userEnteredValue: 'Clinical' }, { userEnteredValue: 'Non-Clinical' }],
+    //             },
+    //             strict: true,
+    //             showCustomUi: true,
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // });
+
     return res.status(200).json({
       success: true,
-      //link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`,
+      link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`,
       spreadsheetId,
       message: 'Spreadsheet created and initialized successfully'
     });
