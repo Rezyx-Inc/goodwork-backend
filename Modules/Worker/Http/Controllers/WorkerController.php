@@ -166,7 +166,7 @@ class WorkerController extends Controller
         // dd($user->nurse->id);
         $data['jobSaved'] = new JobSaved();
         //return $data['requiredFieldsToApply'];
-        return view('worker::dashboard.details', $data);
+        return view('worker::dashboard.details.details', $data);
     }
 
     public function sendMessages(Request $request)
