@@ -2190,7 +2190,6 @@
             }
         }
 
-        console.log('workerMatch', workerMatch);
 
         var Emr = {};
 
@@ -2216,7 +2215,6 @@
                 });
             } else {
                 if (!Emr.hasOwnProperty(id.val())) {
-                    console.log(id.val());
 
                     var select = document.getElementById(idtitle);
                     var selectedOption = select.options[select.selectedIndex];
@@ -2224,7 +2222,6 @@
 
                     Emr[id.val()] = optionText;
                     EmrStr = Object.values(Emr).join(', ');
-                    console.log('EmrStr', EmrStr);
                     id.val('');
                     list_Emr();
                 }
@@ -2233,10 +2230,8 @@
 
         function list_Emr() {
             var str = '';
-            console.log(Emr);
 
             for (const key in Emr) {
-                console.log(Emr);
 
                 let Emrname = "";
                 @php
@@ -2307,14 +2302,12 @@
         var job_certification_displayname = job_certification.split(',').map(function(item) {
             return item.trim();
         });
-        console.log('certifications : ', job_certification_displayname);
 
         // vaccination
         var job_vaccination = "{!! $model->vaccinations !!}";
         var job_vaccination_displayname = job_vaccination.split(',').map(function(item) {
             return item.trim();
         });
-        console.log('vaccinations : ', job_vaccination_displayname);
 
         // references
         var number_of_references = "{!! $model->number_of_references !!}";
@@ -2324,7 +2317,6 @@
         var job_skills_displayname = job_skills.split(',').map(function(item) {
             return item.trim();
         });
-        console.log('skills : ', job_skills_displayname);
 
 
         var worker_id = "{!! auth()->guard('frontend')->user()->nurse->id !!}";
@@ -2342,7 +2334,6 @@
                         WorkerId: worker_id
                     }),
                     success: function(resp) {
-                        console.log('Success:', resp);
 
                         let jsonResp = JSON.parse(resp);
                         all_files = jsonResp;
@@ -2352,7 +2343,6 @@
                         ); // Resolve the promise with the display names
                     },
                     error: function(resp) {
-                        console.log('Error:', resp);
                         reject(resp); // Reject the promise with the error response
                     }
                 });
@@ -2407,7 +2397,6 @@
                                     // Handling file selection
                                     const file = this.files[0];
                                     selectedFiles.push(file.name);
-                                    console.log(selectedFiles);
                                 }
                             }, {
                                 once: true //avoid multiple registrations
@@ -2417,7 +2406,6 @@
                             if (index > -1) {
                                 selectedFiles.splice(index, 1);
                             }
-                            console.log(selectedFiles);
 
                         }
                     }
@@ -2446,13 +2434,11 @@
                 if (item.classList.contains("checked")) {
                     // add item
                     selectedValues.push(value);
-                    console.log(selectedValues);
                 } else {
                     // remove item
                     const index = selectedValues.indexOf(value);
                     if (index > -1) {
                         selectedValues.splice(index, 1);
-                        console.log(selectedValues);
                     }
                 }
                 let btnText = document.querySelector(".btn-text");
@@ -2591,11 +2577,9 @@
                     var readLess = document.getElementById('read-less');
 
                     if (readLess) {
-                        console.log(readLess);
                         readMore.classList.add('d-none');
                         readLess.classList.remove('d-none');
                     } else {
-                        console.log('readLess is not null')
 
                         var readLess = document.createElement('a');
                         readLess.id = 'read-less';
@@ -2639,7 +2623,6 @@
         requiredFieldsToApply.forEach(function(field) {
 
             var element = document.getElementById(field);
-            console.log(element);
 
             if (element) {
 
@@ -3076,7 +3059,7 @@
                 text = worker_files
                     .map(file => file?.ReferenceInformation?.referenceName + ' @ ' + file?.displayName)
                     .slice(0, limit)
-                    .join('<br>') + (worker_files.length > limit ? '<br>+ ' + (worker_files.length - limit) : '');
+                    .join('<br>') + (worker_files.length > limit ? '<br>+ ' + (worker_files.length - limit) + ' More' : '');
             }
             element.html(text);
         }
@@ -3096,18 +3079,12 @@
             if (inputName == 'certification') {
                 const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
                     worker_files_displayname_by_type.includes(element));
-                console.log('job certification job name :', job_certification_displayname)
-                console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
-                console.log('is_job_certif_exist_in_worker_files', is_job_certif_exist_in_worker_files);
                 if (is_job_certif_exist_in_worker_files) {
                     check = true;
                 }
             } else if (inputName == 'vaccination') {
                 const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
                     worker_files_displayname_by_type.includes(element));
-                console.log('job vaccination job name :', job_vaccination_displayname)
-                console.log('worker_files_displayname_by_type', worker_files_displayname_by_type)
-                console.log('is_job_vaccin_exist_in_worker_files', is_job_vaccin_exist_in_worker_files);
 
                 if (is_job_vaccin_exist_in_worker_files) {
                     check = true;
@@ -3162,11 +3139,8 @@
 
         async function check_required_files_before_sent(obj) {
             let access = true;
-            console.log('requiredFieldsToApply', requiredFieldsToApply);
             for (const requiredField of requiredFieldsToApply) {
-                console.log('requiredField', requiredField);
                 if (requiredField == 'certification') {
-                    console.log('you need certification !');
                     let certificate = await get_all_files_displayName_by_type('certification');
                     if (certificate.length == 0) {
                         notie.alert({
@@ -3178,7 +3152,6 @@
                         break;
                     }
                 } else if (requiredField == 'vaccination') {
-                    console.log('you need vaccination !');
                     let vaccination = await get_all_files_displayName_by_type('vaccination');
                     if (vaccination.length == 0) {
                         notie.alert({
@@ -3190,7 +3163,6 @@
                         break;
                     }
                 } else if (requiredField == 'references') {
-                    console.log('you need references !');
                     let references = await get_all_files_displayName_by_type('references');
                     if (references.length == 0) {
                         notie.alert({
@@ -3202,7 +3174,6 @@
                         break;
                     }
                 } else if (requiredField == 'skills') {
-                    console.log('you need skills !');
                     let skills = await get_all_files_displayName_by_type('skills');
                     if (skills.length == 0) {
                         notie.alert({
@@ -3215,11 +3186,8 @@
                     }
                 } else {
                     let fieldValue = dataToSend[requiredField];
-                    console.log(workerMatch);
-                    console.log('the field', requiredField);
                     if (fieldValue == null && workerMatch[requiredField].match == false) {
 
-                        console.log('the nurse match ', workerMatch[requiredField].match);
                         notie.alert({
                             type: 'error',
                             text: '<i class="fa fa-exclamation-triangle"></i> Please fill the required fields',
@@ -3232,7 +3200,6 @@
                 }
             };
             if (access == false) {
-                console.log('access', access);
                 return false;
             }
             let diploma = [];
@@ -3280,7 +3247,6 @@
 
         $(document).ready(async function() {
             worker_files = await get_all_files();
-            console.log('Worker files:', worker_files);
             checkFileMatch('certification');
             checkFileMatch('vaccination');
             checkFileMatch('references');
@@ -3288,10 +3254,8 @@
             checkFileMatch('driving_license');
             checkFileMatch('diploma');
             let matches = @json($matches);
-            console.log((matches));
 
             let usematches = @json($userMatches);
-            console.log((usematches));
             $('input[name="phone[]"]').mask('(999) 999-9999');
         });
 
