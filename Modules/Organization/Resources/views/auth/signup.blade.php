@@ -37,7 +37,7 @@
                     <span class="help-block-email"></span>
                 </div>
                 <div class="ss-form-group">
-                    <input type="tel" id="contact_number" name="mobile" placeholder="Mobile" onchange=contactNumber(this)><br/>
+                    <input type="tel" id="contact_number" name="mobile" placeholder="Mobile"><br/>
                     <span id="passwordHelpInline" class="form-text">
       (Mobile not required)
     </span><br>
