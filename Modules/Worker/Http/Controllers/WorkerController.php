@@ -124,8 +124,43 @@ class WorkerController extends Controller
 
     public function details($id)
     {
+
         $data = [];
         $data['model'] = Job::findOrFail($id);
+        $recruiter_id = $data['model']->recruiter_id;
+        $data['requiredFieldsToApply'] = [];
+
+        if(isset($recruiter_id))
+        {
+
+            $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
+                'id' => $recruiter_id,
+            ]);
+            $requiredFields = $requiredFields->json();
+
+            if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
+
+                $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
+                $data['requiredFieldsToApply'] = $requiredFieldsToApply;
+
+            }
+
+        }
+        else
+        {
+
+            $organization_id = $data['model']->organization_id;
+            $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+                'id' => $organization_id,
+            ]);
+            $requiredFields = $requiredFields->json();
+            if (isset($requiredFields['requiredToApply'])) {
+                $requiredFieldsToApply = $requiredFields['requiredToApply'];
+                $data['requiredFieldsToApply'] = $requiredFieldsToApply;
+            }
+
+        }
+        
         $distinctFilters = Keyword::distinct()->pluck('filter');
         $allKeywords = [];
         foreach ($distinctFilters as $filter) {
@@ -136,6 +171,7 @@ class WorkerController extends Controller
         // $user = auth()->guard('frontend')->user();
         // dd($user->nurse->id);
         $data['jobSaved'] = new JobSaved();
+        //return $data['requiredFieldsToApply'];
         return view('worker::dashboard.details', $data);
     }
 
@@ -1270,7 +1306,7 @@ class WorkerController extends Controller
     public function match_worker_job(Request $request)
     {
 
-        // dd($request->input());
+        //return $request->all();
         $user = auth()->guard('frontend')->user();
 
         $id = $user->id;

@@ -3816,7 +3816,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', async function() {
-            fillData();
+            //fillData();
             // let workerClassification = document.getElementById("nurse_classification");
             // workerClassificationValue = workerClassification.value;
             // if(workerClassificationValue == 'W-2'){
@@ -4806,6 +4806,7 @@
 
     <script>
         function askWorker(e, type, workerid, jobid) {
+            return false;
             let url = "{{ url('organization/organization-messages') }}";
             window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
         }

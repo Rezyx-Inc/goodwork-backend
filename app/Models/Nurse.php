@@ -174,7 +174,7 @@ class Nurse extends Model implements HasMedia
         'how_much_k',
         'worker_total_goodwork_amount',
         'worker_total_contract_amount',
-        'worker_as_soon_as_posible',
+        'worker_as_soon_as_possible',
         'eligible_work_in_us',
         'worked_at_facility_before',
         'account_tier',
@@ -206,6 +206,7 @@ class Nurse extends Model implements HasMedia
         'worker_call_back_rate',
         'worker_on_call_rate',
         'worker_on_call_check',
+        'worker_call_back_check',
         'worker_experience',
         'worker_benefits',
         'nurse_classification'

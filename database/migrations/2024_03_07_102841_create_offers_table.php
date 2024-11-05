@@ -28,6 +28,7 @@ class CreateOffersTable extends Migration
             $table->string('traveler_distance_from_facility')->nullable();
             $table->string('job_id', 36)->nullable();
             $table->string('recruiter_id', 36)->nullable();
+            $table->string('organization_id', 36)->nullable();
             $table->string('worker_user_id', 36)->nullable();
             $table->string('clinical_setting')->nullable();
             $table->decimal('Patient_ratio', 8, 2)->nullable();

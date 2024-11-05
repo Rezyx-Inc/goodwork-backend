@@ -26,7 +26,7 @@ $user = auth()->guard('recruiter')->user();
         <a href="{{ route('recruiter-messages') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('recruiter/recruiter-messages') ? 'active' : '' }}">
         <img src="{{URL::asset('recruiter/assets/images/r-message-icon.png')}}" /><span>Messages</span></a>
 
-        <a  href="{{route('recruiter-profile', ['type' => 'profile']) }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('recruiter/recruiter-profile') ? 'active' : '' }}">
+        <a  href="{{route('recruiter-profile', ['type' => 'profile']) }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('recruiter/recruiter-profile/profile') ? 'active' : '' }}">
         <img src="{{URL::asset('recruiter/assets/images/r-profile-icon.png')}}" /><span>My Profile</span>
         </a>
     </div>

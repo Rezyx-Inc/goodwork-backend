@@ -20,6 +20,10 @@
             <h4><span>Organization </span> Sign Up</h4>
             <form class="" method="post" action="{{route('organization.signup')}}" id="signup-form-submit">
                 <div class="ss-form-group">
+                    <input type="text" name="organization_name" placeholder="Organization Name" required><br/>
+                    <span class="help-block-organization-name"></span>
+                </div>
+                <div class="ss-form-group">
                     <input type="text" name="first_name" placeholder="First Name" required><br/>
                     <span class="help-block-first-name"></span>
                 </div>
@@ -33,7 +37,7 @@
                     <span class="help-block-email"></span>
                 </div>
                 <div class="ss-form-group">
-                    <input type="tel" id="contact_number" name="mobile" placeholder="Mobile" onchange=contactNumber(this)><br/>
+                    <input type="tel" id="contact_number" name="mobile" placeholder="Mobile"><br/>
                     <span id="passwordHelpInline" class="form-text">
       (Mobile not required)
     </span><br>
@@ -79,10 +83,18 @@
     var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     var firstName = $('input[name="first_name"]').val();
+    var organization_name = $('input[name="organization_name"]').val();
     var lastName = $('input[name="last_name"]').val();
     var email = $('input[name="email"]').val();
     var mobile = $('#contact_number').val();
 
+    if (organization_name.trim() === '') {
+    $('.help-block-organization-name').text('Please enter your organization name');
+    $('.help-block-organization-name').addClass('text-danger');
+     access = false;
+}else{
+    $('.help-block-organization-name').text('');
+}
     if (firstName.trim() === '') {
     $('.help-block-first-name').text('Please enter your first name');
     $('.help-block-first-name').addClass('text-danger');
