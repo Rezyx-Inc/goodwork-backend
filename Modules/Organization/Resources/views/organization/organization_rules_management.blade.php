@@ -28,8 +28,10 @@ $faker = app('Faker\Generator');
                     <th scope="row">{{$item["displayName"]}}</th>
                     <td>
                         <div class="form-check">
-                            <input id="apply_{{$item["workerFieldIdMatch"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                            @if($item['applyDisabled']) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["workerFieldIdMatch"]}}">
+
+                            <input id="apply_{{$item["fieldID"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
+                            @if($item['applyDisabled']) checked disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["fieldID"]}}">
+
                         </div>
                     </td>
                     <td>

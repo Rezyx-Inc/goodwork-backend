@@ -75,6 +75,7 @@ class OpportunitiesController extends Controller
         }
 
         return view('recruiter::recruiter/opportunitiesmanager', compact('draftJobs', 'specialities', 'professions', 'publishedJobs', 'onholdJobs', 'states', 'allKeywords', 'applyCount', 'requiredFieldsToSubmit'));
+
     }
 
     public function get_cities(Request $request)
