@@ -55,18 +55,65 @@ router.post('/createSheet', async (req, res) => {
 
     // Define the fields to be initialized in the sheet
     const fields = [
-      'job_id', 'job_name', 'job_city', 'job_type', 'type', 'job_state', 'weekly_pay', 'preferred_specialty',
-      'active', 'description', 'start_date', 'hours_shift', 'hours_per_week', 'preferred_experience',
-      'facility_shift_cancelation_policy', 'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio',
-      'Unit', 'scrub_color', 'rto', 'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus',
-      'completion_bonus', 'extension_bonus', 'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday',
-      'orientation_rate', 'on_call', 'on_call_rate', 'call_back_rate', 'weekly_non_taxable_amount', 'profession',
-      'terms', 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy',
-      'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
-      'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
-      'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-      'professional_state_licensure'
+      'Org Job Id',
+      'Type',
+      'Terms *',
+      'Profession *',
+      'Specialty *',
+      '$/hr *',
+      '$/Wk *',
+      'Hrs/Wk *',
+      'State *',
+      'City *',
+      'Shift Time',
+      'Guaranteed Hrs/wk',
+      'Hrs/Shift',
+      'Shifts/Wk',
+      'Wks/Contract',
+      'Start Date',
+      'End Date',
+      'RTO',
+      'OT $/Hr',
+      'On Call $/Hr',
+      'Call Back $/Hr',
+      'Orientation $/Hr',
+      'Taxable/Wk',
+      'Non-taxable/Wk',
+      'Feels Like $/hr',
+      'Gw$/Wk',
+      'Referral Bonus',
+      'Sign-On Bonus',
+      'Extension Bonus',
+      '$/Org',
+      '$/Gw ',
+      'Total $',
+      'Pay Frequency',
+      'Benefits',
+      'Clinical Setting',
+      'Adress',
+      'Facility',
+      "Facility's Parent System",
+      'Facility Shift Cancellation Policy',
+      'Contract Termination Policy',
+      'Min Miles Must Live From Facility',
+      'Professional Licensure',
+      'Certifications',
+      'Description',
+      'Auto Offer',
+      'Experience',
+      'References',
+      'Skills checklist',
+      'On Call?',
+      'Block scheduling',
+      'Floating Required',
+      'Patient Ratio Max',
+      'EMR',
+      'Unit',
+      'Classification',
+      'Vaccinations & Immunizations',
     ];
+
+
 
     // Write the fields as headers in the first row of the sheet
     await sheets.spreadsheets.values.update({
@@ -78,8 +125,36 @@ router.post('/createSheet', async (req, res) => {
       },
     });
 
+    // await sheets.spreadsheets.batchUpdate({
+    //   spreadsheetId,
+    //   resource: {
+    //     requests: [
+    //       {
+    //         setDataValidation: {
+    //           range: {
+    //             sheetId: 0, // Assumes Sheet1 is the first sheet
+    //             startRowIndex: 1, // Skip the header row
+    //             endRowIndex: 1000, // Adjust the row limit as needed
+    //             startColumnIndex: 1, // Column B
+    //             endColumnIndex: 2,
+    //           },
+    //           rule: {
+    //             condition: {
+    //               type: 'ONE_OF_LIST',
+    //               values: [{ userEnteredValue: 'Clinical' }, { userEnteredValue: 'Non-Clinical' }],
+    //             },
+    //             strict: true,
+    //             showCustomUi: true,
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // });
+
     return res.status(200).json({
       success: true,
+      link: `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit?gid=0#gid=0`,
       spreadsheetId,
       message: 'Spreadsheet created and initialized successfully'
     });
@@ -96,3 +171,4 @@ router.post('/createSheet', async (req, res) => {
 
 
 module.exports = router;
+
