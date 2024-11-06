@@ -14,7 +14,7 @@
                     <div class="col-lg-12">
                         <h2>Explore</h2>
 
-                        <!------------->
+                        <!------ Preview ------->
                         <div class="ss-apply-on-jb-mmn-dv-box-divs">
 
                             <div class="ss-job-prfle-sec">
@@ -127,15 +127,16 @@
 
 
                         </div>
-                        <!----------------jobs applay view details--------------->
-
+                        <!----------------apply job : view details--------------->
                         <div class="ss-job-apply-on-view-detls-mn-dv">
+                            
+                        <!---------------- Header ----------------->
                             <div class="ss-job-apply-on-tx-bx-hed-dv">
                                 <ul>
                                     <li>
                                         <p>Recruiter</p>
                                     </li>
-                                    {{-- <li><img src="{{URL::asset('images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li> --}}
+                                    <li><img width="50px" src="{{URL::asset('images/nurses/profile/'.$model->recruiter->image)}}" onerror="this.onerror=null;this.src='{{USER_IMG}}';"/>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</li>
                                 </ul>
 
                                 <ul>
@@ -147,10 +148,10 @@
                             </div>
 
                             <div class="ss-jb-aap-on-txt-abt-dv">
-                                <h5>About job</h5>
+                                <h5>About Work</h5>
                                 <ul>
                                     <li>
-                                        <h6>Job Name</h6>
+                                        <h6>Work Name</h6>
                                         <p>{{ $model->job_name }}</p>
                                         {{-- <p>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</p> --}}
                                     </li>

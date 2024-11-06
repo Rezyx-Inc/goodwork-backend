@@ -143,15 +143,8 @@
 
                             <div class="ss-form-group">
                                 <label>Min Title of Reference</label>
-                                <select name="min_title_of_reference">
-                                    <option value="">Select a min title</option>
-                                    @if (isset($allKeywords['MinTitleOfReference']))
-                                        @foreach ($allKeywords['MinTitleOfReference'] as $value)
-                                            <option value="{{ $value->title }}">{{ $value->title }}
-                                            </option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                                <input type="text" name="min_title_of_reference"
+                                    placeholder="Min Title of Reference">
 
                                 <span class="help-block"></span>
                             </div>

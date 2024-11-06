@@ -283,17 +283,26 @@
                 let referencePhone = document.querySelector('input[name="phone"]').value;
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
                 let referenceDate = document.querySelector('input[name="date_referred"]').value;
-                let referenceMinTitle = document.querySelector('select[name="min_title_of_reference"]').value;
+                let referenceMinTitle = document.querySelector('input[name="min_title_of_reference"]').value;
                 let referenceRecency = document.querySelector('select[name="recency_of_reference"]').value;
                 let referenceImage = document.querySelector('input[name="image"]').files[0];
 
-                if (!referenceImage) {
+                if (!referenceName) {
                     notie.alert({
                         type: 'error',
-                        text: '<i class="fa fa-exclamation-triangle"></i> Please upload image',
+                        text: '<i class="fa fa-exclamation-triangle"></i> Reference Name is required',
                         time: 3
                     });
                     return 404;
+                } else {
+                    if (!referencePhone && !referenceEmail) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-exclamation-triangle"></i> Phone Number or Email is required',
+                            time: 3
+                        });
+                        return 404;
+                    }
                 }
 
 
@@ -335,6 +344,7 @@
                 }
                 fileReadPromises.push(readerPromise);
             } else {
+                alert("file")
                 fileInputs.forEach((input, index) => {
                     let displayName = input.getAttribute("displayName");
                     if (input.files[0]) {
@@ -853,6 +863,8 @@
                 case 'file':
                     if (inputName == 'references') {
                         display_uploaded_reference_files(element, 2);
+                    }else if (inputName =="certification"){
+                        
                     }
                     break;
 
@@ -876,11 +888,11 @@
             let text = element.data('title');
             if (limit == null && worker_files.length > 0) {
                 text = worker_files
-                    .map(file => file?.ReferenceInformation?.referenceName + ' @ ' + file?.displayName)
-                    .join('<br>') + '<br>';
+                    .map(file => file?.ReferenceInformation?.referenceName)
+                    .join(',<br>') + '<br>';
             } else if (!!limit && worker_files.length > 0) {
                 text = worker_files
-                    .map(file => file?.ReferenceInformation?.referenceName + ' @ ' + file?.displayName)
+                    .map(file => file?.ReferenceInformation?.referenceName)
                     .slice(0, limit)
                     .join('<br>') + (worker_files.length > limit ? '<br>+ ' + (worker_files.length - limit) + ' More' : '');
             }
