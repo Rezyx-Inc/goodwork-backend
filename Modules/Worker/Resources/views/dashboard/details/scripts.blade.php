@@ -831,9 +831,9 @@
 
             if (inputName == 'references') {
                 element = $('#' + inputName).find('p[data-target="reference_file"]');
-                element.text("New text for the References");
-
-            } else {
+            } else if (inputName == 'certification') {
+                element = $('#' + inputName).find('p[data-target="certification_file"]');
+            }  else {
                 element = $('#' + inputName).find('p[data-name="' + inputName + '"]');
             }
             switch (type) {
@@ -863,8 +863,8 @@
                 case 'file':
                     if (inputName == 'references') {
                         display_uploaded_reference_files(element, 2);
-                    }else if (inputName =="certification"){
-                        
+                    } else if (inputName == 'certification') {
+                        display_uploaded_certification_files(element);
                     }
                     break;
 
@@ -895,6 +895,19 @@
                     .map(file => file?.ReferenceInformation?.referenceName)
                     .slice(0, limit)
                     .join('<br>') + (worker_files.length > limit ? '<br>+ ' + (worker_files.length - limit) + ' More' : '');
+            }
+            element.html(text);
+        }
+
+        // display uploaded certification files
+        function display_uploaded_certification_files(element) {
+            // filter worker_files by type
+            worker_files = all_files.filter(file => file.type == 'certification');
+
+            let text = element.data('title');
+            console.log("*****************************text : ", text);
+            if (worker_files.length > 0) {
+                text = worker_files.length + ' Files Uploaded';
             }
             element.html(text);
         }

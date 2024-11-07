@@ -329,16 +329,12 @@
                                             @endforeach
                                         </li>
                                         <li>
-                                            <p></p>
-                                            @foreach ($certificates as $v)
-                                                <p data-target="certification_file"
-                                                    data-hidden_name="{{ strtolower($v) }}_cer" data-hidden_value="Yes"
-                                                    data-hidden_type="{{ $v }}"
-                                                    data-href="{{ route('worker.certification') }}"
-                                                    data-title="No {{ $v }}?"
-                                                    data-name="{{ strtolower($v) }}" onclick="open_modal(this)">No
-                                                    {{ $v }}?</p>
-                                            @endforeach
+                                            <p class="certification_file" data-target="certification_file" onclick="open_modal(this)"
+                                            data-title="No certification?">
+                                                @foreach ($certificates as $v)
+                                                    No {{ $v }}?
+                                                @endforeach
+                                            </p>
                                         </li>
                                     </ul>
                                 @endif
