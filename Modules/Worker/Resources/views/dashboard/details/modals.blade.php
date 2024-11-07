@@ -143,22 +143,24 @@
 
                             <div class="ss-form-group">
                                 <label>Min Title of Reference</label>
-                                <input type="text" name="min_title_of_reference"
+                                <input id="min_title_of_reference" type="text" name="min_title_of_reference"
                                     placeholder="Min Title of Reference">
-
                                 <span class="help-block"></span>
                             </div>
+
                             <div class="ss-form-group">
                                 <label>Is this from your last assignment?</label>
-                                <select name="recency_of_reference">
-                                    <option value="">Select a recency period</option>
-                                    @if (isset($allKeywords['RecencyOfReference']))
-                                        @foreach ($allKeywords['RecencyOfReference'] as $value)
-                                            <option value="{{ $value->title }}">{{ $value->title }}
-                                            </option>
-                                        @endforeach
-                                    @endif
-                                </select>
+
+                                <div class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-primary focus active" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                        <input type="radio" name="recency_of_reference" value="1" class="join-btn" checked> Yes
+                                    </label>
+                                    <label class="btn btn-secondary" type="button" data-toggle-class="btn-primary" >
+                                        <input type="radio" name="recency_of_reference" value="0" class="join-btn"> &nbsp; No &nbsp;
+                                    </label>
+                                </div>
+
+
                                 <span class="help-block"></span>
                             </div>
 

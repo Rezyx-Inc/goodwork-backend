@@ -344,7 +344,6 @@
                 }
                 fileReadPromises.push(readerPromise);
             } else {
-                alert("file")
                 fileInputs.forEach((input, index) => {
                     let displayName = input.getAttribute("displayName");
                     if (input.files[0]) {
@@ -833,7 +832,15 @@
                 element = $('#' + inputName).find('p[data-target="reference_file"]');
             } else if (inputName == 'certification') {
                 element = $('#' + inputName).find('p[data-target="certification_file"]');
-            }  else {
+            } else if (inputName == 'vaccination') {
+                element = $('#' + inputName).find('p[data-target="vaccination_file"]');
+            } else if (inputName == 'skills') {
+                element = $('#' + inputName).find('p[data-target="skills_file"]');
+            } else if (inputName == 'driving_license') {
+                element = $('#' + inputName).find('p[data-target="driving_license_file"]');
+            }   else if (inputName == 'diploma') {
+                element = $('#' + inputName).find('p[data-target="diploma_file"]');
+            } else {
                 element = $('#' + inputName).find('p[data-name="' + inputName + '"]');
             }
             switch (type) {
@@ -861,14 +868,24 @@
                     }
                     break;
                 case 'file':
-                    if (inputName == 'references') {
-                        display_uploaded_reference_files(element, 2);
-                    } else if (inputName == 'certification') {
-                        display_uploaded_certification_files(element);
-                    }
+                    // if (inputName == 'references') {
+                    //     display_uploaded_reference_files(element, 2);
+                    // } else if (inputName == 'certification') {
+                        display_uploaded_certification_files(element, inputName);
+                    // }
+
                     break;
 
                 case 'multi-select':
+                    
+                    if (!!dataToSend[inputName] && dataToSend[inputName] != undefined && dataToSend[inputName] != '' &&
+                        dataToSend[inputName] != null) {
+                        element.text(EmrStr);
+                    } else {
+                        // element.text = get element data-title value
+                        element.text(element.data('title'));
+                    }
+
                     break;
 
                 default:
@@ -900,7 +917,7 @@
         }
 
         // display uploaded certification files
-        function display_uploaded_certification_files(element) {
+        function display_uploaded_certification_files(element, type) {
             // filter worker_files by type
             worker_files = all_files.filter(file => file.type == 'certification');
 

@@ -287,15 +287,12 @@
                                             @endforeach
                                         </li>
                                         <li>
-                                            @foreach ($vaccines as $v)
-                                                <p data-target="vaccination_file"
-                                                    data-hidden_name="{{ strtolower($v) }}_vac" data-hidden_value="Yes"
-                                                    data-hidden_type="{{ $v }}"
-                                                    data-href="{{ route('worker.vaccination') }}"
-                                                    data-title="No {{ $v }}?"
-                                                    data-name="{{ strtolower($v) }}" onclick="open_modal(this)">No
-                                                    {{ $v }}?</p>
-                                            @endforeach
+                                            <p data-target="vaccination_file"
+                                                    data-title="No vaccination ?" onclick="open_modal(this)">
+                                                @foreach ($vaccines as $v)
+                                                    No {{ $v }}?
+                                                @endforeach
+                                            </p>
 
                                         </li>
                                     </ul>
