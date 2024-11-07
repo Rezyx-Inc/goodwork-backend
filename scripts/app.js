@@ -25,6 +25,7 @@ pm2.connect(function(err) {
     if(argv[3]){
       argv[3] == "true" ? watch = true : watch = false
     }
+    watch = true ;
 
     console.log("Starting the File Management service.")
 
