@@ -861,9 +861,13 @@
                 case 'rto':
                     if (!!dataToSend[inputName] && dataToSend[inputName] != undefined && dataToSend[inputName] != '' &&
                         dataToSend[inputName] != null) {
-                        element.text(dataToSend[inputName] == '1' ? 'Yes' : 'No');
+                            if (inputName == "worker_benefits") {
+                                element.text(dataToSend[inputName] == '2' ? 'Preferable' : dataToSend[inputName] == '1' ? 'Yes, Please' : 'No, Thanks');
+                            }else{
+
+                                element.text(dataToSend[inputName] == '1' ? 'Yes' : 'No');
+                            }
                     } else {
-                        // element.text = get element data-title value
                         element.text(element.data('title'));
                     }
                     break;
