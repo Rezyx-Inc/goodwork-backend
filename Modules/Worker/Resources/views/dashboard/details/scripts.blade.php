@@ -278,8 +278,7 @@
             const fileReadPromises = [];
             var workerId = worker_id;
 
-            if (type == 'references') {
-                let referenceName = document.querySelector('input[name="name"]').value;
+            if (type == 'references') {let referenceName = document.querySelector('input[name="name"]').value;
                 let referencePhone = document.querySelector('input[name="phone"]').value;
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
                 let referenceDate = document.querySelector('input[name="date_referred"]').value;
@@ -305,7 +304,6 @@
                     }
                 }
 
-
                 var referenceInfo = {
                     referenceName: referenceName,
                     phoneNumber: referencePhone,
@@ -314,6 +312,7 @@
                     minTitle: referenceMinTitle,
                     isLastAssignment: referenceRecency == 1 ? true : false
                 };
+                console.log(referenceInfo);
 
                 var readerPromise;
                 if (referenceImage) {
@@ -322,7 +321,7 @@
                         reader.onload = function(event) {
                             resolve({
                                 name: referenceImage.name,
-                                path: referenceImage.name,
+                                path: "",
                                 type: type,
                                 content: event.target.result,
                                 displayName: referenceImage.name,
@@ -333,16 +332,18 @@
                         reader.readAsDataURL(referenceImage);
                     });
                 } else {
-                    readerPromise = {
+                    readerPromise = Promise.resolve({
                         name: 'null',
                         path: 'null',
                         type: type,
                         content: 'data:',
                         displayName: 'null',
                         ReferenceInformation: referenceInfo
-                    };
+                    });
                 }
+
                 fileReadPromises.push(readerPromise);
+
             } else {
                 fileInputs.forEach((input, index) => {
                     let displayName = input.getAttribute("displayName");

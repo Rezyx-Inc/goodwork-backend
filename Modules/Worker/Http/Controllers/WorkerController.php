@@ -128,6 +128,9 @@ class WorkerController extends Controller
         $data = [];
         $data['model'] = Job::findOrFail($id);
         $recruiter_id = $data['model']->recruiter_id;
+        $user = User::findOrFail($recruiter_id);
+
+        $data['model']->organization_name = !!$user->organization_name && strlen($user->organization_name) ? $user->organization_name : 'Not Available';
         $data['requiredFieldsToApply'] = [];
 
         if (isset($recruiter_id)) {
@@ -163,7 +166,7 @@ class WorkerController extends Controller
         }
         $data['allKeywords'] = $allKeywords;
         // $user = auth()->guard('frontend')->user();
-        // dd($user->nurse->id);
+        // dd($data["model"]->matchWithWorker()['diploma']['match']);
         $data['jobSaved'] = new JobSaved();
         //return $data['requiredFieldsToApply'];
         return view('worker::dashboard.details.details', $data);

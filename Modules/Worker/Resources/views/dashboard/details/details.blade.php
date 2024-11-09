@@ -157,7 +157,7 @@
                                     </li>
                                     <li>
                                         <h6>Organization Name</h6>
-                                        {{-- <p>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</p> --}}
+                                        <p>{{ $model->organization_name }}</p> 
                                     </li>
                                     <li>
                                         <h6>Date Posted</h6>
@@ -515,7 +515,7 @@
                                         <p data-target="diploma_file" data-hidden_name="diploma_cer"
                                             data-hidden_value="Yes" data-href="{{ route('info-required') }}"
                                             data-title="Did you really graduate?" data-name="diploma"
-                                            onclick="open_modal(this)">Did you really graduate?</p>
+                                            onclick="open_modal(this)"> {{ $matches['diploma']['match'] ? 'You got the smarts needed.' : 'Did you really graduate ?' }}</p>
                                     </li>
                                 </ul>
 
