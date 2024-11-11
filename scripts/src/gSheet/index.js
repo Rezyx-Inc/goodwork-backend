@@ -126,10 +126,15 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         // Skip conversion for 'job_id' and assign it directly as a string
         if (header === 'Job ID') {
           rowObject[header] = value; // Keep 'job_id' as a string
+        } else if ((header === 'On Call?' && value === '')
+          || (header === 'Floating Required' && value === '')) {
+          rowObject[header] = 0;
         } else if (isNumeric) {
           rowObject[header] = parseFloat(value); // Convert to number if fully numeric
         } else if (isBoolean) {
-          rowObject[header] = value.toLowerCase() === 'true'; // Convert to boolean (true or false)
+          rowObject[header] = value.toLowerCase() === 'true'; // Convert to boolean
+        } else if (value === '') {
+          rowObject[header] = null; // Set empty values to null
         } else {
           rowObject[header] = value; // Keep as string for all other cases
         }
@@ -146,7 +151,7 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     const fileName = `${spreadsheetName.replace(/[<>:"/\\|?*]/g, '_')}.json`;
     const folderPath = path.join(__dirname, 'jsons');
     const filePath = path.join(folderPath, fileName);
-
+    
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath);
     }
@@ -456,7 +461,7 @@ async function main() {
 
     //await deleteAllSpreadsheets(auth);
 
-    const idd_for_delete = "10FTneX13j-8ClFi3C7hlDiBcBF1AvkDwF2LaLsRLU9o"
+    const idd_for_delete = "1mZ2wz86OzlRLpA31TCJd-og9M5PJ-mltwrZMdQRVdNM"
     //await deleteSpreadsheetById(auth, idd_for_delete);
 
     const liste_id_to_delete = [
