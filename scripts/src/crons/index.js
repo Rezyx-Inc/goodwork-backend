@@ -1,7 +1,7 @@
 var cron = require("node-cron");
 var laboredge = require("./laboredge.js");
 var { report } = require("../set.js");
-var gsheet = require("../gSheet/index.js").main;
+var { main } = require("../gSheet/index.js");
 
 // Uncomment to seed accounts
 //laboredge.seed(999);
@@ -23,7 +23,7 @@ if (process.env.ENABLE_CRON) {
   cron.schedule("0 * * * *", () => {
     console.log("Checking job updates");
     // laboredge.update();
-    gsheet();
+    main();
   });
 
   // Check other updates every day at 1 am
