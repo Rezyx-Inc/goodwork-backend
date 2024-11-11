@@ -112,18 +112,20 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     // Transform the data into an array of objects
     const jsonData = rows.map(row => {
       const rowObject = {};
-
+    
       headers.forEach((header, index) => {
         let value = row[index] || '';
-
+    
         // Check if the value is fully numeric
-        const isNumeric = /^\d+$/.test(value); // Regular expression to check if the value is all digits
-
+        const isNumeric = /^\d+$/.test(value);
+    
         // Check if the value is boolean (case insensitive)
         const isBoolean = value.toLowerCase() === 'true' || value.toLowerCase() === 'false';
-
+    
+        // Check if the value is in "M/D/YYYY", "MM/DD/YYYY", "M-D-YYYY", or "MM-DD-YYYY" format
+        const isDateFormat = /^\d{1,2}[\/-]\d{1,2}[\/-]\d{4}$/.test(value);
+    
         // Assign based on type
-        // Skip conversion for 'job_id' and assign it directly as a string
         if (header === 'Job ID') {
           rowObject[header] = value; // Keep 'job_id' as a string
         } else if ((header === 'On Call?' && value === '')
@@ -133,15 +135,23 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
           rowObject[header] = parseFloat(value); // Convert to number if fully numeric
         } else if (isBoolean) {
           rowObject[header] = value.toLowerCase() === 'true'; // Convert to boolean
+        } else if (isDateFormat) {
+          // Convert "M/D/YYYY", "MM/DD/YYYY", "M-D-YYYY", or "MM-DD-YYYY" to "YYYY-MM-DD"
+          const [month, day, year] = value.split(/[\/-]/);
+          const formattedMonth = month.padStart(2, '0'); 
+          const formattedDay = day.padStart(2, '0');    
+          rowObject[header] = `${year}-${formattedMonth}-${formattedDay}`;
         } else if (value === '') {
           rowObject[header] = null; // Set empty values to null
         } else {
           rowObject[header] = value; // Keep as string for all other cases
         }
       });
-
+    
       return rowObject;
     });
+    
+    
 
 
 
