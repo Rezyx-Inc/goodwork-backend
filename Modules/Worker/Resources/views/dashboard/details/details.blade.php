@@ -151,11 +151,6 @@
                                 <h5>About Work</h5>
                                 <ul>
                                     <li>
-                                        <h6>Work Name</h6>
-                                        <p>{{ $model->job_name }}</p>
-                                        {{-- <p>{{$model->recruiter->first_name}} {{$model->recruiter->last_name}}</p> --}}
-                                    </li>
-                                    <li>
                                         <h6>Organization Name</h6>
                                         <p>{{ $model->organization_name }}</p> 
                                     </li>
@@ -184,14 +179,7 @@
 
                             <!-------Work Information------->
                             <div class="ss-jb-apl-oninfrm-mn-dv">
-                                <ul class="ss-jb-apply-on-inf-hed">
-                                    <li>
-                                        <h5>Work Information</h5>
-                                    </li>
-                                    <li>
-                                        <h5>Your Information</h5>
-                                    </li>
-                                </ul>
+
                                 @php
                                     $matches = [];
 
@@ -207,982 +195,1010 @@
                                     }
                                 @endphp
 
-
-                                @if (isset($model->profession))
-                                    <ul id="profession"
-                                        class="ss-s-jb-apl-on-inf-txt-ul  {{ $matches['profession']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                {{-- Summary --}}
+                                <button class="btn first-collapse" data-toggle="collapse" data-target="#summary">Summary</button>
+                                <div id="summary" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
                                         <li>
-                                            <span>Profession</span>
-                                            <h6>{{ $model->profession }}</h6>
+                                            <h5>Work Information</h5>
                                         </li>
                                         <li>
-                                            <p data-target="dropdown" data-title="What kind of professional are you?"
-                                                data-filter="Profession" data-name="profession" onclick="open_modal(this)">
-                                                What kind of professional are you?</p>
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif
+                                    
+                                    @if (isset($model->profession))
+                                        <ul id="profession"
+                                            class="ss-s-jb-apl-on-inf-txt-ul profession_item {{ $matches['profession']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Profession</span>
+                                                <h6>{{ $model->profession }}</h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="What kind of professional are you?"
+                                                    data-filter="Profession" data-name="profession" onclick="open_modal(this)">
+                                                    What kind of professional are you?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
+                                    @if (isset($model->preferred_specialty))
+                                        <ul id="specialty"
+                                            class="ss-s-jb-apl-on-inf-txt-ul preferred_specialty_item {{ $matches['preferred_specialty']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Specialty</span>
+                                                <h6>{{ str_replace(',', ', ', $model->preferred_specialty) }}</h6>
+                                            </li>
+                                            {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="What's your specialty?"
+                                                    data-filter="Speciality" data-name="specialty" onclick="open_modal(this)">
+                                                    What's your specialty?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                @if (isset($model->preferred_specialty))
-                                    <ul id="specialty"
-                                        class="ss-s-jb-apl-on-inf-txt-ul  {{ $matches['preferred_specialty']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    @if (isset($model->actual_hourly_rate))
+                                        <ul id="worker_actual_hourly_rate"
+                                            class="ss-s-jb-apl-on-inf-txt-ul actual_hourly_rate_item {{ $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Est. Taxable Hourly Rate</span>
+                                                <h6>${{ number_format($model->actual_hourly_rate) }}</h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
+                                                    data-placeholder="What rate is fair?"
+                                                    data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What rate
+                                                    is fair?</p>
+
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->hours_per_week) && isset($model->actual_hourly_rate))
+                                        <ul id="worker_weekly_rate"
+                                            class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Est. Weekly Rate</span>
+                                                <h6>${{ number_format($model->weekly_pay) }} </h6>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->hours_per_week))
+                                        <ul id="worker_hours_per_week"
+                                            class="ss-s-jb-apl-on-inf-txt-ul hours_per_week_item {{ $matches['hours_per_week']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Hours/Week</span>
+                                                <h6>{{ $model->hours_per_week }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="Ideal hours per week?"
+                                                    data-placeholder="Enter number Of Hours/Week"
+                                                    data-name="worker_hours_per_week" onclick="open_modal(this)">Ideal hours
+                                                    per week?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->job_state))
+                                        <ul id="worker_facility_state"
+                                            class="ss-s-jb-apl-on-inf-txt-ul job_state_item {{ $matches['job_state']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Facility State</span>
+                                                <h6>{{ $model->job_state }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="States you'd like to work?"
+                                                    data-filter="State" data-name="worker_facility_state"
+                                                    onclick="open_modal(this)">States you'd like to work?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->job_city))
+                                        <ul id="worker_facility_city"
+                                            class="ss-s-jb-apl-on-inf-txt-ul job_city_item {{ $matches['job_city']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Facility City</span>
+                                                <h6>{{ $model->job_city }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="Cities you'd like to work?"
+                                                    data-filter="City" data-name="worker_facility_city"
+                                                    onclick="open_modal(this)">Do you want to work here ?</p>
+
+                                            </li>
+                                        </ul>
+                                    @endif
+                                    
+                                </div>
+                                
+                                {{-- Shift --}}
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#shift">Shift</button>
+                                <div id="shift" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
                                         <li>
-                                            <span>Specialty</span>
-                                            <h6>{{ str_replace(',', ', ', $model->preferred_specialty) }}</h6>
+                                            <h5>Work Information</h5>
                                         </li>
-                                        {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
                                         <li>
-                                            <p data-target="dropdown" data-title="What's your specialty?"
-                                                data-filter="Speciality" data-name="specialty" onclick="open_modal(this)">
-                                                What's your specialty?</p>
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif
+
+                                    @if (isset($model->preferred_shift))
+                                        <ul id="worker_shift_time_of_day" class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Shift Time Of Day</span>
+                                                <h6>{{ $model->preferred_shift }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="Fav shift?"
+                                                    data-filter="shift_time_of_day" data-name="worker_shift_time_of_day"
+                                                    onclick="open_modal(this)">Fav shift?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->guaranteed_hours))
+                                        <ul id="worker_guaranteed_hours"
+                                            class="ss-s-jb-apl-on-inf-txt-ul guaranteed_hours_item {{ $matches['guaranteed_hours']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Guaranteed Hours</span>
+                                                <h6>{{ number_format($model->guaranteed_hours) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number"
+                                                    data-title="Open to jobs with no guaranteed hours?"
+                                                    data-placeholder="Enter Guaranteed Hours"
+                                                    data-name="worker_guaranteed_hours" onclick="open_modal(this)">Open to
+                                                    jobs with no guaranteed hours?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->hours_shift))
+                                        <ul id="worker_hours_shift"
+                                            class="ss-s-jb-apl-on-inf-txt-ul hours_shift_item {{ $matches['hours_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Hours/Shift</span>
+                                                <h6>{{ $model->hours_shift }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="Preferred hours per shift"
+                                                    data-placeholder="Enter number Of Hours/Shift"
+                                                    data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours
+                                                    per shift</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->weeks_shift))
+                                        <ul id="worker_shifts_week"
+                                            class="ss-s-jb-apl-on-inf-txt-ul weeks_shift_item {{ $matches['weeks_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Shifts/Week</span>
+                                                <h6>{{ number_format($model->weeks_shift) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="Ideal shifts per week"
+                                                    data-placeholder="Enter ideal shift per week"
+                                                    data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per
+                                                    week</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->preferred_assignment_duration))
+                                        <ul id="worker_weeks_assignment"
+                                            class="ss-s-jb-apl-on-inf-txt-ul preferred_assignment_duration_item {{ $matches['preferred_assignment_duration']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Weeks/Assignment</span>
+                                                <h6>{{ $model->preferred_assignment_duration }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="How many weeks?"
+                                                    data-placeholder="Enter prefered weeks per assignment"
+                                                    data-name="worker_weeks_assignment" onclick="open_modal(this)">How many
+                                                    weeks?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
 
-                                @if (isset($model->job_location))
-                                    <ul id="nursing_license_state"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['job_location']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+
+                                    @if (isset($model->as_soon_as) && $model->as_soon_as == '1')
+                                        <ul id="worker_as_soon_as_possible"
+                                            class="ss-s-jb-apl-on-inf-txt-ul as_soon_as_item {{ $matches['as_soon_as']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Start Date</span>
+                                                <h6>As soon as possible</h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="Can you start as soon as possible?"
+                                                    data-name="worker_as_soon_as_possible" onclick="open_modal(this)">Can you
+                                                    start as
+                                                    soon as possible?</p>
+                                            </li>
+                                        </ul>
+
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>End Date</span>
+                                            </li>
+                                            <li>
+                                                <h6>NA</h6>
+                                            </li>
+                                        </ul>
+
+                                    @else
+                                        <ul id="worker_start_date"
+                                            class="ss-s-jb-apl-on-inf-txt-ul start_date_item {{ $matches['start_date']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Start date</span>
+                                                <h6>{{ $model->start_date }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="date" data-title="When can you start?"
+                                                    data-name="worker_start_date" onclick="open_modal(this)">When can you
+                                                    start?</p>
+                                            </li>
+                                        </ul>
+
+                                        <ul id="worker_end_date"
+                                            class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>End Date</span>
+                                            </li>
+                                            <li>
+                                                <h6>{{ $model->end_date }}</h6>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->rto))
+                                        <ul id="rto"
+                                            class="ss-s-jb-apl-on-inf-txt-ul rto_item {{ $matches['rto']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>RTO</span>
+                                                <h6>{{ $model->rto }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="rto" data-title="Any time off?"
+                                                    data-placeholder="Any time off?" data-name="rto"
+                                                    onclick="open_modal(this)">Any time off?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                    
+
+                                </div>
+                                
+                                {{-- Pay --}}
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#pay">Pay</button>
+                                <div id="pay" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
                                         <li>
-                                            <span>Professional Licensure</span>
-                                            <h6>{{ $model->job_location }}</h6>
+                                            <h5>Work Information</h5>
                                         </li>
-
                                         <li>
-                                            <p data-target="dropdown" data-title="Where are you licensed?"
-                                                data-filter="StateCode" data-placeholder="Where are you licensed?"
-                                                data-name="nursing_license_state" onclick="open_modal(this)">Where are you
-                                                licensed?</p>
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif
 
-                                @if (isset($model->preferred_experience))
-                                    <ul id="worker_experience"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['preferred_experience']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    @if (isset($model->overtime))
+                                        <ul id="worker_overtime_rate"
+                                            class="ss-s-jb-apl-on-inf-txt-ul overtime_item {{ $matches['overtime']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Overtime</span>
+                                                <h6>{{ number_format($model->overtime) }} </h6>
+                                            </li>
+                                            <li>
+
+                                                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
+                                                    data-name="worker_overtime_rate" onclick="open_modal(this)">What rate is
+                                                    fair?</p>
+
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->on_call_rate))
+                                        <ul id="worker_on_call"
+                                            class="ss-s-jb-apl-on-inf-txt-ul on_call_rate_item {{ $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>On Call Rate</span>
+                                                <h6>${{ number_format($model->on_call_rate) }}</h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
+                                                    data-placeholder="What rate is fair?" data-name="worker_on_call"
+                                                    onclick="open_modal(this)">What rate is fair?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->call_back_rate))
+                                        <ul id="worker_call_back_check"
+                                            class="ss-s-jb-apl-on-inf-txt-ul call_back_rate_item {{ $matches['call_back_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Call Back Rate</span>
+                                                <h6>${{ number_format($model->call_back_rate) }}</h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="Is this rate reasonable?"
+                                                    data-name="worker_call_back_check" onclick="open_modal(this)">Is this rate
+                                                    reasonable?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->orientation_rate))
+                                        <ul id="worker_orientation_rate"
+                                            class="ss-s-jb-apl-on-inf-txt-ul orientation_rate_item {{ $matches['orientation_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Orientation Rate</span>
+                                                <h6>${{ number_format($model->orientation_rate) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="What rate is fair?"
+                                                    data-placeholder="-" data-name="worker_orientation_rate"
+                                                    onclick="open_modal(this)">What rate is fair?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->weekly_taxable_amount))
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Est. Weekly Taxable Amount</span>
+                                                <h6>${{ number_format($model->weekly_taxable_amount) }} </h6>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->weekly_non_taxable_amount))
+                                        <ul id="worker_weekly_non_taxable_amount_check"
+                                            class="ss-s-jb-apl-on-inf-txt-ul weekly_non_taxable_amount_item {{ $matches['weekly_non_taxable_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Est. Weekly Non-Taxable Amount</span>
+                                                <h6>${{ number_format($model->weekly_non_taxable_amount) }}</h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="Are you going to duplicate expenses?"
+                                                    data-placeholder="Weekly non-taxable amount"
+                                                    data-name="worker_weekly_non_taxable_amount_check"
+                                                    onclick="open_modal(this)">Are you going to duplicate expenses?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->feels_like_per_hour))
+                                        <ul id="worker_feels_like_per_hour_check"
+                                            class="ss-s-jb-apl-on-inf-txt-ul feels_like_per_hour_item {{ $matches['feels_like_per_hour']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Feels Like $/Hr</span>
+                                                <h6>${{ $model->feels_like_per_hour }} </h6>
+
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="Does this seem fair based on the market?"
+                                                    data-placeholder="Does this seem fair based on the market?"
+                                                    data-name="worker_feels_like_per_hour_check" onclick="open_modal(this)">
+                                                    Does this seem fair based on the market?</p>
+
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->weekly_taxable_amount))
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Est. Goodwork Weekly Amount</span>
+                                                <h6>${{ number_format($model->goodwork_weekly_amount) }}</h6>
+                                            </li>
+                                            <li>
+                                                <h6> You have 5 days left before your rate drops form 5% to 2%</h6>
+                                                {{-- <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p> --}}
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->referral_bonus))
+                                        <ul id="worker_referral_bonus"
+                                            class="ss-s-jb-apl-on-inf-txt-ul referral_bonus_item {{ $matches['referral_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Referral Bonus</span>
+                                                <h6>{{ number_format($model->referral_bonus) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="# of people you have referred?"
+                                                    data-placeholder="# of people you have referred?"
+                                                    data-name="worker_referral_bonus" onclick="open_modal(this)"># of people
+                                                    you have referred?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->sign_on_bonus))
+                                        <ul id="worker_sign_on_bonus"
+                                            class="ss-s-jb-apl-on-inf-txt-ul sign_on_bonus_item {{ $matches['sign_on_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Sign-On Bonus</span>
+                                                <h6>${{ number_format($model->sign_on_bonus) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="What kind of bonus do you expect?"
+                                                    data-placeholder="What kind of bonus do you expect?"
+                                                    data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of
+                                                    bonus do you expect?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->extension_bonus))
+                                        <ul id="worker_extension_bonus"
+                                            class="ss-s-jb-apl-on-inf-txt-ul extension_bonus_item {{ $matches['extension_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Extension Bonus</span>
+                                                <h6>${{ number_format($model->extension_bonus) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="What are you comparing this to?"
+                                                    data-placeholder="What are you comparing this to?"
+                                                    data-name="worker_extension_bonus" onclick="open_modal(this)">What are you
+                                                    comparing this to?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->completion_bonus))
+                                        <ul id="worker_completion_bonus"
+                                            class="ss-s-jb-apl-on-inf-txt-ul completion_bonus_item {{ $matches['completion_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Completion Bonus</span>
+                                                <h6>${{ number_format($model->completion_bonus) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="What kind of bonus do you deserve?"
+                                                    data-placeholder="What kind of bonus do you deserve?"
+                                                    data-name="worker_completion_bonus" onclick="open_modal(this)">What kind
+                                                    of bonus do you deserve?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->other_bonus))
+                                        <ul id="worker_other_bonus"
+                                            class="ss-s-jb-apl-on-inf-txt-ul other_bonus_item {{ $matches['other_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Other Bonus</span>
+                                                <h6>${{ number_format($model->other_bonus) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="Other bonuses you want?"
+                                                    data-placeholder="Other bonuses you want?" data-name="worker_other_bonus"
+                                                    onclick="open_modal(this)">Other bonuses you want?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->health_insaurance))
+                                        <ul id="worker_health_insurance"
+                                            class="ss-s-jb-apl-on-inf-txt-ul health_insaurance_item {{ $matches['health_insaurance']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Health Insurance</span>
+
+                                                <h6> {{ $model->health_insaurance == '1' ? 'Yes' : 'No' }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="How much do you want this?"
+                                                    data-name="worker_health_insurance"
+                                                    data-placeholder="How important is this to you?" onclick="open_modal(this)">
+                                                    How much do you want this?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->total_organization_amount))
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Est. Total Organization Amount</span>
+                                                <h6>${{ number_format($model->total_organization_amount) }}</h6>
+                                            </li>
+
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->total_goodwork_amount))
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Est. Total Goodwork Amount</span>
+                                                <h6>${{ number_format($model->total_goodwork_amount) }}</h6>
+                                            </li>
+
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->total_contract_amount))
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Est. Total Contract Amount</span>
+                                                <h6>${{ number_format($model->total_contract_amount) }}</h6>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->pay_frequency))
+                                        <ul class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Pay Frequency</span>
+                                                <h6>{{ $model->pay_frequency }}</h6>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->benefits))
+                                        <ul id="worker_benefits"
+                                            class="ss-s-jb-apl-on-inf-txt-ul benefits_item {{ $matches['benefits']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Benefits</span>
+                                                <h6>{{ $model->benefits }} </h6>
+                                            </li>
+                                            <li>
+                                                {{-- binary : benefits -> tinyinteger 1->yes 2->maybe 0->no : Yes, Please | No, Thanks | preferable  --}}
+                                                <p class="profile_info_text" data-target="benefits" data-title="Do you want benefits?"
+                                                    data-placeholder="Do you want benefits ?" data-name="worker_benefits"
+                                                    onclick="open_modal(this)">How much do you want this?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->dental))
+                                        <ul id="worker_dental"
+                                            class="ss-s-jb-apl-on-inf-txt-ul dental_item {{ $matches['dental']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Dental</span>
+                                                <h6> {{ $model->dental == '1' ? 'Yes' : 'No' }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="How important is this to you?"
+                                                    data-placeholder="" data-name="worker_dental" onclick="open_modal(this)">
+                                                    How much do you want this?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->vision))
+                                        <ul id="worker_vision"
+                                            class="ss-s-jb-apl-on-inf-txt-ul vision_item {{ $matches['vision']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Vision</span>
+                                                <h6> {{ $model->vision == '1' ? 'Yes' : 'No' }} </h6>
+                                            </li>
+                                            <li>
+
+                                                <p class="profile_info_text" data-target="binary" data-title="How important is this to you?"
+                                                    data-placeholder="How important is this to you?" data-name="worker_vision"
+                                                    onclick="open_modal(this)">How much do you want this?</p>
+
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->four_zero_one_k))
+                                        <ul id="worker_four_zero_one_k"
+                                            class="ss-s-jb-apl-on-inf-txt-ul four_zero_one_k_item {{ $matches['four_zero_one_k']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>401K</span>
+
+                                                <h6>{{ $model->four_zero_one_k == '1' ? 'Yes' : 'No' }} </h6>
+
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-placeholder="How much do you want this?"
+                                                    data-title="How much do you want this?" data-name="worker_four_zero_one_k"
+                                                    onclick="open_modal(this)">How much do you want this?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                </div>
+                                
+                                {{-- Location --}}
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#location">Location</button>
+                                <div id="location" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
                                         <li>
-                                            <span>Experience</span>
-                                            <h6>{{ $model->preferred_experience }} Years Required</h6>
+                                            <h5>Work Information</h5>
                                         </li>
                                         <li>
-                                            <p data-target="input_number" data-hidden_name="dl_cer" data-hidden_value="Yes"
-                                                data-href="{{ route('info-required') }}"
-                                                data-title="How long have you done this?" data-name="worker_experience"
-                                                onclick="open_modal(this)">How long have you done this?</p>
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif
 
-                                @if (isset($model->vaccinations))
-                                    <ul id="vaccination"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['vaccinations']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                    @if (isset($model->clinical_setting))
+                                        <ul id="clinical_setting_you_prefer"
+                                            class="ss-s-jb-apl-on-inf-txt-ul clinical_setting_item {{ $matches['clinical_setting']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Clinical Setting</span>
+                                                <h6>{{ $model->clinical_setting }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="What setting do you prefer?"
+                                                    data-filter="ClinicalSetting" data-name="clinical_setting_you_prefer"
+                                                    onclick="open_modal(this)">What setting do you prefer?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->preferred_work_location))
+                                        <ul
+                                            class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Address</span>
+                                                <h6>{{ $model->preferred_work_location }} </h6>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->facility_name))
+                                        <ul
+                                            class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Facility</span>
+                                                <h6>{{ $model->facility_name }} </h6>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->facilitys_parent_system))
+                                        <ul id="worker_facilitys_parent_system" class="ss-s-jb-apl-on-inf-txt-ul">
+                                            <li>
+                                                <span>Facility's Parent System</span>
+                                                <h6>{{ $model->facilitys_parent_system }}</h6>
+                                            </li>
+                                            {{-- <li>
+                                                <p class="profile_info_text" data-target="input" data-title="What facilities would you like to work at?"
+                                                    data-placeholder="Write Name Of Facilities"
+                                                    data-name="worker_facilitys_parent_system" onclick="open_modal(this)">What
+                                                    facilities would you like to work at?</p>
+                                            </li> --}}
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->facility_shift_cancelation_policy))
+                                        <ul id="facility_shift_cancelation_policy"
+                                            class="ss-s-jb-apl-on-inf-txt-ul facility_shift_cancelation_policy_item {{ $matches['facility_shift_cancelation_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Facility Shift Cancellation Policy</span>
+                                                <h6>{{ $model->facility_shift_cancelation_policy }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input" data-title="What terms do you prefer?"
+                                                    data-filter="AssignmentDuration"
+                                                    data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">
+                                                    What terms do you prefer?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->contract_termination_policy))
+                                        <ul id="contract_termination_policy"
+                                            class="ss-s-jb-apl-on-inf-txt-ul contract_termination_policy_item {{ $matches['contract_termination_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Contract Termination Policy</span>
+                                                <h6>{{ $model->contract_termination_policy }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="What terms do you prefer?"
+                                                    data-filter="ContractTerminationPolicy"
+                                                    data-name="contract_termination_policy" onclick="open_modal(this)">What
+                                                    terms do you prefer?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->traveler_distance_from_facility))
+                                        <ul id="distance_from_your_home"
+                                            class="ss-s-jb-apl-on-inf-txt-ul traveler_distance_from_facility_item {{ $matches['traveler_distance_from_facility']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Min Miles Must Live From Facility</span>
+                                                <h6>{{ $model->traveler_distance_from_facility }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="Where does the IRS think you live?"
+                                                    data-placeholder="What's your google validated address ?"
+                                                    data-name="distance_from_your_home" onclick="open_modal(this)">Where does
+                                                    the IRS think you live?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                </div>
+                                
+                                {{-- Certs & Licences --}}
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#certslicen">Certs & Licences</button>
+                                <div id="certslicen" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
                                         <li>
-                                            @php
-                                                $vaccines = explode(',', $model->vaccinations);
-                                            @endphp
-                                            <span>Vaccinations & Immunizations</span>
-                                            @foreach ($vaccines as $v)
-                                                <h6>{{ $v }} Required</h6>
-                                            @endforeach
+                                            <h5>Work Information</h5>
                                         </li>
                                         <li>
-                                            <p data-target="vaccination_file"
-                                                    data-title="No vaccination ?" onclick="open_modal(this)">
-                                                @foreach ($vaccines as $v)
-                                                    No {{ $v }}?
-                                                @endforeach
-                                            </p>
-
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif
+                                    
+                                    @if (isset($model->job_location))
+                                        <ul id="nursing_license_state"
+                                            class="ss-s-jb-apl-on-inf-txt-ul job_location_item {{ $matches['job_location']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Professional Licensure</span>
+                                                <h6>{{ $model->job_location }}</h6>
+                                            </li>
 
-                                @if (isset($model->number_of_references))
-                                    <ul id="references"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['number_of_references']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Numnber of references</span>
-                                            <h6>{{ $model->number_of_references }} references </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="reference_file" onclick="open_modal(this)"
-                                                data-title="Who are your References?">Who are your
-                                                References?</p>
-                                        </li>
-                                    </ul>
-                                @endif
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="Where are you licensed?"
+                                                    data-filter="StateCode" data-placeholder="Where are you licensed?"
+                                                    data-name="nursing_license_state" onclick="open_modal(this)">Where are you
+                                                    licensed?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                @if (isset($model->certificate))
-                                    <ul id="certification"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['certificate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            @php
-                                                $certificates = explode(',', $model->certificate);
-                                            @endphp
-                                            <span>Certifications</span>
-                                            @foreach ($certificates as $v)
-                                                <h6>{{ $v }} Required</h6>
-                                            @endforeach
-                                        </li>
-                                        <li>
-                                            <p class="certification_file" data-target="certification_file" onclick="open_modal(this)"
-                                            data-title="No certification?">
+                                    @if (isset($model->certificate))
+                                        <ul id="certification"
+                                            class="ss-s-jb-apl-on-inf-txt-ul certificate_item {{ $matches['certificate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                @php
+                                                    $certificates = explode(',', $model->certificate);
+                                                @endphp
+                                                <span>Certifications</span>
                                                 @foreach ($certificates as $v)
-                                                    No {{ $v }}?
+                                                    <h6>{{ $v }} Required</h6>
                                                 @endforeach
-                                            </p>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" class="certification_file" data-target="certification_file" onclick="open_modal(this)"
+                                                data-title="No certification?">
+                                                    @foreach ($certificates as $v)
+                                                        No {{ $v }}?
+                                                    @endforeach
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                </div>
+
+                                {{-- Work Info --}}
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#workInfo">Work Info</button>
+                                <div id="workInfo" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
+                                        <li>
+                                            <h5>Work Information</h5>
+                                        </li>
+                                        <li>
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif
+                                    
+                                    @if (isset($model->urgency))
+                                        <ul id="worker_urgency"
+                                            class="ss-s-jb-apl-on-inf-txt-ul urgency_item {{ $matches['urgency']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Urgency</span>
+                                                <h6>{{ $model->urgency }} </h6>
 
-                                @if (isset($model->skills))
-                                    <ul id="skills" class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
-                                        <li>
-                                            <span>Skills checklist</span>
-                                            <h6>{{ str_replace(',', ', ', $model->skills) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="skills_file" data-title="Upload your latest skills checklist"
-                                                onclick="open_modal(this)">Upload your latest skills checklist</p>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="dropdown" data-title="How quickly you can be ready to submit?"
+                                                    data-filter="Urgency"
+                                                    data-placeholder="How quickly you can be ready to submit?"
+                                                    data-name="worker_urgency" onclick="open_modal(this)">How quickly you can
+                                                    be ready to submit?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                        </li>
-                                    </ul>
-                                @endif
+                                    @if (isset($model->preferred_experience))
+                                        <ul id="worker_experience"
+                                            class="ss-s-jb-apl-on-inf-txt-ul preferred_experience_item {{ $matches['preferred_experience']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Experience</span>
+                                                <h6>{{ $model->preferred_experience }} Years Required</h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-hidden_name="dl_cer" data-hidden_value="Yes"
+                                                    data-href="{{ route('info-required') }}"
+                                                    data-title="How long have you done this? <br/>(The specialty you’re applying for)" data-name="worker_experience"
+                                                    onclick="open_modal(this)">How long have you done this?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                <ul id="worker_eligible_work_in_us"
-                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['eligible_work_in_us']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                    <li>
-                                        <span>Eligible to work in the US</span>
-                                        <h6>Required</h6>
-                                        {{-- <h6>Flu 2022 Preferred</h6> --}}
-                                    </li>
-                                    <li>
-                                        <p data-target="binary" data-title="Does Congress allow you to work here?"
-                                            data-name="worker_eligible_work_in_us" onclick="open_modal(this)">Does
-                                            Congress allow you to work here?</p>
-                                    </li>
-                                </ul>
+                                    @if (isset($model->number_of_references))
+                                        <ul id="references"
+                                            class="ss-s-jb-apl-on-inf-txt-ul number_of_references_item {{ $matches['number_of_references']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Number of references</span>
+                                                <h6>{{ $model->number_of_references }} references </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="reference_file" onclick="open_modal(this)"
+                                                    data-title="Who are your References?">Who are your
+                                                    References?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                @if (isset($model->block_scheduling))
-                                    <ul id="block_scheduling"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['block_scheduling']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Block Scheduling</span>
+                                    @if (isset($model->skills))
+                                        <ul id="skills" class="ss-s-jb-apl-on-inf-txt-ul ss-s-jb-apl-bg-pink">
+                                            <li>
+                                                <span>Skills checklist</span>
+                                                <h6>{{ str_replace(',', ', ', $model->skills) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="skills_file" data-title="Upload your latest skills checklist"
+                                                    onclick="open_modal(this)">Upload your latest skills checklist</p>
+
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->on_call))
+                                        <ul id="worker_on_call_check"
+                                            class="ss-s-jb-apl-on-inf-txt-ul on_call_item {{ $matches['on_call']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>On call</span>
+                                                <h6>{{ $model->on_call == '1' ? 'Yes' : 'No' }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="Will you do call?"
+                                                    data-name="worker_on_call_check" onclick="open_modal(this)">Will you do
+                                                    call?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                    @if (isset($model->block_scheduling))
+                                        <ul id="block_scheduling"
+                                            class="ss-s-jb-apl-on-inf-txt-ul block_scheduling_item {{ $matches['block_scheduling']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Block Scheduling</span>
 
 
-                                            <h6>{{ $model->block_scheduling == '1' ? 'Yes' : 'No' }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Do you want Block Scheduling?"
-                                                data-name="block_scheduling" onclick="open_modal(this)">Do you want Block
-                                                Scheduling?</p>
-                                        </li>
-                                    </ul>
-                                @endif
+                                                <h6>{{ $model->block_scheduling == '1' ? 'Yes' : 'No' }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="Do you want Block Scheduling?"
+                                                    data-name="block_scheduling" onclick="open_modal(this)">Do you want Block
+                                                    Scheduling?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                @if (isset($model->float_requirement))
-                                    <ul id="float_requirement"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['float_requirement']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Float Requirements</span>
-                                            <h6>{{ $model->float_requirement == '1' ? 'Yes' : 'No' }} </h6>
+                                    @if (isset($model->float_requirement))
+                                        <ul id="float_requirement"
+                                            class="ss-s-jb-apl-on-inf-txt-ul float_requirement_item {{ $matches['float_requirement']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Float Requirements</span>
+                                                <h6>{{ $model->float_requirement == '1' ? 'Yes' : 'No' }} </h6>
 
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Are you willing float to?"
-                                                data-name="float_requirement" onclick="open_modal(this)">Are you willing
-                                                float to?</p>
-                                        </li>
-                                    </ul>
-                                @endif
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="binary" data-title="Are you willing to float ?"
+                                                    data-name="float_requirement" onclick="open_modal(this)">Are you willing to float ?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                @if (isset($model->facility_shift_cancelation_policy))
-                                    <ul id="facility_shift_cancelation_policy"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['facility_shift_cancelation_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Facility Shift Cancellation Policy</span>
-                                            <h6>{{ $model->facility_shift_cancelation_policy }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input" data-title="What terms do you prefer?"
-                                                data-filter="AssignmentDuration"
-                                                data-name="facility_shift_cancelation_policy" onclick="open_modal(this)">
-                                                What terms do you prefer?</p>
-                                        </li>
-                                    </ul>
-                                @endif
+                                    @if (isset($model->Patient_ratio))
+                                        <ul id="worker_patient_ratio"
+                                            class="ss-s-jb-apl-on-inf-txt-ul Patient_ratio_item {{ $matches['Patient_ratio']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Patient Ratio</span>
+                                                <h6>{{ number_format($model->Patient_ratio) }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="input_number" data-title="How many patients can you handle?"
+                                                    data-placeholder="How many patients can you handle?"
+                                                    data-name="worker_patient_ratio" onclick="open_modal(this)">How many
+                                                    patients can you handle?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                @if (isset($model->contract_termination_policy))
-                                    <ul id="contract_termination_policy"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['contract_termination_policy']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Contract Termination Policy</span>
-                                            <h6>{{ $model->contract_termination_policy }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="dropdown" data-title="What terms do you prefer?"
-                                                data-filter="ContractTerminationPolicy"
-                                                data-name="contract_termination_policy" onclick="open_modal(this)">What
-                                                terms do you prefer?</p>
-                                        </li>
-                                    </ul>
-                                @endif
+                                    @if (isset($model->Emr))
+                                        <ul id="worker_emr"
+                                            class="ss-s-jb-apl-on-inf-txt-ul emr_item {{ $matches['emr']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>EMR</span>
+                                                <h6>{{ $model->Emr }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="multi_select" data-title="What EMRs have you used?"
+                                                    data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What
+                                                    EMRs have you used?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                @if (isset($model->facilitys_parent_system))
-                                    <ul id="worker_facilitys_parent_system" class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Facility's Parent System</span>
-                                            <h6>{{ $model->facilitys_parent_system }}</h6>
-                                        </li>
-                                        {{-- <li>
-                                            <p data-target="input" data-title="What facilities would you like to work at?"
-                                                data-placeholder="Write Name Of Facilities"
-                                                data-name="worker_facilitys_parent_system" onclick="open_modal(this)">What
-                                                facilities would you like to work at?</p>
-                                        </li> --}}
-                                    </ul>
-                                @endif
+                                </div>
 
-                                @if (isset($model->clinical_setting))
-                                    <ul id="clinical_setting_you_prefer"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['clinical_setting']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                {{-- ID & Tax Info --}}
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#idTax">ID & Tax Info</button>
+                                <div id="idTax" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
                                         <li>
-                                            <span>Clinical Setting</span>
-                                            <h6>{{ $model->clinical_setting }} </h6>
+                                            <h5>Work Information</h5>
                                         </li>
                                         <li>
-                                            <p data-target="dropdown" data-title="What setting do you prefer?"
-                                                data-filter="ClinicalSetting" data-name="clinical_setting_you_prefer"
-                                                onclick="open_modal(this)">What setting do you prefer?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->Patient_ratio))
-                                    <ul id="worker_patient_ratio"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['Patient_ratio']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Patient Ratio</span>
-                                            <h6>{{ number_format($model->Patient_ratio) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="How many patients can you handle?"
-                                                data-placeholder="How many patients can you handle?"
-                                                data-name="worker_patient_ratio" onclick="open_modal(this)">How many
-                                                patients can you handle?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->Emr))
-                                    <ul id="worker_emr"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['emr']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>EMR</span>
-                                            <h6>{{ $model->Emr }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="multi_select" data-title="What EMRs have you used?"
-                                                data-filter="EMR" data-name="worker_emr" onclick="open_modal(this)">What
-                                                EMRs have you used?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->scrub_color))
-                                    <ul id="worker_scrub_color"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['scrub_color']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Scrub Color</span>
-                                            <h6>{{ $model->scrub_color }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input" data-title="Fav scrub brand?"
-                                                data-placeholder="Fav scrub brand?" data-name="worker_scrub_color"
-                                                onclick="open_modal(this)">Fav scrub brand?</p>
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif
 
-                                <ul id="diploma"
-                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['diploma']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                    <li>
-                                        <span>Diploma</span>
-                                        <h6>College Diploma</h6>
-                                    </li>
-                                    <li>
-                                        <p data-target="diploma_file" data-hidden_name="diploma_cer"
-                                            data-hidden_value="Yes" data-href="{{ route('info-required') }}"
-                                            data-title="Did you really graduate?" data-name="diploma"
-                                            onclick="open_modal(this)"> {{ $matches['diploma']['match'] ? 'You got the smarts needed.' : 'Did you really graduate ?' }}</p>
-                                    </li>
-                                </ul>
+                                    @if (isset($model->nurse_classification))
+                                        <ul id="nurse_classification"
+                                            class="ss-s-jb-apl-on-inf-txt-ul nurse_classification_item {{ $matches['nurse_classification']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Classification</span>
+                                                <h6>{{ $model->nurse_classification }} </h6>
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="multi_select" data-title="What EMRs have you used?"
+                                                    data-filter="nurseClassification" data-name="worker_classification" onclick="open_modal(this)">What's your file cabinet ID?</p>
+                                            </li>
+                                        </ul>
+                                    @endif
 
-                                <ul id="driving_license"
-                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['driving_license']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                    <li>
-                                        <span>drivers license</span>
-                                        <h6>Required</h6>
-                                    </li>
-                                    <li>
-                                        <p data-target="driving_license_file" data-hidden_name="dl_cer"
-                                            data-hidden_value="Yes" data-href="{{ route('info-required') }}"
-                                            data-title="Are you really allowed to drive?" data-name="driving_license"
-                                            onclick="open_modal(this)">Are you really allowed to drive?</p>
-                                    </li>
-                                </ul>
+                                </div>
 
-                                <ul id="worked_at_facility_before"
-                                    class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['worked_at_facility_before']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                    <li>
-                                        <span>Worked at Facility Before</span>
-                                        <h6>In the last 18 months</h6>
-                                    </li>
-                                    <li>
-                                        <p data-target="binary" data-title="Are you sure you never worked here as staff?"
-                                            data-name="worked_at_facility_before" onclick="open_modal(this)">Are you sure
-                                            you never worked here as staff?</p>
-                                    </li>
-                                </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                {{-- old order --}}
-
-
-                                {{-- @if (isset($model->urgency))
-                                    <ul id="worker_urgency"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['urgency']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                {{-- Medical info --}}
+                                <button class="btn first-collapse mt-3" data-toggle="collapse" data-target="#medInf">Medical info</button>
+                                <div id="medInf" class="collapse">
+                                    <ul class="ss-jb-apply-on-inf-hed mt-3">
                                         <li>
-                                            <span>Urgency</span>
-                                            <h6>{{ $model->urgency }} </h6>
-
+                                            <h5>Work Information</h5>
                                         </li>
                                         <li>
-                                            <p data-target="dropdown" data-title="How quickly you can be ready to submit?"
-                                                data-filter="Urgency"
-                                                data-placeholder="How quickly you can be ready to submit?"
-                                                data-name="worker_urgency" onclick="open_modal(this)">How quickly you can
-                                                be ready to submit?</p>
+                                            <h5>Your Information</h5>
                                         </li>
                                     </ul>
-                                @endif --}}
 
+                                    @if (isset($model->vaccinations))
+                                        <ul id="vaccination"
+                                            class="ss-s-jb-apl-on-inf-txt-ul vaccinations_item {{ $matches['vaccinations']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                @php
+                                                    $vaccines = explode(',', $model->vaccinations);
+                                                @endphp
+                                                <span>Vaccinations & Immunizations</span>
+                                                @foreach ($vaccines as $v)
+                                                    <h6>{{ $v }} Required</h6>
+                                                @endforeach
+                                            </li>
+                                            <li>
+                                                <p class="profile_info_text" data-target="vaccination_file"
+                                                        data-title="No vaccination ?" onclick="open_modal(this)">
+                                                    @foreach ($vaccines as $v)
+                                                        No {{ $v }}?
+                                                    @endforeach
+                                                </p>
 
-
-                                @if (isset($model->traveler_distance_from_facility))
-                                    <ul id="distance_from_your_home"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['traveler_distance_from_facility']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Distance from your home</span>
-                                            <h6>{{ $model->traveler_distance_from_facility }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="Where does the IRS think you live?"
-                                                data-placeholder="What's your google validated address ?"
-                                                data-name="distance_from_your_home" onclick="open_modal(this)">Where does
-                                                the IRS think you live?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->facility_id))
-                                    <ul id="facilities_you_like_to_work_at" class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Facility</span>
-                                            <h6>{{ $model->facility_id }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input" data-title="What Facilities have you worked at?"
-                                                data-placeholder="Write Name Of Facilities"
-                                                data-name="facilities_you_like_to_work_at" onclick="open_modal(this)">What
-                                                Facilities have you worked at?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-
-                                @if (isset($model->Unit))
-                                    <ul id="worker_unit"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['Unit']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Unit</span>
-                                            <h6>{{ $model->Unit }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input" data-title="Fav Unit?" data-placeholder="Fav Unit?"
-                                                data-name="worker_unit" onclick="open_modal(this)">Fav Unit?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-
-                                @if (isset($model->job_city))
-                                    <ul id="worker_facility_city"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['job_city']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Facility City</span>
-                                            <h6>{{ $model->job_city }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="dropdown" data-title="Cities you'd like to work?"
-                                                data-filter="City" data-name="worker_facility_city"
-                                                onclick="open_modal(this)">Cities you'd like to work?</p>
-
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->job_state))
-                                    <ul id="worker_facility_state"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['job_state']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Facility State Code</span>
-                                            <h6>{{ $model->job_state }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="dropdown" data-title="States you'd like to work?"
-                                                data-filter="State" data-name="worker_facility_state"
-                                                onclick="open_modal(this)">States you'd like to work?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->as_soon_as) && $model->as_soon_as == '1')
-                                    <ul id="worker_as_soon_as_possible"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['as_soon_as']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Start date</span>
-                                            <h6>As soon as possible</h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Can you start as soon as possible?"
-                                                data-name="worker_as_soon_as_possible" onclick="open_modal(this)">Can you
-                                                start as
-                                                soon as possible?</p>
-                                        </li>
-                                    </ul>
-                                @else
-                                    <ul id="worker_start_date"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['start_date']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Start date</span>
-                                            <h6>{{ $model->start_date }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="date" data-title="When can you start?"
-                                                data-name="worker_start_date" onclick="open_modal(this)">When can you
-                                                start?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->rto))
-                                    <ul id="rto"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['rto']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>RTO</span>
-                                            <h6>{{ $model->rto }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="rto" data-title="Any time off?"
-                                                data-placeholder="Any time off?" data-name="rto"
-                                                onclick="open_modal(this)">Any time off?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->preferred_shift))
-                                    <ul id="worker_shift_time_of_day" class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Shift Time Of Day</span>
-                                            <h6>{{ $model->preferred_shift }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="dropdown" data-title="Fav shift?"
-                                                data-filter="shift_time_of_day" data-name="worker_shift_time_of_day"
-                                                onclick="open_modal(this)">Fav shift?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->hours_per_week))
-                                    <ul id="worker_hours_per_week"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['hours_per_week']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Hours/Week</span>
-                                            <h6>{{ $model->hours_per_week }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="Ideal hours per week?"
-                                                data-placeholder="Enter number Of Hours/Week"
-                                                data-name="worker_hours_per_week" onclick="open_modal(this)">Ideal hours
-                                                per week?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->guaranteed_hours))
-                                    <ul id="worker_guaranteed_hours"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['guaranteed_hours']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Guaranteed Hours</span>
-                                            <h6>{{ number_format($model->guaranteed_hours) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number"
-                                                data-title="Open to jobs with no guaranteed hours?"
-                                                data-placeholder="Enter Guaranteed Hours"
-                                                data-name="worker_guaranteed_hours" onclick="open_modal(this)">Open to
-                                                jobs with no guaranteed hours?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->hours_shift))
-                                    <ul id="worker_hours_shift"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['hours_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Hours/Shift</span>
-                                            <h6>{{ $model->hours_shift }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="Preferred hours per shift"
-                                                data-placeholder="Enter number Of Hours/Shift"
-                                                data-name="worker_hours_shift" onclick="open_modal(this)">Preferred hours
-                                                per shift</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->preferred_assignment_duration))
-                                    <ul id="worker_weeks_assignment"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['preferred_assignment_duration']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Weeks/Assignment</span>
-                                            <h6>{{ $model->preferred_assignment_duration }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="How many weeks?"
-                                                data-placeholder="Enter prefered weeks per assignment"
-                                                data-name="worker_weeks_assignment" onclick="open_modal(this)">How many
-                                                weeks?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->weeks_shift))
-                                    <ul id="worker_shifts_week"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['weeks_shift']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Shifts/Week</span>
-                                            <h6>{{ number_format($model->weeks_shift) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="Ideal shifts per week"
-                                                data-placeholder="Enter ideal shift per week"
-                                                data-name="worker_shifts_week" onclick="open_modal(this)">Ideal shifts per
-                                                week</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->referral_bonus))
-                                    <ul id="worker_referral_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['referral_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Referral Bonus</span>
-                                            <h6>{{ number_format($model->referral_bonus) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="# of people you have referred?"
-                                                data-placeholder="# of people you have referred?"
-                                                data-name="worker_referral_bonus" onclick="open_modal(this)"># of people
-                                                you have referred?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->sign_on_bonus))
-                                    <ul id="worker_sign_on_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['sign_on_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Sign-On Bonus</span>
-                                            <h6>${{ number_format($model->sign_on_bonus) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="What kind of bonus do you expect?"
-                                                data-placeholder="What kind of bonus do you expect?"
-                                                data-name="worker_sign_on_bonus" onclick="open_modal(this)">What kind of
-                                                bonus do you expect?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->completion_bonus))
-                                    <ul id="worker_completion_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['completion_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Completion Bonus</span>
-                                            <h6>${{ number_format($model->completion_bonus) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="What kind of bonus do you deserve?"
-                                                data-placeholder="What kind of bonus do you deserve?"
-                                                data-name="worker_completion_bonus" onclick="open_modal(this)">What kind
-                                                of bonus do you deserve?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->extension_bonus))
-                                    <ul id="worker_extension_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['extension_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Extension Bonus</span>
-                                            <h6>${{ number_format($model->extension_bonus) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="What are you comparing this to?"
-                                                data-placeholder="What are you comparing this to?"
-                                                data-name="worker_extension_bonus" onclick="open_modal(this)">What are you
-                                                comparing this to?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->other_bonus))
-                                    <ul id="worker_other_bonus"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['other_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Other Bonus</span>
-                                            <h6>${{ number_format($model->other_bonus) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="Other bonuses you want?"
-                                                data-placeholder="Other bonuses you want?" data-name="worker_other_bonus"
-                                                onclick="open_modal(this)">Other bonuses you want?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->four_zero_one_k))
-                                    <ul id="worker_four_zero_one_k"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['four_zero_one_k']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>401K</span>
-
-                                            <h6>{{ $model->four_zero_one_k == '1' ? 'Yes' : 'No' }} </h6>
-
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-placeholder="How much do you want this?"
-                                                data-title="How much do you want this?" data-name="worker_four_zero_one_k"
-                                                onclick="open_modal(this)">How much do you want this?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->health_insaurance))
-                                    <ul id="worker_health_insurance"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['health_insaurance']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Health Insurance</span>
-
-                                            <h6> {{ $model->health_insaurance == '1' ? 'Yes' : 'No' }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="How much do you want this?"
-                                                data-name="worker_health_insurance"
-                                                data-placeholder="How much do you want this?" onclick="open_modal(this)">
-                                                How much do you want this?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->dental))
-                                    <ul id="worker_dental"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['dental']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Dental</span>
-                                            <h6> {{ $model->dental == '1' ? 'Yes' : 'No' }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="How much do you want this?"
-                                                data-placeholder="" data-name="worker_dental" onclick="open_modal(this)">
-                                                How much do you want this?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->vision))
-                                    <ul id="worker_vision"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['vision']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Vision</span>
-                                            <h6> {{ $model->vision == '1' ? 'Yes' : 'No' }} </h6>
-                                        </li>
-                                        <li>
-
-                                            <p data-target="binary" data-title="How much do you want this?"
-                                                data-placeholder="How much do you want this?" data-name="worker_vision"
-                                                onclick="open_modal(this)">How much do you want this?</p>
-
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->benefits))
-                                    <ul id="worker_benefits"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['benefits']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Benefits</span>
-                                            <h6>{{ $model->benefits }} </h6>
-                                        </li>
-                                        <li>
-                                            {{-- binary : benefits -> tinyinteger 1->yes 2->maybe 0->no : Yes, Please | No, Thanks | preferable  --}}
-                                            <p data-target="benefits" data-title="Do you want benefits?"
-                                                data-placeholder="Do you want benefits ?" data-name="worker_benefits"
-                                                onclick="open_modal(this)">How much do you want this?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-
-                                @if (isset($model->actual_hourly_rate))
-                                    <ul id="worker_actual_hourly_rate"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Est. Taxable Hourly Rate</span>
-                                            <h6>${{ number_format($model->actual_hourly_rate) }}</h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="What rate is fair?"
-                                                data-placeholder="What rate is fair?"
-                                                data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What rate
-                                                is fair?</p>
-
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                {{-- @if (isset($model->feels_like_per_hour))
-                                    <ul id="worker_feels_like_per_hour_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['feels_like_per_hour']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Feels Like $/Hr</span>
-                                            <h6>${{ $model->feels_like_per_hour }} </h6>
-
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Does this seem fair based on the market?"
-                                                data-placeholder="Does this seem fair based on the market?"
-                                                data-name="worker_feels_like_per_hour_check" onclick="open_modal(this)">
-                                                Does this seem fair based on the market?</p>
-
-                                        </li>
-                                    </ul>
-                                @endif --}}
-
-                                @if (isset($model->overtime))
-                                    <ul id="worker_overtime_rate"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['overtime']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Overtime</span>
-                                            <h6>{{ number_format($model->overtime) }} </h6>
-                                        </li>
-                                        <li>
-
-                                            <p data-target="input_number" data-title="What rate is fair?"
-                                                data-name="worker_overtime_rate" onclick="open_modal(this)">What rate is
-                                                fair?</p>
-
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->holiday))
-                                    <ul id="worker_holiday"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['holiday']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Holiday</span>
-                                            <h6>{{ $model->holiday }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="date" data-title="Any holiday you refuse to work?"
-                                                data-name="worker_holiday" onclick="open_modal(this)">Any holiday
-                                                you refuse to work?</p>
-
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->on_call))
-                                    <ul id="worker_on_call_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['on_call']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>On call</span>
-                                            <h6>{{ $model->on_call == '1' ? 'Yes' : 'No' }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Will you do call?"
-                                                data-name="worker_on_call_check" onclick="open_modal(this)">Will you do
-                                                call?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-                                @if (isset($model->on_call_rate))
-                                    <ul id="worker_on_call"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>On Call Rate</span>
-                                            <h6>${{ number_format($model->on_call_rate) }}</h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="What rate is fair?"
-                                                data-placeholder="What rate is fair?" data-name="worker_on_call"
-                                                onclick="open_modal(this)">What rate is fair?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->call_back_rate))
-                                    <ul id="worker_call_back_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['call_back_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>On Call Back Rate</span>
-                                            <h6>${{ number_format($model->call_back_rate) }}</h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Is this rate reasonable?"
-                                                data-name="worker_call_back_check" onclick="open_modal(this)">Is this rate
-                                                reasonable?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->orientation_rate))
-                                    <ul id="worker_orientation_rate"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['orientation_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Orientation Rate</span>
-                                            <h6>${{ number_format($model->orientation_rate) }} </h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="What rate is fair?"
-                                                data-placeholder="-" data-name="worker_orientation_rate"
-                                                onclick="open_modal(this)">What rate is fair?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->weekly_taxable_amount))
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Weekly Taxable Amount</span>
-                                            <h6>${{ number_format($model->weekly_taxable_amount) }} </h6>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->organization_weekly_amount))
-                                    <ul id="worker_organization_weekly_amount"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['organization_weekly_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Est. Organization Weekly Amount</span>
-                                            <h6>${{ number_format($model->organization_weekly_amount) }}</h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="input_number" data-title="What range is reasonable?"
-                                                data-placeholder="What range is reasonable?"
-                                                data-name="worker_organization_weekly_amount" onclick="open_modal(this)">
-                                                What
-                                                range is reasonable?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->weekly_non_taxable_amount))
-                                    <ul id="worker_weekly_non_taxable_amount_check"
-                                        class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['weekly_non_taxable_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
-                                        <li>
-                                            <span>Est. Weekly Non-Taxable Amount</span>
-                                            <h6>${{ number_format($model->weekly_non_taxable_amount) }}</h6>
-                                        </li>
-                                        <li>
-                                            <p data-target="binary" data-title="Are you going to duplicate expenses?"
-                                                data-placeholder="Weekly non-taxable amount"
-                                                data-name="worker_weekly_non_taxable_amount_check"
-                                                onclick="open_modal(this)">Are you going to duplicate expenses?</p>
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->weekly_taxable_amount))
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Goodwork Weekly Amount</span>
-                                            <h6>${{ number_format($model->weekly_taxable_amount) }}</h6>
-                                        </li>
-                                        <li>
-                                            <h6> You have 5 days left before your rate drops form 5% to 2%</h6>
-                                            {{-- <p data-target="input" data-title="You have 5 days left before your rate drops form 5% to 2%" data-placeholder="Goodwork Weekly Amount" data-name="worker_goodwork_weekly_amount" onclick="open_modal(this)">You have 5 days left before your rate drops form 5% to 2% </p> --}}
-                                        </li>
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->total_organization_amount))
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Organization Amount</span>
-                                            <h6>${{ number_format($model->total_organization_amount) }}</h6>
-                                        </li>
-
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->total_goodwork_amount))
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Goodwork Amount</span>
-                                            <h6>${{ number_format($model->total_goodwork_amount) }}</h6>
-                                        </li>
-
-                                    </ul>
-                                @endif
-
-                                @if (isset($model->total_contract_amount))
-                                    <ul class="ss-s-jb-apl-on-inf-txt-ul">
-                                        <li>
-                                            <span>Est. Total Contract Amount</span>
-                                            <h6>${{ number_format($model->total_contract_amount) }}</h6>
-                                        </li>
-                                    </ul>
-                                @endif
+                                            </li>
+                                        </ul>
+                                    @endif
+                                </div>
 
                                 <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                     <li>
@@ -1209,7 +1225,125 @@
                 </div>
             </div>
 
+            {{-- Not required for now or pending DB management
+            
+                <ul id="worker_eligible_work_in_us"
+                    class="ss-s-jb-apl-on-inf-txt-ul eligible_work_in_us_item {{ $matches['eligible_work_in_us']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                    <li>
+                        <span>Eligible to work in the US</span>
+                        <h6>Required</h6>
+                    </li>
+                    <li>
+                        <p class="profile_info_text" data-target="binary" data-title="Does Congress allow you to work here?"
+                            data-name="worker_eligible_work_in_us" onclick="open_modal(this)">Does
+                            Congress allow you to work here?</p>
+                    </li>
+                </ul>
 
+                @if (isset($model->scrub_color))
+                    <ul id="worker_scrub_color"
+                        class="ss-s-jb-apl-on-inf-txt-ul scrub_color_item {{ $matches['scrub_color']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                        <li>
+                            <span>Scrub Color</span>
+                            <h6>{{ $model->scrub_color }} </h6>
+                        </li>
+                        <li>
+                            <p class="profile_info_text" data-target="input" data-title="Fav scrub brand?"
+                                data-placeholder="Fav scrub brand?" data-name="worker_scrub_color"
+                                onclick="open_modal(this)">Fav scrub brand?</p>
+                        </li>
+                    </ul>
+                @endif
+
+                @if (isset($model->Unit))
+                    <ul id="worker_unit"
+                        class="ss-s-jb-apl-on-inf-txt-ul Unit_item {{ $matches['Unit']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                        <li>
+                            <span>Unit</span>
+                            <h6>{{ $model->Unit }} </h6>
+                        </li>
+                        <li>
+                            <p class="profile_info_text" data-target="input" data-title="Fav Unit?" data-placeholder="Fav Unit?"
+                                data-name="worker_unit" onclick="open_modal(this)">Fav Unit?</p>
+                        </li>
+                    </ul>
+                @endif
+
+                @if (isset($model->organization_weekly_amount))
+                    <ul id="worker_organization_weekly_amount"
+                        class="ss-s-jb-apl-on-inf-txt-ul organization_weekly_amount_item {{ $matches['organization_weekly_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                        <li>
+                            <span>Est. Organization Weekly Amount</span>
+                            <h6>${{ number_format($model->organization_weekly_amount) }}</h6>
+                        </li>
+                        <li>
+                            <p class="profile_info_text" data-target="input_number" data-title="What range is reasonable?"
+                                data-placeholder="What range is reasonable?"
+                                data-name="worker_organization_weekly_amount" onclick="open_modal(this)">
+                                What
+                                range is reasonable?</p>
+                        </li>
+                    </ul>
+                @endif
+
+                <ul id="diploma"
+                    class="ss-s-jb-apl-on-inf-txt-ul diploma_item {{ $matches['diploma']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+
+                    <li>
+                        <span>Diploma</span>
+                        <h6>College Diploma</h6>
+                    </li>
+                    <li>
+                        <p class="profile_info_text" data-target="diploma_file" data-hidden_name="diploma_cer"
+                            data-hidden_value="Yes" data-href="{{ route('info-required') }}"
+                            data-title="Did you really graduate? <br/>Upload a copy of your diploma" data-name="diploma"
+                            onclick="open_modal(this)"> Did you really graduate ?</p>
+                    </li>
+                </ul>
+
+                <ul id="driving_license"
+                    class="ss-s-jb-apl-on-inf-txt-ul driving_license_item {{ $matches['driving_license']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                    <li>
+                        <span>drivers license</span>
+                        <h6>Required</h6>
+                    </li>
+                    <li>
+                        <p class="profile_info_text" data-target="driving_license_file" data-hidden_name="dl_cer"
+                            data-hidden_value="Yes" data-href="{{ route('info-required') }}"
+                            data-title="Are you really allowed to drive?" data-name="driving_license"
+                            onclick="open_modal(this)">Are you allowed to drive?</p>
+                    </li>
+                </ul>
+
+                <ul id="worked_at_facility_before"
+                    class="ss-s-jb-apl-on-inf-txt-ul worked_at_facility_before_item {{ $matches['worked_at_facility_before']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                    <li>
+                        <span>Worked at Facility Before</span>
+                        <h6>In the last 18 months</h6>
+                    </li>
+                    <li>
+                        <p class="profile_info_text" data-target="binary" data-title="Are you sure you never worked here as staff?"
+                            data-name="worked_at_facility_before" onclick="open_modal(this)">Are you sure
+                            you never worked here as staff?</p>
+                    </li>
+                </ul>
+
+                @if (isset($model->facility_id))
+                    <ul id="facilities_you_like_to_work_at" class="ss-s-jb-apl-on-inf-txt-ul">
+                        <li>
+                            <span>Facility</span>
+                            <h6>{{ $model->facility_id }} </h6>
+                        </li>
+                        <li>
+                            <p class="profile_info_text" data-target="input" data-title="What Facilities have you worked at?"
+                                data-placeholder="Write Name Of Facilities"
+                                data-name="facilities_you_like_to_work_at" onclick="open_modal(this)">What
+                                Facilities have you worked at?</p>
+                        </li>
+                    </ul>
+                @endif
+
+            --}}
             <!----------------job-details pop-up modals ---------------->
             @include('worker::dashboard.details.modals')
 
@@ -1350,5 +1484,18 @@
 
     .upload_label {
         height: 100px;
+    }
+
+    .btn.first-collapse,
+    .btn.first-collapse:hover,
+    .btn.first-collapse:focus,
+    .btn.first-collapse:active {
+        background-color: #fff8fd;
+        color: rgb(65, 41, 57);
+        font-size: 14px;
+        font-family: 'Neue Kabel';
+        font-style: normal;
+        width: 100%;
+        background: #FFEEEF;
     }
 </style>

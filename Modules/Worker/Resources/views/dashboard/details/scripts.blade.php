@@ -278,7 +278,8 @@
             const fileReadPromises = [];
             var workerId = worker_id;
 
-            if (type == 'references') {let referenceName = document.querySelector('input[name="name"]').value;
+            if (type == 'references') {
+                let referenceName = document.querySelector('input[name="name"]').value;
                 let referencePhone = document.querySelector('input[name="phone"]').value;
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
                 let referenceDate = document.querySelector('input[name="date_referred"]').value;
@@ -839,7 +840,7 @@
                 element = $('#' + inputName).find('p[data-target="skills_file"]');
             } else if (inputName == 'driving_license') {
                 element = $('#' + inputName).find('p[data-target="driving_license_file"]');
-            }   else if (inputName == 'diploma') {
+            } else if (inputName == 'diploma') {
                 element = $('#' + inputName).find('p[data-target="diploma_file"]');
             } else {
                 element = $('#' + inputName).find('p[data-name="' + inputName + '"]');
@@ -862,12 +863,13 @@
                 case 'rto':
                     if (!!dataToSend[inputName] && dataToSend[inputName] != undefined && dataToSend[inputName] != '' &&
                         dataToSend[inputName] != null) {
-                            if (inputName == "worker_benefits") {
-                                element.text(dataToSend[inputName] == '2' ? 'Preferable' : dataToSend[inputName] == '1' ? 'Yes, Please' : 'No, Thanks');
-                            }else{
+                        if (inputName == "worker_benefits") {
+                            element.text(dataToSend[inputName] == '2' ? 'Preferable' : dataToSend[inputName] == '1' ?
+                                'Yes, Please' : 'No, Thanks');
+                        } else {
 
-                                element.text(dataToSend[inputName] == '1' ? 'Yes' : 'No');
-                            }
+                            element.text(dataToSend[inputName] == '1' ? 'Yes' : 'No');
+                        }
                     } else {
                         element.text(element.data('title'));
                     }
@@ -876,13 +878,13 @@
                     // if (inputName == 'references') {
                     //     display_uploaded_reference_files(element, 2);
                     // } else if (inputName == 'certification') {
-                        display_uploaded_certification_files(element, inputName);
+                    display_uploaded_certification_files(element, inputName);
                     // }
 
                     break;
 
                 case 'multi-select':
-                    
+
                     if (!!dataToSend[inputName] && dataToSend[inputName] != undefined && dataToSend[inputName] != '' &&
                         dataToSend[inputName] != null) {
                         element.text(EmrStr);
@@ -927,7 +929,7 @@
             worker_files = all_files.filter(file => file.type == 'certification');
 
             let text = element.data('title');
-            console.log("*****************************text : ", text);
+            console.log("*****************************element", element, "type", type, " =>text : ", text);
             if (worker_files.length > 0) {
                 text = worker_files.length + ' Files Uploaded';
             }
@@ -1114,20 +1116,37 @@
             apply_on_jobs(obj, worked_bfore);
 
         }
+        let matches;
+        let usematches;
 
         $(document).ready(async function() {
+            matches = @json($matches);
+            usematches = @json($userMatches);
+
+            init_profile_info_text();
+
             worker_files = await get_all_files();
+
             checkFileMatch('certification');
             checkFileMatch('vaccination');
             checkFileMatch('references');
             checkFileMatch('skills');
             checkFileMatch('driving_license');
             checkFileMatch('diploma');
-            let matches = @json($matches);
 
-            let usematches = @json($userMatches);
             $('input[name="phone[]"]').mask('(999) 999-9999');
         });
+
+        function init_profile_info_text() {
+            // map on matches
+            for (const key of Object.keys(matches)) {
+
+                if (matches[key].profile_info_text) {
+                    // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
+                    $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
+                }
+            }
+        }
 
         function open_file(obj) {
             $(obj).parent().find('input[type="file"]').click();
