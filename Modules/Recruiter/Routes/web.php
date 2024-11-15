@@ -201,6 +201,14 @@ Route::prefix('recruiter')->group(function () {
 
         Route::get('get-offer-information', ['uses' => 'ApplicationController@get_offer_information', 'as'=> 'get-offer-information']);
 
+        // get_offer_information_for_edit
+
+        Route::get('get-offer-information-for-edit', ['uses' => 'ApplicationController@get_offer_information_for_edit', 'as'=> 'get-offer-information-for-edit']);
+
+        // updateJobOffer
+
+        Route::post('update-job-offer', ['uses' => 'ApplicationController@update_job_offer', 'as'=> 'update-job-offer']);
+
         // get offer list by type
 
         Route::get('get-offers-by-type', ['uses' => 'ApplicationController@get_offers_by_type', 'as'=> 'get-offers-by-type']);
@@ -216,6 +224,12 @@ Route::prefix('recruiter')->group(function () {
         // counter offer of each worker
 
         Route::post('recruiter-counter-offer', ['uses' => 'ApplicationController@recruiter_counter_offer', 'as'=> 'recruiter-counter-offer']);
+
+        // list docs
+        Route::post('list-docs', ['uses' => 'ApplicationController@listDocs', 'as' => 'list-worker-docs']);
+
+        // get one doc
+        Route::post('get-doc', ['uses' => 'ApplicationController@getDoc', 'as' => 'get-worker-docs']);
 
     });
 });

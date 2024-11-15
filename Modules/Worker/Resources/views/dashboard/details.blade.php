@@ -27,14 +27,6 @@
                                                         <path
                                                             d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
                                                     </svg> {{ $model->profession }}</a></li>
-                                            <li><a href="#"><svg style="vertical-align: sub;"
-                                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
-                                                        <path
-                                                            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
-                                                    </svg> {{ $model->specialty }}</a></li>
                                         </ul>
                                     </div>
                                     <p class="col-2 text-center" style="padding-right:20px;">
@@ -812,7 +804,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['sign_on_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Sign-On Bonus</span>
-                                            <h6>{{ number_format($model->sign_on_bonus) }} $ </h6>
+                                            <h6>$ {{ number_format($model->sign_on_bonus) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What kind of bonus do you expect?"
@@ -828,7 +820,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['completion_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Completion Bonus</span>
-                                            <h6>{{ number_format($model->completion_bonus) }} $ </h6>
+                                            <h6>$ {{ number_format($model->completion_bonus) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What kind of bonus do you deserve?"
@@ -844,7 +836,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['extension_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Extension Bonus</span>
-                                            <h6>{{ number_format($model->extension_bonus) }} $ </h6>
+                                            <h6>$ {{ number_format($model->extension_bonus) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What are you comparing this to?"
@@ -860,7 +852,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['other_bonus']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Other Bonus</span>
-                                            <h6>{{ number_format($model->other_bonus) }} $ </h6>
+                                            <h6>$ {{ number_format($model->other_bonus) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="Other bonuses you want?"
@@ -957,8 +949,8 @@
                                     <ul id="worker_actual_hourly_rate"
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['actual_hourly_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
-                                            <span>Est. Texable Hourly Rate</span>
-                                            <h6>{{ number_format($model->actual_hourly_rate) }} $</h6>
+                                            <span>Est. Taxable Hourly Rate</span>
+                                            <h6>$ {{ number_format($model->actual_hourly_rate) }}</h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What rate is fair?"
@@ -1040,7 +1032,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['on_call_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>On Call Rate</span>
-                                            <h6>{{ number_format($model->on_call_rate) }} $</h6>
+                                            <h6>$ {{ number_format($model->on_call_rate) }}</h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What rate is fair?"
@@ -1055,7 +1047,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['call_back_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>On Call Back Rate</span>
-                                            <h6>{{ number_format($model->call_back_rate) }} $</h6>
+                                            <h6>$ {{ number_format($model->call_back_rate) }}</h6>
                                         </li>
                                         <li>
                                             <p data-target="binary" data-title="Is this rate reasonable?"
@@ -1070,7 +1062,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['orientation_rate']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Orientation Rate</span>
-                                            <h6>{{ number_format($model->orientation_rate) }} $ </h6>
+                                            <h6>$ {{ number_format($model->orientation_rate) }} </h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What rate is fair?"
@@ -1084,7 +1076,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Weekly Taxable Amount</span>
-                                            <h6>{{ number_format($model->weekly_taxable_amount) }} $ </h6>
+                                            <h6>$ {{ number_format($model->weekly_taxable_amount) }} </h6>
                                         </li>
                                         {{-- <li>
             <p>?</p>
@@ -1097,7 +1089,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['organization_weekly_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Est. Organization Weekly Amount</span>
-                                            <h6>{{ number_format($model->organization_weekly_amount) }} $</h6>
+                                            <h6>$ {{ number_format($model->organization_weekly_amount) }}</h6>
                                         </li>
                                         <li>
                                             <p data-target="input_number" data-title="What range is reasonable?"
@@ -1114,7 +1106,7 @@
                                         class="ss-s-jb-apl-on-inf-txt-ul {{ $matches['weekly_non_taxable_amount']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                         <li>
                                             <span>Est. Weekly Non-Taxable Amount</span>
-                                            <h6>{{ number_format($model->weekly_non_taxable_amount) }} $</h6>
+                                            <h6>$ {{ number_format($model->weekly_non_taxable_amount) }}</h6>
                                         </li>
                                         <li>
                                             <p data-target="binary" data-title="Are you going to duplicate expenses?"
@@ -1129,7 +1121,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Goodwork Weekly Amount</span>
-                                            <h6>{{ number_format($model->weekly_taxable_amount) }} $</h6>
+                                            <h6>$ {{ number_format($model->weekly_taxable_amount) }}</h6>
                                         </li>
                                         <li>
                                             <h6> You have 5 days left before your rate drops form 5% to 2%</h6>
@@ -1142,7 +1134,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Total Organization Amount</span>
-                                            <h6>{{ number_format($model->total_organization_amount) }} $</h6>
+                                            <h6>$ {{ number_format($model->total_organization_amount) }}</h6>
                                         </li>
 
                                     </ul>
@@ -1152,7 +1144,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Total Goodwork Amount</span>
-                                            <h6>{{ number_format($model->total_goodwork_amount) }} $</h6>
+                                            <h6>$ {{ number_format($model->total_goodwork_amount) }}</h6>
                                         </li>
 
                                     </ul>
@@ -1162,7 +1154,7 @@
                                     <ul class="ss-s-jb-apl-on-inf-txt-ul">
                                         <li>
                                             <span>Est. Total Contract Amount</span>
-                                            <h6>{{ number_format($model->total_contract_amount) }} $</h6>
+                                            <h6>$ {{ number_format($model->total_contract_amount) }}</h6>
                                         </li>
                                         {{-- <li>
             <p>?</p>

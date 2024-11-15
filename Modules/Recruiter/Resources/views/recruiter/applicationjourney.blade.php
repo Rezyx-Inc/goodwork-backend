@@ -1142,6 +1142,32 @@
             }
         }
 
+        function ChangeOfferInfo(offerId){
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('recruiter/get-offer-information-for-edit') }}",
+                    data: {
+                        'token': csrfToken,
+                        'offer_id' : offerId,
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        $("#application-details").html(result.content);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
         function selectOfferCycleState(type){
             applicationStatusToggle(type);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -1276,7 +1302,7 @@
                     dataType: 'json',
                     success: function(result) {
                          $("#application-details").html(result.content);
-                        console.log(result.content);
+                        //console.log(result.content);
 
                         var files = result.files;
                         console.log(files);
@@ -1335,7 +1361,7 @@
                     dataType: 'json',
                     success: function(result) {
                          $("#application-details").html(result.content);
-                        console.log(result.content);
+                        //console.log(result.content);
                     },
                     error: function(error) {
                         console.log(error);

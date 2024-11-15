@@ -147,7 +147,22 @@ router.get('/list-docs', async (req, res) => {
 
             var list = [];
             for(let file of docs.files){
-                list.push({name: file.name, id: file._id, type: file.type, displayName: file.displayName});
+                if (file.type == "references") {
+                    list.push({
+                        name: file.name,
+                        id: file._id,
+                        type: file.type,
+                        displayName: file.displayName,
+                        ReferenceInformation: file.ReferenceInformation,
+                    });
+                } else {
+                    list.push({
+                        name: file.name,
+                        id: file._id,
+                        type: file.type,
+                        displayName: file.displayName,
+                    });
+                }
             }
 
             return res.status(200).json(list)

@@ -36,7 +36,7 @@
                         <form method="post" action="{{ route('admin-login.store') }}" id="login-form">
                             @csrf
                             <div class="col-12 mb-4">
-                                <!-- <input type="text" class="form-control" id="" placeholder="Enter phone number or email id"> -->
+                                <!-- <input type="text" class="form-control" id="" placeholder="Enter phone number or email"> -->
                                 <input id="email" type="email" maxlength="255" class="form-control" name="email"
                                     value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 <small class="invalid-feedback"></small>
