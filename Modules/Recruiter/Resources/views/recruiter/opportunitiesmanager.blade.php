@@ -41,8 +41,8 @@
                 <div class="all d-none" id="create_job_request_form">
                     <div class="bodyAll">
                         <div class="ss-account-form-lft-1 container">
-                            <header><span style="color: #b5649e;">Create</span> Work Request</header>
-                            <div class="row progress-bar-item">
+                            <header><span style="color: #b5649e;">Work </span>Info & Requirements</header>
+                            {{-- <div class="row progress-bar-item">
                                 <div class="col-3 step">
                                     <!-- <p>Step 1</p> -->
                                     <div class="bullet">
@@ -74,26 +74,47 @@
                                     <div class="check fas fa-check"></div>
                                 </div>
 
-                            </div>
+                            </div> --}}
                             <div class="form-outer">
                                 <form method="post" id="create_job_form" action="{{ route('addJob.store') }}">
                                     @csrf
                                     <!-- first form slide required inputs for adding jobs -->
 
                                     <div class=" page slide-page">
+    
                                         <div class="row">
-
-                                            <div class="ss-form-group col-md-4 d-none">
-                                                <input type="text" name="active" id="active">
+                                            <div class="ss-form-group col-md-12 d-none">
+                                                <input hidden type="text" name="active" id="active">
                                             </div>
-                                            <div class="ss-form-group col-md-4 d-none">
-                                                <input type="text" name="is_open" id="is_open">
+                                            <div class="ss-form-group col-md-12 d-none">
+                                                <input hidden type="text" name="is_open" id="is_open">
                                             </div>
                                             
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Work Type</label>
+                                            
+                                            <div class="col-md-12 mb-4 collapse-container">
+                                                <p>
+                                                    <a class="btn first-collapse" data-toggle="collapse" >
+                                                        Summary
+                                                    </a>
+                                                </p>
+                                            </div>
+                                            {{-- Org Job Id --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Org Job Id</label>
+                                                <input type="text" name="job_id" id="job_id"
+                                                    placeholder="Enter Work Id">
+                                                <div> 
+                                                        <span class="help-block-job_id"></span>
+                                                </div>
+                                            </div>
+
+                                            {{-- Type --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Type</label>
                                                 <select name="job_type" id="job_type">
-                                                    <option value="" disabled selected hidden>Select a Work type
+                                                    <option value="" disabled selected hidden>Select a type
                                                     </option>
                                                     <option value="Clinical">Clinical
                                                     </option>
@@ -101,11 +122,48 @@
                                                     </option>
                                                 </select>
 
+                                                <div> 
                                                 <span class="help-block-job_type"></span>
+                                                </div>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Preferred Specialty</label>
+                                            {{-- Terms --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Terms</label>
+                                                <select name="terms" id="terms">
+                                                    <option value="" disabled selected hidden>Select a Term</option>
+                                                    @foreach ($allKeywords['Terms'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <div> 
+                                                <span class="help-block-terms"></span>
+                                                </div>
+                                            </div>
+
+                                             {{-- Profession --}}
+
+                                             <div class="ss-form-group col-md-12">
+                                                <label>Profession</label>
+                                                <select name="profession" id="perferred_profession">
+                                                    <option value="" disabled selected hidden>Select a Profession
+                                                    </option>
+                                                    @foreach ($allKeywords['Profession'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <div> 
+                                                <span class="help-block-perferred_profession"></span>
+                                                </div>
+                                            </div>
+
+                                            {{-- Specialty --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Specialty</label>
                                                 <select name="preferred_specialty" id="preferred_specialty">
                                                     <option value="" disabled selected hidden>Select a specialty
                                                     </option>
@@ -115,27 +173,37 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                <div> 
                                                 <span class="help-block-preferred_specialty"></span>
+                                                </div>
                                             </div>
 
+                                            {{-- $/hr --}}
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Preferred Profession</label>
-                                                <select name="profession" id="perferred_profession">
-                                                    <option value="" disabled selected hidden>Select a Profession
-                                                    </option>
-                                                    @foreach ($allKeywords['Profession'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-perferred_profession"></span>
+                                            <div class="ss-form-group col-md-12">
+                                                <label>$/hr</label>
+                                                <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
+                                                    placeholder="Enter Taxable Regular Hourly rate">
+                                                <div> 
+                                                    <span class="help-block-actual_hourly_rate"></span>
+                                                </div>
                                             </div>
 
+                                             {{-- $/Wk --}}
 
+                                             <div class="ss-form-group col-md-12">
+                                                <label>$/Wk</label>
+                                                <input type="number" step="0.01" name="weekly_pay" id="weekly_pay"
+                                                    placeholder="Enter Weekly Pay">
+                                                <div> 
+                                                    <span class="help-block-weekly_pay"></span>
+                                                </div>
+                                            </div>
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Work State </label>
+                                            {{-- State --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label> State </label>
                                                 <select name="job_state" id="job_state">
                                                     <option value="" disabled selected hidden>Select a State</option>
                                                     @foreach ($states as $state)
@@ -144,71 +212,349 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                <div> 
                                                 <span class="help-block-job_state"></span>
-
-
-                                               
+                                                </div>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
+                                            {{-- City --}}
 
-                                               
-                                                <label> Work City </label>
+                                            <div class="ss-form-group col-md-12"> 
+                                                <label> City </label>
                                                 <select name="job_city" id="job_city">
                                                     <option value="">Select a city</option>
                                                 </select>
+                                                <div>
+                                                    <div> 
+                                                    <span class="help-block-job_city"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
 
-                                                <span class="help-block-job_city"></span>
+                                        <div class="col-md-12 mb-4 collapse-container">
+                                            <p>
+                                                <a class="btn first-collapse" data-toggle="collapse" href="#collapse-1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                    Shift
+                                                </a>
+                                            </p>
+                                        </div>
+
+                                        <div class="row collapse" id="collapse-1">
+
+                                            {{-- Shift Time --}}
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Shift Time</label>
+                                                <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
+                                                </div>
+                                                <ul style="align-items: flex-start;">
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="shifttimeofday">
+                                                                <option value="">Select Shift Time of Day</option>
+                                                                @if (isset($allKeywords['PreferredShift']))
+                                                                    @foreach ($allKeywords['PreferredShift'] as $value)
+                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="shifttimeofdayAllValues"
+                                                                name="preferred_shift_duration">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
+                                                                onclick="addshifttimeofday('from_add')"><i
+                                                                    class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                                <div> 
+                                                <span class="help-block-shift_time_of_day"></span>
+                                                </div>
                                             </div>
 
-
-                                            
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Weeks per Assignment</label>
+                                            {{-- Hrs/Wk  --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Hrs/Wk</label>
+                                                <input type="number" name="hours_per_week" id="hours_per_week"
+                                                    placeholder="Enter hours per week">
+                                                <div> 
+                                                    <span class="help-block-hours_per_week"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Guaranteed Hrs/wk --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Guaranteed Hrs/wk</label>
+                                                <input type="number" name="guaranteed_hours" id="guaranteed_hours"
+                                                    placeholder="Enter Guaranteed Hours per week">
+                                                <div> 
+                                                    <span class="help-block-guaranteed_hours"></span>
+                                                </div>
+                                                </div>
+                                            {{-- Hrs/Shift --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Hrs/Shift</label>
+                                                <input type="number" name="hours_shift" id="hours_shift"
+                                                    placeholder="Enter Hours Per Shift">
+                                                <div> 
+                                                    <span class="help-block-hours_shift"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Shifts/Wk --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Shifts/Wk
+                                                </label>
+                                                <input type="number" name="weeks_shift" id="weeks_shift"
+                                                    placeholder="Enter Shift Per Weeks">
+                                                <div> 
+                                                    <span class="help-block-weeks_shift"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Wks/Contract --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Wks/Contract</label>
                                                 <input type="number" name="preferred_assignment_duration"
                                                     id="preferred_assignment_duration"
                                                     placeholder="Enter Work Duration Per Assignment">
-                                                <span class="help-block-preferred_assignment_duration"></span>
+                                                <div> 
+                                                    <span class="help-block-preferred_assignment_duration"></span>
+                                                </div>
+                                                </div>
+                                            {{-- Start Date --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12" style="margin: 20px 0px;">
+                                                        <label>Start Date</label>
+                                                    </div>
+                                                    <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12"
+                                                        style="display: flex; justify-content: end; align-items:center;">
+                                                        <input id="as_soon_as" name="as_soon_as" value="1"
+                                                            type="checkbox" style="box-shadow:none; width:auto;"
+                                                            class="col-6">
+                                                        <label class="col-6">
+                                                            As soon As possible
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <input id="start_date" type="date" min="2024-03-06" name="start_date"
+                                                    placeholder="Select Date" value="2024-03-06">
+                                                <div> 
+                                                    <span class="help-block-start_date"></span>
+                                                </div>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Est. Weekly Pay </label>
-                                                <input type="number" step="0.01" name="weekly_pay" id="weekly_pay"
-                                                    placeholder="Enter Weekly Pay">
-                                                <span class="help-block-weekly_pay"></span>
+                                            {{-- End Date --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" style="margin: 20px 0px;">
+                                                        <label>End Date</label>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <input id="end_date" type="date" min="2024-03-06" name="end_date"
+                                                    placeholder="Select Date" value="2024-03-06">
+                                                <div> 
+                                                    <span class="help-block-end_date"></span>
+                                                </div>
+                                            </div>
+                                            {{-- RTO --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Rto</label>
+                                                <select name="rto" id="rto">
+                                                    <option value="" disabled selected hidden>Select an Rto</option>
+                                                    <option value="allowed">Allowed
+                                                    </option>
+                                                    <option value="not allowed">Not Allowed
+                                                    </option>
+                                                </select>
+                                                <div> 
+                                                <span class="help-block-rto"></span>
+                                                </div>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Terms</label>
-                                                <select name="terms" id="terms">
-                                                    <option value="" disabled selected hidden>Select a Term</option>
-                                                    @foreach ($allKeywords['Terms'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-terms"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Est. Weekly non-taxable amount</label>
-                                                <input type="number" name="weekly_non_taxable_amount"
-                                                    id="weekly_non_taxable_amount"
-                                                    placeholder="Enter Weekly non-taxable amount">
-                                                <span class="help-block-weekly_non_taxable_amount"></span>
+                                            <div class="col-md-12 mb-4 collapse-container">
+                                                <p>
+                                                    <a id="collapse-2-btn" class="btn first-collapse" data-toggle="collapse" href="#collapse-2" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        Pay
+                                                    </a>
+                                                </p>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+                                            <div class="row collapse" id="collapse-2">
+                                            
+                                            {{-- OT/Hr --}}
+                                            <div class="ss-form-group col-md-12">
                                                 <label>Overtime Hourly rate</label>
                                                 <input type="number" name="overtime" id="overtime"
                                                     placeholder="Enter actual Overtime Hourly rate">
-                                                <span class="help-block-overtime"></span>
+                                                <div> 
+                                                    <span class="help-block-overtime"></span>
+                                                </div>
+                                            </div>
+                                            {{-- on call check --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>On Call</label>
+                                                <select name="on_call" id="on_call">
+                                                    <option value="" disabled selected hidden>Select an answer
+                                                    </option>
+                                                    <option value="Yes">Yes
+                                                    </option>
+                                                    <option value="No">No
+                                                    </option>
+                                                </select>
+                                                <div> 
+                                                <span class="help-block-on_call"></span>
+                                                </div>
+                                            </div>
+                                            {{-- On Call/Hr --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>On Call Hourly Rate</label>
+                                                <input type="number" name="on_call_rate" id="on_call_rate"
+                                                    placeholder="Enter a call back hourly rate">
+                                                <div> 
+                                                    <span class="help-block-on_call_rate"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Call Back/Hr --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Call Back Hourly rate</label>
+                                                <input type="number" name="call_back_rate" id="call_back_rate"
+                                                    placeholder="Enter Call Back Hourly rate">
+                                                <div> 
+                                                    <span class="help-block-call_back_rate"></span>
+                                                </div>
+                                                    <div> 
+                                                <span class="help-block-call_back_rate"></span>
+                                                    </div>
+                                            </div>
+                                            {{-- Orientation/Hr --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Orientation Hourly rate</label>
+                                                <input type="number" name="orientation_rate" id="orientation_rate"
+                                                    placeholder="Enter Orientation Hourly rate">
+                                                <div> 
+                                                    <span class="help-block-orientation_rate"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Taxable/Wk  --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Est. Taxable/Wk</label>
+                                                <input type="number" name="weekly_taxable_amount"
+                                                    id="weekly_taxable_amount"
+                                                    placeholder="Enter Weekly non-taxable amount">
+                                                <div> 
+                                                    <span class="help-block-weekly_taxable_amount"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Non-taxable/Wk  --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Est. Non-taxable/Wk</label>
+                                                <input type="number" name="weekly_non_taxable_amount"
+                                                    id="weekly_non_taxable_amount"
+                                                    placeholder="Enter Weekly non-taxable amount">
+                                                <div> 
+                                                    <span class="help-block-weekly_non_taxable_amount"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Feels Like $/hr --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Feels Like $/hrs</label>
+                                                <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
+                                                    placeholder="Enter Feels Like $/hrs">
+                                                <div> 
+                                                    <span class="help-block-feels_like_per_hour"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Gw$/Wk --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Gw$/Wk</label>
+                                                <input type="number" name="goodwork_weekly_amount" id="goodwork_weekly_amount"
+                                                    placeholder="Enter Gw$/Wk">
+                                                <div> 
+                                                    <span class="help-block-goodwork_weekly_amount"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Bonus --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Referral Bonus</label>
+                                                <input type="number" name="referral_bonus" id="referral_bonus"
+                                                    placeholder="Enter referral bonus">
+                                                <div> 
+                                                    <span class="help-block-referral_bonus"></span>
+                                                </div>
+                                                </div>
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Sign on Bonus</label>
+                                                <input type="number" name="sign_on_bonus" id="sign_on_bonus"
+                                                    placeholder="Enter sign on bonus">
+                                                <div> 
+                                                    <span class="help-block-sign_on_bonus"></span>
+                                                </div>
+                                                </div>
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Completion Bonus</label>
+                                                <input type="number" name="completion_bonus" id="completion_bonus"
+                                                    placeholder="Enter completion bonus">
+                                                <div> 
+                                                    <span class="help-block-completion_bonus"></span>
+                                                </div>
+                                                </div>
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Extension Bonus</label>
+
+                                                <input type="number" name="extension_bonus" id="extension_bonus"
+                                                    placeholder="Enter extension bonus">
+                                                <div> 
+                                                    <span class="help-block-extension_bonus"></span>
+                                                </div>
+                                                </div>
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Other bonus</label>
+                                                <input type="number" name="other_bonus" id="other_bonus"
+                                                    placeholder="Enter other bonus">
+                                                <div> 
+                                                    <span class="help-block-other_bonus"></span>
+                                                </div>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Est. Taxable Hourly rate</label>
-                                                <input type="number" name="actual_hourly_rate" id="actual_hourly_rate"
-                                                    placeholder="Enter Taxable Regular Hourly rate">
-                                                <span class="help-block-actual_hourly_rate"></span>
+                                            {{-- total_organization_amount --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Total Organization Amount</label>
+                                                <input type="number" name="total_organization_amount"
+                                                    id="total_organization_amount"
+                                                    placeholder="Enter Total Organization Amount">
+                                                <div> 
+                                                    <span class="help-block-total_organization_amount"></span>
+                                                </div>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
+
+                                            {{-- total_goodwork_amount --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Total Goodwork Amount</label>
+                                                <input type="number" name="total_goodwork_amount"
+                                                    id="total_goodwork_amount"
+                                                    placeholder="Enter Total Goodwork Amount">
+                                                <div> 
+                                                    <span class="help-block-total_goodwork_amount"></span>
+                                                </div>
+                                            </div>
+
+                                            {{-- total_contract_amount --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Total Contract Amount</label>
+                                                <input type="number" name="total_contract_amount"
+                                                    id="total_contract_amount"
+                                                    placeholder="Enter Total Contract Amount">
+                                                <div> 
+                                                    <span class="help-block-total_contract_amount"></span>
+                                                </div>
+                                            </div>
+
+                                            {{-- Pay Frequency --}}
+                                            <div class="ss-form-group col-md-12">
                                                 <label>Pay Frequency</label>
                                                 <select name="pay_frequency" id="pay_frequency">
                                                     <option value="" disabled selected hidden>Select a pay frequency
@@ -218,55 +564,141 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                <div> 
                                                 <span class="help-block-pay_frequency"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Benefits --}}
+                                            <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Benefits</label>
+                                                <div class="ss-speilty-exprnc-add-list benefits-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="benefits">
+                                                                <option value="" disabled selected hidden>Select a
+                                                                    benefits</option>
+                                                                @if (isset($allKeywords['Benefits']))
+                                                                    @foreach ($allKeywords['Benefits'] as $value)
+                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="benefitsAllValues" name="benefits">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
+                                                                onclick="addbenefits('from_add')"><i class="fa fa-plus"
+                                                                    aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                                <div> 
+                                                <span class="help-block-benefits"></span>
+                                                </div>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Guaranteed Hours per week</label>
-                                                <input type="number" name="guaranteed_hours" id="guaranteed_hours"
-                                                    placeholder="Enter Guaranteed Hours per week">
-                                                <span class="help-block-guaranteed_hours"></span>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Hours Per Week</label>
-                                                <input type="number" name="hours_per_week" id="hours_per_week"
-                                                    placeholder="Enter hours per week">
-                                                <span class="help-block-hours_per_week"></span>
+                                            <div class="col-md-12 mb-4 collapse-container">
+                                                <p>
+                                                    <a class="btn first-collapse" data-toggle="collapse" href="#collapse-3" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        Location
+                                                    </a>
+                                                </p>
                                             </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Hours Per Shift</label>
-                                                <input type="number" name="hours_shift" id="hours_shift"
-                                                    placeholder="Enter Hours Per Shift">
-                                                <span class="help-block-hours_shift"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Shift Per Weeks
-                                                </label>
-                                                <input type="number" name="weeks_shift" id="weeks_shift"
-                                                    placeholder="Enter Shift Per Weeks">
-                                                <span class="help-block-weeks_shift"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Eligible work in us ?</label>
-                                                <select name="eligible_work_in_us" id="eligible_work_in_us">
-                                                    <option value="" disabled selected hidden>Select an answer
+                                        <div class="row collapse" id="collapse-3">
+                                            {{-- Clinical Setting --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Clinical Setting</label>
+                                                <select name="clinical_setting" id="clinical_setting">
+                                                    <option value="" disabled selected hidden>Select a setting
                                                     </option>
-                                                    <option value="1">Yes
-                                                    </option>
-                                                    <option value="0">No
-                                                    </option>
+                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
+                                                        <option value="{{ $value->title }}">{{ $value->title }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
-                                                <span class="help-block-eligible_work_in_us"></span>
+                                                <div> 
+                                                <span class="help-block-clinical_setting"></span>
+                                                </div>
+                                            </div>
+                                            
+                                            {{-- Address --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Location</label>
+                                                <input type="text" name="preferred_work_location"
+                                                    id="preferred_work_location" placeholder="Enter Work Location">
+                                                <div> 
+                                                    <span class="help-block-preferred_work_location"></span>
+                                                </div>
                                             </div>
 
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Preferred Experience</label>
-                                                <input type="number" name="preferred_experience"
-                                                    id="preferred_experience" placeholder="Enter Preferred Experience">
-                                                <span class="help-block-preferred_experience"></span>
+                                            {{-- Facility --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Facility Name</label>
+                                                <input type="text" name="facility_name" id="facility_name"
+                                                    placeholder="Enter facility name">
+                                                <div> 
+                                                    <span class="help-block-facility_name"></span>
+                                                </div>
                                             </div>
 
+                                            {{-- Facility's Parent System  --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Facility's Parent System</label>
+                                                <input type="text" name="facilitys_parent_system"
+                                                    id="facilitys_parent_system"
+                                                    placeholder="Enter facility's parent system">
+                                                <div> 
+                                                    <span class="help-block-facilitys_parent_system"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Shift Cancellation Policy --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Shift Cancellation Policy</label>
+                                                <input type="text" name="facility_shift_cancelation_policy"
+                                                    id="facility_shift_cancelation_policy"
+                                                    placeholder="Select your shift cancellation policy">
+                                                <div> 
+                                                    <span class="help-block-facility_shift_cancelation_policy"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Contract Termination Policy --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Contract Termination Policy</label>
+                                                <input type="text" name="contract_termination_policy"
+                                                    id="contract_termination_policy"
+                                                    placeholder="Enter your contract termination policy">
+                                                <div> 
+                                                    <span class="help-block-contract_termination_policy"></span>
+                                                </div>
+                                            </div>
+
+                                            {{-- Min Miles Must Live From Facility --}}
+                                            <div class="ss-form-group col-md-">
+                                                <label>Min distance from facility</label>
+                                                <input type="number" name="traveler_distance_from_facility"
+                                                    id="traveler_distance_from_facility"
+                                                    placeholder="Enter travel distance">
+                                                <div> 
+                                                    <span class="help-block-traveler_distance_from_facility"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12 mb-4 collapse-container">
+                                            <p>
+                                                <a class="btn first-collapse" data-toggle="collapse" href="#collapse-4" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                    Certs & Licences 
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div class="row collapse" id="collapse-4">
+                                            {{--  Professional Licensure --}}
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Professional Licensure</label>
                                                 <div class="ss-speilty-exprnc-add-list professional_licensure-content">
@@ -293,525 +725,11 @@
                                                                     class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <div> 
                                                 <span class="help-block-professional_licensure"></span>
-                                            </div>
-
-
-
-                                            <div class="ss-form-group ss-prsnl-frm-specialty">
-                                                <label>Shift Time of Day</label>
-                                                <div class="ss-speilty-exprnc-add-list shifttimeofday-content">
                                                 </div>
-                                                <ul>
-                                                    <li class="row w-100 p-0 m-0">
-                                                        <div class="ps-0">
-                                                            <select class="m-0" id="shifttimeofday">
-                                                                <option value="">Select Shift Time of Day</option>
-                                                                @if (isset($allKeywords['PreferredShift']))
-                                                                    @foreach ($allKeywords['PreferredShift'] as $value)
-                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
-                                                            <input type="hidden" id="shifttimeofdayAllValues"
-                                                                name="preferred_shift_duration">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
-                                                                onclick="addshifttimeofday('from_add')"><i
-                                                                    class="fa fa-plus" aria-hidden="true"></i></a></div>
-                                                    </li>
-                                                </ul>
-                                                <span class="help-block-shift_time_of_day"></span>
                                             </div>
-
-                                            <div class="field btns col-12 d-flex justify-content-center">
-                                                <button class="saveDrftBtn">Save as draft</button>
-                                                <button class="firstNext next">Next</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <!-- Second form slide required inputs for adding jobs -->
-                                    <div class="page">
-                                        <div class="row">
-                                            {{-- edits --}}
-                                            
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Min distance from facility</label>
-                                                <input type="number" name="traveler_distance_from_facility"
-                                                    id="traveler_distance_from_facility"
-                                                    placeholder="Enter travel distance">
-                                                <span class="help-block-traveler_distance_from_facility"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Clinical Setting</label>
-                                                <select name="clinical_setting" id="clinical_setting">
-                                                    <option value="" disabled selected hidden>Select a setting
-                                                    </option>
-                                                    @foreach ($allKeywords['ClinicalSetting'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-clinical_setting"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Patient ratio</label>
-                                                <input type="number" name="Patient_ratio" id="Patient_ratio"
-                                                    placeholder="Enter Patient ratio">
-                                                <span class="help-block-Patient_ratio"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Unit</label>
-                                                <input type="text" name="Unit" id="Unit"
-                                                    placeholder="Enter Unit">
-                                                <span class="help-block-Unit"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Scrub Color</label>
-                                                <input type="text" name="scrub_color" id="scrub_color"
-                                                    placeholder="Enter scrub color">
-                                                <span class="help-block-scrub_color"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Rto</label>
-                                                <select name="rto" id="rto">
-                                                    <option value="" disabled selected hidden>Select an Rto</option>
-                                                    <option value="allowed">Allowed
-                                                    </option>
-                                                    <option value="not allowed">Not Allowed
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-rto"></span>
-                                            </div>
-                                           <div class="ss-form-group col-md-4">
-                                                <label> Work Id</label>
-                                                <input type="text" name="job_id" id="job_id"
-                                                    placeholder="Enter Work Id">
-                                                <span class="help-block-job_id"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label> Work Name</label>
-                                                <input type="text" name="job_name" id="job_name"
-                                                    placeholder="Enter Work name">
-                                                <span class="help-block-job_name"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Preferred Work Location</label>
-                                                <input type="text" name="preferred_work_location"
-                                                    id="preferred_work_location" placeholder="Enter Work Location">
-                                                <span class="help-block-preferred_work_location"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Referral Bonus</label>
-                                                <input type="number" name="referral_bonus" id="referral_bonus"
-                                                    placeholder="Enter referral bonus">
-                                                <span class="help-block-referral_bonus"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Sign on Bonus</label>
-                                                <input type="number" name="sign_on_bonus" id="sign_on_bonus"
-                                                    placeholder="Enter sign on bonus">
-                                                <span class="help-block-sign_on_bonus"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Completion Bonus</label>
-                                                <input type="number" name="completion_bonus" id="completion_bonus"
-                                                    placeholder="Enter completion bonus">
-                                                <span class="help-block-completion_bonus"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Extension Bonus</label>
-
-                                                <input type="number" name="extension_bonus" id="extension_bonus"
-                                                    placeholder="Enter extension bonus">
-                                                <span class="help-block-extension_bonus"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Other bonus</label>
-                                                <input type="number" name="other_bonus" id="other_bonus"
-                                                    placeholder="Enter other bonus">
-                                                <span class="help-block-other_bonus"></span>
-                                            </div>
-                                            
-
-                                            
-                                            <div class="ss-form-group col-md-4">
-                                                <label>On Call</label>
-                                                <select name="on_call" id="on_call">
-                                                    <option value="" disabled selected hidden>Select an answer
-                                                    </option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-on_call"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>On Call Rate</label>
-                                                <input type="number" name="on_call_rate" id="on_call_rate"
-                                                    placeholder="Enter a call back hourly rate">
-                                                <span class="help-block-on_call_rate"></span>
-                                            </div>
-
-                                            
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Work Description</label>
-                                                <textarea type="text" name="description" id="description" placeholder="Enter Work Description"></textarea>
-                                                <span class="help-block-description"></span>
-                                            </div>
-
-                                            <div class="field btns col-12 d-flex justify-content-center">
-                                                <button class="saveDrftBtn">Save as draft</button>
-                                                <button class="prev-1 prev">Previous</button>
-                                                <button class="next-1 next">Next</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Third form slide required inputs for adding jobs -->
-
-                                    <div class="page">
-                                        <div class="row">
-                                           
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Holidy date</label>
-                                                <input type="date" name="holiday" id="holiday"
-                                                    placeholder="Enter Holidy hourly rate">
-                                                <span class="help-block-holiday"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Orientation Hourly rate</label>
-                                                <input type="number" name="orientation_rate" id="orientation_rate"
-                                                    placeholder="Enter Orientation Hourly rate">
-                                                <span class="help-block-orientation_rate"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Block scheduling</label>
-                                                <select name="block_scheduling" id="block_scheduling">
-                                                    <option value="" disabled selected hidden>Select an answer
-                                                    </option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-block_scheduling"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Float requirements</label>
-                                                <select name="float_requirement" id="float_requirement">
-                                                    <option value="" disabled selected hidden>Select an answer
-                                                    </option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-float_requirement"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Number Of References</label>
-                                                <input type="number" name="number_of_references"
-                                                    id="number_of_references" placeholder="Enter number of references">
-                                                <span class="help-block-number_of_references"></span>
-                                            </div>
-                                            
-
-                                            
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Facility's Parent System</label>
-                                                <input type="text" name="facilitys_parent_system"
-                                                    id="facilitys_parent_system"
-                                                    placeholder="Enter facility's parent system">
-                                                <span class="help-block-facilitys_parent_system"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Facility Name</label>
-                                                <input type="text" name="facility_name" id="facility_name"
-                                                    placeholder="Enter facility name">
-                                                <span class="help-block-facility_name"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Contract Termination Policy</label>
-                                                <input type="text" name="contract_termination_policy"
-                                                    id="contract_termination_policy"
-                                                    placeholder="Enter your contract termination policy">
-                                                <span class="help-block-contract_termination_policy"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Shift Cancellation Policy</label>
-                                                <input type="text" name="facility_shift_cancelation_policy"
-                                                    id="facility_shift_cancelation_policy"
-                                                    placeholder="Select your shift cancellation policy">
-                                                <span class="help-block-facility_shift_cancelation_policy"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>401K</label>
-                                                <select name="four_zero_one_k" id="four_zero_one_k">
-                                                    <option value="" disabled selected hidden>Select an answer
-                                                    </option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-four_zero_one_k"></span>
-                                            </div>
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Health Insurance</label>
-                                                <select name="health_insaurance" id="health_insaurance">
-                                                    <option value="" disabled selected hidden>Select a Health
-                                                        Insurance</option>
-                                                    <option value="Yes">Yes
-                                                    </option>
-                                                    <option value="No">No
-                                                    </option>
-                                                </select>
-                                                <span class="help-block-health_insaurance"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Feels Like $/hrs</label>
-                                                <input type="number" name="feels_like_per_hour" id="feels_like_per_hour"
-                                                    placeholder="Enter Feels Like $/hrs">
-                                                <span class="help-block-feels_like_per_hour"></span>
-                                            </div>
-
-
-
-                                            <div class="ss-form-group col-md-4">
-                                                <label>Call Back Hourly rate</label>
-                                                <input type="number" name="call_back_rate" id="call_back_rate"
-                                                    placeholder="Enter Call Back Hourly rate">
-                                                <span class="help-block-call_back_rate"></span>
-                                                <span class="help-block-call_back_rate"></span>
-                                            </div>
-
-                                            <div class="ss-form-group col-md-12">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-sm-12 col-md-12 col-xs-12" style="margin: 20px 0px;">
-                                                        <label>Start Date</label>
-                                                    </div>
-                                                    <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12"
-                                                        style="display: flex; justify-content: end; align-items:center;">
-                                                        <input id="as_soon_as" name="as_soon_as" value="1"
-                                                            type="checkbox" style="box-shadow:none; width:auto;"
-                                                            class="col-6">
-                                                        <label class="col-6">
-                                                            As soon As possible
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <input id="start_date" type="date" min="2024-03-06" name="start_date"
-                                                    placeholder="Select Date" value="2024-03-06">
-                                            </div>
-                                            <span class="help-block-start_date"></span>
-
-                                            <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
-                                                <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
-                                                <div class="row justify-content-center" style="display:flex; align-items:end;">
-                                                    <label class="col-6" for="urgency"
-                                                        style="display:flex; justify-content:end;">Auto Offer</label>
-                                                    <div class="col-6">
-                                                        <input type="checkbox" name="urgency" id="urgency"
-                                                            value="Auto Offer" style="box-shadow: none;">
-                                                    </div>
-                                                </div>
-                                                
-                                                <span class="help-block-urgency"></span>
-                                            </div>
-                                            
-                                            <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div>
-                                              
-                                              
-                                            <div class="row ss-form-group d-flex justify-content-end col-md-7" style="padding-bottom: 20px;">
-                                                <label style="padding-bottom: 25px; padding-top: 25px;">Professional State Licensure</label>
-                                                
-                                                    <div class="row col-6 justify-content-center align-items-end">
-                                                        <label class="col-7" for="professional_state_licensure_pending">Accept
-                                                            Pending
-                                                        </label>
-                                                        <div class="col-5">
-                                                            <input type="radio" id="professional_state_licensure_pending"
-                                                                name="professional_state_licensure" value="Accept Pending"
-                                                                style="box-shadow: none;">
-                                                        </div>
-                                                    </div>
-                                                    {{-- Radio option for "Active" --}}
-                                                    <div class="row col-6 justify-content-center align-items-end">
-                                                        <label  class="col-7" for="professional_state_licensure_active">
-                                                            Active
-                                                        </label>
-                                                        <div class="col-5">
-                                                            <input type="radio" id="professional_state_licensure_active"
-                                                                name="professional_state_licensure" value="Active"
-                                                                style="box-shadow: none;">
-                                                        </div>
-                                                    </div>
-                                                <span class="help-block-professional_state_licensure"></span>
-                                            </div>
-
-                                            <div class="field btns col-12 d-flex justify-content-center">
-                                                <button class="saveDrftBtn">Save as draft</button>
-                                                <button class="prev-2 prev">Previous</button>
-                                                <button class="next-2 next">Next</button>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    {{-- slide added from sheets --}}
-
-                                    <div class="page">
-                                        <div class="row">
-
-                                            
-                                            {{-- <div class="ss-form-group col-md-4">
-                                                <label>Worker Classification</label>
-                                                <select name="nurse_classification" id="nurse_classification">
-                                                    <option value="" disabled selected hidden>Select a Worker Classification</option>
-                                                    @foreach ($allKeywords['NurseClassification'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-nurse_classification"></span>
-                                            </div> --}}
-
-
-
-                                            
-
-                                            
-
-                                            
-
-                                            {{-- <div class="row ss-form-group col-md-4 d-flex justify-content-end">
-                                                <label>Urgency</label>
-                                                <div class="row" style="display:flex; align-items:end;">
-                                                    <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto Offer</label>
-                                                    <div class="col-6">
-                                                        <input type="checkbox" name="urgency" id="urgency" value="Auto Offer" style="box-shadow: none;">
-                                                    </div>
-                                                </div>
-                                                <span class="help-block-urgency"></span>
-                                            </div> --}}
-
-                                            
-
-                                            {{-- <div class="ss-form-group col-md-4">
-                                                <label>Professional Licensure</label>
-                                                <select name="job_location" id="job_location">
-                                                    <option value="" disabled selected hidden>Select a Professional Licensure</option>
-                                                    @foreach ($allKeywords['StateCode'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-job_location"></span>
-                                            </div> --}}
-
-                                            <div class="ss-form-group ss-prsnl-frm-specialty">
-                                                <label>Worker Classification</label>
-                                                <div class="ss-speilty-exprnc-add-list nurse_classification-content">
-                                                </div>
-                                                <ul>
-                                                    <li class="row w-100 p-0 m-0">
-                                                        <div class="ps-0">
-                                                            <select class="m-0" id="nurse_classification">
-                                                                <option value="" disabled selected hidden>Select a
-                                                                    Worker Classification</option>
-                                                                @if (isset($allKeywords['NurseClassification']))
-                                                                    @foreach ($allKeywords['NurseClassification'] as $value)
-                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
-                                                            <input type="hidden" id="nurse_classificationAllValues"
-                                                                name="nurse_classification">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
-                                                                onclick="addnurse_classification('from_add')"><i
-                                                                    class="fa fa-plus" aria-hidden="true"></i></a></div>
-                                                    </li>
-                                                </ul>
-                                                <span class="help-block-nurse_classification"></span>
-                                            </div>
-                                            
-
-                                            <div class="ss-form-group ss-prsnl-frm-specialty">
-                                                <label>EMR</label>
-                                                <div class="ss-speilty-exprnc-add-list Emr-content">
-                                                </div>
-                                                <ul>
-                                                    <li class="row w-100 p-0 m-0">
-                                                        <div class="ps-0">
-                                                            <select class="m-0" id="Emr">
-                                                                <option value="" disabled selected hidden>Select an
-                                                                    emr</option>
-                                                                @if (isset($allKeywords['EMR']))
-                                                                    @foreach ($allKeywords['EMR'] as $value)
-                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
-                                                            <input type="hidden" id="EmrAllValues" name="Emr">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
-                                                                onclick="addEmr('from_add')"><i class="fa fa-plus"
-                                                                    aria-hidden="true"></i></a></div>
-                                                    </li>
-                                                </ul>
-                                                <span class="help-block-Emr"></span>
-                                            </div>
-
-                                            <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
-                                                <label>Benefits</label>
-                                                <div class="ss-speilty-exprnc-add-list benefits-content">
-                                                </div>
-                                                <ul>
-                                                    <li class="row w-100 p-0 m-0">
-                                                        <div class="ps-0">
-                                                            <select class="m-0" id="benefits">
-                                                                <option value="" disabled selected hidden>Select a
-                                                                    benefits</option>
-                                                                @if (isset($allKeywords['Benefits']))
-                                                                    @foreach ($allKeywords['Benefits'] as $value)
-                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
-                                                            <input type="hidden" id="benefitsAllValues" name="benefits">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
-                                                                onclick="addbenefits('from_add')"><i class="fa fa-plus"
-                                                                    aria-hidden="true"></i></a></div>
-                                                    </li>
-                                                </ul>
-                                                <span class="help-block-benefits"></span>
-                                            </div>
-
-
-
+                                            {{-- Certifications --}}
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Certifications</label>
                                                 <div class="ss-speilty-exprnc-add-list certificate-content">
@@ -838,38 +756,67 @@
                                                                     class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <div> 
                                                 <span class="help-block-certificate"></span>
-                                            </div>
-                                            <div class="ss-form-group ss-prsnl-frm-specialty">
-                                                <label>Vaccinations & Immunizations name</label>
-                                                <div class="ss-speilty-exprnc-add-list vaccinations-content">
-
                                                 </div>
-                                                <ul>
-                                                    <li class="row w-100 p-0 m-0">
-                                                        <div class="ps-0">
-                                                            <select class="m-0" id="vaccinations">
-                                                                <option value="" disabled selected hidden>Enter
-                                                                    Vaccinations & Immunizations name</option>
-                                                                @if (isset($allKeywords['Vaccinations']))
-                                                                    @foreach ($allKeywords['Vaccinations'] as $value)
-                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
-                                                            <input type="hidden" id="vaccinationsAllValues"
-                                                                name="vaccinations">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
-                                                                onclick="addvacc('from_add')"><i
-                                                                    class="fa fa-plus" aria-hidden="true"></i></a></div>
-                                                    </li>
-                                                </ul>
-                                                <span class="help-block-vaccinations"></span>
                                             </div>
 
+
+                                        </div>
+                                        <div class="col-md-12 mb-4 collapse-container">
+                                            <p>
+                                                <a class="btn first-collapse" data-toggle="collapse" href="#collapse-5" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                    Work Info
+                                                </a>
+                                            </p>
+                                        </div>
+                                            <div class="row collapse" id="collapse-5">
+                                            {{-- Description --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Description</label>
+                                                <textarea type="text" name="description" id="description" placeholder="Enter Work Description"></textarea>
+                                                <div> 
+                                                <span class="help-block-description"></span>
+                                                </div>
+                                            </div>
+                                                {{-- Auto Offer --}}
+                                            <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
+                                                <div class="row justify-content-center" style="display:flex; align-items:end;">
+                                                    <div class="col-6">
+                                                    <label for="urgency"
+                                                        style="display:flex; justify-content:center;">Auto Offer</label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="checkbox" name="urgency" id="urgency"
+                                                            value="Auto Offer" style="box-shadow: none;">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div> 
+                                                <span class="help-block-urgency"></span>
+                                                </div>
+                                            </div>
+                                           
+                                            {{-- Experience --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Experience (Yrs)</label>
+                                                <input type="number" name="preferred_experience"
+                                                    id="preferred_experience" placeholder="Enter Experience">
+                                                <div> 
+                                                    <span class="help-block-preferred_experience"></span>
+                                                </div>
+                                            </div>
+                                            {{-- number of references --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Number Of References</label>
+                                                <input type="number" name="number_of_references"
+                                                    id="number_of_references" placeholder="Enter number of references">
+                                                <div> 
+                                                    <span class="help-block-number_of_references"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Skills --}}
                                             <div class="ss-form-group ss-prsnl-frm-specialty">
                                                 <label>Skills checklist</label>
                                                 <div class="ss-speilty-exprnc-add-list skills-content">
@@ -895,60 +842,321 @@
                                                                     aria-hidden="true"></i></a></div>
                                                     </li>
                                                 </ul>
+                                                <div> 
                                                 <span class="help-block-skills"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Block scheduling --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Block scheduling</label>
+                                                <select name="block_scheduling" id="block_scheduling">
+                                                    <option value="" disabled selected hidden>Select an answer
+                                                    </option>
+                                                    <option value="Yes">Yes
+                                                    </option>
+                                                    <option value="No">No
+                                                    </option>
+                                                </select>
+                                                <div> 
+                                                <span class="help-block-block_scheduling"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Floating requirements --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Floating requirements</label>
+                                                <select name="float_requirement" id="float_requirement">
+                                                    <option value="" disabled selected hidden>Select an answer
+                                                    </option>
+                                                    <option value="Yes">Yes
+                                                    </option>
+                                                    <option value="No">No
+                                                    </option>
+                                                </select>
+                                                <div> 
+                                                <span class="help-block-float_requirement"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Patient Ratio Max --}}
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Patient ratio Max</label>
+                                                <input type="number" name="Patient_ratio" id="Patient_ratio"
+                                                    placeholder="Enter Patient ratio">
+                                                <div> 
+                                                    <span class="help-block-Patient_ratio"></span>
+                                                </div>
                                             </div>
 
+                                            {{-- EMR  --}}
+
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>EMR</label>
+                                                <div class="ss-speilty-exprnc-add-list Emr-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="Emr">
+                                                                <option value="" disabled selected hidden>Select an
+                                                                    emr</option>
+                                                                @if (isset($allKeywords['EMR']))
+                                                                    @foreach ($allKeywords['EMR'] as $value)
+                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="EmrAllValues" name="Emr">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
+                                                                onclick="addEmr('from_add')"><i class="fa fa-plus"
+                                                                    aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                                <div> 
+                                                <span class="help-block-Emr"></span>
+                                                </div>
+                                            </div>
+
+                                            {{-- Unit --}}
+
+                                            <div class="ss-form-group col-md-12">
+                                                <label>Unit</label>
+                                                <input type="text" name="Unit" id="Unit"
+                                                    placeholder="Enter Unit">
+                                                <div> 
+                                                    <span class="help-block-Unit"></span>
+                                                </div>
+                                            </div>
+
+                                            </div>
+                                            <div class="col-md-12 mb-4 collapse-container">
+                                                <p>
+                                                    <a class="btn first-collapse" data-toggle="collapse" href="#collapse-6" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        ID & Tax Info
+                                                    </a>
+                                                </p>
+                                            </div>
+                                            <div class="row collapse" id="collapse-6">
+
+                                                {{-- Classification --}}
+                                            <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                <label>Classification</label>
+                                                <div class="ss-speilty-exprnc-add-list nurse_classification-content">
+                                                </div>
+                                                <ul>
+                                                    <li class="row w-100 p-0 m-0">
+                                                        <div class="ps-0">
+                                                            <select class="m-0" id="nurse_classification">
+                                                                <option value="" disabled selected hidden>Select a
+                                                                    Worker Classification</option>
+                                                                @if (isset($allKeywords['NurseClassification']))
+                                                                    @foreach ($allKeywords['NurseClassification'] as $value)
+                                                                        <option value="{{ $value->id }}">{{$value->title}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                            <input type="hidden" id="nurse_classificationAllValues"
+                                                                name="nurse_classification">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
+                                                                onclick="addnurse_classification('from_add')"><i
+                                                                    class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                    </li>
+                                                </ul>
+                                                <div> 
+                                                <span class="help-block-nurse_classification"></span>
+                                                </div>
+                                            </div>
+                                            {{-- Authorized to work in US ? --}}
+                                                {{-- <div class="ss-form-group col-md-12">
+                                                    <label>Authorized to work in US ?</label>
+                                                    <select name="eligible_work_in_us" id="eligible_work_in_us">
+                                                        <option value="" disabled selected hidden>Select an answer
+                                                        </option>
+                                                        <option value="1">Yes
+                                                        </option>
+                                                        <option value="0">No
+                                                        </option>
+                                                    </select>
+                                                    <div> 
+                                                    <span class="help-block-eligible_work_in_us"></span>
+                                                    </div>
+                                                </div> --}}
+
+                                            </div>
+                                            <div class="col-md-12 mb-4 collapse-container">
+                                                <p>
+                                                    <a class="btn first-collapse" data-toggle="collapse" href="#collapse-7" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        Medical info
+                                                    </a>
+                                                </p>
+                                            </div>
+                                            <div class="row collapse" id="collapse-7">
+
+                                            
+
+                                                <div class="ss-form-group ss-prsnl-frm-specialty">
+                                                    <label>Vaccinations & Immunizations name</label>
+                                                    <div class="ss-speilty-exprnc-add-list vaccinations-content">
+    
+                                                    </div>
+                                                    <ul>
+                                                        <li class="row w-100 p-0 m-0">
+                                                            <div class="ps-0">
+                                                                <select class="m-0" id="vaccinations">
+                                                                    <option value="" disabled selected hidden>Enter
+                                                                        Vaccinations & Immunizations name</option>
+                                                                    @if (isset($allKeywords['Vaccinations']))
+                                                                        @foreach ($allKeywords['Vaccinations'] as $value)
+                                                                            <option value="{{ $value->id }}">{{$value->title}}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </select>
+                                                                <input type="hidden" id="vaccinationsAllValues"
+                                                                    name="vaccinations">
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="ss-prsn-frm-plu-div"><a href="javascript:void(0)"
+                                                                    onclick="addvacc('from_add')"><i
+                                                                        class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                                        </li>
+                                                    </ul>
+                                                    <div> 
+                                                    <span class="help-block-vaccinations"></span>
+                                                    </div>
+                                                </div>
+    
+
+                                                 </div>
+                                                 <div class="col-md-12 mb-4 collapse-container">
+                                                    <p>
+                                                        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-8" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                            Other Info
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            <div class="row collapse" id="collapse-8">
+                                            
+                                            
+                                                
+                                                
+                                                
+                                                
+                                                <div class="ss-form-group col-md-12">
+                                                    <label>Scrub Color</label>
+                                                    <input type="text" name="scrub_color" id="scrub_color"
+                                                        placeholder="Enter scrub color">
+                                                    <div> 
+                                                        <span class="help-block-scrub_color"></span>
+                                                    </div>
+                                                    </div>
+                                                
+                                               
+                                                <div class="ss-form-group col-md-12">
+                                                    <label>Name</label>
+                                                    <input type="text" name="job_name" id="job_name"
+                                                        placeholder="Enter Work name">
+                                                    <div> 
+                                                        <span class="help-block-job_name"></span>
+                                                    </div>
+                                                    </div>
+                                            
+                                                
+                                                
+
+                                           
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Holidy date</label>
+                                                        <input type="date" name="holiday" id="holiday"
+                                                            placeholder="Enter Holidy hourly rate">
+                                                        <div> 
+                                                            <span class="help-block-holiday"></span>
+                                                        </div>
+                                                    </div>
+
+        
+                                                    {{-- <div class="ss-form-group col-md-12">
+                                                        <label>401K</label>
+                                                        <select name="four_zero_one_k" id="four_zero_one_k">
+                                                            <option value="" disabled selected hidden>Select an answer
+                                                            </option>
+                                                            <option value="Yes">Yes
+                                                            </option>
+                                                            <option value="No">No
+                                                            </option>
+                                                        </select>
+                                                        <div> 
+                                                        <span class="help-block-four_zero_one_k"></span>
+                                                        </div>
+                                                    </div> --}}
+
+                                                    {{-- <div class="ss-form-group col-md-12">
+                                                        <label>Health Insurance</label>
+                                                        <select name="health_insaurance" id="health_insaurance">
+                                                            <option value="" disabled selected hidden>Select a Health
+                                                                Insurance</option>
+                                                            <option value="Yes">Yes
+                                                            </option>
+                                                            <option value="No">No
+                                                            </option>
+                                                        </select>
+                                                        <div> 
+                                                        <span class="help-block-health_insaurance"></span>
+                                                        </div>
+                                                    </div> --}}
+         
+
+                                                    
+        
+                                                    
+                                                  
+                                                      
+                                                    <div class="row d-flex justify-content-center col-md-12" style="padding-bottom: 20px;">
+                                                        <label style="padding-bottom: 25px; padding-top: 25px;">Professional State Licensure</label>
+                                                        
+                                                            <div class="row col-6 justify-content-center align-items-end">
+                                                                <label class="col-7" for="professional_state_licensure_pending">Accept
+                                                                    Pending
+                                                                </label>
+                                                                <div class="col-5">
+                                                                    <input type="radio" id="professional_state_licensure_pending"
+                                                                        name="professional_state_licensure" value="Accept Pending"
+                                                                        style="box-shadow: none;">
+                                                                </div>
+                                                            </div>
+                                                            {{-- Radio option for "Active" --}}
+                                                            <div class="row col-6 justify-content-center align-items-end">
+                                                                <label  class="col-7" for="professional_state_licensure_active">
+                                                                    Active
+                                                                </label>
+                                                                <div class="col-5">
+                                                                    <input type="radio" id="professional_state_licensure_active"
+                                                                        name="professional_state_licensure" value="Active"
+                                                                        style="box-shadow: none;">
+                                                                </div>
+                                                            </div>
+                                                            <div> 
+                                                            <span class="help-block-professional_state_licensure"></span>
+                                                            </div>
+                                                    </div>
+                                                </div>
+
+                                                    
+            
                                             <div class="field btns col-12 d-flex justify-content-center">
                                                 <button class="saveDrftBtn">Save as draft</button>
-                                                <button class="prev-3 prev">Previous</button>
+                                                {{-- <button class="firstNext next">Next</button> --}}
                                                 <button class="submit">Submit</button>
                                             </div>
-
                                         </div>
                                     </div>
 
-                                    {{-- end slide added from sheets --}}
 
-
-                                    <!-- Forth form slide for adding jobs -->
-
-                                    <div class="page">
-                                        <div class="row">
-
-
-                                            
-
-
-                                            
-
-                                            {{-- <div class="ss-form-group col-md-4">
-                                                <label>EMR</label>
-                                                <select name="Emr"
-                                                    id="emr">
-                                                    <option value="" disabled selected hidden>Select an EMR</option>
-                                                    @foreach ($allKeywords['EMR'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-emr"></span>
-                                            </div> --}}
-
-                                            
-
-                                            
-                                            {{-- <div class="ss-form-group col-md-4">
-                                            <input type="text" name="responsibilities" id="responsibilities"
-                                                placeholder="Enter Responsibilities">
-                                        </div>
-
-                                        <div class="ss-form-group col-md-4">
-                                            <input type="text" name="qualifications" id="qualifications"
-                                                placeholder="Enter Qualifications">
-                                        </div> --}}
-                                            
-                                        </div>
-                                    </div>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -1126,14 +1334,14 @@
                                             <div class=" page slide-pageDraft">
                                                 <div class="row">
                                        
-                                                    <div class="ss-form-group col-md-4 d-none">
-                                                        <input type="text" name="active" id="activeDraft">
+                                                    <div class="ss-form-group col-md-12 d-none">
+                                                        <input hidden type="text" name="active" id="activeDraft">
                                                     </div>
-                                                    <div class="ss-form-group col-md-4 d-none">
-                                                        <input type="text" name="is_open" id="is_openDraft">
+                                                    <div class="ss-form-group col-md-12 d-none">
+                                                        <input hidden type="text" name="is_open" id="is_openDraft">
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Work Type</label>
                                                         <select name="job_type" id="job_typeDraft">
                                                             <option value="" disabled selected hidden>Select a Work type
@@ -1144,11 +1352,13 @@
                                                             </option>
                                                         </select>
                                        
+                                                        <div> 
                                                         <span class="help-block-job_typeDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Specialty</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Specialty</label>
                                                         <select name="preferred_specialty" id="preferred_specialtyDraft">
                                                             <option value="" disabled selected hidden>Select a specialty
                                                             </option>
@@ -1158,12 +1368,14 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-preferred_specialtyDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Profession</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Profession</label>
                                                         <select name="profession" id="perferred_professionDraft">
                                                             <option value="" disabled selected hidden>Select a Profession
                                                             </option>
@@ -1172,12 +1384,14 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-perferred_professionDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label> Work State </label>
                                                         <select name="job_state" id="job_stateDraft">
                                                             <option value="" disabled selected hidden>Select a State</option>
@@ -1187,13 +1401,15 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-job_stateDraft"></span>
-                                       
+                                                        </div>
+                                                        
                                        
                                        
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                        
                                        
                                                         <label> Work City </label>
@@ -1201,24 +1417,30 @@
                                                             <option value="">Select a city</option>
                                                         </select>
                                        
+                                                        <div> 
                                                         <span class="help-block-job_cityDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Weeks per Assignment</label>
                                                         <input type="number" name="preferred_assignment_duration" id="preferred_assignment_durationDraft"
                                                             placeholder="Enter Work Duration Per Assignment">
-                                                        <span class="help-block-preferred_assignment_durationDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-preferred_assignment_durationDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Est. Weekly Pay </label>
                                                         <input type="number" step="0.01" name="weekly_pay" id="weekly_payDraft" placeholder="Enter Weekly Pay">
+                                                        <div> 
                                                         <span class="help-block-weekly_payDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Terms</label>
                                                         <select name="terms" id="termsDraft">
                                                             <option value="" disabled selected hidden>Select a Term</option>
@@ -1227,27 +1449,35 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-termsDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Est. Weekly non-taxable amount</label>
                                                         <input type="number" name="weekly_non_taxable_amount" id="weekly_non_taxable_amountDraft"
                                                             placeholder="Enter Weekly non-taxable amount">
-                                                        <span class="help-block-weekly_non_taxable_amountDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-weekly_non_taxable_amountDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Overtime Hourly rate</label>
                                                         <input type="number" name="overtime" id="overtimeDraft" placeholder="Enter actual Overtime Hourly rate">
+                                                        <div> 
                                                         <span class="help-block-overtimeDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Est. Taxable Hourly rate</label>
                                                         <input type="number" name="actual_hourly_rate" id="actual_hourly_rateDraft"
                                                             placeholder="Enter Taxable Regular Hourly rate">
-                                                        <span class="help-block-actual_hourly_rateDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-actual_hourly_rateDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Pay Frequency</label>
                                                         <select name="pay_frequency" id="pay_frequencyDraft">
                                                             <option value="" disabled selected hidden>Select a pay frequency
@@ -1257,33 +1487,43 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-pay_frequencyDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Guaranteed Hours per week</label>
                                                         <input type="number" name="guaranteed_hours" id="guaranteed_hoursDraft"
                                                             placeholder="Enter Guaranteed Hours per week">
-                                                        <span class="help-block-guaranteed_hoursDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-guaranteed_hoursDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Hours Per Week</label>
                                                         <input type="number" name="hours_per_week" id="hours_per_weekDraft" placeholder="Enter hours per week">
+                                                        <div> 
                                                         <span class="help-block-hours_per_weekDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Hours Per Shift</label>
                                                         <input type="number" name="hours_shift" id="hours_shiftDraft" placeholder="Enter Hours Per Shift">
+                                                        <div> 
                                                         <span class="help-block-hours_shiftDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Shift Per Weeks
                                                         </label>
                                                         <input type="number" name="weeks_shift" id="weeks_shiftDraft" placeholder="Enter Shift Per Weeks">
+                                                        <div> 
                                                         <span class="help-block-weeks_shiftDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Eligible work in us ?</label>
                                                         <select name="eligible_work_in_us" id="eligible_work_in_usDraft">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -1293,15 +1533,19 @@
                                                             <option value="0">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-eligible_work_in_usDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Experience</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Experience</label>
                                                         <input type="number" name="preferred_experience" id="preferred_experienceDraft"
-                                                            placeholder="Enter Preferred Experience">
-                                                        <span class="help-block-preferred_experienceDraft"></span>
-                                                    </div>
+                                                            placeholder="Enter Experience">
+                                                        <div> 
+                                                            <span class="help-block-preferred_experienceDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Professional Licensure</label>
@@ -1328,7 +1572,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-professional_licensure"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
@@ -1357,7 +1603,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-shift_time_of_day"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -1373,13 +1621,15 @@
                                                 <div class="row">
                                                     {{-- Drafts --}}
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Min distance from facility</label>
                                                         <input type="number" name="traveler_distance_from_facility" id="traveler_distance_from_facilityDraft"
                                                             placeholder="Enter travel distance">
-                                                        <span class="help-block-traveler_distance_from_facilityDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-traveler_distance_from_facilityDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Clinical Setting</label>
                                                         <select name="clinical_setting" id="clinical_settingDraft">
                                                             <option value="" disabled selected hidden>Select a setting
@@ -1389,24 +1639,32 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-clinical_settingDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Patient ratio</label>
                                                         <input type="number" name="Patient_ratio" id="Patient_ratioDraft" placeholder="Enter Patient ratio">
+                                                        <div> 
                                                         <span class="help-block-Patient_ratioDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Unit</label>
                                                         <input type="text" name="Unit" id="UnitDraft" placeholder="Enter Unit">
+                                                        <div> 
                                                         <span class="help-block-UnitDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Scrub Color</label>
                                                         <input type="text" name="scrub_color" id="scrub_colorDraft" placeholder="Enter scrub color">
+                                                        <div> 
                                                         <span class="help-block-scrub_colorDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Rto</label>
                                                         <select name="rto" id="rtoDraft">
                                                             <option value="" disabled selected hidden>Select an Rto</option>
@@ -1415,57 +1673,75 @@
                                                             <option value="not allowed">Not Allowed
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-rtoDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label> Work Id</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Id</label>
                                                         <input type="text" name="job_id" id="job_idDraft" placeholder="Enter Work Id">
+                                                        <div> 
                                                         <span class="help-block-job_idDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label> Work Name</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Name</label>
                                                         <input type="text" name="job_name" id="job_nameDraft" placeholder="Enter Work name">
+                                                        <div> 
                                                         <span class="help-block-job_nameDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Work Location</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Location</label>
                                                         <input type="text" name="preferred_work_location" id="preferred_work_locationDraft"
                                                             placeholder="Enter Work Location">
-                                                        <span class="help-block-preferred_work_locationDraft"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-preferred_work_locationDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Referral Bonus</label>
                                                         <input type="number" name="referral_bonus" id="referral_bonusDraft" placeholder="Enter referral bonus">
+                                                        <div> 
                                                         <span class="help-block-referral_bonusDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Sign on Bonus</label>
                                                         <input type="number" name="sign_on_bonus" id="sign_on_bonusDraft" placeholder="Enter sign on bonus">
+                                                        <div> 
                                                         <span class="help-block-sign_on_bonusDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Completion Bonus</label>
                                                         <input type="number" name="completion_bonus" id="completion_bonusDraft"
                                                             placeholder="Enter completion bonus">
-                                                        <span class="help-block-completion_bonusDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-completion_bonusDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Extension Bonus</label>
                                        
                                                         <input type="number" name="extension_bonus" id="extension_bonusDraft"
                                                             placeholder="Enter extension bonus">
-                                                        <span class="help-block-extension_bonusDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-extension_bonusDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Other bonus</label>
                                                         <input type="number" name="other_bonus" id="other_bonusDraft" placeholder="Enter other bonus">
+                                                        <div> 
                                                         <span class="help-block-other_bonusDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>On Call</label>
                                                         <select name="on_call" id="on_callDraft">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -1475,20 +1751,26 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-on_callDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>On Call Rate</label>
                                                         <input type="number" name="on_call_rate" id="on_call_rateDraft"
                                                             placeholder="Enter a call back hourly rate">
-                                                        <span class="help-block-on_call_rateDraft"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-on_call_rateDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Work Description</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Description</label>
                                                         <textarea type="text" name="description" id="descriptionDraft" placeholder="Enter Work Description"></textarea>
+                                                        <div> 
                                                         <span class="help-block-descriptionDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -1504,19 +1786,23 @@
                                             <div class="page">
                                                 <div class="row">
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Holidy date</label>
                                                         <input type="date" name="holiday" id="holidayDraft" placeholder="Enter Holidy hourly rate">
+                                                        <div> 
                                                         <span class="help-block-holidayDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Orientation Hourly rate</label>
                                                         <input type="number" name="orientation_rate" id="orientation_rateDraft"
                                                             placeholder="Enter Orientation Hourly rate">
-                                                        <span class="help-block-orientation_rateDraft"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-orientation_rateDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Block scheduling</label>
                                                         <select name="block_scheduling" id="block_schedulingDraft">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -1526,9 +1812,11 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-block_schedulingDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Float requirements</label>
                                                         <select name="float_requirement" id="float_requirementDraft">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -1538,46 +1826,58 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-float_requirementDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Number Of References</label>
                                                         <input type="number" name="number_of_references" id="number_of_referencesDraft"
                                                             placeholder="Enter number of references">
-                                                        <span class="help-block-number_of_referencesDraft"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-number_of_referencesDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Facility's Parent System</label>
                                                         <input type="text" name="facilitys_parent_system" id="facilitys_parent_systemDraft"
                                                             placeholder="Enter facility's parent system">
-                                                        <span class="help-block-facilitys_parent_systemDraft"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-facilitys_parent_systemDraft"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Facility Name</label>
                                                         <input type="text" name="facility_name" id="facility_nameDraft" placeholder="Enter facility name">
+                                                        <div> 
                                                         <span class="help-block-facility_nameDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Contract Termination Policy</label>
                                                         <input type="text" name="contract_termination_policy" id="contract_termination_policyDraft"
                                                             placeholder="Enter your contract termination policy">
-                                                        <span class="help-block-contract_termination_policyDraft"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-contract_termination_policyDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Shift Cancellation Policy</label>
                                                         <input type="text" name="facility_shift_cancelation_policy"
                                                             id="facility_shift_cancelation_policyDraft" placeholder="Select your shift cancellation policy">
-                                                        <span class="help-block-facility_shift_cancelation_policyDraft"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-facility_shift_cancelation_policyDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>401K</label>
                                                         <select name="four_zero_one_k" id="four_zero_one_kDraft">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -1587,9 +1887,11 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-four_zero_one_kDraft"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Health Insurance</label>
                                                         <select name="health_insaurance" id="health_insauranceDraft">
                                                             <option value="" disabled selected hidden>Select a Health
@@ -1599,24 +1901,30 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-health_insauranceDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Feels Like $/hrs</label>
                                                         <input type="number" name="feels_like_per_hour" id="feels_like_per_hourDraft"
                                                             placeholder="Enter Feels Like $/hrs">
-                                                        <span class="help-block-feels_like_per_hourDraft"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-feels_like_per_hourDraft"></span>
+                                                        </div>
+                                                        </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Call Back Hourly rate</label>
                                                         <input type="number" name="call_back_rate" id="call_back_rateDraft"
                                                             placeholder="Enter Call Back Hourly rate">
-                                                        <span class="help-block-call_back_rateDraft"></span>
-                                                        
+                                                        <div> 
+                                                            <span class="help-block-call_back_rateDraft"></span>
+                                                        </div>
+                                                            
                                                     </div>
                                        
                                                     <div class="ss-form-group col-md-12">
@@ -1636,26 +1944,35 @@
                                                         <input id="start_dateDraft" type="date" min="2024-03-06" name="start_date" placeholder="Select Date"
                                                             value="2024-03-06">
                                                     </div>
+
+                                                    
+                                                    
+                                                    <div> 
                                                     <span class="help-block-start_dateDraft"></span>
-                                       
-                                                    <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                    </div>
+                                                    
+                                                    <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
                                                         <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
                                                         <div class="row justify-content-center" style="display:flex; align-items:end;">
-                                                            <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto
+                                                            <div class="col-6">
+                                                            <label for="urgency" style="display:flex; justify-content:center;">Auto
                                                                 Offer</label>
+                                                            </div>
                                                             <div class="col-6">
                                                                 <input type="checkbox" name="urgency" id="urgencyDraft" value="Auto Offer"
                                                                     style="box-shadow: none;">
                                                             </div>
                                                         </div>
                                        
+                                                        <div> 
                                                         <span class="help-block-urgencyDraft"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div>
+                                                    {{-- <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div> --}}
                                        
                                        
-                                                    <div class="row ss-form-group d-flex justify-content-end col-md-7" style="padding-bottom: 20px;">
+                                                    <div class="row d-flex justify-content-center col-md-12" style="padding-bottom: 20px;">
                                                         <label style="padding-bottom: 25px; padding-top: 25px;">Professional State Licensure</label>
                                        
                                                         <div class="row col-6 justify-content-center align-items-end">
@@ -1703,7 +2020,7 @@
                                                 <div class="row">
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                        <label>Worker Classification</label>
                                                                                        <select name="nurse_classification" id="nurse_classification">
                                                                                            <option value="" disabled selected hidden>Select a Worker Classification</option>
@@ -1712,8 +2029,10 @@
                                                                                                </option>
                                                                                            @endforeach
                                                                                        </select>
+                                                                                       <div> 
                                                                                        <span class="help-block-nurse_classification"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                        
                                        
@@ -1723,7 +2042,7 @@
                                        
                                        
                                        
-                                                    {{-- <div class="row ss-form-group col-md-4 d-flex justify-content-end">
+                                                    {{-- <div class="row ss-form-group col-md-12 d-flex justify-content-end">
                                                                                        <label>Urgency</label>
                                                                                        <div class="row" style="display:flex; align-items:end;">
                                                                                            <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto Offer</label>
@@ -1731,12 +2050,14 @@
                                                                                                <input type="checkbox" name="urgency" id="urgency" value="Auto Offer" style="box-shadow: none;">
                                                                                            </div>
                                                                                        </div>
+                                                                                       <div> 
                                                                                        <span class="help-block-urgency"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                        <label>Professional Licensure</label>
                                                                                        <select name="job_location" id="job_location">
                                                                                            <option value="" disabled selected hidden>Select a Professional Licensure</option>
@@ -1745,8 +2066,10 @@
                                                                                                </option>
                                                                                            @endforeach
                                                                                        </select>
+                                                                                       <div> 
                                                                                        <span class="help-block-job_location"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Worker Classification</label>
@@ -1773,7 +2096,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-nurse_classificationDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -1800,7 +2125,9 @@
                                                                         onclick="addEmr('from_draft')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-EmrDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
@@ -1828,7 +2155,9 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-benefitsDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
@@ -1858,7 +2187,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-certificateDraft"></span>
+                                                        </div>
                                                     </div>
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Vaccinations & Immunizations name</label>
@@ -1886,7 +2217,9 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-vaccinationsDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -1914,7 +2247,9 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-skillsDraft"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -1940,7 +2275,7 @@
                                        
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                        <label>EMR</label>
                                                                                        <select name="Emr"
                                                                                            id="emr">
@@ -1950,18 +2285,20 @@
                                                                                                </option>
                                                                                            @endforeach
                                                                                        </select>
+                                                                                       <div> 
                                                                                        <span class="help-block-emr"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                        
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                    <input type="text" name="responsibilities" id="responsibilities"
                                                                                        placeholder="Enter Responsibilities">
                                                                                </div>
                                        
-                                                                               <div class="ss-form-group col-md-4">
+                                                                               <div class="ss-form-group col-md-12">
                                                                                    <input type="text" name="qualifications" id="qualifications"
                                                                                        placeholder="Enter Qualifications">
                                                                                </div> --}}
@@ -2038,17 +2375,17 @@
                                             <div class=" page slide-pageEdit">
                                                 <div class="row">
                                        
-                                                    <div class="ss-form-group col-md-4 d-none">
-                                                        <input type="text" name="active" id="activeEdit">
+                                                    <div class="ss-form-group col-md-12 d-none">
+                                                        <input hidden type="text" name="active" id="activeEdit">
                                                     </div>
-                                                    <div class="ss-form-group col-md-4 d-none">
-                                                        <input type="text" name="is_open" id="is_openEdit">
+                                                    <div class="ss-form-group col-md-12 d-none">
+                                                        <input hidden type="text" name="is_open" id="is_openEdit">
                                                     </div>
-                                                    <div class="ss-form-group col-md-4 d-none">
+                                                    <div class="ss-form-group col-md-12 d-none">
                                                         <input type="text" name="id" id="idEdit">
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Work Type</label>
                                                         <select name="job_type" id="job_typeEdit">
                                                             <option value="" disabled selected hidden>Select a Work type
@@ -2059,11 +2396,13 @@
                                                             </option>
                                                         </select>
                                        
+                                                        <div> 
                                                         <span class="help-block-job_typeEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Specialty</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Specialty</label>
                                                         <select name="preferred_specialty" id="preferred_specialtyEdit">
                                                             <option value="" disabled selected hidden>Select a specialty
                                                             </option>
@@ -2073,12 +2412,14 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-preferred_specialtyEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Profession</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Profession</label>
                                                         <select name="profession" id="perferred_professionEdit">
                                                             <option value="" disabled selected hidden>Select a Profession
                                                             </option>
@@ -2087,12 +2428,14 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-perferred_professionEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label> Work State </label>
                                                         <select name="job_state" id="job_stateEdit">
                                                             <option value="" disabled selected hidden>Select a State</option>
@@ -2102,38 +2445,47 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-job_stateEdit"></span>
-                                       
+                                                        </div>
+                                                        
                                        
                                        
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                        
                                        
                                                         <label> Work City </label>
-                                                        <select name="job_city" id="job_cityEdit" class="searchable-select">
+                                                        {{-- <select name="job_city" id="job_cityEdit" class="searchable-select"> --}}
+                                                            <select name="job_city" id="job_cityEdit">
                                                             <option value="">Select a city</option>
                                                         </select>
                                        
+                                                        <div> 
                                                         <span class="help-block-job_cityEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Weeks per Assignment</label>
                                                         <input type="number" name="preferred_assignment_duration" id="preferred_assignment_durationEdit"
                                                             placeholder="Enter Work Duration Per Assignment">
-                                                        <span class="help-block-preferred_assignment_durationEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-preferred_assignment_durationEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Est. Weekly Pay </label>
                                                         <input type="number" step="0.01" name="weekly_pay" id="weekly_payEdit" placeholder="Enter Weekly Pay">
+                                                        <div> 
                                                         <span class="help-block-weekly_payEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Terms</label>
                                                         <select name="terms" id="termsEdit">
                                                             <option value="" disabled selected hidden>Select a Term</option>
@@ -2142,27 +2494,35 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-termsEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Est. Weekly non-taxable amount</label>
                                                         <input type="number" name="weekly_non_taxable_amount" id="weekly_non_taxable_amountEdit"
                                                             placeholder="Enter Weekly non-taxable amount">
-                                                        <span class="help-block-weekly_non_taxable_amountEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-weekly_non_taxable_amountEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Overtime Hourly rate</label>
                                                         <input type="number" name="overtime" id="overtimeEdit" placeholder="Enter actual Overtime Hourly rate">
+                                                        <div> 
                                                         <span class="help-block-overtimeEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Est. Taxable Hourly rate</label>
                                                         <input type="number" name="actual_hourly_rate" id="actual_hourly_rateEdit"
                                                             placeholder="Enter Taxable Regular Hourly rate">
-                                                        <span class="help-block-actual_hourly_rateEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-actual_hourly_rateEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Pay Frequency</label>
                                                         <select name="pay_frequency" id="pay_frequencyEdit">
                                                             <option value="" disabled selected hidden>Select a pay frequency
@@ -2172,33 +2532,43 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-pay_frequencyEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Guaranteed Hours per week</label>
                                                         <input type="number" name="guaranteed_hours" id="guaranteed_hoursEdit"
                                                             placeholder="Enter Guaranteed Hours per week">
-                                                        <span class="help-block-guaranteed_hoursEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-guaranteed_hoursEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Hours Per Week</label>
                                                         <input type="number" name="hours_per_week" id="hours_per_weekEdit" placeholder="Enter hours per week">
+                                                        <div> 
                                                         <span class="help-block-hours_per_weekEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Hours Per Shift</label>
                                                         <input type="number" name="hours_shift" id="hours_shiftEdit" placeholder="Enter Hours Per Shift">
+                                                        <div> 
                                                         <span class="help-block-hours_shiftEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Shift Per Weeks
                                                         </label>
                                                         <input type="number" name="weeks_shift" id="weeks_shiftEdit" placeholder="Enter Shift Per Weeks">
+                                                        <div> 
                                                         <span class="help-block-weeks_shiftEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Eligible work in us ?</label>
                                                         <select name="eligible_work_in_us" id="eligible_work_in_usEdit">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -2208,15 +2578,19 @@
                                                             <option value="0">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-eligible_work_in_usEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Experience</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Experience</label>
                                                         <input type="number" name="preferred_experience" id="preferred_experienceEdit"
-                                                            placeholder="Enter Preferred Experience">
-                                                        <span class="help-block-preferred_experienceEdit"></span>
-                                                    </div>
+                                                            placeholder="Enter Experience">
+                                                        <div> 
+                                                            <span class="help-block-preferred_experienceEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Professional Licensure</label>
@@ -2243,7 +2617,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-professional_licensureEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
@@ -2272,7 +2648,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-shift_time_of_dayEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2288,13 +2666,15 @@
                                                 <div class="row">
                                                     {{-- edits --}}
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Min distance from facility</label>
                                                         <input type="number" name="traveler_distance_from_facility" id="traveler_distance_from_facilityEdit"
                                                             placeholder="Enter travel distance">
-                                                        <span class="help-block-traveler_distance_from_facilityEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-traveler_distance_from_facilityEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Clinical Setting</label>
                                                         <select name="clinical_setting" id="clinical_settingEdit">
                                                             <option value="" disabled selected hidden>Select a setting
@@ -2304,24 +2684,32 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-clinical_settingEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Patient ratio</label>
                                                         <input type="number" name="Patient_ratio" id="Patient_ratioEdit" placeholder="Enter Patient ratio">
+                                                        <div> 
                                                         <span class="help-block-Patient_ratioEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Unit</label>
                                                         <input type="text" name="Unit" id="UnitEdit" placeholder="Enter Unit">
+                                                        <div> 
                                                         <span class="help-block-UnitEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Scrub Color</label>
                                                         <input type="text" name="scrub_color" id="scrub_colorEdit" placeholder="Enter scrub color">
+                                                        <div> 
                                                         <span class="help-block-scrub_colorEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Rto</label>
                                                         <select name="rto" id="rtoEdit">
                                                             <option value="" disabled selected hidden>Select an Rto</option>
@@ -2330,57 +2718,75 @@
                                                             <option value="not allowed">Not Allowed
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-rtoEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label> Work Id</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Id</label>
                                                         <input type="text" name="job_id" id="job_idEdit" placeholder="Enter Work Id">
+                                                        <div> 
                                                         <span class="help-block-job_idEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label> Work Name</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Name</label>
                                                         <input type="text" name="job_name" id="job_nameEdit" placeholder="Enter Work name">
+                                                        <div> 
                                                         <span class="help-block-job_nameEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Preferred Work Location</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Location</label>
                                                         <input type="text" name="preferred_work_location" id="preferred_work_locationEdit"
                                                             placeholder="Enter Work Location">
-                                                        <span class="help-block-preferred_work_locationEdit"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-preferred_work_locationEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Referral Bonus</label>
                                                         <input type="number" name="referral_bonus" id="referral_bonusEdit" placeholder="Enter referral bonus">
+                                                        <div> 
                                                         <span class="help-block-referral_bonusEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Sign on Bonus</label>
                                                         <input type="number" name="sign_on_bonus" id="sign_on_bonusEdit" placeholder="Enter sign on bonus">
+                                                        <div> 
                                                         <span class="help-block-sign_on_bonusEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Completion Bonus</label>
                                                         <input type="number" name="completion_bonus" id="completion_bonusEdit"
                                                             placeholder="Enter completion bonus">
-                                                        <span class="help-block-completion_bonusEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-completion_bonusEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Extension Bonus</label>
                                        
                                                         <input type="number" name="extension_bonus" id="extension_bonusEdit"
                                                             placeholder="Enter extension bonus">
-                                                        <span class="help-block-extension_bonusEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-extension_bonusEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Other bonus</label>
                                                         <input type="number" name="other_bonus" id="other_bonusEdit" placeholder="Enter other bonus">
+                                                        <div> 
                                                         <span class="help-block-other_bonusEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>On Call</label>
                                                         <select name="on_call" id="on_callEdit">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -2390,20 +2796,26 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-on_callEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>On Call Rate</label>
                                                         <input type="number" name="on_call_rate" id="on_call_rateEdit"
                                                             placeholder="Enter a call back hourly rate">
-                                                        <span class="help-block-on_call_rateEdit"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-on_call_rateEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
-                                                        <label>Work Description</label>
+                                                    <div class="ss-form-group col-md-12">
+                                                        <label>Description</label>
                                                         <textarea type="text" name="description" id="descriptionEdit" placeholder="Enter Work Description"></textarea>
+                                                        <div> 
                                                         <span class="help-block-descriptionEdit"></span>
+                                                        </div>
                                                     </div>
                                                                          
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2419,19 +2831,23 @@
                                             <div class="page">
                                                 <div class="row">
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Holidy date</label>
                                                         <input type="date" name="holiday" id="holidayEdit" placeholder="Enter Holidy hourly rate">
+                                                        <div> 
                                                         <span class="help-block-holidayEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Orientation Hourly rate</label>
                                                         <input type="number" name="orientation_rate" id="orientation_rateEdit"
                                                             placeholder="Enter Orientation Hourly rate">
-                                                        <span class="help-block-orientation_rateEdit"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-orientation_rateEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Block scheduling</label>
                                                         <select name="block_scheduling" id="block_schedulingEdit">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -2441,9 +2857,11 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-block_schedulingEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Float requirements</label>
                                                         <select name="float_requirement" id="float_requirementEdit">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -2453,46 +2871,58 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-float_requirementEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Number Of References</label>
                                                         <input type="number" name="number_of_references" id="number_of_referencesEdit"
                                                             placeholder="Enter number of references">
-                                                        <span class="help-block-number_of_referencesEdit"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-number_of_referencesEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Facility's Parent System</label>
                                                         <input type="text" name="facilitys_parent_system" id="facilitys_parent_systemEdit"
                                                             placeholder="Enter facility's parent system">
-                                                        <span class="help-block-facilitys_parent_systemEdit"></span>
-                                                    </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                        <div> 
+                                                            <span class="help-block-facilitys_parent_systemEdit"></span>
+                                                        </div>
+                                                        </div>
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Facility Name</label>
                                                         <input type="text" name="facility_name" id="facility_nameEdit" placeholder="Enter facility name">
+                                                        <div> 
                                                         <span class="help-block-facility_nameEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Contract Termination Policy</label>
                                                         <input type="text" name="contract_termination_policy" id="contract_termination_policyEdit"
                                                             placeholder="Enter your contract termination policy">
-                                                        <span class="help-block-contract_termination_policyEdit"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-contract_termination_policyEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Shift Cancellation Policy</label>
                                                         <input type="text" name="facility_shift_cancelation_policy"
                                                             id="facility_shift_cancelation_policyEdit" placeholder="Select your shift cancellation policy">
-                                                        <span class="help-block-facility_shift_cancelation_policyEdit"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-facility_shift_cancelation_policyEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>401K</label>
                                                         <select name="four_zero_one_k" id="four_zero_one_kEdit">
                                                             <option value="" disabled selected hidden>Select an answer
@@ -2502,9 +2932,11 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-four_zero_one_kEdit"></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Health Insurance</label>
                                                         <select name="health_insaurance" id="health_insauranceEdit">
                                                             <option value="" disabled selected hidden>Select a Health
@@ -2514,24 +2946,30 @@
                                                             <option value="No">No
                                                             </option>
                                                         </select>
+                                                        <div> 
                                                         <span class="help-block-health_insauranceEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Feels Like $/hrs</label>
                                                         <input type="number" name="feels_like_per_hour" id="feels_like_per_hourEdit"
                                                             placeholder="Enter Feels Like $/hrs">
-                                                        <span class="help-block-feels_like_per_hourEdit"></span>
-                                                    </div>
+                                                        <div> 
+                                                            <span class="help-block-feels_like_per_hourEdit"></span>
+                                                        </div>
+                                                        </div>
                                        
                                        
                                        
-                                                    <div class="ss-form-group col-md-4">
+                                                    <div class="ss-form-group col-md-12">
                                                         <label>Call Back Hourly rate</label>
                                                         <input type="number" name="call_back_rate" id="call_back_rateEdit"
                                                             placeholder="Enter Call Back Hourly rate">
-                                                        <span class="help-block-call_back_rateEdit"></span>
-                                                        
+                                                        <div> 
+                                                            <span class="help-block-call_back_rateEdit"></span>
+                                                        </div>
+                                                            
                                                     </div>
                                        
                                                     <div class="ss-form-group col-md-12">
@@ -2551,26 +2989,32 @@
                                                         <input id="start_dateEdit" type="date" min="2024-03-06" name="start_date" placeholder="Select Date"
                                                             value="2024-03-06">
                                                     </div>
+                                                    <div> 
                                                     <span class="help-block-start_dateEdit"></span>
-                                       
-                                                    <div class="row ss-form-group col-md-4 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                    </div>
+                                                    
+                                                    <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
                                                         <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
                                                         <div class="row justify-content-center" style="display:flex; align-items:end;">
-                                                            <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto
+                                                            <div class="col-6">
+                                                            <label for="urgency" style="display:flex; justify-content:center;">Auto
                                                                 Offer</label>
+                                                            </div>
                                                             <div class="col-6">
                                                                 <input type="checkbox" name="urgency" id="urgencyEdit" value="Auto Offer"
                                                                     style="box-shadow: none;">
                                                             </div>
                                                         </div>
                                        
+                                                        <div> 
                                                         <span class="help-block-urgencyEdit"></span>
+                                                        </div>
                                                     </div>
                                        
-                                                    <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div>
+                                                    {{-- <div class="vr p-0" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;"></div> --}}
                                        
                                        
-                                                    <div class="row ss-form-group d-flex justify-content-end col-md-7" style="padding-bottom: 20px;">
+                                                    <div class="row d-flex justify-content-center col-md-12" style="padding-bottom: 20px;">
                                                         <label style="padding-bottom: 25px; padding-top: 25px;">Professional State Licensure</label>
                                        
                                                         <div class="row col-6 justify-content-center align-items-end">
@@ -2600,7 +3044,9 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-professional_state_licensureEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2619,7 +3065,7 @@
                                                 <div class="row">
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                        <label>Worker Classification</label>
                                                                                        <select name="nurse_classification" id="nurse_classification">
                                                                                            <option value="" disabled selected hidden>Select a Worker Classification</option>
@@ -2628,8 +3074,10 @@
                                                                                                </option>
                                                                                            @endforeach
                                                                                        </select>
+                                                                                       <div> 
                                                                                        <span class="help-block-nurse_classification"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                        
                                        
@@ -2639,7 +3087,7 @@
                                        
                                        
                                        
-                                                    {{-- <div class="row ss-form-group col-md-4 d-flex justify-content-end">
+                                                    {{-- <div class="row ss-form-group col-md-12 d-flex justify-content-end">
                                                                                        <label>Urgency</label>
                                                                                        <div class="row" style="display:flex; align-items:end;">
                                                                                            <label class="col-6" for="urgency" style="display:flex; justify-content:end;">Auto Offer</label>
@@ -2647,12 +3095,14 @@
                                                                                                <input type="checkbox" name="urgency" id="urgency" value="Auto Offer" style="box-shadow: none;">
                                                                                            </div>
                                                                                        </div>
+                                                                                       <div> 
                                                                                        <span class="help-block-urgency"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                        <label>Professional Licensure</label>
                                                                                        <select name="job_location" id="job_location">
                                                                                            <option value="" disabled selected hidden>Select a Professional Licensure</option>
@@ -2661,8 +3111,10 @@
                                                                                                </option>
                                                                                            @endforeach
                                                                                        </select>
+                                                                                       <div> 
                                                                                        <span class="help-block-job_location"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Worker Classification</label>
@@ -2689,7 +3141,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-nurse_classificationEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -2716,7 +3170,9 @@
                                                                         onclick="addEmr('from_edit')"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-EmrEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
@@ -2744,7 +3200,9 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-benefitsEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                        
@@ -2774,7 +3232,9 @@
                                                                             aria-hidden="true"></i></a></div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-certificateEdit"></span>
+                                                        </div>
                                                     </div>
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
                                                         <label>Vaccinations & Immunizations name</label>
@@ -2802,7 +3262,9 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-vaccinationsEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="ss-form-group ss-prsnl-frm-specialty">
@@ -2830,7 +3292,9 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                        <div> 
                                                         <span class="help-block-skillsEdit"></span>
+                                                        </div>
                                                     </div>
                                        
                                                     <div class="field btns col-12 d-flex justify-content-center">
@@ -2856,7 +3320,7 @@
                                        
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                        <label>EMR</label>
                                                                                        <select name="Emr"
                                                                                            id="emr">
@@ -2866,18 +3330,20 @@
                                                                                                </option>
                                                                                            @endforeach
                                                                                        </select>
+                                                                                       <div> 
                                                                                        <span class="help-block-emr"></span>
-                                                                                   </div> --}}
+                                                                                       </div>
+                                                                                    </div> --}}
                                        
                                        
                                        
                                        
-                                                    {{-- <div class="ss-form-group col-md-4">
+                                                    {{-- <div class="ss-form-group col-md-12">
                                                                                    <input type="text" name="responsibilities" id="responsibilities"
                                                                                        placeholder="Enter Responsibilities">
                                                                                </div>
                                        
-                                                                               <div class="ss-form-group col-md-4">
+                                                                               <div class="ss-form-group col-md-12">
                                                                                    <input type="text" name="qualifications" id="qualifications"
                                                                                        placeholder="Enter Qualifications">
                                                                                </div> --}}
@@ -2948,6 +3414,22 @@
 {{-- script managing certifs  --}}
 
 <script>
+
+
+    // target = document.querySelector('#collapse-2');
+
+    // var observer = new MutationObserver(function(mutations) {
+    //     mutations.forEach(function(mutation) {
+    //         console.log(mutation.type);
+    //         let targetbtn = document.querySelector('#collapse-2'+'-btn');
+    //         targetbtn.click();
+    //     });
+    // });
+
+    // var config = { attributes: true, childList: true, characterData: true }
+
+    // observer.observe(target, config);
+
 
     const requiredToSubmit = @json($requiredFieldsToSubmit);
     
@@ -3744,7 +4226,7 @@
                 'perferred_profession': 'Clerical', // type select
                 'job_state': 'Arizona', // type select
                 'weekly_pay': 250, // type number
-                'terms': 'Shift (PRN, Per Diem)', // type select
+                'terms': 'Perm', // type select
                 'preferred_assignment_duration': 3, // type number
                 'facility_shift_cancelation_policy': 'shift cancellation policy', // type text
                 'traveler_distance_from_facility': 50, // type number
@@ -3771,24 +4253,34 @@
                 'block_scheduling': 'No', // type no/yes select
                 'float_requirement': 'No', // type no/yes select
                 'number_of_references': 1, // type number
-                'eligible_work_in_us': 0, // type select
+                
                 'urgency': 'Auto Offer', // type checkbox
                 'facilitys_parent_system': 'Parent system', // type text
                 'facility_name': 'Facility Name', // type text
                 'pay_frequency': 'Daily', // type select
                 'preferred_experience': 'preferred experience', // type number
                 'contract_termination_policy': 'Contract policy', // type text
-                'four_zero_one_k': 'No',  // type no/yes select
-                'health_insaurance': 'No', // type no/yes select
+               
+                
                 'feels_like_per_hour': 5, // type number 
                 'call_back_rate': 16, // type number
                 'weekly_non_taxable_amount': 100, // type number
                 'start_date': '2025-04-27', // type date
-                'preferred_experience': 10 // type number
+                'end_date': '2025-04-30', // type date
+                'preferred_experience': 10, // type number
+                'weekly_taxable_amount': 100, // type number
+                'goodwork_weekly_amount': 110, // type number
+                'total_organization_amount': 120 ,
+                'total_goodwork_amount': 130,
+                'total_contract_amount': 140,
+                'preferred_work_location': 'Work location', 
+                'description': 'description',
+
 
             };
 
             for (const [id, value] of Object.entries(fields)) {
+                console.log(id);
                 document.getElementById(id).value = value;
             }
         }
@@ -5230,214 +5722,145 @@
 
 
     const slidePage = document.querySelector(".slide-page");
-    const nextBtnFirst = document.querySelector(".firstNext");
-    const prevBtnSec = document.querySelector(".prev-1");
-    const nextBtnSec = document.querySelector(".next-1");
-    const prevBtnThird = document.querySelector(".prev-2");
-    const nextBtnThird = document.querySelector(".next-2");
+    // const nextBtnFirst = document.querySelector(".firstNext");
+    // const prevBtnSec = document.querySelector(".prev-1");
+    // const nextBtnSec = document.querySelector(".next-1");
+    // const prevBtnThird = document.querySelector(".prev-2");
+    // const nextBtnThird = document.querySelector(".next-2");
 
-    const prevBtnFourth = document.querySelector(".prev-3");
+    // const prevBtnFourth = document.querySelector(".prev-3");
    
     const submitBtn = document.querySelector(".submit");
     const saveDrftBtn = document.querySelectorAll(".saveDrftBtn");
 
-    const progressText = document.querySelectorAll(".step p");
-    const progressCheck = document.querySelectorAll(".step .check");
-    const bullet = document.querySelectorAll(".step .bullet");
-    let current = 1;
+    // const progressText = document.querySelectorAll(".step p");
+    // const progressCheck = document.querySelectorAll(".step .check");
+    // const bullet = document.querySelectorAll(".step .bullet");
+    // let current = 1;
 
     // Validation the add job
     // first Slide
     function validateFirst() {
     
         var access = true;
+       
+        var specialtyElement = document.getElementById("preferred_specialty");
+        var specialty = specialtyElement.value;
+        var professionElement = document.getElementById("perferred_profession");
+        var profession = professionElement.value;
+        var cityElement = document.getElementById("job_city");
+        var city = cityElement.value;
+        var stateElement = document.getElementById("job_state");
+        var state = stateElement.value;
+        var weeklyPayElement = document.getElementById("weekly_pay");
+        var weeklyPay = weeklyPayElement.value;
+        var termsElement = document.getElementById("terms");
+        var terms = termsElement.value;
+        var hoursPerWeekElement = document.getElementById("hours_per_week");
+        var hoursPerWeek = hoursPerWeekElement.value;
+        var actual_hourly_rate = document.getElementById("actual_hourly_rate");
+        var actual_hourly_rate = actual_hourly_rate.value;
 
-        var jobType = document.getElementById("job_type").value;
-        var specialty = document.getElementById("preferred_specialty").value;
-        var profession = document.getElementById("perferred_profession").value;
-        var city = document.getElementById("job_city").value;
-        var state = document.getElementById("job_state").value;
-        var weeklyPay = document.getElementById("weekly_pay").value;
-        var terms = document.getElementById("terms").value;
-        var preferred_experience = document.getElementById("preferred_experience").value;
-        var eligible_work_in_us = document.getElementById("eligible_work_in_us").value;
-        var hours_per_week = document.getElementById("hours_per_week").value;
-        var guaranteed_hours = document.getElementById("guaranteed_hours").value;
-        var hours_shift = document.getElementById("hours_shift").value;
-        var weeks_shift = document.getElementById("weeks_shift").value;
-        var pay_frequency = document.getElementById("pay_frequency").value;
-        var actual_hourly_rate = document.getElementById("actual_hourly_rate").value;
-        var overtime = document.getElementById("overtime").value;
-        var weekly_non_taxable_amount = document.getElementById("weekly_non_taxable_amount").value;
+            if (terms.trim() === '') {
+                
+                $('.help-block-terms').text('Please enter the terms');
+                $('.help-block-terms').addClass('text-danger');
+                access = false;
+            } else {
+                $('.help-block-terms').text('');
+            }
 
-        // weekly non taxable amount
+                
+            if (specialty.trim() === '') {
+                
+                $('.help-block-preferred_specialty').text('Please enter the Work speciality');
+                $('.help-block-preferred_specialty').addClass('text-danger');
+                access = false;
+            } else {
+                    $('.help-block-preferred_specialty').text('');
+            }
 
-        if (weekly_non_taxable_amount.trim() === '') {
-            $('.help-block-weekly_non_taxable_amount').text('Please enter the Weekly non taxable amount');
-            $('.help-block-weekly_non_taxable_amount').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_non_taxable_amount').text('');
-        }
+            if (profession.trim() === '') {
+                
+                $('.help-block-perferred_profession').text('Please enter the Work profession');
+                $('.help-block-perferred_profession').addClass('text-danger');
+                access = false;
+            } else {
+                    $('.help-block-perferred_profession').text('');
+            } 
 
-        // overtime
-        if (overtime.trim() === '') {
-            $('.help-block-overtime').text('Please enter the Overtime');
-            $('.help-block-overtime').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-overtime').text('');
-        }
+            if (city.trim() === '') {
+                
+                $('.help-block-job_city').text('Please enter the Work city');
+                $('.help-block-job_city').addClass('text-danger');
+                access = false;
+            } else {
+                    $('.help-block-job_city').text('');
+            }
 
-        // actual hourly rate
-        if (actual_hourly_rate.trim() === '') {
-            $('.help-block-actual_hourly_rate').text('Please enter the Actual hourly rate');
-            $('.help-block-actual_hourly_rate').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-actual_hourly_rate').text('');
-        }
+            if (state.trim() === '') {
+                
+                $('.help-block-job_state').text('Please enter the Work state');
+                $('.help-block-job_state').addClass('text-danger');
+                access = false;
+            } else {
+                $('.help-block-job_state').text('');
+            }
 
-        // pay frequency
-        if (pay_frequency.trim() === '') {
-            $('.help-block-pay_frequency').text('Please enter the Pay frequency');
-            $('.help-block-pay_frequency').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-pay_frequency').text('');
-        }
-        // hours per week
-        if (hours_per_week.trim() === '') {
-            $('.help-block-hours_per_week').text('Please enter the Hours per week');
-            $('.help-block-hours_per_week').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_per_week').text('');
-        }
+            
 
-        if (guaranteed_hours.trim() === '') {
-            $('.help-block-guaranteed_hours').text('Please enter the guaranteed hours');
-            $('.help-block-guaranteed_hours').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-guaranteed_hours').text('');
-        }
+        if(terms === "Perm"){
+            
+            if (actual_hourly_rate.trim() === '') {
+                
+                $('.help-block-actual_hourly_rate').text('Perm Job requires Actual hourly rate');
+                $('.help-block-actual_hourly_rate').addClass('text-danger');
+                access = false;
+            } else {
+                $('.help-block-actual_hourly_rate').text('');
+            }
 
-
-        if (hours_shift.trim() === '') {
-            $('.help-block-hours_shift').text('Please enter the hours shift');
-            $('.help-block-hours_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-hours_shift').text('');
-        }
-
-        if (weeks_shift.trim() === '') {
-            $('.help-block-weeks_shift').text('Please enter the weeks shift');
-            $('.help-block-weeks_shift').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weeks_shift').text('');
-        }
-
-        // eligible work in us
-        if (eligible_work_in_us.trim() === '') {
-            $('.help-block-eligible_work_in_us').text('Please enter the Eligible work in us');
-            $('.help-block-eligible_work_in_us').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-eligible_work_in_us').text('');
-        }
-
-        // preferred experience
-
-        if (preferred_experience.trim() === '') {
-            $('.help-block-preferred_experience').text('Please enter the Preferred experience');
-            $('.help-block-preferred_experience').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-preferred_experience').text('');
-        }
-
-
-
-        // shift time of day
-        if (Object.keys(shifttimeofday).length === 0) {
-            $('.help-block-shift_time_of_day').text('Please enter the Shift time of day');
-            $('.help-block-shift_time_of_day').addClass('text-danger');
-            access = false;
-        }else{
-            $('.help-block-shift_time_of_day').text('');
-        }
-        // professional licensure
-        if (Object.keys(professional_licensure).length === 0) {
-            $('.help-block-professional_licensure').text('Please enter the Professional licensure');
-            $('.help-block-professional_licensure').addClass('text-danger');
-            access = false; 
-        }else{
-            $('.help-block-professional_licensure').text('');
-        }
-
-        if (jobType.trim() === "") {
-            $('.help-block-job_type').text('Please enter the Work type');
-            $('.help-block-job_type').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-job_type').text('');
+            if(hoursPerWeek.trim() === '') {
+                hoursPerWeekElement.closest('.collapse').classList.add('show');
+                $('.help-block-hours_per_week').text('Perm Job requires Hours per week');
+                $('.help-block-hours_per_week').addClass('text-danger');
+                access = false;
+            } else {
+                $('.help-block-hours_per_week').text('');
+            }
 
         }
+        else if(terms === "Shift"){
 
-        if (specialty.trim() === '') {
-            $('.help-block-preferred_specialty').text('Please enter the Work speciality');
-            $('.help-block-preferred_specialty').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-preferred_specialty').text('');
+            if(actual_hourly_rate.trim() === ''){
+                actual_hourly_rate.closest('.collapse').classList.add('show');
+                $('.help-block-actual_hourly_rate').text('Shift Job requires Actual hourly rate');
+                $('.help-block-actual_hourly_rate').addClass('text-danger');
+                access = false;
+            } else {
+                $('.help-block-actual_hourly_rate').text('');
+            }
 
+        }else if(terms === "Contract (Travel or Local)" || terms === "Contract to Perm" || terms === "Contract (Travel only)" || terms === "Contract (Local only)"){
+
+            if (weeklyPay.trim() === '') { 
+                    
+                    $('.help-block-weekly_pay').text('Contract Job requires Weekly pay');
+                    $('.help-block-weekly_pay').addClass('text-danger');
+                    access = false;
+            } else {
+                    $('.help-block-weekly_pay').text('');
+            }
+
+            if(hoursPerWeek.trim() === '') {
+                hoursPerWeekElement.closest('.collapse').classList.add('show');
+                $('.help-block-hours_per_week').text(' Contract Job requires Hours per week');
+                $('.help-block-hours_per_week').addClass('text-danger');
+                access = false;
+            } else {
+                $('.help-block-hours_per_week').text('');
+            }
         }
-
-        if (profession.trim() === '') {
-            $('.help-block-perferred_profession').text('Please enter the Work profession');
-            $('.help-block-perferred_profession').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-perferred_profession').text('');
-
-        }
-        if (terms.trim() === '') {
-            $('.help-block-terms').text('Please enter the terms');
-            $('.help-block-terms').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-terms').text('');
-        }
-
-        if (city.trim() === '') {
-            $('.help-block-job_city').text('Please enter the Work city');
-            $('.help-block-job_city').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-job_city').text('');
-
-        }
-
-        if (state.trim() === '') {
-            $('.help-block-job_state').text('Please enter the Work state');
-            $('.help-block-job_state').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-job_state').text('');
-        }
-
-        if (weeklyPay.trim() === '') {
-            $('.help-block-weekly_pay').text('Please enter the Work weekly pay');
-            $('.help-block-weekly_pay').addClass('text-danger');
-            access = false;
-        } else {
-            $('.help-block-weekly_pay').text('');
-
-        }
-
 
         if (access) {
             return true;
@@ -5448,7 +5871,7 @@
 
 
     function validateRequiredFieldsToSubmit(slideFields){
-
+        console.log('validate requiered fields to submit');
         let access = true;
         const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
 
@@ -5461,6 +5884,8 @@
                                 const pendingElementHtml = document.getElementById('professional_state_licensure_pending');
 
                                 if(!activeElementHtml.checked && !pendingElementHtml.checked) {
+                                    const collapseElement = pendingElementHtml.closest('.collapse');
+                                    collapseElement.classList.add('show');
                                     $(`.help-block-professional_state_licensure`).text(`This field is required`);
                                     $(`.help-block-professional_state_licensure`).addClass('text-danger');
                                     access = false;
@@ -5476,6 +5901,7 @@
 
                                 const urgencyElementHtml = document.getElementById('urgency');
                                 if(!urgencyElementHtml.checked) {
+                                    urgencyElementHtml.closest('.collapse').classList.add('show');
                                     $(`.help-block-urgency`).text(`This field is required`);
                                     $(`.help-block-urgency`).addClass('text-danger');
                                     access = false;
@@ -5489,11 +5915,17 @@
                             const elementHtml = document.getElementById(element);
                             const elementValue = elementHtml.value;
                             if(elementValue.trim() === '') {
-
+                                
+                                console.log('element clicked');
+                                const collapseElement = elementHtml.closest('.collapse');
+                                if(collapseElement){
+                                collapseElement.classList.add('show');
+                                console.log('colapseElement',collapseElement);
+                                }
+                                console.log('element',element);
                                 $(`.help-block-${element}`).text(`This field is required`);
                                 $(`.help-block-${element}`).addClass('text-danger');
                                 access = false;
-                               
                             } else {
 
                                 $(`.help-block-${element}`).text('');
@@ -5507,22 +5939,34 @@
     }
 
     function validateRequiredMultiCheckFieldsToSubmit(slideFields) {
+        
+        console.log('validate requiered multi fields to submit');
+        console.log('slideFields : ',slideFields);
         let access = true;
+        console.log('requiredToSubmit : ',requiredToSubmit);
         const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
-
+        console.log('common elements : ',commonElements);
         if(commonElements.length > 0) {
 
             commonElements.forEach(element => {
 
+               
+             
+                
                 const elementStr = element;
                 const elementValue = window[elementStr];
-                console.log(elementValue);
+                console.log('from multiselectcheckvalidation : ',elementValue);
 
                 if(Object.keys(elementValue).length === 0) {
+                    console.log('from first check : ',elementValue);
+                    const htmlElement = document.getElementById(element);
+                const collapseElement = htmlElement.closest('.collapse');
+                collapseElement.classList.add('show');
                     $(`.help-block-${element}`).text(`This field is required`);
                     $(`.help-block-${element}`).addClass('text-danger');
                     access = false;
                 } else {
+                    console.log('from first check : ',elementValue);
                     $(`.help-block-${element}`).text('');
                 }
             });
@@ -5532,88 +5976,90 @@
     }
 
 
-    nextBtnFirst.addEventListener("click", function(event) {
-        event.preventDefault();
-        if (validateFirst()) {
-            slidePage.style.marginLeft = "-20%";
-            bullet[current - 1].classList.add("active");
-            progressCheck[current - 1].classList.add("active");
-            progressText[current - 1].classList.add("active");
-            current += 1;
-        }
+    // nextBtnFirst.addEventListener("click", function(event) {
+    //     event.preventDefault();
+    //     if (validateFirst()) {
+    //         slidePage.style.marginLeft = "-20%";
+    //         bullet[current - 1].classList.add("active");
+    //         progressCheck[current - 1].classList.add("active");
+    //         progressText[current - 1].classList.add("active");
+    //         current += 1;
+    //     }
 
 
-    });
-    nextBtnSec.addEventListener("click", function(event) {
+    // });
+    // nextBtnSec.addEventListener("click", function(event) {
 
-        event.preventDefault();
+    //     event.preventDefault();
 
-        const SecondSlideFields = [
-                              "traveler_distance_from_facility",
-                              "clinical_setting",
-                              "Patient_ratio",
-                              "Unit",
-                              "scrub_color",
-                              "rto",
-                              "job_id",
-                              "job_name",
-                              "preferred_work_location",
-                              "referral_bonus",
-                              "sign_on_bonus",
-                              "completion_bonus",
-                              "extension_bonus",
-                              "other_bonus",
-                              "on_call",
-                              "on_call_rate",
-                              "description"
-                            ];
+    //     const SecondSlideFields = [
+    //                           "traveler_distance_from_facility",
+    //                           "clinical_setting",
+    //                           "Patient_ratio",
+    //                           "Unit",
+    //                           "scrub_color",
+    //                           "rto",
+    //                           "job_id",
+    //                           "job_name",
+    //                           "preferred_work_location",
+    //                           "referral_bonus",
+    //                           "sign_on_bonus",
+    //                           "completion_bonus",
+    //                           "extension_bonus",
+    //                           "other_bonus",
+    //                           "on_call",
+    //                           "on_call_rate",
+    //                           "description"
+    //                         ];
 
-        if(validateRequiredFieldsToSubmit(SecondSlideFields)) { 
-            slidePage.style.marginLeft = "-40%";
-            bullet[current - 1].classList.add("active");
-            progressCheck[current - 1].classList.add("active");
-            progressText[current - 1].classList.add("active");
-            current += 1;
-        }
+    //     if(validateRequiredFieldsToSubmit(SecondSlideFields)) { 
+    //         slidePage.style.marginLeft = "-40%";
+    //         bullet[current - 1].classList.add("active");
+    //         progressCheck[current - 1].classList.add("active");
+    //         progressText[current - 1].classList.add("active");
+    //         current += 1;
+    //     }
         
-    });
+    // });
 
-    nextBtnThird.addEventListener("click", function(event) {
-        event.preventDefault();
+    // nextBtnThird.addEventListener("click", function(event) {
+    //     event.preventDefault();
 
-        const ThirdSlideFields = [
-            "holiday",
-            "orientation_rate",
-            "block_scheduling",
-            "float_requirement",
-            "number_of_references",
-            "facilitys_parent_system",
-            "facility_name",
-            "contract_termination_policy",
-            "facility_shift_cancelation_policy",
-            "four_zero_one_k",
-            "health_insaurance",
-            "feels_like_per_hour",
-            "call_back_rate",
-            "as_soon_as",
-            "start_date",
-            "urgency",
-            "professional_state_licensure"
-        ];
+    //     const ThirdSlideFields = [
+    //         "holiday",
+    //         "orientation_rate",
+    //         "block_scheduling",
+    //         "float_requirement",
+    //         "number_of_references",
+    //         "facilitys_parent_system",
+    //         "facility_name",
+    //         "contract_termination_policy",
+    //         "facility_shift_cancelation_policy",
+    //         "four_zero_one_k",
+    //         "health_insaurance",
+    //         "feels_like_per_hour",
+    //         "call_back_rate",
+    //         "as_soon_as",
+    //         "start_date",
+    //         "urgency",
+    //         "professional_state_licensure"
+    //     ];
 
-        if(validateRequiredFieldsToSubmit(ThirdSlideFields)) {
-            slidePage.style.marginLeft = "-60%";
-            bullet[current - 1].classList.add("active");
-            progressCheck[current - 1].classList.add("active");
-            progressText[current - 1].classList.add("active");
-            current += 1;
-        }
+    //     if(validateRequiredFieldsToSubmit(ThirdSlideFields)) {
+    //         slidePage.style.marginLeft = "-60%";
+    //         bullet[current - 1].classList.add("active");
+    //         progressCheck[current - 1].classList.add("active");
+    //         progressText[current - 1].classList.add("active");
+    //         current += 1;
+    //     }
         
-    });
+    // });
     
     submitBtn.addEventListener("click", function(event) {
 
         event.preventDefault();
+        console.log('submit button clicked');
+
         let nurse_classification_all_values = document.getElementById("nurse_classificationAllValues");
         if (nurse_classification_all_values) {
             nurse_classification_all_values.value = nurse_classificationStr;
@@ -5658,19 +6104,62 @@
             "benefits",
             "certificate",
             "vaccinations",
-            "skills"
+            "skills",
+            "shift_time_of_day",
+            "professional_licensure",
         ];
 
-        if(validateRequiredMultiCheckFieldsToSubmit(slideFields)) {
-            bullet[current - 1].classList.add("active");
-            progressCheck[current - 1].classList.add("active");
-            progressText[current - 1].classList.add("active");
-            current += 1;
+        const otherSlideFields = [
+            "preferred_experience",
+            "traveler_distance_from_facility",
+            "clinical_setting",
+            "Patient_ratio",
+            "Unit",
+            "scrub_color",
+            "rto",
+            "job_id",
+            "job_name",
+            "job_type",
+            "preferred_work_location",
+            "referral_bonus",
+            "sign_on_bonus",
+            "completion_bonus",
+            "extension_bonus",
+            "other_bonus",
+            "on_call",
+            "on_call_rate",
+            "description",
+            "holiday",
+            "orientation_rate",
+            "block_scheduling",
+            "float_requirement",
+            "number_of_references",
+            "facilitys_parent_system",
+            "facility_name",
+            "contract_termination_policy",
+            "facility_shift_cancelation_policy",
+            "four_zero_one_k",
+            "health_insaurance",
+            "feels_like_per_hour",
+            "call_back_rate",
+            "as_soon_as",
+            "start_date",
+            "urgency",
+            "professional_state_licensure",
+        ];
+
+        if(validateRequiredMultiCheckFieldsToSubmit(slideFields) && validateRequiredFieldsToSubmit(otherSlideFields) && validateFirst()) { 
+            // bullet[current - 1].classList.add("active");
+            // progressCheck[current - 1].classList.add("active");
+            // progressText[current - 1].classList.add("active");
+            // current += 1;
             document.getElementById("active").value = true;
             document.getElementById("is_open").value = true;
             
             event.target.form.submit();
         }
+
+        
 
     });
 
@@ -5720,43 +6209,45 @@
             let act = document.getElementById("active").value;
             console.log(act);
 
-            var jobName = document.getElementById("job_name").value;
-            if (jobName.trim() === '') {
-                $('.help-block-job_name').text('Enter at least a Work name');
-                $('.help-block-job_name').addClass('text-danger');
+            // var jobName = document.getElementById("job_name").value;
+            // if (jobName.trim() === '') {
+            //     $('.help-block-job_name').text('Enter at least a Work name');
+            //     $('.help-block-job_name').addClass('text-danger');
 
-            } else {
-                $('.help-block-job_name').text('');
-                event.target.form.submit();
-            }
+            // } else {
+            //     $('.help-block-job_name').text('');
+            //     event.target.form.submit();
+            // }
+
+            event.target.form.submit();
         });
     });
 
-    prevBtnSec.addEventListener("click", function(event) {
-        event.preventDefault();
-        slidePage.style.marginLeft = "0%";
-        bullet[current - 2].classList.remove("active");
-        progressCheck[current - 2].classList.remove("active");
-        progressText[current - 2].classList.remove("active");
-        current -= 1;
-    });
-    prevBtnThird.addEventListener("click", function(event) {
-        event.preventDefault();
-        slidePage.style.marginLeft = "-20%";
-        bullet[current - 2].classList.remove("active");
-        progressCheck[current - 2].classList.remove("active");
-        progressText[current - 2].classList.remove("active");
-        current -= 1;
-    });
-    prevBtnFourth.addEventListener("click", function(event) {
-        event.preventDefault();
+    // prevBtnSec.addEventListener("click", function(event) {
+    //     event.preventDefault();
+    //     slidePage.style.marginLeft = "0%";
+    //     bullet[current - 2].classList.remove("active");
+    //     progressCheck[current - 2].classList.remove("active");
+    //     progressText[current - 2].classList.remove("active");
+    //     current -= 1;
+    // });
+    // prevBtnThird.addEventListener("click", function(event) {
+    //     event.preventDefault();
+    //     slidePage.style.marginLeft = "-20%";
+    //     bullet[current - 2].classList.remove("active");
+    //     progressCheck[current - 2].classList.remove("active");
+    //     progressText[current - 2].classList.remove("active");
+    //     current -= 1;
+    // });
+    // prevBtnFourth.addEventListener("click", function(event) {
+    //     event.preventDefault();
 
-        slidePage.style.marginLeft = "-40%";
-        bullet[current - 2].classList.remove("active");
-        progressCheck[current - 2].classList.remove("active");
-        progressText[current - 2].classList.remove("active");
-        current -= 1;
-    });
+    //     slidePage.style.marginLeft = "-40%";
+    //     bullet[current - 2].classList.remove("active");
+    //     progressCheck[current - 2].classList.remove("active");
+    //     progressText[current - 2].classList.remove("active");
+    //     current -= 1;
+    // });
     
 
     // for Work draft editing
@@ -7134,7 +7625,7 @@
     .container header {
         font-size: 35px;
         font-weight: 500;
-        margin: 0 0 50px 0;
+        margin: 0 0 25px 0;
     }
 
     .container .form-outer {
@@ -7200,6 +7691,32 @@
         font-size: 17px;
         font-weight: 500;
         margin-bottom: 2px;
+    }
+
+    .ss-account-form-lft-1 .ss-form-group input,
+    .ss-account-form-lft-1 select,
+    form .page .field select {
+        border: 2px solid #3D2C39 !important;
+        width: 90%;
+        padding: 10px !important;
+        box-shadow: 10px 10px 0px 0px #3D2C39;
+        border-radius: 12px;
+        background: #fff !important;
+        font-size: 17px;
+        font-weight: 500;
+        margin-bottom: 2px;
+    }
+
+    .ss-form-group{
+        display: inline !important;
+    }
+
+    .ss-prsnl-frm-specialty{
+        width: 95%;
+    }
+
+    .ss-form-group div{
+        margin-top: 4px;
     }
 
     .select2-container .select2-selection--single {
@@ -7451,5 +7968,22 @@
     .ss-form-group span {
         margin-top: 10px;
     }
+
+    
+    .btn.first-collapse,
+    .btn.first-collapse:hover,
+    .btn.first-collapse:focus,
+    .btn.first-collapse:active {
+        /* background-color: rgb(255, 237, 238); */
+        background-color: #fff8fd;
+        color: rgb(65, 41, 57);
+        font-size: 14px;
+        font-family: 'Neue Kabel';
+        font-style: normal;
+        width: 90%;
+    }
+    
+    
+
 </style>
 @endsection

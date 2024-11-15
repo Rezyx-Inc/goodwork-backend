@@ -23,12 +23,14 @@
             <form method="get" action="{{route('worker.explore')}}" id="filter_form"> @csrf
 
               <div class="ss-input-slct-grp">
-                <label for="cars">Good Work number</label>
-                <div class="form-outline">
-                  <input type="text" id="gw" class="gw" name="gw" placeholder="Search by Good Work number" value="{{ request('gw') }}">
-                </div>
-                <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div> <!-- Error message display -->
+                <label for="cars">Job Type</label>
+                <select name="job_type">
+                  <option value="">Select</option>
+                    <option value="Clinical" {{ $job_type == 'Clinical' ? 'selected' : '' }}>Clinical</option>
+                    <option value="Non-Clinical" {{ $job_type == 'Non-Clinical' ? 'selected' : '' }}>Non-Clinical</option>
+                </select>
               </div>
+
               <div class="ss-input-slct-grp">
                 <label for="cars">Profession</label>
                 <select name="profession">
@@ -43,8 +45,8 @@
                 <label>Specialty</label>
                 <select name="speciality" id="speciality">
                   <option value="">Select Specialty</option>
-                  @foreach($specialities as $speciality)
-                  <option value="{{$speciality->full_name}}">{{$speciality->full_name}}</option>
+                  @foreach($specialities as $v)
+                  <option value="{{$v->full_name}}" data-id="{{$v->full_name}}" {{ ($speciality == $v->full_name) ? 'selected': ''}}>{{$v->full_name}}</option>
                   @endforeach
                 </select>
               </div>
@@ -57,8 +59,8 @@
                   <option value="">Select</option>
                   @foreach ($us_states as $v)
                   <option value="{{ $v->name }}" data-id="{{ $v->id }}"
-                    {{ $v->iso2 == $state ? 'selected' : '' }}>
-                    {{ $v->name }}({{ $v->iso2 }})
+                    {{ $v->name == $state ? 'selected' : '' }}>
+                    {{ $v->name }}
                   </option>
                   @endforeach
                 </select>
@@ -67,11 +69,11 @@
               <div class="ss-input-slct-grp">
                 <label>City</label>
                 <select name="city" id="city">
-                  <option value="">Select</option>
                   @if (!empty($city))
+                  <option value="">Select a city</option>
                   <option value="{{ $city }}" selected>{{ $city }}</option>
                   @else
-                  <option value="">Select City</option>
+                  <option value="">Select state first</option>
                   @endif
                 </select>
               </div>
@@ -89,14 +91,26 @@
                 </ul>
               </div>
 
-
-              <div class="ss-explr-datepkr">
-                <label>Start Date</label>
-                <ul class="ss-date-with">
-                  <li><input type="date" value="{{ $start_date }}" name="start_date"
-                      placeholder="Start Date"></li>
-                </ul>
-              </div>
+              <div class="ss-form-group col-md-12">
+                <div class="row">
+                    <div class="row col-lg-12 col-sm-12 col-md-12 col-xs-12"
+                        style="display: flex; justify-content: end; align-items:center;">
+                        <input type="hidden" name="as_soon_as" value="0">
+                        <input id="as_soon_as" name="as_soon_as" value="1"
+                            type="checkbox" style="box-shadow:none; width:auto;"
+                            class="col-2">
+                        <label class="col-10">
+                            As soon As possible
+                        </label>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" style="margin: 20px 0px;">
+                      <label>Start Date</label>
+                      <input type="date" value="{{ $start_date }}" name="start_date"
+                      placeholder="Start Date">
+                  </div>
+                </div>
+            </div>
+              
               {{-- <div class="ss-explr-datepkr">
                 <label>End Date</label>
                 <ul class="ss-date-with">
@@ -126,6 +140,13 @@
         <div class="ss-price-week-sec">
           <label>Hours Per Week</label>
           <div id="slider3"></div>
+        </div>
+        <div class="ss-input-slct-grp">
+          <label for="cars">Good Work number</label>
+          <div class="form-outline">
+            <input type="text" id="gw" class="gw" name="gw" placeholder="Search by Good Work number" value="{{ request('gw') }}">
+          </div>
+          <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div> <!-- Error message display -->
         </div>
         <!-- partial -->
         <!-- partial:index.partial.html -->
@@ -160,6 +181,7 @@
         id="hpw_minval">
       <input type="hidden" name="hours_per_week_to" value="{{ $hours_per_week_to }}"
         id="hpw_maxval">
+        
       {{-- <input type="hidden" name="assignment_from" value="{{$assignment_from}}" id="al_minval">
       <input type="hidden" name="assignment_to" value="{{$assignment_to}}" id="al_maxval"> --}}
       </form>

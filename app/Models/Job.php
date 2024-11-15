@@ -78,6 +78,7 @@ class Job extends Model
         'preferred_experience',
         'description',
         'start_date',
+        'end_date',
         'as_soon_as',
         'end_date',
         'created_at',

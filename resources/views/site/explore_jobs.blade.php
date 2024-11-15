@@ -23,44 +23,38 @@
               <div class="form-outline">
                 <input type="text" id="gw" class="gw" name="gw" placeholder="Search by Good Work number" value="{{ request('gw') }}">
               </div>
-              <button type="submit" class="btn btn-primary">
-                🔍
-              </button>
+              <button type="submit" class="btn ">
+                <i class="fas fa-search"></i>
+                </button>
               <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div> <!-- Error message display -->
 
             </form>
 
           </div>
-          <button type="button" class="btn btn-primary">
-            <i class="fas fa-search"></i>
-          </button>
         </div>
       </div>
-    </div>
-
-
-    <div class="col-lg-6">
-      <div class="ss-expl-pg-bn-ul-sc">
-        <ul>
-          <li>
-            <h6>76+</h6>
-          </li>
-          <li>
-            <p>Nurse <br>Registered</p>
-          </li>
-        </ul>
-
-        <ul>
-          <li>
-            <h6>125+</h6>
-          </li>
-          <li>
-            <p>jobs <br>Added</p>
-          </li>
-        </ul>
+      <div class="col-lg-6">
+        <div class="ss-expl-pg-bn-ul-sc">
+          <ul>
+            <li>
+              <h6>76+</h6>
+            </li>
+            <li>
+              <p>Nurse <br>Registered</p>
+            </li>
+          </ul>
+  
+          <ul>
+            <li>
+              <h6>125+</h6>
+            </li>
+            <li>
+              <p>jobs <br>Added</p>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </div>
+    </div>  
   </div>
 </section>
 

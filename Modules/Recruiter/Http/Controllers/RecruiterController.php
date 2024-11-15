@@ -525,6 +525,7 @@ class RecruiterController extends Controller
                     'description' => 'nullable|string',
                     'terms' => 'nullable|string',
                     'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
                     'hours_shift' => 'nullable|integer',
                     'hours_per_week' => 'nullable|integer',
                     'preferred_experience' => 'nullable|integer',
@@ -536,7 +537,6 @@ class RecruiterController extends Controller
                     'scrub_color' => 'nullable|string',
                     'rto' => 'nullable|string',
                     'guaranteed_hours' => 'nullable|string',
-
                     'weeks_shift' => 'nullable|string',
                     'referral_bonus' => 'nullable|string',
                     'sign_on_bonus' => 'nullable|string',
@@ -551,18 +551,18 @@ class RecruiterController extends Controller
                     'on_call_rate' => 'nullable|string',
                     'call_back_rate' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|string',
+                    'weekly_taxable_amount' => 'nullable|string',
+                    'goodwork_weekly_amount' => 'nullable|string',
                     'profession' => 'nullable|string',
-
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
                     'block_scheduling' => 'nullable|string',
                     'contract_termination_policy' => 'nullable|string',
-
                     'job_location' => 'nullable|string',
                     'vaccinations' => 'nullable|string',
                     'number_of_references' => 'nullable|integer',
                     'min_title_of_reference' => 'nullable|string',
-                    'eligible_work_in_us' => 'nullable|boolean',
+                    // 'eligible_work_in_us' => 'nullable|boolean',
                     'recency_of_reference' => 'nullable|integer',
                     'certificate' => 'nullable|string',
                     'skills' => 'nullable|string',
@@ -576,6 +576,9 @@ class RecruiterController extends Controller
                     'preferred_shift_duration' => 'nullable|string',
                     'as_soon_as' => 'nullable|integer',
                     'professional_state_licensure' => 'nullable|string',
+                    'total_goodwork_amount' => 'nullable|string',
+                    'total_contract_amount' => 'nullable|string',
+                    'total_organization_amount' => 'nullable|string',
                 ]);
 
                 $job = new Job();
@@ -583,16 +586,16 @@ class RecruiterController extends Controller
                 try {
                     $fields = [
                         'job_type', 'type', 'job_id', 'job_name', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
-                        'active', 'description', 'start_date', 'hours_shift', 'hours_per_week', 'preferred_experience',
+                        'active', 'description', 'start_date', 'end_date', 'hours_shift', 'hours_per_week', 'preferred_experience',
                         'facility_shift_cancelation_policy', 'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio',
                         'Unit', 'scrub_color', 'rto', 'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus',
                         'completion_bonus', 'extension_bonus', 'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday',
-                        'orientation_rate', 'on_call', 'on_call_rate', 'call_back_rate', 'weekly_non_taxable_amount', 'profession',
+                        'orientation_rate', 'on_call', 'on_call_rate', 'call_back_rate', 'weekly_non_taxable_amount','weekly_taxable_amount','goodwork_weekly_amount', 'profession',
                         'specialty', 'terms', 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy',
-                        'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
+                        'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 
                         'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                         'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-                        'professional_state_licensure'
+                        'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
                     ];
                 
                     foreach ($fields as $field) {
@@ -616,19 +619,21 @@ class RecruiterController extends Controller
 
                 $validatedData = $request->validate([
                     
-                    'job_type' => 'required|string',
+                    'job_type' => 'nullable|string',
                     'job_name' => 'nullable|string',
                     'job_id' => 'nullable|string',
                     'job_city' => 'required|string',
                     'job_state' => 'required|string',
-                    'weekly_pay' => 'required|numeric',
+                    'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'required|string',
                     'preferred_work_location' => 'nullable|string',
                     'preferred_experience' => 'nullable|integer',
                     'description' => 'nullable|string',
                     'terms' => 'nullable|string',
                     'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
                     'hours_shift' => 'nullable|integer',
+                    'hours_per_week' => 'nullable|integer',
                     'facility_shift_cancelation_policy' => 'nullable|string',
                     'traveler_distance_from_facility' => 'nullable|string',
                     'clinical_setting' => 'nullable|string',
@@ -651,6 +656,8 @@ class RecruiterController extends Controller
                     'on_call_rate' => 'nullable|string',
                     'call_back_rate' => 'nullable|string',
                     'weekly_non_taxable_amount' => 'nullable|string',
+                    'weekly_taxable_amount' => 'nullable|string',
+                    'goodwork_weekly_amount' => 'nullable|string',
                     'profession' => 'nullable|string',
                     'Emr' => 'nullable|string',
                     'preferred_assignment_duration' => 'nullable|string',
@@ -660,7 +667,7 @@ class RecruiterController extends Controller
                     'vaccinations' => 'nullable|string',
                     'number_of_references' => 'nullable|integer',
                     'min_title_of_reference' => 'nullable|string',
-                    'eligible_work_in_us' => 'nullable|boolean',
+                    
                     'recency_of_reference' => 'nullable|integer',
                     'certificate' => 'nullable|string',
                     'preferred_shift_duration' => 'nullable|string',
@@ -674,21 +681,24 @@ class RecruiterController extends Controller
                     'feels_like_per_hour' => 'nullable|string',
                     'as_soon_as' => 'nullable|integer',
                     'professional_state_licensure' => 'nullable|string',
+                    'total_goodwork_amount' => 'nullable|string',
+                    'total_contract_amount' => 'nullable|string',
+                    'total_organization_amount' => 'nullable|string',
                 ]);
 
                 $job = new Job();
                 $fields = [
                     'job_type', 'type', 'job_name', 'job_id', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
-                    'description', 'start_date', 'hours_shift', 'preferred_experience', 'facility_shift_cancelation_policy',
+                    'description', 'start_date','end_date','hours_shift', 'hours_per_week', 'preferred_experience', 'facility_shift_cancelation_policy',
                     'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio', 'Unit', 'scrub_color', 'rto',
                     'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus', 'completion_bonus', 'extension_bonus',
                     'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday', 'orientation_rate', 'on_call', 'call_back_rate',
-                    'weekly_non_taxable_amount', 'profession', 'specialty', 'terms', 'preferred_work_location',
+                    'weekly_non_taxable_amount','weekly_taxable_amount','goodwork_weekly_amount', 'profession', 'specialty', 'terms', 'preferred_work_location',
                     'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy', 'Emr', 'on_call_rate',
-                    'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
+                    'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference',
                     'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                     'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-                    'professional_state_licensure'
+                    'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
                 ];
                 
                 foreach ($fields as $field) {
@@ -702,13 +712,15 @@ class RecruiterController extends Controller
                 $job->active = true;
                 $job->is_open = true;
                 
-                $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
-                $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
-                $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
-                $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
-                $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
-                $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
-                $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
+                // WE DON'T NEED THE CALCULATION FOR NOW UNTIL WE GET THE FIRST VERSION OF THE APP
+
+                // $job->hours_per_week = $job->weeks_shift * $job->hours_shift; --
+                // $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate; --
+                // $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
+                // $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
+                // $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05; --
+                // $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
+                // $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
                 
                 // Save the job data to the database
                 $job->save();
@@ -767,6 +779,7 @@ class RecruiterController extends Controller
                     'description' => 'nullable|string',
                     'terms' => 'nullable|string',
                     'start_date' => 'nullable|date',
+                    'end_date' => 'nullable|date',
                     'hours_shift' => 'nullable|integer',
                     'facility_shift_cancelation_policy' => 'nullable|string',
                     'traveler_distance_from_facility' => 'nullable|string',
@@ -814,6 +827,9 @@ class RecruiterController extends Controller
                     'as_soon_as' => 'nullable|integer',
                     'active' => '0',
                     'professional_state_licensure' => 'nullable|string',
+                    'total_goodwork_amount' => 'nullable|string',
+                    'total_contract_amount' => 'nullable|string',
+                    'total_organization_amount' => 'nullable|string',
 
             ]);
 
@@ -821,7 +837,7 @@ class RecruiterController extends Controller
             $job = new Job();
             $fields = [
                 'job_type', 'job_id', 'job_name', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
-                'preferred_work_location', 'description', 'terms', 'start_date', 'hours_shift',
+                'preferred_work_location', 'description', 'terms', 'start_date','end_date', 'hours_shift',
                 'facility_shift_cancelation_policy', 'traveler_distance_from_facility', 'clinical_setting',
                 'Patient_ratio', 'Unit', 'scrub_color', 'rto', 'guaranteed_hours', 'weeks_shift',
                 'referral_bonus', 'sign_on_bonus', 'completion_bonus', 'extension_bonus', 'other_bonus',
@@ -831,7 +847,7 @@ class RecruiterController extends Controller
                 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us', 'recency_of_reference',
                 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                 'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour',
-                'as_soon_as', 'professional_state_licensure'
+                'as_soon_as', 'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
             ];
             
             foreach ($fields as $field) {
@@ -904,17 +920,18 @@ class RecruiterController extends Controller
         $validatedData = [];
         try {
             $validatedData = $request->validate([
-                'job_type' => 'required|string',
+                'job_type' => 'nullable|string',
                 'job_name' => 'required|string',
                 'job_id' => 'nullable|string',
                 'job_city' => 'required|string',
                 'job_state' => 'required|string',
-                'weekly_pay' => 'required|numeric',
+                'weekly_pay' => 'nullable|numeric',
                 'preferred_specialty' => 'required|string',
                 'preferred_work_location' => 'nullable|string',
                 'description' => 'nullable|string',
                 'terms' => 'nullable|string',
                 'start_date' => 'nullable|date',
+                'end_date' => 'nullable|date',
                 'hours_shift' => 'nullable|integer',
                 'facility_shift_cancelation_policy' => 'nullable|string',
                 'traveler_distance_from_facility' => 'nullable|string',
@@ -938,7 +955,7 @@ class RecruiterController extends Controller
                 'on_call' => 'nullable|string',
                 'call_back_rate' => 'nullable|string',
                 'weekly_non_taxable_amount' => 'nullable|string',
-                'profession' => 'nullable|string',
+                'profession' => 'required|string',
                 'Emr' => 'nullable|string',
                 'preferred_assignment_duration' => 'nullable|string',
                 'block_scheduling' => 'nullable|string',
@@ -962,6 +979,10 @@ class RecruiterController extends Controller
                 'feels_like_per_hour' => 'nullable|string',
                 'as_soon_as' => 'nullable|integer',
                 'professional_state_licensure' => 'nullable|string',
+                'total_goodwork_amount' => 'nullable|string',
+                'total_contract_amount' => 'nullable|string',
+                'total_organization_amount' => 'nullable|string',
+
 
             ]);
 
@@ -973,7 +994,7 @@ class RecruiterController extends Controller
 
             $fields = [
                 'job_type', 'type', 'job_name', 'job_id', 'job_city', 'job_state', 'weekly_pay', 'preferred_experience',
-                'preferred_specialty', 'description', 'start_date', 'hours_shift', 'facility_shift_cancelation_policy',
+                'preferred_specialty', 'description', 'start_date','end_date', 'hours_shift', 'facility_shift_cancelation_policy',
                 'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio', 'Unit', 'scrub_color', 'rto',
                 'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus', 'completion_bonus', 'extension_bonus',
                 'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday', 'orientation_rate', 'on_call', 'call_back_rate',
@@ -981,7 +1002,7 @@ class RecruiterController extends Controller
                 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy', 'Emr', 'on_call_rate',
                 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
                 'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
-                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as' , 'professional_state_licensure'
+                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as' , 'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
             ];
             
             foreach ($fields as $field) {

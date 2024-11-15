@@ -124,7 +124,7 @@ class WorkerDashboardController extends Controller
           'traveler_distance_from_facility' => 'required|string',
           'clinical_setting' => 'required|string',
           'Patient_ratio' => 'required|string',
-          'emr' => 'required|string',
+          'Emr' => 'required|string',
           'Unit' => 'required|string',
           'scrub_color' => 'required|string',
           'rto' => 'required|string',
@@ -165,7 +165,7 @@ class WorkerDashboardController extends Controller
         isset($request->traveler_distance_from_facility) ? ($nurse_data['distance_from_your_home'] = $request->traveler_distance_from_facility) : '';
         isset($request->clinical_setting) ? ($nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting) : '';
         isset($request->Patient_ratio) ? ($nurse_data['worker_patient_ratio'] = $request->Patient_ratio) : '';
-        isset($request->emr) ? ($nurse_data['worker_emr'] = $request->emr) : '';
+        isset($request->Emr) ? ($nurse_data['worker_emr'] = $request->Emr) : '';
         isset($request->Unit) ? ($nurse_data['worker_unit'] = $request->Unit) : '';
         isset($request->scrub_color) ? ($nurse_data['worker_scrub_color'] = $request->scrub_color) : '';
         isset($request->rto) ? ($nurse_data['rto'] = $request->rto) : '';
@@ -384,6 +384,8 @@ class WorkerDashboardController extends Controller
     $data['end_date'] = $request->input('end_date', null);
     $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
     $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
+    $data['job_type'] = $request->input('job_type', null);
+    $data['as_soon_as'] = $request->input('as_soon_as', null);
 
     // Pay and hour filters
     $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
@@ -392,6 +394,8 @@ class WorkerDashboardController extends Controller
     $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
     $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
     $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
+
+    //return response()->json(['message' => $data['as_soon_as']]); 
 
     $user = auth()->guard('frontend')->user();
 
@@ -411,24 +415,29 @@ class WorkerDashboardController extends Controller
       }
 
       $data['jobs'] = $ret->get();
-      return view('site.explore_jobs', $data);
+      return view('worker::dashboard.explore', $data);
     }
 
 
+    if (!empty($data['job_type'])) {
+      $ret->where('job_type', '=', $data['job_type']);
+    }
 
     if (!empty($data['profession'])) {
       $ret->where('profession', '=', $data['profession']);
     }
 
     if (!empty($data['speciality'])) {
-      $ret->where('specialty', '=', $data['speciality']);
+      $ret->where('preferred_specialty', '=', $data['speciality']);
     }
 
     if (!empty($data['terms']) && !is_null($request->input('terms'))) {
       $ret->whereIn('terms', $data['terms']);
     }
 
-    if (!empty($data['start_date'])) {
+    if(!empty($data['as_soon_as'])){
+      $ret->where('as_soon_as', '=', $data['as_soon_as']);
+    }elseif(!empty($data['start_date'])) {
       $ret->where('start_date', '<=', $data['start_date']);
     }
 
@@ -537,6 +546,7 @@ class WorkerDashboardController extends Controller
 
   public function apply_on_jobs(Request $request)
   {
+    
     try {
 
       $request->validate([
@@ -545,11 +555,13 @@ class WorkerDashboardController extends Controller
       $response = [];
       $user = auth()->guard('frontend')->user();
       $job = Job::findOrFail($request->jid);
+      // return $job;
       //return response()->json(['data'=>$job], 200);
       $rec = Offer::where(['worker_user_id' => $user->nurse->id, 'job_id' => $request->jid])
         ->whereNull('deleted_at')
         ->first();
       $input = [
+          // Summary
         'job_id' => $request->jid,
         'worked_at_facility_before' => $request->worked_at_facility_before,
         'created_by' => $job->created_by,
@@ -559,50 +571,77 @@ class WorkerDashboardController extends Controller
         'type' => $job->job_type,
         'terms' => $job->terms,
         'profession' => $job->profession,
-        'block_scheduling' => $job->block_scheduling,
-        'float_requirement' => $job->float_requirement,
-        'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
-        'contract_termination_policy' => $job->contract_termination_policy,
-        'traveler_distance_from_facility' => $job->traveler_distance_from_facility,
-        'clinical_setting' => $job->clinical_setting,
-        'Patient_ratio' => $job->Patient_ratio,
-        'Emr' => $job->Emr,
-        'Unit' => $job->Unit,
-        'scrub_color' => $job->scrub_color,
-        'start_date' => $job->start_date,
-        'rto' => $job->rto,
+        'specialty' => $job->preferred_specialty,
+        'actual_hourly_rate' => $job->actual_hourly_rate,
+        'weekly_pay' => $job->weekly_pay,
         'hours_per_week' => $job->hours_per_week,
+        'state' => $job->job_state,
+        'city' => $job->job_city,
+          // Shift
+        'preferred_shift_duration' => $job->preferred_shift_duration,
         'guaranteed_hours' => $job->guaranteed_hours,
         'hours_shift' => $job->hours_shift,
         'weeks_shift' => $job->weeks_shift,
         'preferred_assignment_duration' => $job->preferred_assignment_duration,
+        'start_date' => $job->start_date,
+        'end_date' => $job->end_date,
+        'rto' => $job->rto,
+        'overtime' => $job->overtime,
+        'on_call_rate' => $job->on_call_rate,
+        'call_back_rate' => $job->call_back_rate,
+        'orientation_rate' => $job->orientation_rate,
+        'weekly_taxable_amount' => $job->weekly_taxable_amount,
+        'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
+        'feels_like_per_hour' => $job->feels_like_per_hour,
+        'goodwork_weekly_amount' => $job->goodwork_weekly_amount,
         'referral_bonus' => $job->referral_bonus,
         'sign_on_bonus' => $job->sign_on_bonus,
         'completion_bonus' => $job->completion_bonus,
         'extension_bonus' => $job->extension_bonus,
         'other_bonus' => $job->other_bonus,
-        'four_zero_one_k' => $job->four_zero_one_k,
-        'health_insaurance' => $job->health_insaurance,
-        'dental' => $job->dental,
-        'vision' => $job->vision,
-        'actual_hourly_rate' => $job->actual_hourly_rate,
-        'overtime' => $job->overtime,
-        'holiday' => $job->holiday,
-        'on_call' => $job->on_call,
-        'orientation_rate' => $job->orientation_rate,
-        'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
-        'description' => $job->description,
-        'hours_shift' => $job->hours_shift,
-        'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
-        'weekly_taxable_amount' => $job->weekly_taxable_amount,
-        'organization_weekly_amount' => $job->organization_weekly_amount,
+        'pay_frequency' => $job->pay_frequency,
+        'benefits' => $job->benefits,
         'total_organization_amount' => $job->total_organization_amount,
-        'weekly_pay' => $job->weekly_pay,
+        'total_goodwork_amount' => $job->total_goodwork_amount,
+        'total_contract_amount' => $job->total_contract_amount,
+          // Location 
+        'clinical_setting' => $job->clinical_setting,
+        'preferred_work_location' => $job->preferred_work_location,
+        'facility_name' => $job->facility_name,
+        'facilitys_parent_system' => $job->facilitys_parent_system,
+        'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
+        'contract_termination_policy' => $job->contract_termination_policy,
+        'traveler_distance_from_facility' => $job->traveler_distance_from_facility,
+        'job_location' => $job->job_location,
+        // Certifications
+        'certificate' => $job->certificate,
+        // Work Info
+        'description' => $job->description,
+        'urgency' => $job->urgency,
+        'as_soon_as' => $job->as_soon_as,
+        'preferred_experience' => $job->preferred_experience,
+        'number_of_references' => $job->number_of_references,
+        'skills' => $job->skills,
+        'on_call' => $job->on_call,
+        'block_scheduling' => $job->block_scheduling,
+        'float_requirement' => $job->float_requirement,
+        'Patient_ratio' => $job->Patient_ratio,
+        'Emr' => $job->Emr,
+        'Unit' => $job->Unit,
+         // ID & Tax Info
+        'nurse_classification' => $job->nurse_classification,
+         // Medical Info
+        'vaccinations' => $job->vaccinations,
+        // other
+        'scrub_color' => $job->scrub_color,
+        'holiday' => $job->holiday,
+        'organization_weekly_amount' => $job->organization_weekly_amount,
         'tax_status' => $job->tax_status,
         'status' => 'Apply',
         'recruiter_id' => $job->recruiter_id,
         'organization_id' => $job->organization_id,
       ];
+      
       if (empty($rec)) {
         offer::create($input);
         $message = 'Job saved successfully.';
@@ -969,7 +1008,7 @@ class WorkerDashboardController extends Controller
       //$update_array['worker_user_id'] = $nurse->id;
       $update_array['clinical_setting'] = $job_data->clinical_setting != $request->clinical_setting ? $request->clinical_setting : $job_data->clinical_setting;
       $update_array['Patient_ratio'] = $job_data->Patient_ratio != $request->Patient_ratio ? $request->Patient_ratio : $job_data->Patient_ratio;
-      $update_array['emr'] = $job_data->emr != $request->emr ? $request->emr : $job_data->emr;
+      $update_array['Emr'] = $job_data->Emr != $request->Emr ? $request->Emr : $job_data->Emr;
       $update_array['Unit'] = $job_data->Unit != $request->Unit ? $request->Unit : $job_data->Unit;
       $update_array['scrub_color'] = $job_data->scrub_color != $request->scrub_color ? $request->scrub_color : $job_data->scrub_color;
       $update_array['start_date'] = $job_data->start_date != $request->start_date ? $request->start_date : $job_data->start_date;

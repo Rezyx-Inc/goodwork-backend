@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\NotificationOffer;
 // ************ models ************
 /** Models */
-use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword};
+use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword ,Speciality, Profession, State};
 
 class ApplicationController extends Controller
 {
@@ -193,6 +193,7 @@ class ApplicationController extends Controller
                 $update_array['type'] = isset($request->type) ? $request->type : $job_data->job_type;
                 $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
                 $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->profession;
+                $update_array['specialty'] = isset($request->specialty) ? $request->specialty : $job_data->preferred_specialty;
 
                 $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
                 $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;
@@ -215,6 +216,7 @@ class ApplicationController extends Controller
                 $update_array['hours_shift'] = isset($request->hours_shift) ? $request->hours_shift : $job_data->hours_shift;
                 $update_array['weeks_shift'] = isset($request->weeks_shift) ? $request->weeks_shift : $job_data->weeks_shift;
                 $update_array['preferred_assignment_duration'] = isset($request->preferred_assignment_duration) ? $request->preferred_assignment_duration : $job_data->preferred_assignment_duration;
+                $update_array['preferred_shift_duration'] = isset($request->preferred_shift_duration) ? $request->preferred_shift_duration : $job_data->preferred_shift_duration;
                 $update_array['referral_bonus'] = isset($request->referral_bonus) ? $request->referral_bonus : $job_data->referral_bonus;
                 $update_array['sign_on_bonus'] = isset($request->sign_on_bonus) ? $request->sign_on_bonus : $job_data->sign_on_bonus;
                 $update_array['completion_bonus'] = isset($request->completion_bonus) ? $request->completion_bonus : $job_data->completion_bonus;
@@ -288,6 +290,80 @@ class ApplicationController extends Controller
     }
 
 
+    // change real offer infromation with the request->all() data
+
+    public function update_job_offer(Request $request)
+    {
+        //return $request->data;
+        
+        $validator = Validator::make($request->all(), [
+            'offer_id' => 'required',
+        ]);
+        $responseData = [];
+        if ($validator->fails()) {
+            $responseData = [
+                'status' => 'error',
+                'message' => $validator->errors()->first(),
+            ];
+        } else {
+            try {
+                $offer = Offer::where('id', $request->offer_id)->first();
+
+                if ($offer) {
+                    $offer->update($request->data);
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => 'Offer Updated Successfully',
+                    ];
+                } else {
+                    $responseData = [
+                        'status' => 'error',
+                        'message' => 'Offer not found',
+                    ];
+                }
+
+            } catch (\Exception $e) {
+                $responseData = [
+                    'status' => 'error',
+                    'message' => $e->getMessage(),
+                ];
+            }
+        }
+        return response()->json($responseData);
+    }
+
+        // get information for from edit 
+
+        public function get_offer_information_for_edit(Request $request)
+        {
+            try {
+                $offer_id = $request->offer_id;
+                $offerdetails = Offer::where('id', $offer_id)->first();
+                // the one who counter an offer or send the first offer
+                $user_id = $offerdetails->created_by;
+                $userdetails = User::where('id', $user_id)->first();
+
+                $specialities = Speciality::select('full_name')->get();
+                $professions = Profession::select('full_name')->get();
+                $applyCount = array();
+                // send the states
+                $states = State::select('id', 'name')->get();
+                $distinctFilters = Keyword::distinct()->pluck('filter');
+                $allKeywords = [];
+                foreach ($distinctFilters as $filter) {
+                    $keywords = Keyword::where('filter', $filter)->get();
+                    $allKeywords[$filter] = $keywords;
+                }
+
+
+                $response['content'] = view('recruiter::offers.edit_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails, 'allKeywords' => $allKeywords, 'states' => $states, 'specialities' => $specialities, 'professions' => $professions])->render();
+                //return new JsonResponse($response, 200);
+                return response()->json($response);
+    
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
     // get offer information for form counter
     public function get_offer_information(Request $request)
@@ -298,7 +374,20 @@ class ApplicationController extends Controller
             // the one who counter an offer or send the first offer
             $user_id = $offerdetails->created_by;
             $userdetails = User::where('id', $user_id)->first();
-            $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails])->render();
+            $specialities = Speciality::select('full_name')->get();
+            $professions = Profession::select('full_name')->get();
+            $applyCount = array();
+            // send the states
+            $states = State::select('id', 'name')->get();
+            $distinctFilters = Keyword::distinct()->pluck('filter');
+            $allKeywords = [];
+            foreach ($distinctFilters as $filter) {
+                $keywords = Keyword::where('filter', $filter)->get();
+                $allKeywords[$filter] = $keywords;
+            }
+             
+            $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails, 'allKeywords' => $allKeywords, 'states' => $states, 'specialities' => $specialities, 'professions' => $professions])->render();
+            
             //return new JsonResponse($response, 200);
             return response()->json($response);
 
@@ -328,10 +417,10 @@ class ApplicationController extends Controller
                         'image' => $user->image,
                         'firstName' => $user->first_name,
                         'lastName' => $user->last_name,
-                        'hourlyPayRate' => $nurse->facility_hourly_pay_rate ?? null,
+                        'hourlyPayRate' => $nurse->worker_actual_hourly_rate ?? null,
                         'city' => $nurse->city ?? null,
                         'state' => $nurse->state ?? null,
-                        'muSpecialty' => $nurse->mu_specialty ?? null,
+                        'profession' => $nurse->profession ?? null,
                         'specialty' => $nurse->specialty ?? null,
                     ];
                 }
@@ -566,5 +655,37 @@ class ApplicationController extends Controller
             return response()->json(["message" => $e->getMessage()]);
         }
 
+    }
+
+    public function listDocs(Request $request)
+    {
+        try {
+            $workerId = $request->WorkerId;
+            //return response()->json(['workerId' => $workerId]);
+
+            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            if ($response->successful()) {
+                return $response->body();
+            } else {
+                return response()->json(['success' => false], $response->status());
+            }
+
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function getDoc(Request $request)
+    {
+        try {
+            $bsonId = $request->input('bsonId');
+            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+
+            // Pass through the response from Node.js API
+            return $response->body();
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 }
