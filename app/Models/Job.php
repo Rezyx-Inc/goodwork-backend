@@ -252,7 +252,6 @@ class Job extends Model
         $job = $this;
         $matches = [
             'profession' => function () use ($job, $nurse) {
-                $profile_info_text = "What kind of professional are you?";
 
                 if ($job->profession == $nurse->profession) {
                     $match = true;
@@ -262,8 +261,10 @@ class Job extends Model
                 $profile_info_text = "What kind of professional are you ?";
                 if (!empty($nurse->profession)) {
                     $match = true;
-                    $profile_info_text = "You are a very professional " . $nurse->profession;
                 }
+                // if (!empty($nurse->profession)) {
+                //     $profile_info_text = "You are a very professional " . $nurse->profession;
+                // }
                 $value = $nurse->highest_nursing_degree;
                 $type = 'dropdown';
                 $name = 'profession';
@@ -271,9 +272,9 @@ class Job extends Model
             },
             'preferred_specialty' => function () use ($job, $nurse) {
                 $profile_info_text = "What’s your specialty ?";
-                if (!empty($nurse->specialty)) {
-                    $profile_info_text = "You are a very professional " . $nurse->specialty;
-                }
+                // if (!empty($nurse->specialty)) {
+                //     $profile_info_text = "You are very special in " . $nurse->specialty;
+                // }
                 if (!empty($nurse->specialty) && $job->preferred_specialty == $nurse->specialty) {
                     $match = true;
                 } else {
@@ -287,9 +288,9 @@ class Job extends Model
             'float_requirement' => function () use ($job, $nurse) {
                 $match = ($job->float_requirement == $nurse->float_requirement);
                 $profile_info_text = "Are you willing to float?";
-                if (!empty($nurse->float_requirement)) {
-                    $profile_info_text = "You are up for floating.";
-                }
+                // if (!empty($nurse->float_requirement)) {
+                //     $profile_info_text = $nurse->float_requirement;
+                // }
                 $value = $nurse->float_requirement;
                 $type = 'input';
                 $name = 'float_requirement';
@@ -297,9 +298,9 @@ class Job extends Model
             },
             'job_location' => function () use ($job, $nurse) {
                 $profile_info_text = "Where are you licensed?";
-                if (!empty($nurse->nursing_license_state)) {
-                    $profile_info_text = "Where are you licensed?";     // TODO :: Ask why it's the same text 
-                }
+                // if (!empty($nurse->nursing_license_state)) {
+                //     $profile_info_text = $nurse->nursing_license_state;
+                // }
                 $job_locations = explode(',', $job->job_location);
                 $nursing_license_state = $nurse->nursing_license_state;
                 $match = false;
@@ -318,9 +319,9 @@ class Job extends Model
             },
             'preferred_experience' => function () use ($job, $nurse) {
                 $profile_info_text = "How long have you done this?";
-                if (!empty($nurse->nursing_license_state)) {
-                    $profile_info_text = "You will need more experience to apply for this job";
-                }
+                // if (!empty($nurse->nursing_license_state)) {
+                //     $profile_info_text = "You will need more experience to apply for this job";
+                // }
                 if (!empty($nurse->worker_experience) && $job->preferred_experience <= $nurse->worker_experience) {
                     $match = true;
                     $profile_info_text = "You are experienced.";
@@ -334,9 +335,9 @@ class Job extends Model
             },
             'job_city' => function () use ($job, $nurse) {
                 $profile_info_text = "Do you want to work here?";
-                if (!empty($nurse->worker_facility_city)) {
-                    $profile_info_text = "You are down to work in " . $job->worker_facility_city;
-                }
+                // if (!empty($nurse->worker_facility_city)) {
+                //     $profile_info_text = "You are down to work in " . $job->worker_facility_city;
+                // }
                 $match = ($job->job_city == $nurse->worker_facility_city);
                 $value = $nurse->worker_facility_city;
                 $type = 'input';
@@ -345,9 +346,9 @@ class Job extends Model
             },
             'job_state' => function () use ($job, $nurse) {
                 $profile_info_text = "Do you want to work here?";
-                if (!empty($nurse->worker_facility_state)) {
-                    $profile_info_text = "You are down to work in " . $job->worker_facility_state;
-                }
+                // if (!empty($nurse->worker_facility_state)) {
+                //     $profile_info_text = "You are down to work in " . $job->worker_facility_state;
+                // }
                 $match = ($job->job_state == $nurse->worker_facility_state);
                 $value = $nurse->worker_facility_state;
                 $type = 'input';
@@ -356,9 +357,9 @@ class Job extends Model
             },
             'as_soon_as' => function () use ($job, $nurse) {
                 $profile_info_text = "you start as soon as possible?";
-                if (!empty($nurse->worker_as_soon_as_possible)) {
-                    $profile_info_text = "Ready to start on " . $job->worker_as_soon_as_possible;
-                }
+                // if (!empty($nurse->worker_as_soon_as_possible)) {
+                //     $profile_info_text = "Ready to start on " . $job->worker_as_soon_as_possible;
+                // }
                 $match = ($job->as_soon_as == $nurse->worker_as_soon_as_possible);
                 $value = $nurse->worker_as_soon_as_possible;
                 $type = 'input';
@@ -367,9 +368,9 @@ class Job extends Model
             },
             'hours_per_week' => function () use ($job, $nurse) {
                 $profile_info_text = "Are you sure you want to work this many hours per week?";
-                if (!empty($nurse->worker_hours_per_week)) {
-                    $profile_info_text =  $job->worker_hours_per_week . "is a match!";
-                }
+                // if (!empty($nurse->worker_hours_per_week)) {
+                //     $profile_info_text =  $job->worker_hours_per_week . "is a match!";
+                // }
                 $match = ($job->hours_per_week == $nurse->worker_hours_per_week);
                 $value = $nurse->worker_hours_per_week;
                 $type = 'input';
@@ -378,13 +379,13 @@ class Job extends Model
             },
             'guaranteed_hours' => function () use ($job, $nurse) {
                 $profile_info_text = "Open to job with no guaranteed hours?";
-                if (!empty($nurse->worker_guaranteed_hours)) {
-                    if ($job->guaranteed_hours == $nurse->worker_guaranteed_hours) {
-                        $profile_info_text = $nurse->worker_guaranteed_hours . " hours is a match";
-                    } else {
-                        $profile_info_text = "Are you ok with these guaranteed hours?";
-                    }
-                }
+                // if (!empty($nurse->worker_guaranteed_hours)) {
+                //     if ($job->guaranteed_hours == $nurse->worker_guaranteed_hours) {
+                //         $profile_info_text = $nurse->worker_guaranteed_hours . " hours is a match";
+                //     } else {
+                //         $profile_info_text = "Are you ok with these guaranteed hours?";
+                //     }
+                // }
                 $match = ($job->guaranteed_hours == $nurse->worker_guaranteed_hours);
                 $value = $nurse->worker_guaranteed_hours;
                 $type = 'input';
@@ -393,13 +394,13 @@ class Job extends Model
             },
             'hours_shift' => function () use ($job, $nurse) {
                 $profile_info_text = "Preferred hours per shift ?";
-                if (!empty($nurse->worker_hours_shift)) {
-                    if ($job->hours_shift == $nurse->worker_hours_shift) {
-                        $profile_info_text = $nurse->worker_hours_shift . " hours/shift is a match";
-                    } else {
-                        $profile_info_text = "Are you sure you want to work this many hours per shift?";
-                    }
-                }
+                // if (!empty($nurse->worker_hours_shift)) {
+                //     if ($job->hours_shift == $nurse->worker_hours_shift) {
+                //         $profile_info_text = $nurse->worker_hours_shift . " hours/shift is a match";
+                //     } else {
+                //         $profile_info_text = "Are you sure you want to work this many hours per shift?";
+                //     }
+                // }
                 $match = ($job->hours_shift == $nurse->worker_hours_shift);
                 $value = $nurse->hours_shift;
                 $type = 'input';
@@ -408,15 +409,15 @@ class Job extends Model
             },
             'preferred_assignment_duration' => function () use ($job, $nurse) {
                 $profile_info_text = "How long do you want to be on contract?";
-                if (!empty($nurse->worker_weeks_assignment)) {
-                    if ($job->preferred_assignment_duration < $nurse->worker_weeks_assignment) {
-                        $profile_info_text = "Are you ok with a shorter assignment?";
-                    } else if ($job->preferred_assignment_duration > $nurse->worker_weeks_assignment) {
-                        $profile_info_text = "Are you sure you want to work this many hours per shift?";
-                    } else {
-                        $profile_info_text = $nurse->worker_weeks_assignment . " weeks is a match";
-                    }
-                }
+                // if (!empty($nurse->worker_weeks_assignment)) {
+                //     if ($job->preferred_assignment_duration < $nurse->worker_weeks_assignment) {
+                //         $profile_info_text = "Are you ok with a shorter assignment?";
+                //     } else if ($job->preferred_assignment_duration > $nurse->worker_weeks_assignment) {
+                //         $profile_info_text = "Are you sure you want to work this many hours per shift?";
+                //     } else {
+                //         $profile_info_text = $nurse->worker_weeks_assignment . " weeks is a match";
+                //     }
+                // }
                 $match = ($job->preferred_assignment_duration == $nurse->worker_weeks_assignment);
                 $value = $nurse->worker_weeks_assignment;
                 $type = 'input';
@@ -425,15 +426,15 @@ class Job extends Model
             },
             'weeks_shift' => function () use ($job, $nurse) {
                 $profile_info_text = "Ideal shifts per week?";
-                if (!empty($nurse->worker_shifts_week)) {
-                    if ($job->weeks_shift < $nurse->worker_shifts_week) {
-                        $profile_info_text = "Are you ok with working shorter shifts?";
-                    } else if ($job->weeks_shift > $nurse->worker_shifts_week) {
-                        $profile_info_text = "Are you ok with working longer shifts?";
-                    } else {
-                        $profile_info_text = $nurse->worker_shifts_week . " weeks is a match";
-                    }
-                }
+                // if (!empty($nurse->worker_shifts_week)) {
+                //     if ($job->weeks_shift < $nurse->worker_shifts_week) {
+                //         $profile_info_text = "Are you ok with working shorter shifts?";
+                //     } else if ($job->weeks_shift > $nurse->worker_shifts_week) {
+                //         $profile_info_text = "Are you ok with working longer shifts?";
+                //     } else {
+                //         $profile_info_text = $nurse->worker_shifts_week . " weeks is a match";
+                //     }
+                // }
                 $match = ($job->weeks_shift == $nurse->worker_shifts_week);
                 $value = $nurse->worker_shifts_week;
                 $type = 'input';
@@ -442,9 +443,9 @@ class Job extends Model
             },
             'health_insaurance' => function () use ($job, $nurse) {
                 $profile_info_text = "How important is this to you ?";
-                if (!empty($nurse->worker_health_insurance)) {
-                    $profile_info_text = $nurse->worker_health_insurance == '1' ? 'Yes' : 'No';
-                }
+                // if (!empty($nurse->worker_health_insurance)) {
+                //     $profile_info_text = $nurse->worker_health_insurance == '1' ? 'Yes' : 'No';
+                // }
                 $match = ($job->health_insaurance == $nurse->worker_health_insurance);
                 $value = $nurse->worker_health_insurance;
                 $type = 'input';
@@ -453,9 +454,9 @@ class Job extends Model
             },
             'dental' => function () use ($job, $nurse) {
                 $profile_info_text = "How important is this to you ?";
-                if (!empty($nurse->worker_dental)) {
-                    $profile_info_text = $nurse->worker_dental == '1' ? 'Yes' : 'No';
-                }
+                // if (!empty($nurse->worker_dental)) {
+                //     $profile_info_text = $nurse->worker_dental == '1' ? 'Yes' : 'No';
+                // }
                 $match = ($job->dental == $nurse->worker_dental);
                 $value = $nurse->worker_dental;
                 $type = 'input';
@@ -464,9 +465,9 @@ class Job extends Model
             },
             'vision' => function () use ($job, $nurse) {
                 $profile_info_text = "How important is this to you ?";
-                if (!empty($nurse->worker_vision)) {
-                    $profile_info_text = $nurse->worker_vision == '1' ? 'Yes' : 'No';
-                }
+                // if (!empty($nurse->worker_vision)) {
+                //     $profile_info_text = $nurse->worker_vision == '1' ? 'Yes' : 'No';
+                // }
                 $match = ($job->vision == $nurse->worker_vision);
                 $value = $nurse->worker_vision;
                 $type = 'input';
@@ -475,9 +476,9 @@ class Job extends Model
             },
             'actual_hourly_rate' => function () use ($job, $nurse) {
                 $profile_info_text = "What rate is fair ?";
-                if (!empty($nurse->worker_actual_hourly_rate)) {
-                    $profile_info_text = $nurse->worker_actual_hourly_rate;
-                }
+                // if (!empty($nurse->worker_actual_hourly_rate)) {
+                //     $profile_info_text = $nurse->worker_actual_hourly_rate;
+                // }
                 $match = ($job->actual_hourly_rate == $nurse->worker_actual_hourly_rate);
                 $value = $nurse->worker_actual_hourly_rate;
                 $type = 'input';
@@ -486,9 +487,9 @@ class Job extends Model
             },
             'overtime' => function () use ($job, $nurse) {
                 $profile_info_text = "What rate is fair ?";
-                if (!empty($nurse->worker_overtime_rate)) {
-                    $profile_info_text = $nurse->worker_overtime_rate;
-                }
+                // if (!empty($nurse->worker_overtime_rate)) {
+                //     $profile_info_text = $nurse->worker_overtime_rate;
+                // }
                 $match = ($nurse->worker_overtime_rate == $job->overtime_rate);
                 $value = $nurse->worker_overtime_rate;
                 $type = 'input';

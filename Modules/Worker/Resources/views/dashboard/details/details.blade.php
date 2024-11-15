@@ -28,6 +28,7 @@
                                                         <path
                                                             d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
                                                     </svg> {{ $model->profession }}</a></li>
+                                            <li><a href="#"> {{ $model->preferred_specialty }}</a></li>
                                         </ul>
                                     </div>
                                     <p class="col-2 text-center" style="padding-right:20px;">
@@ -219,6 +220,7 @@
                                                 <h6>{{ $model->profession }}</h6>
                                             </li>
                                             <li>
+                                                <span>Your Profession</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="What kind of professional are you?" data-filter="Profession"
                                                     data-name="profession" onclick="open_modal(this)">
@@ -236,6 +238,7 @@
                                             </li>
                                             {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
                                             <li>
+                                                <span>Your Specialty</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="What's your specialty?" data-filter="Speciality"
                                                     data-name="specialty" onclick="open_modal(this)">
@@ -252,6 +255,7 @@
                                                 <h6>${{ number_format($model->actual_hourly_rate) }}</h6>
                                             </li>
                                             <li>
+                                                <span>Your Est. Taxable Hourly Rate</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-placeholder="What rate is fair?"
                                                     data-name="worker_actual_hourly_rate" onclick="open_modal(this)">What
@@ -279,6 +283,7 @@
                                                 <h6>{{ $model->hours_per_week }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Hours/Week</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="Ideal hours per week?"
                                                     data-placeholder="Enter number Of Hours/Week"
@@ -297,6 +302,7 @@
                                                 <h6>{{ $model->job_state }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Facility State</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="States you'd like to work?" data-filter="State"
                                                     data-name="worker_facility_state" onclick="open_modal(this)">States
@@ -313,6 +319,7 @@
                                                 <h6>{{ $model->job_city }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Facility City</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="Cities you'd like to work?" data-filter="City"
                                                     data-name="worker_facility_city" onclick="open_modal(this)">Do you
@@ -344,6 +351,7 @@
                                                 <h6>{{ $model->preferred_shift }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Shift Time Of Day</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="Fav shift?" data-filter="shift_time_of_day"
                                                     data-name="worker_shift_time_of_day" onclick="open_modal(this)">Fav
@@ -360,6 +368,7 @@
                                                 <h6>{{ number_format($model->guaranteed_hours) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Guaranteed Hours</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="Open to jobs with no guaranteed hours?"
                                                     data-placeholder="Enter Guaranteed Hours"
@@ -377,6 +386,7 @@
                                                 <h6>{{ $model->hours_shift }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Hours/Shift</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="Preferred hours per shift"
                                                     data-placeholder="Enter number Of Hours/Shift"
@@ -395,6 +405,7 @@
                                                 <h6>{{ number_format($model->weeks_shift) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Shifts/Week</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="Ideal shifts per week"
                                                     data-placeholder="Enter ideal shift per week"
@@ -413,6 +424,7 @@
                                                 <h6>{{ $model->preferred_assignment_duration }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Weeks/Assignment</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="How many weeks?"
                                                     data-placeholder="Enter prefered weeks per assignment"
@@ -433,6 +445,7 @@
                                                 <h6>As soon as possible</h6>
                                             </li>
                                             <li>
+                                                <span>Your Start Date</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Can you start as soon as possible?"
                                                     data-name="worker_as_soon_as_possible" onclick="open_modal(this)">Can
@@ -458,6 +471,7 @@
                                                 <h6>{{ $model->start_date }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Start date</span>
                                                 <p class="profile_info_text" data-target="date"
                                                     data-title="When can you start?" data-name="worker_start_date"
                                                     onclick="open_modal(this)">When can you
@@ -483,22 +497,13 @@
                                                 <h6>{{ $model->rto }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your RTO</span>
                                                 <p class="profile_info_text" data-target="rto" data-title="Any time off?"
                                                     data-placeholder="Any time off?" data-name="rto"
                                                     onclick="open_modal(this)">Any time off?</p>
                                             </li>
                                         </ul>
                                     @endif
-
-
-
-
-
-
-
-
-
-
 
                                 </div>
 
@@ -524,6 +529,7 @@
                                             </li>
                                             <li>
 
+                                                <span>Your Overtime</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-name="worker_overtime_rate"
                                                     onclick="open_modal(this)">What rate is
@@ -541,6 +547,7 @@
                                                 <h6>${{ number_format($model->on_call_rate) }}</h6>
                                             </li>
                                             <li>
+                                                <span>Your On Call Rate</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-placeholder="What rate is fair?"
                                                     data-name="worker_on_call" onclick="open_modal(this)">What rate is
@@ -557,6 +564,7 @@
                                                 <h6>${{ number_format($model->call_back_rate) }}</h6>
                                             </li>
                                             <li>
+                                                <span>Your Call Back Rate</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Is this rate reasonable?"
                                                     data-name="worker_call_back_check" onclick="open_modal(this)">Is this
@@ -574,6 +582,7 @@
                                                 <h6>${{ number_format($model->orientation_rate) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Orientation Rate</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-placeholder="-"
                                                     data-name="worker_orientation_rate" onclick="open_modal(this)">What
@@ -599,6 +608,7 @@
                                                 <h6>${{ number_format($model->weekly_non_taxable_amount) }}</h6>
                                             </li>
                                             <li>
+                                                <span>Your Est. Weekly Non-Taxable Amount</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Are you going to duplicate expenses?"
                                                     data-placeholder="Weekly non-taxable amount"
@@ -617,6 +627,7 @@
 
                                             </li>
                                             <li>
+                                                <span>Your Feels Like $/Hr</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Does this seem fair based on the market?"
                                                     data-placeholder="Does this seem fair based on the market?"
@@ -649,6 +660,7 @@
                                                 <h6>{{ number_format($model->referral_bonus) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Referral Bonus</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="# of people you have referred?"
                                                     data-placeholder="# of people you have referred?"
@@ -667,6 +679,7 @@
                                                 <h6>${{ number_format($model->sign_on_bonus) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Sign-On Bonus</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What kind of bonus do you expect?"
                                                     data-placeholder="What kind of bonus do you expect?"
@@ -685,6 +698,7 @@
                                                 <h6>${{ number_format($model->extension_bonus) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Extension Bonus</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What are you comparing this to?"
                                                     data-placeholder="What are you comparing this to?"
@@ -703,6 +717,7 @@
                                                 <h6>${{ number_format($model->completion_bonus) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Completion Bonus</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What kind of bonus do you deserve?"
                                                     data-placeholder="What kind of bonus do you deserve?"
@@ -721,6 +736,7 @@
                                                 <h6>${{ number_format($model->other_bonus) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Other Bonus</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="Other bonuses you want?"
                                                     data-placeholder="Other bonuses you want?"
@@ -739,6 +755,7 @@
                                                 <h6> {{ $model->health_insaurance == '1' ? 'Yes' : 'No' }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Health Insurance</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="How much do you want this?"
                                                     data-name="worker_health_insurance"
@@ -796,6 +813,7 @@
                                             </li>
                                             <li>
                                                 {{-- binary : benefits -> tinyinteger 1->yes 2->maybe 0->no : Yes, Please | No, Thanks | preferable  --}}
+                                                <span>Your Benefits</span>
                                                 <p class="profile_info_text" data-target="benefits"
                                                     data-title="Do you want benefits?"
                                                     data-placeholder="Do you want benefits ?" data-name="worker_benefits"
@@ -812,6 +830,7 @@
                                                 <h6> {{ $model->dental == '1' ? 'Yes' : 'No' }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Dental</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="How important is this to you?" data-placeholder=""
                                                     data-name="worker_dental" onclick="open_modal(this)">
@@ -829,6 +848,7 @@
                                             </li>
                                             <li>
 
+                                                <span>Your Vision</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="How important is this to you?"
                                                     data-placeholder="How important is this to you?"
@@ -849,6 +869,7 @@
 
                                             </li>
                                             <li>
+                                                <span>Your 401K</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-placeholder="How much do you want this?"
                                                     data-title="How much do you want this?"
@@ -881,6 +902,7 @@
                                                 <h6>{{ $model->clinical_setting }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Clinical Setting</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="What setting do you prefer?" data-filter="ClinicalSetting"
                                                     data-name="clinical_setting_you_prefer" onclick="open_modal(this)">
@@ -914,6 +936,7 @@
                                                 <h6>{{ $model->facilitys_parent_system }}</h6>
                                             </li>
                                             {{-- <li>
+                                                <span>Your Facility's Parent System</span>
                                                 <p class="profile_info_text" data-target="input" data-title="What facilities would you like to work at?"
                                                     data-placeholder="Write Name Of Facilities"
                                                     data-name="worker_facilitys_parent_system" onclick="open_modal(this)">What
@@ -930,6 +953,7 @@
                                                 <h6>{{ $model->facility_shift_cancelation_policy }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Facility Shift Cancellation Policy</span>
                                                 <p class="profile_info_text" data-target="input"
                                                     data-title="What terms do you prefer?"
                                                     data-filter="AssignmentDuration"
@@ -948,6 +972,7 @@
                                                 <h6>{{ $model->contract_termination_policy }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Contract Termination Policy</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="What terms do you prefer?"
                                                     data-filter="ContractTerminationPolicy"
@@ -966,6 +991,7 @@
                                                 <h6>{{ $model->traveler_distance_from_facility }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Min Miles Must Live From Facility</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="Where does the IRS think you live?"
                                                     data-placeholder="What's your google validated address ?"
@@ -1000,6 +1026,7 @@
                                             </li>
 
                                             <li>
+                                                <span>Your Professional Licensure</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="Where are you licensed?" data-filter="StateCode"
                                                     data-placeholder="Where are you licensed?"
@@ -1023,6 +1050,7 @@
                                                 @endforeach
                                             </li>
                                             <li>
+                                                <span>Your Certifications</span>
                                                 <p class="profile_info_text" class="certification_file"
                                                     data-target="certification_file" onclick="open_modal(this)"
                                                     data-title="No certification?">
@@ -1058,6 +1086,7 @@
 
                                             </li>
                                             <li>
+                                                <span>Your Urgency</span>
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="How quickly you can be ready to submit?"
                                                     data-filter="Urgency"
@@ -1077,6 +1106,7 @@
                                                 <h6>{{ $model->preferred_experience }} Years Required</h6>
                                             </li>
                                             <li>
+                                                <span>Your Experience</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-hidden_name="dl_cer" data-hidden_value="Yes"
                                                     data-href="{{ route('info-required') }}"
@@ -1095,6 +1125,7 @@
                                                 <h6>{{ $model->number_of_references }} references </h6>
                                             </li>
                                             <li>
+                                                <span>Your Number of references</span>
                                                 <p class="profile_info_text" data-target="reference_file"
                                                     onclick="open_modal(this)" data-title="Who are your References?">Who
                                                     are your
@@ -1110,6 +1141,7 @@
                                                 <h6>{{ str_replace(',', ', ', $model->skills) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Skills checklist</span>
                                                 <p class="profile_info_text" data-target="skills_file"
                                                     data-title="Upload your latest skills checklist"
                                                     onclick="open_modal(this)">Upload your latest skills checklist</p>
@@ -1126,6 +1158,7 @@
                                                 <h6>{{ $model->on_call == '1' ? 'Yes' : 'No' }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your On call</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Will you do call?" data-name="worker_on_call_check"
                                                     onclick="open_modal(this)">Will you do
@@ -1144,6 +1177,7 @@
                                                 <h6>{{ $model->block_scheduling == '1' ? 'Yes' : 'No' }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Block Scheduling</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Do you want Block Scheduling?"
                                                     data-name="block_scheduling" onclick="open_modal(this)">Do you want
@@ -1162,6 +1196,7 @@
 
                                             </li>
                                             <li>
+                                                <span>Your Float Requirements</span>
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Are you willing to float ?" data-name="float_requirement"
                                                     onclick="open_modal(this)">Are you willing to float ?</p>
@@ -1177,6 +1212,7 @@
                                                 <h6>{{ number_format($model->Patient_ratio) }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Patient Ratio</span>
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="How many patients can you handle?"
                                                     data-placeholder="How many patients can you handle?"
@@ -1194,6 +1230,7 @@
                                                 <h6>{{ $model->Emr }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your EMR</span>
                                                 <p class="profile_info_text" data-target="multi_select"
                                                     data-title="What EMRs have you used?" data-filter="EMR"
                                                     data-name="worker_emr" onclick="open_modal(this)">What
@@ -1225,6 +1262,7 @@
                                                 <h6>{{ $model->nurse_classification }} </h6>
                                             </li>
                                             <li>
+                                                <span>Your Classification</span>
                                                 <p class="profile_info_text" data-target="multi_select"
                                                     data-title="What EMRs have you used?"
                                                     data-filter="nurseClassification" data-name="worker_classification"
@@ -1261,6 +1299,7 @@
                                                 @endforeach
                                             </li>
                                             <li>
+                                                <span>Your Vaccinations & Immunizations</span>
                                                 <p class="profile_info_text" data-target="vaccination_file"
                                                     data-title="No vaccination ?" onclick="open_modal(this)">
                                                     @foreach ($vaccines as $v)
