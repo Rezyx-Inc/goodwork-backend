@@ -113,40 +113,40 @@ class WorkerDashboardController extends Controller
         // Validate fields for ProfessionalInformation
         $request->validate([
 
-          'nursing_license_number' => 'string',
-          'specialty' => 'required|string',
-          'profession' => 'required|string',
-          'terms' => 'required|string',
-          'block_scheduling' => 'required|string',
-          'float_requirement' => 'required|string',
-          'facility_shift_cancelation_policy' => 'required|string',
-          'contract_termination_policy' => 'required|string',
-          'traveler_distance_from_facility' => 'required|string',
-          'clinical_setting' => 'required|string',
-          'Patient_ratio' => 'required|string',
-          'Emr' => 'required|string',
-          'Unit' => 'required|string',
-          'scrub_color' => 'required|string',
-          'rto' => 'required|string',
-          'shift_of_day' => 'required|string',
-          'hours_shift' => 'required|string',
-          'preferred_assignment_duration' => 'required|string',
-          'weeks_shift' => 'required|string',
-          'worker_experience' => 'required|string',
-          'worker_eligible_work_in_us' => 'required|string',
-          'worker_facility_city' => 'required|string',
-          'worker_facility_state' => 'required|string',
-          'worker_four_zero_one_k' => 'required|string',
-          'worker_dental' => 'required|string',
-          'worker_overtime_rate' => 'required|string',
-          'worker_on_call' => 'required|string',
-          'worker_call_back' => 'required|string',
-          'worker_on_call_check' => 'required|string',
-          'worker_benefits' => 'required|string',
-          'nurse_classification' => 'required|string',
-          'worker_holiday' => 'required|date',
-          'worker_job_type' => 'required|string',
-          'worker_vision' => 'required|string',
+          'nursing_license_number' => 'nullable|string',
+          'specialty' => 'nullable|string',
+          'profession' => 'nullable|string',
+          'terms' => 'nullable|string',
+          'block_scheduling' => 'nullable|string',
+          'float_requirement' => 'nullable|string',
+          'facility_shift_cancelation_policy' => 'nullable|string',
+          'contract_termination_policy' => 'nullable|string',
+          'traveler_distance_from_facility' => 'nullable|string',
+          'clinical_setting' => 'nullable|string',
+          'Patient_ratio' => 'nullable|string',
+          'Emr' => 'nullable|string',
+          'Unit' => 'nullable|string',
+          'scrub_color' => 'nullable|string',
+          'rto' => 'nullable|string',
+          'shift_of_day' => 'nullable|string',
+          'hours_shift' => 'nullable|string',
+          'preferred_assignment_duration' => 'nullable|string',
+          'weeks_shift' => 'nullable|string',
+          'worker_experience' => 'nullable|string',
+          'worker_eligible_work_in_us' => 'nullable|string',
+          'worker_facility_city' => 'nullable|string',
+          'worker_facility_state' => 'nullable|string',
+          'worker_four_zero_one_k' => 'nullable|string',
+          'worker_dental' => 'nullable|string',
+          'worker_overtime_rate' => 'nullable|string',
+          'worker_on_call' => 'nullable|string',
+          'worker_call_back' => 'nullable|string',
+          'worker_on_call_check' => 'nullable|string',
+          'worker_benefits' => 'nullable|string',
+          'nurse_classification' => 'nullable|string',
+          'worker_holiday' => 'nullable|date',
+          'worker_job_type' => 'nullable|string',
+          'worker_vision' => 'nullable|string',
         ]);
 
         $nurse_data = [];
@@ -195,24 +195,24 @@ class WorkerDashboardController extends Controller
       if ($request->InfoType == 'BasicInformation') {
         //return $request->all();
         $request->validate([
-          'first_name' => 'required|string',
-          'last_name' => 'required|string',
-          'mobile' => 'required|string',
+          'first_name' => 'nullable|string',
+          'last_name' => 'nullable|string',
+          'mobile' => 'nullable|string',
           //'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
-          'zip_code' => 'required|string',
-          'state' => 'required|string',
-          'city' => 'required|string',
-          'address' => 'required|string',
+          'zip_code' => 'nullable|string',
+          'state' => 'nullable|string',
+          'city' => 'nullable|string',
+          'address' => 'nullable|string',
         ]);
         $user_data = [];
         $nurse_data = [];
         isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
         isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
-        isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';
-        isset($request->zip_code) ? ($user_data['zip_code'] = $request->zip_code) : '';
-        isset($request->state) ? ($nurse_data['state'] = $request->state) : '';
-        isset($request->city) ? ($nurse_data['city'] = $request->city) : '';
-        isset($request->address) ? ($nurse_data['address'] = $request->address) : '';
+        $user_data['mobile'] = $request->mobile;
+        $user_data['zip_code'] = $request->zip_code;
+        $nurse_data['state'] = $request->state;
+        $nurse_data['city'] = $request->city;
+        $nurse_data['address'] = $request->address;
 
         if ($request->hasFile('profile_pic')) {
           $file = $request->file('profile_pic');
@@ -231,7 +231,7 @@ class WorkerDashboardController extends Controller
       return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
     } catch (\Exception $e) {
 
-      return response()->json(['msg' => $e->getMessage(), 'status' => false]);
+      return response()->json(['msg' => $e->getMessage(), 'status' => false], 500);
     }
   }
 
@@ -435,9 +435,9 @@ class WorkerDashboardController extends Controller
       $ret->whereIn('terms', $data['terms']);
     }
 
-    if(!empty($data['as_soon_as'])){
+    if (!empty($data['as_soon_as'])) {
       $ret->where('as_soon_as', '=', $data['as_soon_as']);
-    }elseif(!empty($data['start_date'])) {
+    } elseif (!empty($data['start_date'])) {
       $ret->where('start_date', '<=', $data['start_date']);
     }
 
@@ -546,7 +546,7 @@ class WorkerDashboardController extends Controller
 
   public function apply_on_jobs(Request $request)
   {
-    
+
     try {
 
       $request->validate([
@@ -561,7 +561,7 @@ class WorkerDashboardController extends Controller
         ->whereNull('deleted_at')
         ->first();
       $input = [
-          // Summary
+        // Summary
         'job_id' => $request->jid,
         'worked_at_facility_before' => $request->worked_at_facility_before,
         'created_by' => $job->created_by,
@@ -577,7 +577,7 @@ class WorkerDashboardController extends Controller
         'hours_per_week' => $job->hours_per_week,
         'state' => $job->job_state,
         'city' => $job->job_city,
-          // Shift
+        // Shift
         'preferred_shift_duration' => $job->preferred_shift_duration,
         'guaranteed_hours' => $job->guaranteed_hours,
         'hours_shift' => $job->hours_shift,
@@ -604,7 +604,7 @@ class WorkerDashboardController extends Controller
         'total_organization_amount' => $job->total_organization_amount,
         'total_goodwork_amount' => $job->total_goodwork_amount,
         'total_contract_amount' => $job->total_contract_amount,
-          // Location 
+        // Location 
         'clinical_setting' => $job->clinical_setting,
         'preferred_work_location' => $job->preferred_work_location,
         'facility_name' => $job->facility_name,
@@ -628,9 +628,9 @@ class WorkerDashboardController extends Controller
         'Patient_ratio' => $job->Patient_ratio,
         'Emr' => $job->Emr,
         'Unit' => $job->Unit,
-         // ID & Tax Info
+        // ID & Tax Info
         'nurse_classification' => $job->nurse_classification,
-         // Medical Info
+        // Medical Info
         'vaccinations' => $job->vaccinations,
         // other
         'scrub_color' => $job->scrub_color,
@@ -641,7 +641,7 @@ class WorkerDashboardController extends Controller
         'recruiter_id' => $job->recruiter_id,
         'organization_id' => $job->organization_id,
       ];
-      
+
       if (empty($rec)) {
         offer::create($input);
         $message = 'Job saved successfully.';

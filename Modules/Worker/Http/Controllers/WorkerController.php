@@ -43,7 +43,7 @@ use App\Models\{
 use App\Models\NotificationMessage as NotificationMessageModel;
 
 if (!defined('USER_IMG')) {
-  define('USER_IMG', asset('frontend/img/profile-pic-big.png'));
+    define('USER_IMG', asset('frontend/img/profile-pic-big.png'));
 }
 
 class WorkerController extends Controller
@@ -128,10 +128,12 @@ class WorkerController extends Controller
         $data = [];
         $data['model'] = Job::findOrFail($id);
         $recruiter_id = $data['model']->recruiter_id;
+        $user = User::findOrFail($recruiter_id);
+
+        $data['model']->organization_name = !!$user->organization_name && strlen($user->organization_name) ? $user->organization_name : 'Not Available';
         $data['requiredFieldsToApply'] = [];
 
-        if(isset($recruiter_id))
-        {
+        if (isset($recruiter_id)) {
 
             $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
                 'id' => $recruiter_id,
@@ -142,12 +144,8 @@ class WorkerController extends Controller
 
                 $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
                 $data['requiredFieldsToApply'] = $requiredFieldsToApply;
-
             }
-
-        }
-        else
-        {
+        } else {
 
             $organization_id = $data['model']->organization_id;
             $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
@@ -158,9 +156,8 @@ class WorkerController extends Controller
                 $requiredFieldsToApply = $requiredFields['requiredToApply'];
                 $data['requiredFieldsToApply'] = $requiredFieldsToApply;
             }
-
         }
-        
+
         $distinctFilters = Keyword::distinct()->pluck('filter');
         $allKeywords = [];
         foreach ($distinctFilters as $filter) {
@@ -169,10 +166,10 @@ class WorkerController extends Controller
         }
         $data['allKeywords'] = $allKeywords;
         // $user = auth()->guard('frontend')->user();
-        // dd($user->nurse->id);
+        // dd($data["model"]->matchWithWorker()['diploma']['match']);
         $data['jobSaved'] = new JobSaved();
         //return $data['requiredFieldsToApply'];
-        return view('worker::dashboard.details', $data);
+        return view('worker::dashboard.details.details', $data);
     }
 
     public function sendMessages(Request $request)
@@ -234,7 +231,6 @@ class WorkerController extends Controller
                 ])->toArray();
             });
         return $chat[0];
-
     }
 
     // Why is it still here ??????????????????
@@ -294,7 +290,6 @@ class WorkerController extends Controller
             $data_User['messages'] = $room->messages;
 
             array_push($data, $data_User);
-
         }
 
 
@@ -330,17 +325,17 @@ class WorkerController extends Controller
                             ],
                             'messagesLength' => [
                                 '$cond' =>
+                                [
+                                    'if' =>
                                     [
-                                        'if' =>
-                                            [
-                                                '$isArray' => '$messages'
-                                            ],
-                                        'then' =>
-                                            [
-                                                '$size' => '$messages'
-                                            ],
-                                        'else' => 'NA'
-                                    ]
+                                        '$isArray' => '$messages'
+                                    ],
+                                    'then' =>
+                                    [
+                                        '$size' => '$messages'
+                                    ],
+                                    'else' => 'NA'
+                                ]
                             ]
 
                         ]
@@ -887,7 +882,6 @@ class WorkerController extends Controller
 
             $response['content'] = view('worker::jobs.' . $view . '_job', $data)->render();
             return new JsonResponse($response, 200);
-
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -985,7 +979,6 @@ class WorkerController extends Controller
 
             event(new NotificationOffer('Hold', false, $time, $receiver, $nurse_id, $full_name, $jobid, $job_name, $id));
             return response()->json(['msg' => 'offer accepted successfully', 'success' => true]);
-
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
             //return response()->json(['success' => false, 'message' =>  "Something was wrong please try later !"]);
@@ -1033,8 +1026,6 @@ class WorkerController extends Controller
             } else {
                 return response()->json(['msg' => 'offer not rejected', 'success' => false]);
             }
-
-
         } catch (\Exception $e) {
             // return response()->json(['success' => false, 'message' =>  "$e->getMessage()"]);
             return response()->json(['success' => false, 'message' => "Something was wrong please try later !"]);
@@ -1156,8 +1147,6 @@ class WorkerController extends Controller
             } else {
                 return response()->json(['success' => false], $response->status());
             }
-
-
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -1320,9 +1309,5 @@ class WorkerController extends Controller
         $model->fill($inputFields->all());
         $model->save();
         return new JsonResponse(['success' => true, 'msg' => 'Updated successfully.'], 200);
-
     }
-
-
-
 }
