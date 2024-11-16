@@ -15,6 +15,7 @@ class KeywordSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('keywords')->delete();
         $mainSuperUserId = User::where([
             'email' => 'fulladmin@nurseify.io'
         ])->get()->first()->id;
