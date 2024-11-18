@@ -5,7 +5,7 @@ const { authorize } = require('../gSheet/services/authService.js');
 var { report } = require("../set.js");
 
 const checkIfSpreadsheetExists = async (auth, organizationId) => {
-  const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth}` } });
+  const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth.credentials.access_token}` } });
 
   const response = await drive.files.list({
     q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${organizationId}'`,
@@ -29,7 +29,7 @@ router.post('/createSheet', async (req, res) => {
     const auth = await authorize();
 
     // Check if a spreadsheet with the organizationId already exists
-    const existingSpreadsheet = await checkIfSpreadsheetExists(auth, organizationId);
+    const existingSpreadsheet = await checkIfSpreadsheetExists(auth.credentials.access_token, organizationId);
 
     if (existingSpreadsheet) {
       return res.status(400).json({
@@ -39,12 +39,12 @@ router.post('/createSheet', async (req, res) => {
       });
     }
 
-    const sheets = google.sheets({ version: 'v4', headers: { Authorization: `Bearer ${auth}` } });
+    const sheets = google.sheets({ version: 'v4', headers: { Authorization: `Bearer ${auth.credentials.access_token}` } });
 
     const drive = google.drive({
       version: 'v3',
       headers: {
-        Authorization: `Bearer ${auth}`,
+        Authorization: `Bearer ${auth.credentials.access_token}`,
       },
     });
 
