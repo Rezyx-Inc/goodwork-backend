@@ -142,7 +142,7 @@ function loadAccessToken() {
 // Function to authorize using the saved or new OAuth token
 async function authorize(cron) {
   //cron = cron || null;
-  console.log(cron);
+  console.log("cron" , cron);
   let accessToken = loadAccessToken();
 
   if (!accessToken) {
