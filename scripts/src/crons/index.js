@@ -1,15 +1,21 @@
+require("dotenv").config();
 var cron = require("node-cron");
 var laboredge = require("./laboredge.js");
 var { report } = require("../set.js");
 var gsheet = require("../gSheet/index.js").main;
+var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
 // Uncomment to seed accounts
 //laboredge.seed(999);
 
 //report("Hello from cron")
 //laboredge.update();
+// (async () => {
+//   console.log("Exec imm");
+//   await gSheetAuth(true);
+// })();
 
-if (process.env.ENABLE_CRON) {
+if (process.env.ENABLE_CRONS) {
   console.log("Starting integrations cron jobs.");
 
   // Check newly added integrations every 10 minutes
@@ -18,6 +24,11 @@ if (process.env.ENABLE_CRON) {
     // laboredge.init();
   });
 
+  // Check newly added integrations every 45 minutes
+  cron.schedule("*/45 * * * *", async () => {
+    console.log("Refresh Gsheet token");
+    await gSheetAuth(true);
+  });
 
   // Check updates every hour
   cron.schedule("0 * * * *", () => {

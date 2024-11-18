@@ -241,21 +241,21 @@ async function main() {
   try {
     const auth = await authorize();
 
-    await processAllSpreadsheets(auth);
+    await processAllSpreadsheets(auth.credentials.access_token);
 
     const id_for_add = "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4"
-    //await addDataToSpreadsheet(auth, id_for_add);
+    //await addDataToSpreadsheet(auth.credentials.access_token, id_for_add);
 
-    //await deleteAllSpreadsheets(auth);
+    //await deleteAllSpreadsheets(auth.credentials.access_token);
 
-    const idd_for_delete = "1Yqy8khZs1GBh9RuQl7pa2qDPKGlPY-1ohpGIrCLifqw"
-    //await deleteSpreadsheetById(auth, idd_for_delete);
+    const idd_for_delete = "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4"
+    //await deleteSpreadsheetById(auth.credentials.access_token, idd_for_delete);
 
     const liste_id_to_delete = [
       "1a4JejQb0FQtvZ-ACE1pxuH57oozXD_T51UfevmSy8Zg",
       "1QUAKun2LFmKqtiqpC18DS1GWNO31iipuRuVkhUv0m08",
     ]
-    //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth, id);});
+    //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth.credentials.access_token, id);});
   } catch (err) {
     console.error('Error in main execution:', err.message);
   }
