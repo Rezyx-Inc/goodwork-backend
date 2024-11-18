@@ -10,10 +10,10 @@ var gSheetAuth = require("../gSheet/services/authService.js").authorize;
 
 //report("Hello from cron")
 //laboredge.update();
-// (async () => {
-//   console.log("Exec imm");
-//   await gSheetAuth(true);
-// })();
+(async () => {
+  console.log("Exec imm");
+  await gSheetAuth(true);
+})();
 
 if (process.env.ENABLE_CRONS) {
   console.log("Starting integrations cron jobs.");
@@ -24,8 +24,8 @@ if (process.env.ENABLE_CRONS) {
     // laboredge.init();
   });
 
-  // Check newly added integrations every 45 minutes
-  cron.schedule("*/45 * * * *", async () => {
+  // Check newly added integrations every 30 minutes
+  cron.schedule("*/30 * * * *", async () => {
     console.log("Refresh Gsheet token");
     await gSheetAuth(true);
   });
