@@ -85,10 +85,12 @@ module.exports.insertJob = async function (orgaId, jobData) {
 
     const [result] = await pool.query(
       `INSERT INTO jobs 
-            (id, organization_id, job_id, job_type, terms, profession, preferred_specialty, actual_hourly_rate, weekly_pay, hours_per_week, job_state, job_city, preferred_shift_duration, guaranteed_hours, hours_shift, weeks_shift, Preferred_assignment_duration, start_date, end_date, rto, overtime, on_call_rate, call_back_rate, orientation_rate, weekly_taxable_amount, weekly_non_taxable_amount, feels_like_per_hour, referral_bonus, sign_on_bonus, extension_bonus, total_organization_amount, pay_frequency, benefits, clinical_setting, preferred_work_location, facility_name, facilitys_parent_system, facility_shift_cancelation_policy, contract_termination_policy, traveler_distance_from_facility, job_location, certificate, description, urgency, preferred_experience, number_of_references, skills, on_call, block_scheduling, float_requirement, Patient_ratio, Emr, Unit, nurse_classification, vaccinations, tax_status, facility_city, facility_state, professional_licensure)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (id, organization_id, created_by, recruiter_id, job_id, job_type, terms, profession, preferred_specialty, actual_hourly_rate, weekly_pay, hours_per_week, job_state, job_city, preferred_shift_duration, guaranteed_hours, hours_shift, weeks_shift, Preferred_assignment_duration, start_date, end_date, rto, overtime, on_call_rate, call_back_rate, orientation_rate, weekly_taxable_amount, weekly_non_taxable_amount, feels_like_per_hour, referral_bonus, sign_on_bonus, extension_bonus, total_organization_amount, pay_frequency, benefits, clinical_setting, preferred_work_location, facility_name, facilitys_parent_system, facility_shift_cancelation_policy, contract_termination_policy, traveler_distance_from_facility, job_location, certificate, description, urgency, preferred_experience, number_of_references, skills, on_call, block_scheduling, float_requirement, Patient_ratio, Emr, Unit, nurse_classification, vaccinations, tax_status, facility_city, facility_state, professional_licensure)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         lastJobId,
+        orgaId,
+        orgaId,
         orgaId,
         jobData["Org Job Id"],
         jobData["Type"],
@@ -152,6 +154,9 @@ module.exports.insertJob = async function (orgaId, jobData) {
         emptyValue,
       ]
     );
+
+
+    return result;
 
     console.log("job inserted", jobData["Org Job Id"]);
     return result;

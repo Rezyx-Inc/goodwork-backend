@@ -252,7 +252,8 @@ async function main() {
     //await deleteSpreadsheetById(auth, idd_for_delete);
 
     const liste_id_to_delete = [
-      "1UtFpwTlmRAyydzW5mslAOr96h8HVOT2HMrpqeIpLbPg",
+      "1a4JejQb0FQtvZ-ACE1pxuH57oozXD_T51UfevmSy8Zg",
+      "1QUAKun2LFmKqtiqpC18DS1GWNO31iipuRuVkhUv0m08",
     ]
     //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth, id);});
   } catch (err) {

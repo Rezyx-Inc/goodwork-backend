@@ -121,10 +121,10 @@ router.post('/createSheet', async (req, res) => {
     // Write the fields as headers in the first row of the sheet
     await sheets.spreadsheets.values.update({
       spreadsheetId,
-      range: 'Sheet1!A1', // Assuming the first sheet is named 'Sheet1' and you want to start at A1
+      range: 'Sheet1!A1',
       valueInputOption: 'RAW',
       resource: {
-        values: [fields], // The fields are written in the first row
+        values: [fields],
       },
     });
 
@@ -164,7 +164,7 @@ router.post('/createSheet', async (req, res) => {
 
   } catch (error) {
     console.error('Error creating spreadsheet:', error);
-    report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
+    //report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
     return res.status(500).json({
       success: false,
       message: 'Internal server error'
