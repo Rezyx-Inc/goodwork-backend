@@ -241,7 +241,7 @@ async function main() {
   try {
     const auth = await authorize();
 
-    //await processAllSpreadsheets(auth.credentials.access_token);
+    await processAllSpreadsheets(auth.credentials.access_token);
 
     const id_for_add = "1IWv1voLSTzIRWZkBj4wB0PyYAQdU0-nOQ4Y28wY9xC4"
     //await addDataToSpreadsheet(auth.credentials.access_token, id_for_add);
@@ -249,7 +249,7 @@ async function main() {
     //await deleteAllSpreadsheets(auth.credentials.access_token);
 
     const idd_for_delete = "1jWUW6v0lOmDCCJ8x9YPqpY0lyIi_pmPaUGfM19BA318"
-    await deleteSpreadsheetById(auth.credentials.access_token, idd_for_delete);
+    //await deleteSpreadsheetById(auth.credentials.access_token, idd_for_delete);
 
     const liste_id_to_delete = [
       "1a4JejQb0FQtvZ-ACE1pxuH57oozXD_T51UfevmSy8Zg",
