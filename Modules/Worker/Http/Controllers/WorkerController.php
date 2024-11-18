@@ -124,52 +124,55 @@ class WorkerController extends Controller
 
     public function details($id)
     {
+        try{
+            $data = [];
+            $data['model'] = Job::findOrFail($id);
+            $recruiter_id = $data['model']->recruiter_id;
+            $user = User::findOrFail($recruiter_id);
 
-        $data = [];
-        $data['model'] = Job::findOrFail($id);
-        $recruiter_id = $data['model']->recruiter_id;
-        $user = User::findOrFail($recruiter_id);
+            $data['model']->organization_name = !!$user->organization_name && strlen($user->organization_name) ? $user->organization_name : 'Not Available';
+            $data['requiredFieldsToApply'] = [];
 
-        $data['model']->organization_name = !!$user->organization_name && strlen($user->organization_name) ? $user->organization_name : 'Not Available';
-        $data['requiredFieldsToApply'] = [];
+            if (isset($recruiter_id)) {
 
-        if (isset($recruiter_id)) {
+                $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
+                    'id' => $recruiter_id,
+                ]);
+                $requiredFields = $requiredFields->json();
 
-            $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
-                'id' => $recruiter_id,
-            ]);
-            $requiredFields = $requiredFields->json();
+                if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
 
-            if (isset($requiredFields[0]) && isset($requiredFields[0]['preferences']['requiredToApply'])) {
+                    $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
+                    $data['requiredFieldsToApply'] = $requiredFieldsToApply;
+                }
+            } else {
 
-                $requiredFieldsToApply = $requiredFields[0]['preferences']['requiredToApply'];
-                $data['requiredFieldsToApply'] = $requiredFieldsToApply;
+                $organization_id = $data['model']->organization_id;
+                $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+                    'id' => $organization_id,
+                ]);
+                $requiredFields = $requiredFields->json();
+                if (isset($requiredFields['requiredToApply'])) {
+                    $requiredFieldsToApply = $requiredFields['requiredToApply'];
+                    $data['requiredFieldsToApply'] = $requiredFieldsToApply;
+                }
             }
-        } else {
 
-            $organization_id = $data['model']->organization_id;
-            $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
-                'id' => $organization_id,
-            ]);
-            $requiredFields = $requiredFields->json();
-            if (isset($requiredFields['requiredToApply'])) {
-                $requiredFieldsToApply = $requiredFields['requiredToApply'];
-                $data['requiredFieldsToApply'] = $requiredFieldsToApply;
+            $distinctFilters = Keyword::distinct()->pluck('filter');
+            $allKeywords = [];
+            foreach ($distinctFilters as $filter) {
+                $keywords = Keyword::where('filter', $filter)->get();
+                $allKeywords[$filter] = $keywords;
             }
+            $data['allKeywords'] = $allKeywords;
+            // $user = auth()->guard('frontend')->user();
+            // dd($data["model"]->matchWithWorker()['diploma']['match']);
+            $data['jobSaved'] = new JobSaved();
+            //return $data['requiredFieldsToApply'];
+            return view('worker::dashboard.details.details', $data);
+        }catch(Exception $e){
+            return redirect()->back()->with('error', 'Something went wrong');
         }
-
-        $distinctFilters = Keyword::distinct()->pluck('filter');
-        $allKeywords = [];
-        foreach ($distinctFilters as $filter) {
-            $keywords = Keyword::where('filter', $filter)->get();
-            $allKeywords[$filter] = $keywords;
-        }
-        $data['allKeywords'] = $allKeywords;
-        // $user = auth()->guard('frontend')->user();
-        // dd($data["model"]->matchWithWorker()['diploma']['match']);
-        $data['jobSaved'] = new JobSaved();
-        //return $data['requiredFieldsToApply'];
-        return view('worker::dashboard.details.details', $data);
     }
 
     public function sendMessages(Request $request)
