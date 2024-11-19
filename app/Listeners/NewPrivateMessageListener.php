@@ -74,7 +74,7 @@ class NewPrivateMessageListener
             ];
         }
 
-        $chat->lastMessage = new UTCDateTime(now()->timestamp * 1000);
+        $chat->lastMessage = 1567878;
         $chat->isActive = true;
         $chat->save();
 
