@@ -156,7 +156,6 @@ module.exports.insertJob = async function (orgaId, jobData) {
     );
 
 
-    return result;
 
     console.log("job inserted", jobData["Org Job Id"]);
     return result;
