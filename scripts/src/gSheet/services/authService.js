@@ -104,7 +104,7 @@ async function getOAuthTokenWithPuppeteer() {
   const code = new URL(currentUrl).searchParams.get('code');
 
   // Close the browser
-  //await browser.close();
+  await browser.close();
 
   if (!code) {
     throw new Error('OAuth2 flow failed. No authorization code received.');

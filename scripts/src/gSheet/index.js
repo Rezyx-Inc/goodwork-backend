@@ -83,6 +83,8 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath);
     }
+    let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
+    console.log(OrgaId);
 
     // Check if the JSON file already exists
     const existFile = fs.existsSync(filePath);
@@ -223,10 +225,15 @@ async function processAllSpreadsheets(auth) {
     // Step 2: Loop through each spreadsheet and get the data
     for (const spreadsheet of spreadsheets) {
 
-      console.log(`Processing spreadsheet: ${spreadsheet.name} (${spreadsheet.id})`);
+      if (spreadsheet.id === "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4") {
+        console.log("skip this");
+        
+      } else {
+        console.log(`Processing spreadsheet: ${spreadsheet.name} (${spreadsheet.id})`);
 
-      // Call your function to get data and save it as JSON
-      await getDataAndSaveAsJson(auth, spreadsheet.id, spreadsheet.name);
+        // Call your function to get data and save it as JSON
+        await getDataAndSaveAsJson(auth, spreadsheet.id, spreadsheet.name);
+      }
 
     }
   } catch (err) {
@@ -248,12 +255,14 @@ async function main() {
 
     //await deleteAllSpreadsheets(auth.credentials.access_token);
 
-    const idd_for_delete = "1jWUW6v0lOmDCCJ8x9YPqpY0lyIi_pmPaUGfM19BA318"
+    const idd_for_delete = "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4"
     //await deleteSpreadsheetById(auth.credentials.access_token, idd_for_delete);
 
     const liste_id_to_delete = [
-      "1a4JejQb0FQtvZ-ACE1pxuH57oozXD_T51UfevmSy8Zg",
-      "1QUAKun2LFmKqtiqpC18DS1GWNO31iipuRuVkhUv0m08",
+      "1Z6WN5LHXTtX7S9XCBhwP8etxtNi3PEIqgWiuOEiZgIs",
+      "19l41OgezIeArouJIpJSlmmFtV7JxMFlDa2KDY2_VA60",
+      "1YsIGVl2l19r_j-bFkm7aWSnUNZXPf19HWcoBHO_xqc4",
+      "1kY6Xp8TydZevV39p3BoQZ7r8tw4tDZs-CFzHJKVLKa4",
     ]
     //liste_id_to_delete.forEach(id => { deleteSpreadsheetById(auth.credentials.access_token, id);});
   } catch (err) {
