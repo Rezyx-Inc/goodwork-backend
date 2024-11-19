@@ -330,20 +330,7 @@
   </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
 <!---------------------mobile show----------------->
-
-
-
 
 @stop
 
@@ -352,6 +339,9 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+  function redirectToJobDetails(id) {
+    window.location.href = `job/${id}/details`;
+  }
   function daysUntilWorkStarts(dateString) {
     const workStartDate = new Date(dateString);
     const today = new Date();
