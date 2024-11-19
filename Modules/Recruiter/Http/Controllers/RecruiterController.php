@@ -19,6 +19,7 @@ use App\Models\Nurse;
 use App\Models\NotificationMessage as NotificationMessageModel;
 use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
+use MongoDB\BSON\UTCDateTime;
 
 class RecruiterController extends Controller
 {
@@ -220,7 +221,7 @@ class RecruiterController extends Controller
             }
 
             $data_User['fullName'] = $name;
-            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['lastMessage'] = new UTCDateTime(now()->timestamp * 1000);
             $data_User['workerId'] = $room->workerId;
             $data_User['isActive'] = $room->isActive;
             $data_User['organizationId'] = $room->organizationId;
@@ -282,7 +283,7 @@ class RecruiterController extends Controller
                 ->get();
 
             $data_User['fullName'] = $user[0]->last_name;
-            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['lastMessage'] = new UTCDateTime(now()->timestamp * 1000);
             $data_User['workerId'] = $room->workerId;
             $data_User['organizationId'] = $room->organizationId;
             $data_User['isActive'] = $room->isActive;
@@ -313,7 +314,7 @@ class RecruiterController extends Controller
                     'workerId' => $nurse_user_id,
                     'recruiterId' => $recruiter_id,
                     'organizationId' => $recruiter_id, // Replace this with the actual organizationId
-                    'lastMessage' => $this->timeAgo(now()),
+                    'lastMessage' => new UTCDateTime(now()->timestamp * 1000),
                     'isActive' => true,
                     'messages' => [],
                 ]);
@@ -372,7 +373,7 @@ class RecruiterController extends Controller
             }
 
             $data_User['fullName'] = $name;
-            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['lastMessage'] = new UTCDateTime(now()->timestamp * 1000);
             $data_User['workerId'] = $room->workerId;
             $data_User['isActive'] = $room->isActive;
             $data_User['organizationId'] = $room->organizationId;
@@ -484,7 +485,7 @@ class RecruiterController extends Controller
 
         $idOrganization = $request->idOrganization;
 
-        $time = now()->toDateTimeString();
+        $time = new UTCDateTime(now()->timestamp * 1000);
         event(new NewPrivateMessage($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
 
