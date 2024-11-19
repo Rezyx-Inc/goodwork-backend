@@ -5,7 +5,6 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Models\Chat;
-use MongoDB\BSON\UTCDateTime;
 // use App\Events\NewPrivatePrivateMessage;
 
 class NewPrivateMessageListener
@@ -74,7 +73,7 @@ class NewPrivateMessageListener
             ];
         }
 
-        $chat->lastMessage = 1567878;
+        $chat->lastMessage = now()->toDateTimeString();
         $chat->isActive = true;
         $chat->save();
 

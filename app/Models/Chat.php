@@ -8,6 +8,7 @@ class Chat extends Model
 {
     protected $connection = 'mongodb';
     protected $collection = 'chat';
+    public $timestamps = false;
 
     // protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'organization', 'messages'];
     protected $fillable = ['lastMessage', 'isActive', 'worker', 'recruiter', 'organization', 'messages', 'organizationId', 'workerId', 'recruiterId'];
