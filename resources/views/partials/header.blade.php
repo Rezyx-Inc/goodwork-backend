@@ -49,7 +49,7 @@
                                                 </li>
                                             @endif
                                         @elseif (request()->routeIs('for-recruiters'))
-                                            @if (!auth()->guard('frontend')->check())
+                                            @if (!auth()->guard('recruiter')->check())
                                                 <li>
                                                     <a href="{{ route('recruiter.login') }}">Login</a>
                                                 </li>
@@ -59,11 +59,11 @@
                                             @else
                                                 <li></li>
                                                 <li>
-                                                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                                                    <a href="{{ route('recruiter-dashboard') }}">Dashboard</a>
                                                 </li>
                                             @endif
                                         @elseif (request()->routeIs('for-organizations'))
-                                            @if (!auth()->guard('frontend')->check())
+                                            @if (!auth()->guard('organization')->check())
                                                 <li>
                                                     <a href="{{ route('organization.login') }}">Login</a>
                                                 </li>
@@ -73,7 +73,7 @@
                                             @else
                                                 <li></li>
                                                 <li>
-                                                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                                                    <a href="{{ route('organization-dashboard') }}">Dashboard</a>
                                                 </li>
                                             @endif
 

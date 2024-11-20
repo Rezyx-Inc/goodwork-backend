@@ -29,7 +29,7 @@
     @endif
 </ul>
 <div class="ss-appli-cng-abt-inf-dv">
-    <h5>Applicant Information</h5>
+    <h5>Applicant summary</h5>
     <p>{{ $userdetails->about_me }}</p>
 </div>
 <div class="ss-applicatio-infor-texts-dv">
@@ -191,7 +191,7 @@
             </h6>
         </li>
         <li class="col-md-12 ss-chng-appli-slider-mn-dv">
-            <p>Applicants Information({{ $jobappliedcount }})</p>
+            <p>Application details({{ $jobappliedcount }})</p>
         </li>
     </ul>
 </div>
