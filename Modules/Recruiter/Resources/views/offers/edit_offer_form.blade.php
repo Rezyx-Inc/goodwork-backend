@@ -274,7 +274,7 @@
                     </div>
                 </div>
                 <input id="start_date" type="date" min="2024-03-06" name="start_date"
-                    placeholder="Select Date" >
+                    placeholder="Select Date" value="{{ date('Y-m-d') }}">
                 <div> 
                     <span class="help-block-start_date"></span>
                 </div>
@@ -288,7 +288,7 @@
                     
                 </div>
                 <input id="end_date" type="date" min="2024-03-06" name="end_date"
-                    placeholder="Select Date" >
+                    placeholder="Select Date" value="{{ date('Y-m-d') }}">
                 <div> 
                     <span class="help-block-end_date"></span>
                 </div>
@@ -562,9 +562,9 @@
             
             {{-- Address --}}
             <div class="ss-form-group col-md-12">
-                <label>Location</label>
+                <label>Facilty address</label>
                 <input type="text" name="preferred_work_location"
-                    id="preferred_work_location" placeholder="Enter Work Location">
+                    id="preferred_work_location" placeholder="Enter Facilty address">
                 <div> 
                     <span class="help-block-preferred_work_location"></span>
                 </div>
