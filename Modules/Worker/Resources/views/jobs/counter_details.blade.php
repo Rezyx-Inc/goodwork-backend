@@ -4,7 +4,7 @@
     <div class="ss-job-apply-on-tx-bx-hed-dv">
         <ul>
             <li>
-                <p>Recruiter NNN</p>
+                <p>Recruiter {{ $recruiter->organization_name ?? '' }}</p>
             </li>
             <li><img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $recruiter->image) }}"
                     onerror="this.onerror=null;this.src='{{ USER_IMG }}';" />{{ $recruiter->first_name . ' ' . $recruiter->last_name }}
@@ -19,11 +19,17 @@
     </div>
     <div>
         <div class="ss-job-view-off-text-fst-dv">
-            <p class="mt-3">On behalf of <a href="">{{ $recruiter->first_name }} {{ $recruiter->last_name }}</a>
-                would like to offer <a href="#">{{ $jobdetails['id'] }}</a>
-                to <a href="#">{{ $nursedetails->first_name }} {{ $nursedetails->last_name }}</a> with the
-                following terms. This offer is only available for the next <a href="#">6 weeks:</a>
-            </p>
+            <p class="mt-3">{{ $recruiter->first_name }} {{ $recruiter->last_name }}
+                {{ $recruiter->organization_name && $recruiter->organization_name != '' ? 'on behalf of ' . $recruiter->organization_name : '' }}
+                would like to offer job
+                {{ $jobdetails['id'] }} to you
+                with the below terms</p>
+
+            {{-- <p class="mt-3">On behalf of {{ $recruiter->first_name }} {{ $recruiter->last_name }}
+                would like to offer {{ $jobdetails['id'] }}
+                to {{ $nursedetails->first_name }} {{ $nursedetails->last_name }} with the
+                following terms.
+            </p> --}}
         </div>
     </div>
     <div class="ss-jb-apply-on-disc-txt mb-3">
