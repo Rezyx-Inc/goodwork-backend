@@ -1,21 +1,22 @@
 <!----------------jobs applay view details--------------->
 
 <div class="ss-counter-ofred-mn-div">
-    <h4><a href="javascript:void(0)" title="Back" data-id="{{ $model->id }}" data-type="offered"
+    <h4><a href="javascript:void(0)" title="Back" data-id="{{ $model->job_id }}" data-type="offered"
             onclick="fetch_job_content(this)"><img
                 src="{{ URL::asset('frontend/img/counter-left-img.png') }}" /></a>Counter Offer</h4>
 
     <div class="ss-job-view-off-text-fst-dv">
-        <p>On behalf of <a href="">{{ $recruiter->first_name }} , {{ $recruiter->last_name }}</a> would like to
-            offer <a href="#">{{ $model->job_id }}</a> to <a href="#">James Bond</a> with the following
-            terms. This offer is only available for the next <a hre="#">6 weeks:</a></p>
+        <p class="mt-3">{{ $recruiter->first_name }} {{ $recruiter->last_name }}
+            {{ $recruiter->organization_name && $recruiter->organization_name != '' ? 'on behalf of ' . $recruiter->organization_name : '' }}
+            would like to offer job
+            {{ $model->job_id }} to you
+            with the below terms</p>
+
     </div>
 
     <div class="ss-jb-apply-on-disc-txt">
         <h5>Description</h5>
-        <p>This position is accountable and responsible for nursing care administered under the direction of a
-            Registered Nurse (Nurse Manager, Charge Nurse, and/or Staff Nurse). Nurse interns must utilize personal
-            protective equipment such as gloves, gown, mask. <a href="#">Read More</a></p>
+        <p>{{ $jobdetails['description'] }}</p>
     </div>
 
 

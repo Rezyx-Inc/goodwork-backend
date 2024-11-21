@@ -124,7 +124,7 @@ class WorkerController extends Controller
 
     public function details($id)
     {
-        try{
+        try {
             $data = [];
             $data['model'] = Job::findOrFail($id);
             $recruiter_id = $data['model']->recruiter_id;
@@ -170,7 +170,7 @@ class WorkerController extends Controller
             $data['jobSaved'] = new JobSaved();
             //return $data['requiredFieldsToApply'];
             return view('worker::dashboard.details.details', $data);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');
         }
     }
@@ -873,6 +873,7 @@ class WorkerController extends Controller
                         $data['us_cities'] = Cities::where('country_id', $usa->id)->get();
                         $offerdetails = Offer::where('id', $offer_id->id)->first();
                         $data['model'] = $offerdetails;
+                        $data['jobdetails'] = $job;
                         $view = 'counter_offer';
                     } catch (\Exception $e) {
                         return response()->json(['success' => false, 'message' => 'here']);
