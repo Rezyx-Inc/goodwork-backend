@@ -282,7 +282,7 @@ router.get("/customer/customer-payment-method", async (req, res) => {
     }
 
   } catch (e) {
-    
+
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }
@@ -330,6 +330,7 @@ router.post("/customer/subscription", async (req, res) => {
       .send({ status: false, message: "Missing parameters." });
   }
 
+  // In 2 weeks from now
   var date = moment().add(2, 'weeks');
   var amount = Number(req.body.amount) / Number(req.body.length);
 
@@ -337,6 +338,7 @@ router.post("/customer/subscription", async (req, res) => {
     if (amount % 1 != 0) {
       var subscriptionScheduleOptions = {
         customer: req.body.stripeId,
+        // Take the first friday
         start_date: date.weekday(5).unix(),
         end_behavior: "cancel",
         phases: [
