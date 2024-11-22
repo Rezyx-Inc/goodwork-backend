@@ -18,7 +18,7 @@
                                         <span class="glyphicon glyphicon-camera"></span>
                                         <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" onchange="loadFile(event)" />
+                                    <input id="file" type="file" accept="image/*" onchange="loadFile(event)" />
                                     <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
                                         onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
                                 </div>
@@ -455,7 +455,8 @@
                                                     </li>
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
-                                                        style="display: none;" />
+                                                        style="display: none;"
+                                                        accept="image/*,.pdf" />
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -481,7 +482,8 @@
                                                     </li>
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
-                                                        style="display: none;" />
+                                                        style="display: none;"
+                                                        accept="image/*,.pdf" />
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -501,7 +503,7 @@
                                             align-items: center;
                                         ">
                                                 <input hidden displayName="Driving Licence" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload" accept="image/*,.pdf">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="driving licence"
                                                         class="item">
@@ -528,7 +530,7 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Ss number file" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload" accept="image/*,.pdf">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="ss number file"
                                                         class="item">
@@ -554,7 +556,7 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Other" type="file" class="files-upload">
-                                                <div class="list-items">
+                                                <div class="list-items" accept="image/*,.pdf">
                                                     <input hidden type="text" name="type" value="other"
                                                         class="item">
                                                 </div>
@@ -587,7 +589,7 @@
                                                             <span class="item-text">{{ $value->title }}</span>
                                                         </li>
                                                         <input displayName="{{ $value->title }}" type="file"
-                                                            class="files-upload" style="display: none;" />
+                                                            class="files-upload" accept="image/*,.pdf" style="display: none;" />
                                                     @endforeach
                                                 @endif
                                             </ul>
@@ -662,7 +664,7 @@
                                             <label>Upload Image</label>
                                             <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
                                             </div>
-                                            <input type="file" name="image">
+                                            <input type="file" name="image" accept="image/*,.pdf">
                                             <button type="button" onclick="open_file(this)">Choose File</button>
                                             <span class="help-block"></span>
                                         </div>
@@ -679,7 +681,7 @@
                                                                         justify-content: center !important;
                                                                         align-items: center !important;
                                                                     ">
-                                                <input hidden displayName="Diploma" type="file" class="files-upload">
+                                                <input hidden displayName="Diploma" type="file" accept="image/*,.pdf" class="files-upload">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="diploma"
                                                         class="item">
@@ -708,7 +710,7 @@
                                                                         align-items: center !important;
                                                                     ">
                                                 <input hidden displayName="Professional License" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload" accept="image/*,.pdf">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type"
                                                         value="Professional License" class="item">
@@ -1016,14 +1018,15 @@
         function sendMultipleFiles(type) {
 
             const fileInputs = document.querySelectorAll('.files-upload');
-            console.log('this is my file inputs values', fileInputs);
+            //console.log('this is my file inputs values', fileInputs);
 
             const fileReadPromises = [];
             let worker_id = '{!! $worker->id !!}';
-            console.log(worker_id);
+            //console.log(worker_id);
             var workerId = worker_id;
 
             if (type == 'references') {
+
                 let referenceName = document.querySelector('input[name="name"]').value;
                 let referencePhone = document.querySelector('input[name="phone"]').value;
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
@@ -1040,7 +1043,9 @@
                     minTitle: referenceMinTitle,
                     isLastAssignment: referenceRecency == 1 ? true : false
                 }
-                console.log(referenceInfo);
+
+                //console.log(referenceInfo);
+
                 if (referenceInfo == null) {
                     notie.alert({
                         type: 'error',
@@ -1049,8 +1054,11 @@
                     });
                     return;
                 }
+
                 let readerPromise = new Promise((resolve, reject) => {
+
                     const reader = new FileReader();
+
                     reader.onload = function(event) {
                         resolve({
                             name: referenceImage.name,
@@ -1064,18 +1072,26 @@
 
                     reader.onerror = reject;
                     reader.readAsDataURL(referenceImage);
+
                 });
+
                 fileReadPromises.push(readerPromise);
                 removeAllCheckBox();
 
             } else {
+
                 fileInputs.forEach((input, index) => {
+
                     let displayName = input.getAttribute("displayName");
+
                     if (input.files[0]) {
+                        
                         const file = input.files[0];
-                        console.log('this is the file', file);
+
                         const readerPromise = new Promise((resolve, reject) => {
+
                             const reader = new FileReader();
+
                             reader.onload = function(event) {
                                 resolve({
                                     name: file.name,
@@ -1085,15 +1101,17 @@
                                     displayName: displayName || file.name,
                                 });
                             };
+
                             reader.onerror = reject;
                             reader.readAsDataURL(file);
-                            console.log('this is the reader promise', file);
+
                         });
 
                         fileReadPromises.push(readerPromise);
                     }
                 });
             }
+
             if (fileReadPromises.length == 0) {
                 notie.alert({
                     type: 'error',
@@ -1105,11 +1123,12 @@
 
 
             Promise.all(fileReadPromises).then(files => {
-                console.log(files);
+                //console.log(files);
                 var body = {
                     workerId: workerId,
                     files: files
                 };
+
                 fetch('/worker/add-docs', {
                         method: 'POST',
                         headers: {
@@ -1124,12 +1143,13 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data); // Handle success
+                        //console.log(data); // Handle success
                         notie.alert({
                             type: 'success',
                             text: '<i class="fa fa-check"></i> Files uploaded successfully',
                             time: 3
                         });
+
                         closeModal();
                         // reload the page
                         // setTimeout(() => {
@@ -1137,15 +1157,18 @@
                         // }, 2000);
                     })
                     .catch(error => {
-                        console.error('Error:', error); // Handle errors
+                        //console.error('Error:', error); // Handle errors
                     });
+
             }).catch(error => {
                 console.error('Error reading files:', error); // Handle file read errors
             });
+
             // clear files inputs
             fileInputs.forEach((input) => {
                 input.value = '';
             });
+            
             selectedFiles = [];
             removeAllCheckBox();
 
