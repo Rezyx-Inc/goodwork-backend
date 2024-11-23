@@ -11,13 +11,19 @@ router.get("/", (req, res) => {
   res.send("Payments page");
 });
 
-/* Workers */
+/* Workers
+
+@note : Commented for now since we won't use these methods ------------------------------------
 
 // create a connected account | returns account id
 router.post("/create", async (req, res) => {
+
   if (!Object.keys(req.body).length) {
+
     return res.status(400).send({ status: false, message: "Empty request" });
+
   } else if (!req.body.userId || !req.body.email) {
+
     return res
       .status(400)
       .send({ status: false, message: "Missing parameters." });
@@ -124,13 +130,18 @@ router.post("/transfer", async (req, res) => {
   }
 });
 
+*/
 /* Recruiters - Organizations (orgs) */
 
 // Create a customer
 router.post("/customer/create", async (req, res) => {
+
   if (!Object.keys(req.body).length) {
+
     return res.status(400).send({ status: false, message: "Empty request" });
+
   } else if (!req.body.email) {
+
     return res
       .status(400)
       .send({ status: false, message: "Missing parameter." });
@@ -138,6 +149,7 @@ router.post("/customer/create", async (req, res) => {
 
   // Check if the customer exists
   try {
+
     const customerTest = await stripe.customers.list({
       email: req.body.email,
     });
@@ -148,34 +160,45 @@ router.post("/customer/create", async (req, res) => {
         .send({ status: false, message: "Client exists.", code: 101 });
     }
   } catch (e) {
+
     console.log(e.message);
     return res.status(400).send({ status: false, message: e.message });
   }
 
-  const portal = "https://billing.stripe.com/p/login/test_8wMaFa19ddXy1wc5kk";
+  const portal = process.env.STRIPE_CUSTOMER_PORTAL;
 
   // Create the customer
   try {
+
     const customer = await stripe.customers.create({
+
       email: req.body.email,
       payment_method: "pm_card_visa",
       invoice_settings: {
         default_payment_method: "pm_card_visa",
       },
+
     });
 
     await queries.insertCustomerStripeId(customer.id, req.body.email);
 
     res.status(200).json({ status: true, message: portal });
+
   } catch (e) {
+
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }
 });
 
-// Create an invoice
+// Create an invoice 
+/*
+@note : Disabled in favor of scheduled payments ---------------------------------------
+
 router.post("/customer/invoice", async (req, res) => {
+
   if (!Object.keys(req.body).length) {
+
     return res.status(400).send({ status: false, message: "Empty request" });
   } else if (!req.body.stripeId || !req.body.amount || !req.body.offerId) {
     return res
@@ -223,31 +246,43 @@ router.post("/customer/invoice", async (req, res) => {
     return res.status(400).send({ status: false, message: e.message });
   }
 });
+*/
 
 // get - customer payment methods
 router.get("/customer/customer-payment-method", async (req, res) => {
+
   if (!Object.keys(req.query).length) {
+
     return res.status(400).send({ status: false, message: "Empty request" });
+    
   } else if (!req.query.customerId) {
+
     return res
       .status(400)
       .send({ status: false, message: "Missing parameters." });
   }
 
   try {
+
     const customer = await stripe.customers.retrieve(req.query.customerId);
+
     if (customer.invoice_settings.default_payment_method) {
+
       return res.status(200).send({
         status: true,
         message: customer.invoice_settings.default_payment_method,
       });
+
     } else {
+
       return res.status(404).send({
         status: false,
         message: "No default payment method found",
       });
     }
+
   } catch (e) {
+
     console.log(e);
     return res.status(400).send({ status: false, message: e.message });
   }
@@ -283,20 +318,27 @@ router.get("/onboarding-status", async (req, res) => {
 
 // Create a subscription/payment
 router.post("/customer/subscription", async (req, res) => {
+
   if (!Object.keys(req.body).length) {
+
     return res.status(400).send({ status: false, message: "Empty request" });
+
   } else if (!req.body.stripeId || !req.body.amount || !req.body.offerId) {
+
     return res
       .status(400)
       .send({ status: false, message: "Missing parameters." });
   }
-  var date = moment();
+
+  // In 2 weeks from now
+  var date = moment().add(2, 'weeks');
   var amount = Number(req.body.amount) / Number(req.body.length);
 
   try {
     if (amount % 1 != 0) {
       var subscriptionScheduleOptions = {
         customer: req.body.stripeId,
+        // Take the first friday
         start_date: date.weekday(5).unix(),
         end_behavior: "cancel",
         phases: [
@@ -347,6 +389,7 @@ router.post("/customer/subscription", async (req, res) => {
           },
         ],
       };
+
     } else if (amount % 1 == 0) {
       var subscriptionScheduleOptions = {
         customer: req.body.stripeId,
