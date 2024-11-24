@@ -7,32 +7,28 @@
             {{-- First Name --}}
             <div class="ss-form-group col-11">
                 <label>First Name</label>
-                <input type="text" name="first_name"
-                    placeholder="Please enter your first name"
+                <input type="text" name="first_name" placeholder="Please enter your first name"
                     value="{{ isset($user->first_name) ? $user->first_name : '' }}">
             </div>
             <span class="help-block-first_name"></span>
             {{-- Last Name --}}
             <div class="ss-form-group col-11">
                 <label>Last Name</label>
-                <input type="text" name="last_name"
-                    placeholder="Please enter your last name"
+                <input type="text" name="last_name" placeholder="Please enter your last name"
                     value="{{ isset($user->last_name) ? $user->last_name : '' }}">
             </div>
             <span class="help-block-last_name"></span>
             {{-- Phone Number --}}
             <div class="ss-form-group col-11">
                 <label>Phone Number</label>
-                <input id="contact_number" type="text" name="mobile"
-                    placeholder="Please enter your phone number"
+                <input id="contact_number" type="text" name="mobile" placeholder="Please enter your phone number"
                     value="{{ isset($user->mobile) ? $user->mobile : '' }}">
             </div>
             <span class="help-block-mobile"></span>
             {{-- Address Information --}}
             <div class="ss-form-group col-11">
                 <label>Address</label>
-                <input type="text" name="address"
-                    placeholder="Please enter your address"
+                <input type="text" name="address" placeholder="Please enter your address"
                     value="{{ isset($worker->address) ? $worker->address : '' }}">
             </div>
             <span class="help-block-address"></span>
@@ -54,7 +50,7 @@
             {{-- City Information --}}
             <div class="ss-form-group col-11">
                 <label>City</label>
-                <select name="city" id="job_city" >
+                <select name="city" id="job_city">
                     <option value="{{ !empty($worker->city) ? $worker->city : '' }}" disabled selected hidden>
                         {{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }}
                     </option>
@@ -65,15 +61,13 @@
             {{-- Zip Code Information --}}
             <div class="ss-form-group col-11">
                 <label>Zip Code</label>
-                <input type="number" name="zip_code"
-                    placeholder="Please enter your Zip Code"
+                <input type="number" name="zip_code" placeholder="Please enter your Zip Code"
                     value="{{ isset($user->zip_code) ? $user->zip_code : '' }}">
             </div>
             <span class="help-block-zip_code"></span>
             {{-- Skip && Save --}}
             <div class="ss-prsn-form-btn-sec col-11">
-                <button type="text" class="ss-prsnl-save-btn"
-                    id="SaveBaiscInformation"> Save
+                <button type="text" class="ss-prsnl-save-btn" id="SaveBaiscInformation"> Save
                 </button>
                 <button type="text" class="ss-prsnl-save-btn firstNext"> Next
                 </button>
@@ -98,8 +92,8 @@
             <div class="ss-form-group col-11">
                 <label>Profession</label>
                 <select name="profession" id="profession">
-                    <option
-                        value="{{ !empty($worker->profession) ? $worker->profession : '' }}" disabled selected hidden>
+                    <option value="{{ !empty($worker->profession) ? $worker->profession : '' }}" disabled selected
+                        hidden>
                         {{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }}
                     </option>
                     @foreach ($professions as $profession)
@@ -114,8 +108,8 @@
             <div class="ss-form-group  col-11">
                 <label>Specialty</label>
                 <select name="specialty" id="specialty">
-                    <option
-                        value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}" disabled selected hidden>
+                    <option value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}" disabled selected
+                        hidden>
                         {{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }}
                     </option>
 
@@ -149,7 +143,8 @@
             <div class="ss-form-group col-11">
                 <label>Type</label>
                 <select name="worker_job_type" id="worker_job_type">
-                    <option value="{{ !empty($worker->worker_job_type) ? $worker->worker_job_type : '' }}" disabled selected hidden>
+                    <option value="{{ !empty($worker->worker_job_type) ? $worker->worker_job_type : '' }}" disabled
+                        selected hidden>
                         {{ !empty($worker->worker_job_type) ? $worker->worker_job_type : 'Select Type' }}
                     </option>
 
@@ -168,10 +163,10 @@
             <div class="ss-form-group col-11">
                 <label>Block scheduling</label>
 
-                <select name="block_scheduling" class="block_scheduling mb-3"
-                    id="block_scheduling" value="">
+                <select name="block_scheduling" class="block_scheduling mb-3" id="block_scheduling" value="">
                     <option
-                        value="{{ $worker->block_scheduling == '0' ? 'No' : ($worker->block_scheduling == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                        value="{{ $worker->block_scheduling == '0' ? 'No' : ($worker->block_scheduling == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
 
                         {{ $worker->block_scheduling == '0' ? 'No' : ($worker->block_scheduling == '1' ? 'Yes' : 'Select Block scheduling') }}
                     </option>
@@ -186,10 +181,9 @@
             <div class="ss-form-group col-11">
                 <label>Float requirements</label>
 
-                <select name="float_requirement" class="float_requirement mb-3"
-                    id="float_requirement" value="">
-                    <option
-                        value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}" disabled selected hidden>
+                <select name="float_requirement" class="float_requirement mb-3" id="float_requirement" value="">
+                    <option value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}"
+                        disabled selected hidden>
                         {{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }}
                     </option>
 
@@ -202,11 +196,11 @@
             {{-- Facility Shift Cancellation Policy --}}
             <div class="ss-form-group  col-11">
                 <label>Facility Shift Cancellation Policy</label>
-                <select name="facility_shift_cancelation_policy"
-                    class="facility_shift_cancelation_policy mb-3"
+                <select name="facility_shift_cancelation_policy" class="facility_shift_cancelation_policy mb-3"
                     id="facility_shift_cancelation_policy" value="">
                     <option
-                        value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}" disabled selected hidden>
+                        value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}"
+                        disabled selected hidden>
                         {{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }}
                     </option>
 
@@ -223,8 +217,7 @@
             {{-- Contract Termination Policy --}}
             <div class="ss-form-group col-11">
                 <label>Contract Termination Policy</label>
-                <input type="text" id="contract_termination_policy"
-                    name="contract_termination_policy"
+                <input type="text" id="contract_termination_policy" name="contract_termination_policy"
                     placeholder="Enter Contract Termination Policy"
                     value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
             </div>
@@ -233,8 +226,7 @@
             {{-- Traveler Distance From Facility --}}
             <div class="ss-form-group col-11">
                 <label>Distance from your home</label>
-                <input type="number" id="traveler_distance_from_facility"
-                    name="distance_from_your_home"
+                <input type="number" id="traveler_distance_from_facility" name="distance_from_your_home"
                     placeholder="Enter the distance from your home."
                     value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}">
             </div>
@@ -243,8 +235,7 @@
             {{-- Clinical Setting --}}
             <div class="ss-form-group col-11">
                 <label>Clinical Setting</label>
-                <input type="text" id="clinical_setting"
-                    name="clinical_setting_you_prefer"
+                <input type="text" id="clinical_setting" name="clinical_setting_you_prefer"
                     placeholder="Enter clinical setting"
                     value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}">
             </div>
@@ -263,8 +254,8 @@
             <div class="ss-form-group col-11">
                 <label>EMR</label>
                 <select name="worker_emr" class="emr mb-3" id="emr">
-                    <option
-                        value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}" disabled selected hidden>
+                    <option value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}" disabled selected
+                        hidden>
                         {{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }}
                     </option>
 
@@ -281,8 +272,7 @@
             {{-- Unit --}}
             <div class="ss-form-group col-11">
                 <label>Unit</label>
-                <input id="Unit" type="text" name="worker_unit"
-                    placeholder="Enter Unit"
+                <input id="Unit" type="text" name="worker_unit" placeholder="Enter Unit"
                     value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}">
             </div>
             <span class="help-block-worker_unit"></span>
@@ -290,8 +280,7 @@
             {{-- Scrub Color --}}
             <div class="ss-form-group col-11">
                 <label>Scrub Color</label>
-                <input id="scrub_color" type="text" name="worker_scrub_color"
-                    placeholder="Enter Scrub Color"
+                <input id="scrub_color" type="text" name="worker_scrub_color" placeholder="Enter Scrub Color"
                     value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}">
             </div>
             <span class="help-block-worker_scrub_color"></span>
@@ -316,7 +305,8 @@
                 <label>Shift Time of Day</label>
                 <select name="worker_shift_time_of_day" id="shift-of-day">
                     <option
-                        value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}" disabled selected hidden>
+                        value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}"
+                        disabled selected hidden>
                         {{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }}
                     </option>
                     @if (isset($allKeywords['PreferredShift']))
@@ -333,8 +323,7 @@
             {{-- Hours/Shift --}}
             <div class="ss-form-group col-11">
                 <label>Hours/Shift</label>
-                <input id="hours_shift" type="number" name="worker_hours_shift"
-                    placeholder="Enter Hours/Shift"
+                <input id="hours_shift" type="number" name="worker_hours_shift" placeholder="Enter Hours/Shift"
                     value="{{ !empty($worker->worker_hours_shift) ? $worker->worker_hours_shift : '' }}">
             </div>
             <span class="help-block-worker_hours_shift"></span>
@@ -342,8 +331,8 @@
             {{-- Weeks/Assignment --}}
             <div class="ss-form-group col-11">
                 <label>Weeks/Assignment</label>
-                <input id="preferred_assignment_duration" type="number"
-                    name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment"
+                <input id="preferred_assignment_duration" type="number" name="worker_weeks_assignment"
+                    placeholder="Enter Weeks/Assignment"
                     value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}">
             </div>
             <span class="help-block-worker_weeks_assignment"></span>
@@ -351,8 +340,7 @@
             {{-- Shifts/Week --}}
             <div class="ss-form-group col-11">
                 <label>Shifts/Week</label>
-                <input id="weeks_shift" type="number" name="worker_shifts_week"
-                    placeholder="Enter Shifts/Week"
+                <input id="weeks_shift" type="number" name="worker_shifts_week" placeholder="Enter Shifts/Week"
                     value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}">
             </div>
             <span class="help-block-worker_shifts_week"></span>
@@ -370,7 +358,7 @@
 
 
             {{-- nursing_license_state --}}
-            <div class="ss-form-group col-11">
+            {{-- <div class="ss-form-group col-11">
                 <label>Where are you licensed?</label>
                 <select name="nursing_license_state" id="nursing_license_state">
                     <option
@@ -383,7 +371,7 @@
                     @endforeach
                 </select>
                 <span class="help-block-nursing_license_state"></span>
-            </div>
+            </div> --}}
             {{-- End nursing_license_state --}}
             {{-- worker_eligible_work_in_us --}}
 
@@ -391,7 +379,8 @@
                 <label>Eligible to work in the US</label>
                 <select name="worker_eligible_work_in_us" id="worker_eligible_work_in_us">
                     <option
-                        value="{{ $worker->worker_eligible_work_in_us == '0' ? 'No' : ($worker->worker_eligible_work_in_us == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                        value="{{ $worker->worker_eligible_work_in_us == '0' ? 'No' : ($worker->worker_eligible_work_in_us == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
 
                         {{ $worker->worker_eligible_work_in_us == '0' ? 'No' : ($worker->worker_eligible_work_in_us == '1' ? 'Yes' : 'Select Eligible to work in the US') }}
                     </option>
@@ -410,15 +399,15 @@
             <div class="ss-form-group col-11">
                 <label>State you'd like to work?</label>
                 <select name="worker_facility_state" id="worker_facility_state">
-                    <option
-                        value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}" disabled selected hidden>
+                    <option value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}"
+                        disabled selected hidden>
                         {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
                     </option>
                     @foreach ($states as $state)
-                    <option id="{{ $state->id }}" value="{{ $state->name }}">
-                        {{ $state->name }}
-                    </option>
-                @endforeach
+                        <option id="{{ $state->id }}" value="{{ $state->name }}">
+                            {{ $state->name }}
+                        </option>
+                    @endforeach
                 </select>
                 <span class="help-block-worker_facility_state"></span>
             </div>
@@ -429,8 +418,8 @@
             <div class="ss-form-group col-11">
                 <label>City you'd like to work?</label>
                 <select name="worker_facility_city" id="worker_facility_city">
-                    <option
-                        value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}" disabled selected hidden>
+                    <option value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}"
+                        disabled selected hidden>
                         {{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : 'Select a City' }}
                     </option>
                     @foreach ($allKeywords['City'] as $value)
@@ -456,8 +445,7 @@
             {{-- worker_guaranteed_hours --}}
             <div class="ss-form-group col-11">
                 <label>Guaranteed Hours</label>
-                <input id="worker_guaranteed_hours" type="number"
-                    name="worker_guaranteed_hours"
+                <input id="worker_guaranteed_hours" type="number" name="worker_guaranteed_hours"
                     placeholder="Enter your guaranteed hours"
                     value="{{ !empty($worker->worker_guaranteed_hours) ? $worker->worker_guaranteed_hours : '' }}">
             </div>
@@ -468,8 +456,8 @@
 
             <div class="ss-form-group col-11">
                 <label>Sign on Bonus</label>
-                <input id="worker_sign_on_bonus" type="number"
-                    name="worker_sign_on_bonus" placeholder="What rate is fair ? "
+                <input id="worker_sign_on_bonus" type="number" name="worker_sign_on_bonus"
+                    placeholder="What rate is fair ? "
                     value="{{ !empty($worker->worker_sign_on_bonus) ? $worker->worker_sign_on_bonus : '' }}">
             </div>
             <span class="help-block-worker_sign_on_bonus"></span>
@@ -478,8 +466,8 @@
             {{-- worker_completion_bonus --}}
             <div class="ss-form-group col-11">
                 <label>Completion Bonus</label>
-                <input id="worker_completion_bonus" type="number"
-                    name="worker_completion_bonus" placeholder="What rate is fair ? "
+                <input id="worker_completion_bonus" type="number" name="worker_completion_bonus"
+                    placeholder="What rate is fair ? "
                     value="{{ !empty($worker->worker_completion_bonus) ? $worker->worker_completion_bonus : '' }}">
             </div>
             <span class="help-block-worker_completion_bonus"></span>
@@ -488,8 +476,8 @@
             {{-- worker_extension_bonus --}}
             <div class="ss-form-group col-11">
                 <label>Extension Bonus</label>
-                <input id="worker_extension_bonus" type="number"
-                    name="worker_extension_bonus" placeholder="What rate is fair ? "
+                <input id="worker_extension_bonus" type="number" name="worker_extension_bonus"
+                    placeholder="What rate is fair ? "
                     value="{{ !empty($worker->worker_extension_bonus) ? $worker->worker_extension_bonus : '' }}">
             </div>
             <span class="help-block-worker_extension_bonus"></span>
@@ -510,8 +498,9 @@
                 <label>401K</label>
                 <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
                     <option
-                    value="{{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                    {{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : 'Select an option') }}
+                        value="{{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
+                        {{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : 'Select an option') }}
                     </option>
 
                     <option value="Yes">Yes</option>
@@ -526,8 +515,9 @@
                 <label>Health Insurance</label>
                 <select name="worker_health_insurance" id="worker_health_insurance">
                     <option
-                    value="{{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                    {{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : 'Select an option') }}
+                        value="{{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
+                        {{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : 'Select an option') }}
                     </option>
                     <option value="">Select an option</option>
                     <option value="1">Yes</option>
@@ -542,7 +532,8 @@
                 <label>Dental</label>
                 <select name="worker_dental" id="worker_dental">
                     <option
-                        value="{{ $worker->worker_dental == '0' ? 'No' : ($worker->worker_dental == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                        value="{{ $worker->worker_dental == '0' ? 'No' : ($worker->worker_dental == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
                         {{ $worker->worker_dental == '0' ? 'No' : ($worker->worker_dental == '1' ? 'Yes' : 'Select an option') }}
                     </option>
                     <option value="">do you want this ?</option>
@@ -559,8 +550,9 @@
                 <label>Vision</label>
                 <select name="worker_vision" id="worker_vision">
                     <option
-                    value="{{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                    {{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : 'Select an option') }}
+                        value="{{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
+                        {{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : 'Select an option') }}
                     </option>
                     <option value="">do you want this ?</option>
                     <option value="Yes">Yes</option>
@@ -573,8 +565,8 @@
             {{-- worker_overtime_rate --}}
             <div class="ss-form-group col-11">
                 <label>Overtime Rate</label>
-                <input id="worker_overtime_rate" type="number"
-                    name="worker_overtime_rate" placeholder="What rate is fair?"
+                <input id="worker_overtime_rate" type="number" name="worker_overtime_rate"
+                    placeholder="What rate is fair?"
                     value="{{ !empty($worker->worker_overtime_rate) ? $worker->worker_overtime_rate : '' }}">
             </div>
             <span class="help-block-worker_overtime_rate"></span>
@@ -595,7 +587,8 @@
                 <label>On Call</label>
                 <select name="worker_on_call_check" id="worker_on_call_check">
                     <option
-                       value="{{ $worker->worker_on_call_check == '0' ? 'No' : ($worker->worker_on_call_check == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                        value="{{ $worker->worker_on_call_check == '0' ? 'No' : ($worker->worker_on_call_check == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
                         {{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}
                     </option>
                     <option value="">Select an option</option>
@@ -609,8 +602,7 @@
             {{-- worker_on_call --}}
             <div class="ss-form-group col-11">
                 <label>On Call Rate</label>
-                <input id="worker_on_call" type="number" name="worker_on_call"
-                    placeholder="What rate is fair?"
+                <input id="worker_on_call" type="number" name="worker_on_call" placeholder="What rate is fair?"
                     value="{{ !empty($worker->worker_on_call) ? $worker->worker_on_call : '' }}">
             </div>
             <span class="help-block-worker_on_call"></span>
@@ -619,8 +611,7 @@
             {{-- worker_call_back --}}
             <div class="ss-form-group col-11">
                 <label>On Call Back Rate</label>
-                <input id="worker_call_back" type="number"
-                    name="worker_call_back" placeholder="What rate is fair?"
+                <input id="worker_call_back" type="number" name="worker_call_back" placeholder="What rate is fair?"
                     value="{{ !empty($worker->worker_call_back) ? $worker->worker_call_back : '' }}">
             </div>
             <span class="help-block-worker_call_back"></span>
@@ -629,8 +620,8 @@
             {{-- worker_orientation_rate --}}
             <div class="ss-form-group col-11">
                 <label>Orientation Rate</label>
-                <input id="worker_orientation_rate" type="number"
-                    name="worker_orientation_rate" placeholder="Is this rate reasonable?"
+                <input id="worker_orientation_rate" type="number" name="worker_orientation_rate"
+                    placeholder="Is this rate reasonable?"
                     value="{{ !empty($worker->worker_orientation_rate) ? $worker->worker_orientation_rate : '' }}">
             </div>
             <span class="help-block-worker_orientation_rate"></span>
@@ -640,10 +631,10 @@
 
             <div class="ss-form-group col-11">
                 <label>Worker benefits</label>
-                <select name="worker_benefits" class="worker_benefits mb-3"
-                    id="worker_benefits" value="">
+                <select name="worker_benefits" class="worker_benefits mb-3" id="worker_benefits" value="">
                     <option
-                    value="{{ $worker->worker_benefits == '0' ? 'No' : ($worker->worker_benefits == '1' ? 'Yes' : '') }}" disabled selected hidden>
+                        value="{{ $worker->worker_benefits == '0' ? 'No' : ($worker->worker_benefits == '1' ? 'Yes' : '') }}"
+                        disabled selected hidden>
                         {{ !empty($worker->worker_benefits) ? $worker->worker_benefits : 'Select your benefits choice' }}
                     </option>
                     <option value="1">Yes, Please</option>
@@ -657,8 +648,8 @@
             <div class="ss-form-group col-11">
                 <label>Nurse Classification</label>
                 <select name="nurse_classification" id="nurse_classification">
-                    <option
-                        value="{{ !empty($worker->nurse_classification) ? $worker->nurse_classification : '' }}" disabled selected hidden>
+                    <option value="{{ !empty($worker->nurse_classification) ? $worker->nurse_classification : '' }}"
+                        disabled selected hidden>
                         {{ !empty($worker->nurse_classification) ? $worker->nurse_classification : 'Select Nurse Classification' }}
                     </option>
                     @foreach ($allKeywords['NurseClassification'] as $value)
@@ -676,18 +667,16 @@
             {{-- Skip && Save --}}
             <div class="ss-prsn-form-btn-sec row col-11" style="gap:0px;">
                 <div class="col-4">
-                    <button type="text"
-                        class="ss-prsnl-skip-btn prev-1 btns_prof_info"> Previous
+                    <button type="text" class="ss-prsnl-skip-btn prev-1 btns_prof_info"> Previous
                     </button>
                 </div>
                 <div class="col-4">
-                    <button type="text"
-                        class="ss-prsnl-save-btn next-1 btns_prof_info"> Next
+                    <button type="text" class="ss-prsnl-save-btn next-1 btns_prof_info"> Next
                     </button>
                 </div>
                 <div class="col-4">
-                    <button type="text" class="ss-prsnl-save-btn btns_prof_info"
-                        id="SaveProfessionalInformation"> Save
+                    <button type="text" class="ss-prsnl-save-btn btns_prof_info" id="SaveProfessionalInformation">
+                        Save
                     </button>
                 </div>
             </div>
@@ -727,8 +716,7 @@
                     justify-content: center;
                     align-items: center;
                     "
-                    data-bs-toggle="modal" data-bs-target="#job-dtl-Dcouments"><i
-                        class="fas fa-plus"></i></a>
+                    data-bs-toggle="modal" data-bs-target="#job-dtl-Dcouments"><i class="fas fa-plus"></i></a>
 
 
                 <br><br>
