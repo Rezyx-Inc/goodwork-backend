@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Docs = require("../models/Docs");
 
+var fs = require("fs");
+var path = require("path");
+
 router.get("/", (req, res) => {
     res.send("Docs page");
 });
@@ -14,9 +17,11 @@ router.get("/", (req, res) => {
 
 */
 router.post("/add-docs", async (req, res) => {
+    
     if (!Object.keys(req.body).length) {
         return res.status(400).send("Empty request");
     }
+
     if (!req.body.workerId || !req.body.files) {
         if (!Array.isArray(req.body.files) || req.body.files.length == 0) {
             return res.status(400).send("No file sent.");
@@ -25,39 +30,66 @@ router.post("/add-docs", async (req, res) => {
         }
     }
 
+    var bsonId;
+
+    // Check if the worker has files, if not, create one
+    await Docs.findOne({ workerId: req.body.workerId })
+    .then(async (docs) => {
+        if (!docs) {
+            let doc = await Docs.create(req.body);
+            return res.status(200).json({ ok: true });
+        }
+
+        bsonId = docs._id;
+    })
+    .catch((e) => {
+        console.log("Unexpected error", e);
+        res.status(500).send(e);
+    });
+
     var files = req.body.files;
 
-    let doc = await Docs.findOne({ workerId: req.body.workerId })
-        .then(async (docs) => {
-            if (!docs) {
-                let doc = await Docs.create(req.body);
-                return res.status(200).json({ ok: true });
-            }
+    // Get files length
+    let documentsLength = await Docs.aggregate([{$match: {workerId: req.body.workerId}}, {$project: {files: {$size: '$files'}}}]);
+    
+    // check if files length is less than 25
+    if ((documentsLength[0].files + files.length) > 25) {
+        return res
+            .status(500)
+            .json({ error: "Max 25 files per user." });
+    }
 
-            // check if files length is less than 25
-            if (docs.files.length + files.length > 25) {
-                return res
-                    .status(500)
-                    .json({ error: "Max 25 files per user." });
-            }
+    // Iterate the files array and update the records in the db
+    for (let file of files) {
 
-            for (let file of files) {
-                docs.files.push(file);
-            }
+        try{
+            file.path = "";
+            await Docs.findOneAndUpdate({_id:bsonId}, {'$push': {files:file}});
 
-            docs.save()
-                .then((docs) => {
-                    return res.status(200).json({ ok: true });
-                })
-                .catch((e) => {
-                    console.log("Unable to save document.", e);
-                    return res.status(400).send(e.message);
-                });
-        })
-        .catch((e) => {
-            console.log("Unexpected error", e);
-            res.status(400).send(e);
-        });
+        }catch(e){
+
+            if(e.code == 10334){
+                
+                console.log("File too big, saving to disk.");
+                file.path = path.join(process.cwd(), process.env.FILES_STORAGE_DIR_NAME, req.body.workerId , (Date.now() + '-' +file.name));
+                
+                if (!fs.existsSync(path.join(process.cwd(), process.env.FILES_STORAGE_DIR_NAME, req.body.workerId ))) {
+                    fs.mkdirSync(path.join(process.cwd(), process.env.FILES_STORAGE_DIR_NAME, req.body.workerId ));
+                }
+                fs.writeFileSync(file.path, file.content, {flag: 'w+'});
+
+                file.content = "";
+                await Docs.findOneAndUpdate({_id:bsonId}, {'$push': {files:file}});
+
+            }else{
+
+                console.log("Unable to Update document.", e);
+                return res.status(400).send(e.message);
+            }
+        }
+    }
+    
+    return res.status(200).json({ ok: true });   
 });
 
 /*
@@ -76,6 +108,13 @@ router.post("/get-docs", async (req, res) => {
         .then((docs) => {
             if (!docs) {
                 return res.status(404).send("Document not found.");
+            }
+
+            // Check if any of the files is saved to disk and get it
+            for (let [index, file] of doc.files) {
+                if(file.content == ''){
+                    doc.files[index].content = fs.readFileSync(file.path).toString();
+                }
             }
 
             return res.status(200).send(docs);
@@ -104,15 +143,31 @@ router.get("/get-doc", async (req, res) => {
         }
 
         for (let file of doc.files) {
+            
             if (file._id == req.query.bsonId) {
-                const base64Content = file.content.toString("base64");
+                
+                // check if file is saved on disk
+                if(file.content == ''){
+                    
+                    const base64Content = fs.readFileSync(file.path).toString();
+                    return res.status(200).json({
+                        name: file.name,
+                        content: {
+                            data: `${base64Content}`,
+                        },
+                    });
 
-                return res.status(200).json({
-                    name: file.name,
-                    content: {
-                        data: `${base64Content}`,
-                    },
-                });
+                }else{
+                    
+                    const base64Content = file.content.toString("base64");
+
+                    return res.status(200).json({
+                        name: file.name,
+                        content: {
+                            data: `${base64Content}`,
+                        },
+                    });
+                }
             }
         }
 
