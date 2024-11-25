@@ -20,7 +20,6 @@ yarn-error.log
 laravel-echo-server.lock
 package-lock.json
 .rnd
-.rnd
 stripe.exe
 composer.lock
 composer.json
