@@ -18,7 +18,7 @@
                                         <span class="glyphicon glyphicon-camera"></span>
                                         <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" accept="image/heic, image/png, image/jpeg" onchange="loadFile(event)" />
+                                    <input id="file" type="file" accept=".heic, .png, .jpeg, .gif" onchange="loadFile(event)" />
                                     @if (isset($user->image))
                                         <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"/>
                                     @else
