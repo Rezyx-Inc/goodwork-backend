@@ -9,6 +9,7 @@
 public/uploads
 /storage/*.key
 /vendor
+/files/*
 .env
 .env.backup
 .phpunit.result.cache
@@ -18,7 +19,6 @@ npm-debug.log
 yarn-error.log
 laravel-echo-server.lock
 package-lock.json
-.rnd
 .rnd
 stripe.exe
 composer.lock

@@ -18,9 +18,12 @@
                                         <span class="glyphicon glyphicon-camera"></span>
                                         <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" onchange="loadFile(event)" />
-                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
-                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
+                                    <input id="file" type="file" accept=".heic, .png, .jpeg, .gif" onchange="loadFile(event)" />
+                                    @if (isset($user->image))
+                                        <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"/>
+                                    @else
+                                        <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output" width="200" />
+                                    @endif
                                 </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $worker->id }}</p>
@@ -321,7 +324,7 @@
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveBonusInformation"> Save
                                                 </button>
-                                                <span class="col-12"
+                                                <!-- <span class="col-12"
                                                     style="display: block;
                                                color: #000;
                                                font-size: 16px;
@@ -332,7 +335,7 @@
                                                 </button>
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
                                                     id="AccessToStripeAccount"> Access to your Stripe account
-                                                </button>
+                                                </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -455,7 +458,8 @@
                                                     </li>
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
-                                                        style="display: none;" />
+                                                        style="display: none;"
+                                                        accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -481,7 +485,8 @@
                                                     </li>
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
-                                                        style="display: none;" />
+                                                        style="display: none;"
+                                                        accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -501,7 +506,7 @@
                                             align-items: center;
                                         ">
                                                 <input hidden displayName="Driving Licence" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="driving licence"
                                                         class="item">
@@ -528,7 +533,7 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Ss number file" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="ss number file"
                                                         class="item">
@@ -554,7 +559,7 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Other" type="file" class="files-upload">
-                                                <div class="list-items">
+                                                <div class="list-items" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                     <input hidden type="text" name="type" value="other"
                                                         class="item">
                                                 </div>
@@ -587,7 +592,7 @@
                                                             <span class="item-text">{{ $value->title }}</span>
                                                         </li>
                                                         <input displayName="{{ $value->title }}" type="file"
-                                                            class="files-upload" style="display: none;" />
+                                                            class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                     @endforeach
                                                 @endif
                                             </ul>
@@ -662,7 +667,7 @@
                                             <label>Upload Image</label>
                                             <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
                                             </div>
-                                            <input type="file" name="image">
+                                            <input type="file" name="image" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                             <button type="button" onclick="open_file(this)">Choose File</button>
                                             <span class="help-block"></span>
                                         </div>
@@ -679,7 +684,7 @@
                                                                         justify-content: center !important;
                                                                         align-items: center !important;
                                                                     ">
-                                                <input hidden displayName="Diploma" type="file" class="files-upload">
+                                                <input hidden displayName="Diploma" type="file" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" class="files-upload">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="diploma"
                                                         class="item">
@@ -708,7 +713,7 @@
                                                                         align-items: center !important;
                                                                     ">
                                                 <input hidden displayName="Professional License" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type"
                                                         value="Professional License" class="item">
@@ -976,7 +981,7 @@
                 item.addEventListener('click', (event) => {
 
                     const uploadInput = item.nextElementSibling;
-                    console.log('this is the next sibling : ', uploadInput)
+                    //console.log('this is the next sibling : ', uploadInput)
                     if (uploadInput) {
                         // class 'checked' check
                         if (item.classList.contains('checked')) {
@@ -986,7 +991,7 @@
                                     // Handling file selection
                                     const file = this.files[0];
                                     selectedFiles.push(file.name);
-                                    console.log(selectedFiles);
+                                    //console.log(selectedFiles);
                                 }
                             }, {
                                 once: true //avoid multiple registrations
@@ -996,7 +1001,7 @@
                             if (index > -1) {
                                 selectedFiles.splice(index, 1);
                             }
-                            console.log(selectedFiles);
+                            //console.log(selectedFiles);
 
                         }
                     }
@@ -1016,14 +1021,15 @@
         function sendMultipleFiles(type) {
 
             const fileInputs = document.querySelectorAll('.files-upload');
-            console.log('this is my file inputs values', fileInputs);
+            //console.log('this is my file inputs values', fileInputs);
 
             const fileReadPromises = [];
             let worker_id = '{!! $worker->id !!}';
-            console.log(worker_id);
+            //console.log(worker_id);
             var workerId = worker_id;
 
             if (type == 'references') {
+
                 let referenceName = document.querySelector('input[name="name"]').value;
                 let referencePhone = document.querySelector('input[name="phone"]').value;
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
@@ -1040,7 +1046,9 @@
                     minTitle: referenceMinTitle,
                     isLastAssignment: referenceRecency == 1 ? true : false
                 }
-                console.log(referenceInfo);
+
+                //console.log(referenceInfo);
+
                 if (referenceInfo == null) {
                     notie.alert({
                         type: 'error',
@@ -1049,8 +1057,11 @@
                     });
                     return;
                 }
+
                 let readerPromise = new Promise((resolve, reject) => {
+
                     const reader = new FileReader();
+
                     reader.onload = function(event) {
                         resolve({
                             name: referenceImage.name,
@@ -1064,18 +1075,26 @@
 
                     reader.onerror = reject;
                     reader.readAsDataURL(referenceImage);
+
                 });
+
                 fileReadPromises.push(readerPromise);
                 removeAllCheckBox();
 
             } else {
+
                 fileInputs.forEach((input, index) => {
+
                     let displayName = input.getAttribute("displayName");
+
                     if (input.files[0]) {
+                        
                         const file = input.files[0];
-                        console.log('this is the file', file);
+
                         const readerPromise = new Promise((resolve, reject) => {
+
                             const reader = new FileReader();
+
                             reader.onload = function(event) {
                                 resolve({
                                     name: file.name,
@@ -1085,15 +1104,17 @@
                                     displayName: displayName || file.name,
                                 });
                             };
+
                             reader.onerror = reject;
                             reader.readAsDataURL(file);
-                            console.log('this is the reader promise', file);
+
                         });
 
                         fileReadPromises.push(readerPromise);
                     }
                 });
             }
+
             if (fileReadPromises.length == 0) {
                 notie.alert({
                     type: 'error',
@@ -1105,11 +1126,12 @@
 
 
             Promise.all(fileReadPromises).then(files => {
-                console.log(files);
+                //console.log(files);
                 var body = {
                     workerId: workerId,
                     files: files
                 };
+
                 fetch('/worker/add-docs', {
                         method: 'POST',
                         headers: {
@@ -1124,12 +1146,13 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data); // Handle success
+                        //console.log(data); // Handle success
                         notie.alert({
                             type: 'success',
                             text: '<i class="fa fa-check"></i> Files uploaded successfully',
                             time: 3
                         });
+
                         closeModal();
                         // reload the page
                         // setTimeout(() => {
@@ -1137,17 +1160,23 @@
                         // }, 2000);
                     })
                     .catch(error => {
-                        console.error('Error:', error); // Handle errors
+                        //console.error('Error:', error); // Handle errors
                     });
+
             }).catch(error => {
                 console.error('Error reading files:', error); // Handle file read errors
             });
+
             // clear files inputs
             fileInputs.forEach((input) => {
                 input.value = '';
             });
+            
             selectedFiles = [];
             removeAllCheckBox();
+
+            // refresh the table
+            refreshDocList(workerId);         
 
         }
 
@@ -1170,13 +1199,13 @@
                 if (item.classList.contains("checked")) {
                     // add item
                     selectedValues.push(value);
-                    console.log(selectedValues);
+                    //console.log(selectedValues);
                 } else {
                     // remove item
                     const index = selectedValues.indexOf(value);
                     if (index > -1) {
                         selectedValues.splice(index, 1);
-                        console.log(selectedValues);
+                        //console.log(selectedValues);
                     }
                 }
                 let btnText = document.querySelector(".btn-text");
@@ -1202,8 +1231,8 @@
                 document.getElementById('option-2').checked = true;
                 AccountSettingDisplay();
             }
-            const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
-            const AddStripeAccount = document.getElementById('AddStripeAccount');
+            //const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
+            //const AddStripeAccount = document.getElementById('AddStripeAccount');
 
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
@@ -1264,142 +1293,8 @@
             @endphp
             const worker_id = '{!! $worker_id !!}';
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '{{ route('list-docs') }}',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    WorkerId: worker_id
-                }),
-                success: function(resp) {
-                    var data;
-                    try {
-                        // Try to manually parse the response as JSON
-                        data = JSON.parse(resp);
-                        console.log(data);
-                    } catch (e) {
-                        // If parsing fails, assume resp is already a JavaScript object
-                        data = resp;
-                    }
-
-                    var tbody = $('.table tbody');
-                    tbody.empty();
-                    data.forEach(function(file) {
-                        var row = $('<tr>');
-                        row.attr('class', 'row');
-                        row.append($('<td class="col-3 td-table">').text(file.displayName));
-
-                        row.append($('<td class="col-3 td-table">').text(file.type));
-                        console.log(file.id);
-                        var deleteButton = $('<button>').text('Delete Document').addClass(
-                            'delete').attr('data-id', file.id);
-                        deleteButton.click(function(event) {
-                            event.preventDefault();
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                        .attr('content')
-                                },
-                                url: '{{ route('del-doc') }}',
-                                method: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({
-                                    bsonId: file.id
-                                }),
-                                success: function() {
-                                    row.remove();
-                                },
-                                error: function(resp) {
-                                    console.log('Error:', resp);
-                                }
-                            });
-                        });
-                        var viewFile = $('<button>').text('View Document').addClass('delete')
-                            .attr('data-id', file.id);
-                        viewFile.click(function(event) {
-                            event.preventDefault();
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                        .attr('content')
-                                },
-                                url: '{{ route('get-doc') }}',
-                                method: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({
-                                    bsonId: file.id
-                                }),
-                                success: function(resp) {
-                                    resp = JSON.parse(resp);
-                                    const base64String = resp.content.data;
-                                    console.log("the resp base64",
-                                    resp);
-
-                                    const mimeType = base64String.match(
-                                        /^data:(.+);base64,/)[1];
-
-
-                                    const base64Data = base64String.split(
-                                        ',')[1];
-
-
-                                    const byteCharacters = atob(base64Data);
-                                    const byteNumbers = new Array(
-                                        byteCharacters.length);
-                                    for (let i = 0; i < byteCharacters
-                                        .length; i++) {
-                                        byteNumbers[i] = byteCharacters
-                                            .charCodeAt(i);
-                                    }
-                                    const byteArray = new Uint8Array(
-                                        byteNumbers);
-
-
-                                    const blob = new Blob([byteArray], {
-                                        type: mimeType
-                                    });
-
-
-                                    const blobUrl = URL.createObjectURL(
-                                        blob);
-                                    const downloadLink = document
-                                        .createElement('a');
-                                    downloadLink.href = blobUrl;
-
-
-                                    const extension = mimeType.split('/')[
-                                        1
-                                        ];
-                                    downloadLink.setAttribute('download',
-                                        `document.${extension}`
-                                    );
-
-                                    document.body.appendChild(downloadLink);
-                                    downloadLink.click();
-                                    document.body.removeChild(
-                                        downloadLink);
-                                },
-                                error: function(resp) {
-                                    console.log('Error:', resp);
-                                }
-                            });
-                        });
-
-
-                        row.append($('<td class="col-3 td-table">').append(viewFile));
-                        row.append($('<td class="col-3 td-table">').append(deleteButton));
-
-                        tbody.append(row);
-                    });
-                },
-                error: function(resp) {
-                    console.log('Error:', resp);
-                }
-            });
-
+            refreshDocList(worker_id);
+            /*
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1412,7 +1307,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         AccessToStripeAccount.classList.remove('d-none');
 
@@ -1422,6 +1317,7 @@
                     }
                 }
             });
+            */
         });
 
 
@@ -1588,7 +1484,7 @@
             const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($(
                     'input[name="email_payment"]').val()))) {
-                console.log(email_payment.value);
+                //console.log(email_payment.value);
                 $('.help-block-email_payment').text('Please enter a valid email');
                 $('.help-block-email_payment').addClass('text-danger');
                 isValid = false;
@@ -1644,7 +1540,7 @@
             if (!validateBasicInfo()) {
                 return;
             }
-            console.log(first_name.value);
+            //console.log(first_name.value);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1670,7 +1566,7 @@
                 cache: false,
                 processData: false,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1763,7 +1659,7 @@
                     InfoType: "ProfessionalInformation"
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1813,7 +1709,7 @@
                     phone_number_payment: phone_number_payment.value,
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1860,7 +1756,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1874,7 +1770,7 @@
 
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -1886,8 +1782,9 @@
 
         // end account disactivating
 
+        /*
         // creating a stripe account
-
+        
         AddStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
             $('#disactivate_account').addClass('d-none');
@@ -1906,7 +1803,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1915,12 +1812,12 @@
                         });
                         $('#loading_disableOption').addClass('d-none');
                         $('#disactivate_account').removeClass('d-none');
-                        console.log(resp);
+                        //console.log(resp);
                         window.location.href = resp.account_link;
                     }
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -1932,7 +1829,7 @@
 
         // end creating stripe account
 
-        // redirecting to login stripe link
+        // start redirecting to login stripe link
 
         AccessToStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
@@ -1952,7 +1849,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1965,7 +1862,7 @@
                     }
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -1976,9 +1873,9 @@
         });
 
 
-        // redirecting to login stripe link
+        // end redirecting to login stripe link
 
-
+        */
         // upload files
         document.getElementById('uploadForm').addEventListener('click', function(event) {
             event.preventDefault();
@@ -1986,7 +1883,7 @@
                 return;
             }
 
-            console.log(worker_id);
+            //console.log(worker_id);
             var workerId = worker_id;
             var filesInput = document.getElementById('document_file');
             var files = Array.from(filesInput.files);
@@ -2022,7 +1919,7 @@
                     contentType: 'application/json',
                     data: JSON.stringify(body),
                     success: function(resp) {
-                        console.log(resp);
+                        //console.log(resp);
                         ajaxindicatorstop();
                         if (resp.ok) {
                             notie.alert({
@@ -2130,7 +2027,7 @@
                 contentType: false,
                 data: formData,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2216,7 +2113,7 @@
                 cache: false,
                 processData: false,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2240,6 +2137,143 @@
                 }
             });
         };
+
+        function refreshDocList(worker_id){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('list-docs') }}',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    WorkerId: worker_id
+                }),
+                success: function(resp) {
+                    var data;
+                    try {
+                        // Try to manually parse the response as JSON
+                        data = JSON.parse(resp);
+                        //console.log(data);
+                    } catch (e) {
+                        // If parsing fails, assume resp is already a JavaScript object
+                        data = resp;
+                    }
+
+                    var tbody = $('.table tbody');
+                    tbody.empty();
+                    data.forEach(function(file) {
+                        var row = $('<tr>');
+                        row.attr('class', 'row');
+                        //row.append($('<td class="col-3 td-table" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">').text(file.name.substring(0,20)));
+                        row.append($('<td class="col-3 td-table">').text(file.displayName));
+                        row.append($('<td class="col-3 td-table">').text(file.type));
+                        //console.log(file.id);
+                        var deleteButton = $('<button>').text('Delete Document').addClass(
+                            'delete').attr('data-id', file.id);
+                        deleteButton.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('del-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function() {
+                                    row.remove();
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+                        var viewFile = $('<button>').text('View Document').addClass('delete')
+                            .attr('data-id', file.id);
+                        viewFile.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('get-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function(resp) {
+                                    resp = JSON.parse(resp);
+                                    const base64String = resp.content.data;
+                                    //console.log("the resp base64",resp);
+
+                                    const mimeType = base64String.match(
+                                        /^data:(.+);base64,/)[1];
+
+
+                                    const base64Data = base64String.split(
+                                        ',')[1];
+
+
+                                    const byteCharacters = atob(base64Data);
+                                    const byteNumbers = new Array(
+                                        byteCharacters.length);
+                                    for (let i = 0; i < byteCharacters
+                                        .length; i++) {
+                                        byteNumbers[i] = byteCharacters
+                                            .charCodeAt(i);
+                                    }
+                                    const byteArray = new Uint8Array(
+                                        byteNumbers);
+
+
+                                    const blob = new Blob([byteArray], {
+                                        type: mimeType
+                                    });
+
+
+                                    const blobUrl = URL.createObjectURL(
+                                        blob);
+                                    const downloadLink = document
+                                        .createElement('a');
+                                    downloadLink.href = blobUrl;
+
+
+                                    const extension = mimeType.split('/')[
+                                        1
+                                        ];
+                                    downloadLink.setAttribute('download',
+                                        `document.${extension}`
+                                    );
+
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(
+                                        downloadLink);
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+
+
+                        row.append($('<td class="col-3 td-table">').append(viewFile));
+                        row.append($('<td class="col-3 td-table">').append(deleteButton));
+
+                        tbody.append(row);
+                    });
+                },
+                error: function(resp) {
+                    console.log('Error:', resp);
+                }
+            });
+        }
     </script>
 @stop
 

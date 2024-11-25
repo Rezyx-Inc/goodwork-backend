@@ -131,10 +131,10 @@ function handleOfferNotificationClick(event) {
 }
 
 $(document).ready (function () {
-  console.log('{{ $unreadOffersNotificationsCount }}');
+  //console.log('{{ $unreadOffersNotificationsCount }}');
 
-  console.log('Offer Notification Messages :' , offerNotificationMessages );
-  console.log(offerNotificationMessages)
+  //console.log('Offer Notification Messages :' , offerNotificationMessages );
+  //console.log(offerNotificationMessages)
 
   if('{{ $unreadOffersNotificationsCount }}' > 0){
     
@@ -166,12 +166,12 @@ $(document).ready (function () {
 
 
 $(document).ready(function(){
-  console.log('{{ $unreadNotificationsCount }}');
+  //console.log('{{ $unreadNotificationsCount }}');
   
   
   let notificationMessages = @json($notificationMessages);
-  console.log('Notification Messages :' , notificationMessages );
-  console.log(notificationMessages)
+  //console.log('Notification Messages :' , notificationMessages );
+  //console.log(notificationMessages)
  
   if('{{ $unreadNotificationsCount }}' > 0){
     
@@ -320,7 +320,7 @@ window.Echo.private('private-offer-notification.' + '{{ $user->nurse->id }}')
                     }
                   });
 
-    console.log('Offer Notification Message :', e);
+    //console.log('Offer Notification Message :', e);
     let status = e.type;
     let message = e.full_name +' ' + offer_status_messages[status] + ' "' + e.job_name + '"';
     console.log(message);
