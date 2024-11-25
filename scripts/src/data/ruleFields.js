@@ -1,7 +1,7 @@
 const ruleFields = [
     {
         fieldID: "job_id",
-        displayName: "Job ID",
+        displayName: "Org Job Id",
         workerFieldIdMatch: "",
         publishDisabled: false,
         applyDisabled: true
@@ -9,7 +9,7 @@ const ruleFields = [
     {
         fieldID: "job_type",
         workerFieldIdMatch: "worker_job_type",
-        displayName: "Job Type",
+        displayName: "Type",
         publishDisabled: true,
         applyDisabled: false
     },
@@ -32,7 +32,7 @@ const ruleFields = [
     {
         fieldID: "preferred_specialty",
         workerFieldIdMatch: "specialty",
-        displayName: "Preferred Specialty",
+        displayName: "Specialty",
         publishDisabled: true,
         applyDisabled: false
     },
@@ -77,7 +77,7 @@ const ruleFields = [
     {
         fieldID: "preferred_shift_duration",
         workerFieldIdMatch: "worker_shift_time_of_day",
-        displayName: "Preferred Shift Duration",
+        displayName: "Shift Time",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -85,7 +85,7 @@ const ruleFields = [
     {
         fieldID: "guaranteed_hours",
         workerFieldIdMatch: "worker_guaranteed_hours",
-        displayName: "Guaranteed Hours",
+        displayName: "Guaranteed Hrs/wk",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -93,7 +93,7 @@ const ruleFields = [
     {
         fieldID: "hours_shift",
         workerFieldIdMatch: "worker_hours_shift",
-        displayName: "Hours Shift",
+        displayName: "Reg Hrs/Shift",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -101,14 +101,14 @@ const ruleFields = [
     {
         fieldID: "weeks_shift",
         workerFieldIdMatch: "worker_shifts_week",
-        displayName: "Weeks Shift",
+        displayName: "Shifts/Wk",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "preferred_assignment_duration",
         workerFieldIdMatch: "worker_weeks_assignment",
-        displayName: "Preferred Assignment Duration",
+        displayName: "Wks/Contract",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -319,7 +319,7 @@ const ruleFields = [
     {
         fieldID: "job_location",
         workerFieldIdMatch: "worker_job_location",
-        displayName: "Job Location",
+        displayName: "Professional Licensure",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -439,18 +439,18 @@ const ruleFields = [
     {
         fieldID: "holiday",
         workerFieldIdMatch: "worker_holiday",
-        displayName: "Holiday",
+        displayName: "Holiday Dates",
         publishDisabled: false,
         applyDisabled: false
     },
-    
     {
-        fieldID: "eligible_work_in_us",
-        workerFieldIdMatch: "worker_eligible_work_in_us",
-        displayName: "Eligible To Work In US",
+        fieldID: "professional_state_licensure",
+        workerFieldIdMatch: "professional_state_licensure",
+        displayName: "Professional State Licensure",
         publishDisabled: false,
         applyDisabled: false
     },
+
 ];
 
 module.exports = ruleFields;

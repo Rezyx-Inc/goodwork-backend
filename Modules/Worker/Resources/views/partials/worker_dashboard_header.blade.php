@@ -35,7 +35,7 @@ $user = auth()->guard('frontend')->user();
 
         <!-- Notification dropdown -->
 
-        <li class="nav-item dropdown ss-bell-sec-li">
+        <li class="nav-item dropdown ss-bell-sec-li d-none">
           <a
              class="ss-bell-sec nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
              href="#"

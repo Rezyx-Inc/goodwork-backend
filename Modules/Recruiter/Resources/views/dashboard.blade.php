@@ -28,11 +28,15 @@
 </main>
 <script>
     let values = <?php echo json_encode($statusCounts); ?>;
+
     
     let yValues = values;
+    
+    let max = Math.max(...yValues);
+    console.log(yValues);
     const ctx = document.getElementById('recruiterStats');
    
-    const xValues = ['New', 'Offered', 'Onboard', 'Working', 'Done'];
+    const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
     
     
     new Chart(ctx, {
@@ -59,6 +63,15 @@
             title: {
                 display: true,
                 text: ""
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: max,
+                        stepSize: 1
+                    }
+                }]
             }
         }
     });

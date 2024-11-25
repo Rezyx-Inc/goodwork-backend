@@ -387,7 +387,12 @@
                     doneElement.classList.add("active");
                 }
             }
-            document.getElementById('listingname').innerHTML = type + ' Applications';
+            if(type == 'Apply'){
+                document.getElementById('listingname').innerHTML = 'New Applications';
+            }else{
+                document.getElementById('listingname').innerHTML = type + ' Applications';
+            }
+            
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
@@ -937,7 +942,7 @@
         }
     </script>
     <script>
-        function askWorker(e, type, workerid, jobid) {
+       function askWorker(e, type, workerid, recruiter_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -972,7 +977,7 @@
 
             // for now just redirecting to messages page
             let url = "{{ url('recruiter/recruiter-messages') }}";
-             window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
+            window.location = url + '?worker_id=' + workerid + '&recruiter_id=' + recruiter_id + '&name=' + name;
             // window.location = url;
         }
 
@@ -1184,7 +1189,21 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
-                        $("#application-list").html(result.content);
+                        if (type == 'Apply') {
+                            // chnage his coloset from col-lg-5 to col-lg-12
+                            
+                            $("#application-details").closest('.col-lg-7').addClass("d-none");
+                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5').addClass('col-lg-12');
+                            $("#application-list").html(result.content);
+                            // hide to col of  #application-details
+                            
+
+                        } else {
+                            $("#application-list").html(result.content);
+                            $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
+                            $("#application-details").closest('.col-lg-7').removeClass("d-none");
+                        }
+                        
                     },
                     error: function(error) {
                         console.log(error);
@@ -1211,6 +1230,8 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
+                        $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
+                        $("#application-details").closest('.col-lg-7').removeClass("d-none");
                         $("#application-list").html(result.content);
                         activeWorkerClass(workerId);
                     },
@@ -1276,7 +1297,11 @@
                     doneElement.classList.add("active");
                 }
             }
-            document.getElementById('listingname').innerHTML = type + ' Applications';
+            if(type == 'Apply'){
+                document.getElementById('listingname').innerHTML = 'New Applications';
+            }else{
+                document.getElementById('listingname').innerHTML = type + ' Applications';
+            }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
