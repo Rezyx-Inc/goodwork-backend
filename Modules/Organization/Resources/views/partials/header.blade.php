@@ -24,7 +24,7 @@ $user = auth()->guard('organization')->user();
 
           <!-- Notification dropdown -->
 
-          <li class="nav-item dropdown ss-bell-sec-li">
+          <li class="nav-item dropdown ss-bell-sec-li d-none">
             <a class="ss-bell-sec nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-bell"></i>
               {{-- <span id="notifications_counter_organization" class="badge rounded-pill badge-notification bg-danger header_notif">{{$unreadNotificationsCount}}</span> --}}

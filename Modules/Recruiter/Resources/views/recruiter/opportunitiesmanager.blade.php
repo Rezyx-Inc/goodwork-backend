@@ -3616,7 +3616,7 @@
 
 
 
-    const requiredToSubmit = @json($requiredFieldsToSubmit);
+const requiredToSubmit = @json($requiredFieldsToSubmit);
     
    function toggleActiveClass(workerUserId,type) {
             console.log("test");
@@ -5567,9 +5567,9 @@
     
 
     <script>
-        function askWorker(e, type, workerid, jobid) {
+        function askWorker(e, type, workerid, recruiter_id, name) {
             let url = "{{ url('recruiter/recruiter-messages') }}";
-            window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
+            window.location = url + '?worker_id=' + workerid + '&recruiter_id=' + recruiter_id + '&name=' + name;
         }
         // const numberOfReferencesField = document.getElementById('number_of_references');
         // numberOfReferencesField.addEventListener('input', function () {

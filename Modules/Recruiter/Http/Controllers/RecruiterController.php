@@ -298,15 +298,14 @@ class RecruiterController extends Controller
     {
 
         $worker_id = $request->input('worker_id');
+        $name = $request->input('name');
         $recruiter_id = Auth::guard('recruiter')->user()->id;
 
-
-
-        if (isset($worker_id)) {
+        if (isset($worker_id) && isset($name)) {
             $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
             // Check if a room with the given worker_id and recruiter_id already exists
             $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('recruiterId', $recruiter_id)->first();
-
+            
             // If the room doesn't exist, create a new one
             if (!$room) {
                 DB::connection('mongodb')->collection('chat')->insert([
@@ -321,6 +320,10 @@ class RecruiterController extends Controller
                 // Call the get_private_messages function
                 $request->query->set('workerId', $nurse_user_id);
                 $request->query->set('organizationId', $recruiter_id); // Replace this with the actual organizationId
+                return $this->get_direct_private_messages($request);
+            }else{
+                $request->query->set('workerId', $nurse_user_id);
+                $request->query->set('organizationId', $recruiter_id);
                 return $this->get_direct_private_messages($request);
             }
         }

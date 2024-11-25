@@ -396,46 +396,106 @@ class ApplicationController extends Controller
         }
     }
 
+
+    
     // get worker infromation of each offer type
     public function get_offers_by_type(Request $request)
     {
+
         try {
             $type = $request->type;
-            $recruiter = Auth::guard('recruiter')->user();
-            $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
+            if( $type == 'Apply'){
+                    try {
+                        $type = $request->type;
+                        $recruiter = Auth::guard('recruiter')->user();
+                        $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
+                    
+                        $nurses = [];
+                        $offerData = [];
+                        foreach ($offerLists as $value) {
 
-            $nurses = [];
-            $offerData = [];
-            foreach ($offerLists as $value) {
-                if ($value && !in_array($value->worker_user_id, $nurses)) {
-                    $nurses[] = $value->worker_user_id;
-                    $nurse = Nurse::where('id', $value->worker_user_id)->first();
-                    $user = User::where('id', $nurse->user_id)->first();
-                    $offerData[] = [
-                        'type' => $type,
-                        'workerUserId' => $value->worker_user_id,
-                        'image' => $user->image,
-                        'firstName' => $user->first_name,
-                        'lastName' => $user->last_name,
-                        'hourlyPayRate' => $nurse->worker_actual_hourly_rate ?? null,
-                        'city' => $nurse->city ?? null,
-                        'state' => $nurse->state ?? null,
-                        'profession' => $nurse->profession ?? null,
-                        'specialty' => $nurse->specialty ?? null,
-                    ];
-                }
+                                $nurses[] = $value->worker_user_id;
+                                $nurse = Nurse::where('id', $value->worker_user_id)->first();
+                                $user = User::where('id', $nurse->user_id)->first();
+                                $offerData[] = [
+                                    'offerId' => $value->id,
+                                    'workerUserId' => $value->worker_user_id,
+                                    'image' => $user->image,
+                                    'firstName' => $user->first_name,
+                                    'lastName' => $user->last_name,
+                                    'city' => $value->city ?? null,
+                                    'state' => $value->state ?? null,
+                                    'profession' => $value->profession ?? null,
+                                    'specialty' => $value->specialty ?? null,
+                                    'facilityName' => $value->facility_name ?? null,
+                                    'preferred_shift_duration' => $value->preferred_shift_duration ?? null,
+                                    'JobId' => $value->job_id,
+                                    'status' => $value->status,
+                                ];
+                            
+                        }
+                        if (empty($offerData)) {
+                            $noApplications = true;
+                        } else {
+                            $noApplications = false;
+                        }
+                            $response['content'] = view('recruiter::offers.applications', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
+
+
+                        //return new JsonResponse($response, 200);
+                        return response()->json($response);
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+            }else{
+                    try{
+                    $recruiter = Auth::guard('recruiter')->user();
+                    $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
+                    
+                    $nurses = [];
+                    $offerData = [];
+                    foreach ($offerLists as $value) {
+                        if ($value && !in_array($value->worker_user_id, $nurses)) {
+                            $nurses[] = $value->worker_user_id;
+                            $nurse = Nurse::where('id', $value->worker_user_id)->first();
+                            $user = User::where('id', $nurse->user_id)->first();
+                            $offerData[] = [
+                                'type' => $type,
+                                'workerUserId' => $value->worker_user_id,
+                                'image' => $user->image,
+                                'firstName' => $user->first_name,
+                                'lastName' => $user->last_name,
+                                'hourlyPayRate' => $nurse->worker_actual_hourly_rate ?? null,
+                                'city' => $nurse->city ?? null,
+                                'state' => $nurse->state ?? null,
+                                'profession' => $nurse->profession ?? null,
+                                'specialty' => $nurse->specialty ?? null,
+                            ];
+                        }
+                    }
+                    if (empty($offerData)) {
+                        $noApplications = true;
+                    } else {
+                        $noApplications = false;
+                    }
+                    $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
+                    //return new JsonResponse($response, 200);
+                    return response()->json($response);
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
             }
-            if (empty($offerData)) {
-                $noApplications = true;
-            } else {
-                $noApplications = false;
-            }
-            $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
-            //return new JsonResponse($response, 200);
-            return response()->json($response);
-        } catch (\Exception $ex) {
+        }catch (\Exception $ex) {
+
             return response()->json(["message" => $ex->getMessage()]);
+
         }
+    }
+
+    // get worker infromation of each offer type
+    public function get_applications(Request $request)
+    {
+        
     }
 
     function get_offers_of_each_worker(Request $request)

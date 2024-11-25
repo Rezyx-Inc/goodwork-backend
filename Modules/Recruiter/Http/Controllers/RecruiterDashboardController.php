@@ -29,9 +29,9 @@ class RecruiterDashboardController extends Controller
 public function index()
 {
     $id = Auth::guard('recruiter')->user()->id;
-    $alljobs = Job::where('recruiter_id', $id)->get();
+    $alljobs = Job::where('recruiter_id', $id)->get(); 
 
-    $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     foreach ($alljobs as $key => $value) {

@@ -191,10 +191,14 @@
         }
 
         $(document).ready(function() {
-            if (@json($direct) == true) {
-                getPrivateMessages(@json($idWorker), @json($nameworker),
-                    @json($idOrganization));
-            }
+            const urlParams = new URLSearchParams(window.location.search);
+                const idWorker = urlParams.get('worker_id');
+                const nameworker = urlParams.get('name');
+                const idOrganization = urlParams.get('recruiter_id');
+                if (idWorker && nameworker && idOrganization) {
+                    getPrivateMessages(@json($idWorker), nameworker, idOrganization);
+                }
+           
             var messagesArea = $('.messages-area');
             messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
 
