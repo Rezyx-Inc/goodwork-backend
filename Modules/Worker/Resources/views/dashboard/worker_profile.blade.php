@@ -18,7 +18,7 @@
                                         <span class="glyphicon glyphicon-camera"></span>
                                         <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" accept="image/*" onchange="loadFile(event)" />
+                                    <input id="file" type="file" accept="image/heic, image/png, image/jpeg" onchange="loadFile(event)" />
                                     <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
                                         onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
                                 </div>
@@ -456,7 +456,7 @@
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
                                                         style="display: none;"
-                                                        accept="image/*,.pdf" />
+                                                        accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -483,7 +483,7 @@
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
                                                         style="display: none;"
-                                                        accept="image/*,.pdf" />
+                                                        accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -503,7 +503,7 @@
                                             align-items: center;
                                         ">
                                                 <input hidden displayName="Driving Licence" type="file"
-                                                    class="files-upload" accept="image/*,.pdf">
+                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="driving licence"
                                                         class="item">
@@ -530,7 +530,7 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Ss number file" type="file"
-                                                    class="files-upload" accept="image/*,.pdf">
+                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="ss number file"
                                                         class="item">
@@ -556,7 +556,7 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Other" type="file" class="files-upload">
-                                                <div class="list-items" accept="image/*,.pdf">
+                                                <div class="list-items" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                     <input hidden type="text" name="type" value="other"
                                                         class="item">
                                                 </div>
@@ -589,7 +589,7 @@
                                                             <span class="item-text">{{ $value->title }}</span>
                                                         </li>
                                                         <input displayName="{{ $value->title }}" type="file"
-                                                            class="files-upload" accept="image/*,.pdf" style="display: none;" />
+                                                            class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                     @endforeach
                                                 @endif
                                             </ul>
@@ -664,7 +664,7 @@
                                             <label>Upload Image</label>
                                             <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
                                             </div>
-                                            <input type="file" name="image" accept="image/*,.pdf">
+                                            <input type="file" name="image" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                             <button type="button" onclick="open_file(this)">Choose File</button>
                                             <span class="help-block"></span>
                                         </div>
@@ -681,7 +681,7 @@
                                                                         justify-content: center !important;
                                                                         align-items: center !important;
                                                                     ">
-                                                <input hidden displayName="Diploma" type="file" accept="image/*,.pdf" class="files-upload">
+                                                <input hidden displayName="Diploma" type="file" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" class="files-upload">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="diploma"
                                                         class="item">
@@ -710,7 +710,7 @@
                                                                         align-items: center !important;
                                                                     ">
                                                 <input hidden displayName="Professional License" type="file"
-                                                    class="files-upload" accept="image/*,.pdf">
+                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type"
                                                         value="Professional License" class="item">
