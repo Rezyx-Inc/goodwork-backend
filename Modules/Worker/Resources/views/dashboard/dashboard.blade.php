@@ -115,10 +115,8 @@
 
 
     <script>
-        let values = <?php echo json_encode($statusCounts); ?>;
-        console.log(values);
-        // values = "1,2,3,4,5,6"
-        let yValues = values;
+        let yValues = <?php echo json_encode($statusCounts); ?>;
+        //let yValues = values;
         const ctx = document.getElementById('recruiterStats');
        
         const xValues = ['New', 'Offered', 'Onboard', 'Working', 'Done'];

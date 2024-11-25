@@ -34,7 +34,8 @@
     @yield('css')
 </head>
 <body>
-    <script type="module">$(document).ready(function() {
+    <script type="module">
+    $(document).ready(function() {
         $.ajaxSetup({
             xhrFields: {
                 withCredentials: true
