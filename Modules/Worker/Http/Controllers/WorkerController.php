@@ -818,6 +818,14 @@ class WorkerController extends Controller
                     break;
                 case 'applied':
                     $view = 'applied';
+                    $offerdetails = Offer::where('id', $offer_id->id)->first();
+                    $jobdetails = Job::where('id', $job->id)->first();
+                    $nursedetails = Nurse::where('id', $worker_id->id)->first();
+                    $recruiter = User::where('id', $jobdetails->created_by)->first();
+                    $data['offerdetails'] = $offerdetails;
+                    $data['jobdetails'] = $jobdetails;
+                    $data['nursedetails'] = $nursedetails;
+                    $data['recruiter'] = $recruiter;
                     break;
                 case 'hired':
                     $offerdetails = Offer::where('id', $offer_id->id)->first();
