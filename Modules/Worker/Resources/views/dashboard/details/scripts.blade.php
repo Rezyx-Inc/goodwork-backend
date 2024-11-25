@@ -453,7 +453,6 @@
         var EmrStr = '';
         var requiredFieldsToApply = @json($requiredFieldsToApply);
 
-        console.log('required fields : ', requiredFieldsToApply);
         requiredFieldsToApply.forEach(function(field) {
 
             var element = document.getElementById(field);
@@ -815,7 +814,8 @@
                 let areaDiv = document.getElementById(inputName);
                 areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
                 areaDiv.classList.add('ss-s-jb-apl-bg-blue');
-            } else if (type == 'file') {
+            }
+            if (type == 'file') {
                 try {
                     let resp = await sendMultipleFiles(inputName);
                     if (resp == 404) {
@@ -842,6 +842,8 @@
                 element = $('#' + inputName).find('p[data-target="driving_license_file"]');
             } else if (inputName == 'diploma') {
                 element = $('#' + inputName).find('p[data-target="diploma_file"]');
+            } else if (inputName == 'nursing_license_state') {
+                element = $('#' + inputName).find('p[data-target="nursing_license_state_file"]');
             } else {
                 element = $('#' + inputName).find('p[data-name="' + inputName + '"]');
             }
@@ -926,10 +928,10 @@
         // display uploaded certification files
         function display_uploaded_certification_files(element, type) {
             // filter worker_files by type
-            worker_files = all_files.filter(file => file.type == 'certification');
+            worker_files = all_files.filter(file => file.type == type);
 
             let text = element.data('title');
-            console.log("*****************************element", element, "type", type, " =>text : ", text);
+            // console.log("*****************************element", element, "type", type, " =>text : ", text);
             if (worker_files.length > 0) {
                 text = worker_files.length + ' Files Uploaded';
             }
@@ -937,11 +939,11 @@
         }
 
         async function checkFileMatch(inputName) {
-            console.log('Checking files for:', inputName);
+            // console.log('Checking files for:', inputName);
             let worker_files_displayname_by_type = [];
             try {
                 worker_files_displayname_by_type = await get_all_files_displayName_by_type(inputName);
-                console.log('Files:', worker_files_displayname_by_type);
+                // console.log('Files:', worker_files_displayname_by_type);
             } catch (error) {
                 console.error('Failed to get files:', error);
             }
