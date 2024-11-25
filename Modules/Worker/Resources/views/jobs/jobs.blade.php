@@ -183,7 +183,9 @@ AddStripe.addEventListener("click", function(event) {
 
 <script>
     $(document).ready(function(){
-        $('.job-list')[0].click('active');
+        if($('.job-list')[0]){
+            $('.job-list')[0].click('active');
+        }
     });
 
     function fetch_job_content(obj)
