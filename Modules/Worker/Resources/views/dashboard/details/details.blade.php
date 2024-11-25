@@ -1017,7 +1017,35 @@
                                         </li>
                                     </ul>
 
+
+
                                     @if (isset($model->job_location))
+                                        <ul id="nursing_license_state"
+                                            class="ss-s-jb-apl-on-inf-txt-ul job_location_item {{ $matches['job_location']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                @php
+                                                    $stateCode = explode(',', $model->job_location);
+                                                @endphp
+                                                <span>Professional Licensure</span>
+                                                @foreach ($stateCode as $v)
+                                                    <h6>{{ $v }} Required</h6>
+                                                @endforeach
+                                            </li>
+                                            <li>
+                                                <span>Your Professional Licensure</span>
+                                                <p class="profile_info_text" class="nursing_license_state_file"
+                                                    data-target="nursing_license_state_file" onclick="open_modal(this)"
+                                                    data-title="Where are you licensed ?">
+                                                    @foreach ($stateCode as $v)
+                                                        No {{ $v }}?
+                                                    @endforeach
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+
+                                    {{-- @if (isset($model->job_location))
                                         <ul id="nursing_license_state"
                                             class="ss-s-jb-apl-on-inf-txt-ul job_location_item {{ $matches['job_location']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                             <li>
@@ -1035,7 +1063,7 @@
                                                     licensed?</p>
                                             </li>
                                         </ul>
-                                    @endif
+                                    @endif --}}
 
                                     @if (isset($model->certificate))
                                         <ul id="certification"

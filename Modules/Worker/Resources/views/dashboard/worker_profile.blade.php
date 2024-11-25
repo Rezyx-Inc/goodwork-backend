@@ -18,11 +18,13 @@
                                         <span class="glyphicon glyphicon-camera"></span>
                                         <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" accept=".heic, .png, .jpeg, .gif" onchange="loadFile(event)" />
+                                    <input id="file" type="file" accept=".heic, .png, .jpeg, .gif"
+                                        onchange="loadFile(event)" />
                                     @if (isset($user->image))
-                                        <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"/>
+                                        <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" />
                                     @else
-                                        <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output" width="200" />
+                                        <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output"
+                                            width="200" />
                                     @endif
                                 </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
@@ -126,7 +128,8 @@
                                         <label for="option-4" class="option option-4">
                                             <div class="dot"></div>
                                             <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" /></li>
+                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" />
+                                                </li>
                                                 <li>
                                                     <p>Support</p>
                                                 </li>
@@ -174,7 +177,7 @@
                             <div class="form-outer">
 
                                 @include('worker::dashboard.profile.settings')
-                                
+
                             </div>
                         </div>
                     </div>
@@ -184,12 +187,12 @@
                     <div class="col-lg-7 bodyAll account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
-                                <p><span><img
-                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
+                                <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
                                     Setting</p>
                             </div>
                             <div class="form-outer">
-                                <form onsubmit="return false;" method="post" action="{{ route('update-worker-profile') }}">
+                                <form onsubmit="return false;" method="post"
+                                    action="{{ route('update-worker-profile') }}">
                                     @csrf
                                     <!-- slide Account Setting -->
                                     <div class="page slide-page">
@@ -325,17 +328,17 @@
                                                     id="SaveBonusInformation"> Save
                                                 </button>
                                                 <!-- <span class="col-12"
-                                                    style="display: block;
+                                                        style="display: block;
                                                color: #000;
                                                font-size: 16px;
                                                font-weight: 500;
                                                margin-top: 0px">Or</span>
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                    id="AddStripeAccount"> Add Stripe Account
-                                                </button>
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                    id="AccessToStripeAccount"> Access to your Stripe account
-                                                </button> -->
+                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                        id="AddStripeAccount"> Add Stripe Account
+                                                    </button>
+                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                        id="AccessToStripeAccount"> Access to your Stripe account
+                                                    </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -434,7 +437,7 @@
                                             <option value="vaccinations">Vaccinations</option>
                                             <option value="references">References</option>
                                             <option value="diploma">Diploma</option>
-                                            <option value="professional_license">Professional License</option>
+                                            <option value="nursing_license_state">Professional License</option>
                                         </select>
                                         <span class="help-block"></span>
                                     </div>
@@ -494,6 +497,60 @@
                                             onclick="sendMultipleFiles('certification')">Save</button>
                                     </div>
 
+                                    {{-- professional license --}}
+                                    <div class="container-multiselect d-none" id="nursing_license_state">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Professional Licensure</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['StateCode']))
+                                                @foreach ($allKeywords['StateCode'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        id="upload-{{ $loop->index }}" class="files-upload"
+                                                        style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('nursing_license_state')">Save</button>
+                                    </div>
+
+                                    {{-- old professional license --}}
+                                    {{-- <div class="d-none" id="professional_license">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                                                        display: flex !important;
+                                                                        justify-content: center !important;
+                                                                        align-items: center !important;
+                                                                    ">
+                                                <input hidden displayName="Professional License" type="file"
+                                                    class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type"
+                                                        value="Professional License" class="item">
+                                                </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('professional_license')">Save</button>
+                                    </div> --}}
+
+
                                     {{-- driving license --}}
                                     <div class="d-none" id="driving_license">
                                         <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
@@ -506,7 +563,8 @@
                                             align-items: center;
                                         ">
                                                 <input hidden displayName="Driving Licence" type="file"
-                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
+                                                    class="files-upload"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="driving licence"
                                                         class="item">
@@ -559,7 +617,8 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Other" type="file" class="files-upload">
-                                                <div class="list-items" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
+                                                <div class="list-items"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                     <input hidden type="text" name="type" value="other"
                                                         class="item">
                                                 </div>
@@ -592,7 +651,8 @@
                                                             <span class="item-text">{{ $value->title }}</span>
                                                         </li>
                                                         <input displayName="{{ $value->title }}" type="file"
-                                                            class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
+                                                            class="files-upload"
+                                                            accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                     @endforeach
                                                 @endif
                                             </ul>
@@ -648,7 +708,8 @@
                                         <div class="ss-form-group">
                                             <label>Is this from your last assignment?</label>
                                             <select name="recency_of_reference">
-                                                <option value="" disabled selected hidden>Select a recency period</option>
+                                                <option value="" disabled selected hidden>Select a recency period
+                                                </option>
                                                 @if (isset($allKeywords['RecencyOfReference']))
                                                     @foreach ($allKeywords['RecencyOfReference'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
@@ -667,7 +728,8 @@
                                             <label>Upload Image</label>
                                             <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
                                             </div>
-                                            <input type="file" name="image" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
+                                            <input type="file" name="image"
+                                                accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                             <button type="button" onclick="open_file(this)">Choose File</button>
                                             <span class="help-block"></span>
                                         </div>
@@ -684,7 +746,9 @@
                                                                         justify-content: center !important;
                                                                         align-items: center !important;
                                                                     ">
-                                                <input hidden displayName="Diploma" type="file" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" class="files-upload">
+                                                <input hidden displayName="Diploma" type="file"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx"
+                                                    class="files-upload">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="diploma"
                                                         class="item">
@@ -713,7 +777,8 @@
                                                                         align-items: center !important;
                                                                     ">
                                                 <input hidden displayName="Professional License" type="file"
-                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
+                                                    class="files-upload"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type"
                                                         value="Professional License" class="item">
@@ -742,7 +807,6 @@
 
     {{-- get elements - prevent defaults behaviors  --}}
     <script>
-
         // slide control
         const slidePage = document.querySelector(".slide-page");
         const nextBtnFirst = document.querySelector(".firstNext");
@@ -821,11 +885,11 @@
         const infoType = document.getElementById("information_type");
         // end change info type title
 
-        if(city.value == ''){
+        if (city.value == '') {
             document.querySelector('.help-city').classList.remove('d-none');
         }
 
-        if(worker_facility_city.value == ''){
+        if (worker_facility_city.value == '') {
             document.querySelector('.help-worker-facility-city').classList.remove('d-none');
         }
 
@@ -908,12 +972,13 @@
             removeAllCheckBox();
             const inputsId = obj.value;
             selectedTypeFile = inputsId;
+            console.log(inputsId);
             //removing d-none class
             document.getElementById(inputsId).classList.remove('d-none');
         }
 
         function HideAllInputsModal() {
-            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'other',
+            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'nursing_license_state', 'other',
                 'vaccinations',
                 'references',
                 'diploma', 'professional_license'
@@ -937,7 +1002,7 @@
             const filesSelected = document.querySelectorAll('.files-upload');
 
             // give hight to filesNamesArea
-            const types = ['vaccinations', 'certificate', 'skills_checklists'];
+            const types = ['vaccinations', 'certificate', 'nursing_license_state', 'skills_checklists'];
 
 
             filesSelected.forEach((fileInput) => {
@@ -1088,7 +1153,7 @@
                     let displayName = input.getAttribute("displayName");
 
                     if (input.files[0]) {
-                        
+
                         const file = input.files[0];
 
                         const readerPromise = new Promise((resolve, reject) => {
@@ -1152,7 +1217,7 @@
                             text: '<i class="fa fa-check"></i> Files uploaded successfully',
                             time: 3
                         });
-
+                        refreshDocsList();
                         closeModal();
                         // reload the page
                         // setTimeout(() => {
@@ -1171,12 +1236,12 @@
             fileInputs.forEach((input) => {
                 input.value = '';
             });
-            
+
             selectedFiles = [];
             removeAllCheckBox();
 
             // refresh the table
-            refreshDocList(workerId);         
+            refreshDocList(workerId);
 
         }
 
@@ -1221,6 +1286,151 @@
 
     <script type="text/javascript">
         // loding states cities docs on page load
+        @php
+            $worker_id = $worker->id;
+        @endphp
+        const worker_id = '{!! $worker_id !!}';
+
+        refreshDocList(worker_id);
+
+        // refresh docs list fun 
+        function refreshDocsList() {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('list-docs') }}',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    WorkerId: worker_id
+                }),
+                success: function(resp) {
+                    var data;
+                    try {
+                        // Try to manually parse the response as JSON
+                        data = JSON.parse(resp);
+                        console.log(data);
+                    } catch (e) {
+                        // If parsing fails, assume resp is already a JavaScript object
+                        data = resp;
+                    }
+
+                    var tbody = $('.table tbody');
+                    tbody.empty();
+                    data.forEach(function(file) {
+                        var row = $('<tr>');
+                        row.attr('class', 'row');
+                        row.append($('<td class="col-3 td-table">').text(file.displayName));
+
+                        row.append($('<td class="col-3 td-table">').text(file.type));
+                        console.log(file.id);
+                        var deleteButton = $('<button>').text('Delete Document').addClass(
+                            'delete').attr('data-id', file.id);
+                        deleteButton.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('del-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function() {
+                                    row.remove();
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+                        var viewFile = $('<button>').text('View Document').addClass('delete')
+                            .attr('data-id', file.id);
+                        viewFile.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('get-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function(resp) {
+                                    resp = JSON.parse(resp);
+                                    const base64String = resp.content.data;
+                                    console.log("the resp base64",
+                                        resp);
+
+                                    const mimeType = base64String.match(
+                                        /^data:(.+);base64,/)[1];
+
+
+                                    const base64Data = base64String.split(
+                                        ',')[1];
+
+
+                                    const byteCharacters = atob(base64Data);
+                                    const byteNumbers = new Array(
+                                        byteCharacters.length);
+                                    for (let i = 0; i < byteCharacters
+                                        .length; i++) {
+                                        byteNumbers[i] = byteCharacters
+                                            .charCodeAt(i);
+                                    }
+                                    const byteArray = new Uint8Array(
+                                        byteNumbers);
+
+
+                                    const blob = new Blob([byteArray], {
+                                        type: mimeType
+                                    });
+
+
+                                    const blobUrl = URL.createObjectURL(
+                                        blob);
+                                    const downloadLink = document
+                                        .createElement('a');
+                                    downloadLink.href = blobUrl;
+
+
+                                    const extension = mimeType.split('/')[
+                                        1
+                                    ];
+                                    downloadLink.setAttribute('download',
+                                        `document.${extension}`
+                                    );
+
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(
+                                        downloadLink);
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+
+
+                        row.append($('<td class="col-3 td-table">').append(viewFile));
+                        row.append($('<td class="col-3 td-table">').append(deleteButton));
+
+                        tbody.append(row);
+                    });
+                },
+                error: function(resp) {
+                    console.log('Error:', resp);
+                }
+            });
+        }
 
         $(document).ready(function() {
             if (@json($type == 'profile')) {
@@ -1231,8 +1441,8 @@
                 document.getElementById('option-2').checked = true;
                 AccountSettingDisplay();
             }
-            //const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
-            //const AddStripeAccount = document.getElementById('AddStripeAccount');
+            // const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
+            // const AddStripeAccount = document.getElementById('AddStripeAccount');
 
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
@@ -1263,7 +1473,8 @@
 
                 $.get(`/api/cities/${selectedState}`, function(data) {
                     CitySelect.empty();
-                    CitySelect.append('<option value="" disabled selected hidden>Select City</option>');
+                    CitySelect.append(
+                        '<option value="" disabled selected hidden>Select City</option>');
                     $.each(data, function(index, city) {
                         CitySelect.append(new Option(city.name, city.name));
                     });
@@ -1279,7 +1490,8 @@
 
                 $.get(`/api/cities/${selectedState}`, function(data) {
                     CitySelect.empty();
-                    CitySelect.append('<option value="" disabled selected hidden>Select City</option>');
+                    CitySelect.append(
+                        '<option value="" disabled selected hidden>Select City</option>');
                     $.each(data, function(index, city) {
                         CitySelect.append(new Option(city.name, city.name));
                     });
@@ -1288,36 +1500,6 @@
             });
 
             // loding docs list and dispatch them on the table (consume api : /list-docs)
-            @php
-                $worker_id = $worker->id;
-            @endphp
-            const worker_id = '{!! $worker_id !!}';
-
-            refreshDocList(worker_id);
-            /*
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/worker/check-onboarding-status',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    access: true
-                }),
-                success: function(resp) {
-                    //console.log(resp);
-                    if (resp.status) {
-                        AccessToStripeAccount.classList.remove('d-none');
-
-                    } else {
-                        console.log(resp);
-                        AddStripeAccount.classList.remove('d-none');
-                    }
-                }
-            });
-            */
         });
 
 
@@ -1330,14 +1512,14 @@
                 $('.help-block-first_name').text('Please enter a first name');
                 $('.help-block-first_name').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-first_name').text('');
             }
             if (last_name.value === '') {
                 $('.help-block-last_name').text('Please enter a last name');
                 $('.help-block-last_name').addClass('text-danger');
                 isValid = false;
-            }   else{
+            } else {
                 $('.help-block-last_name').text('');
             }
 
@@ -1382,65 +1564,240 @@
         // validation professional information
         function validateProfessionalInfo() {
 
-                var isValid = true;
+            var isValid = true;
 
-                const fields = [
-                    { field: profession, errorClass: 'help-block-profession', errorMessage: 'Please enter a profession' },
-                    { field: specialty, errorClass: 'help-block-specialty', errorMessage: 'Please enter a specialty' },
-                    { field: terms, errorClass: 'help-block-terms', errorMessage: 'Please enter a term' },
-                    { field: worker_job_type, errorClass: 'help-block-worker_job_type', errorMessage: 'Please enter a worker type' },
-                    { field: block_scheduling, errorClass: 'help-block-block_scheduling', errorMessage: 'Please enter a block scheduling' },
-                    { field: float_requirement, errorClass: 'help-block-float_requirement', errorMessage: 'Please enter a float requirement' },
-                    { field: facility_shift_cancelation_policy, errorClass: 'help-block-facility_shift_cancelation_policy', errorMessage: 'Please enter a facility shift cancelation policy' },
-                    { field: contract_termination_policy, errorClass: 'help-block-contract_termination_policy', errorMessage: 'Please enter a contract termination policy' },
-                    { field: traveler_distance_from_facility, errorClass: 'help-block-traveler_distance_from_facility', errorMessage: 'Please enter the Distance from your home' },
-                    { field: clinical_setting, errorClass: 'help-block-clinical_setting_you_prefer', errorMessage: 'Please enter a clinical setting' },
-                    { field: Patient_ratio, errorClass: 'help-block-worker_patient_ratio', errorMessage: 'Please enter a patient ratio' },
-                    { field: emr, errorClass: 'help-block-worker_emr', errorMessage: 'Please enter an EMR' },
-                    { field: Unit, errorClass: 'help-block-worker_unit', errorMessage: 'Please enter a unit' },
-                    { field: scrub_color, errorClass: 'help-block-worker_scrub_color', errorMessage: 'Please enter a scrub color' },
-                    { field: rto, errorClass: 'help-block-rto', errorMessage: 'Please enter an RTO' },
-                    { field: shift_of_day, errorClass: 'help-block-worker_shift_time_of_day', errorMessage: 'Please enter a shift time of day' },
-                    { field: hours_shift, errorClass: 'help-block-worker_hours_shift', errorMessage: 'Please enter hours per shift' },
-                    { field: preferred_assignment_duration, errorClass: 'help-block-worker_weeks_assignment', errorMessage: 'Please enter a preferred assignment duration' },
-                    { field: weeks_shift, errorClass: 'help-block-worker_shifts_week', errorMessage: 'Please enter a weeks shift' },
-                    { field: worker_experience, errorClass: 'help-block-worker_experience', errorMessage: 'Please enter worker experience' },
-                    { field: worker_eligible_work_in_us, errorClass: 'help-block-worker_eligible_work_in_us', errorMessage: 'Please enter worker eligible work in us' },
-                    { field: nursing_license_state, errorClass: 'help-block-nursing_license_state', errorMessage: 'Please enter a nursing license state' },
-                    { field: worker_facility_city, errorClass: 'help-block-worker_facility_city', errorMessage: 'Please enter a worker facility city' },
-                    { field: worker_facility_state, errorClass: 'help-block-worker_facility_state', errorMessage: 'Please enter a worker facility state' },
-                    { field: worker_start_date, errorClass: 'help-block-worker_start_date', errorMessage: 'Please enter a worker start date' },
-                    { field: worker_guaranteed_hours, errorClass: 'help-block-worker_guaranteed_hours', errorMessage: 'Please enter worker guaranteed hours' },
-                    { field: worker_sign_on_bonus, errorClass: 'help-block-worker_sign_on_bonus', errorMessage: 'Please enter a worker sign on bonus' },
-                    { field: worker_completion_bonus, errorClass: 'help-block-worker_completion_bonus', errorMessage: 'Please enter a worker completion bonus' },
-                    { field: worker_extension_bonus, errorClass: 'help-block-worker_extension_bonus', errorMessage: 'Please enter a worker extension bonus' },
-                    { field: worker_other_bonus, errorClass: 'help-block-worker_other_bonus', errorMessage: 'Please enter a worker other bonus' },
-                    { field: worker_four_zero_one_k, errorClass: 'help-block-worker_four_zero_one_k', errorMessage: 'Please enter a worker four zero one k' },
-                    { field: worker_health_insurance, errorClass: 'help-block-worker_health_insurance', errorMessage: 'Please enter worker health insurance' },
-                    { field: worker_dental, errorClass: 'help-block-worker_dental', errorMessage: 'Please enter worker dental' },
-                    { field: worker_vision, errorClass: 'help-block-worker_vision', errorMessage: 'Please enter worker vision' },
-                    { field: worker_overtime_rate, errorClass: 'help-block-worker_overtime_rate', errorMessage: 'Please enter worker overtime rate' },
-                    { field: worker_holiday, errorClass: 'help-block-worker_holiday', errorMessage: 'Please enter worker holiday' },
-                    { field: worker_on_call_check, errorClass: 'help-block-worker_on_call_check', errorMessage: 'Please enter worker on call check' },
-                    { field: worker_on_call, errorClass: 'help-block-worker_on_call', errorMessage: 'Please enter worker on call rate' },
-                    { field: worker_call_back, errorClass: 'help-block-worker_call_back', errorMessage: 'Please enter worker on call back rate' },
-                    { field: worker_orientation_rate, errorClass: 'help-block-worker_orientation_rate', errorMessage: 'Please enter worker orientation rate' },
-                    { field: worker_benefits, errorClass: 'help-block-worker_benefits', errorMessage: 'Please enter worker benefits' },
-                    { field: nurse_classification, errorClass: 'help-block-nurse_classification', errorMessage: 'Please enter a worker classification' },
-                    { field: nursing_license_number, errorClass: 'help-block-licence', errorMessage: 'Please enter a licence number' }
-                ];
+            const fields = [{
+                    field: profession,
+                    errorClass: 'help-block-profession',
+                    errorMessage: 'Please enter a profession'
+                },
+                {
+                    field: specialty,
+                    errorClass: 'help-block-specialty',
+                    errorMessage: 'Please enter a specialty'
+                },
+                {
+                    field: terms,
+                    errorClass: 'help-block-terms',
+                    errorMessage: 'Please enter a term'
+                },
+                {
+                    field: worker_job_type,
+                    errorClass: 'help-block-worker_job_type',
+                    errorMessage: 'Please enter a worker type'
+                },
+                {
+                    field: block_scheduling,
+                    errorClass: 'help-block-block_scheduling',
+                    errorMessage: 'Please enter a block scheduling'
+                },
+                {
+                    field: float_requirement,
+                    errorClass: 'help-block-float_requirement',
+                    errorMessage: 'Please enter a float requirement'
+                },
+                {
+                    field: facility_shift_cancelation_policy,
+                    errorClass: 'help-block-facility_shift_cancelation_policy',
+                    errorMessage: 'Please enter a facility shift cancelation policy'
+                },
+                {
+                    field: contract_termination_policy,
+                    errorClass: 'help-block-contract_termination_policy',
+                    errorMessage: 'Please enter a contract termination policy'
+                },
+                {
+                    field: traveler_distance_from_facility,
+                    errorClass: 'help-block-traveler_distance_from_facility',
+                    errorMessage: 'Please enter the Distance from your home'
+                },
+                {
+                    field: clinical_setting,
+                    errorClass: 'help-block-clinical_setting_you_prefer',
+                    errorMessage: 'Please enter a clinical setting'
+                },
+                {
+                    field: Patient_ratio,
+                    errorClass: 'help-block-worker_patient_ratio',
+                    errorMessage: 'Please enter a patient ratio'
+                },
+                {
+                    field: emr,
+                    errorClass: 'help-block-worker_emr',
+                    errorMessage: 'Please enter an EMR'
+                },
+                {
+                    field: Unit,
+                    errorClass: 'help-block-worker_unit',
+                    errorMessage: 'Please enter a unit'
+                },
+                {
+                    field: scrub_color,
+                    errorClass: 'help-block-worker_scrub_color',
+                    errorMessage: 'Please enter a scrub color'
+                },
+                {
+                    field: rto,
+                    errorClass: 'help-block-rto',
+                    errorMessage: 'Please enter an RTO'
+                },
+                {
+                    field: shift_of_day,
+                    errorClass: 'help-block-worker_shift_time_of_day',
+                    errorMessage: 'Please enter a shift time of day'
+                },
+                {
+                    field: hours_shift,
+                    errorClass: 'help-block-worker_hours_shift',
+                    errorMessage: 'Please enter hours per shift'
+                },
+                {
+                    field: preferred_assignment_duration,
+                    errorClass: 'help-block-worker_weeks_assignment',
+                    errorMessage: 'Please enter a preferred assignment duration'
+                },
+                {
+                    field: weeks_shift,
+                    errorClass: 'help-block-worker_shifts_week',
+                    errorMessage: 'Please enter a weeks shift'
+                },
+                {
+                    field: worker_experience,
+                    errorClass: 'help-block-worker_experience',
+                    errorMessage: 'Please enter worker experience'
+                },
+                {
+                    field: worker_eligible_work_in_us,
+                    errorClass: 'help-block-worker_eligible_work_in_us',
+                    errorMessage: 'Please enter worker eligible work in us'
+                },
+                {
+                    field: nursing_license_state,
+                    errorClass: 'help-block-nursing_license_state',
+                    errorMessage: 'Please enter a nursing license state'
+                },
+                {
+                    field: worker_facility_city,
+                    errorClass: 'help-block-worker_facility_city',
+                    errorMessage: 'Please enter a worker facility city'
+                },
+                {
+                    field: worker_facility_state,
+                    errorClass: 'help-block-worker_facility_state',
+                    errorMessage: 'Please enter a worker facility state'
+                },
+                {
+                    field: worker_start_date,
+                    errorClass: 'help-block-worker_start_date',
+                    errorMessage: 'Please enter a worker start date'
+                },
+                {
+                    field: worker_guaranteed_hours,
+                    errorClass: 'help-block-worker_guaranteed_hours',
+                    errorMessage: 'Please enter worker guaranteed hours'
+                },
+                {
+                    field: worker_sign_on_bonus,
+                    errorClass: 'help-block-worker_sign_on_bonus',
+                    errorMessage: 'Please enter a worker sign on bonus'
+                },
+                {
+                    field: worker_completion_bonus,
+                    errorClass: 'help-block-worker_completion_bonus',
+                    errorMessage: 'Please enter a worker completion bonus'
+                },
+                {
+                    field: worker_extension_bonus,
+                    errorClass: 'help-block-worker_extension_bonus',
+                    errorMessage: 'Please enter a worker extension bonus'
+                },
+                {
+                    field: worker_other_bonus,
+                    errorClass: 'help-block-worker_other_bonus',
+                    errorMessage: 'Please enter a worker other bonus'
+                },
+                {
+                    field: worker_four_zero_one_k,
+                    errorClass: 'help-block-worker_four_zero_one_k',
+                    errorMessage: 'Please enter a worker four zero one k'
+                },
+                {
+                    field: worker_health_insurance,
+                    errorClass: 'help-block-worker_health_insurance',
+                    errorMessage: 'Please enter worker health insurance'
+                },
+                {
+                    field: worker_dental,
+                    errorClass: 'help-block-worker_dental',
+                    errorMessage: 'Please enter worker dental'
+                },
+                {
+                    field: worker_vision,
+                    errorClass: 'help-block-worker_vision',
+                    errorMessage: 'Please enter worker vision'
+                },
+                {
+                    field: worker_overtime_rate,
+                    errorClass: 'help-block-worker_overtime_rate',
+                    errorMessage: 'Please enter worker overtime rate'
+                },
+                {
+                    field: worker_holiday,
+                    errorClass: 'help-block-worker_holiday',
+                    errorMessage: 'Please enter worker holiday'
+                },
+                {
+                    field: worker_on_call_check,
+                    errorClass: 'help-block-worker_on_call_check',
+                    errorMessage: 'Please enter worker on call check'
+                },
+                {
+                    field: worker_on_call,
+                    errorClass: 'help-block-worker_on_call',
+                    errorMessage: 'Please enter worker on call rate'
+                },
+                {
+                    field: worker_call_back,
+                    errorClass: 'help-block-worker_call_back',
+                    errorMessage: 'Please enter worker on call back rate'
+                },
+                {
+                    field: worker_orientation_rate,
+                    errorClass: 'help-block-worker_orientation_rate',
+                    errorMessage: 'Please enter worker orientation rate'
+                },
+                {
+                    field: worker_benefits,
+                    errorClass: 'help-block-worker_benefits',
+                    errorMessage: 'Please enter worker benefits'
+                },
+                {
+                    field: nurse_classification,
+                    errorClass: 'help-block-nurse_classification',
+                    errorMessage: 'Please enter a worker classification'
+                },
+                {
+                    field: nursing_license_number,
+                    errorClass: 'help-block-licence',
+                    errorMessage: 'Please enter a licence number'
+                }
+            ];
 
-                // Validate fields
-                fields.forEach(({ field, errorClass, errorMessage }) => {
-                    if (field.value === '') {
-                        $(`.${errorClass}`).text(errorMessage).addClass('text-danger');
-                        isValid = false;
-                    } else {
-                        $(`.${errorClass}`).text('').removeClass('text-danger');
-                    }
-                });
+            // Validate fields
+            fields.forEach(({
+                field,
+                errorClass,
+                errorMessage
+            }) => {
+                if (field.value === '') {
+                    $(`.${errorClass}`).text(errorMessage).addClass('text-danger');
+                    isValid = false;
+                } else {
+                    $(`.${errorClass}`).text('').removeClass('text-danger');
+                }
+            });
 
-                return isValid;
+            return isValid;
         }
         // end validation professional information
         // validation document management
@@ -2138,7 +2495,7 @@
             });
         };
 
-        function refreshDocList(worker_id){
+        function refreshDocList(worker_id) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2246,7 +2603,7 @@
 
                                     const extension = mimeType.split('/')[
                                         1
-                                        ];
+                                    ];
                                     downloadLink.setAttribute('download',
                                         `document.${extension}`
                                     );

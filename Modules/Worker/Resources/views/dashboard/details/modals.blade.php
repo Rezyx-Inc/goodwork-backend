@@ -1,6 +1,56 @@
 <!----------------job-detls popup form----------->
 
 <!-----------Did you really graduate?------------>
+<!-- nursing_license_state_file  Modal -->
+
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="nursing_license_state_file_modal" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="ss-pop-cls-vbtn">
+                <button type="button" class="btn-close" data-target="#nursing_license_state_file_modal"
+                    onclick="close_modal(this)" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                    <form name="nursing_license_state" method="post" action="{{ route('worker-upload-files') }}"
+                        id="StateCode_modal_form" class="modal-form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                        <h4></h4>
+                        {{-- StateCode --}}
+                        <div class="container-multiselect" id="certificate">
+                            <div class="select-btn">
+                                <span class="btn-text">Select Professional Licensure</span>
+                                <span class="arrow-dwn">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
+                            </div>
+                            <ul class="list-items">
+                                @if (isset($allKeywords['StateCode']))
+                                    @foreach ($allKeywords['StateCode'] as $value)
+                                        <li class="item" value="{{ $value->title }}">
+                                            <span class="checkbox">
+                                                <i class="fa-solid fa-check check-icon"></i>
+                                            </span>
+                                            <span class="item-text">{{ $value->title }}</span>
+                                        </li>
+                                        <input name="nursing_license_state" displayName="{{ $value->title }}"
+                                            type="file" id="upload-{{ $loop->index }}" class="files-upload"
+                                            style="display: none;" />
+                                    @endforeach
+                                @endif
+                            </ul>
+                            <button class="ss-job-dtl-pop-sv-btn" onclick="collect_data(event,'file')">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- Certification  Modal -->
 
 <div class="modal fade ss-jb-dtl-pops-mn-dv" id="certification_file_modal" data-bs-backdrop="static"
@@ -50,6 +100,7 @@
         </div>
     </div>
 </div>
+
 
 
 <!-- Vaccination  Modal -->
@@ -152,11 +203,14 @@
                                 <label>Is this from your last assignment?</label>
 
                                 <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary focus active" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        <input type="radio" name="recency_of_reference" value="1" class="join-btn" checked> Yes
+                                    <label class="btn btn-primary focus active" data-toggle-class="btn-primary"
+                                        data-toggle-passive-class="btn-default">
+                                        <input type="radio" name="recency_of_reference" value="1"
+                                            class="join-btn" checked> Yes
                                     </label>
-                                    <label class="btn btn-secondary" type="button" data-toggle-class="btn-primary" >
-                                        <input type="radio" name="recency_of_reference" value="0" class="join-btn"> &nbsp; No &nbsp;
+                                    <label class="btn btn-secondary" type="button" data-toggle-class="btn-primary">
+                                        <input type="radio" name="recency_of_reference" value="0"
+                                            class="join-btn"> &nbsp; No &nbsp;
                                     </label>
                                 </div>
 
