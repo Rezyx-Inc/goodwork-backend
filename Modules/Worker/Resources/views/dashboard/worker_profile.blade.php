@@ -978,7 +978,7 @@
                 item.addEventListener('click', (event) => {
 
                     const uploadInput = item.nextElementSibling;
-                    console.log('this is the next sibling : ', uploadInput)
+                    //console.log('this is the next sibling : ', uploadInput)
                     if (uploadInput) {
                         // class 'checked' check
                         if (item.classList.contains('checked')) {
@@ -988,7 +988,7 @@
                                     // Handling file selection
                                     const file = this.files[0];
                                     selectedFiles.push(file.name);
-                                    console.log(selectedFiles);
+                                    //console.log(selectedFiles);
                                 }
                             }, {
                                 once: true //avoid multiple registrations
@@ -998,7 +998,7 @@
                             if (index > -1) {
                                 selectedFiles.splice(index, 1);
                             }
-                            console.log(selectedFiles);
+                            //console.log(selectedFiles);
 
                         }
                     }
@@ -1172,6 +1172,9 @@
             selectedFiles = [];
             removeAllCheckBox();
 
+            // refresh the table
+            refreshDocList(workerId);         
+
         }
 
         const selectBtn = document.querySelectorAll(".select-btn"),
@@ -1193,13 +1196,13 @@
                 if (item.classList.contains("checked")) {
                     // add item
                     selectedValues.push(value);
-                    console.log(selectedValues);
+                    //console.log(selectedValues);
                 } else {
                     // remove item
                     const index = selectedValues.indexOf(value);
                     if (index > -1) {
                         selectedValues.splice(index, 1);
-                        console.log(selectedValues);
+                        //console.log(selectedValues);
                     }
                 }
                 let btnText = document.querySelector(".btn-text");
@@ -1287,141 +1290,7 @@
             @endphp
             const worker_id = '{!! $worker_id !!}';
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '{{ route('list-docs') }}',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    WorkerId: worker_id
-                }),
-                success: function(resp) {
-                    var data;
-                    try {
-                        // Try to manually parse the response as JSON
-                        data = JSON.parse(resp);
-                        console.log(data);
-                    } catch (e) {
-                        // If parsing fails, assume resp is already a JavaScript object
-                        data = resp;
-                    }
-
-                    var tbody = $('.table tbody');
-                    tbody.empty();
-                    data.forEach(function(file) {
-                        var row = $('<tr>');
-                        row.attr('class', 'row');
-                        row.append($('<td class="col-3 td-table">').text(file.displayName));
-
-                        row.append($('<td class="col-3 td-table">').text(file.type));
-                        console.log(file.id);
-                        var deleteButton = $('<button>').text('Delete Document').addClass(
-                            'delete').attr('data-id', file.id);
-                        deleteButton.click(function(event) {
-                            event.preventDefault();
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                        .attr('content')
-                                },
-                                url: '{{ route('del-doc') }}',
-                                method: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({
-                                    bsonId: file.id
-                                }),
-                                success: function() {
-                                    row.remove();
-                                },
-                                error: function(resp) {
-                                    console.log('Error:', resp);
-                                }
-                            });
-                        });
-                        var viewFile = $('<button>').text('View Document').addClass('delete')
-                            .attr('data-id', file.id);
-                        viewFile.click(function(event) {
-                            event.preventDefault();
-                            $.ajax({
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
-                                        .attr('content')
-                                },
-                                url: '{{ route('get-doc') }}',
-                                method: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({
-                                    bsonId: file.id
-                                }),
-                                success: function(resp) {
-                                    resp = JSON.parse(resp);
-                                    const base64String = resp.content.data;
-                                    console.log("the resp base64",
-                                    resp);
-
-                                    const mimeType = base64String.match(
-                                        /^data:(.+);base64,/)[1];
-
-
-                                    const base64Data = base64String.split(
-                                        ',')[1];
-
-
-                                    const byteCharacters = atob(base64Data);
-                                    const byteNumbers = new Array(
-                                        byteCharacters.length);
-                                    for (let i = 0; i < byteCharacters
-                                        .length; i++) {
-                                        byteNumbers[i] = byteCharacters
-                                            .charCodeAt(i);
-                                    }
-                                    const byteArray = new Uint8Array(
-                                        byteNumbers);
-
-
-                                    const blob = new Blob([byteArray], {
-                                        type: mimeType
-                                    });
-
-
-                                    const blobUrl = URL.createObjectURL(
-                                        blob);
-                                    const downloadLink = document
-                                        .createElement('a');
-                                    downloadLink.href = blobUrl;
-
-
-                                    const extension = mimeType.split('/')[
-                                        1
-                                        ];
-                                    downloadLink.setAttribute('download',
-                                        `document.${extension}`
-                                    );
-
-                                    document.body.appendChild(downloadLink);
-                                    downloadLink.click();
-                                    document.body.removeChild(
-                                        downloadLink);
-                                },
-                                error: function(resp) {
-                                    console.log('Error:', resp);
-                                }
-                            });
-                        });
-
-
-                        row.append($('<td class="col-3 td-table">').append(viewFile));
-                        row.append($('<td class="col-3 td-table">').append(deleteButton));
-
-                        tbody.append(row);
-                    });
-                },
-                error: function(resp) {
-                    console.log('Error:', resp);
-                }
-            });
+            refreshDocList(worker_id);
 
             $.ajax({
                 headers: {
@@ -1435,7 +1304,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         AccessToStripeAccount.classList.remove('d-none');
 
@@ -1611,7 +1480,7 @@
             const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($(
                     'input[name="email_payment"]').val()))) {
-                console.log(email_payment.value);
+                //console.log(email_payment.value);
                 $('.help-block-email_payment').text('Please enter a valid email');
                 $('.help-block-email_payment').addClass('text-danger');
                 isValid = false;
@@ -1667,7 +1536,7 @@
             if (!validateBasicInfo()) {
                 return;
             }
-            console.log(first_name.value);
+            //console.log(first_name.value);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1693,7 +1562,7 @@
                 cache: false,
                 processData: false,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1786,7 +1655,7 @@
                     InfoType: "ProfessionalInformation"
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1836,7 +1705,7 @@
                     phone_number_payment: phone_number_payment.value,
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1883,7 +1752,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1897,7 +1766,7 @@
 
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -1929,7 +1798,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1938,12 +1807,12 @@
                         });
                         $('#loading_disableOption').addClass('d-none');
                         $('#disactivate_account').removeClass('d-none');
-                        console.log(resp);
+                        //console.log(resp);
                         window.location.href = resp.account_link;
                     }
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -1975,7 +1844,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -1988,7 +1857,7 @@
                     }
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -2009,7 +1878,7 @@
                 return;
             }
 
-            console.log(worker_id);
+            //console.log(worker_id);
             var workerId = worker_id;
             var filesInput = document.getElementById('document_file');
             var files = Array.from(filesInput.files);
@@ -2045,7 +1914,7 @@
                     contentType: 'application/json',
                     data: JSON.stringify(body),
                     success: function(resp) {
-                        console.log(resp);
+                        //console.log(resp);
                         ajaxindicatorstop();
                         if (resp.ok) {
                             notie.alert({
@@ -2153,7 +2022,7 @@
                 contentType: false,
                 data: formData,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2239,7 +2108,7 @@
                 cache: false,
                 processData: false,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2263,6 +2132,143 @@
                 }
             });
         };
+
+        function refreshDocList(worker_id){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('list-docs') }}',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    WorkerId: worker_id
+                }),
+                success: function(resp) {
+                    var data;
+                    try {
+                        // Try to manually parse the response as JSON
+                        data = JSON.parse(resp);
+                        //console.log(data);
+                    } catch (e) {
+                        // If parsing fails, assume resp is already a JavaScript object
+                        data = resp;
+                    }
+
+                    var tbody = $('.table tbody');
+                    tbody.empty();
+                    data.forEach(function(file) {
+                        var row = $('<tr>');
+                        row.attr('class', 'row');
+                        row.append($('<td class="col-3 td-table">').text(file.displayName));
+
+                        row.append($('<td class="col-3 td-table">').text(file.type));
+                        //console.log(file.id);
+                        var deleteButton = $('<button>').text('Delete Document').addClass(
+                            'delete').attr('data-id', file.id);
+                        deleteButton.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('del-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function() {
+                                    row.remove();
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+                        var viewFile = $('<button>').text('View Document').addClass('delete')
+                            .attr('data-id', file.id);
+                        viewFile.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('get-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function(resp) {
+                                    resp = JSON.parse(resp);
+                                    const base64String = resp.content.data;
+                                    //console.log("the resp base64",resp);
+
+                                    const mimeType = base64String.match(
+                                        /^data:(.+);base64,/)[1];
+
+
+                                    const base64Data = base64String.split(
+                                        ',')[1];
+
+
+                                    const byteCharacters = atob(base64Data);
+                                    const byteNumbers = new Array(
+                                        byteCharacters.length);
+                                    for (let i = 0; i < byteCharacters
+                                        .length; i++) {
+                                        byteNumbers[i] = byteCharacters
+                                            .charCodeAt(i);
+                                    }
+                                    const byteArray = new Uint8Array(
+                                        byteNumbers);
+
+
+                                    const blob = new Blob([byteArray], {
+                                        type: mimeType
+                                    });
+
+
+                                    const blobUrl = URL.createObjectURL(
+                                        blob);
+                                    const downloadLink = document
+                                        .createElement('a');
+                                    downloadLink.href = blobUrl;
+
+
+                                    const extension = mimeType.split('/')[
+                                        1
+                                        ];
+                                    downloadLink.setAttribute('download',
+                                        `document.${extension}`
+                                    );
+
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(
+                                        downloadLink);
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+
+
+                        row.append($('<td class="col-3 td-table">').append(viewFile));
+                        row.append($('<td class="col-3 td-table">').append(deleteButton));
+
+                        tbody.append(row);
+                    });
+                },
+                error: function(resp) {
+                    console.log('Error:', resp);
+                }
+            });
+        }
     </script>
 @stop
 
