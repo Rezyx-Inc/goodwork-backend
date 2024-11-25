@@ -19,8 +19,11 @@
                                         <span>Change Image</span>
                                     </label>
                                     <input id="file" type="file" accept="image/heic, image/png, image/jpeg" onchange="loadFile(event)" />
-                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
-                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
+                                    @if (isset($user->image))
+                                        <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"/>
+                                    @else
+                                        <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output" width="200" />
+                                    @endif
                                 </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $worker->id }}</p>
@@ -321,7 +324,7 @@
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveBonusInformation"> Save
                                                 </button>
-                                                <span class="col-12"
+                                                <!-- <span class="col-12"
                                                     style="display: block;
                                                color: #000;
                                                font-size: 16px;
@@ -332,7 +335,7 @@
                                                 </button>
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
                                                     id="AccessToStripeAccount"> Access to your Stripe account
-                                                </button>
+                                                </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -1228,8 +1231,8 @@
                 document.getElementById('option-2').checked = true;
                 AccountSettingDisplay();
             }
-            const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
-            const AddStripeAccount = document.getElementById('AddStripeAccount');
+            //const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
+            //const AddStripeAccount = document.getElementById('AddStripeAccount');
 
             $('#contact_number').mask('+1 (999) 999-9999');
             $('#new_contact_number').mask('+1 (999) 999-9999');
@@ -1291,7 +1294,7 @@
             const worker_id = '{!! $worker_id !!}';
 
             refreshDocList(worker_id);
-
+            /*
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1314,6 +1317,7 @@
                     }
                 }
             });
+            */
         });
 
 
@@ -1778,8 +1782,9 @@
 
         // end account disactivating
 
+        /*
         // creating a stripe account
-
+        
         AddStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
             $('#disactivate_account').addClass('d-none');
@@ -1824,7 +1829,7 @@
 
         // end creating stripe account
 
-        // redirecting to login stripe link
+        // start redirecting to login stripe link
 
         AccessToStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
@@ -1868,9 +1873,9 @@
         });
 
 
-        // redirecting to login stripe link
+        // end redirecting to login stripe link
 
-
+        */
         // upload files
         document.getElementById('uploadForm').addEventListener('click', function(event) {
             event.preventDefault();
@@ -2160,8 +2165,8 @@
                     data.forEach(function(file) {
                         var row = $('<tr>');
                         row.attr('class', 'row');
+                        //row.append($('<td class="col-3 td-table" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">').text(file.name.substring(0,20)));
                         row.append($('<td class="col-3 td-table">').text(file.displayName));
-
                         row.append($('<td class="col-3 td-table">').text(file.type));
                         //console.log(file.id);
                         var deleteButton = $('<button>').text('Delete Document').addClass(
