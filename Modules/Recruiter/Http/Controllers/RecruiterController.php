@@ -641,19 +641,16 @@ class RecruiterController extends Controller
 
                     // check if the recruiter is associated with an organization
 
-                    $checkResponse = Http::post('http://localhost:4545/checkRecruiter', ['id' => $created_by]);
-                    return $checkResponse;
-                    if ($checkResponse->status() == 200) {
-                       $job->organization_id = $checkResponse->json()->id;
-                       return response()->json(['success' => true, 'recruiter' => $checkResponse->json()]);
+                    $checkResponse = Http::post('http://localhost:4545/organizations/checkRecruiter', ['id' => $created_by]);
+                    $checkResponse = $checkResponse->json();
+                    if (isset($checkResponse[0])) {
+                        $orgId = $checkResponse[0]['orgId'];
                     } else {
-                        return response()->json(['success' => false, 'message' => 'Recruiter is not associated with an organization']);
+                        $orgId = null;
                     }
-
-                    
-                    
-                
+                    $job->organization_id = $orgId;
                     $job->save();
+
                 } catch (Exception $e) {
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
