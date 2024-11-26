@@ -91,6 +91,14 @@ Route::prefix('organization')->group(function () {
 
         Route::get('get-offer-information', ['uses' => 'OrganizationApplicationController@get_offer_information', 'as'=> 'organization-get-offer-information']);
 
+        // get_offer_information_for_edit
+
+        Route::get('get-offer-information-for-edit', ['uses' => 'OrganizationApplicationController@get_offer_information_for_edit', 'as'=> 'organization-get-offer-information-for-edit']);
+
+        // updateJobOffer
+
+        Route::post('update-job-offer', ['uses' => 'OrganizationApplicationController@update_job_offer', 'as'=> 'organization-update-job-offer']);
+
         // get offer list by type
 
         Route::get('get-offers-by-type', ['uses' => 'OrganizationApplicationController@get_offers_by_type', 'as'=> 'organization-get-offers-by-type']);
@@ -138,6 +146,12 @@ Route::prefix('organization')->group(function () {
         // assign recruiter to job
 
         Route::post('assign-recruiter-to-job',['uses'=>'OrganizationController@assign_recruiter_to_job','as'=>'assign_recruiter_to_job']);
+
+        // list docs
+        Route::post('list-docs', ['uses' => 'OrganizationApplicationController@listDocs', 'as' => 'organization-list-worker-docs']);
+
+        // get one doc
+        Route::post('get-doc', ['uses' => 'OrganizationApplicationController@getDoc', 'as' => 'organization-get-worker-docs']);
 
     });
 });

@@ -387,7 +387,12 @@
                     doneElement.classList.add("active");
                 }
             }
-            document.getElementById('listingname').innerHTML = type + ' Applications';
+            if(type == 'Apply'){
+                document.getElementById('listingname').innerHTML = 'New Applications';
+            }else{
+                document.getElementById('listingname').innerHTML = type + ' Applications';
+            }
+            
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
@@ -937,8 +942,7 @@
         }
     </script>
     <script>
-        function askWorker(e, type, workerid, jobid) {
-            return false;
+       function askWorker(e, type, workerid,recruiter_id , organization_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -973,7 +977,7 @@
 
             // for now just redirecting to messages page
             let url = "{{ url('organization/organization-messages') }}";
-             window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
+            window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name;
             // window.location = url;
         }
 
@@ -1143,6 +1147,32 @@
             }
         }
 
+        function ChangeOfferInfo(offerId){
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('organization/get-offer-information-for-edit') }}",
+                    data: {
+                        'token': csrfToken,
+                        'offer_id' : offerId,
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        $("#application-details").html(result.content);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
         function selectOfferCycleState(type){
             applicationStatusToggle(type);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -1159,7 +1189,21 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
-                        $("#application-list").html(result.content);
+                        if (type == 'Apply') {
+                            // chnage his coloset from col-lg-5 to col-lg-12
+                            
+                            $("#application-details").closest('.col-lg-7').addClass("d-none");
+                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5').addClass('col-lg-12');
+                            $("#application-list").html(result.content);
+                            // hide to col of  #application-details
+                            
+
+                        } else {
+                            $("#application-list").html(result.content);
+                            $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
+                            $("#application-details").closest('.col-lg-7').removeClass("d-none");
+                        }
+                        
                     },
                     error: function(error) {
                         console.log(error);
@@ -1186,6 +1230,8 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
+                        $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
+                        $("#application-details").closest('.col-lg-7').removeClass("d-none");
                         $("#application-list").html(result.content);
                         activeWorkerClass(workerId);
                     },
@@ -1251,7 +1297,11 @@
                     doneElement.classList.add("active");
                 }
             }
-            document.getElementById('listingname').innerHTML = type + ' Applications';
+            if(type == 'Apply'){
+                document.getElementById('listingname').innerHTML = 'New Applications';
+            }else{
+                document.getElementById('listingname').innerHTML = type + ' Applications';
+            }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
@@ -1277,7 +1327,7 @@
                     dataType: 'json',
                     success: function(result) {
                          $("#application-details").html(result.content);
-                        console.log(result.content);
+                        //console.log(result.content);
 
                         var files = result.files;
                         console.log(files);
@@ -1336,7 +1386,7 @@
                     dataType: 'json',
                     success: function(result) {
                          $("#application-details").html(result.content);
-                        console.log(result.content);
+                        //console.log(result.content);
                     },
                     error: function(error) {
                         console.log(error);

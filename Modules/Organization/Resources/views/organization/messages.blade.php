@@ -39,12 +39,12 @@
                 });
         });
         var idWorker_Global = '';
-        var idOrganization_Global = '';
+        var idRecruiter_Global = '';
 
 
         var PrivateChannel = '';
         var page = 1; // Initialize the page number (the number of the 10 messages to be loaded next)
-        function getPrivateMessages(idWorker, fullName, idOrganization) {
+        function getPrivateMessages(idWorker, fullName, idRecruiter) {
 
             // Leave the current channel
             window.Echo.leave(PrivateChannel);
@@ -81,18 +81,18 @@
             document.getElementById('empty_room').classList.add("d-none");
             document.getElementById('body_room').classList.remove("d-none");
             idWorker_Global = idWorker;
-            idOrganization_Global = idOrganization;
+            idRecruiter_Global = idRecruiter;
 
             let id = @json($id);
 
-            PrivateChannel = 'private-chat.' + idOrganization + '.' + id + '.' + idWorker_Global;
+            PrivateChannel = 'private-chat.' + id + '.' + idRecruiter + '.' + idWorker_Global;
 
             let messageText = document.getElementById('message');
             console.log(messageText);
 
             function createRealMessageHTML(message) {
                 var senderClass;
-                if (message.senderRole == 'ORGANIZATION') {
+                if (message.senderRole == 'RECRUITER') {
                     senderClass = 'ss-msg-rply-blue-dv';
                 } else if (message.senderRole == 'ORGANIZATION') {
                     senderClass = 'ss-msg-rply-black-dv';
@@ -132,7 +132,7 @@
 
             window.Echo.private(PrivateChannel)
                 .listen('NewPrivateMessage', (event) => {
-                    console.log('New private message Organization:', event);
+                    console.log('New private message Recruiter:', event);
                     var messageHTML = createRealMessageHTML(event);
                     $('.private-messages').append(messageHTML);
                     var element = document.getElementById('body_room');
@@ -140,8 +140,8 @@
                 });
 
             $('.private-messages').html('');
-            $.get('/organization/getMessages?page=1&workerId=' + idWorker + '&organizationId=' + idOrganization, function(
-                data) {
+            $.get('/organization/getMessages?page=1&workerId=' + idWorker + '&recruiterId=' + idRecruiter, function(
+            data) {
                 // Parse the returned data
                 var messages = data.messages;
 
@@ -150,7 +150,7 @@
                 // Function to create the HTML for a message
                 function createMessageHTML(message) {
                     var senderClass;
-                    if (message.sender == 'ORGANIZATION') {
+                    if (message.sender == 'RECRUITER') {
                         senderClass = 'ss-msg-rply-blue-dv';
                     } else if (message.sender == 'ORGANIZATION') {
                         senderClass = 'ss-msg-rply-black-dv';
@@ -191,10 +191,14 @@
         }
 
         $(document).ready(function() {
-            if (@json($direct) == true) {
-                getPrivateMessages(@json($idWorker), @json($nameworker),
-                    @json($idOrganization));
-            }
+            const urlParams = new URLSearchParams(window.location.search);
+                const idWorker = urlParams.get('worker_id');
+                const nameworker = urlParams.get('name');
+                const idRecruiter = urlParams.get('recruiter_id');
+                if (idWorker && nameworker && idRecruiter) {
+                    getPrivateMessages(@json($idWorker), nameworker, idRecruiter);
+                }
+           
             var messagesArea = $('.messages-area');
             messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
 
@@ -207,7 +211,7 @@
                     $('#login').addClass('d-none');
                     // Make an AJAX request to the API
                     $.get('/organization/getMessages?page=' + page + '&workerId=' + idWorker_Global +
-                        '&organizationId=' + idOrganization_Global,
+                        '&recruiterId=' + idRecruiter_Global,
                         function(data) {
                             // Parse the returned data
                             var messages = data.messages;
@@ -219,7 +223,7 @@
 
 
                                 var senderClass;
-                                if (message.sender == 'ORGANIZATION') {
+                                if (message.sender == 'RECRUITER') {
                                     senderClass = 'ss-msg-rply-blue-dv';
                                 } else if (message.sender == 'ORGANIZATION') {
                                     senderClass = 'ss-msg-rply-black-dv';
@@ -276,14 +280,14 @@
         function sendMessage(type) {
             console.log(type);
             let id = @json($id);
-            console.log('organization id', id);
-            PrivateChannel = 'private-chat.' + idOrganization_Global + '.' + id + '.' + idWorker_Global;
+            console.log('recruiter id', id);
+            PrivateChannel = 'private-chat.' + id + '.' + idRecruiter_Global + '.' + idWorker_Global;
             console.log(PrivateChannel);
             let messageInput = document.getElementById('messageEnvoye');
             let message = messageInput.value;
 
             let formData = new FormData();
-            formData.append('idOrganization', idOrganization_Global);
+            formData.append('idRecruiter', idRecruiter_Global);
             formData.append('idWorker', idWorker_Global);
             formData.append('type', type);
             formData.append('_token', '{{ csrf_token() }}');
@@ -391,7 +395,7 @@
     <main style="padding-top: 130px" class="ss-main-body-sec">
 
 
-        <div class="container" id="organizations_messages">
+        <div class="container" id="recruiters_messages">
             <div class="ss-message-pg-mn-div">
                 <div class="row">
                     <div class="col-lg-5 ss-displ-flex">
@@ -411,7 +415,19 @@
                                     <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')"
                                         class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
-                                            <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
+                                            {{-- <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $workerId->image) }}"
+                                                alt=""> --}}
+                                                @php
+                                                // Models
+                                                    $worker = App\Models\User::find($room['workerId']);  
+                                                @endphp
+                                              
+                                                
+                                            <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $worker->image) }}"
+                                                onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
+                                                id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                            
+                                                
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
                                                 <p id="room_{{ $room['workerId'] }}">
@@ -459,8 +475,10 @@
                         <div id="body_room" class="d-none ss-msg-rply-mn-div messages-area parentMessages">
                             <div class="ss-msg-rply-profile-sec">
                                 <ul>
-                                    <li><img src="{{ URL::asset('frontend/img/msg-rply-box-img.png') }}" /></li>
-                                    <li>
+                                    {{-- <li><img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $worker->image) }}"
+                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
+                                        id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture"></li>
+                                    <li> --}}
                                         <p id="fullName"></p>
                                     </li>
                                 </ul>

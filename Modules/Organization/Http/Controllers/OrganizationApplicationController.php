@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Events\NotificationOffer;
 // ************ models ************
 /** Models */
-use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword};
+use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword, Speciality, Profession, State};
 
 class OrganizationApplicationController extends Controller
 {
@@ -285,6 +285,80 @@ class OrganizationApplicationController extends Controller
         return response()->json($responseData);
     }
 
+    // change real offer infromation with the request->all() data
+
+    public function update_job_offer(Request $request)
+    {
+        //return $request->data;
+        
+        $validator = Validator::make($request->all(), [
+            'offer_id' => 'required',
+        ]);
+        $responseData = [];
+        if ($validator->fails()) {
+            $responseData = [
+                'status' => 'error',
+                'message' => $validator->errors()->first(),
+            ];
+        } else {
+            try {
+                $offer = Offer::where('id', $request->offer_id)->first();
+
+                if ($offer) {
+                    $offer->update($request->data);
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => 'Offer Updated Successfully',
+                    ];
+                } else {
+                    $responseData = [
+                        'status' => 'error',
+                        'message' => 'Offer not found',
+                    ];
+                }
+
+            } catch (\Exception $e) {
+                $responseData = [
+                    'status' => 'error',
+                    'message' => $e->getMessage(),
+                ];
+            }
+        }
+        return response()->json($responseData);
+    }
+
+        // get information for from edit 
+
+        public function get_offer_information_for_edit(Request $request)
+        {
+            try {
+                $offer_id = $request->offer_id;
+                $offerdetails = Offer::where('id', $offer_id)->first();
+                // the one who counter an offer or send the first offer
+                $user_id = $offerdetails->created_by;
+                $userdetails = User::where('id', $user_id)->first();
+
+                $specialities = Speciality::select('full_name')->get();
+                $professions = Profession::select('full_name')->get();
+                $applyCount = array();
+                // send the states
+                $states = State::select('id', 'name')->get();
+                $distinctFilters = Keyword::distinct()->pluck('filter');
+                $allKeywords = [];
+                foreach ($distinctFilters as $filter) {
+                    $keywords = Keyword::where('filter', $filter)->get();
+                    $allKeywords[$filter] = $keywords;
+                }
+
+
+                $response['content'] = view('recruiter::offers.edit_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails, 'allKeywords' => $allKeywords, 'states' => $states, 'specialities' => $specialities, 'professions' => $professions])->render();
+                //return new JsonResponse($response, 200);
+                return response()->json($response);
+    
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
 
     // get offer information for form counter
@@ -307,42 +381,113 @@ class OrganizationApplicationController extends Controller
     // get worker infromation of each offer type
     public function get_offers_by_type(Request $request)
     {
+
         try {
             $type = $request->type;
-            $organization = Auth::guard('organization')->user();
-            $offerLists = Offer::where('status', $type)->where('organization_id', $organization->id)->get();
+            if( $type == 'Apply'){
+                    try {
+                        $type = $request->type;
+                        $organization = Auth::guard('organization')->user();
+                        $organization_id = Auth::guard('organization')->user()->id;
+                        // $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $organization_id);
+                        // $responseData = $scriptResponse->json();
+                        // $allRecruiters = [];
+                        // $ids = [];
+                        // if(isset($responseData)) {
+                        //     $ids = array_map(function($recruiter) {
+                        //     return $recruiter['id'];
+                        //     }, $responseData);
+                        // }
+                        // $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
+                        $offerLists = Offer::where('status', $type)->where('organization_id', $organization->id)->get();
+                        // $offerLists = Offer::where(function($query) use ($type, $organization, $ids) {
+                        //     $query->where('status', $type)
+                        //           ->where(function($query) use ($organization, $ids) {
+                        //               $query->where('organization_id', $organization->id)
+                        //                     ->orWhereIn('recruiter_id', $ids);
+                        //           });
+                        // })->get();
+                        
+                    
+                        $nurses = [];
+                        $offerData = [];
+                        foreach ($offerLists as $value) {
 
-            $nurses = [];
-            $offerData = [];
-            foreach ($offerLists as $value) {
-                if ($value && !in_array($value->worker_user_id, $nurses)) {
-                    $nurses[] = $value->worker_user_id;
-                    $nurse = Nurse::where('id', $value->worker_user_id)->first();
-                    $user = User::where('id', $nurse->user_id)->first();
-                    $offerData[] = [
-                        'type' => $type,
-                        'workerUserId' => $value->worker_user_id,
-                        'image' => $user->image,
-                        'firstName' => $user->first_name,
-                        'lastName' => $user->last_name,
-                        'hourlyPayRate' => $nurse->facility_hourly_pay_rate ?? null,
-                        'city' => $nurse->city ?? null,
-                        'state' => $nurse->state ?? null,
-                        'muSpecialty' => $nurse->mu_specialty ?? null,
-                        'specialty' => $nurse->specialty ?? null,
-                    ];
-                }
-            }
-            if (empty($offerData)) {
-                $noApplications = true;
-            } else {
-                $noApplications = false;
-            }
-            $response['content'] = view('organization::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
-            return new JsonResponse($response, 200);
+                                $nurses[] = $value->worker_user_id;
+                                $nurse = Nurse::where('id', $value->worker_user_id)->first();
+                                $user = User::where('id', $nurse->user_id)->first();
+                                $offerData[] = [
+                                    'offerId' => $value->id,
+                                    'workerUserId' => $value->worker_user_id,
+                                    'image' => $user->image,
+                                    'firstName' => $user->first_name,
+                                    'lastName' => $user->last_name,
+                                    'city' => $value->city ?? null,
+                                    'state' => $value->state ?? null,
+                                    'profession' => $value->profession ?? null,
+                                    'specialty' => $value->specialty ?? null,
+                                    'facilityName' => $value->facility_name ?? null,
+                                    'preferred_shift_duration' => $value->preferred_shift_duration ?? null,
+                                    'JobId' => $value->job_id,
+                                    'status' => $value->status,
+                                ];
+                            
+                        }
+                        if (empty($offerData)) {
+                            $noApplications = true;
+                        } else {
+                            $noApplications = false;
+                        }
+                            $response['content'] = view('organization::offers.applications', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
 
-        } catch (\Exception $ex) {
+
+                        //return new JsonResponse($response, 200);
+                        return response()->json($response);
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+            }else{
+                    try{
+                    $organization = Auth::guard('organization')->user();
+                    $offerLists = Offer::where('status', $type)->where('organization_id', $organization->id)->get();
+                    
+                    $nurses = [];
+                    $offerData = [];
+                    foreach ($offerLists as $value) {
+                        if ($value && !in_array($value->worker_user_id, $nurses)) {
+                            $nurses[] = $value->worker_user_id;
+                            $nurse = Nurse::where('id', $value->worker_user_id)->first();
+                            $user = User::where('id', $nurse->user_id)->first();
+                            $offerData[] = [
+                                'type' => $type,
+                                'workerUserId' => $value->worker_user_id,
+                                'image' => $user->image,
+                                'firstName' => $user->first_name,
+                                'lastName' => $user->last_name,
+                                'hourlyPayRate' => $nurse->worker_actual_hourly_rate ?? null,
+                                'city' => $nurse->city ?? null,
+                                'state' => $nurse->state ?? null,
+                                'profession' => $nurse->profession ?? null,
+                                'specialty' => $nurse->specialty ?? null,
+                            ];
+                        }
+                    }
+                    if (empty($offerData)) {
+                        $noApplications = true;
+                    } else {
+                        $noApplications = false;
+                    }
+                    $response['content'] = view('organization::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
+                    //return new JsonResponse($response, 200);
+                    return response()->json($response);
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+            }
+        }catch (\Exception $ex) {
+
             return response()->json(["message" => $ex->getMessage()]);
+
         }
     }
 
@@ -392,7 +537,20 @@ class OrganizationApplicationController extends Controller
             $worker_details = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $worker_details->user_id)->first();
             $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
-            $response['content'] = view('organization::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
+
+            $orgId = Auth::guard('organization')->user()->id;
+            $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
+            $responseData = $scriptResponse->json();
+            $allRecruiters = [];
+            $ids = [];
+            if(isset($responseData)) {
+                $ids = array_map(function($recruiter) {
+                return $recruiter['id'];
+                }, $responseData);
+            }
+            $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
+
+            $response['content'] = view('organization::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'allRecruiters' => $allRecruiters ])->render();
             return new JsonResponse($response, 200);
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
@@ -561,5 +719,37 @@ class OrganizationApplicationController extends Controller
             return response()->json(["message" => $e->getMessage()]);
         }
 
+    }
+
+     public function listDocs(Request $request)
+    {
+        try {
+            $workerId = $request->WorkerId;
+            //return response()->json(['workerId' => $workerId]);
+
+            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            if ($response->successful()) {
+                return $response->body();
+            } else {
+                return response()->json(['success' => false], $response->status());
+            }
+
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function getDoc(Request $request)
+    {
+        try {
+            $bsonId = $request->input('bsonId');
+            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+
+            // Pass through the response from Node.js API
+            return $response->body();
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 }
