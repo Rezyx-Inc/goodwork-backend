@@ -36,7 +36,7 @@
     console.log(yValues);
     const ctx = document.getElementById('recruiterStats');
    
-    const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
+    const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
     
     
     new Chart(ctx, {
