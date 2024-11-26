@@ -251,6 +251,7 @@ class OrganizationAuthController extends Controller
           Mail::to($model->email)->send(new login($email_data));
 
 
+          /*
           // call local api to create spreadsheet
           $response = Http::post('http://localhost:4545/sheets/createSheet', [
             'organizationId' => $model->id,
@@ -265,9 +266,10 @@ class OrganizationAuthController extends Controller
             'subject' => 'Spreadsheet Link',
           ];
           Mail::to($model->email)->send(new sheetLink($email_link));
-
+          */
+          
           return response()->json([
-            'msg' => 'Registration successful but failed to create spreadsheet.',
+            'msg' => 'Registration successful.',
             'success' => true,
             'link' => route('organization.verify')
           ]);

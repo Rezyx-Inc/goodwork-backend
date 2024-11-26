@@ -23,8 +23,8 @@ $user = auth()->guard('organization')->user();
         <a href="{{ route('organization-opportunities-manager') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('organization/organization-opportunities-manager') ? 'active' : '' }}">
         <img src="{{URL::asset('organization/assets/images/r-opp-icon.png')}}" /><span>Opportunities Manager</span></a>
 
-        {{-- <a href="{{ route('organization-messages') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('organization/organization-messages') ? 'active' : '' }}">
-        <img src="{{URL::asset('organization/assets/images/r-message-icon.png')}}" /><span>Messages</span></a> --}}
+        <a href="{{ route('organization-messages') }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('organization/organization-messages') ? 'active' : '' }}">
+        <img src="{{URL::asset('organization/assets/images/r-message-icon.png')}}" /><span>Messages</span></a>
 
         <a  href="{{route('organization-profile', ['type' => 'profile']) }}" class="list-group-item list-group-item-action py-2 ripple shadow-none {{ request()->is('organization/organization-profile/profile') ? 'active' : '' }}">
         <img src="{{URL::asset('organization/assets/images/r-profile-icon.png')}}" /><span>My Profile</span>
