@@ -1331,3 +1331,5 @@
         background-color: rgb(82, 222, 193);
     }
 </style>
+
+{{-- TODO :: get documents and update values of certifications, professional licenses, ... --}}
