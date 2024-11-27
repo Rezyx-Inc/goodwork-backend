@@ -1222,7 +1222,7 @@
                                                             }
 
                                                             if ($count > 0) {
-                                                                echo $count . ' Files Uploaded';
+                                                                echo $count . ' File(s) Uploaded';
                                                             } else {
                                                                 foreach ($stateCode as $key => $v) {
                                                                     echo "No $v ?";
@@ -1292,7 +1292,7 @@
                                                             }
 
                                                             if ($count > 0) {
-                                                                echo $count . ' Files Uploaded';
+                                                                echo $count . ' File(s) Uploaded';
                                                             } else {
                                                                 foreach ($certificates as $key => $v) {
                                                                     echo "No $v ?";
@@ -1403,7 +1403,7 @@
                                                             }
 
                                                             if ($count > 0) {
-                                                                echo $count . ' Files Uploaded';
+                                                                echo $count . ' File(s) Uploaded';
                                                             } else {
                                                                 echo ' Who are your References?';
                                                             }
@@ -1442,7 +1442,7 @@
                                                             }
 
                                                             if ($count > 0) {
-                                                                echo $count . ' Files Uploaded';
+                                                                echo $count . ' File(s) Uploaded';
                                                             } else {
                                                                 echo ' Upload your latest skills checklist';
                                                             }
@@ -1668,7 +1668,7 @@
                                                             }
 
                                                             if ($count > 0) {
-                                                                echo $count . ' Files Uploaded';
+                                                                echo $count . ' File(s) Uploaded';
                                                             } else {
                                                                 foreach ($vaccines as $key => $v) {
                                                                     echo "No $v ?";
