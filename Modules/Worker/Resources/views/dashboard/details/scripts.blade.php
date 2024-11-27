@@ -1125,7 +1125,7 @@
             matches = @json($matches);
             usematches = @json($userMatches);
 
-            init_profile_info_text();
+            // init_profile_info_text();
 
             worker_files = await get_all_files();
 
