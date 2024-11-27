@@ -700,8 +700,8 @@
                                                     data-placeholder="Weekly non-taxable amount"
                                                     data-name="worker_weekly_non_taxable_amount_check"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_weekly_non_taxable_amount)
-                                                        {{ $nurse->worker_weekly_non_taxable_amount }}
+                                                    @isset($nurse->worker_weekly_non_taxable_amount_check)
+                                                        {{ $nurse->worker_weekly_non_taxable_amount_check }}
                                                     @else
                                                         Are you going to duplicate expenses?
                                                     @endisset
