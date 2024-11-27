@@ -12,6 +12,7 @@ use URL;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NotificationOffer;
+use Carbon\Carbon;
 // ************ models ************
 /** Models */
 use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword ,Speciality, Profession, State};
@@ -417,6 +418,13 @@ class ApplicationController extends Controller
                                 $nurses[] = $value->worker_user_id;
                                 $nurse = Nurse::where('id', $value->worker_user_id)->first();
                                 $user = User::where('id', $nurse->user_id)->first();
+                                $nowDate = Carbon::now();
+
+                                $recently_added = $nowDate->isSameDay($value->created_at);
+                                if($recently_added == false){
+                                    $recently_added = $nowDate->diffForHumans($value->created_at);
+                                }
+                                
                                 $offerData[] = [
                                     'offerId' => $value->id,
                                     'workerUserId' => $value->worker_user_id,
@@ -431,6 +439,7 @@ class ApplicationController extends Controller
                                     'preferred_shift_duration' => $value->preferred_shift_duration ?? null,
                                     'JobId' => $value->job_id,
                                     'status' => $value->status,
+                                    'recently_added' => $recently_added
                                 ];
                             
                         }
@@ -449,16 +458,27 @@ class ApplicationController extends Controller
                     }
             }else{
                     try{
+
                     $recruiter = Auth::guard('recruiter')->user();
                     $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
                     
                     $nurses = [];
                     $offerData = [];
+
                     foreach ($offerLists as $value) {
+
                         if ($value && !in_array($value->worker_user_id, $nurses)) {
                             $nurses[] = $value->worker_user_id;
                             $nurse = Nurse::where('id', $value->worker_user_id)->first();
                             $user = User::where('id', $nurse->user_id)->first();
+
+                            $nowDate = Carbon::now();
+
+                            $recently_added = $nowDate->isSameDay($value->created_at);
+                            if($recently_added == false){
+                                $recently_added = $nowDate->diffForHumans($value->created_at);
+                            }
+
                             $offerData[] = [
                                 'type' => $type,
                                 'workerUserId' => $value->worker_user_id,
@@ -470,6 +490,7 @@ class ApplicationController extends Controller
                                 'state' => $nurse->state ?? null,
                                 'profession' => $nurse->profession ?? null,
                                 'specialty' => $nurse->specialty ?? null,
+                                'recently_added' => $recently_added
                             ];
                         }
                     }
