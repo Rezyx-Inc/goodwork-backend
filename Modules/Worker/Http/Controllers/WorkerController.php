@@ -125,10 +125,26 @@ class WorkerController extends Controller
     public function details($id)
     {
         try {
+
             $data = [];
+
+            $worker = auth()->guard('frontend')->user();
+            $nurse = Nurse::where('user_id', $worker->nurse->id)->first();
+            $data['nurse'] = $nurse;
+            // get listDocs for this worker from the listDocs function with worker id in the request
+
+            $request = request();
+            // append worker id to the request
+            $request->merge(['WorkerId' => $worker->nurse->id]);
+
+            $docsListResponse = $this->listDocs($request);
+
+            $data['docsList'] = json_decode($docsListResponse);
+
             $data['model'] = Job::findOrFail($id);
             $recruiter_id = $data['model']->recruiter_id;
             $user = User::findOrFail($recruiter_id);
+
 
             $data['model']->organization_name = !!$user->organization_name && strlen($user->organization_name) ? $user->organization_name : 'Not Available';
             $data['requiredFieldsToApply'] = [];
