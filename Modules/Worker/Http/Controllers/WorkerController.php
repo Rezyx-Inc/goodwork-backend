@@ -129,8 +129,7 @@ class WorkerController extends Controller
             $data = [];
 
             $worker = auth()->guard('frontend')->user();
-            $nurse = Nurse::where('user_id', $worker->nurse->id)->first();
-            $data['nurse'] = $nurse;
+            $data['nurse'] = $worker->nurse;
             // get listDocs for this worker from the listDocs function with worker id in the request
 
             $request = request();
