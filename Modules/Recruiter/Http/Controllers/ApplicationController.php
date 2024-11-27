@@ -100,6 +100,7 @@ class ApplicationController extends Controller
         $id = $recruiter->id;
         $offers = Offer::where('status', 'Onboarding')->where('recruiter_id', $id)->get();
 
+        // Move this to a separate cron task
         foreach ($offers as $offer) {
 
             if($offer->as_soon_as == '1'){
@@ -127,10 +128,15 @@ class ApplicationController extends Controller
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+        
+        $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
+
         foreach ($statusCountsQuery as $statusCount) {
+            
             if ($statusCount) {
+
                 $statusCounts[$statusCount->status] = $statusCount->count;
+            
             } else {
                 $statusCounts[$statusCount->status] = 0;
             }
@@ -557,7 +563,7 @@ class ApplicationController extends Controller
             $response['files'] = $files;
 
             return response()->json($response);
-            
+
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -605,7 +611,7 @@ class ApplicationController extends Controller
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
                 }
-                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('recruiter_id', $recruiter_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;
