@@ -825,7 +825,6 @@ function addcertifications(type) {
     'pay_frequency',
     'preferred_experience',
     'contract_termination_policy',
-    'four_zero_one_k',
     'health_insaurance',
     'feels_like_per_hour',
     'call_back_rate',
@@ -833,7 +832,7 @@ function addcertifications(type) {
     'start_date',
     'end_date',
     'preferred_experience',
-    'professional_state_licensure',
+    'professional_licensure',
     'description',
     'preferred_work_location',
     'as_soon_as',
@@ -850,7 +849,7 @@ function addcertifications(type) {
             for (let i = 0; i < OfferFieldsName.length; i++) {
                 
                 let fieldName = OfferFieldsName[i];
-                console.log(fieldName);
+                //console.log(fieldName);
                 let fieldValue = document.getElementById(fieldName).value;
                 if (fieldValue !== null && fieldValue.trim() !== '') {
                     data[fieldName] = fieldValue;
@@ -862,12 +861,52 @@ function addcertifications(type) {
         }
     }
 
+    function getDiffBeforeSend(oldData, newData) {
+        // console.log('oldData', oldData);
+        // console.log('newData', newData)
+     
+        const changes = {};
+
+        for (const key in newData) {
+            let oldValue = oldData[key];
+            let newValue = newData[key];
+        
+            // YES No conditions
+            if (oldValue === 0 && newValue === "No") newValue = 0;
+            if (oldValue === 1 && newValue === "Yes") newValue = 1;
+        
+            // if type is number so newData will be number
+            if (typeof oldValue === "number") newValue = Number(newValue);
+        
+            if (oldValue !== newValue) {
+                changes[key] = {
+                    oldValue,
+                    newValue
+                };
+            }
+        }
+        
+        if (Object.keys(changes).length > 0) {
+            console.log("Changed fields:", changes);
+            return changes;
+        }else{
+            console.log("No changes");
+            return null;
+        }
+
+        return changes;
+        
+    }
+
+
     function offerSend(event) {
         try {
             event.preventDefault();
             getValues(OfferFieldsName);
+            let offerdetails = @json($offerdetails);
+            getDiffBeforeSend(offerdetails , data);
             let id = document.getElementById('offer_id').value;
-            console.log(id);
+            //console.log(id);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
                 $.ajax({
@@ -889,7 +928,7 @@ function addcertifications(type) {
                             time: 2
                         });
                         setTimeout(() => {
-                            location.reload();
+                            //location.reload();
                         }, 2000);
                     },
                     error: function(error) {
@@ -902,7 +941,7 @@ function addcertifications(type) {
         } catch (error) {
             console.log(error);
         }
-        console.log('offer countered data', data);
+        //console.log('offer countered data', data);
     }
 
     function editOffer(event) {  

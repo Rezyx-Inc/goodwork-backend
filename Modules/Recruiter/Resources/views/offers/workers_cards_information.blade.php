@@ -9,7 +9,7 @@
                     <span class="mb-3">{{ $data['workerUserId'] }}</span>
                 </li>
                 <li class="w-50">
-                    <p>Recently Added</p>
+                    <p>{{ gettype($data['recently_added']) == 'boolean' ? 'Recently Added' : $data['recently_added'] }}</p>
                 </li>
             </ul>
         </div>
