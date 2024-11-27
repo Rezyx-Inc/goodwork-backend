@@ -389,7 +389,7 @@
             }
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
-            }else{
+            }else if (type != null){
                 document.getElementById('listingname').innerHTML = type + ' Applications';
             }
             
@@ -1299,7 +1299,7 @@
             }
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
-            }else{
+            }else if (type != null){
                 document.getElementById('listingname').innerHTML = type + ' Applications';
             }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
