@@ -229,7 +229,7 @@ class OrganizationController extends Controller
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['workerId'] = $room->workerId;
             $data_User['isActive'] = $room->isActive;
-            $data_User['organizationId'] = $room->organizationId;
+            $data_User['recruiterId'] = $room->recruiterId;
             $data_User['messages'] = $room->messages;
 
             array_push($data, $data_User);
@@ -294,7 +294,7 @@ class OrganizationController extends Controller
             $data_User['fullName'] = $user[0]->last_name;
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['workerId'] = $room->workerId;
-            $data_User['organizationId'] = $room->organizationId;
+            $data_User['recruiterId'] = $room->recruiterId;
             $data_User['isActive'] = $room->isActive;
             $data_User['messages'] = $room->messages;
 
@@ -359,6 +359,7 @@ class OrganizationController extends Controller
                                 'organizationId' => 1,
                                 'workerId' => 1,
                                 'organizationId' => 1,
+                                'recruiterId' => 1,
                                 'lastMessage' => 1,
                                 'isActive' => 1,
                                 'messages' => [
@@ -390,7 +391,7 @@ class OrganizationController extends Controller
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['workerId'] = $room->workerId;
             $data_User['isActive'] = $room->isActive;
-            $data_User['organizationId'] = $room->organizationId;
+            $data_User['recruiterId'] = $room->recruiterId;
             $data_User['messages'] = $room->messages;
 
             array_push($data, $data_User);

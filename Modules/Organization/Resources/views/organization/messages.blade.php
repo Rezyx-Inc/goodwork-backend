@@ -405,14 +405,14 @@
                                 <ul style="float:left;">
 
                                     <li style="margin-left:0px;"><button id="published"
-                                            class="ss-darfts-sec-publsh-btn active">Organizations</button></li>
+                                            class="ss-darfts-sec-publsh-btn active">Workers</button></li>
                                 </ul>
                             </div>
 
                             <!-- rooms  -->
                             @if ($data)
                                 @foreach ($data as $room)
-                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')"
+                                    <div onclick="getPrivateMessages('{{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['recruiterId'] }}')"
                                         class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
                                             {{-- <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $workerId->image) }}"
@@ -420,14 +420,15 @@
                                                 @php
                                                 // Models
                                                     $worker = App\Models\User::find($room['workerId']);  
-                                                @endphp
-                                              
                                                 
+                                                    @endphp
+                                            @if(isset($worker))       
+                                            
                                             <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $worker->image) }}"
                                                 onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
                                                 id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                            @endif
                                             
-                                                
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
                                                 <p id="room_{{ $room['workerId'] }}">
@@ -475,10 +476,12 @@
                         <div id="body_room" class="d-none ss-msg-rply-mn-div messages-area parentMessages">
                             <div class="ss-msg-rply-profile-sec">
                                 <ul>
-                                    {{-- <li><img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $worker->image) }}"
+                                    @if(isset($worker)) 
+                                    <li><img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $worker->image) }}"
                                         onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
                                         id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture"></li>
-                                    <li> --}}
+                                    <li>
+                                    @endif
                                         <p id="fullName"></p>
                                     </li>
                                 </ul>

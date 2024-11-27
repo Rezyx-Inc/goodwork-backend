@@ -194,7 +194,7 @@
             const urlParams = new URLSearchParams(window.location.search);
                 const idWorker = urlParams.get('worker_id');
                 const nameworker = urlParams.get('name');
-                const idOrganization = urlParams.get('recruiter_id');
+                const idOrganization = urlParams.get('organization_id');
                 if (idWorker && nameworker && idOrganization) {
                     getPrivateMessages(@json($idWorker), nameworker, idOrganization);
                 }
@@ -405,7 +405,7 @@
                                 <ul style="float:left;">
 
                                     <li style="margin-left:0px;"><button id="published"
-                                            class="ss-darfts-sec-publsh-btn active">Recruiters</button></li>
+                                            class="ss-darfts-sec-publsh-btn active">Workers</button></li>
                                 </ul>
                             </div>
 
