@@ -28,7 +28,7 @@
         </li>
     @endif
 </ul>
-<div class="ss-appli-cng-abt-inf-dv">
+<!-- <div class="ss-appli-cng-abt-inf-dv">
     <h5>Applicant summary</h5>
     <p>{{ $userdetails->about_me }}</p>
 </div>
@@ -195,10 +195,10 @@
         </li>
     </ul>
 </div>
-
+ -->
 
 <div class="ss-chng-appli-slider-mn-dv">
-    <div class="{{ $jobappliedcount > 1 ? 'owl-carousel application-job-slider-owl' : '' }} application-job-slider">
+    <div class="application-job-slider">
         @foreach ($offerdetails as $value)
             <div style="width:100%;" class="ss-chng-appli-slider-sml-dv"
             @if ($value['status'] == 'Apply')
@@ -210,7 +210,7 @@
                 <ul class="ss-cng-appli-slid-ul1">
                     <li class="d-flex">
                         <p>{{ $value->terms }}</p>
-                        <span>{{ $jobappliedcount }} Workeds Applied</span>
+                        <!-- <span>Applied to {{ $jobappliedcount }} {{ $jobappliedcount > 1 ? 'Works' : 'Work'}}</span> -->
                     </li>
                     <li>Posted on {{ \Carbon\Carbon::parse($value->start_date)->format('M d, Y') }}</li>
                 </ul>

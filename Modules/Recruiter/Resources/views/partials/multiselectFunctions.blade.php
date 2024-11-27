@@ -862,8 +862,8 @@ function addcertifications(type) {
     }
 
     function getDiffBeforeSend(oldData, newData) {
-        // console.log('oldData', oldData);
-        // console.log('newData', newData)
+        //console.log('oldData', oldData);
+        //console.log('newData', newData)
      
         const changes = {};
 
@@ -887,10 +887,10 @@ function addcertifications(type) {
         }
         
         if (Object.keys(changes).length > 0) {
-            console.log("Changed fields:", changes);
+            //console.log("Changed fields:", changes);
             return changes;
         }else{
-            console.log("No changes");
+            //console.log("No changes");
             return null;
         }
 
@@ -900,7 +900,9 @@ function addcertifications(type) {
 
 
     function offerSend(event) {
+        
         try {
+
             event.preventDefault();
             getValues(OfferFieldsName);
             let offerdetails = @json($offerdetails);
@@ -928,7 +930,7 @@ function addcertifications(type) {
                             time: 2
                         });
                         setTimeout(() => {
-                            //location.reload();
+                            location.reload();
                         }, 2000);
                     },
                     error: function(error) {
