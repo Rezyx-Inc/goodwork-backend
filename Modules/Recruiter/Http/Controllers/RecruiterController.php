@@ -19,6 +19,8 @@ use App\Models\Nurse;
 use App\Models\NotificationMessage as NotificationMessageModel;
 use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
+use Illuminate\Support\Facades\Http;
+
 
 class RecruiterController extends Controller
 {
@@ -611,8 +613,44 @@ class RecruiterController extends Controller
                     $job->created_by = $created_by;
                     $job->active = false;
                     $job->is_open = false;
-                
+
+                    // example
+
+                     // $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/customer-payment-method';
+                    // $stripe_id = User::where('id', $recruiter_id)->first()->stripeAccountId;
+                    // $data = ['customerId' => $stripe_id];
+                    // $response = Http::get($url, $data);
+
+                    // router.post('/checkRecruiter', async (req, res) => {
+                    //     if (!Object.keys(req.body).length) {
+                    //         return res.status(400).send("Empty request");
+                    //     }
+                    //     try {
+                    //         const org = await Organizations.find({ recruiters: { $elemMatch: { id: req.body.id } } });
+                    //         if (!org) {
+                    //             return res.status(404).send("Organization not found.");
+                    //         }
+                    //         res.status(200).send(org);
+                    //     } catch (err) {
+                    //         console.error("Unexpected error", err);
+                    //         res.status(500).send("Unexpected error.");
+                    //     }
+                    // });
+
+                   
+
+                    // check if the recruiter is associated with an organization
+
+                    $checkResponse = Http::post('http://localhost:4545/organizations/checkRecruiter', ['id' => $created_by]);
+                    $checkResponse = $checkResponse->json();
+                    if (isset($checkResponse[0])) {
+                        $orgId = $checkResponse[0]['orgId'];
+                    } else {
+                        $orgId = null;
+                    }
+                    $job->organization_id = $orgId;
                     $job->save();
+
                 } catch (Exception $e) {
                     return response()->json(['success' => false, 'message' => $e->getMessage()]);
                 }
@@ -726,6 +764,15 @@ class RecruiterController extends Controller
                 // $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
                 
                 // Save the job data to the database
+              
+                $checkResponse = Http::post('http://localhost:4545/organizations/checkRecruiter', ['id' => $created_by]);
+                $checkResponse = $checkResponse->json();
+                if (isset($checkResponse[0])) {
+                    $orgId = $checkResponse[0]['orgId'];
+                } else {
+                    $orgId = null;
+                }
+                $job->organization_id = $orgId;
                 $job->save();
 
             } else {

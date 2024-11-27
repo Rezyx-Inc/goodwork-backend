@@ -30,9 +30,11 @@
     let values = <?php echo json_encode($statusCounts); ?>;
 
     let yValues = values;
+    let max = Math.max(...yValues);
+
     const ctx = document.getElementById('organizationStats');
 
-    const xValues = ['New', 'Offered', 'Onboard', 'Working', 'Done'];
+    const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
 
 
     new Chart(ctx, {
@@ -59,6 +61,15 @@
             title: {
                 display: true,
                 text: ""
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: max,
+                        stepSize: 1
+                    }
+                }]
             }
         }
     });

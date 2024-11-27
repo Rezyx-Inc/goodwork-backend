@@ -942,7 +942,7 @@
         }
     </script>
     <script>
-       function askWorker(e, type, workerid, recruiter_id, name) {
+       function askWorker(e, type, workerid, recruiter_id , organization_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -977,7 +977,7 @@
 
             // for now just redirecting to messages page
             let url = "{{ url('recruiter/recruiter-messages') }}";
-            window.location = url + '?worker_id=' + workerid + '&recruiter_id=' + recruiter_id + '&name=' + name;
+            window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name;
             // window.location = url;
         }
 

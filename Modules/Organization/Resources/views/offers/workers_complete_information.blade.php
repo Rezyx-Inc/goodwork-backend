@@ -17,19 +17,19 @@
                 Consult worker files
             </a>
         </li>
-        {{-- <li>
-            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->job_id }}')"
+        <li>
+            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
-        </li> --}}
+        </li>
     @else
-        {{-- <li>
-            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->job_id }}')"
+        <li>
+            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
-        </li> --}}
+        </li>
     @endif
 </ul>
 <div class="ss-appli-cng-abt-inf-dv">
-    <h5>Applicant Information</h5>
+    <h5>Applicant summary</h5>
     <p>{{ $userdetails->about_me }}</p>
 </div>
 <div class="ss-applicatio-infor-texts-dv">
@@ -191,7 +191,7 @@
             </h6>
         </li>
         <li class="col-md-12 ss-chng-appli-slider-mn-dv">
-            <p>Applicants Information({{ $jobappliedcount }})</p>
+            <p>Application details({{ $jobappliedcount }})</p>
         </li>
     </ul>
 </div>
@@ -216,9 +216,19 @@
                 </ul>
                 <h4>{{ $value->job_name }}</h4>
                 <ul class="ss-cng-appli-slid-ul2 d-block">
-                    <li class="d-inline-block">{{ $value->job->job_location }}, {{ $value->job->job_state }}</li>
-                    <li class="d-inline-block">{{ $value->job->preferred_shift }} </li>
-                    <li class="d-inline-block">{{ $value->weeks_shift }} wks</li>
+                    @if(isset($value->job->job_city) && isset($value->job->job_state))
+                        <li class="d-inline-block">{{ $value->job->job_city }}, {{ $value->job->job_state }}</li>
+                    @elseif(isset($value->job->job_city))
+                        <li class="d-inline-block">{{ $value->job->job_city }}</li>
+                    @elseif(isset($value->job->job_state))
+                        <li class="d-inline-block">{{ $value->job->job_state }}</li>
+                    @endif
+                    @if(isset($value->job->preferred_shift_duration))
+                        <li class="d-inline-block">{{ $value->job->preferred_shift_duration }} </li>
+                    @endif
+                    @if(isset($value->job->weeks_shift))
+                        <li class="d-inline-block">{{ $value->job->weeks_shift }} wks</li>
+                    @endif
                 </ul>
                 <ul class="ss-cng-appli-slid-ul3">
                     <li><span>{{ $value->facility }}</span></li>
@@ -235,3 +245,9 @@
 <script>
    
 </script>
+
+<style>
+        .application-job-slider{
+            cursor: pointer;
+        }
+</style>

@@ -24,7 +24,10 @@
                         <ul>
                             <li>
                                 <h6>Organization Name</h6>
-                                <p>{{ $jobdetails->organization_name ?? 'Missing Information' }}</p>
+                                @php 
+                                    $organization = \App\Models\User::where('id', $jobdetails->organization_id)->first();
+                                @endphp
+                                <p>{{ $organization->organization_name ?? 'Missing Information' }}</p>
                                 </p>
                             </li>
                             <li>

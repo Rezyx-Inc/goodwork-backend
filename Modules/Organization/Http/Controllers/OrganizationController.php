@@ -21,6 +21,8 @@ use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\register;
 
 
 class OrganizationController extends Controller
@@ -96,11 +98,11 @@ class OrganizationController extends Controller
 
     public function get_private_messages(Request $request)
     {
-        $idOrganization = $request->query('organizationId');
+        $idRecruiter = $request->query('recruiterId');
         $idWorker = $request->query('workerId');
         $page = $request->query('page', 1);
 
-        $idorganization = Auth::guard('organization')->user()->id;
+        $idOrganization = Auth::guard('organization')->user()->id;
 
         // Calculate the number of messages to skip
         $skip = ($page - 1) * 10;
@@ -109,7 +111,7 @@ class OrganizationController extends Controller
 
         $chat = DB::connection('mongodb')
             ->collection('chat')
-            ->raw(function ($collection) use ($idOrganization, $idorganization, $idWorker, $skip) {
+            ->raw(function ($collection) use ($idOrganization, $idRecruiter, $idWorker, $skip) {
                 return $collection
                     ->aggregate([
                         [
@@ -117,7 +119,7 @@ class OrganizationController extends Controller
                                 'organizationId' => $idOrganization,
                                 // 'organizationId'=> $idorganization,
                                 // for now until get the offer works
-                                'organizationId' => $idorganization,
+                                'recruiterId' => $idRecruiter,
 
                                 'workerId' => $idWorker,
                             ],
@@ -138,28 +140,29 @@ class OrganizationController extends Controller
 
     public function get_direct_private_messages(Request $request)
     {
-        $idOrganization = $request->query('organizationId');
+        //return $request->all();
+        $idRecruiter = $request->query('recruiterId');
         $idWorker = $request->query('workerId');
         $page = $request->query('page', 1);
 
-        $idorganization = Auth::guard('organization')->user()->id;
+        $idOrganization = Auth::guard('organization')->user()->id;
 
         // Calculate the number of messages to skip
         $skip = ($page - 1) * 10;
 
-        // we need to set the organization static since we dont have a relation between those three roles yet so we choose "GWU000005"
+        // we need to set the recruiter static since we dont have a relation between those three roles yet so we choose "GWU000005"
 
         $chat = DB::connection('mongodb')
             ->collection('chat')
-            ->raw(function ($collection) use ($idOrganization, $idorganization, $idWorker, $skip) {
+            ->raw(function ($collection) use ($idOrganization, $idRecruiter, $idWorker, $skip) {
                 return $collection
                     ->aggregate([
                         [
                             '$match' => [
                                 'organizationId' => $idOrganization,
-                                // 'organizationId'=> $idorganization,
+                                // 'recruiterId'=> $idRecruiter,
                                 // for now until get the offer works
-                                'organizationId' => $idorganization,
+                                'recruiterId' => $idRecruiter,
 
                                 'workerId' => $idWorker,
                             ],
@@ -185,7 +188,7 @@ class OrganizationController extends Controller
                     ->aggregate([
                         [
                             '$match' => [
-                                //'organizationId' => $id,
+                                //'recruiterId' => $id,
                                 // for now until get the offer works
                                 'organizationId' => $id,
                             ],
@@ -194,7 +197,7 @@ class OrganizationController extends Controller
                             '$project' => [
                                 'organizationId' => 1,
                                 'workerId' => 1,
-                                'organizationId' => 1,
+                                'recruiterId' => 1,
                                 'lastMessage' => 1,
                                 'isActive' => 1,
                                 'messages' => [
@@ -242,9 +245,13 @@ class OrganizationController extends Controller
             // Handle the case where no user is found
             $nameworker = 'Default Name';
         }
-        return view('organization::organization/messages', compact('idWorker', 'idOrganization', 'direct', 'id', 'data', 'nameworker'));
+        $worker = User::where('id', $idWorker)
+        ->get()
+        ->first();
+        return view('organization::organization/messages', compact('idWorker', 'idRecruiter', 'direct', 'id', 'data', 'nameworker','worker'));
 
     }
+
 
     public function get_rooms(Request $request)
     {
@@ -301,11 +308,12 @@ class OrganizationController extends Controller
     {
 
         $worker_id = $request->input('worker_id');
+        $recruiter_id = $request->input('recruiter_id');
         $organization_id = Auth::guard('organization')->user()->id;
 
 
 
-        if (isset($worker_id)) {
+        if (isset($worker_id) && isset($recruiter_id)) {
             $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
             // Check if a room with the given worker_id and organization_id already exists
             $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('organizationId', $organization_id)->first();
@@ -314,8 +322,8 @@ class OrganizationController extends Controller
             if (!$room) {
                 DB::connection('mongodb')->collection('chat')->insert([
                     'workerId' => $nurse_user_id,
+                    'recruiterId' => $recruiter_id,
                     'organizationId' => $organization_id,
-                    'organizationId' => $organization_id, // Replace this with the actual organizationId
                     'lastMessage' => $this->timeAgo(now()),
                     'isActive' => true,
                     'messages' => [],
@@ -324,6 +332,10 @@ class OrganizationController extends Controller
                 // Call the get_private_messages function
                 $request->query->set('workerId', $nurse_user_id);
                 $request->query->set('organizationId', $organization_id); // Replace this with the actual organizationId
+                return $this->get_direct_private_messages($request);
+            }else{
+                $request->query->set('workerId', $nurse_user_id);
+                $request->query->set('recruiterId', $recruiter_id);
                 return $this->get_direct_private_messages($request);
             }
         }
@@ -387,7 +399,12 @@ class OrganizationController extends Controller
         $nameworker = '';
         $idWorker = '';
         $idOrganization = '';
-        return view('organization::organization/messages', compact('id', 'data', 'direct', 'idWorker', 'idOrganization', 'nameworker'));
+        // all worker details by worker id
+
+        $worker = User::where('id', $idWorker)
+            ->get()
+            ->first();
+        return view('organization::organization/messages', compact('id', 'data', 'direct', 'idWorker', 'idOrganization', 'nameworker','worker'));
     }
 
     public function timeAgo($time = null)
@@ -485,10 +502,11 @@ class OrganizationController extends Controller
         $full_name = $user->first_name . ' ' . $user->last_name;
 
 
-        $idOrganization = $request->idOrganization;
+        $idRecruiter = $request->idRecruiter;
 
         $time = now()->toDateTimeString();
-        event(new NewPrivateMessage($message, $idOrganization, $id, $idWorker, $role, $time, $type, $fileName));
+        //return response()->json(['success' => true, 'message' => $message, 'id' => $id, 'idRecruiter' => $idRecruiter, 'idWorker' => $idWorker, 'role' => $role, 'time' => $time, 'type' => $type, 'fileName' => $fileName]);
+        event(new NewPrivateMessage($message, $id, $idRecruiter, $idWorker, $role, $time, $type, $fileName));
         event(new NotificationMessage($message, false, $time, $idWorker, $id, $full_name));
 
         return true;
@@ -1289,19 +1307,24 @@ public function recruiters_management()
                     'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
                     'email' => 'email:rfc,dns'
                 ]);
+
                 if ($validator->fails()) {
                     $data = [];
                     $data['msg'] =$validator->errors()->first();;
                     $data['success'] = false;
                     return response()->json($data);
+
                 }else{
+
                     $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
+
                     if (!empty($check)) {
                         $data = [];
                         $data['msg'] ='Already exist.';
                         $data['success'] = false;
                         return response()->json($data);
                     }
+
                     $response = [];
                     $model = User::create([
                         'first_name' => $request->first_name,
@@ -1313,7 +1336,6 @@ public function recruiters_management()
                         'role' => 'RECRUITER',
                     ]);
 
-
                     $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId, [
                         'id' => $model->id,
                         'worksAssigned' => 0,
@@ -1324,13 +1346,18 @@ public function recruiters_management()
 
                     if ($scriptResponse->failed()) {
                         $data = [];
-                        $data['msg'] = $response->json()['message'];
+                        $data['msg'] = "Unexpected error, please contact support@goodwork.world";
                         $data['success'] = false;
                         return response()->json($data);
                     }
 
                     $response['msg'] = 'Registered successfully!';
                     $response['success'] = true;
+
+                    // sending mail infromation
+                    $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'subject' => 'Registration'];
+                    Mail::to($model->email)->send(new register($email_data));
+                    
                     return response()->json($response);
                 }
 
@@ -1494,7 +1521,12 @@ public function recruiters_management()
             ]);
 
             if ($AssignmentResponse->status() == 200) {
+                $offers = Offer::where('job_id', $jobId)->get();
 
+                foreach ($offers as $offer) {
+                    $offer->recruiter_id = $recruiterId;
+                    $offer->save();
+                }
 
                 $job->recruiter_id = $recruiterId;
                 $job->save();
