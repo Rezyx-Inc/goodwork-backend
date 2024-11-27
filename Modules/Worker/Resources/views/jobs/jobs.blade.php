@@ -269,7 +269,7 @@
                             location.reload();
                         }, 2000);
                     } else {
-                        open_stripe_modal();
+                        // open_stripe_modal();
                         notie.alert({
                             type: 'error',
                             text: '<i class="fa fa-times"></i>' + resp.message,
