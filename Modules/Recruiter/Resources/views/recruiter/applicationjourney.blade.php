@@ -525,6 +525,10 @@
 
         $(document).ready(function() {
 
+            const urlParams = new URLSearchParams(window.location.search);
+            const viewParam = urlParams.get('view');
+            selectOfferCycleState(viewParam);
+            
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
                 var $form = $('#send-job-offer');
