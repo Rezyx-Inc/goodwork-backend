@@ -21,6 +21,8 @@ use App\Models\NotificationJobModel;
 use App\Models\NotificationOfferModel;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\register;
 
 
 class OrganizationController extends Controller
@@ -1305,19 +1307,24 @@ public function recruiters_management()
                     'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
                     'email' => 'email:rfc,dns'
                 ]);
+
                 if ($validator->fails()) {
                     $data = [];
                     $data['msg'] =$validator->errors()->first();;
                     $data['success'] = false;
                     return response()->json($data);
+
                 }else{
+
                     $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
+
                     if (!empty($check)) {
                         $data = [];
                         $data['msg'] ='Already exist.';
                         $data['success'] = false;
                         return response()->json($data);
                     }
+
                     $response = [];
                     $model = User::create([
                         'first_name' => $request->first_name,
@@ -1328,7 +1335,6 @@ public function recruiters_management()
                         'active' => '1',
                         'role' => 'RECRUITER',
                     ]);
-
 
                     $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId, [
                         'id' => $model->id,
@@ -1347,6 +1353,11 @@ public function recruiters_management()
 
                     $response['msg'] = 'Registered successfully!';
                     $response['success'] = true;
+
+                    // sending mail infromation
+                    $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'subject' => 'Registration'];
+                    Mail::to($model->email)->send(new register($email_data));
+                    
                     return response()->json($response);
                 }
 
