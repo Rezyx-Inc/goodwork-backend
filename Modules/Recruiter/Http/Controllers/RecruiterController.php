@@ -302,8 +302,8 @@ class RecruiterController extends Controller
         $worker_id = $request->input('worker_id');
         $name = $request->input('name');
         $recruiter_id = Auth::guard('recruiter')->user()->id;
-
-        if (isset($worker_id) && isset($name)) {
+        $organization_id = $request->input('organization_id');
+        if (isset($worker_id) && isset($organization_id)) {
             $nurse_user_id = Nurse::where('id', $worker_id)->first()->user_id;
             // Check if a room with the given worker_id and recruiter_id already exists
             $room = DB::connection('mongodb')->collection('chat')->where('workerId', $nurse_user_id)->where('recruiterId', $recruiter_id)->first();
@@ -313,7 +313,7 @@ class RecruiterController extends Controller
                 DB::connection('mongodb')->collection('chat')->insert([
                     'workerId' => $nurse_user_id,
                     'recruiterId' => $recruiter_id,
-                    'organizationId' => $recruiter_id, // Replace this with the actual organizationId
+                    'organizationId' => $organization_id, // Replace this with the actual organizationId
                     'lastMessage' => $this->timeAgo(now()),
                     'isActive' => true,
                     'messages' => [],
