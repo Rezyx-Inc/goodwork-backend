@@ -110,10 +110,11 @@ router.post("/get-docs", async (req, res) => {
                 return res.status(404).send("Document not found.");
             }
 
+            let docsFiles = docs.files;
             // Check if any of the files is saved to disk and get it
-            for (let [index, file] of doc.files) {
-                if(file.content == ''){
-                    doc.files[index].content = fs.readFileSync(file.path).toString();
+            for (let [value, index] in docsFiles) {
+                if(value.content == ''){
+                    docs.files[index].content = fs.readFileSync(value.path).toString();
                 }
             }
 

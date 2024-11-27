@@ -522,6 +522,7 @@ class ApplicationController extends Controller
     function get_offers_of_each_worker(Request $request)
     {
         try {
+
             $recruiter = Auth::guard('recruiter')->user();
             $recruiter_id = $recruiter->id;
             $worker_id = $request->nurse_id;
@@ -530,30 +531,33 @@ class ApplicationController extends Controller
             $user = User::where('id', $nurse->user_id)->first();
             $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'recruiter_id' => $recruiter->id])->get();
             $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'recruiter_id' => $recruiter->id])->count();
+
             // file availablity check
             $hasFile = false;
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
-	    // return response()->json($fileresponse->json());	
+
+	        // return response()->json($fileresponse->json());	
             if (!empty($fileresponse->json()['files'])) {
                 $hasFile = true;
 		
                 foreach ($fileresponse->json()['files'] as $file) {
-		 if(isset($file['content']) && isset($file['name']) && isset($file['type'])){	
-                    $files[] = [
-                        'name' => $file['name'],
-                        'content' => $file['content'],
-                        'type' => $file['type']
-                    ];
-		 }
+		            if(isset($file['content']) && isset($file['name']) && isset($file['type'])){	
+                        $files[] = [
+                            'name' => $file['name'],
+                            'content' => $file['content'],
+                            'type' => $file['type']
+                        ];
+		            }      
                 }
             }
+
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
-            //return response()->json(['response'=>$response]);
-            //return new JsonResponse($response, 200);
+
             return response()->json($response);
+            
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
