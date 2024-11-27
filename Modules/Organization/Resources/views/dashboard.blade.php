@@ -28,7 +28,7 @@
 </main>
 <script>
     let values = <?php echo json_encode($statusCounts); ?>;
-
+    values = [1,2,3,4,5,6];
     let yValues = values;
     let max = Math.max(...yValues);
 
@@ -37,7 +37,7 @@
     const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
 
 
-    new Chart(ctx, {
+    var chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: xValues,
@@ -70,6 +70,17 @@
                         stepSize: 1
                     }
                 }]
+            },
+            onClick: (e) => {
+                const activePoints = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
+                if (activePoints.length > 0) {
+                    const index = activePoints[0]._index;
+                    const label = chart.data.labels[index];
+                    const value = chart.data.datasets[0].data[index];
+                    window.location = "/organization/organization-application/?view="+ label;
+                }
+
+
             }
         }
     });
