@@ -1346,7 +1346,7 @@ public function recruiters_management()
 
                     if ($scriptResponse->failed()) {
                         $data = [];
-                        $data['msg'] = $response->json()['message'];
+                        $data['msg'] = "Unexpected error, please contact support@goodwork.world";
                         $data['success'] = false;
                         return response()->json($data);
                     }
