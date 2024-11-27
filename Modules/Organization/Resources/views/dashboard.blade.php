@@ -28,7 +28,7 @@
 </main>
 <script>
     let values = <?php echo json_encode($statusCounts); ?>;
-    values = [1,2,3,4,5,6];
+
     let yValues = values;
     let max = Math.max(...yValues);
 
