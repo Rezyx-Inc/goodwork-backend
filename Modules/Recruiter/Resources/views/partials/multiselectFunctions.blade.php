@@ -28,6 +28,10 @@ var professional_licensure = {};
 var nurse_classification = {};
 var Emr = {};
 
+var result = {};
+
+{{-- script managing certifications --}}
+
 
 
 function addcertifications(type) {
@@ -53,7 +57,7 @@ function addcertifications(type) {
         } else {
             if (!certificate.hasOwnProperty(id.val())) {
 
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -62,7 +66,7 @@ function addcertifications(type) {
                 certificate[id.val()] = optionText;
 
                 certificateStr = Object.values(certificate).join(', ');
-                // console.log(certificate);
+                // // console.log(certificate);
                 id.val('');
                 list_certifications();
             }
@@ -74,12 +78,12 @@ function addcertifications(type) {
         var str = '';
         // let certificatename = "";
         // certificatename = Object.values(certificate).join(', ');
-        // console.log(certificatename);
+        // // console.log(certificatename);
         // document.getElementById("certificateEdit").value = certificatename;
-        // console.log(certificate);
+        // // console.log(certificate);
 
         for (const key in certificate) {
-            console.log(certificate);
+            // console.log(certificate);
 
             let certificatename = "";
             @php
@@ -155,7 +159,7 @@ function addcertifications(type) {
             });
         } else {
             if (!vaccinations.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -171,10 +175,10 @@ function addcertifications(type) {
 
     function list_vaccinations() {
         var str = '';
-        console.log(vaccinations);
+        // console.log(vaccinations);
 
         for (const key in vaccinations) {
-            console.log(vaccinations);
+            // console.log(vaccinations);
 
             let vaccinationsname = "";
             @php
@@ -248,7 +252,7 @@ function addcertifications(type) {
             });
         } else {
             if (!skills.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -264,16 +268,16 @@ function addcertifications(type) {
 
     function list_skills() {
         var str = '';
-        console.log('fomr skiiiils', skills);
+        // console.log('fomr skiiiils', skills);
 
         for (const key in skills) {
-            console.log('skills', skills);
+            // console.log('skills', skills);
 
 
             let skillsname = "";
             let allspcldata = @json($allKeywords['Speciality']);
 
-            console.log('allspcldata', allspcldata);
+            // console.log('allspcldata', allspcldata);
 
             if (skills.hasOwnProperty(key)) {
                 var data = allspcldata;
@@ -340,7 +344,7 @@ function addcertifications(type) {
             });
         } else {
             if (!shifttimeofday.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -348,7 +352,7 @@ function addcertifications(type) {
 
                 shifttimeofday[id.val()] = optionText;
                 shifttimeofdayStr = Object.values(shifttimeofday).join(', ');
-                console.log('shifttimeofdayStr', shifttimeofdayStr);
+                // console.log('shifttimeofdayStr', shifttimeofdayStr);
                 id.val('');
                 list_shifttimeofday();
             }
@@ -357,10 +361,10 @@ function addcertifications(type) {
 
     function list_shifttimeofday() {
         var str = '';
-        console.log(shifttimeofday);
+        // console.log(shifttimeofday);
 
         for (const key in shifttimeofday) {
-            console.log(shifttimeofday);
+            // console.log(shifttimeofday);
 
             let shifttimeofdayname = "";
             @php
@@ -433,7 +437,7 @@ function addcertifications(type) {
             });
         } else {
             if (!benefits.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -441,7 +445,7 @@ function addcertifications(type) {
 
                 benefits[id.val()] = optionText;
                 benefitsStr = Object.values(benefits).join(', ');
-                console.log('benefitsStr', benefitsStr);
+                // console.log('benefitsStr', benefitsStr);
                 id.val('');
                 list_benefits();
             }
@@ -450,10 +454,10 @@ function addcertifications(type) {
 
     function list_benefits() {
         var str = '';
-        console.log(benefits);
+        // console.log(benefits);
 
         for (const key in benefits) {
-            console.log(benefits);
+            // console.log(benefits);
 
             let benefitsname = "";
             @php
@@ -526,7 +530,7 @@ function addcertifications(type) {
             });
         } else {
             if (!professional_licensure.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -534,7 +538,7 @@ function addcertifications(type) {
 
                 professional_licensure[id.val()] = optionText;
                 professional_licensureStr = Object.values(professional_licensure).join(', ');
-                console.log('professional_licensureStr', professional_licensureStr);
+                // console.log('professional_licensureStr', professional_licensureStr);
                 id.val('');
                 list_professional_licensure();
             }
@@ -543,10 +547,10 @@ function addcertifications(type) {
 
     function list_professional_licensure() {
         var str = '';
-        console.log(professional_licensure);
+        // console.log(professional_licensure);
 
         for (const key in professional_licensure) {
-            console.log(professional_licensure);
+            // console.log(professional_licensure);
 
             let professional_licensurename = "";
             @php
@@ -621,7 +625,7 @@ function addcertifications(type) {
             });
         } else {
             if (!Emr.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -629,7 +633,7 @@ function addcertifications(type) {
 
                 Emr[id.val()] = optionText;
                 EmrStr = Object.values(Emr).join(', ');
-                console.log('EmrStr', EmrStr);
+                // console.log('EmrStr', EmrStr);
                 id.val('');
                 list_Emr();
             }
@@ -638,10 +642,10 @@ function addcertifications(type) {
 
     function list_Emr() {
         var str = '';
-        console.log(Emr);
+        // console.log(Emr);
 
         for (const key in Emr) {
-            console.log(Emr);
+            // console.log(Emr);
 
             let Emrname = "";
             @php
@@ -715,7 +719,7 @@ function addcertifications(type) {
             });
         } else {
             if (!nurse_classification.hasOwnProperty(id.val())) {
-                console.log(id.val());
+                // console.log(id.val());
 
                 var select = document.getElementById(idtitle);
                 var selectedOption = select.options[select.selectedIndex];
@@ -723,7 +727,7 @@ function addcertifications(type) {
 
                 nurse_classification[id.val()] = optionText;
                 nurse_classificationStr = Object.values(nurse_classification).join(', ');
-                console.log('nurse_classificationStr', nurse_classificationStr);
+                // console.log('nurse_classificationStr', nurse_classificationStr);
                 id.val('');
                 list_nurse_classification();
             }
@@ -732,10 +736,10 @@ function addcertifications(type) {
 
     function list_nurse_classification() {
         var str = '';
-        console.log(nurse_classification);
+        // console.log(nurse_classification);
 
         for (const key in nurse_classification) {
-            console.log(nurse_classification);
+            // console.log(nurse_classification);
 
             let nurse_classificationname = "";
             @php
@@ -784,63 +788,124 @@ function addcertifications(type) {
 
     var data = {};
     var OfferFieldsName = [
+    'offer_id',
     'job_id',
-    'job_name',
     'type',
-    'specialty',
+    'terms',
     'profession',
+    'specialty',
+    'actual_hourly_rate',
+    'weekly_pay',
+    'hours_per_week',
     'state',
     'city',
-    'weekly_pay',
-    'terms',
-    'preferred_assignment_duration',
-    'facility_shift_cancelation_policy',
-    'traveler_distance_from_facility',
-    'clinical_setting',
-    'Patient_ratio',
-    'Unit',
-    'scrub_color',
-    'rto',
     'guaranteed_hours',
-    'hours_per_week',
     'hours_shift',
     'weeks_shift',
+    'preferred_assignment_duration',
+    'as_soon_as',
+    'start_date',
+    'end_date',
+    'rto',
+    'overtime',
+    'on_call',
+    'on_call_rate',
+    'call_back_rate',
+    'orientation_rate',
+    'weekly_taxable_amount',
+    'weekly_non_taxable_amount',
+    'feels_like_per_hour',
+    'goodwork_weekly_amount',
     'referral_bonus',
     'sign_on_bonus',
     'completion_bonus',
     'extension_bonus',
     'other_bonus',
-    'actual_hourly_rate',
-    'overtime',
-    'on_call',
-    'on_call_rate',
-    'holiday',
-    'orientation_rate',
-    'block_scheduling',
-    'float_requirement',
-    'number_of_references',
-    'urgency',
-    'facilitys_parent_system',
-    'facility_name',
     'pay_frequency',
-    'preferred_experience',
-    'contract_termination_policy',
-    'health_insaurance',
-    'feels_like_per_hour',
-    'call_back_rate',
-    'weekly_non_taxable_amount',
-    'start_date',
-    'end_date',
-    'preferred_experience',
-    'professional_licensure',
-    'description',
-    'preferred_work_location',
-    'as_soon_as',
-    'goodwork_weekly_amount',
     'total_organization_amount',
     'total_goodwork_amount',
-    'total_contract_amount'
+    'total_contract_amount',
+    'clinical_setting',
+    'preferred_work_location',
+    'facility_name',
+    'facilitys_parent_system',
+    'facility_shift_cancelation_policy',
+    'contract_termination_policy',
+    'traveler_distance_from_facility',
+    'description',
+    'urgency',
+    'preferred_experience',
+    'number_of_references',
+    'block_scheduling',
+    'float_requirement',
+    'Patient_ratio',
+    'Unit',
+    'scrub_color',
+    'job_name',
+    'holiday',
     ];
+
+   
+
+    function getMultiSelectValues() {
+        try {
+                let nurse_classification_all_values = document.getElementById("nurse_classificationAllValues");
+            if (nurse_classification_all_values) {
+                nurse_classificationStr = Object.values(nurse_classification).join(', ');
+                nurse_classification_all_values.value = nurse_classificationStr;
+                data['nurse_classification'] = nurse_classificationStr;
+            }
+
+            let professional_licensure_all_values = document.getElementById("professional_licensureAllValues");
+            if (professional_licensure_all_values) {
+                professional_licensureStr = Object.values(professional_licensure).join(', ');
+                professional_licensure_all_values.value = professional_licensureStr;
+                data['professional_licensure'] = professional_licensureStr;
+            }
+
+            let Emr_all_values = document.getElementById("EmrAllValues");
+            if (Emr_all_values) {
+                EmrStr = Object.values(Emr).join(', ');
+                Emr_all_values.value = EmrStr;
+                data['Emr'] = EmrStr;
+            }
+
+            let benefits_all_values = document.getElementById("benefitsAllValues");
+            if (benefits_all_values) {
+                benefitsStr = Object.values(benefits).join(', ');
+                benefits_all_values.value = benefitsStr;
+                data['benefits'] = benefitsStr;
+            }
+
+            let certif_all_values = document.getElementById("certificateAllValues");
+            if (certif_all_values) {
+                certificateStr = Object.values(certificate).join(', ');
+                certif_all_values.value = certificateStr;
+                data['certificate'] = certificateStr;
+            }
+            let vaccin_all_values = document.getElementById("vaccinationsAllValues");
+            if (vaccin_all_values) {
+                vaccinationsStr = Object.values(vaccinations).join(', ');
+                vaccin_all_values.value = vaccinationsStr;
+                data['vaccinations'] = vaccinationsStr;
+            }
+            let skills_all_values = document.getElementById("skillsAllValues");
+            if (skills_all_values) {
+                skillsStr = Object.values(skills).join(', ');
+                skills_all_values.value = skillsStr;
+                data['skills'] = skillsStr;
+            }
+            let shifttimeofday_all_values = document.getElementById("shifttimeofdayAllValues");
+            if (shifttimeofday_all_values) {
+                shifttimeofdayStr = Object.values(shifttimeofday).join(', ');
+                shifttimeofday_all_values.value = shifttimeofdayStr;
+                data['shifttimeofday'] = shifttimeofdayStr;
+            }
+        } catch (error) {
+            // console.log(error);
+        }
+    }
+
 
     
 
@@ -849,7 +914,7 @@ function addcertifications(type) {
             for (let i = 0; i < OfferFieldsName.length; i++) {
                 
                 let fieldName = OfferFieldsName[i];
-                //console.log(fieldName);
+                // console.log(fieldName);
                 let fieldValue = document.getElementById(fieldName).value;
                 if (fieldValue !== null && fieldValue.trim() !== '') {
                     data[fieldName] = fieldValue;
@@ -857,46 +922,23 @@ function addcertifications(type) {
                 
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
-    function getDiffBeforeSend(oldData, newData) {
-        //console.log('oldData', oldData);
-        //console.log('newData', newData)
-     
-        const changes = {};
-
-        for (const key in newData) {
-            let oldValue = oldData[key];
-            let newValue = newData[key];
-        
-            // YES No conditions
-            if (oldValue === 0 && newValue === "No") newValue = 0;
-            if (oldValue === 1 && newValue === "Yes") newValue = 1;
-        
-            // if type is number so newData will be number
-            if (typeof oldValue === "number") newValue = Number(newValue);
-        
-            if (oldValue !== newValue) {
-                changes[key] = {
-                    oldValue,
-                    newValue
-                };
+    function getDiff(result , data){
+        for (const key in result) {
+            if (result.hasOwnProperty(key)) {
+                const element = result[key];
+                if(data[key] != element){
+                    console.log('key',key);
+                    console.log('element',element);
+                    console.log('data[key]',data[key]);
+                }
             }
         }
-        
-        if (Object.keys(changes).length > 0) {
-            //console.log("Changed fields:", changes);
-            return changes;
-        }else{
-            //console.log("No changes");
-            return null;
-        }
-
-        return changes;
-        
     }
+    
 
 
     function offerSend(event) {
@@ -904,11 +946,16 @@ function addcertifications(type) {
         try {
 
             event.preventDefault();
+            
             getValues(OfferFieldsName);
-            let offerdetails = @json($offerdetails);
-            getDiffBeforeSend(offerdetails , data);
+            getMultiSelectValues();
+            console.log('data to send from the form', data);
+            console.log('offer data we get ', result);
+            getDiff(result , data);
+            return null;
+
             let id = document.getElementById('offer_id').value;
-            //console.log(id);
+            //// console.log(id);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
                 $.ajax({
@@ -934,16 +981,16 @@ function addcertifications(type) {
                         }, 2000);
                     },
                     error: function(error) {
-                        console.log(error);
+                        // console.log(error);
                     }
                 });
             } else {
                 console.error('CSRF token not found.');
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
-        //console.log('offer countered data', data);
+        //// console.log('offer countered data', data);
     }
 
     function editOffer(event) {  
@@ -951,7 +998,7 @@ function addcertifications(type) {
             event.preventDefault();
             getValues(OfferFieldsName);
             let id = document.getElementById('offer_id').value;
-            console.log(id);
+            // console.log(id);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
                 $.ajax({
@@ -977,89 +1024,95 @@ function addcertifications(type) {
                         }, 2000);
                     },
                     error: function(error) {
-                        console.log(error);
+                        // console.log(error);
                     }
                 });
             } else {
                 console.error('CSRF token not found.');
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
-        console.log('offer edited', data);
+        // console.log('offer edited', data);
     }
 
     function getOfferDataToEdit(){
         var offerdetails = @json($offerdetails);
-        console.log('offerdetails',offerdetails);
+        // console.log('offerdetails',offerdetails);
         if(offerdetails != null)
         {
-            var result = offerdetails;
+            result = offerdetails;
             console.log('result',result);
 
             const fields = {
                 'id': { id: 'offer_id', type: 'number' },
                 'job_id': { id: 'job_id', type: 'number' },
-                'job_name': { id: 'job_name', type: 'text' },
                 'type': { id: 'type', type: 'select' },
-                'specialty': { id: 'specialty', type: 'select' },
+                'terms': { id: 'terms', type: 'select' },
                 'profession': { id: 'profession', type: 'select' },
+                'specialty': { id: 'specialty', type: 'select' },
+                'actual_hourly_rate': { id: 'actual_hourly_rate', type: 'number' },
+                'weekly_pay': { id: 'weekly_pay', type: 'number' },
+                'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
-                'weekly_pay': { id: 'weekly_pay', type: 'number' },
-                'terms': { id: 'terms', type: 'select' },
-                'preferred_assignment_duration': { id: 'preferred_assignment_duration', type: 'number' },
-                'facility_shift_cancelation_policy': { id: 'facility_shift_cancelation_policy', type: 'text' },
-                'traveler_distance_from_facility': { id: 'traveler_distance_from_facility', type: 'number' },
-                'clinical_setting': { id: 'clinical_setting', type: 'select' },
-                'Patient_ratio': { id: 'Patient_ratio', type: 'number' },
-                'Unit': { id: 'Unit', type: 'text' },
-                'scrub_color': { id: 'scrub_color', type: 'text' },
-                'rto': { id: 'rto', type: 'select' },
+
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
-                'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },
                 'weeks_shift': { id: 'weeks_shift', type: 'number' },
+                'preferred_assignment_duration': { id: 'preferred_assignment_duration', type: 'number' },
+                'as_soon_as': { id: 'as_soon_as', type: 'checkbox' },
+                'start_date': { id: 'start_date', type: 'date' },
+                'end_date': { id: 'end_date', type: 'date' },
+                'rto': { id: 'rto', type: 'select' },
+                'overtime': { id: 'overtime', type: 'number' },
+                'on_call': { id: 'on_call', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'on_call_rate': { id: 'on_call_rate', type: 'number' },
+                'call_back_rate': { id: 'call_back_rate', type: 'number' },
+                'orientation_rate': { id: 'orientation_rate', type: 'number' },
+                'weekly_taxable_amount': { id: 'weekly_taxable_amount', type: 'number' },
+                'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amount', type: 'number' },
+                'feels_like_per_hour': { id: 'feels_like_per_hour', type: 'number' },
+                'goodwork_weekly_amount': { id: 'goodwork_weekly_amount', type: 'number' },
                 'referral_bonus': { id: 'referral_bonus', type: 'number' },
                 'sign_on_bonus': { id: 'sign_on_bonus', type: 'number' },
                 'completion_bonus': { id: 'completion_bonus', type: 'number' },
                 'extension_bonus': { id: 'extension_bonus', type: 'number' },
                 'other_bonus': { id: 'other_bonus', type: 'number' },
-                'actual_hourly_rate': { id: 'actual_hourly_rate', type: 'number' },
-                'overtime': { id: 'overtime', type: 'number' },
-                'on_call': { id: 'on_call', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-                'on_call_rate': { id: 'on_call_rate', type: 'number' },
-                'holiday': { id: 'holiday', type: 'date' },
-                'orientation_rate': { id: 'orientation_rate', type: 'number' },
-                'block_scheduling': { id: 'block_scheduling', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-                'float_requirement': { id: 'float_requirement', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-                'number_of_references': { id: 'number_of_references', type: 'number' },
-                'urgency': { id: 'urgency', type: 'checkbox' },
-                'facilitys_parent_system': { id: 'facilitys_parent_system', type: 'text' },
-                'facility_name': { id: 'facility_name', type: 'text' },
                 'pay_frequency': { id: 'pay_frequency', type: 'select' },
-                'preferred_experience': { id: 'preferred_experience', type: 'number' },
-                'contract_termination_policy': { id: 'contract_termination_policy', type: 'text' },
-                'four_zero_one_k': { id: 'four_zero_one_k', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-                'health_insaurance': { id: 'health_insaurance', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-                'feels_like_per_hour': { id: 'feels_like_per_hour', type: 'number' },
-                'call_back_rate': { id: 'call_back_rate', type: 'number' },
-                'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amount', type: 'number' },
-                'start_date': { id: 'start_date', type: 'date' },
-                'end_date': { id: 'end_date', type: 'date' },
-                'preferred_experience': { id: 'preferred_experience', type: 'number' },
-                'professional_state_licensure': { id: 'professional_state_licensure_pending', type: 'radio' },
-                'description': { id: 'description', type: 'text' },
-                'preferred_work_location': { id: 'preferred_work_location', type: 'text' },
-                'as_soon_as': { id: 'as_soon_as', type: 'checkbox' },
-                'goodwork_weekly_amount': { id: 'goodwork_weekly_amount', type: 'number' },
+
+                
                 'total_organization_amount': { id: 'total_organization_amount', type: 'number' },
                 'total_goodwork_amount' : { id: 'total_goodwork_amount', type: 'number' },
-                'total_contract_amount' : { id: 'total_contract_amount', type: 'number' }
+                'total_contract_amount' : { id: 'total_contract_amount', type: 'number' },
+                'clinical_setting': { id: 'clinical_setting', type: 'select' },
+                'preferred_work_location': { id: 'preferred_work_location', type: 'text' },
+                'facility_name': { id: 'facility_name', type: 'text' },
+                'facilitys_parent_system': { id: 'facilitys_parent_system', type: 'text' },
+                'facility_shift_cancelation_policy': { id: 'facility_shift_cancelation_policy', type: 'text' },
+                'contract_termination_policy': { id: 'contract_termination_policy', type: 'text' },
+                'traveler_distance_from_facility': { id: 'traveler_distance_from_facility', type: 'number' },
+
+                
+                'description': { id: 'description', type: 'text' },
+                'urgency': { id: 'urgency', type: 'checkbox' },
+                'preferred_experience': { id: 'preferred_experience', type: 'number' },
+                'number_of_references': { id: 'number_of_references', type: 'number' },
+                'block_scheduling': { id: 'block_scheduling', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'float_requirement': { id: 'float_requirement', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'Patient_ratio': { id: 'Patient_ratio', type: 'number' },
+                'Unit': { id: 'Unit', type: 'text' },
+
+
+                'scrub_color': { id: 'scrub_color', type: 'text' },
+                'job_name': { id: 'job_name', type: 'text' },
+                'holiday': { id: 'holiday', type: 'date' },
+                'professional_state_licensure': { id: 'professional_state_licensure_pending', type: 'radio' },
+
             };
 
             for (const [key, field] of Object.entries(fields)) {
-                console.log('key', key);
+                // console.log('key', key);
                 const element = document.getElementById(field.id);
                 if (!element || result[key] == null) continue;
             
@@ -1077,10 +1130,10 @@ function addcertifications(type) {
                     }
                 } else if (field.type === 'checkbox') {
                     field.id === 'urgencyDraft' ? element.checked = result[key] === 'Auto Offer' : element.checked = result[key] === '1';
-                    console.log('checkbox test', result[key]);
+                    // console.log('checkbox test', result[key]);
                 }
                 else if (field.type === 'radio') {
-                    console.log('radio', result[key]);
+                    // console.log('radio', result[key]);
                     if (result[key] === 'Accept Pending') {
                         document.getElementById('professional_state_licensure_pendingDraft').checked = true;
                     } else {
@@ -1088,14 +1141,16 @@ function addcertifications(type) {
                     }
                 }
                  else {
-                    console.log('key', key);
-                    console.log('value', result[key]);
+                    // console.log('key', key);
+                    // console.log('value', result[key]);
                     element.value = result[key];
                 }
             }
             // list emr 
             var emr = result['Emr'];
+            // console.log('emr from the old offers : ', result['Emr']);
             if(emr !== null){
+            
             emr = emr.split(', ');
             
             emr.forEach(function(item) {
@@ -1202,10 +1257,10 @@ function addcertifications(type) {
             // list shift time of day
 
             var shifttimeofdayresult = result['preferred_shift_duration'];
-            console.log("sift time of day : ",shifttimeofdayresult);
+            // console.log("shift time of day : ",shifttimeofdayresult);
             // shifttimeofday is a string use trim to check if it is empty
             if (shifttimeofdayresult !== null) {
-                console.log('triiiiiiimed');
+                // console.log('triiiiiiimed');
             shifttimeofdayresult = shifttimeofdayresult.split(', ');
             
             shifttimeofdayresult.forEach(function(item) {

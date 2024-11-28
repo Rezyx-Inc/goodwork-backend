@@ -1467,10 +1467,10 @@
         <div class="col-md-12">
             <span class="mt-3">Patient ratio</span>
         </div>
-        <div class="row {{ $offerdetails->patient_ratio === $userdetails->nurse->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Patient_ratio === $userdetails->nurse->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->patient_ratio ?? 'Missing Patient Ratio Information' }}</h6>
+                <h6>{{ $offerdetails->Patient_ratio ?? 'Missing Patient Ratio Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1488,10 +1488,10 @@
         <div class="col-md-12">
             <span class="mt-3">EMR</span>
         </div>
-        <div class="row {{ $offerdetails->emr === $userdetails->nurse->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Emr === $userdetails->nurse->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->emr ?? 'Missing EMR Information' }}</h6>
+                <h6>{{ $offerdetails->Emr ?? 'Missing EMR Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1509,10 +1509,10 @@
         <div class="col-md-12">
             <span class="mt-3">Unit</span>
         </div>
-        <div class="row {{ $offerdetails->unit === $userdetails->nurse->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Unit === $userdetails->nurse->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->unit ?? 'Missing Unit Information' }}</h6>
+                <h6>{{ $offerdetails->Unit ?? 'Missing Unit Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1628,7 +1628,7 @@
         <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
             Offer</button>
     </div>
-    @if (count($offerLogs) > 0)
+    {{-- @if (count($offerLogs) > 0) --}}
         <div class="ss-counter-buttons-div">
             <button class="counter-save-for-button" onclick="counterOffer('{{ $offerdetails->id }}')">Counter
                 Offer</button>
@@ -1638,7 +1638,7 @@
                 onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept
                 Offer</button>
         </div>
-    @endif
+    {{-- @endif --}}
 @endif
 
 </div>
