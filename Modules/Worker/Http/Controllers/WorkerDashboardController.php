@@ -57,7 +57,7 @@ class WorkerDashboardController extends Controller
     $user_id = Auth::guard('frontend')->user()->id;
     $id = Nurse::where('user_id', $user_id)->first()->id;
 
-    $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     $statusCountsQuery = Offer::whereIn('status', $statusList)
