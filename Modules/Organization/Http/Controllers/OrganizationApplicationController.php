@@ -371,7 +371,8 @@ class OrganizationApplicationController extends Controller
             $user_id = $offerdetails->created_by;
             $userdetails = User::where('id', $user_id)->first();
             $response['content'] = view('organization::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails])->render();
-            return new JsonResponse($response, 200);
+            
+            return response()->json($response);
 
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
@@ -521,7 +522,7 @@ class OrganizationApplicationController extends Controller
             $response['content'] = view('organization::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
             //return response()->json(['response'=>$response]);
-            return new JsonResponse($response, 200);
+            return response()->json($response);
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -551,7 +552,8 @@ class OrganizationApplicationController extends Controller
             $allRecruiters = User::whereIn('id', $ids)->where('role', 'RECRUITER')->get();
 
             $response['content'] = view('organization::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'allRecruiters' => $allRecruiters ])->render();
-            return new JsonResponse($response, 200);
+            return response()->json($response);
+            
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }

@@ -428,6 +428,7 @@ class ApplicationController extends Controller
 
                                 $recently_added = $nowDate->isSameDay($value->created_at);
                                 if($recently_added == false){
+
                                     $recently_added = $value->created_at->diffForHumans();
                                 }
                                 
@@ -482,7 +483,9 @@ class ApplicationController extends Controller
 
                             $recently_added = $nowDate->isSameDay($value->created_at);
                             if($recently_added == false){
+
                                 $recently_added = $value->created_at->diffForHumans();
+
                             }
 
                             $offerData[] = [

@@ -284,7 +284,7 @@
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
                 let referenceDate = document.querySelector('input[name="date_referred"]').value;
                 let referenceMinTitle = document.querySelector('input[name="min_title_of_reference"]').value;
-                let referenceRecency = document.querySelector('select[name="recency_of_reference"]').value;
+                let referenceRecency = document.querySelector('input[name="recency_of_reference"]:checked').value;
                 let referenceImage = document.querySelector('input[name="image"]').files[0];
 
                 if (!referenceName) {
@@ -313,7 +313,8 @@
                     minTitle: referenceMinTitle,
                     isLastAssignment: referenceRecency == 1 ? true : false
                 };
-                console.log(referenceInfo);
+                console.log('*************************referenceInfo', referenceInfo);
+
 
                 var readerPromise;
                 if (referenceImage) {
@@ -1125,7 +1126,7 @@
             matches = @json($matches);
             usematches = @json($userMatches);
 
-            init_profile_info_text();
+            // init_profile_info_text();
 
             worker_files = await get_all_files();
 
