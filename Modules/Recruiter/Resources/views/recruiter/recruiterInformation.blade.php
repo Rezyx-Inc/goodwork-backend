@@ -123,6 +123,13 @@
                                 <h6>{{ $jobdetails->job_city ?? 'Missing City information' }}</h6>
                             </div>
 
+                            {{-- is_resume --}}
+
+                            <div class="col-lg-5 col-md-5 col-sm-12">
+                                <p class="mt-3">Resume</p>
+                                <h6>{{ $jobdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+                            </div>
+
 
 
                             <div class="col-md-12 mb-4 collapse-container">
