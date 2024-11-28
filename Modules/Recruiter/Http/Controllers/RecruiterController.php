@@ -963,7 +963,7 @@ class RecruiterController extends Controller
         //return $request->all();
         $created_by = Auth::guard('recruiter')->user()->id;
         // Validate the form data
-
+        //dd($request);
         $active = $request->input('active');
 
         // $active = $activeRequest['active'];
@@ -1032,12 +1032,11 @@ class RecruiterController extends Controller
                 'total_goodwork_amount' => 'nullable|string',
                 'total_contract_amount' => 'nullable|string',
                 'total_organization_amount' => 'nullable|string',
-
-
+                'is_resume' => 'nullable|string',
             ]);
 
+            
             $job = Job::find($request->id);
-
             if ($job === null) {
                 return response()->json(['error' => "Job not found"], 404);
             }
@@ -1052,7 +1051,8 @@ class RecruiterController extends Controller
                 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy', 'Emr', 'on_call_rate',
                 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
                 'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
-                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as' , 'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
+                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as' , 'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount',
+                'is_resume',
             ];
             
             foreach ($fields as $field) {
@@ -1077,7 +1077,7 @@ class RecruiterController extends Controller
             // update the job data to the database
             $job->save();
 
-            return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
+            //return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
 
             return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
 
