@@ -192,7 +192,8 @@ class Offer extends Model
         'pay_frequency',
         'benefits',
         'number_of_references',
-        'organization_id'
+        'organization_id',
+        'is_resume'
         
     ];
 
