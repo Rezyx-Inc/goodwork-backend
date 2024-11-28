@@ -328,6 +328,21 @@
                 </p>
             </div>
         </div>
+        {{-- Resume --}}
+        <div class="col-md-12">
+            <span class="mt-3">Resume</span>
+        </div>
+        
+        <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
+            <div class="col-md-6">
+                <h6>{{ !$offerdetails->resume ? 'Required' : 'Not Required' }}
+                </h6>
+            </div>
+            <div class="col-md-6 ">
+                <p id="resume-placeholder">
+                </p>
+            </div>
+        </div>
 
     </div>
     {{-- End  Summary --}}
@@ -1467,10 +1482,10 @@
         <div class="col-md-12">
             <span class="mt-3">Patient ratio</span>
         </div>
-        <div class="row {{ $offerdetails->patient_ratio === $userdetails->nurse->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Patient_ratio === $userdetails->nurse->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->patient_ratio ?? 'Missing Patient Ratio Information' }}</h6>
+                <h6>{{ $offerdetails->Patient_ratio ?? 'Missing Patient Ratio Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1488,10 +1503,10 @@
         <div class="col-md-12">
             <span class="mt-3">EMR</span>
         </div>
-        <div class="row {{ $offerdetails->emr === $userdetails->nurse->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Emr === $userdetails->nurse->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->emr ?? 'Missing EMR Information' }}</h6>
+                <h6>{{ $offerdetails->Emr ?? 'Missing EMR Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1509,10 +1524,10 @@
         <div class="col-md-12">
             <span class="mt-3">Unit</span>
         </div>
-        <div class="row {{ $offerdetails->unit === $userdetails->nurse->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Unit === $userdetails->nurse->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->unit ?? 'Missing Unit Information' }}</h6>
+                <h6>{{ $offerdetails->Unit ?? 'Missing Unit Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1693,8 +1708,6 @@
         var worker_id = @json($offerdetails['worker_user_id']);
         var offer_id = @json($offerdetails['id']);
         var placeholder = document.getElementById(fileType + '-placeholder');
-        console.log('file type:', fileType);
-        console.log('Placeholder:', placeholder);
 
         if (file.length > 0 && no_files == false) {
             placeholder.innerHTML = file.join(', ');
@@ -1722,8 +1735,6 @@
                     WorkerId: worker_id
                 }),
                 success: function(resp) {
-                    console.log('Success:', resp);
-
                     let jsonResp = JSON.parse(resp);
                     files = jsonResp;
                     resolve(
@@ -1736,7 +1747,6 @@
                     updateWorkerFilesList([], 'vaccination');
                     updateWorkerFilesList([], 'references');
                     updateWorkerFilesList([], 'skills');
-                    console.log('Error:', resp);
                     reject(resp);
                 }
             });
@@ -1748,12 +1758,15 @@
 
         let files = worker_files.filter(file => file.type == type);
         let displayNames = [];
+
         if (type == 'references') {
             displayNames = files.map(file => file.ReferenceInformation.referenceName + ' - ' + file
                 .ReferenceInformation.minTitle);
+
         } else {
             displayNames = files.map(file => file.displayName);
         }
+
         worker_files_displayname_by_type = displayNames;
         return displayNames;
 
@@ -1761,13 +1774,11 @@
 
     async function checkFileMatch(inputName) {
 
-        console.log('Checking files for:', inputName);
         let worker_files_displayname_by_type = [];
 
         try {
 
             worker_files_displayname_by_type = await get_all_files_displayName_by_type(inputName);
-            console.log('Files:', worker_files_displayname_by_type);
 
         } catch (error) {
 
@@ -1851,8 +1862,6 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         var workerId = @json($offerdetails['worker_user_id']);
-        console.log(workerId);
-        console.log('worker id', workerId);
 
         function activeWorkerClass(workerUserId) {
 
