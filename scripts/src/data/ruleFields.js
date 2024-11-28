@@ -1,7 +1,7 @@
 const ruleFields = [
     {
         fieldID: "job_id",
-        displayName: "Org Job Id",
+        displayName: "Job Id",
         workerFieldIdMatch: "",
         publishDisabled: false,
         applyDisabled: true
@@ -39,14 +39,14 @@ const ruleFields = [
     {
         fieldID: "actual_hourly_rate",
         workerFieldIdMatch: "worker_actual_hourly_rate",
-        displayName: "Actual Hourly Rate",
+        displayName: "$/hr",
         publishDisabled: true,
         applyDisabled: false
     },
     {
         fieldID: "weekly_pay",
         workerFieldIdMatch: "worker_organization_weekly_amount",
-        displayName: "Weekly Pay",
+        displayName: "$/wk",
         publishDisabled: true,
         applyDisabled: false
     },
@@ -54,7 +54,7 @@ const ruleFields = [
     {
         fieldID: "hours_per_week",
         workerFieldIdMatch: "worker_hours_per_week",
-        displayName: "Hours Per Week",
+        displayName: "Hrs/Wk",
         publishDisabled: true,
         applyDisabled: false
     },
@@ -62,14 +62,14 @@ const ruleFields = [
     {
         fieldID: "job_state",
         workerFieldIdMatch: "worker_facility_state",
-        displayName: "Job State",
+        displayName: "State",
         publishDisabled: true,
         applyDisabled: false
     },
     {
         fieldID: "job_city",
         workerFieldIdMatch: "worker_facility_city",
-        displayName: "Job City",
+        displayName: "City",
         publishDisabled: true,
         applyDisabled: false
     },
@@ -144,7 +144,7 @@ const ruleFields = [
     {
         fieldID: "overtime",
         workerFieldIdMatch: "worker_overtime_rate",
-        displayName: "Overtime",
+        displayName: "OT/Hr",
         publishDisabled: false,
         applyDisabled: false
     },

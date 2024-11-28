@@ -1475,6 +1475,7 @@ public function recruiters_management()
 
             $columns = $columns[0]["ruleFields"];
             //return response()->json(['columns'=>$columns]);
+            //return $columns;
             return view('organization::organization.organization_rules_management', compact('columns','requiredFields'));
 
         }catch(\Exception $ex){
