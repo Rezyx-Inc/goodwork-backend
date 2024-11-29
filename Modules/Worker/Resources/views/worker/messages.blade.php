@@ -467,7 +467,7 @@
                                     <div onclick="getPrivateMessages('{{ $room['recruiterId'] }}','{{ $room['organizationId'] }}','{{ $room['fullName'] }}')"
                                         class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
-                                            <li><img src="{{ URL::asset('frontend/img/message-img1.png') }}" /></li>
+                                            <li><img src="{{ URL::asset($room['recruiterImage']) }}" /></li>
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
                                                 <p id="room_{{ $room['recruiterId'] }}">

@@ -376,7 +376,15 @@ class WorkerController extends Controller
                 $name = 'Default Name';
             }
 
+            if ($user->image != null && $user->image != '') {
+                $image = 'uploads/' . $user->image;
+            } else {
+                $image = "frontend/img/account-img.png";
+
+            }
+
             $data_User['fullName'] = $name;
+            $data_User['recruiterImage'] = $image;
 
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['organizationId'] = $room->organizationId;
@@ -390,7 +398,8 @@ class WorkerController extends Controller
 
             array_push($data, $data_User);
         }
-
+        //return $data;
+        //dd($data);
         return view('worker::worker/messages', compact('id', 'data'));
     }
 
