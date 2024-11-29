@@ -1061,6 +1061,10 @@ class RecruiterController extends Controller
                 }
             }
             
+            if(!isset($request->is_resume)){
+                $job->is_resume = false;    
+            }
+
             $job->recruiter_id = $created_by;
             $job->created_by = $created_by;
             $job->active = true;
@@ -1077,7 +1081,7 @@ class RecruiterController extends Controller
             // update the job data to the database
             $job->save();
 
-            //return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
+            return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job updated successfully');
 
             return response()->json(['status' => 'success', 'message' => 'Job updated successfully']);
 
