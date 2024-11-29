@@ -129,8 +129,11 @@ class ApplicationController extends Controller
             $statusCounts[$status] = 0;
         }
         
-        $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
+        // Count unique workers applying
+        //$statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
 
+        // Count unique applications per worker
+        $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
             
             if ($statusCount) {
@@ -623,7 +626,7 @@ class ApplicationController extends Controller
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
                 }
-                $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;
