@@ -9,56 +9,56 @@
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Apply')" id="Apply">
                         <p>New</p>
-                        <span>{{ $statusCounts['Apply'] }} Applicants</span>
+                        <span>{{ $statusCounts['Apply'] }} {{ $statusCounts['Apply'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Screening Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Screening')" id="Screening">
                         <p>Screening</p>
-                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
+                        <span>{{ $statusCounts['Screening'] }} {{ $statusCounts['Screening'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Submitted Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Submitted')" id="Submitted">
                         <p>Submitted</p>
-                        <span>{{ $statusCounts['Submitted'] }} Applicants</span>
+                        <span>{{ $statusCounts['Submitted'] }} {{ $statusCounts['Submitted'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Offered Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Offered')" id="Offered">
                         <p>Offered</p>
-                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
+                        <span>{{ $statusCounts['Offered'] }} {{ $statusCounts['Offered'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
-                        <span>{{ $statusCounts['Onboarding'] }} Applicants</span>
+                        <span>{{ $statusCounts['Onboarding'] }} {{ $statusCounts['Onboarding'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
                         <p>Working</p>
-                        <span>{{ $statusCounts['Working'] }} Applicants</span>
+                        <span>{{ $statusCounts['Working'] }} {{ $statusCounts['Working'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Done Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Done')" id="Done">
                         <p>Done</p>
-                        <span>{{ $statusCounts['Done'] }} Applicants</span>
+                        <span>{{ $statusCounts['Done'] }} {{ $statusCounts['Done'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- On Hold Applicants --}}
                 {{-- <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Hold')" id="Hold">
                         <p>Hold</p>
-                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
+                        <span>{{ $statusCounts['Hold'] }} {{ $statusCounts['Hold'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div> --}}
 
@@ -1090,6 +1090,7 @@
         }
 
         function open_modal(obj) {
+            
             let name, title, modal, form, target;
 
             name = $(obj).data('name');
@@ -1334,13 +1335,18 @@
                         //console.log(result.content);
 
                         var files = result.files;
-                        console.log(files);
                         var tbody = $('tbody');
                         tbody.empty(); // Clear the table body
+
                         // Add a row for each file
                         if (files) {
-                        for (var i = 0; i < files.length; i++) {
+
+                            for (var i = 0; i < files.length; i++) {
+
                                 var file = files[i];
+                                /* if(file.type == "resume"){
+                                    file.content = "data:application/pdf;base64,"+file.content;
+                                } */
                                 var base64String = file.content;
 
                                 const mimeType = base64String.match(/^data:(.+);base64,/)[1];
@@ -1362,8 +1368,8 @@
                                 row.append('<td>' + file.type + '</td>');
                                 row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
                                 tbody.append(row);
+                            }
                         }
-                    }
 
                     },
                     error: function(error) {
