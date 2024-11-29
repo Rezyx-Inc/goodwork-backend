@@ -20,7 +20,7 @@ const ruleFields = [
         publishDisabled: true,
         applyDisabled: false
     },
-    
+
     {
         fieldID: "profession",
         workerFieldIdMatch: "profession",
@@ -28,7 +28,7 @@ const ruleFields = [
         publishDisabled: true,
         applyDisabled: false
     },
-    
+
     {
         fieldID: "preferred_specialty",
         workerFieldIdMatch: "specialty",
@@ -50,7 +50,7 @@ const ruleFields = [
         publishDisabled: true,
         applyDisabled: false
     },
-    
+
     {
         fieldID: "hours_per_week",
         workerFieldIdMatch: "worker_hours_per_week",
@@ -58,7 +58,7 @@ const ruleFields = [
         publishDisabled: true,
         applyDisabled: false
     },
-    
+
     {
         fieldID: "job_state",
         workerFieldIdMatch: "worker_facility_state",
@@ -73,7 +73,7 @@ const ruleFields = [
         publishDisabled: true,
         applyDisabled: false
     },
-    
+
     {
         fieldID: "preferred_shift_duration",
         workerFieldIdMatch: "worker_shift_time_of_day",
@@ -81,7 +81,7 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    
+
     {
         fieldID: "guaranteed_hours",
         workerFieldIdMatch: "worker_guaranteed_hours",
@@ -97,7 +97,7 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    
+
     {
         fieldID: "weeks_shift",
         workerFieldIdMatch: "worker_shifts_week",
@@ -112,14 +112,14 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    {
-        fieldID: "as_soon_as",
-        workerFieldIdMatch: "worker_as_soon_as_possible",
-        displayName: "As Soon As",
-        publishDisabled: false,
-        applyDisabled: false
-    },
-    
+    // {
+    //     fieldID: "as_soon_as",
+    //     workerFieldIdMatch: "worker_as_soon_as_possible",
+    //     displayName: "As Soon As",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
+
     {
         fieldID: "start_date",
         workerFieldIdMatch: "worker_start_date",
@@ -151,49 +151,49 @@ const ruleFields = [
     {
         fieldID: "on_call_rate",
         workerFieldIdMatch: "worker_on_call_check",
-        displayName: "On Call Rate",
+        displayName: "On Call/Hr",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "call_back_rate",
         workerFieldIdMatch: "worker_call_back_check",
-        displayName: "Call Back Rate",
+        displayName: "Call Back/Hr",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "orientation_rate",
         workerFieldIdMatch: "worker_orientation_rate",
-        displayName: "Orientation Rate",
+        displayName: "Orientation/Hr",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "weekly_taxable_amount",
         workerFieldIdMatch: "worker_weekly_taxable_amount",
-        displayName: "Weekly Taxable Amount",
+        displayName: "Taxable/Wk",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "weekly_non_taxable_amount",
         workerFieldIdMatch: "worker_weekly_non_taxable_amount",
-        displayName: "Weekly Non Taxable Amount",
+        displayName: "Non-taxable/Wk",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "feels_like_per_hour",
         workerFieldIdMatch: "worker_feels_like_per_hour",
-        displayName: "Feels Like Per Hour",
+        displayName: "Feels Like $/hr",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "goodwork_weekly_amount",
         workerFieldIdMatch: "",
-        displayName: "Goodwork Weekly Amount",
+        displayName: "Gw$/Wk or Gw$/Hr",
         publishDisabled: false,
         applyDisabled: true
     },
@@ -207,7 +207,7 @@ const ruleFields = [
     {
         fieldID: "sign_on_bonus",
         workerFieldIdMatch: "worker_sign_on_bonus",
-        displayName: "Sign On Bonus",
+        displayName: "Sign-On Bonus",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -218,38 +218,38 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    {
-        fieldID: "completion_bonus",
-        workerFieldIdMatch: "worker_completion_bonus",
-        displayName: "Completion Bonus",
-        publishDisabled: false,
-        applyDisabled: false
-    },
-    {
-        fieldID: "other_bonus",
-        workerFieldIdMatch: "worker_other_bonus",
-        displayName: "Other Bonus",
-        publishDisabled: false,
-        applyDisabled: false
-    },
+    // {
+    //     fieldID: "completion_bonus",
+    //     workerFieldIdMatch: "worker_completion_bonus",
+    //     displayName: "Completion Bonus + dont exist in the sheet ",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
+    // {
+    //     fieldID: "other_bonus",
+    //     workerFieldIdMatch: "worker_other_bonus",
+    //     displayName: "Other Bonus + dont exist in the sheet ",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
     {
         fieldID: "total_organization_amount",
         workerFieldIdMatch: "",
-        displayName: "Total Organization Amount",
+        displayName: "$/Org",
         publishDisabled: false,
         applyDisabled: true
     },
     {
         fieldID: "total_goodwork_amount",
         workerFieldIdMatch: "",
-        displayName: "Total Goodwork Amount",
+        displayName: "$/Gw",
         publishDisabled: false,
         applyDisabled: true
     },
     {
         fieldID: "total_contract_amount",
         workerFieldIdMatch: "",
-        displayName: "Total Contract Amount",
+        displayName: "Total $",
         publishDisabled: false,
         applyDisabled: true
     },
@@ -277,14 +277,14 @@ const ruleFields = [
     {
         fieldID: "preferred_work_location",
         workerFieldIdMatch: "worker_preferred_work_location",
-        displayName: "Preferred Work Location",
+        displayName: "Adress",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "facility_name",
         workerFieldIdMatch: "worker_facility_name",
-        displayName: "Facility Name",
+        displayName: "Facility",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -312,7 +312,7 @@ const ruleFields = [
     {
         fieldID: "traveler_distance_from_facility",
         workerFieldIdMatch: "distance_from_your_home",
-        displayName: "Traveler Distance From Facility",
+        displayName: "Perm address miles from facility",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -326,42 +326,42 @@ const ruleFields = [
     {
         fieldID: "certificate",
         workerFieldIdMatch: "certification",
-        displayName: "Certificate",
+        displayName: "Certifications",
         publishDisabled: false,
         applyDisabled: false
     },
-    {
-        fieldID: "description",
-        workerFieldIdMatch: "worker_description",
-        displayName: "Description",
-        publishDisabled: false,
-        applyDisabled: false
-    },
-    {
-        fieldID: "urgency",
-        workerFieldIdMatch: "worker_urgency",
-        displayName: "Urgency",
-        publishDisabled: false,
-        applyDisabled: false
-    },
-    {
-        fieldID: "preferred_experience",
-        workerFieldIdMatch: "worker_experience",
-        displayName: "Preferred Experience",
-        publishDisabled: false,
-        applyDisabled: false
-    },
+    // {
+    //     fieldID: "description",
+    //     workerFieldIdMatch: "worker_description",
+    //     displayName: "Description",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
+    // {
+    //     fieldID: "urgency",
+    //     workerFieldIdMatch: "worker_urgency",
+    //     displayName: "Urgency ++ exist in Adding Job Order & Rules",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
+    // {
+    //     fieldID: "preferred_experience",
+    //     workerFieldIdMatch: "worker_experience",
+    //     displayName: "Preferred Experience ++ exist in Adding Job Order & Rules",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
     {
         fieldID: "number_of_references",
         workerFieldIdMatch: "references",
-        displayName: "Number Of References",
+        displayName: "References",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "skills",
         workerFieldIdMatch: "skills",
-        displayName: "Skills",
+        displayName: "Skills checklist",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -379,17 +379,24 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    {
-        fieldID: "float_requirement",
-        workerFieldIdMatch: "float_requirement",
-        displayName: "Float Requirement",
-        publishDisabled: false,
-        applyDisabled: false
-    },
+    // {
+    //     fieldID: "float_requirement",
+    //     workerFieldIdMatch: "float_requirement",
+    //     displayName: "Float Requirement ++ exist in Adding Job Order & Rules",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
+    // {
+    //     fieldID: "Patient_ratio",
+    //     workerFieldIdMatch: "worker_patient_ratio",
+    //     displayName: "Patient Ratio ++ exist in Adding Job Order & Rules",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
     {
         fieldID: "Patient_ratio",
         workerFieldIdMatch: "worker_patient_ratio",
-        displayName: "Patient Ratio",
+        displayName: "Floating Required",
         publishDisabled: false,
         applyDisabled: false
     },
@@ -400,56 +407,56 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    {
-        fieldID: "Unit",
-        workerFieldIdMatch: "worker_unit",
-        displayName: "Unit",
-        publishDisabled: false,
-        applyDisabled: false
-    },
+    // {
+    //     fieldID: "Unit",
+    //     workerFieldIdMatch: "worker_unit",
+    //     displayName: "Unit ++ exist in Adding Job Order & Rules",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
     {
         fieldID: "nurse_classification",
         workerFieldIdMatch: "nurse_classification",
-        displayName: "Nurse Classification",
+        displayName: "Classification",
         publishDisabled: false,
         applyDisabled: false
     },
     {
         fieldID: "vaccinations",
         workerFieldIdMatch: "vaccination",
-        displayName: "Vaccinations",
+        displayName: "Vaccinations & Immunizations",
         publishDisabled: false,
         applyDisabled: false
     },
-    {
-        fieldID: "job_name",
-        workerFieldIdMatch: "",
-        displayName: "Job Name",
-        publishDisabled: false,
-        applyDisabled: true
-    },
-    {
-        fieldID: "scrub_color",
-        workerFieldIdMatch: "worker_scrub_color",
-        displayName: "Scrub Color",
-        publishDisabled: false,
-        applyDisabled: false
-    },
-    
-    {
-        fieldID: "holiday",
-        workerFieldIdMatch: "worker_holiday",
-        displayName: "Holiday Dates",
-        publishDisabled: false,
-        applyDisabled: false
-    },
-    {
-        fieldID: "professional_state_licensure",
-        workerFieldIdMatch: "professional_state_licensure",
-        displayName: "Professional State Licensure",
-        publishDisabled: false,
-        applyDisabled: false
-    },
+    // {
+    //     fieldID: "job_name",
+    //     workerFieldIdMatch: "",
+    //     displayName: "Job Name ++ Don't want these included for now",
+    //     publishDisabled: false,
+    //     applyDisabled: true
+    // },
+    // {
+    //     fieldID: "scrub_color",
+    //     workerFieldIdMatch: "worker_scrub_color",
+    //     displayName: "Scrub Color ++ Don't want these included for now",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
+
+    // {
+    //     fieldID: "holiday",
+    //     workerFieldIdMatch: "worker_holiday",
+    //     displayName: "Holiday Dates ++ Don't want these included for now",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
+    // {
+    //     fieldID: "professional_state_licensure",
+    //     workerFieldIdMatch: "professional_state_licensure",
+    //     displayName: "Professional State Licensure ++ donnt exist ",
+    //     publishDisabled: false,
+    //     applyDisabled: false
+    // },
 
 ];
 
