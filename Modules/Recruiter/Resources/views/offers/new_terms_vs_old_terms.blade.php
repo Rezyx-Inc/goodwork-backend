@@ -101,12 +101,12 @@
     <div id="summary-section" class="section">
         <div class="row col-md-12  mt-4 collapse-container">
             <p>
-                <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-0">
+                <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-0" role="button" aria-expanded="false">
                     Summary
                 </a>
             </p>
         </div>
-        <div class="row mb-4 collapse-static-container" style="padding:0px;" id="collapse-0">
+        <div class="row mb-4 collapse text-center" style="padding:0px;" id="collapse-0">
         </div>
     </div>
 
@@ -119,7 +119,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-1">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-1">
         </div>
     </div>
 
@@ -132,7 +132,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-2">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-2">
         </div>
     </div>
 
@@ -145,7 +145,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-4">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-4">
         </div>
     </div>
 
@@ -158,7 +158,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-5">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-5">
         </div>
     </div>
 
@@ -171,7 +171,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-6">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-6">
         </div>
     </div>
 
@@ -184,7 +184,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-7">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-7">
         </div>
     </div>
 
@@ -197,7 +197,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-8">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-8">
         </div>
     </div>
 
@@ -210,7 +210,7 @@
                 </a>
             </p>
         </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse-static-container" id="collapse-9">
+        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-9">
         </div>
     </div>
 
@@ -454,13 +454,12 @@
                 var elements = createFieldElement(field, newValue, oldValue);
                 console.log('element:', section);
                 document.getElementById(section + '-section').querySelector(
-                    '.collapse-static-container, .collapse').appendChild(elements[0]);
+                    '.collapse').appendChild(elements[0]);
                 document.getElementById(section + '-section').querySelector(
-                    '.collapse-static-container, .collapse').appendChild(elements[1]);
+                    '.collapse').appendChild(elements[1]);
             });
 
         });
-        $('.first-collapse').click();
 
     });
 </script>
