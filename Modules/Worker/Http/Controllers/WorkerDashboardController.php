@@ -334,6 +334,7 @@ class WorkerDashboardController extends Controller
     $data['progress_percentage'] = $progress * 33 + 1;
     $data['type'] = $type;
 
+    // dd($data['worker']->toArray());
     return view('worker::dashboard.worker_profile', $data);
   }
 

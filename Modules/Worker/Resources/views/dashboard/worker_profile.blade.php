@@ -7,176 +7,110 @@
     <!--Main layout-->
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
         <div class="container">
-            <div class="ss-my-profile--basic-mn-sec">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="ss-my-profil-div">
-                            <h2>My <span class="ss-pink-color">Profile</span></h2>
-                            <div class="ss-my-profil-img-div">
-                                <div class="profile-pic">
-                                    <label class="-label" for="file">
-                                        <span class="glyphicon glyphicon-camera"></span>
-                                        <span>Change Image</span>
-                                    </label>
-                                    <input id="file" type="file" accept=".heic, .png, .jpeg, .gif"
-                                        onchange="loadFile(event)" />
-                                    @if (isset($user->image))
-                                        <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" />
-                                    @else
-                                        <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output"
-                                            width="200" />
-                                    @endif
-                                </div>
-                                <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
-                                <p>{{ $worker->id }}</p>
-                            </div>
-                            <div class="ss-profil-complet-div">
-                                <div class="row d-flex justify-content-center align-items-center ">
-                                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
-                                        <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                            style="transform:rotate(-90deg)">
-                                            <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2"
-                                                stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0">
-                                            </circle>
-                                            <circle r="90" cx="100" cy="100" stroke="#ad66a3"
-                                                stroke-width="16px" stroke-linecap="round" fill="transparent"
-                                                stroke-dasharray="565.48px"
-                                                stroke-dashoffset="{{ 565.48 * (1 - $progress_percentage / 100) }}px">
-                                            </circle>
-                                            <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold"
-                                                style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
-                                        </svg>
-                                    </div>
-                                    {{-- if the profile is not complete --}}
-                                    <div id="profile_incomplete" class="row col-lg-9 col-md-6 col-sm-12 col-xs-12 p-0">
-                                        <div class="col-12">
-                                            <h6>Profile Incomplete</h6>
-                                        </div>
 
-                                        <div class="col-12">
-                                            <p>You're just a few percent away from revenue. Complete your profile and get
-                                                5%.
-                                            </p>
-                                        </div>
+            <div class="ss-my-profil-div mb-5">
+
+                <div class="row">
+                    <h2>Worker <span class="ss-pink-color">Profile</span></h2>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="ss-profil-complet-div">
+                            <div class="row d-flex justify-content-center align-items-center ">
+                                <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 m-0 p-0">
+                                    <svg viewBox="-25 -25 250 250" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                        style="transform:rotate(-90deg)">
+                                        <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e9d1e2"
+                                            stroke-width="16px" stroke-dasharray="565.48px" stroke-dashoffset="0">
+                                        </circle>
+                                        <circle r="90" cx="100" cy="100" stroke="#ad66a3" stroke-width="16px"
+                                            stroke-linecap="round" fill="transparent" stroke-dasharray="565.48px"
+                                            stroke-dashoffset="{{ 565.48 * (1 - $progress_percentage / 100) }}px">
+                                        </circle>
+                                        <text x="71px" y="115px" fill="#3d2c39" font-size="40px" font-weight="bold"
+                                            style="transform:rotate(90deg) translate(0px, -196px)">{{ $progress_percentage }}%</text>
+                                    </svg>
+                                </div>
+                                {{-- if the profile is not complete --}}
+                                <div id="profile_incomplete" class="row col-lg-9 col-md-6 col-sm-12 col-xs-12 p-0">
+                                    <div class="col-12">
+                                        <h6>Profile Incomplete</h6>
                                     </div>
-                                    {{-- if the profile is complete --}}
-                                    <div id="profile_complete" class="row col-lg-9 col-md-6 col-sm-12 col-xs-12 p-0 d-none">
-                                        <div class="col-12">
-                                            <h6>Profile complete</h6>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>Congratulations! Your profile is complete. You can now start earning.</p>
-                                            </p>
-                                        </div>
+
+                                    <div class="col-12">
+                                        <p>You're just a few percent away from revenue. Complete your profile and get
+                                            5%.
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="ss-my-presnl-btn-mn">
-                                <div class="ss-my-prsnl-wrapper">
-                                    <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-1" checked
-                                            onclick="ProfileIinformationDisplay()" />
-                                        <label for="option-1" class="option option-1">
-                                            <div class="dot"></div>
-                                            <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></li>
-                                                <li>
-                                                    <p>Profile settings</p>
-                                                </li>
-                                                <li><span class="img-white"><img
-                                                            src="{{ URL::asset('frontend/img/arrowcircleright.png') }}" /></span>
-                                                </li>
-                                            </ul>
-                                        </label>
+                                {{-- if the profile is complete --}}
+                                <div id="profile_complete" class="row col-lg-9 col-md-6 col-sm-12 col-xs-12 p-0 d-none">
+                                    <div class="col-12">
+                                        <h6>Profile complete</h6>
                                     </div>
-                                    <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-2"
-                                            onclick="AccountSettingDisplay()">
-                                        <label for="option-2" class="option option-2">
-                                            <div class="dot"></div>
-                                            <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}" />
-                                                </li>
-                                                <li>
-                                                    <p>Account settings</p>
-                                                </li>
-                                                <li><span class="img-white"><img
-                                                            src="{{ URL::asset('frontend/img/arrowcircleright.png') }}" /></span>
-                                                </li>
-                                            </ul>
-                                        </label>
-                                    </div>
-                                    <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-3"
-                                            onclick="BonusTransfersDisplay()">
-                                        <label for="option-3" class="option option-3">
-                                            <div class="dot"></div>
-                                            <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-refren.png') }}" />
-                                                </li>
-                                                <li>
-                                                    <p>Bonus Transfers</p>
-                                                </li>
-                                                <li><span class="img-white"><img
-                                                            src="{{ URL::asset('frontend/img/arrowcircleright.png') }}" /></span>
-                                                </li>
-                                            </ul>
-                                        </label>
-                                    </div>
-                                    <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-4" onclick="SupportDisplay()">
-                                        <label for="option-4" class="option option-4">
-                                            <div class="dot"></div>
-                                            <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" />
-                                                </li>
-                                                <li>
-                                                    <p>Support</p>
-                                                </li>
-                                                <li><span class="img-white"><img
-                                                            src="{{ URL::asset('frontend/img/arrowcircleright.png') }}" /></span>
-                                                </li>
-                                            </ul>
-                                        </label>
-                                    </div>
-                                    <div class="ss-my-prosnl-rdio-btn">
-                                        <input type="radio" name="select" id="option-5"
-                                            onclick="DisactivateAccountDisplay()">
-                                        <label for="option-5" class="option option-5">
-                                            <div class="dot"></div>
-                                            <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" />
-                                                </li>
-                                                <li>
-                                                    <p>Disable account</p>
-                                                </li>
-                                                <li><span class="img-white"><img
-                                                            src="{{ URL::asset('frontend/img/arrowcircleright.png') }}" /></span>
-                                                </li>
-                                            </ul>
-                                        </label>
+                                    <div class="col-12">
+                                        <p>Congratulations! Your profile is complete. You can now start earning.</p>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{-- ---------------------------------------------------------- Profile settings Form ---------------------------------------------------------- --}}
-                    <div class="col-lg-7 bodyAll profile_setting">
-                        <div class="ss-pers-info-form-mn-dv">
-
-                            <div class="ss-persnl-frm-hed">
-                                {{-- Basic Information Or Professional Information Or Document management --}}
-                                <p id="information_type"><span><img
-                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Basic
-                                    Information</p>
-                                <div class="progress">
-                                    <div id="progress" class="progress-bar" role="progressbar" style="width: 33%"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                    <div class="col-4">
+                        <div class="ss-my-profil-img-div">
+                            <div class="profile-pic">
+                                <label class="-label" for="file">
+                                    <span class="glyphicon glyphicon-camera"></span>
+                                    <span>Change Image</span>
+                                </label>
+                                <input id="file" type="file" accept=".heic, .png, .jpeg, .gif"
+                                    onchange="loadFile(event)" />
+                                @if (isset($user->image))
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" />
+                                @else
+                                    <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output"
+                                        width="200" />
+                                @endif
                             </div>
+                            <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                            <p>{{ $worker->id }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ss-opport-mngr-hedr mb-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h4>Opportunities Manager</h4>
+                    </div>
+                    <div class="col-lg-8">
+                        <ul>
+                            <li><button id="profile_settings" onclick="ProfileIinformationDisplay()"
+                                    class="ss-darfts-sec-draft-btn">Your Info & Requirements</button></li>
+                            <li><button id="account_settings" onclick="AccountSettingDisplay()"
+                                    class="ss-darfts-sec-publsh-btn">Account settings</button></li>
+                            <li><button id="bonus_transfers" onclick="BonusTransfersDisplay()"
+                                    class="ss-darfts-sec-publsh-btn">Bonus Transfers</button></li>
+                            <li><button id="support" onclick="SupportDisplay()"
+                                    class="ss-darfts-sec-publsh-btn">Support</button></li>
+                            <li><button id="disable_account" onclick="DisactivateAccountDisplay()"
+                                    class="ss-darfts-sec-publsh-btn">Disable account</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ss-my-profile--basic-mn-sec">
+                <div class="row">
+                    {{-- ---------------------------------------------------------- Profile settings Form ---------------------------------------------------------- --}}
+                    <div class=" profile_setting">
+                        <div class="ss-pers-info-form-mn-dv" style="width: 100%;">
+
                             <div class="form-outer">
 
                                 @include('worker::dashboard.profile.settings')
+                                {{-- @include('worker::dashboard.profile.settings_backUp') --}}
 
                             </div>
                         </div>
@@ -184,15 +118,14 @@
                     {{-- ---------------------------------------------------------- End Profile settings Form ---------------------------------------------------------- --}}
                     {{-- ---------------------------------------------------------- Account settings Form ---------------------------------------------------------- --}}
 
-                    <div class="col-lg-7 bodyAll account_setting d-none">
+                    <div class=" account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
                                     Setting</p>
                             </div>
                             <div class="form-outer">
-                                <form onsubmit="return false;" method="post"
-                                    action="{{ route('update-worker-profile') }}">
+                                <form onsubmit="return false;" method="post" action="{{ route('update-worker-profile') }}">
                                     @csrf
                                     <!-- slide Account Setting -->
                                     <div class="page slide-page">
@@ -255,7 +188,7 @@
                     </div>
                     {{-- ---------------------------------------------------------- End Account settings  ---------------------------------------------------------- --}}
                     {{-- ----------------------------------------------------------  Bonus Area -------------------------------------------------------------------- --}}
-                    <div class="col-lg-7 bodyAll bonus_transfers d-none">
+                    <div class=" bonus_transfers d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Bonus
@@ -328,17 +261,17 @@
                                                     id="SaveBonusInformation"> Save
                                                 </button>
                                                 <!-- <span class="col-12"
-                                                                style="display: block;
+                                                                                                                                                                                                                                                                        style="display: block;
                                                color: #000;
                                                font-size: 16px;
                                                font-weight: 500;
                                                margin-top: 0px">Or</span>
-                                                            <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                                id="AddStripeAccount"> Add Stripe Account
-                                                            </button>
-                                                            <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                                id="AccessToStripeAccount"> Access to your Stripe account
-                                                            </button> -->
+                                                                                                                                                                                                                                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                                                                                                                                                                                                                                        id="AddStripeAccount"> Add Stripe Account
+                                                                                                                                                                                                                                                                    </button>
+                                                                                                                                                                                                                                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                                                                                                                                                                                                                                        id="AccessToStripeAccount"> Access to your Stripe account
+                                                                                                                                                                                                                                                                    </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -349,7 +282,7 @@
                     </div>
                     {{-- ----------------------------------------------------------  End Bonus Area -------------------------------------------------------------------- --}}
                     {{-- ----------------------------------------------------------  Support Area -------------------------------------------------------------------- --}}
-                    <div class="col-lg-7 bodyAll support_info d-none">
+                    <div class=" support_info d-none">
                         <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
                                 <h1
@@ -370,7 +303,7 @@
                     {{-- ------------------------------------------------------- End Support Area -------------------------------------------------------------------- --}}
 
                     {{-- ------------------------------------------------------- Disable account area -------------------------------------------------------------------- --}}
-                    <div class="col-lg-7 bodyAll disable_account d-none">
+                    <div class=" disable_account d-none">
                         <div class="ss-pers-info-form-mn-dv" style="width:100%">
                             <div class="ss-persnl-frm-hed">
                                 <p><span><img

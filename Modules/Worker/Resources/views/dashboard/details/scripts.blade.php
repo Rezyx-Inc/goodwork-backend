@@ -1140,16 +1140,16 @@
             $('input[name="phone[]"]').mask('(999) 999-9999');
         });
 
-        function init_profile_info_text() {
-            // map on matches
-            for (const key of Object.keys(matches)) {
+        // function init_profile_info_text() {
+        //     // map on matches
+        //     for (const key of Object.keys(matches)) {
 
-                if (matches[key].profile_info_text) {
-                    // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
-                    $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
-                }
-            }
-        }
+        //         if (matches[key].profile_info_text) {
+        //             // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
+        //             $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
+        //         }
+        //     }
+        // }
 
         function open_file(obj) {
             $(obj).parent().find('input[type="file"]').click();
