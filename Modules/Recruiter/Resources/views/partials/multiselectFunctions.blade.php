@@ -30,6 +30,8 @@ var Emr = {};
 
 var result = {};
 
+var diff = {};
+
 {{-- script managing certifications --}}
 
 
@@ -787,63 +789,74 @@ function addcertifications(type) {
     }
 
     var data = {};
-    var OfferFieldsName = [
-    'offer_id',
-    'job_id',
-    'type',
-    'terms',
-    'profession',
-    'specialty',
-    'actual_hourly_rate',
-    'weekly_pay',
-    'hours_per_week',
-    'state',
-    'city',
-    'guaranteed_hours',
-    'hours_shift',
-    'weeks_shift',
-    'preferred_assignment_duration',
-    'as_soon_as',
-    'start_date',
-    'end_date',
-    'rto',
-    'overtime',
-    'on_call',
-    'on_call_rate',
-    'call_back_rate',
-    'orientation_rate',
-    'weekly_taxable_amount',
-    'weekly_non_taxable_amount',
-    'feels_like_per_hour',
-    'goodwork_weekly_amount',
-    'referral_bonus',
-    'sign_on_bonus',
-    'completion_bonus',
-    'extension_bonus',
-    'other_bonus',
-    'pay_frequency',
-    'total_organization_amount',
-    'total_goodwork_amount',
-    'total_contract_amount',
-    'clinical_setting',
-    'preferred_work_location',
-    'facility_name',
-    'facilitys_parent_system',
-    'facility_shift_cancelation_policy',
-    'contract_termination_policy',
-    'traveler_distance_from_facility',
-    'description',
-    'urgency',
-    'preferred_experience',
-    'number_of_references',
-    'block_scheduling',
-    'float_requirement',
-    'Patient_ratio',
-    'Unit',
-    'scrub_color',
-    'job_name',
-    'holiday',
-    ];
+    var OfferFieldsName = {
+                'id': { id: 'offer_id', type: 'number' },
+                'job_id': { id: 'job_id', type: 'number' },
+                'type': { id: 'type', type: 'select' },
+                'terms': { id: 'terms', type: 'select' },
+                'profession': { id: 'profession', type: 'select' },
+                'specialty': { id: 'specialty', type: 'select' },
+                'actual_hourly_rate': { id: 'actual_hourly_rate', type: 'number' },
+                'weekly_pay': { id: 'weekly_pay', type: 'number' },
+                'hours_per_week': { id: 'hours_per_week', type: 'number' },
+                'state': { id: 'state', type: 'select' },
+                'city': { id: 'city', type: 'select' },
+
+                'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
+                'hours_shift': { id: 'hours_shift', type: 'number' },
+                'weeks_shift': { id: 'weeks_shift', type: 'number' },
+                'preferred_assignment_duration': { id: 'preferred_assignment_duration', type: 'number' },
+                'as_soon_as': { id: 'as_soon_as', type: 'checkbox' },
+                'start_date': { id: 'start_date', type: 'date' },
+                'end_date': { id: 'end_date', type: 'date' },
+                'rto': { id: 'rto', type: 'select' },
+                'overtime': { id: 'overtime', type: 'number' },
+                'on_call': { id: 'on_call', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'on_call_rate': { id: 'on_call_rate', type: 'number' },
+                'call_back_rate': { id: 'call_back_rate', type: 'number' },
+                'orientation_rate': { id: 'orientation_rate', type: 'number' },
+                'weekly_taxable_amount': { id: 'weekly_taxable_amount', type: 'number' },
+                'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amount', type: 'number' },
+                'feels_like_per_hour': { id: 'feels_like_per_hour', type: 'number' },
+                'goodwork_weekly_amount': { id: 'goodwork_weekly_amount', type: 'number' },
+                'referral_bonus': { id: 'referral_bonus', type: 'number' },
+                'sign_on_bonus': { id: 'sign_on_bonus', type: 'number' },
+                'completion_bonus': { id: 'completion_bonus', type: 'number' },
+                'extension_bonus': { id: 'extension_bonus', type: 'number' },
+                'other_bonus': { id: 'other_bonus', type: 'number' },
+                'pay_frequency': { id: 'pay_frequency', type: 'select' },
+
+                
+                'total_organization_amount': { id: 'total_organization_amount', type: 'number' },
+                'total_goodwork_amount' : { id: 'total_goodwork_amount', type: 'number' },
+                'total_contract_amount' : { id: 'total_contract_amount', type: 'number' },
+                'clinical_setting': { id: 'clinical_setting', type: 'select' },
+                'preferred_work_location': { id: 'preferred_work_location', type: 'text' },
+                'facility_name': { id: 'facility_name', type: 'text' },
+                'facilitys_parent_system': { id: 'facilitys_parent_system', type: 'text' },
+                'facility_shift_cancelation_policy': { id: 'facility_shift_cancelation_policy', type: 'text' },
+                'contract_termination_policy': { id: 'contract_termination_policy', type: 'text' },
+                'traveler_distance_from_facility': { id: 'traveler_distance_from_facility', type: 'number' },
+
+                
+                'description': { id: 'description', type: 'text' },
+                'urgency': { id: 'urgency', type: 'checkbox' },
+                'preferred_experience': { id: 'preferred_experience', type: 'number' },
+                'number_of_references': { id: 'number_of_references', type: 'number' },
+                'block_scheduling': { id: 'block_scheduling', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'float_requirement': { id: 'float_requirement', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'Patient_ratio': { id: 'Patient_ratio', type: 'number' },
+                'Unit': { id: 'Unit', type: 'text' },
+
+
+                'scrub_color': { id: 'scrub_color', type: 'text' },
+                'job_name': { id: 'job_name', type: 'text' },
+                'holiday': { id: 'holiday', type: 'date' },
+                'professional_state_licensure': { id: 'professional_state_licensure_pending', type: 'radio' },
+
+            };
+
+   
 
    
 
@@ -911,15 +924,30 @@ function addcertifications(type) {
 
     function getValues(OfferFieldsName) {
         try {
-            for (let i = 0; i < OfferFieldsName.length; i++) {
-                
-                let fieldName = OfferFieldsName[i];
-                // console.log(fieldName);
-                let fieldValue = document.getElementById(fieldName).value;
-                if (fieldValue !== null && fieldValue.trim() !== '') {
-                    data[fieldName] = fieldValue;
+            for (const key in OfferFieldsName) {
+                if (OfferFieldsName.hasOwnProperty(key)) {
+                    const element = OfferFieldsName[key];
+                    if (element.type == 'number') {
+                        data[key] = document.getElementById(element.id).value;
+                    } else if (element.type == 'select') {
+                        data[key] = document.getElementById(element.id).value;
+                    } else if (element.type == 'checkbox') {
+                        if(element.id = 'urgency'){
+                            data[key] = document.getElementById(element.id).checked ? 'Auto Offer' : null;
+                            continue;
+                        }
+                        data[key] = document.getElementById(element.id).checked ? 1 : 0;
+                    } else if (element.type == 'date') {
+                        if (element.id == 'holiday'){
+                            continue
+                        }
+                        data[key] = document.getElementById(element.id).value;
+                    } else if (element.type == 'text') {
+                        data[key] = document.getElementById(element.id).value;
+                    } else if (element.type == 'radio') {
+                        data[key] = document.getElementById(element.id).checked ? 1 : 0;
+                    }
                 }
-                
             }
         } catch (error) {
             // console.log(error);
@@ -927,13 +955,16 @@ function addcertifications(type) {
     }
 
     function getDiff(result , data){
+        diff = {}; 
         for (const key in result) {
             if (result.hasOwnProperty(key)) {
                 const element = result[key];
-                if(data[key] != element){
-                    console.log('key',key);
-                    console.log('element',element);
-                    console.log('data[key]',data[key]);
+                
+                if(data[key] != element && data[key] != null){
+                    diff[key] = element;
+                    // console.log('key',key);
+                    // console.log('element',element);
+                    // console.log('data[key]',data[key]);
                 }
             }
         }
@@ -952,7 +983,15 @@ function addcertifications(type) {
             console.log('data to send from the form', data);
             console.log('offer data we get ', result);
             getDiff(result , data);
-            return null;
+           
+            if (Object.keys(diff).length == 0) {
+                notie.alert({
+                    type: 'error',
+                    text: '<i class="fa fa-times"></i> No changes found.',
+                    time: 3
+                });
+                return null;
+            }
 
             let id = document.getElementById('offer_id').value;
             //// console.log(id);
@@ -966,6 +1005,7 @@ function addcertifications(type) {
                     data: {
                         'token': csrfToken,
                         'data': data,
+                        'diff': diff,
                         'id': id
                     },
                     type: 'POST',
@@ -977,7 +1017,7 @@ function addcertifications(type) {
                             time: 2
                         });
                         setTimeout(() => {
-                            location.reload();
+                             location.reload();
                         }, 2000);
                     },
                     error: function(error) {
@@ -992,6 +1032,8 @@ function addcertifications(type) {
         }
         //// console.log('offer countered data', data);
     }
+
+    
 
     function editOffer(event) {  
         try {
@@ -1118,7 +1160,7 @@ function addcertifications(type) {
             
                 if (field.type === 'select') {
                     if (field.options) {
-                        element.value = result[key] == '1' ? 'Yes' : 'No';
+                        element.value = result[key] ;
                     } else {
                         const option = document.createElement('option');
                         option.value = result[key];

@@ -575,10 +575,20 @@ class ApplicationController extends Controller
         try {
             $offer_id = $request->offer_id;
             $offer = Offer::where('id', $offer_id)->first();
+            $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
             $worker_id = $offer->worker_user_id;
             $worker_details = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $worker_details->user_id)->first();
-            $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
+
+            if ($offer->status == 'Offered') {
+                $offerLogsDiff = OffersLogs::select('details')->where('original_offer_id', $offer_id)->first();
+                if(empty($offerLogsDiff)){
+                    $offerLogsDiff = null;
+                }
+                $response['content'] = view('recruiter::offers.new_terms_vs_old_terms', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'diff' => $offerLogsDiff])->render(); 
+                return response()->json($response);
+            }
+
             $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
             //return new JsonResponse($response, 200);
             return response()->json($response);
@@ -636,6 +646,25 @@ class ApplicationController extends Controller
             $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
             $offer_id = $request->id;
             $data = $request->data;
+            $diff = $request->diff;
+
+            if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
+                $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
+                $offerLog->update([
+                    'counter_offer_by' => $recruiter_id,
+                    'details' => $diff,
+                ]);
+            }else{
+                OffersLogs::create([
+                    'original_offer_id' => $offer_id,
+                    'counter_offer_by' => $recruiter_id,
+                    'nurse_id' => $data['worker_user_id'],
+                    'organization_recruiter_id' => $data['organization_id'],
+                    'details' => $diff,
+                    'status' => 'Counter Offer'
+                ]);
+            }
+
             $offer = Offer::where('id', $offer_id)->first();
             // update it
             if ($offer) {

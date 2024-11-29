@@ -1628,7 +1628,7 @@
         <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
             Offer</button>
     </div>
-    {{-- @if (count($offerLogs) > 0) --}}
+    @if (count($offerLogs) > 0)
         <div class="ss-counter-buttons-div">
             <button class="counter-save-for-button" onclick="counterOffer('{{ $offerdetails->id }}')">Counter
                 Offer</button>
@@ -1638,7 +1638,7 @@
                 onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept
                 Offer</button>
         </div>
-    {{-- @endif --}}
+    @endif
 @endif
 
 </div>
