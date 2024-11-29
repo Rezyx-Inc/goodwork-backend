@@ -572,7 +572,7 @@ class ApplicationController extends Controller
 
     function get_one_offer_information(Request $request)
     {
-
+        // return $request->all();
         try {
             $offer_id = $request->offer_id;
             $offer = Offer::where('id', $offer_id)->first();
@@ -642,6 +642,7 @@ class ApplicationController extends Controller
 
     public function recruiter_counter_offer(Request $request)
     {
+        
         try {
             $recruiter = Auth::guard('recruiter')->user();
             $recruiter_id = $recruiter->id;
@@ -649,25 +650,26 @@ class ApplicationController extends Controller
             $offer_id = $request->id;
             $data = $request->data;
             $diff = $request->diff;
+            $offer = Offer::where('id', $offer_id)->first();
 
             if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
                 $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
                 $offerLog->update([
-                    'counter_offer_by' => $recruiter_id,
-                    'details' => $diff,
+                    'details' => json_encode($diff),
                 ]);
+                
             }else{
                 OffersLogs::create([
-                    'original_offer_id' => $offer_id,
                     'counter_offer_by' => $recruiter_id,
-                    'nurse_id' => $data['worker_user_id'],
-                    'organization_recruiter_id' => $data['organization_id'],
-                    'details' => $diff,
+                    'nurse_id' => $offer['worker_user_id'],
+                    'organization_recruiter_id' => $offer['organization_id'],
+                    'original_offer_id' => $offer_id,
+                    'details' => json_encode($diff),
                     'status' => 'Counter Offer'
                 ]);
             }
 
-            $offer = Offer::where('id', $offer_id)->first();
+            
             // update it
             if ($offer) {
                 $offer->update($data);

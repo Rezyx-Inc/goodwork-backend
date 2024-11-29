@@ -242,7 +242,8 @@
             <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
                 Offer</button>
         </div>
-        @if (count($offerLogs) > 0)
+        {{-- comment the condition for now until we have the counter 1st offer from the worker worked --}}
+        {{-- @if (count($offerLogs) > 0) --}}
         <div class="ss-counter-buttons-div">
             <button class="counter-save-for-button" onclick="counterOffer('{{ $offerdetails->id }}')">Counter
                 Offer</button>
@@ -252,7 +253,7 @@
                 onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept
                 Offer</button>
         </div>
-        @endif
+        {{-- @endif --}}
     @endif
 
 </div>
@@ -294,7 +295,6 @@
                 'weekly_taxable_amount',
                 'weekly_non_taxable_amount',
                 'feels_like_per_hour',
-                'goodwork_weekly_amount',
                 'referral_bonus',
                 'sign_on_bonus',
                 'completion_bonus',
@@ -303,7 +303,6 @@
                 'pay_frequency',
                 'benefits',
                 'total_organization_amount',
-                'total_goodwork_amount',
                 'total_contract_amount'
             ],
             // Location
@@ -367,14 +366,12 @@
             'weekly_taxable_amount',
             'weekly_non_taxable_amount',
             'feels_like_per_hour',
-            'goodwork_weekly_amount',
             'referral_bonus',
             'sign_on_bonus',
             'completion_bonus',
             'extension_bonus',
             'other_bonus',
             'total_organization_amount',
-            'total_goodwork_amount',
             'total_contract_amount',
             'traveler_distance_from_facility',
             'number_of_references'
@@ -443,7 +440,7 @@
             rowDiv.appendChild(oldValueDiv);
 
             if (diff[field] != undefined) {
-                rowDiv.classList.add('ss-s-jb-apl-bg-pink');
+                rowDiv.classList.add('ss-s-jb-apl-bg-bl');
             }
 
             return [fieldDiv, rowDiv];
@@ -489,5 +486,8 @@
 
     .green-bg {
         background-color: rgb(82, 222, 193);
+    }
+    .ss-s-jb-apl-bg-bl{
+        background-color: rgb(186 215 255);
     }
 </style>
