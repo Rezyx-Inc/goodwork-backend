@@ -45,7 +45,8 @@
                     </option>
                     <option value="Submitted">Submitted
                     </option>
-                    <option value="Offered">Offered</option>
+                    <option value="Offered">Make an Offer</option>
+                    <option value="Rejected">Reject</option>
                     <option value="Done">Done</option>
                 </select>
             @else
@@ -61,7 +62,7 @@
                         {{ $offerdetails['status'] === 'Submitted' ? 'selected hidden disabled' : '' }}>Submitted
                     </option>
                     <option value="Offered"
-                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Offered</option>
+                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Make an Offer</option>
                     <option value="Done" {{ $offerdetails['status'] === 'Done' ? 'selected hidden disabled' : '' }}>
                         Done</option>
                     <option value="Onboarding"
@@ -102,13 +103,13 @@
     {{-- Summary --}}
     <div class="row col-md-12 mb-4 mt-4 collapse-container">
         <p>
-            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-0">
+            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-0" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Summary
             </a>
         </p>
     </div>
 
-    <div class="row mb-4 collapse-static-container" style="padding:0px;" id="collapse-0">
+    <div class="row mb-4 collapse text-center" style="padding:0px;" id="collapse-0">
 
         {{-- type --}}
 
@@ -1617,17 +1618,7 @@
 
 @if ($offerdetails->status == 'Screening')
     <div class="ss-counter-buttons-div">
-        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Send
-            1st
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
         <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
-        <button class="ss-reject-offer-btn"
-            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
             Offer</button>
     </div>
 @endif
