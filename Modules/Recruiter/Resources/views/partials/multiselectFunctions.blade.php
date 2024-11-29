@@ -801,6 +801,7 @@ function addcertifications(type) {
                 'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
+                'is_resume': { id: 'is_resume', type: 'checkbox'},
 
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },
@@ -923,20 +924,32 @@ function addcertifications(type) {
     
 
     function getValues(OfferFieldsName) {
+        
         try {
             for (const key in OfferFieldsName) {
+
                 if (OfferFieldsName.hasOwnProperty(key)) {
+
                     const element = OfferFieldsName[key];
+
                     if (element.type == 'number') {
+
                         data[key] = document.getElementById(element.id).value;
+
                     } else if (element.type == 'select') {
+
                         data[key] = document.getElementById(element.id).value;
+
                     } else if (element.type == 'checkbox') {
-                        if(element.id = 'urgency'){
+
+                        if(element.id == 'urgency'){
+
                             data[key] = document.getElementById(element.id).checked ? 'Auto Offer' : null;
                             continue;
                         }
+
                         data[key] = document.getElementById(element.id).checked ? 1 : 0;
+                        
                     } else if (element.type == 'date') {
                         if (element.id == 'holiday'){
                             continue
@@ -1039,8 +1052,10 @@ function addcertifications(type) {
         try {
             event.preventDefault();
             getValues(OfferFieldsName);
+
             let id = document.getElementById('offer_id').value;
-            // console.log(id);
+            console.log(data.is_resume);
+
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
                 $.ajax({
@@ -1172,7 +1187,8 @@ function addcertifications(type) {
                     }
                 } else if (field.type === 'checkbox') {
                     field.id === 'urgencyDraft' ? element.checked = result[key] === 'Auto Offer' : element.checked = result[key] === '1';
-                    // console.log('checkbox test', result[key]);
+                    element.checked = result[key] === 1;
+
                 }
                 else if (field.type === 'radio') {
                     // console.log('radio', result[key]);

@@ -175,6 +175,28 @@
                 </div>
             </div>
             
+            @if ($offerdetails->status == 'Screening')
+
+            {{-- Resume --}}
+            <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+            <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
+                <div class="row justify-content-center" style="display:flex; align-items:end;">
+                    <div class="col-6">
+                    <label for="is_resume"
+                        style="display:flex; justify-content:center;">Resume is required</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="checkbox" name="is_resume" id="is_resume"
+                            value="1" style="box-shadow: none;">
+                    </div>
+                </div>
+                
+                <div> 
+                    <span class="helper help-block-is_resume"></span>
+                </div>
+            </div>
+
+            @endif
 
         <div class="col-md-12 mt-4 collapse-container">
             <p>
