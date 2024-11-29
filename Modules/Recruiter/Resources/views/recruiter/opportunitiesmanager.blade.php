@@ -1498,6 +1498,26 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    {{-- Resume --}}
+
+                                                        <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                            <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
+                                                            <div class="row justify-content-center" style="display:flex; align-items:end;">
+                                                                <div class="col-6">
+                                                                <label for="is_resume"
+                                                                    style="display:flex; justify-content:center;">Resume is required</label>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <input type="checkbox" name="is_resume" id="job_isResumeDraft"
+                                                                        value="1" style="box-shadow: none;">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div> 
+                                                                <span class="helper help-block-resumeDraft"></span>
+                                                            </div>
+                                                        </div>
                                                     
         
                                                 <div class="col-md-12 mb-4 collapse-container">
@@ -4494,229 +4514,225 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
     }
 </script>
 
-    <script>
+<script>
         
-         var certificate = {};
-         var vaccinations = {};
-         var skills = {};
-         var shifttimeofday = {};
-         var benefits = {};
-         var professional_licensure = {};
-         var nurse_classification = {};
-         var Emr = {};
-         var holiday = {};
+    var certificate = {};
+    var vaccinations = {};
+    var skills = {};
+    var shifttimeofday = {};
+    var benefits = {};
+    var professional_licensure = {};
+    var nurse_classification = {};
+    var Emr = {};
+    var holiday = {};
 
-        function fillData() {
-            const fields = {
-                'job_id': 1,  // type number
-                'job_name': 'job name', // type input text
-                'job_type': 'Clinical', // type select
-                'preferred_specialty': 'Adult Medicine', // type select
-                'perferred_profession': 'Clerical', // type select
-                'job_state': 'Arizona', // type select
-                'weekly_pay': 250, // type number
-                'terms': 'Perm', // type select
-                'preferred_assignment_duration': 3, // type number
-                'facility_shift_cancelation_policy': 'shift cancellation policy', // type text
-                'traveler_distance_from_facility': 50, // type number
-                'clinical_setting': 'Clinic', // type select
-                'Patient_ratio': 20, // type number 
-                'Unit': 'Unit', // type text
-                'scrub_color': 'Blue', // type text
-                'rto': 'allowed', // type select 
-                'guaranteed_hours': 7, // type number 
-                'hours_per_week': 30, // type number
-                'hours_shift': 5, // type number 
-                'weeks_shift': 3, // type number 
-                'referral_bonus': 30, // type number
-                'sign_on_bonus': 10,  // type number
-                'completion_bonus': 3, // type number
-                'extension_bonus': 3, // type number
-                'other_bonus': 3, // type number
-                'actual_hourly_rate': 3, // type number
-                'overtime': 3, // type number 
-                'on_call': 'Yes', // type no/yes select
-                'on_call_rate': 10, // type number
-                'holiday': '2025-04-27', // type date
-                'orientation_rate': 19, // type number
-                'block_scheduling': 'No', // type no/yes select
-                'float_requirement': 'No', // type no/yes select
-                'number_of_references': 1, // type number
-                
-                'urgency': 'Auto Offer', // type checkbox
-                'facilitys_parent_system': 'Parent system', // type text
-                'facility_name': 'Facility Name', // type text
-                'pay_frequency': 'Daily', // type select
-                'preferred_experience': 'preferred experience', // type number
-                'contract_termination_policy': 'Contract policy', // type text
-               
-                
-                'feels_like_per_hour': 5, // type number 
-                'call_back_rate': 16, // type number
-                'weekly_non_taxable_amount': 100, // type number
-                'start_date': '2025-04-27', // type date
-                'end_date': '2025-04-30', // type date
-                'preferred_experience': 10, // type number
-                'weekly_taxable_amount': 100, // type number
-                'goodwork_weekly_amount': 110, // type number
-                'total_organization_amount': 120 ,
-                'total_goodwork_amount': 130,
-                'total_contract_amount': 140,
-                'preferred_work_location': 'Work location', 
-                'description': 'description',
+    // Fill the form with data
+    function fillData() {
+        const fields = {
+            'job_id': 1,  // type number
+            'job_name': 'job name', // type input text
+            'job_type': 'Clinical', // type select
+            'preferred_specialty': 'Adult Medicine', // type select
+            'perferred_profession': 'Clerical', // type select
+            'job_state': 'Arizona', // type select
+            'weekly_pay': 250, // type number
+            'terms': 'Perm', // type select
+            'preferred_assignment_duration': 3, // type number
+            'facility_shift_cancelation_policy': 'shift cancellation policy', // type text
+            'traveler_distance_from_facility': 50, // type number
+            'clinical_setting': 'Clinic', // type select
+            'Patient_ratio': 20, // type number 
+            'Unit': 'Unit', // type text
+            'scrub_color': 'Blue', // type text
+            'rto': 'allowed', // type select 
+            'guaranteed_hours': 7, // type number 
+            'hours_per_week': 30, // type number
+            'hours_shift': 5, // type number 
+            'weeks_shift': 3, // type number 
+            'referral_bonus': 30, // type number
+            'sign_on_bonus': 10,  // type number
+            'completion_bonus': 3, // type number
+            'extension_bonus': 3, // type number
+            'other_bonus': 3, // type number
+            'actual_hourly_rate': 3, // type number
+            'overtime': 3, // type number 
+            'on_call': 'Yes', // type no/yes select
+            'on_call_rate': 10, // type number
+            'holiday': '2025-04-27', // type date
+            'orientation_rate': 19, // type number
+            'block_scheduling': 'No', // type no/yes select
+            'float_requirement': 'No', // type no/yes select
+            'number_of_references': 1, // type number
+            
+            'urgency': 'Auto Offer', // type checkbox
+            'facilitys_parent_system': 'Parent system', // type text
+            'facility_name': 'Facility Name', // type text
+            'pay_frequency': 'Daily', // type select
+            'preferred_experience': 'preferred experience', // type number
+            'contract_termination_policy': 'Contract policy', // type text
+            
+            
+            'feels_like_per_hour': 5, // type number 
+            'call_back_rate': 16, // type number
+            'weekly_non_taxable_amount': 100, // type number
+            'start_date': '2025-04-27', // type date
+            'end_date': '2025-04-30', // type date
+            'preferred_experience': 10, // type number
+            'weekly_taxable_amount': 100, // type number
+            'goodwork_weekly_amount': 110, // type number
+            'total_organization_amount': 120 ,
+            'total_goodwork_amount': 130,
+            'total_contract_amount': 140,
+            'preferred_work_location': 'Work location', 
+            'description': 'description',
 
 
-            };
+        };
 
-            for (const [id, value] of Object.entries(fields)) {
-                console.log(id);
-                document.getElementById(id).value = value;
+        for (const [id, value] of Object.entries(fields)) {
+            console.log(id);
+            document.getElementById(id).value = value;
+        }
+    }
+
+    function checkWorkerClassification() {
+
+        let benefitsElement = document.getElementById("benefits_id");
+        benefitsElement.classList.remove('d-none');
+
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+
+        //fillData();
+        // let workerClassification = document.getElementById("nurse_classification");
+        // workerClassificationValue = workerClassification.value;
+        // if(workerClassificationValue == 'W-2'){
+        //     let benefitsElement = document.getElementById("benefits_id");
+        //     benefitsElement.classList.remove('d-none');
+        // }
+
+        checkWorkerClassification();
+
+        const jobTypeSelect = document.getElementById('job_type');
+        const professionSelect = document.getElementById('perferred_profession');
+
+        jobTypeSelect.addEventListener('change', function() {
+
+            const selectedJobType = this.value;
+            let professions = [];
+
+            if (selectedJobType === 'Clinical') {
+
+                professions = @json($allKeywords['ClinicalProfession']);
+
+            } else if (selectedJobType === 'Non-Clinical') {
+
+                professions = @json($allKeywords['Non-ClinicalProfession']);
+
+            } else {
+
+                professions = @json($allKeywords['Profession']);
+
             }
-        }
 
-        function checkWorkerClassification() {
-            let benefitsElement = document.getElementById("benefits_id");
-            benefitsElement.classList.remove('d-none');
-            // let workerClassification = document.getElementById("nurse_classification");
-            // workerClassification.addEventListener('change',function(){
-            //     workerClassificationValue = this.value;
-            //     let benefitsElement = document.getElementById("benefits_id");
-            //     if(workerClassificationValue == 'W-2'){
-            //         benefitsElement.classList.remove('d-none');
-            //     }else{
-            //         benefitsElement.classList.add('d-none');
-            //     }
-            // });
-        }
+            professionSelect.innerHTML = '<option value="">Profession</option>';
 
-        document.addEventListener('DOMContentLoaded', async function() {
-            //fillData();
-            // let workerClassification = document.getElementById("nurse_classification");
-            // workerClassificationValue = workerClassification.value;
-            // if(workerClassificationValue == 'W-2'){
-            //     let benefitsElement = document.getElementById("benefits_id");
-            //     benefitsElement.classList.remove('d-none');
-            // }
-            checkWorkerClassification();
-            const jobTypeSelect = document.getElementById('job_type');
-            const professionSelect = document.getElementById('perferred_profession');
+            professions.forEach(function(profession) {
 
-            jobTypeSelect.addEventListener('change', function() {
-                const selectedJobType = this.value;
-                let professions = [];
-                if (selectedJobType === 'Clinical') {
-                    professions = @json($allKeywords['ClinicalProfession']);
-                } else if (selectedJobType === 'Non-Clinical') {
-                    professions = @json($allKeywords['Non-ClinicalProfession']);
-                } else {
-                    professions = @json($allKeywords['Profession']);
-                }
+                const option = document.createElement('option');
+                option.value = profession.title;
+                option.textContent = profession.title;
+                professionSelect.appendChild(option);
 
-                professionSelect.innerHTML = '<option value="">Profession</option>';
-
-                professions.forEach(function(profession) {
-                    const option = document.createElement('option');
-                    option.value = profession.title;
-                    option.textContent = profession.title;
-                    professionSelect.appendChild(option);
-                });
             });
-
-            const jobState = document.getElementById('job_state');
-            const jobCity = document.getElementById('job_city');
-            let citiesData = [];
-            const selectedJobState = jobState.value;
-            const selectedState = $(jobState).find(':selected').attr('id');
-            // console.log('id : ', selectedState);
-            // console.log('value : ', selectedJobState);
-            // 
-            // await $.get(`/api/cities/${selectedState}`, function(cities) {
-                // console.log('cities :', cities);
-                // citiesData = [];
-                // citiesData = cities;
-            // });
-            // jobCity.innerHTML = '<option value="">Cities</option>';
-            // citiesData.forEach(function(City) {
-                // const option = document.createElement('option');
-                // option.value = City.name;
-                // option.textContent = City.name;
-                // jobCity.appendChild(option);
-            // });
-            // document.getElementById("job_city").value = 'Globe';
-
-            jobState.addEventListener('change', async function() {
-
-                const selectedJobState = this.value;
-                const selectedState = $(this).find(':selected').attr('id');
-                console.log('id : ', selectedState);
-                console.log('value : ', selectedJobState);
-
-                await $.get(`/api/cities/${selectedState}`, function(cities) {
-                    console.log('cities :', cities);
-                    citiesData = cities;
-                });
-
-                jobCity.innerHTML = '<option value="">Cities</option>';
-                citiesData.forEach(function(City) {
-                    const option = document.createElement('option');
-                    option.value = City.name;
-                    option.textContent = City.name;
-                    jobCity.appendChild(option);
-                });
-
-            })
-
-            const jobTypeSelectEdit = document.getElementById('job_typeEdit');
-            const professionSelectEdit = document.getElementById('perferred_professionEdit');
-
-            jobTypeSelectEdit.addEventListener('change', function() {
-                const selectedJobType = this.value;
-                let professions = [];
-                if (selectedJobType === 'Clinical') {
-                    professions = @json($allKeywords['ClinicalProfession']);
-                } else if (selectedJobType === 'Non-Clinical') {
-                    professions = @json($allKeywords['Non-ClinicalProfession']);
-                } else {
-                    professions = @json($allKeywords['Profession']);
-                }
-
-                professionSelectEdit.innerHTML = '<option value="">Profession</option>';
-
-                professions.forEach(function(profession) {
-                    const option = document.createElement('option');
-                    option.value = profession.title;
-                    option.textContent = profession.title;
-                    professionSelectEdit.appendChild(option);
-                });
-            });
-
-           
-
-
         });
 
+        const jobState = document.getElementById('job_state');
+        const jobCity = document.getElementById('job_city');
+        let citiesData = [];
+        const selectedJobState = jobState.value;
+        const selectedState = $(jobState).find(':selected').attr('id');
 
-        const myForm = document.getElementById('create_job_form');
-        const draftJobs = @json($draftJobs);
-        const publishedJobs = @json($publishedJobs);
-        const onholdJobs = @json($onholdJobs);
+        jobState.addEventListener('change', async function() {
 
-        if (publishedJobs == 0) {
-            $("#application-details-apply").html('<div class="text-center"><span>Data Not found</span></div>');
-            $("#job-list-published").html('<div class="text-center"><span>No Job</span></div>');
-        }
+            const selectedJobState = this.value;
+            const selectedState = $(this).find(':selected').attr('id');
+            console.log('id : ', selectedState);
+            console.log('value : ', selectedJobState);
 
-        if (onholdJobs == 0) {
-            $("#application-details-apply-onhold").html('<div class="text-center"><span>Data Not found</span></div>');
-            $("#job-list-onhold").html('<div class="text-center"><span>No Job</span></div>');
-        }
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                citiesData = cities;
+            });
 
-        // the first draft job
+            jobCity.innerHTML = '<option value="">Cities</option>';
+
+            citiesData.forEach(function(City) {
+
+                const option = document.createElement('option');
+                option.value = City.name;
+                option.textContent = City.name;
+                jobCity.appendChild(option);
+
+            });
+
+        })
+
+        const jobTypeSelectEdit = document.getElementById('job_typeEdit');
+        const professionSelectEdit = document.getElementById('perferred_professionEdit');
+
+        jobTypeSelectEdit.addEventListener('change', function() {
+
+            const selectedJobType = this.value;
+            let professions = [];
+
+            if (selectedJobType === 'Clinical') {
+
+                professions = @json($allKeywords['ClinicalProfession']);
+
+            } else if (selectedJobType === 'Non-Clinical') {
+
+                professions = @json($allKeywords['Non-ClinicalProfession']);
+
+            } else {
+
+                professions = @json($allKeywords['Profession']);
+            }
+
+            professionSelectEdit.innerHTML = '<option value="">Profession</option>';
+
+            professions.forEach(function(profession) {
+
+                const option = document.createElement('option');
+                option.value = profession.title;
+                option.textContent = profession.title;
+                professionSelectEdit.appendChild(option);
+
+            });
+        });
+    });
+
+
+    const myForm = document.getElementById('create_job_form');
+    const draftJobs = @json($draftJobs);
+    const publishedJobs = @json($publishedJobs);
+    const onholdJobs = @json($onholdJobs);
+
+    if (publishedJobs == 0) {
+        $("#application-details-apply").html('<div class="text-center"><span>Data Not found</span></div>');
+        $("#job-list-published").html('<div class="text-center"><span>No Job</span></div>');
+    }
+
+    if (onholdJobs == 0) {
+        $("#application-details-apply-onhold").html('<div class="text-center"><span>Data Not found</span></div>');
+        $("#job-list-onhold").html('<div class="text-center"><span>No Job</span></div>');
+    }
+
+    // the first draft job
     function getFirstDraftJob(){
-        if(draftJobs.length !== 0)
-        {
+        if(draftJobs.length !== 0){
+
             var result = draftJobs[0]; 
-            console.log('result',result);
 
             const fields = {
                 'id': { id: 'idDraft', type: 'number' },
@@ -4727,6 +4743,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                 'profession': { id: 'perferred_professionDraft', type: 'select' },
                 'job_state': { id: 'job_stateDraft', type: 'select' },
                 'job_city': { id: 'job_cityDraft', type: 'select' },
+                'is_resume': { id: 'job_is_resume', type: 'checkbox'},
                 'weekly_pay': { id: 'weekly_payDraft', type: 'number' },
                 'terms': { id: 'termsDraft', type: 'select' },
                 'preferred_assignment_duration': { id: 'preferred_assignment_durationDraft', type: 'number' },
@@ -4776,13 +4793,19 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
             };
 
             for (const [key, field] of Object.entries(fields)) {
+
                 const element = document.getElementById(field.id);
+
                 if (!element || result[key] == null) continue;
             
                 if (field.type === 'select') {
+
                     if (field.options) {
+
                         element.value = result[key] == '1' ? 'Yes' : 'No';
+
                     } else {
+
                         const option = document.createElement('option');
                         option.value = result[key];
                         option.text = result[key];
@@ -4791,194 +4814,286 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                         element.value = result[key];
 
                     }
+
                 } else if (field.type === 'checkbox') {
+
                     if (field.id === 'urgencyDraft') {
+
                         element.checked = result[key] === 'Auto Offer';
+
                     } else {
+
                         element.checked = result[key] === '1';
                     }
+
                 }
+
                 else if (field.type === 'radio') {
-                    console.log('radio', result[key]);
+
                     if (result[key] === 'Accept Pending') {
+
                         document.getElementById('professional_state_licensure_pendingDraft').checked = true;
+
                     } else {
+
                         document.getElementById('professional_state_licensure_activeDraft').checked = true;
+
                     }
+
                 }
+
                  else {
+                    
                     element.value = result[key];
                 }
             }
+
             // list emr 
             var emr = result['Emr'];
             if(emr !== null){
-            emr = emr.split(', ');
-            
-            emr.forEach(function(item) {
-                @php
-                    $allKeywordsJSON = json_encode($allKeywords['EMR']);
-                @endphp
-                let allspcldata = '{!! $allKeywordsJSON !!}';
-                var data = JSON.parse(allspcldata);
-                data.forEach(function(itemData) {
-                    if (item == itemData.title) {
-                        Emr[itemData.id] = item;
-                    }
-                });
-            });
-            }
-            list_Emr();
+                emr = emr.split(', ');
+                
+                emr.forEach(function(item) {
 
-            // list benefits
-
-            var benefitsResult = result['benefits'];
-            if(benefitsResult) {
-            benefitsResult = benefitsResult.split(', ');
-            
-                benefitsResult.forEach(function(item) {
                     @php
-                        $allKeywordsJSON = json_encode($allKeywords['Benefits']);
+                        $allKeywordsJSON = json_encode($allKeywords['EMR']);
                     @endphp
+
                     let allspcldata = '{!! $allKeywordsJSON !!}';
                     var data = JSON.parse(allspcldata);
+
                     data.forEach(function(itemData) {
+
                         if (item == itemData.title) {
-                            benefits[itemData.id] = item;
+
+                            Emr[itemData.id] = item;
                         }
                     });
                 });
             }
+
+            list_Emr();
+
+            // list benefits
+            var benefitsResult = result['benefits'];
+            
+            if(benefitsResult) {
+
+                benefitsResult = benefitsResult.split(', ');
+                
+                benefitsResult.forEach(function(item) {
+
+                    @php
+                        $allKeywordsJSON = json_encode($allKeywords['Benefits']);
+                    @endphp
+
+                    let allspcldata = '{!! $allKeywordsJSON !!}';
+                    var data = JSON.parse(allspcldata);
+
+                    data.forEach(function(itemData) {
+
+                        if (item == itemData.title) {
+                            benefits[itemData.id] = item;
+                        }
+
+                    });
+
+                });
+
+            }
+
             list_benefits();
 
             // list nurse classification
             var nurse_classificationResult = result['nurse_classification'];
+
             if(nurse_classificationResult !== null){
-            nurse_classificationResult = nurse_classificationResult.split(', ');
-            
+
+                nurse_classificationResult = nurse_classificationResult.split(', ');
+                
                 nurse_classificationResult.forEach(function(item) {
+
                     @php
                         $allKeywordsJSON = json_encode($allKeywords['NurseClassification']);
                     @endphp
+
                     let allspcldata = '{!! $allKeywordsJSON !!}';
                     var data = JSON.parse(allspcldata);
+
                     data.forEach(function(itemData) {
+
                         if (item == itemData.title) {
+
                             nurse_classification[itemData.id] = item;
+
                         }
+
                     });
+
                 });
+
             }
 
             list_nurse_classification();
 
             // list professional licensure
-
             var professional_licensureResult = result['job_location'];
+            
             if(professional_licensureResult !== null){
             
-            professional_licensureResult = professional_licensureResult.split(', ');
-            
+                professional_licensureResult = professional_licensureResult.split(', ');
 
-            professional_licensureResult.forEach(function(item) {
-                @php
-                    $allKeywordsJSON = json_encode($allKeywords['StateCode']);
-                @endphp
-                let allspcldata = '{!! $allKeywordsJSON !!}';
-                var data = JSON.parse(allspcldata);
-                data.forEach(function(itemData) {
-                    if (item == itemData.title) {
-                        professional_licensure[itemData.id] = item;
-                    }
+                professional_licensureResult.forEach(function(item) {
+
+                    @php
+                        $allKeywordsJSON = json_encode($allKeywords['StateCode']);
+                    @endphp
+
+                    let allspcldata = '{!! $allKeywordsJSON !!}';
+                    var data = JSON.parse(allspcldata);
+
+                    data.forEach(function(itemData) {
+
+                        if (item == itemData.title) {
+
+                            professional_licensure[itemData.id] = item;
+
+                        }
+
+                    });
+
                 });
-            });
+
             }
             list_professional_licensure();
 
             // list skills
-
             var skillsResult = result['skills'];
+
             if(skillsResult !== null){
-            skillsResult = skillsResult.split(', ');
+
+                skillsResult = skillsResult.split(', ');
             
-            skillsResult.forEach(function(item) {
-                @php
-                    $allKeywordsJSON = json_encode($allKeywords['Speciality']);
-                @endphp
-                let allspcldata = {!! json_encode($allKeywordsJSON) !!};
-                var data = JSON.parse(allspcldata);
-                data.forEach(function(itemData) {
-                    if (item == itemData.title) {
-                        skills[itemData.id] = item;
-                    }
+                skillsResult.forEach(function(item) {
+
+                    @php
+                        $allKeywordsJSON = json_encode($allKeywords['Speciality']);
+                    @endphp
+
+                    let allspcldata = {!! json_encode($allKeywordsJSON) !!};
+                    var data = JSON.parse(allspcldata);
+
+                    data.forEach(function(itemData) {
+
+                        if (item == itemData.title) {
+
+                            skills[itemData.id] = item;
+
+                        }
+
+                    });
+
                 });
-            });
+
             }
             list_skills();
 
             // list shift time of day
-
             var shifttimeofdayresult = result['preferred_shift_duration'];
-            console.log("sift time of day : ",shifttimeofdayresult);
+
             // shifttimeofday is a string use trim to check if it is empty
             if (shifttimeofdayresult !== null) {
-                console.log('triiiiiiimed');
-            shifttimeofdayresult = shifttimeofdayresult.split(', ');
             
-            shifttimeofdayresult.forEach(function(item) {
-                @php
-                    $allKeywordsJSON = json_encode($allKeywords['PreferredShift']);
-                @endphp
-                let allspcldata = '{!! $allKeywordsJSON !!}';
-                var data = JSON.parse(allspcldata);
-                data.forEach(function(itemData) {
-                    if (item == itemData.title) {
-                        shifttimeofday[itemData.id] = item;
-                    }
+                shifttimeofdayresult = shifttimeofdayresult.split(', ');
+            
+                shifttimeofdayresult.forEach(function(item) {
+                    
+                    @php
+                        $allKeywordsJSON = json_encode($allKeywords['PreferredShift']);
+                    @endphp
+                    
+                    let allspcldata = '{!! $allKeywordsJSON !!}';
+                    var data = JSON.parse(allspcldata);
+                    
+                    data.forEach(function(itemData) {
+                    
+                        if (item == itemData.title) {
+                    
+                            shifttimeofday[itemData.id] = item;
+                    
+                        }
+                    
+                    });
+                
                 });
-            });
             }
+
             list_shifttimeofday();
 
             // list certifications
-
             var certificationsResult = result['certificate'];
+
             if (certificationsResult !== null) {
-            certificationsResult = certificationsResult.split(', ');
-            
-            certificationsResult.forEach(function(item) {
-                @php
-                    $allKeywordsJSON = json_encode($allKeywords['Certification']);
-                @endphp
-                let allspcldata = '{!! $allKeywordsJSON !!}';
-                var data = JSON.parse(allspcldata);
-                data.forEach(function(itemData) {
-                    if (item == itemData.title) {
-                        certificate[itemData.id] = item;
-                    }
+
+                certificationsResult = certificationsResult.split(', ');
+                
+                certificationsResult.forEach(function(item) {
+
+                    @php
+
+                        $allKeywordsJSON = json_encode($allKeywords['Certification']);
+
+                    @endphp
+
+                    let allspcldata = '{!! $allKeywordsJSON !!}';
+                    var data = JSON.parse(allspcldata);
+
+                    data.forEach(function(itemData) {
+
+                        if (item == itemData.title) {
+
+                            certificate[itemData.id] = item;
+
+                        }
+
+                    });
+
                 });
-            });
+
             }
 
             list_certifications();
 
             // list vaccinations
-
             var vaccinationsResult = result['vaccinations'];
+
             if (vaccinationsResult !== null) {
-            vaccinationsResult = vaccinationsResult.split(', ');
-            vaccinationsResult.forEach(function(item) {
-                @php
-                    $allKeywordsJSON = json_encode($allKeywords['Vaccinations']);
-                @endphp
-                let allspcldata = '{!! $allKeywordsJSON !!}';
-                var data = JSON.parse(allspcldata);
-                data.forEach(function(itemData) {
-                    if (item == itemData.title) {
-                        vaccinations[itemData.id] = item;
-                    }
+
+                vaccinationsResult = vaccinationsResult.split(', ');
+
+                vaccinationsResult.forEach(function(item) {
+
+                    @php
+
+                        $allKeywordsJSON = json_encode($allKeywords['Vaccinations']);
+
+                    @endphp
+
+                    let allspcldata = '{!! $allKeywordsJSON !!}';
+                    var data = JSON.parse(allspcldata);
+
+                    data.forEach(function(itemData) {
+
+                        if (item == itemData.title) {
+
+                            vaccinations[itemData.id] = item;
+
+                        }
+
+                    });
+
                 });
-            });
+
             }
 
             list_vaccinations();
@@ -4986,597 +5101,721 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
         } else {
             
             $("#job-list-draft").html('<div class="text-center"><span>No Job</span></div>');
-            
 
             // add d-none class to hide the form
             document.getElementById('details_info').classList.add('d-none');
+
             // remove d-none class to show the message
             document.getElementById('no-job-for-draft').classList.remove('d-none');
-
-            
 
         }
     }
 
+    var certificateStr = '';
+    var vaccinationsStr = '';
+    var skillsStr = '';
+    var shifttimeofdayStr = '';
+    var benefitsStr = '';
+    var professional_licensureStr = '';
+    var nurse_classificationStr = '';
+    var EmrStr = '';
+    var holidayStr = '';
 
-        var certificateStr = '';
-        var vaccinationsStr = '';
-        var skillsStr = '';
-        var shifttimeofdayStr = '';
-        var benefitsStr = '';
-        var professional_licensureStr = '';
-        var nurse_classificationStr = '';
-        var EmrStr = '';
-        var holidayStr = '';
+    // from edited job
+    var certificateStrEdit = '';
+    var vaccinationsStrEdit = '';
+    var skillsStrEdit = '';
+    var shifttimeofdayStrEdit = '';
+    var benefitsStrEdit = '';
+    var professional_licensureStrEdit = '';
+    var nurse_classificationStrEdit = '';
+    var EmrStrEdit = '';
+    var holidayStrEdit = '';
 
-        // from edited job
-        var certificateStrEdit = '';
-        var vaccinationsStrEdit = '';
-        var skillsStrEdit = '';
-        var shifttimeofdayStrEdit = '';
-        var benefitsStrEdit = '';
-        var professional_licensureStrEdit = '';
-        var nurse_classificationStrEdit = '';
-        var EmrStrEdit = '';
-        var holidayStrEdit = '';
+    $(document).ready(function() {
 
+        $('#job_stateDraft').change(function() {
 
-        // $(document).ready(function() {
-        //     $('#job_state').change(function() {
-        //         console.log("selected");
-        //         const selectedState = $(this).find(':selected').attr('id');
-        //         const CitySelect = $('#job_city');
-        //         $.get(`/api/cities/${selectedState}`, function(data) {
-        //             CitySelect.empty();
-        //             CitySelect.append('<option value="">Select City</option>');
-        //             $.each(data, function(index, city) {
-        //                 CitySelect.append(new Option(city.name, city.name));
-        //             });
-        //         });
-        //     });
-        // });
+            const selectedState = $(this).find(':selected').attr('id');
+            const CitySelect = $('#job_cityDraft');
 
+            $.get(`/api/cities/${selectedState}`, function(data) {
 
-        $(document).ready(function() {
-            $('#job_stateDraft').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#job_cityDraft');
+                CitySelect.empty();
+                CitySelect.append('<option value="">Select City</option>');
 
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="">Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
+                $.each(data, function(index, city) {
+
+                    CitySelect.append(new Option(city.name, city.name));
+
                 });
+
             });
 
-            $('#job_stateEdit').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#job_cityEdit');
-
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="">Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                });
-            });
         });
 
-        function request_job_form_appear() {
-           
-            certificate = {};
-            vaccinations = {};
-            skills = {};
-            shifttimeofday = {};
-            benefits = {};
-            professional_licensure = {};
-            nurse_classification = {};
-            Emr = {};
+        $('#job_stateEdit').change(function() {
 
-            document.getElementById('no-job-posted').classList.add('d-none');
-            document.getElementById('published-job-details').classList.add('d-none');
-            document.getElementById('create_job_request_form').classList.remove('d-none');
+            const selectedState = $(this).find(':selected').attr('id');
+            const CitySelect = $('#job_cityEdit');
+
+            $.get(`/api/cities/${selectedState}`, function(data) {
+
+                CitySelect.empty();
+                CitySelect.append('<option value="">Select City</option>');
+
+                $.each(data, function(index, city) {
+
+                    CitySelect.append(new Option(city.name, city.name));
+
+                });
+
+            });
+
+        });
+
+    });
+
+    function request_job_form_appear() {
+        
+        certificate = {};
+        vaccinations = {};
+        skills = {};
+        shifttimeofday = {};
+        benefits = {};
+        professional_licensure = {};
+        nurse_classification = {};
+        Emr = {};
+
+        document.getElementById('no-job-posted').classList.add('d-none');
+        document.getElementById('published-job-details').classList.add('d-none');
+        document.getElementById('create_job_request_form').classList.remove('d-none');
+
+    }
+
+    function opportunitiesType(type, id = "", formtype) {
+
+        certificate = {};
+        vaccinations = {};
+        skills = {};
+        shifttimeofday = {};
+        benefits = {};
+        professional_licensure = {};
+        nurse_classification = {};
+        Emr = {};
+
+        var draftsElement = document.getElementById('drafts');
+        var publishedElement = document.getElementById('published');
+        var onholdElement = document.getElementById('onhold');
+
+        if (type == "drafts") {
+
+            getFirstDraftJob();
+
+            document.getElementById("onholdCards").classList.add('d-none');
+            document.getElementById("draftCards").classList.remove('d-none');
+            document.getElementById("publishedCards").classList.add('d-none');
+            document.getElementById("details_edit_job").classList.add("d-none");
+
+            document.getElementById("no-job-posted").classList.add("d-none");
+            document.getElementById("details_draft").classList.remove("d-none");
+            document.getElementById("details_published").classList.add("d-none");
+            document.getElementById("details_onhold").classList.add("d-none");
+            document.getElementById('published-job-details').classList.remove('d-none');
+            document.getElementById("create_job_request_form").classList.add("d-none");
+
+        } else if (type == "published") {
+
+            document.getElementById("onholdCards").classList.add('d-none');
+            document.getElementById("draftCards").classList.add('d-none');
+            document.getElementById("publishedCards").classList.remove('d-none');
+            document.getElementById("details_edit_job").classList.add("d-none");
+
+            document.getElementById("no-job-posted").classList.add("d-none");
+            document.getElementById("details_published").classList.remove("d-none");
+            document.getElementById("details_onhold").classList.add("d-none");
+            document.getElementById("details_draft").classList.add("d-none");
+
+            document.getElementById('published-job-details').classList.remove('d-none');
+            document.getElementById("create_job_request_form").classList.add("d-none");
+
+        } else if (type == "onhold") {
+
+            document.getElementById("draftCards").classList.add('d-none');
+            document.getElementById("publishedCards").classList.add('d-none');
+            document.getElementById("onholdCards").classList.remove('d-none');
+            document.getElementById("details_edit_job").classList.add("d-none");
+
+            document.getElementById("no-job-posted").classList.add("d-none");
+            document.getElementById("details_onhold").classList.remove("d-none");
+            document.getElementById("details_published").classList.add("d-none");
+            document.getElementById("details_draft").classList.add("d-none");
+
+            document.getElementById('published-job-details').classList.remove('d-none');
+            document.getElementById("create_job_request_form").classList.add("d-none");
+        }
+
+        if (draftsElement.classList.contains("active")) {
+
+            draftsElement.classList.remove("active");
+            document.getElementById("create_job_request_form").classList.add("d-none");
 
         }
 
-        function opportunitiesType(type, id = "", formtype) {
+        if (publishedElement.classList.contains("active")) {
 
-            certificate = {};
-            vaccinations = {};
-            skills = {};
-            shifttimeofday = {};
-            benefits = {};
-            professional_licensure = {};
-            nurse_classification = {};
-            Emr = {};
+            publishedElement.classList.remove("active");
+            document.getElementById("create_job_request_form").classList.add("d-none");
 
-            console.log(type);
+        }
 
-            var draftsElement = document.getElementById('drafts');
-            var publishedElement = document.getElementById('published');
-            var onholdElement = document.getElementById('onhold');
+        if (onholdElement.classList.contains("active")) {
 
+            onholdElement.classList.remove("active");
+            document.getElementById("create_job_request_form").classList.add("d-none");
 
-            if (type == "drafts") {
-                getFirstDraftJob();
-                document.getElementById("onholdCards").classList.add('d-none');
-                document.getElementById("draftCards").classList.remove('d-none');
-                document.getElementById("publishedCards").classList.add('d-none');
-                document.getElementById("details_edit_job").classList.add("d-none");
+        }
 
-                document.getElementById("no-job-posted").classList.add("d-none");
-                document.getElementById("details_draft").classList.remove("d-none");
-                document.getElementById("details_published").classList.add("d-none");
-                document.getElementById("details_onhold").classList.add("d-none");
-                document.getElementById('published-job-details').classList.remove('d-none');
-                document.getElementById("create_job_request_form").classList.add("d-none");
+        document.getElementById(type).classList.add("active")
 
+        // Change scroll behavior
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
+        let activestatus = 0;
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-            } else if (type == "published") {
-                document.getElementById("onholdCards").classList.add('d-none');
-                document.getElementById("draftCards").classList.add('d-none');
-                document.getElementById("publishedCards").classList.remove('d-none');
-                document.getElementById("details_edit_job").classList.add("d-none");
+        if (csrfToken) {
 
-                document.getElementById("no-job-posted").classList.add("d-none");
-                document.getElementById("details_published").classList.remove("d-none");
-                document.getElementById("details_onhold").classList.add("d-none");
-                document.getElementById("details_draft").classList.add("d-none");
+            $.ajax({
 
-                document.getElementById('published-job-details').classList.remove('d-none');
-                document.getElementById("create_job_request_form").classList.add("d-none");
-            } else if (type == "onhold") {
-                document.getElementById("draftCards").classList.add('d-none');
-                document.getElementById("publishedCards").classList.add('d-none');
-                document.getElementById("onholdCards").classList.remove('d-none');
-                document.getElementById("details_edit_job").classList.add("d-none");
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                url: "{{ url('recruiter/get-job-listing') }}",
+                beforeSend: function(xhr) {
 
+                    xhr.withCredentials = true;
 
-                document.getElementById("no-job-posted").classList.add("d-none");
-                document.getElementById("details_onhold").classList.remove("d-none");
-                document.getElementById("details_published").classList.add("d-none");
-                document.getElementById("details_draft").classList.add("d-none");
+                },
+                data: {
 
-                document.getElementById('published-job-details').classList.remove('d-none');
-                document.getElementById("create_job_request_form").classList.add("d-none");
-            }
+                    "_token": "{{ csrf_token() }}",
+                    'type': type,
+                    'id': id,
+                    'formtype': formtype,
 
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {
 
-            if (draftsElement.classList.contains("active")) {
-                draftsElement.classList.remove("active");
-                document.getElementById("create_job_request_form").classList.add("d-none");
+                    window.allspecialty = result.allspecialty;
+                    window.allvaccinations = result.allvaccinations;
+                    window.allcertificate = result.allcertificate;
+                    window.allbenefits = result.allcertificate;
+                    window.allprofessional_licensure = result.allcertificate;
+                    window.allEmr = result.allcertificate;
+                    window.allnurse_classification = result.allcertificate;
 
-            }
-            if (publishedElement.classList.contains("active")) {
-                publishedElement.classList.remove("active");
-                document.getElementById("create_job_request_form").classList.add("d-none");
+                    list_specialities();
+                    list_vaccinations();
+                    list_certifications();
+                    list_benefits();
+                    list_professional_licensure();
+                    list_Emr();
+                    list_nurse_classification();
 
-            }
-            if (onholdElement.classList.contains("active")) {
-                onholdElement.classList.remove("active");
-                document.getElementById("create_job_request_form").classList.add("d-none");
+                    if (result.joblisting != "") {
 
-            }
+                        if (type == "published") {
 
-            document.getElementById(type).classList.add("active")
+                            document.getElementById("published-job-details").classList.remove("d-none");
+                            document.getElementById("no-job-posted").classList.add("d-none");
+                            $("#application-details-apply").html(result.jobdetails);
+                            $("#job-list-published").html(result.joblisting);
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-            let activestatus = 0;
-            // document.getElementById('opportunitylistname').innerHTML = type;
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('recruiter/get-job-listing') }}",
-                    beforeSend: function(xhr) {
-                        xhr.withCredentials = true;
-                    },
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        'type': type,
-                        'id': id,
-                        'formtype': formtype,
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
+                        } else if (type == "onhold") {
 
-                        // $("#job-list").html(result.joblisting);
-                        // $("#job-details").html(result.jobdetails);
-
-                        window.allspecialty = result.allspecialty;
-                        window.allvaccinations = result.allvaccinations;
-                        window.allcertificate = result.allcertificate;
-                        window.allbenefits = result.allcertificate;
-                        window.allprofessional_licensure = result.allcertificate;
-                        window.allEmr = result.allcertificate;
-                        window.allnurse_classification = result.allcertificate;
-
-
-
-                        list_specialities();
-                        list_vaccinations();
-                        list_certifications();
-                        list_benefits();
-                        list_professional_licensure();
-                        list_Emr();
-                        list_nurse_classification();
-
-                        if (result.joblisting != "") {
-                            if (type == "published") {
-                                document.getElementById("published-job-details").classList.remove("d-none");
-                                document.getElementById("no-job-posted").classList.add("d-none");
-                                $("#application-details-apply").html(result.jobdetails);
-                                $("#job-list-published").html(result.joblisting);
-                            } else if (type == "onhold") {
-                                document.getElementById("published-job-details").classList.remove("d-none");
-                                document.getElementById("no-job-posted").classList.add("d-none");
-                                $("#application-details-apply-onhold").html(result.jobdetails);
-                                $("#job-list-onhold").html(result.joblisting);
-                            }
+                            document.getElementById("published-job-details").classList.remove("d-none");
+                            document.getElementById("no-job-posted").classList.add("d-none");
+                            $("#application-details-apply-onhold").html(result.jobdetails);
+                            $("#job-list-onhold").html(result.joblisting);
 
                         }
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
-            // editJob();
-        }
-        $(document).ready(function() {
-            document.getElementById("details_draft").classList.add("d-none");
-            document.getElementById('published-job-details').classList.add('d-none');
-            document.getElementById('details_edit_job').classList.add('d-none');
-        });
 
-        function editOpportunity(id = "", formtype) {
+                    }
+                },
+                error: function(error) {
+
+                    console.log(error);
+                }
+            });
+
+        } else {
+
+            console.error('CSRF token not found.');
+
+        }
+
+    }
+
+    $(document).ready(function() {
+
+        document.getElementById("details_draft").classList.add("d-none");
+        document.getElementById('published-job-details').classList.add('d-none');
+        document.getElementById('details_edit_job').classList.add('d-none');
+
+    });
+
+    function editOpportunity(id = "", formtype) {
+
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        if (csrfToken) {
+
+            $.ajax({
+
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                url: "{{ url('recruiter/get-job-listing') }}",
+                beforeSend: function(xhr) {
+                    xhr.withCredentials = true;
+                },
+                data: {
+
+                    "_token": "{{ csrf_token() }}",
+                    'id': id,
+                    'formtype': formtype
+
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {
+
+                    // Silence is gold
+
+                },
+                error: function(error) {
+                    
+                    //Silence is gold
+
+                }
+            });
+
+        } else {
+
+            console.error('CSRF token not found.');
+
+        }
+
+    }
+
+    function editJob(inputField) {
+
+        var value = inputField.value;
+        var name = inputField.name;
+
+        if (value != "") {
+
+            if (name = "benefits", name == "vaccinations" || name == "preferred_specialty" || name == "preferred_experience" || name == "certificate") {
+
+                var inputFields = document.querySelectorAll(name == "vaccinations" ? 'select[name="vaccinations"]' :
+                    name == "preferred_specialty" ? 'select[name="preferred_specialty"]' :
+                    name == "preferred_experience" ? 'input[name="preferred_experience"]' :
+                    name == 'certificate' ? 'select[name="certificate"]' :
+                    name == 'benefits' ? 'select[name="benefits"]' :
+                    name == 'professional_licensure' ? 'select[name="job_location"]' :
+                    name == 'nurse_classification' ? 'select[name="nurse_classification"]' :
+                    'select[name="Emr"]'
+                );
+
+                var data = [];
+
+                inputFields.forEach(function(input) {
+                    data.push(input.value);
+                });
+
+                value = data.join(', ');
+            }
+
+            var formData = {};
+            formData[inputField.name] = value;
+            formData['job_id'] = document.getElementById('job_id').value;
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('recruiter/get-job-listing') }}",
-                    beforeSend: function(xhr) {
-                        xhr.withCredentials = true;
-                    },
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        'id': id,
-                        'formtype': formtype
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
 
-                        // $("#application-list").html(result.applicationlisting);
-                        // $("#application-details").html(result.applicationdetails);
-                    },
-                    error: function(error) {
-                        // Handle errors
+            $.ajax({
+
+                headers: {
+
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                type: 'POST',
+                url: "{{ url('recruiter/recruiter-create-opportunity') }}/update",
+                data: formData,
+                dataType: 'json',
+                success: function(data) {
+
+                    if (document.getElementById('job_id').value.trim() == '' || document.getElementById('job_id').value.trim() == 'null' || document.getElementById('job_id').value.trim() == null) {
+                        
+                        document.getElementById("job_id").value = data.job_id;
+
                     }
-                });
-            } else {
-                console.error('CSRF token not found.');
-            }
-        }
+                },
+                error: function(error) {
 
-        function editJob(inputField) {
-            var value = inputField.value;
-            var name = inputField.name;
+                    console.log("Edit Job error",error);
 
-            if (value != "") {
-                if (name = "benefits", name == "vaccinations" || name == "preferred_specialty" || name ==
-                    "preferred_experience" || name ==
-                    "certificate") {
-                    var inputFields = document.querySelectorAll(name == "vaccinations" ? 'select[name="vaccinations"]' :
-                        name == "preferred_specialty" ? 'select[name="preferred_specialty"]' :
-                        name == "preferred_experience" ? 'input[name="preferred_experience"]' :
-                        name == 'certificate' ? 'select[name="certificate"]' :
-                        name == 'benefits' ? 'select[name="benefits"]' :
-                        name == 'professional_licensure' ? 'select[name="job_location"]' :
-                        name == 'nurse_classification' ? 'select[name="nurse_classification"]' :
-                        'select[name="Emr"]'
-                    );
-                    var data = [];
-                    inputFields.forEach(function(input) {
-                        data.push(input.value);
-                    });
-
-                    value = data.join(', ');
                 }
 
-                var formData = {};
-                formData[inputField.name] = value;
-                formData['job_id'] = document.getElementById('job_id').value;
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            });
+
+        }
+
+    }
+
+    function addmoreexperience() {
+
+        var allExperienceDiv = document.getElementById('all-experience');
+        var newExperienceDiv = document.querySelector('.experience-inputs').cloneNode(true);
+
+        newExperienceDiv.querySelector('select.specialty').selectedIndex = 0;
+        newExperienceDiv.querySelector('input[type="number"]').value = '';
+        allExperienceDiv.appendChild(newExperienceDiv);
+
+    }
+
+    function changeStatus(type, id = '0') {
+
+        if (type == "draft") {
+
+            notie.alert({
+                type: 'success',
+                text: '<i class="fa fa-check"></i> Draft Updated Successfully',
+                time: 5
+            });
+
+        } else {
+
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            if (csrfToken) {
+
+                event.preventDefault();
+                let check_type = type;
+
+                if (id == '0') {
+
+                    id = document.getElementById('job_id').value;
+
+                }
+
+                let formData = {
+
+                    'job_id': id
+
+                }
+
                 $.ajax({
+
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
+
                     type: 'POST',
-                    url: "{{ url('recruiter/recruiter-create-opportunity') }}/update",
+                    url: "{{ url('recruiter/recruiter-create-opportunity') }}/" + check_type,
+
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
-                        // notie.alert({
-                        //   type: 'success',
-                        //   text: '<i class="fa fa-check"></i> ' + data.message,
-                        //   time: 5
-                        // });
-                        if (document.getElementById('job_id').value.trim() == '' || document.getElementById(
-                                'job_id').value.trim() == 'null' || document.getElementById('job_id').value
-                            .trim() == null) {
-                            document.getElementById("job_id").value = data.job_id;
-                        }
+
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> ' + data.message,
+                            time: 3
+                        });
+
+                        window.location.reload();
+
                     },
                     error: function(error) {
-                        console.log(error);
+
+                        console.log("Change Status Error",error);
                     }
-                });
-            }
-        }
 
-        function addmoreexperience() {
-            var allExperienceDiv = document.getElementById('all-experience');
-            var newExperienceDiv = document.querySelector('.experience-inputs').cloneNode(true);
-            newExperienceDiv.querySelector('select.specialty').selectedIndex = 0;
-            newExperienceDiv.querySelector('input[type="number"]').value = '';
-            allExperienceDiv.appendChild(newExperienceDiv);
-        }
-
-        function changeStatus(type, id = '0') {
-            if (type == "draft") {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> Draft Updated Successfully',
-                    time: 5
                 });
+
             } else {
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                if (csrfToken) {
-                    event.preventDefault();
-                    let check_type = type;
 
-                    // if (document.getElementById('job_id').value) {
-                    if (id == '0') {
-                        id = document.getElementById('job_id').value;
+                console.error('CSRF token not found.');
+
+            }
+
+        }
+
+    }
+
+    function offerSend(id, jobid, type, workerid, recruiter_id) {
+
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        if (csrfToken) {
+
+            let counterstatus = "1";
+
+            if (type == "rejectcounter") {
+
+                counterstatus = "0";
+            }
+
+            $.ajax({
+
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                url: "{{ url('recruiter/recruiter-send-job-offer') }}",
+                data: {
+
+                    'token': csrfToken,
+                    'id': id,
+                    'job_id': jobid,
+                    'counterstatus': counterstatus,
+                    'worker_user_id': workerid,
+                    'recruiter_id': recruiter_id,
+                    'is_draft': "1",
+
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {
+
+                    notie.alert({
+                        type: 'success',
+                        text: '<i class="fa fa-check"></i> ' + result.message,
+                        time: 5
+                    });
+
+                },
+                error: function(error) {
+
+                    // Silence is gold
+                }
+
+            });
+
+        } else {
+
+            console.error('CSRF token not found.');
+
+        }
+    }
+
+    setInterval(function() {
+
+        $(document).ready(function() {
+
+            $('.application-job-slider-owl').owlCarousel({
+
+                items: 3,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                margin: 20,
+                nav: false,
+                dots: false,
+                navText: ['<span class="fa fa-angle-left  fa-2x"></span>',
+                    '<span class="fas fa fa-angle-right fa-2x"></span>'
+                ],
+                responsive: {
+
+                    0: {
+                        items: 1
+                    },
+                    480: {
+                        items: 2
+                    },
+                    768: {
+                        items: 3
+                    },
+                    992: {
+                        items: 2
                     }
+
+                }
+
+            })
+
+        })
+
+    }, 3000)
+
+    function updateJob() {
+        
+        notie.alert({
+            type: 'success',
+            text: '<i class="fa fa-check"></i> Work Updated Successfully.',
+            time: 3
+        });
+
+    }
+
+</script>
+<script>
+    var speciality = {};
+
+    function add_speciality(obj) {
+
+        if (!$('#preferred_specialty').val()) {
+
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Select the speciality please.',
+                time: 3
+            });
+
+        } else if (!$('#preferred_experience').val()) {
+
+            notie.alert({
+                type: 'error',
+                text: '<i class="fa fa-check"></i> Enter total year of experience.',
+                time: 3
+            });
+
+        } else {
+
+            if (!speciality.hasOwnProperty($('#preferred_specialty').val())) {
+
+                speciality[$('#preferred_specialty').val()] = $('#preferred_experience').val();
+                $('#preferred_experience').val('');
+                $('#preferred_specialty').val('');
+                list_specialities();
+
+            }
+
+        }
+
+    }
+
+    function remove_speciality(obj, key) {
+
+        if (speciality.hasOwnProperty($(obj).data('key'))) {
+
+            var element = document.getElementById("remove-speciality");
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            if (csrfToken) {
+
+                event.preventDefault();
+
+                if (document.getElementById('job_id').value) {
+
                     let formData = {
-                        'job_id': id
+                        'job_id': document.getElementById('job_id').value,
+                        'specialty': key,
                     }
+
+                    let removetype = 'specialty';
+
                     $.ajax({
+
                         headers: {
                             'X-CSRF-TOKEN': csrfToken
                         },
-
                         type: 'POST',
-                        url: "{{ url('recruiter/recruiter-create-opportunity') }}/" + check_type,
-
+                        url: "{{ url('recruiter/remove') }}/" + removetype,
                         data: formData,
                         dataType: 'json',
                         success: function(data) {
-                            notie.alert({
-                                type: 'success',
-                                text: '<i class="fa fa-check"></i> ' + data.message,
-                                time: 3
-                            });
 
-                            window.location.reload();
+                            // Silence is gold
 
-                            // if (type == "hidejob") {
-                            //     console.log("this is data");
-                            //     //console.log(data.message);
-                            //     opportunitiesType('onhold',data.job_id)
-                            // } else {
-                            //     opportunitiesType('published',data.job_id)
-                            // }
                         },
                         error: function(error) {
-                            console.log(error);
+
+                            console.log("Remove Specialty Error",error);
+
                         }
+
                     });
-                    // }
-                } else {
-                    console.error('CSRF token not found.');
+
                 }
-            }
-        }
 
+                delete speciality[$(obj).data('key')];
+                delete window.allspecialty[$(obj).data('key')];
 
-
-
-        function offerSend(id, jobid, type, workerid, recruiter_id) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            if (csrfToken) {
-                let counterstatus = "1";
-                if (type == "rejectcounter") {
-                    counterstatus = "0";
-                }
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    url: "{{ url('recruiter/recruiter-send-job-offer') }}",
-                    data: {
-                        'token': csrfToken,
-                        'id': id,
-                        'job_id': jobid,
-                        'counterstatus': counterstatus,
-                        'worker_user_id': workerid,
-                        'recruiter_id': recruiter_id,
-                        'is_draft': "1",
-                    },
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function(result) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> ' + result.message,
-                            time: 5
-                        });
-                    },
-                    error: function(error) {
-                        // Handle errors
-                    }
-                });
             } else {
+
                 console.error('CSRF token not found.');
+
             }
+
+            list_specialities();
+
         }
-        setInterval(function() {
-            $(document).ready(function() {
-                $('.application-job-slider-owl').owlCarousel({
-                    items: 3,
-                    loop: true,
-                    autoplay: true,
-                    autoplayTimeout: 5000,
-                    margin: 20,
-                    nav: false,
-                    dots: false,
-                    navText: ['<span class="fa fa-angle-left  fa-2x"></span>',
-                        '<span class="fas fa fa-angle-right fa-2x"></span>'
-                    ],
-                    responsive: {
-                        0: {
-                            items: 1
-                        },
-                        480: {
-                            items: 2
-                        },
-                        768: {
-                            items: 3
-                        },
-                        992: {
-                            items: 2
-                        }
+
+    }
+
+    function list_specialities() {
+
+        var str = '';
+
+        if (window.allspecialty) {
+
+            speciality = Object.assign({}, speciality, window.allspecialty);
+
+        }
+
+        for (const key in speciality) {
+
+            let specialityname = "";
+            var select = document.getElementById("preferred_specialty");
+            var allspcldata = [];
+
+            for (var i = 0; i < select.options.length; i++) {
+
+                var obj = {
+
+                    'id': select.options[i].value,
+                    'title': select.options[i].textContent,
+
+                };
+
+                allspcldata.push(obj);
+
+            }
+
+            if (speciality.hasOwnProperty(key)) {
+
+                allspcldata.forEach(function(item) {
+
+                    if (key == item.id) {
+
+                        specialityname = item.title;
+
                     }
-                })
-            })
-        }, 3000)
 
-        function updateJob() {
-            notie.alert({
-                type: 'success',
-                text: '<i class="fa fa-check"></i> Work Updated Successfully.',
-                time: 3
-            });
-        }
-    </script>
-    <script>
-        var speciality = {};
-
-        function add_speciality(obj) {
-            if (!$('#preferred_specialty').val()) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Select the speciality please.',
-                    time: 3
                 });
-            } else if (!$('#preferred_experience').val()) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i> Enter total year of experience.',
-                    time: 3
-                });
-            } else {
-                if (!speciality.hasOwnProperty($('#preferred_specialty').val())) {
-                    speciality[$('#preferred_specialty').val()] = $('#preferred_experience').val();
-                    $('#preferred_experience').val('');
-                    $('#preferred_specialty').val('');
-                    list_specialities();
-                }
+
+                const value = speciality[key];
+                str += '<ul>';
+                str += '<li>' + specialityname + '</li>';
+                str += '<li>' + value + ' Years</li>';
+                str += '<li><button type="button"  id="remove-speciality" data-key="' + key +
+                    '" onclick="remove_speciality(this, ' + key +
+                    ')"><img src="{{ URL::asset('frontend/img/delete-img.png') }}" /></button></li>';
+                str += '</ul>';
+
             }
+
         }
 
-        function remove_speciality(obj, key) {
-            if (speciality.hasOwnProperty($(obj).data('key'))) {
-                var element = document.getElementById("remove-speciality");
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                if (csrfToken) {
-                    event.preventDefault();
-                    if (document.getElementById('job_id').value) {
-                        let formData = {
-                            'job_id': document.getElementById('job_id').value,
-                            'specialty': key,
-                        }
-                        let removetype = 'specialty';
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken
-                            },
-                            type: 'POST',
-                            url: "{{ url('recruiter/remove') }}/" + removetype,
-                            data: formData,
-                            dataType: 'json',
-                            success: function(data) {
+        $('.speciality-content').html(str);
 
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                    }
-                    delete speciality[$(obj).data('key')];
-                    delete window.allspecialty[$(obj).data('key')];
-                } else {
-                    console.error('CSRF token not found.');
-                }
-                list_specialities();
-            }
-        }
-
-        function list_specialities() {
-            var str = '';
-            if (window.allspecialty) {
-                speciality = Object.assign({}, speciality, window.allspecialty);
-            }
-            for (const key in speciality) {
-                let specialityname = "";
-
-                var select = document.getElementById("preferred_specialty");
-                var allspcldata = [];
-                for (var i = 0; i < select.options.length; i++) {
-                    var obj = {
-                        'id': select.options[i].value,
-                        'title': select.options[i].textContent,
-                    };
-                    allspcldata.push(obj);
-                }
-
-                if (speciality.hasOwnProperty(key)) {
-                    allspcldata.forEach(function(item) {
-                        if (key == item.id) {
-                            specialityname = item.title;
-                        }
-                    });
-                    const value = speciality[key];
-                    str += '<ul>';
-                    str += '<li>' + specialityname + '</li>';
-                    str += '<li>' + value + ' Years</li>';
-                    str += '<li><button type="button"  id="remove-speciality" data-key="' + key +
-                        '" onclick="remove_speciality(this, ' + key +
-                        ')"><img src="{{ URL::asset('frontend/img/delete-img.png') }}" /></button></li>';
-                    str += '</ul>';
-                }
-            }
-            $('.speciality-content').html(str);
-        }
-    </script>
-    
-
+    }
+</script>
     <script>
         function askWorker(e, type, workerid, recruiter_id, name) {
             let url = "{{ url('recruiter/recruiter-messages') }}";
@@ -7380,7 +7619,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                         if (field.id === 'urgencyEdit') {
                             element.checked = result[key] === 'Auto Offer';
                         } else {
-                            console.log("RESULT KEY AGAIN", field.id , typeof(result[key]));
                             element.checked = result[key] === 1;
                         }
                         
