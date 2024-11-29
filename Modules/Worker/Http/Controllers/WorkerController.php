@@ -364,7 +364,7 @@ class WorkerController extends Controller
         $data = [];
         foreach ($rooms as $room) {
             //$user = User::where('id', $room->organizationId)->select("first_name","last_name")->get();
-            $user = User::select('first_name', 'last_name')
+            $user = User::select('first_name', 'last_name' , 'image')
                 ->where('id', $room->recruiterId)
                 ->get()
                 ->first();
