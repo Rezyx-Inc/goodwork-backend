@@ -428,7 +428,7 @@ class ApplicationController extends Controller
 
                                 $recently_added = $nowDate->isSameDay($value->created_at);
                                 if($recently_added == false){
-                                    $recently_added = $value->created_at->diffForHumans($nowDate);
+                                    $recently_added = $value->created_at->diffForHumans();
                                 }
                                 
                                 $offerData[] = [
@@ -482,7 +482,7 @@ class ApplicationController extends Controller
 
                             $recently_added = $nowDate->isSameDay($value->created_at);
                             if($recently_added == false){
-                                $recently_added = $value->created_at->diffForHumans($nowDate);
+                                $recently_added = $value->created_at->diffForHumans();
                             }
 
                             $offerData[] = [
@@ -508,6 +508,7 @@ class ApplicationController extends Controller
                     $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
                     //return new JsonResponse($response, 200);
                     return response()->json($response);
+
                     } catch (\Exception $ex) {
                         return response()->json(["message" => $ex->getMessage()]);
                     }
@@ -590,8 +591,9 @@ class ApplicationController extends Controller
             }
 
             $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
-            //return new JsonResponse($response, 200);
+            
             return response()->json($response);
+        
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -787,8 +789,11 @@ class ApplicationController extends Controller
             //return response()->json(['workerId' => $workerId]);
 
             $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            
             if ($response->successful()) {
+                
                 return $response->body();
+
             } else {
                 return response()->json(['success' => false], $response->status());
             }

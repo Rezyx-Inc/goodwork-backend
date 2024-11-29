@@ -2663,6 +2663,26 @@
                                                             </div>
                                                         </div>
                                                         
+                                                        {{-- Resume --}}
+
+                                                        <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                            <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
+                                                            <div class="row justify-content-center" style="display:flex; align-items:end;">
+                                                                <div class="col-6">
+                                                                <label for="is_resume"
+                                                                    style="display:flex; justify-content:center;">Resume is required</label>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <input type="checkbox" name="is_resume" id="job_isResumeEdit"
+                                                                        value="1" style="box-shadow: none;">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div> 
+                                                                <span class="helper help-block-resumeEdit"></span>
+                                                            </div>
+                                                        </div>
+                                                        
             
                                                     <div class="col-md-12 mb-4 collapse-container">
                                                         <p>
@@ -3226,7 +3246,7 @@
                                                             </div>
                                                             
                                                             <div> 
-                                                            <span class="helper help-block-urgency"></span>
+                                                                <span class="helper help-block-urgency"></span>
                                                             </div>
                                                         </div>
                                                        
@@ -3619,15 +3639,11 @@
 const requiredToSubmit = @json($requiredFieldsToSubmit);
     
    function toggleActiveClass(workerUserId,type) {
-            console.log("test");
-            console.log(workerUserId);
-            console.log(type);
+
             var element = document.getElementById(workerUserId);
-            console.log(element);
             element.classList.add('active');
             
             var allElements = document.getElementsByClassName(type);
-            console.log(allElements);
 
             for (var i = 0; i < allElements.length; i++) {
                 if (allElements[i].classList.contains('active')) {
@@ -5173,7 +5189,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
-                        console.log(result);
 
                         // $("#job-list").html(result.joblisting);
                         // $("#job-details").html(result.jobdetails);
@@ -5463,10 +5478,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
     <script>
         var speciality = {};
 
-        // console.log(window.allspecialty)
-        // console.log(window.allvaccinations)
-        // console.log(window.allcertificate)
-
         function add_speciality(obj) {
             if (!$('#preferred_specialty').val()) {
                 notie.alert({
@@ -5727,7 +5738,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
         Emr = {};
     
         const jobId = element.getAttribute('job_id');
-        console.log(draftJobs[jobId].job_name)
         element.classList.add("active");
 
         var result = draftJobs[jobId]; 
@@ -6354,6 +6364,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
             "start_date",
             "urgency",
             "professional_state_licensure",
+            "is_resume",
         ];
 
         if(validateRequiredMultiCheckFieldsToSubmit(slideFields) && validateRequiredFieldsToSubmit(otherSlideFields) && validateFirst()) { 
@@ -6420,7 +6431,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
         document.getElementById("active").value = false;
         document.getElementById("is_open").value = false;
         let act = document.getElementById("active").value;
-        console.log(act);
 
         // var jobName = document.getElementById("job_name").value;
         // if (jobName.trim() === '') {
@@ -6438,7 +6448,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
     
     const submitBtnDraft = document.querySelector(".submitDraft");
     const saveDrftBtnDraft = document.querySelectorAll(".saveDrftBtnDraft");
-    console.log(saveDrftBtnDraft);
     const progressTextDraft = document.querySelectorAll(".stepDraft p");
     const progressCheckDraft = document.querySelectorAll(".stepDraft .check");
     const bulletDraft = document.querySelectorAll(".stepDraft .bullet");
@@ -7074,6 +7083,20 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                             
                                 return;
                             }
+
+                            if (element === 'is_resume') {
+                            
+                                const resumeElementHtml = document.getElementById('job_isResumeEdit');
+                                if(!resumeElementHtml.checked) {
+                                    $(`.help-block-resumeEdit`).text(`This field is required`);
+                                    $(`.help-block-resumeEdit`).addClass('text-danger');
+                                    access = false;
+                                } else {
+                                    $(`.help-block-resumeEdit`).text('');
+                                }
+                            
+                                return;
+                            }
                         
                             const elementHtml = document.getElementById(element+'Edit');
                             const elementValue = elementHtml.value;
@@ -7167,9 +7190,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
         document.getElementById("activeEdit").value = true;
         document.getElementById("is_openEdit").value = true;
 
-        console.log(EmrStr);
-        console.log('edit' + nurse_classificationStr);
-
         const slideFields = [
             "nurse_classification",
             "Emr",
@@ -7184,6 +7204,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
             progressCheckEdit[currentEdit - 1].classList.add("active");
             progressTextEdit[currentEdit - 1].classList.add("active");
             currentEdit += 1;
+            
             event.target.form.submit();
         }
     });
@@ -7264,288 +7285,289 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                 dataType: 'json',
              
                 success: function(result) {
-        console.log(result);
 
-        const fields = {
-            
-            'id': { id: 'idEdit', type: 'number' },
-            'job_id': { id: 'job_idEdit', type: 'number' },
-            'job_name': { id: 'job_nameEdit', type: 'text' },
-            'job_type': { id: 'job_typeEdit', type: 'select' },
-            'preferred_specialty': { id: 'preferred_specialtyEdit', type: 'select' },
-            'profession': { id: 'perferred_professionEdit', type: 'select' },
-            'job_state': { id: 'job_stateEdit', type: 'select' },
-            'job_city': { id: 'job_cityEdit', type: 'select' },
-            'weekly_pay': { id: 'weekly_payEdit', type: 'number' },
-            'terms': { id: 'termsEdit', type: 'select' },
-            'preferred_assignment_duration': { id: 'preferred_assignment_durationEdit', type: 'number' },
-            'facility_shift_cancelation_policy': { id: 'facility_shift_cancelation_policyEdit', type: 'text' },
-            'traveler_distance_from_facility': { id: 'traveler_distance_from_facilityEdit', type: 'number' },
-            'clinical_setting': { id: 'clinical_settingEdit', type: 'select' },
-            'Patient_ratio': { id: 'Patient_ratioEdit', type: 'number' },
-            'Unit': { id: 'UnitEdit', type: 'text' },
-            'scrub_color': { id: 'scrub_colorEdit', type: 'text' },
-            'rto': { id: 'rtoEdit', type: 'select' },
-            'guaranteed_hours': { id: 'guaranteed_hoursEdit', type: 'number' },
-            'hours_per_week': { id: 'hours_per_weekEdit', type: 'number' },
-            'hours_shift': { id: 'hours_shiftEdit', type: 'number' },
-            'weeks_shift': { id: 'weeks_shiftEdit', type: 'number' },
-            'referral_bonus': { id: 'referral_bonusEdit', type: 'number' },
-            'sign_on_bonus': { id: 'sign_on_bonusEdit', type: 'number' },
-            'completion_bonus': { id: 'completion_bonusEdit', type: 'number' },
-            'extension_bonus': { id: 'extension_bonusEdit', type: 'number' },
-            'other_bonus': { id: 'other_bonusEdit', type: 'number' },
-            'actual_hourly_rate': { id: 'actual_hourly_rateEdit', type: 'number' },
-            'overtime': { id: 'overtimeEdit', type: 'number' },
-            'on_call': { id: 'on_callEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-            'on_call_rate': { id: 'on_call_rateEdit', type: 'number' },
-            'holiday': { id: 'holidayEdit', type: 'date' },
-            'orientation_rate': { id: 'orientation_rateEdit', type: 'number' },
-            'block_scheduling': { id: 'block_schedulingEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-            'float_requirement': { id: 'float_requirementEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-            'number_of_references': { id: 'number_of_referencesEdit', type: 'number' },
-            'eligible_work_in_us': { id: 'eligible_work_in_usEdit', type: 'select' },
-            'urgency': { id: 'urgencyEdit', type: 'checkbox' },
-            'facilitys_parent_system': { id: 'facilitys_parent_systemEdit', type: 'text' },
-            'facility_name': { id: 'facility_nameEdit', type: 'text' },
-            'pay_frequency': { id: 'pay_frequencyEdit', type: 'select' },
-            'preferred_experience': { id: 'preferred_experienceEdit', type: 'number' },
-            'contract_termination_policy': { id: 'contract_termination_policyEdit', type: 'text' },
-            'four_zero_one_k': { id: 'four_zero_one_kEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-            'health_insaurance': { id: 'health_insauranceEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
-            'feels_like_per_hour': { id: 'feels_like_per_hourEdit', type: 'number' },
-            'call_back_rate': { id: 'call_back_rateEdit', type: 'number' },
-            'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amountEdit', type: 'number' },
-            'weekly_taxable_amount': { id: 'weekly_taxable_amountEdit', type: 'number' },
-            'start_date': { id: 'start_dateEdit', type: 'date' },
-            'preferred_experience': { id: 'preferred_experienceEdit', type: 'number' },
-            'professional_state_licensure': { id: 'professional_state_licensure_pendingEdit', type: 'radio' },
-            'description': { id: 'descriptionEdit', type: 'text' },
-            'preferred_work_location': { id: 'preferred_work_locationEdit', type: 'text' },
-            'as_soon_as': { id: 'as_soon_asEdit', type: 'checkbox' },
-            'goodwork_weekly_amount': { id: 'goodwork_weekly_amountEdit', type: 'number' },
-            'total_organization_amount': { id: 'total_organization_amountEdit', type: 'number' },
-            'total_goodwork_amount' : { id: 'total_goodwork_amountEdit', type: 'number' },
-            'total_contract_amount' : { id: 'total_contract_amountEdit', type: 'number' }
-        };
+            const fields = {
+                
+                'id': { id: 'idEdit', type: 'number' },
+                'job_id': { id: 'job_idEdit', type: 'number' },
+                'job_name': { id: 'job_nameEdit', type: 'text' },
+                'job_type': { id: 'job_typeEdit', type: 'select' },
+                'preferred_specialty': { id: 'preferred_specialtyEdit', type: 'select' },
+                'profession': { id: 'perferred_professionEdit', type: 'select' },
+                'job_state': { id: 'job_stateEdit', type: 'select' },
+                'job_city': { id: 'job_cityEdit', type: 'select' },
+                'is_resume': { id: 'job_isResumeEdit', type: 'checkbox'},
+                'weekly_pay': { id: 'weekly_payEdit', type: 'number' },
+                'terms': { id: 'termsEdit', type: 'select' },
+                'preferred_assignment_duration': { id: 'preferred_assignment_durationEdit', type: 'number' },
+                'facility_shift_cancelation_policy': { id: 'facility_shift_cancelation_policyEdit', type: 'text' },
+                'traveler_distance_from_facility': { id: 'traveler_distance_from_facilityEdit', type: 'number' },
+                'clinical_setting': { id: 'clinical_settingEdit', type: 'select' },
+                'Patient_ratio': { id: 'Patient_ratioEdit', type: 'number' },
+                'Unit': { id: 'UnitEdit', type: 'text' },
+                'scrub_color': { id: 'scrub_colorEdit', type: 'text' },
+                'rto': { id: 'rtoEdit', type: 'select' },
+                'guaranteed_hours': { id: 'guaranteed_hoursEdit', type: 'number' },
+                'hours_per_week': { id: 'hours_per_weekEdit', type: 'number' },
+                'hours_shift': { id: 'hours_shiftEdit', type: 'number' },
+                'weeks_shift': { id: 'weeks_shiftEdit', type: 'number' },
+                'referral_bonus': { id: 'referral_bonusEdit', type: 'number' },
+                'sign_on_bonus': { id: 'sign_on_bonusEdit', type: 'number' },
+                'completion_bonus': { id: 'completion_bonusEdit', type: 'number' },
+                'extension_bonus': { id: 'extension_bonusEdit', type: 'number' },
+                'other_bonus': { id: 'other_bonusEdit', type: 'number' },
+                'actual_hourly_rate': { id: 'actual_hourly_rateEdit', type: 'number' },
+                'overtime': { id: 'overtimeEdit', type: 'number' },
+                'on_call': { id: 'on_callEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'on_call_rate': { id: 'on_call_rateEdit', type: 'number' },
+                'holiday': { id: 'holidayEdit', type: 'date' },
+                'orientation_rate': { id: 'orientation_rateEdit', type: 'number' },
+                'block_scheduling': { id: 'block_schedulingEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'float_requirement': { id: 'float_requirementEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'number_of_references': { id: 'number_of_referencesEdit', type: 'number' },
+                'eligible_work_in_us': { id: 'eligible_work_in_usEdit', type: 'select' },
+                'urgency': { id: 'urgencyEdit', type: 'checkbox' },
+                'facilitys_parent_system': { id: 'facilitys_parent_systemEdit', type: 'text' },
+                'facility_name': { id: 'facility_nameEdit', type: 'text' },
+                'pay_frequency': { id: 'pay_frequencyEdit', type: 'select' },
+                'preferred_experience': { id: 'preferred_experienceEdit', type: 'number' },
+                'contract_termination_policy': { id: 'contract_termination_policyEdit', type: 'text' },
+                'four_zero_one_k': { id: 'four_zero_one_kEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'health_insaurance': { id: 'health_insauranceEdit', type: 'select', options: { 'No': '0', 'Yes': '1' } },
+                'feels_like_per_hour': { id: 'feels_like_per_hourEdit', type: 'number' },
+                'call_back_rate': { id: 'call_back_rateEdit', type: 'number' },
+                'weekly_non_taxable_amount': { id: 'weekly_non_taxable_amountEdit', type: 'number' },
+                'weekly_taxable_amount': { id: 'weekly_taxable_amountEdit', type: 'number' },
+                'start_date': { id: 'start_dateEdit', type: 'date' },
+                'preferred_experience': { id: 'preferred_experienceEdit', type: 'number' },
+                'professional_state_licensure': { id: 'professional_state_licensure_pendingEdit', type: 'radio' },
+                'description': { id: 'descriptionEdit', type: 'text' },
+                'preferred_work_location': { id: 'preferred_work_locationEdit', type: 'text' },
+                'as_soon_as': { id: 'as_soon_asEdit', type: 'checkbox' },
+                'goodwork_weekly_amount': { id: 'goodwork_weekly_amountEdit', type: 'number' },
+                'total_organization_amount': { id: 'total_organization_amountEdit', type: 'number' },
+                'total_goodwork_amount' : { id: 'total_goodwork_amountEdit', type: 'number' },
+                'total_contract_amount' : { id: 'total_contract_amountEdit', type: 'number' }
+            };
 
-        for (const [key, field] of Object.entries(fields)) {
-            const element = document.getElementById(field.id);
-            if (!element) continue;
-            if (result[key] === null){
-                if (field.type === 'select') {
-                    element.value = '';
-                } else if (field.type === 'checkbox') {
-                    element.checked = false;
-                } else {
-                    element.value = '';
-                }
-                continue;
-            }
-
-            if (field.type === 'select') {
-                if (field.options) {
-                    element.value = result[key] == '1' ? 'Yes' : 'No';
-                } else {
-                    const option = document.createElement('option');
-                    option.value = result[key];
-                    option.text = result[key];
-                    option.hidden = true;
-                    element.add(option);
-                    element.value = result[key];
-                    
-                }
-            } else if (field.type === 'checkbox') {
-                    if (field.id === 'urgencyEdit') {
-                        element.checked = result[key] === 'Auto Offer';
+            for (const [key, field] of Object.entries(fields)) {
+                const element = document.getElementById(field.id);
+                if (!element) continue;
+                if (result[key] === null){
+                    if (field.type === 'select') {
+                        element.value = '';
+                    } else if (field.type === 'checkbox') {
+                        element.checked = false;
                     } else {
-                        element.checked = result[key] === '1';
+                        element.checked = '';
                     }
-                     
-            } else if (field.type === 'radio') {
-                console.log('radio', result[key]);
-                if (result[key] === 'Accept Pending') {
-                    document.getElementById('professional_state_licensure_pendingEdit').checked = true;
-                } else {
-                    document.getElementById('professional_state_licensure_activeEdit').checked = true;
+                    continue;
+                }
+
+                if (field.type === 'select') {
+                    if (field.options) {
+                        element.value = result[key] == '1' ? 'Yes' : 'No';
+                    } else {
+                        const option = document.createElement('option');
+                        option.value = result[key];
+                        option.text = result[key];
+                        option.hidden = true;
+                        element.add(option);
+                        element.value = result[key];
+                        
+                    }
+                } else if (field.type === 'checkbox') {
+                        if (field.id === 'urgencyEdit') {
+                            element.checked = result[key] === 'Auto Offer';
+                        } else {
+                            console.log("RESULT KEY AGAIN", field.id , typeof(result[key]));
+                            element.checked = result[key] === 1;
+                        }
+                        
+                } else if (field.type === 'radio') {
+                    console.log('radio', result[key]);
+                    if (result[key] === 'Accept Pending') {
+                        document.getElementById('professional_state_licensure_pendingEdit').checked = true;
+                    } else {
+                        document.getElementById('professional_state_licensure_activeEdit').checked = true;
+                    }
+                }
+                else {
+                    element.value = result[key];
                 }
             }
-             else {
-                element.value = result[key];
-            }
-        }
-        // list emr 
-        var emr = result['Emr'];
-        if(emr !== null){
-        emr = emr.split(', ');
+            // list emr 
+            var emr = result['Emr'];
+            if(emr !== null){
+            emr = emr.split(', ');
 
-        emr.forEach(function(item) {
-            @php
-                $allKeywordsJSON = json_encode($allKeywords['EMR']);
-            @endphp
-            let allspcldata = '{!! $allKeywordsJSON !!}';
-            var data = JSON.parse(allspcldata);
-            data.forEach(function(itemData) {
-                if (item == itemData.title) {
-                    Emr[itemData.id] = item;
-                }
-            });
-        });
-        }
-        list_Emr();
-
-        // list benefits
-
-        var benefitsResult = result['benefits'];
-        if(benefitsResult) {
-        benefitsResult = benefitsResult.split(', ');
-        
-            benefitsResult.forEach(function(item) {
+            emr.forEach(function(item) {
                 @php
-                    $allKeywordsJSON = json_encode($allKeywords['Benefits']);
+                    $allKeywordsJSON = json_encode($allKeywords['EMR']);
                 @endphp
                 let allspcldata = '{!! $allKeywordsJSON !!}';
                 var data = JSON.parse(allspcldata);
                 data.forEach(function(itemData) {
                     if (item == itemData.title) {
-                        benefits[itemData.id] = item;
+                        Emr[itemData.id] = item;
                     }
                 });
             });
-        }
-        list_benefits();
+            }
+            list_Emr();
 
-        // list nurse classification
-        var nurse_classificationResult = result['nurse_classification'];
-        if(nurse_classificationResult !== null){
-        nurse_classificationResult = nurse_classificationResult.split(', ');
-        
-            nurse_classificationResult.forEach(function(item) {
-                @php
-                    $allKeywordsJSON = json_encode($allKeywords['NurseClassification']);
-                @endphp
-                let allspcldata = '{!! $allKeywordsJSON !!}';
-                var data = JSON.parse(allspcldata);
-                data.forEach(function(itemData) {
-                    if (item == itemData.title) {
-                        nurse_classification[itemData.id] = item;
-                    }
-                });
-            });
-        }
-        
-        list_nurse_classification();
+            // list benefits
 
-        // list professional licensure
-
-        var professional_licensureResult = result['job_location'];
-        if(professional_licensureResult !== null){
-       
-        professional_licensureResult = professional_licensureResult.split(', ');
-       
+            var benefitsResult = result['benefits'];
+            if(benefitsResult) {
+            benefitsResult = benefitsResult.split(', ');
             
-        professional_licensureResult.forEach(function(item) {
-            @php
-                $allKeywordsJSON = json_encode($allKeywords['StateCode']);
-            @endphp
-            let allspcldata = '{!! $allKeywordsJSON !!}';
-            var data = JSON.parse(allspcldata);
-            data.forEach(function(itemData) {
-                if (item == itemData.title) {
-                    professional_licensure[itemData.id] = item;
-                }
-            });
-        });
-        }
-        list_professional_licensure();
+                benefitsResult.forEach(function(item) {
+                    @php
+                        $allKeywordsJSON = json_encode($allKeywords['Benefits']);
+                    @endphp
+                    let allspcldata = '{!! $allKeywordsJSON !!}';
+                    var data = JSON.parse(allspcldata);
+                    data.forEach(function(itemData) {
+                        if (item == itemData.title) {
+                            benefits[itemData.id] = item;
+                        }
+                    });
+                });
+            }
+            list_benefits();
 
-        // list skills
+            // list nurse classification
+            var nurse_classificationResult = result['nurse_classification'];
+            if(nurse_classificationResult !== null){
+            nurse_classificationResult = nurse_classificationResult.split(', ');
+            
+                nurse_classificationResult.forEach(function(item) {
+                    @php
+                        $allKeywordsJSON = json_encode($allKeywords['NurseClassification']);
+                    @endphp
+                    let allspcldata = '{!! $allKeywordsJSON !!}';
+                    var data = JSON.parse(allspcldata);
+                    data.forEach(function(itemData) {
+                        if (item == itemData.title) {
+                            nurse_classification[itemData.id] = item;
+                        }
+                    });
+                });
+            }
+            
+            list_nurse_classification();
 
-        var skillsResult = result['skills'];
-        if(skillsResult !== null){
-        skillsResult = skillsResult.split(', ');
+            // list professional licensure
+
+            var professional_licensureResult = result['job_location'];
+            if(professional_licensureResult !== null){
         
-        skillsResult.forEach(function(item) {
-            @php
-                $allKeywordsJSON = json_encode($allKeywords['Speciality']);
-            @endphp
-            let allspcldata = {!! json_encode($allKeywordsJSON) !!};
-            var data = JSON.parse(allspcldata);
-            data.forEach(function(itemData) {
-                if (item == itemData.title) {
-                    skills[itemData.id] = item;
-                }
-            });
-        });
-        }
-        list_skills();
-
-        // list shift time of day
-
-        var shifttimeofdayresult = result['preferred_shift_duration'];
-        console.log("sift time of day : ",shifttimeofdayresult);
-        // shifttimeofday is a string use trim to check if it is empty
-        if (shifttimeofdayresult !== null) {
-            console.log('triiiiiiimed');
-        shifttimeofdayresult = shifttimeofdayresult.split(', ');
+            professional_licensureResult = professional_licensureResult.split(', ');
         
-        shifttimeofdayresult.forEach(function(item) {
-            @php
-                $allKeywordsJSON = json_encode($allKeywords['PreferredShift']);
-            @endphp
-            let allspcldata = '{!! $allKeywordsJSON !!}';
-            var data = JSON.parse(allspcldata);
-            data.forEach(function(itemData) {
-                if (item == itemData.title) {
-                    shifttimeofday[itemData.id] = item;
-                }
+                
+            professional_licensureResult.forEach(function(item) {
+                @php
+                    $allKeywordsJSON = json_encode($allKeywords['StateCode']);
+                @endphp
+                let allspcldata = '{!! $allKeywordsJSON !!}';
+                var data = JSON.parse(allspcldata);
+                data.forEach(function(itemData) {
+                    if (item == itemData.title) {
+                        professional_licensure[itemData.id] = item;
+                    }
+                });
             });
-        });
-        }
-        list_shifttimeofday();
+            }
+            list_professional_licensure();
 
-        // list certifications
+            // list skills
 
-        var certificationsResult = result['certificate'];
-        if (certificationsResult !== null) {
-        certificationsResult = certificationsResult.split(', ');
-        
-        certificationsResult.forEach(function(item) {
-            @php
-                $allKeywordsJSON = json_encode($allKeywords['Certification']);
-            @endphp
-            let allspcldata = '{!! $allKeywordsJSON !!}';
-            var data = JSON.parse(allspcldata);
-            data.forEach(function(itemData) {
-                if (item == itemData.title) {
-                    certificate[itemData.id] = item;
-                }
+            var skillsResult = result['skills'];
+            if(skillsResult !== null){
+            skillsResult = skillsResult.split(', ');
+            
+            skillsResult.forEach(function(item) {
+                @php
+                    $allKeywordsJSON = json_encode($allKeywords['Speciality']);
+                @endphp
+                let allspcldata = {!! json_encode($allKeywordsJSON) !!};
+                var data = JSON.parse(allspcldata);
+                data.forEach(function(itemData) {
+                    if (item == itemData.title) {
+                        skills[itemData.id] = item;
+                    }
+                });
             });
-        });
-        }
+            }
+            list_skills();
 
-        list_certifications();
+            // list shift time of day
 
-        // list vaccinations
-
-        var vaccinationsResult = result['vaccinations'];
-        if (vaccinationsResult !== null) {
-        vaccinationsResult = vaccinationsResult.split(', ');
-        vaccinationsResult.forEach(function(item) {
-            @php
-                $allKeywordsJSON = json_encode($allKeywords['Vaccinations']);
-            @endphp
-            let allspcldata = '{!! $allKeywordsJSON !!}';
-            var data = JSON.parse(allspcldata);
-            data.forEach(function(itemData) {
-                if (item == itemData.title) {
-                    vaccinations[itemData.id] = item;
-                }
+            var shifttimeofdayresult = result['preferred_shift_duration'];
+            console.log("sift time of day : ",shifttimeofdayresult);
+            // shifttimeofday is a string use trim to check if it is empty
+            if (shifttimeofdayresult !== null) {
+                console.log('triiiiiiimed');
+            shifttimeofdayresult = shifttimeofdayresult.split(', ');
+            
+            shifttimeofdayresult.forEach(function(item) {
+                @php
+                    $allKeywordsJSON = json_encode($allKeywords['PreferredShift']);
+                @endphp
+                let allspcldata = '{!! $allKeywordsJSON !!}';
+                var data = JSON.parse(allspcldata);
+                data.forEach(function(itemData) {
+                    if (item == itemData.title) {
+                        shifttimeofday[itemData.id] = item;
+                    }
+                });
             });
-        });
-        }
+            }
+            list_shifttimeofday();
 
-        list_vaccinations();
+            // list certifications
+
+            var certificationsResult = result['certificate'];
+            if (certificationsResult !== null) {
+            certificationsResult = certificationsResult.split(', ');
+            
+            certificationsResult.forEach(function(item) {
+                @php
+                    $allKeywordsJSON = json_encode($allKeywords['Certification']);
+                @endphp
+                let allspcldata = '{!! $allKeywordsJSON !!}';
+                var data = JSON.parse(allspcldata);
+                data.forEach(function(itemData) {
+                    if (item == itemData.title) {
+                        certificate[itemData.id] = item;
+                    }
+                });
+            });
+            }
+
+            list_certifications();
+
+            // list vaccinations
+
+            var vaccinationsResult = result['vaccinations'];
+            if (vaccinationsResult !== null) {
+            vaccinationsResult = vaccinationsResult.split(', ');
+            vaccinationsResult.forEach(function(item) {
+                @php
+                    $allKeywordsJSON = json_encode($allKeywords['Vaccinations']);
+                @endphp
+                let allspcldata = '{!! $allKeywordsJSON !!}';
+                var data = JSON.parse(allspcldata);
+                data.forEach(function(itemData) {
+                    if (item == itemData.title) {
+                        vaccinations[itemData.id] = item;
+                    }
+                });
+            });
+            }
+
+            list_vaccinations();
 
 
 

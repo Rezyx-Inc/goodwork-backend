@@ -194,6 +194,7 @@ class Offer extends Model
         'number_of_references',
         'organization_id',
         'contract_termination_policy'
+        'is_resume'
         
     ];
 
