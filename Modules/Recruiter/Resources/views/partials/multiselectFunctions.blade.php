@@ -1095,7 +1095,7 @@ function addcertifications(type) {
 
     function getOfferDataToEdit(){
         var offerdetails = @json($offerdetails);
-        // console.log('offerdetails',offerdetails);
+        //console.log('offerdetails',offerdetails);
         if(offerdetails != null)
         {
             result = offerdetails;
@@ -1113,6 +1113,7 @@ function addcertifications(type) {
                 'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
+                'is_resume': { id: 'is_resume', type: 'checkbox'},
 
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },
