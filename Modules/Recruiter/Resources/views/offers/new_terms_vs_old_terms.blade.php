@@ -91,10 +91,10 @@
 <div class="ss-jb-apl-oninfrm-mn-dv">
     <div class="ss-jb-apply-on-inf-hed-rec row">
         <div class="col-md-6">
-            <h5 class="mt-3 mb-3 text-center">New Terms</h5>
+            <h5 class="mt-3 mb-3 text-center">Old Terms</h5>
         </div>
         <div class="col-md-6">
-            <h5 class="mt-3 mb-3 text-center">Old Terms</h5>
+            <h5 class="mt-3 mb-3 text-center">New Terms</h5>
         </div>
     </div>
 
@@ -429,14 +429,14 @@
             var newValueH6 = document.createElement('h6');
             newValueH6.id = field + '-new-value';
 
-            newValueH6.textContent = newValue;
+            newValueH6.textContent = oldValue;
             newValueDiv.appendChild(newValueH6);
 
             var oldValueDiv = document.createElement('div');
             oldValueDiv.className = 'col-md-6';
             var oldValueH6 = document.createElement('h6');
             oldValueH6.id = field + '-old-value';
-            oldValueH6.textContent = oldValue;
+            oldValueH6.textContent = newValue;
             oldValueDiv.appendChild(oldValueH6);
 
             rowDiv.appendChild(newValueDiv);
