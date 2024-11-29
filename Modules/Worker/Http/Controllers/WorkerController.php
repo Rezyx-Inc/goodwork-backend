@@ -364,7 +364,7 @@ class WorkerController extends Controller
         $data = [];
         foreach ($rooms as $room) {
             //$user = User::where('id', $room->organizationId)->select("first_name","last_name")->get();
-            $user = User::select('first_name', 'last_name')
+            $user = User::select('first_name', 'last_name' , 'image')
                 ->where('id', $room->recruiterId)
                 ->get()
                 ->first();
@@ -376,7 +376,15 @@ class WorkerController extends Controller
                 $name = 'Default Name';
             }
 
+            if ($user->image != null && $user->image != '') {
+                $image = 'uploads/' . $user->image;
+            } else {
+                $image = "frontend/img/account-img.png";
+
+            }
+
             $data_User['fullName'] = $name;
+            $data_User['recruiterImage'] = $image;
 
             $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
             $data_User['organizationId'] = $room->organizationId;
@@ -390,7 +398,8 @@ class WorkerController extends Controller
 
             array_push($data, $data_User);
         }
-
+        //return $data;
+        //dd($data);
         return view('worker::worker/messages', compact('id', 'data'));
     }
 
@@ -941,9 +950,9 @@ class WorkerController extends Controller
         $full_name = $user->first_name . ' ' . $user->last_name;
         $offer_id = $request->offer_id;
 
-        if (!$this->checkPaymentMethod($user_id)) {
-            return response()->json(['success' => false, 'message' => 'Please complete your payment method onboarding first']);
-        }
+        // if (!$this->checkPaymentMethod($user_id)) {
+        //     return response()->json(['success' => false, 'message' => 'Please complete your payment method onboarding first']);
+        // }
 
         try {
             $request->validate([
@@ -964,35 +973,35 @@ class WorkerController extends Controller
             $update_array['is_counter'] = '0';
             $update_array['is_draft'] = '0';
             $update_array['status'] = 'Hold';
-            $is_offer_update = DB::table('offers')
-                ->where(['id' => $offer_id])
-                ->update($update_array);
+            // $is_offer_update = DB::table('offers')
+            //     ->where(['id' => $offer_id])
+            //     ->update($update_array);
             $user_id = $job->created_by;
             $user = User::where('id', $user_id)->first();
 
-            $data = [
-                'offerId' => $offer_id,
-                'amount' => '1',
-                'stripeId' => $user->stripeAccountId,
-                'fullName' => $user->first_name . ' ' . $user->last_name,
-            ];
+            // $data = [
+            //     'offerId' => $offer_id,
+            //     'amount' => '1',
+            //     'stripeId' => $user->stripeAccountId,
+            //     'fullName' => $user->first_name . ' ' . $user->last_name,
+            // ];
 
             //return response()->json(['message'=>$data]);
 
-            $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
+            // $url = 'http://localhost:' . config('app.file_api_port') . '/payments/customer/invoice';
 
             // return response()->json(['data'=>$data , 'url' => $url]);
 
             // Make the request
-            $responseInvoice = Http::post($url, $data);
+            // $responseInvoice = Http::post($url, $data);
             // return response()->json(['message'=>$responseInvoice->json()]);
-            $responseData = [];
-            if ($offer) {
-                $responseData = [
-                    'status' => 'success',
-                    'message' => $responseInvoice->json()['message'],
-                ];
-            }
+            // $responseData = [];
+            // if ($offer) {
+            //     $responseData = [
+            //         'status' => 'success',
+            //         'message' => $responseInvoice->json()['message'],
+            //     ];
+            // }
 
 
             // event offer notification
