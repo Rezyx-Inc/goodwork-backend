@@ -66,7 +66,7 @@
                     <option value="Done" {{ $offerdetails['status'] === 'Done' ? 'selected hidden disabled' : '' }}>
                         Done</option>
                     <option value="Onboarding"
-                        {{ $offerdetails['status'] === 'Onboarding hidden disabled' ? 'selected' : '' }}>
+                        {{ $offerdetails['status'] === 'Onboarding' ? 'selected hidden disabled' : '' }}>
                         Onboarding</option>
                     {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
                 </option> --}}

@@ -86,7 +86,7 @@
             </div>
             <div class="ss-acount-profile">
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 d-none">
                         <div class="ss-account-form-lft-1">
                             <h5 class="mb-4 d-none" id="listingname">New applications</h5>
                             <div id="application-list">
@@ -94,7 +94,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-7">
+                    <div class="col-lg-7 d-none">
                         <div class="ss-change-appli-mn-div">
                             <div class="row" id="application-details">
                             </div>
@@ -528,6 +528,17 @@
             const urlParams = new URLSearchParams(window.location.search);
             const viewParam = urlParams.get('view');
             selectOfferCycleState(viewParam);
+
+            if (viewParam == 'Apply') {
+                            // chnage his coloset from col-lg-5 to col-lg-12    
+                            $("#application-details").closest('.col-lg-7').addClass("d-none");
+                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5 d-none').addClass('col-lg-12');
+                            
+                            // hide to col of  #application-details
+            } else {
+                $("#application-list").closest('.col-lg-5').removeClass('d-none').addClass('col-lg-5');
+                $("#application-details").closest('.col-lg-7').removeClass("d-none");
+            }
             
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
@@ -1250,7 +1261,12 @@
         }
 
         function applicationStatusToggle(type){
-            noApplicationDetailsContent();
+            
+            if (type != 'Apply') {
+                noApplicationDetailsContent();
+                noApplicationWorkerListContent();
+            }
+            
             $("#listingname").removeClass("d-none");
             var applyElement = document.getElementById('Apply');
             var screeningElement = document.getElementById('Screening');
@@ -1492,10 +1508,6 @@
             }
         }
 
-        $(document).ready(function() {
-            noApplicationDetailsContent();
-            noApplicationWorkerListContent();
-        });
 
         function noApplicationWorkerListContent(){
             $("#application-list").html("<div class='text-center no_details'><span>Select an application status</span></div>");

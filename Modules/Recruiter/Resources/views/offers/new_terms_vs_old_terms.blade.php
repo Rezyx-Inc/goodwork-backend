@@ -11,24 +11,6 @@
             {{ $userdetails->last_name }}
         </h6>
     </li>
-    {{-- @if ($hasFile == true)
-        <li style="margin-right:10px;">
-            <a style="cursor:pointer;" class="rounded-pill ss-apply-btn py-2 border-0 px-4" data-target="file"
-                data-hidden_value="Yes" data-href="" data-title="Worker's Files" data-name="diploma"
-                onclick="open_modal(this)">
-                Consult worker files
-            </a>
-        </li>
-        <li>
-            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->job_id }}')"
-                class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
-        </li>
-    @else
-        <li>
-            <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->job_id }}')"
-                class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
-        </li>
-    @endif --}}
 </ul>
 
 <div class="row ss-chng-apcon-st-ssele d-flex justify-content-center align-items-center">
@@ -65,7 +47,7 @@
                     <option value="Done" {{ $offerdetails['status'] === 'Done' ? 'selected hidden disabled' : '' }}>
                         Done</option>
                     <option value="Onboarding"
-                        {{ $offerdetails['status'] === 'Onboarding hidden disabled' ? 'selected' : '' }}>
+                        {{ $offerdetails['status'] === 'Onboarding' ? 'selected hidden disabled' : '' }}>
                         Onboarding</option>
                     {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
                 </option> --}}
@@ -111,7 +93,7 @@
     </div>
 
     <div id="shift-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
+        <div class="row col-md-12 collapse-container">
             <p>
                 <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-1" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -124,7 +106,7 @@
     </div>
 
     <div id="pay-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
+        <div class="row col-md-12 collapse-container">
             <p>
                 <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-2" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -137,7 +119,7 @@
     </div>
 
     <div id="location-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
+        <div class="row col-md-12 collapse-container">
             <p>
                 <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-4" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -150,7 +132,7 @@
     </div>
 
     <div id="certs-licenses-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
+        <div class="row col-md-12 collapse-container">
             <p>
                 <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-5" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -163,7 +145,7 @@
     </div>
 
     <div id="work-infos-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
+        <div class="row col-md-12 collapse-container">
             <p>
                 <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-6" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -176,7 +158,7 @@
     </div>
 
     <div id="id-tax-info-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
+        <div class="row col-md-12 collapse-container">
             <p>
                 <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-7" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -189,7 +171,7 @@
     </div>
 
     <div id="medical-info-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
+        <div class="row col-md-12 collapse-container">
             <p>
                 <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-8" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -201,49 +183,17 @@
         </div>
     </div>
 
-    <div id="other-info-section" class="section">
-        <div class="col-md-12 mt-4 collapse-container">
-            <p>
-                <a class="btn first-collapse mb-4" data-toggle="collapse" href="#collapse-9" role="button"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    Other Info
-                </a>
-            </p>
-        </div>
-        <div style="padding:0px; margin:0px;" class="row mb-4 collapse text-center" id="collapse-9">
-        </div>
+    <div class="ss-counter-buttons-div">
+        <button class="ss-reject-offer-btn"
+            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
+            Offer</button>
     </div>
-
-    @if ($offerdetails->status == 'Screening')
-        <div class="ss-counter-buttons-div">
-            <button class="ss-acpect-offer-btn"
-                onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Send
-                1st
-                Offer</button>
-        </div>
-        <div class="ss-counter-buttons-div">
-            <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
-                Offer</button>
-        </div>
-        <div class="ss-counter-buttons-div">
-            <button class="ss-reject-offer-btn"
-                onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
-                Offer</button>
-        </div>
-    @endif
-
-    @if ($offerdetails->status == 'Offered')
-        <div class="ss-counter-buttons-div">
-            <button class="ss-reject-offer-btn"
-                onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
-                Offer</button>
-        </div>
-        <div class="ss-counter-buttons-div">
-            <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
-                Offer</button>
-        </div>
-        {{-- comment the condition for now until we have the counter 1st offer from the worker worked --}}
-        {{-- @if (count($offerLogs) > 0) --}}
+    <div class="ss-counter-buttons-div">
+        <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
+            Offer</button>
+    </div>
+    {{-- comment the condition for now until we have the counter 1st offer from the worker worked --}}
+    {{-- @if (count($offerLogs) > 0) --}}
         <div class="ss-counter-buttons-div">
             <button class="counter-save-for-button" onclick="counterOffer('{{ $offerdetails->id }}')">Counter
                 Offer</button>
@@ -253,215 +203,198 @@
                 onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept
                 Offer</button>
         </div>
-        {{-- @endif --}}
-    @endif
+    {{-- @endif --}}
 
 </div>
 
 <script>
-    $(document).ready(function() {
-        var fields = {
-            // Summary
-            'summary': [
-                'type',
-                'terms',
-                'profession',
-                'specialty',
-                'actual_hourly_rate',
-                'weekly_pay',
-                'hours_per_week',
-                'state',
-                'city'
-            ],
-            // Shift
-            'shift': [
-                'preferred_shift_duration',
-                'guaranteed_hours',
-                'hours_shift',
-                'weeks_shift',
-                'preferred_assignment_duration',
-                'as_soon_as',
-                'start_date',
-                'end_date',
-                'rto'
-            ],
-            // Pay
-            'pay': [
-                'overtime',
-                'on_call',
-                'on_call_rate',
-                'call_back_rate',
-                'orientation_rate',
-                'weekly_taxable_amount',
-                'weekly_non_taxable_amount',
-                'feels_like_per_hour',
-                'referral_bonus',
-                'sign_on_bonus',
-                'completion_bonus',
-                'extension_bonus',
-                'other_bonus',
-                'pay_frequency',
-                'benefits',
-                'total_organization_amount',
-                'total_contract_amount'
-            ],
-            // Location
-            'location': [
-                'clinical_setting',
-                'preferred_work_location',
-                'facility_name',
-                'facilitys_parent_system',
-                'facility_shift_cancelation_policy',
-                'contract_termination_policy',
-                'traveler_distance_from_facility'
-            ],
-            // Certs & Licences
-            'certs-licenses': [
-                'job_location',
-                'certificate'
-            ],
-            // Work Infos
-            'work-infos': [
-                'description',
-                'urgency',
-                'preferred_experience',
-                'number_of_references',
-                'skills',
-                'block_scheduling',
-                'float_requirement',
-                'Patient_ratio',
-                'Emr',
-                'Unit'
-            ],
-            // ID & Tax Info
-            'id-tax-info': [
-                'nurse_classification'
-            ],
-            // Medical info
-            'medical-info': [
-                'vaccinations'
-            ],
-            // Other Info
-            'other-info': [
-                'scrub_color',
-                'job_name',
-                'holiday',
-            ]
-        };
+   $(document).ready(function() {
+    var fields = {
+        // Summary
+        'summary': [
+            {'id': 'type', 'display-name': 'Type'},
+            {'id': 'terms', 'display-name': 'Terms'},
+            {'id': 'profession', 'display-name': 'Profession'},
+            {'id': 'specialty', 'display-name': 'Specialty'},
+            {'id': 'actual_hourly_rate', 'display-name': '$/hr'},
+            {'id': 'weekly_pay', 'display-name': '$/wk'},
+            {'id': 'hours_per_week', 'display-name': 'Hrs/Wk'},
+            {'id': 'state', 'display-name': 'State'},
+            {'id': 'city', 'display-name': 'City'}
+        ],
+        // Shift
+        'shift': [
+            {'id': 'preferred_shift_duration', 'display-name': 'Shift Time'},
+            {'id': 'guaranteed_hours', 'display-name': 'Guaranteed Hrs/wk'},
+            {'id': 'hours_shift', 'display-name': 'Reg Hrs/Shift'},
+            {'id': 'weeks_shift', 'display-name': 'Shifts/Wk'},
+            {'id': 'preferred_assignment_duration', 'display-name': 'Wks/Contract'},
+            {'id': 'as_soon_as', 'display-name': 'As Soon As'},
+            {'id': 'start_date', 'display-name': 'Start Date'},
+            {'id': 'end_date', 'display-name': 'End Date'},
+            {'id': 'rto', 'display-name': 'RTO'}
+        ],
+        // Pay
+        'pay': [
+            {'id': 'overtime', 'display-name': 'OT $/Hr'},
+            {'id': 'on_call_rate', 'display-name': 'On Call $/Hr'},
+            {'id': 'call_back_rate', 'display-name': 'Call Back $/Hr'},
+            {'id': 'orientation_rate', 'display-name': 'Orientation $/Hr'},
+            {'id': 'weekly_taxable_amount', 'display-name': 'Taxable/Wk'},
+            {'id': 'weekly_non_taxable_amount', 'display-name': 'Non-taxable/Wk'},
+            {'id': 'feels_like_per_hour', 'display-name': 'Feels Like $/hr'},
+            {'id': 'referral_bonus', 'display-name': 'Referral Bonus'},
+            {'id': 'sign_on_bonus', 'display-name': 'Sign-On Bonus'},
+            {'id': 'extension_bonus', 'display-name': 'Extension Bonus'},
+            {'id': 'total_organization_amount', 'display-name': '$/Org'},
+            {'id': 'total_contract_amount', 'display-name': 'Total $'},
+            {'id': 'pay_frequency', 'display-name': 'Pay Frequency'},
+            {'id': 'benefits', 'display-name': 'Benefits'}
+        ],
+        // Location
+        'location': [
+            {'id': 'clinical_setting', 'display-name': 'Clinical Setting'},
+            {'id': 'preferred_work_location', 'display-name': 'Adress'},
+            {'id': 'facility_name', 'display-name': 'Facility'},
+            {'id': 'facilitys_parent_system', 'display-name': 'Facility\'s Parent System'},
+            {'id': 'facility_shift_cancelation_policy', 'display-name': 'Facility Shift Cancelation Policy'},
+            {'id': 'contract_termination_policy', 'display-name': 'Contract Termination Policy'},
+            {'id': 'traveler_distance_from_facility', 'display-name': 'Perm address miles from facility'}
+        ],
+        // Certs & Licences
+        'certs-licenses': [
+            {'id': 'job_location', 'display-name': 'Professional Licensure'},
+            {'id': 'certificate', 'display-name': 'Certifications'}
+        ],
+        // Work Infos
+        'work-infos': [
+            {'id': 'description', 'display-name': 'Description'},
+            {'id': 'preferred_experience', 'display-name': 'Experience'},
+            {'id': 'number_of_references', 'display-name': 'References'},
+            {'id': 'skills', 'display-name': 'Skills checklist'},
+            {'id': 'on_call', 'display-name': 'On Call'},
+            {'id': 'block_scheduling', 'display-name': 'Block Scheduling'},
+            {'id': 'float_requirement', 'display-name': 'Float Requirement'},
+            {'id': 'Patient_ratio', 'display-name': 'Patient Ratio Max'},
+            {'id': 'Emr', 'display-name': 'EMR'},
+            {'id': 'Unit', 'display-name': 'Unit'}
+        ],
+        // ID & Tax Info
+        'id-tax-info': [
+            {'id': 'nurse_classification', 'display-name': 'Nurse Classification'}
+        ],
+        // Medical info
+        'medical-info': [
+            {'id': 'vaccinations', 'display-name': 'Vaccinations'}
+        ],
+    };
 
-        // fix all number fields to number 
+    // fix all number fields to number 
+    var numberFields = [
+        'actual_hourly_rate',
+        'weekly_pay',
+        'hours_per_week',
+        'guaranteed_hours',
+        'hours_shift',
+        'weeks_shift',
+        'preferred_assignment_duration',
+        'overtime',
+        'on_call_rate',
+        'call_back_rate',
+        'orientation_rate',
+        'weekly_taxable_amount',
+        'weekly_non_taxable_amount',
+        'feels_like_per_hour',
+        'referral_bonus',
+        'sign_on_bonus',
+        'extension_bonus',
+        'total_organization_amount',
+        'total_contract_amount',
+        'traveler_distance_from_facility',
+        'number_of_references'
+    ];
 
-        var numberFields = [
-            'actual_hourly_rate',
-            'weekly_pay',
-            'hours_per_week',
-            'guaranteed_hours',
-            'hours_shift',
-            'weeks_shift',
-            'preferred_assignment_duration',
-            'overtime',
-            'on_call_rate',
-            'call_back_rate',
-            'orientation_rate',
-            'weekly_taxable_amount',
-            'weekly_non_taxable_amount',
-            'feels_like_per_hour',
-            'referral_bonus',
-            'sign_on_bonus',
-            'completion_bonus',
-            'extension_bonus',
-            'other_bonus',
-            'total_organization_amount',
-            'total_contract_amount',
-            'traveler_distance_from_facility',
-            'number_of_references'
-        ];
-
-        
-        var diff = @json($diff);
-        if (diff == null) {
-            diff = {};
-        }else{
+    var diff = @json($diff);
+    if (diff == null) {
+        diff = {};
+    } else {
         diff = JSON.parse(diff['details']);
+    }
+    var offerdetails = @json($offerdetails);
+
+    numberFields.forEach(function(field) {
+        if (offerdetails[field] != null) {
+            offerdetails[field] = Number(offerdetails[field]);
         }
-        var offerdetails = @json($offerdetails);
-
-        numberFields.forEach(function(field) {
-            if (offerdetails[field] != null) {
-                offerdetails[field] = Number(offerdetails[field]);
-            }
-        });
-
-        numberFields.forEach(function(field) {
-            if (diff[field] != null) {
-                diff[field] = Number(diff[field]);
-            }
-        });
-
-        console.log('diff:', diff);
-        console.log('offerdetails:', offerdetails);
-
-        function createFieldElement(field, newValue, oldValue) {
-            if (field == 'on_call' || field == 'block_scheduling' || field == 'float_requirement' || field == 'as_soon_as') {
-                    newValue = newValue == 1 ? 'Yes' : 'No';
-                    oldValue = oldValue == 1 ? 'Yes' : 'No';
-            }
-
-            var fieldDiv = document.createElement('div');
-            fieldDiv.className = 'col-md-12';
-            var span = document.createElement('h5');
-            span.className = 'mt-3';
-            span.style.fontSize = '17px';
-            span.style.color = '#3d2c39';
-            span.textContent = field.replace(/_/g, ' ');
-            fieldDiv.appendChild(span);
-
-            var rowDiv = document.createElement('div');
-            rowDiv.className = 'row d-flex align-items-center';
-            rowDiv.style.margin = 'auto';
-            rowDiv.id = field + '-div';
-
-            var newValueDiv = document.createElement('div');
-            newValueDiv.className = 'col-md-6';
-            var newValueH6 = document.createElement('h6');
-            newValueH6.id = field + '-new-value';
-
-            newValueH6.textContent = oldValue;
-            newValueDiv.appendChild(newValueH6);
-
-            var oldValueDiv = document.createElement('div');
-            oldValueDiv.className = 'col-md-6';
-            var oldValueH6 = document.createElement('h6');
-            oldValueH6.id = field + '-old-value';
-            oldValueH6.textContent = newValue;
-            oldValueDiv.appendChild(oldValueH6);
-
-            rowDiv.appendChild(newValueDiv);
-            rowDiv.appendChild(oldValueDiv);
-
-            if (diff[field] != undefined) {
-                rowDiv.classList.add('ss-s-jb-apl-bg-bl');
-            }
-
-            return [fieldDiv, rowDiv];
-        }
-
-        Object.keys(fields).forEach(function(section) {
-            fields[section].forEach(function(field) {
-
-                var oldValue = diff[field] != undefined ? diff[field] : offerdetails[field];
-                var newValue = offerdetails[field];
-                var elements = createFieldElement(field, newValue, oldValue);
-                console.log('element:', section);
-                document.getElementById(section + '-section').querySelector(
-                    '.collapse').appendChild(elements[0]);
-                document.getElementById(section + '-section').querySelector(
-                    '.collapse').appendChild(elements[1]);
-            });
-
-        });
-
     });
+
+    numberFields.forEach(function(field) {
+        if (diff[field] != null) {
+            diff[field] = Number(diff[field]);
+        }
+    });
+
+    console.log('diff:', diff);
+    console.log('offerdetails:', offerdetails);
+
+    function createFieldElement(field, displayName, newValue, oldValue) {
+        if (field == 'on_call' || field == 'block_scheduling' || field == 'float_requirement' || field == 'as_soon_as') {
+            newValue = newValue == 1 ? 'Yes' : 'No';
+            oldValue = oldValue == 1 ? 'Yes' : 'No';
+        }
+
+        var fieldDiv = document.createElement('div');
+        fieldDiv.className = 'col-md-12';
+        var span = document.createElement('h5');
+        span.className = 'mt-3 mb-3';
+        span.style.fontSize = '17px';
+        span.style.color = '#3d2c39';
+        span.textContent = displayName;
+        fieldDiv.appendChild(span);
+
+        var rowDiv = document.createElement('div');
+        rowDiv.className = 'row d-flex align-items-center';
+        rowDiv.style.margin = 'auto';
+        rowDiv.id = field + '-div';
+
+        var newValueDiv = document.createElement('div');
+        newValueDiv.className = 'col-md-6';
+        var newValueH6 = document.createElement('h6');
+        newValueH6.id = field + '-new-value';
+        newValueH6.textContent = oldValue;
+        newValueDiv.appendChild(newValueH6);
+
+        var oldValueDiv = document.createElement('div');
+        oldValueDiv.className = 'col-md-6';
+        var oldValueH6 = document.createElement('h6');
+        oldValueH6.id = field + '-old-value';
+        oldValueH6.textContent = newValue;
+        oldValueDiv.appendChild(oldValueH6);
+
+        rowDiv.appendChild(newValueDiv);
+        rowDiv.appendChild(oldValueDiv);
+
+        if (diff[field] != undefined) {
+            rowDiv.classList.add('ss-s-jb-apl-bg-bl');
+        }
+
+        return [fieldDiv, rowDiv];
+    }
+
+    Object.keys(fields).forEach(function(section) {
+        fields[section].forEach(function(field) {
+            var fieldId = field.id;
+            var displayName = field['display-name'];
+            var oldValue = diff[fieldId] != undefined ? diff[fieldId] : offerdetails[fieldId];
+            var newValue = offerdetails[fieldId];
+            var elements = createFieldElement(fieldId, displayName, newValue, oldValue);
+            console.log('element:', section);
+            document.getElementById(section + '-section').querySelector('.collapse').appendChild(elements[0]);
+            document.getElementById(section + '-section').querySelector('.collapse').appendChild(elements[1]);
+        });
+    });
+
+});
 </script>
 
 <style>
