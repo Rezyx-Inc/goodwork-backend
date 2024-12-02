@@ -230,6 +230,25 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            {{-- Resume --}}
+                                            <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
+                                                <div class="row justify-content-center" style="display:flex; align-items:end;">
+                                                    <div class="col-6">
+                                                    <label for="is_resume"
+                                                        style="display:flex; justify-content:center;">Is Required</label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="checkbox" name="is_resume" id="job_is_resumeDraft"
+                                                            value="1" style="box-shadow: none;">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div> 
+                                                <span class="helper help-block-is_resume"></span>
+                                                </div>
+                                            </div>
                                             
 
                                         <div class="col-md-12 mb-4 collapse-container">
@@ -4590,7 +4609,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
         };
 
         for (const [id, value] of Object.entries(fields)) {
-            console.log(id);
+
             document.getElementById(id).value = value;
         }
     }
@@ -4658,8 +4677,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
 
             const selectedJobState = this.value;
             const selectedState = $(this).find(':selected').attr('id');
-            console.log('id : ', selectedState);
-            console.log('value : ', selectedJobState);
 
             await $.get(`/api/cities/${selectedState}`, function(cities) {
                 citiesData = cities;
@@ -4743,7 +4760,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                 'profession': { id: 'perferred_professionDraft', type: 'select' },
                 'job_state': { id: 'job_stateDraft', type: 'select' },
                 'job_city': { id: 'job_cityDraft', type: 'select' },
-                'is_resume': { id: 'job_is_resume', type: 'checkbox'},
+                'is_resume': { id: 'job_is_resumeDraft', type: 'checkbox'},
                 'weekly_pay': { id: 'weekly_payDraft', type: 'number' },
                 'terms': { id: 'termsDraft', type: 'select' },
                 'preferred_assignment_duration': { id: 'preferred_assignment_durationDraft', type: 'number' },
@@ -4822,8 +4839,8 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                         element.checked = result[key] === 'Auto Offer';
 
                     } else {
-
-                        element.checked = result[key] === '1';
+                        
+                        element.checked = Boolean(result[key]);
                     }
 
                 }
@@ -5991,6 +6008,8 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                 'profession': { id: 'perferred_professionDraft', type: 'select' },
                 'job_state': { id: 'job_stateDraft', type: 'select' },
                 'job_city': { id: 'job_cityDraft', type: 'select' },
+                'is_resume': {id:'job_isResumeDraft', type:'checkbox'},
+
                 'weekly_pay': { id: 'weekly_payDraft', type: 'number' },
                 'terms': { id: 'termsDraft', type: 'select' },
                 'preferred_assignment_duration': { id: 'preferred_assignment_durationDraft', type: 'number' },
@@ -6072,14 +6091,22 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
 
                     }
                 } else if (field.type === 'checkbox') {
+                    
+                    
+
                     if (field.id === 'urgencyDraft') {
                         element.checked = result[key] === 'Auto Offer';
+
+                    }else if (field.id === "job_isResumeDraft"){
+                        element.checked = Boolean(result[key]);
+
                     } else {
+
                         element.checked = false;
                     }
                 }
                 else if (field.type === 'radio') {
-                    console.log('radio', result[key]);
+
                     if (result[key] === 'Accept Pending') {
                         document.getElementById('professional_state_licensure_pendingDraft').checked = true;
                     } else {
@@ -6404,7 +6431,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
 
 
     function validateRequiredFieldsToSubmit(slideFields){
-        console.log('validate requiered fields to submit');
         let access = true;
         const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
 
@@ -6448,12 +6474,9 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                             const elementHtml = document.getElementById(element);
                             const elementValue = elementHtml.value;
                             if(elementValue.trim() === '') {
-                                console.log('element clicked');
                                 const collapseElement = elementHtml.closest('.collapse');
                                 
                                 collapseElement.classList.add('show');
-                                console.log('colapseElement',collapseElement);
-                                console.log('element',element);
                                 $(`.help-block-${element}`).text(`This field is required`);
                                 $(`.help-block-${element}`).addClass('text-danger');
                                 access = false;
@@ -6471,12 +6494,9 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
 
     function validateRequiredMultiCheckFieldsToSubmit(slideFields) {
         
-        console.log('validate requiered multi fields to submit');
-        console.log('slideFields : ',slideFields);
         let access = true;
-        console.log('requiredToSubmit : ',requiredToSubmit);
+        
         const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
-        console.log('common elements : ',commonElements);
         if(commonElements.length > 0) {
 
             commonElements.forEach(element => {
@@ -6509,7 +6529,6 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
 
         event.preventDefault();
         $(`.helper`).text('');
-        console.log('submit button clicked');
 
         let nurse_classification_all_values = document.getElementById("nurse_classificationAllValues");
         if (nurse_classification_all_values) {
@@ -6679,6 +6698,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
         //     $('.help-block-job_name').text('');
         //     event.target.form.submit();
         // }
+        
         event.target.form.submit();
         
         });
@@ -7021,6 +7041,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
             "start_date",
             "urgency",
             "professional_state_licensure",
+            "is_resume",
         ];
         
         if (validateRequiredMultiCheckFieldsToSubmitDraft(slideFields) && validateRequiredFieldsToSubmitDraft(otherSlideFields) && validateFirstDraft()) {
@@ -7619,7 +7640,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                         if (field.id === 'urgencyEdit') {
                             element.checked = result[key] === 'Auto Offer';
                         } else {
-                            element.checked = result[key] === 1;
+                            element.checked = Boolean(result[key]);
                         }
                         
                 } else if (field.type === 'radio') {

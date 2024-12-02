@@ -523,6 +523,7 @@ class RecruiterController extends Controller
                     'job_id' => 'nullable|string',
                     'job_name' => 'nullable|string',
                     'job_city' => 'nullable|string',
+                    'is_resume' => 'nullable|string',
                     'job_state' => 'nullable|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'nullable|string',
@@ -600,7 +601,7 @@ class RecruiterController extends Controller
                         'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 
                         'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                         'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-                        'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
+                        'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount','is_resume'
                     ];
                 
                     foreach ($fields as $field) {
@@ -640,7 +641,6 @@ class RecruiterController extends Controller
                    
 
                     // check if the recruiter is associated with an organization
-
                     $checkResponse = Http::post('http://localhost:4545/organizations/checkRecruiter', ['id' => $created_by]);
                     $checkResponse = $checkResponse->json();
                     if (isset($checkResponse[0])) {
@@ -648,6 +648,12 @@ class RecruiterController extends Controller
                     } else {
                         $orgId = null;
                     }
+
+                    // Check if the is_resume bool is set
+                    if (!isset($request->is_resume)){
+                        $job->is_resume = false;
+                    }
+
                     $job->organization_id = $orgId;
                     $job->save();
 
@@ -664,6 +670,7 @@ class RecruiterController extends Controller
                     'job_name' => 'nullable|string',
                     'job_id' => 'nullable|string',
                     'job_city' => 'required|string',
+                    'is_resume' => 'nullable|string',
                     'job_state' => 'required|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'required|string',
@@ -739,7 +746,7 @@ class RecruiterController extends Controller
                     'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference',
                     'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                     'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-                    'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
+                    'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount', 'is_resume'
                 ];
                 
                 foreach ($fields as $field) {
@@ -772,6 +779,12 @@ class RecruiterController extends Controller
                 } else {
                     $orgId = null;
                 }
+
+                // Check if the is_resume bool is set
+                if (!isset($request->is_resume)){
+                    $job->is_resume = false;
+                }
+
                 $job->organization_id = $orgId;
                 $job->save();
 
@@ -791,7 +804,8 @@ class RecruiterController extends Controller
             // Redirect back to the add job form with a success message
             return redirect()->route('recruiter-opportunities-manager')->with('success', 'Job added successfully!');
 
-            // return response()->json(['success' => true, 'message' => 'Job added successfully!']);
+             //return response()->json(['success' => true, 'message' => 'Job added successfully!']);
+             
         } catch (QueryException $e) {
             // Log the error
             Log::error('Error saving job: ' . $e->getMessage());
@@ -821,6 +835,7 @@ class RecruiterController extends Controller
                     'job_name' => 'nullable|string',
                     'job_id' => 'nullable|string',
                     'job_city' => 'nullable|string',
+                    'is_resume' => 'nullable|string',
                     'job_state' => 'nullable|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'nullable|string',
@@ -897,7 +912,7 @@ class RecruiterController extends Controller
                 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us', 'recency_of_reference',
                 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                 'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour',
-                'as_soon_as', 'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount'
+                'as_soon_as', 'professional_state_licensure', 'total_goodwork_amount' , 'total_contract_amount', 'total_organization_amount','is_resume'
             ];
             
             foreach ($fields as $field) {
@@ -910,6 +925,11 @@ class RecruiterController extends Controller
             $job->created_by = Auth::guard('recruiter')->user()->id;
             $job->active = false;
             $job->is_open = false;
+
+            // Check if the is_resume bool is set
+            if (!isset($request->is_resume)){
+                $job->is_resume = false;
+            }
             
             // Save the job data to the database
             $job->save();
