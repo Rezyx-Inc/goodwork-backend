@@ -351,20 +351,168 @@ class WorkerDashboardController extends Controller
     return view('worker::dashboard.my_work_journey', $data);
   }
 
+  // public function explore(Request $request)
+  // {
+  //   // GW Number
+  //   $gwNumber = $request->input('gw', '');
+
+  //   // Build the query
+  //   $ret = Job::where('active', '1');
+
+
+  //   // Initialize data array
+  //   $data = [];
+  //   $data['user'] = auth()->guard('frontend')->user();
+  //   $data['jobSaved'] = new JobSaved();
+
+  //   // Fetch related data
+  //   $data['specialities'] = Speciality::select('full_name')->get();
+  //   $data['professions'] = Profession::select('full_name')->get();
+  //   $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
+  //   $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
+  //   $usa = Countries::where(['iso3' => 'USA'])->first();
+  //   $data['us_states'] = States::where('country_id', $usa->id)->get();
+
+  //   // Set filter values from the request, use null as the default if not provided
+  //   $data['profession'] = $request->input('profession');
+  //   $data['speciality'] = $request->input('speciality');
+  //   $data['experience'] = $request->input('experience');
+  //   $data['city'] = $request->input('city');
+  //   $data['state'] = $request->input('state');
+  //   $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+  //   $data['start_date'] = $request->input('start_date', null);
+  //   $data['end_date'] = $request->input('end_date', null);
+  //   $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
+  //   $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
+  //   $data['job_type'] = $request->input('job_type', null);
+  //   $data['as_soon_as'] = $request->input('as_soon_as', null);
+
+  //   // Pay and hour filters
+  //   $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
+  //   $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
+  //   $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
+  //   $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
+  //   $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
+  //   $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
+
+  //   //return response()->json(['message' => $data['as_soon_as']]); 
+
+  //   $user = auth()->guard('frontend')->user();
+
+  //   $nurse = NURSE::where('user_id', $user->id)->first();
+  //   $jobs_id = Offer::where('worker_user_id', $nurse->id)
+  //     ->select('job_id')
+  //     ->get();
+
+  //   if (!empty($gwNumber)) {
+
+  //     if (str_starts_with($gwNumber, 'GWJ')) {
+
+  //       $ret->where('id', $gwNumber);
+  //     } else {
+
+  //       $ret->where('job_id', $gwNumber);
+  //     }
+
+  //     $data['jobs'] = $ret->get();
+  //     return view('worker::dashboard.explore', $data);
+  //   }
+
+
+  //   if (!empty($data['job_type'])) {
+  //     $ret->where('job_type', '=', $data['job_type']);
+  //   }
+
+  //   if (!empty($data['profession'])) {
+  //     $ret->where('profession', '=', $data['profession']);
+  //   }
+
+  //   if (!empty($data['speciality'])) {
+  //     $ret->where('preferred_specialty', '=', $data['speciality']);
+  //   }
+
+  //   if (!empty($data['terms']) && !is_null($request->input('terms'))) {
+  //     $ret->whereIn('terms', $data['terms']);
+  //   }
+
+  //   if (!empty($data['as_soon_as'])) {
+  //     $ret->where('as_soon_as', '=', $data['as_soon_as']);
+  //   } elseif (!empty($data['start_date'])) {
+  //     $ret->where('start_date', '<=', $data['start_date']);
+  //   }
+
+  //   if (!empty($data['shifts'])) {
+  //     $ret->whereIn('preferred_shift', $data['shifts']);
+  //   }
+
+  //   if (!empty($data['state'])) {
+  //     $ret->where('job_state', '=', $data['state']);
+  //   }
+
+  //   if (!empty($data['city'])) {
+  //     $ret->where('job_city', '=', $data['city']);
+  //   }
+
+  //   if (isset($request->weekly_pay_from)) {
+
+  //     $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
+  //   }
+
+  //   if (isset($request->weekly_pay_to)) {
+  //     $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
+  //   }
+
+  //   if (isset($request->hourly_pay_from)) {
+  //     $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
+  //   }
+
+  //   if (isset($request->hourly_pay_to)) {
+  //     $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
+  //   }
+
+  //   if (isset($request->hours_per_week_from)) {
+  //     $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
+  //   }
+
+  //   if (isset($request->hours_per_week_to)) {
+  //     $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
+  //   }
+
+  //   if (isset($request->state)) {
+  //     $ret->where('job_state', '=', $data['state']);
+  //   }
+
+  //   if (isset($request->city)) {
+  //     $ret->where('job_city', '=', $data['city']);
+  //   }
+
+  //   //return response()->json(['message' =>  $ret->get()]);
+  //   $data['jobs'] = $ret->get();
+
+  //   $jobSaved = new JobSaved;
+
+  //   $data['jobSaved'] = $jobSaved;
+
+
+  //   return view('worker::dashboard.explore', $data);
+  // }
+
+
   public function explore(Request $request)
   {
+    
     // GW Number
     $gwNumber = $request->input('gw', '');
-
+    
     // Build the query
     $ret = Job::where('active', '1');
-
-
+    
+    
     // Initialize data array
     $data = [];
     $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
-
+    
     // Fetch related data
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
@@ -372,7 +520,7 @@ class WorkerDashboardController extends Controller
     $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
     $usa = Countries::where(['iso3' => 'USA'])->first();
     $data['us_states'] = States::where('country_id', $usa->id)->get();
-
+    
     // Set filter values from the request, use null as the default if not provided
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
@@ -386,7 +534,7 @@ class WorkerDashboardController extends Controller
     $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
     $data['job_type'] = $request->input('job_type', null);
     $data['as_soon_as'] = $request->input('as_soon_as', null);
-
+    
     // Pay and hour filters
     $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
     $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
@@ -394,7 +542,7 @@ class WorkerDashboardController extends Controller
     $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
     $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
     $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
-
+    
     //return response()->json(['message' => $data['as_soon_as']]); 
 
     $user = auth()->guard('frontend')->user();
@@ -438,45 +586,47 @@ class WorkerDashboardController extends Controller
     if (!empty($data['as_soon_as'])) {
       $ret->where('as_soon_as', '=', $data['as_soon_as']);
     } elseif (!empty($data['start_date'])) {
-      $ret->where('start_date', '<=', $data['start_date']);
+      $ret->where('start_date', '>=', $data['start_date']);
     }
 
-    if (!empty($data['shifts'])) {
-      $ret->whereIn('preferred_shift', $data['shifts']);
-    }
+    // hidden for now
+    /* if (!empty($data['shifts'])) {
+        $ret->whereIn('preferred_shift', $data['shifts']);
+      }
+    */
 
-    if (!empty($data['state'])) {
-      $ret->where('job_state', '=', $data['state']);
-    }
+    // if (!empty($data['state'])) {
+    //   $ret->where('job_state', '=', $data['state']);
+    // }
 
-    if (!empty($data['city'])) {
-      $ret->where('job_city', '=', $data['city']);
-    }
+    // if (!empty($data['city'])) {
+    //   $ret->where('job_city', '=', $data['city']);
+    // }
 
-    if (isset($request->weekly_pay_from)) {
+    // if ($data['weekly_pay_from'] !== 10) { 
+    //   $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
+    // }
+  
+    // if ($data['weekly_pay_to'] !== 10000) {
+    //   $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
+    // }
 
-      $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-    }
+    // if ($data['hourly_pay_from'] !== 2) {
+    //   $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
+    // }
 
-    if (isset($request->weekly_pay_to)) {
-      $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
-    }
+    // if ($data['hourly_pay_to'] !== 24) {
+    //   $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
+    // }
 
-    if (isset($request->hourly_pay_from)) {
-      $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
-    }
+    // if ($data['hours_per_week_from'] !== 10) {
+    //   $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
+    // }
 
-    if (isset($request->hourly_pay_to)) {
-      $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
-    }
+    // if ($data['hours_per_week_to'] !== 100) {
+    //   $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
+    // }
 
-    if (isset($request->hours_per_week_from)) {
-      $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
-    }
-
-    if (isset($request->hours_per_week_to)) {
-      $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
-    }
 
     if (isset($request->state)) {
       $ret->where('job_state', '=', $data['state']);
@@ -496,6 +646,9 @@ class WorkerDashboardController extends Controller
 
     return view('worker::dashboard.explore', $data);
   }
+
+
+
 
   public function add_save_jobs(Request $request)
   {
