@@ -25,9 +25,9 @@
                             <li>
                                 <h6>Organization Name</h6>
                                 @php 
-                                    $organization = \App\Models\User::where('id', $jobdetails->organization_id)->first();
+                                    $recruiter = \App\Models\User::where('id', $jobdetails->recruiter_id)->first();
                                 @endphp
-                                <p>{{ $organization->organization_name ?? 'Missing Information' }}</p>
+                                <p>{{ $recruiter->organization_name ?? 'Missing Information' }}</p>
                                 </p>
                             </li>
                             <li>

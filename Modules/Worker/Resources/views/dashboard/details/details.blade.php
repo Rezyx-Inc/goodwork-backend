@@ -156,7 +156,7 @@
                                 <ul>
                                     <li>
                                         <h6>Organization Name</h6>
-                                        <p>{{ $model->organization_name }}</p>
+                                        <p>{{ $model->recruiter->organization_name }}</p>
                                     </li>
                                     <li>
                                         <h6>Date Posted</h6>
@@ -226,8 +226,8 @@
                                                     data-title="What kind of professional are you?" data-filter="Profession"
                                                     data-name="profession" onclick="open_modal(this)">
 
-                                                    @if (!!$nurse->worker_job_type)
-                                                        {{ $nurse->worker_job_type }}
+                                                    @if (!!$nurse->profession)
+                                                        {{ $nurse->profession }}
                                                     @else
                                                         What kind of professional are you?
                                                     @endif
