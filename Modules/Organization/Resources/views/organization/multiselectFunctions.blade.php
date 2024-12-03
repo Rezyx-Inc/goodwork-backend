@@ -885,7 +885,7 @@ function addcertifications(type) {
                     success: function(result) {
                         notie.alert({
                             type: 'success',
-                            text: '<i class="fa fa-check"></i> Counter Offer Sended',
+                            text: '<i class="fa fa-check"></i> Counter Offer Sent',
                             time: 2
                         });
                         setTimeout(() => {

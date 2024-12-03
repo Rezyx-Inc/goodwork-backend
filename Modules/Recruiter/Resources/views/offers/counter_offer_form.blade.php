@@ -5,8 +5,8 @@
     <div class="ss-job-view-off-text-fst-dv">
         <p class="mt-3">On behalf of <a href="">Albus Percival , Hogwarts</a> would like to offer <a
                 href="#">{{ $offerdetails['id'] }}</a>
-            to <a href="#">{{ $userdetails->first_name }} {{ $userdetails->last_name }}</a> with the following
-            terms. This offer is only available for the next <a hre="#">6 weeks:</a>
+            to <a href="#">{{ $userdetails->first_name }} {{ $userdetails->last_name }}</a> 
+           
         </p>
 
     </div>
@@ -273,6 +273,7 @@
                     </div>
                     <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12"
                         style="display: flex; justify-content: end; align-items:center;">
+                        <input type="hidden" name="as_soon_as" value="0">
                         <input id="as_soon_as" name="as_soon_as" value="1"
                             type="checkbox" style="box-shadow:none; width:auto;"
                             class="col-6">
@@ -341,9 +342,9 @@
                 <select name="on_call" id="on_call">
                     <option value="" disabled selected hidden>Select an answer
                     </option>
-                    <option value="Yes">Yes
+                    <option value="1">Yes
                     </option>
-                    <option value="No">No
+                    <option value="0">No
                     </option>
                 </select>
                 <div> 
@@ -477,7 +478,7 @@
                 </div>
             </div>
             {{-- Benefits --}}
-            <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
+            <div id="benefits_id" class="ss-form-group ss-prsnl-frm-specialty">
                 <label>Benefits</label>
                 <div class="ss-speilty-exprnc-add-list benefits-content">
                 </div>
@@ -796,9 +797,9 @@
                 <select name="block_scheduling" id="block_scheduling">
                     <option value="" disabled selected hidden>Select an answer
                     </option>
-                    <option value="Yes">Yes
+                    <option value="1">Yes
                     </option>
-                    <option value="No">No
+                    <option value="0">No
                     </option>
                 </select>
                 <div> 
@@ -811,9 +812,9 @@
                 <select name="float_requirement" id="float_requirement">
                     <option value="" disabled selected hidden>Select an answer
                     </option>
-                    <option value="Yes">Yes
+                    <option value="1">Yes
                     </option>
-                    <option value="No">No
+                    <option value="0">No
                     </option>
                 </select>
                 <div> 

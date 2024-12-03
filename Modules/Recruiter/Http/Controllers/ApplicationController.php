@@ -129,8 +129,11 @@ class ApplicationController extends Controller
             $statusCounts[$status] = 0;
         }
         
-        $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
+        // Count unique workers applying
+        //$statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
 
+        // Count unique applications per worker
+        $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
             
             if ($statusCount) {
@@ -428,7 +431,6 @@ class ApplicationController extends Controller
 
                                 $recently_added = $nowDate->isSameDay($value->created_at);
                                 if($recently_added == false){
-
                                     $recently_added = $value->created_at->diffForHumans();
                                 }
                                 
@@ -483,9 +485,7 @@ class ApplicationController extends Controller
 
                             $recently_added = $nowDate->isSameDay($value->created_at);
                             if($recently_added == false){
-
                                 $recently_added = $value->created_at->diffForHumans();
-
                             }
 
                             $offerData[] = [
@@ -511,6 +511,7 @@ class ApplicationController extends Controller
                     $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
                     //return new JsonResponse($response, 200);
                     return response()->json($response);
+
                     } catch (\Exception $ex) {
                         return response()->json(["message" => $ex->getMessage()]);
                     }
@@ -574,17 +575,28 @@ class ApplicationController extends Controller
 
     function get_one_offer_information(Request $request)
     {
-
+        // return $request->all();
         try {
             $offer_id = $request->offer_id;
             $offer = Offer::where('id', $offer_id)->first();
+            $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
             $worker_id = $offer->worker_user_id;
             $worker_details = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $worker_details->user_id)->first();
-            $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
+
+            if ($offer->status == 'Offered') {
+                $offerLogsDiff = OffersLogs::select('details')->where('original_offer_id', $offer_id)->first();
+                if(empty($offerLogsDiff)){
+                    $offerLogsDiff = null;
+                }
+                $response['content'] = view('recruiter::offers.new_terms_vs_old_terms', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'diff' => $offerLogsDiff])->render(); 
+                return response()->json($response);
+            }
+
             $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
-            //return new JsonResponse($response, 200);
+            
             return response()->json($response);
+        
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -614,7 +626,7 @@ class ApplicationController extends Controller
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
                 }
-                $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;
@@ -633,13 +645,34 @@ class ApplicationController extends Controller
 
     public function recruiter_counter_offer(Request $request)
     {
+        
         try {
             $recruiter = Auth::guard('recruiter')->user();
             $recruiter_id = $recruiter->id;
             $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
             $offer_id = $request->id;
             $data = $request->data;
+            $diff = $request->diff;
             $offer = Offer::where('id', $offer_id)->first();
+
+            if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
+                $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
+                $offerLog->update([
+                    'details' => json_encode($diff),
+                ]);
+                
+            }else{
+                OffersLogs::create([
+                    'counter_offer_by' => $recruiter_id,
+                    'nurse_id' => $offer['worker_user_id'],
+                    'organization_recruiter_id' => $offer['organization_id'],
+                    'original_offer_id' => $offer_id,
+                    'details' => json_encode($diff),
+                    'status' => 'Counter Offer'
+                ]);
+            }
+
+            
             // update it
             if ($offer) {
                 $offer->update($data);
@@ -761,8 +794,11 @@ class ApplicationController extends Controller
             //return response()->json(['workerId' => $workerId]);
 
             $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            
             if ($response->successful()) {
+                
                 return $response->body();
+
             } else {
                 return response()->json(['success' => false], $response->status());
             }

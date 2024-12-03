@@ -133,7 +133,7 @@ class Offer extends Model
         'worker_user_id',
         'clinical_setting',
         'Patient_ratio',
-        'emr',
+        'Emr',
         'Unit',
         'scrub_color',
         'start_date',
@@ -192,7 +192,9 @@ class Offer extends Model
         'pay_frequency',
         'benefits',
         'number_of_references',
-        'organization_id'
+        'organization_id',
+        'contract_termination_policy',
+        'is_resume',
         
     ];
 

@@ -9,56 +9,56 @@
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Apply')" id="Apply">
                         <p>New</p>
-                        <span>{{ $statusCounts['Apply'] }} Applicants</span>
+                        <span>{{ $statusCounts['Apply'] }} {{ $statusCounts['Apply'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Screening Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Screening')" id="Screening">
                         <p>Screening</p>
-                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
+                        <span>{{ $statusCounts['Screening'] }} {{ $statusCounts['Screening'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Submitted Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Submitted')" id="Submitted">
                         <p>Submitted</p>
-                        <span>{{ $statusCounts['Submitted'] }} Applicants</span>
+                        <span>{{ $statusCounts['Submitted'] }} {{ $statusCounts['Submitted'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Offered Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Offered')" id="Offered">
                         <p>Offered</p>
-                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
+                        <span>{{ $statusCounts['Offered'] }} {{ $statusCounts['Offered'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
-                        <span>{{ $statusCounts['Onboarding'] }} Applicants</span>
+                        <span>{{ $statusCounts['Onboarding'] }} {{ $statusCounts['Onboarding'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
                         <p>Working</p>
-                        <span>{{ $statusCounts['Working'] }} Applicants</span>
+                        <span>{{ $statusCounts['Working'] }} {{ $statusCounts['Working'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Done Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Done')" id="Done">
                         <p>Done</p>
-                        <span>{{ $statusCounts['Done'] }} Applicants</span>
+                        <span>{{ $statusCounts['Done'] }} {{ $statusCounts['Done'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- On Hold Applicants --}}
                 {{-- <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Hold')" id="Hold">
                         <p>Hold</p>
-                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
+                        <span>{{ $statusCounts['Hold'] }} {{ $statusCounts['Hold'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div> --}}
 
@@ -86,7 +86,7 @@
             </div>
             <div class="ss-acount-profile">
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 d-none">
                         <div class="ss-account-form-lft-1">
                             <h5 class="mb-4 d-none" id="listingname">New applications</h5>
                             <div id="application-list">
@@ -94,7 +94,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-7">
+                    <div class="col-lg-7 d-none">
                         <div class="ss-change-appli-mn-div">
                             <div class="row" id="application-details">
                             </div>
@@ -528,6 +528,17 @@
             const urlParams = new URLSearchParams(window.location.search);
             const viewParam = urlParams.get('view');
             selectOfferCycleState(viewParam);
+
+            if (viewParam == 'Apply') {
+                            // chnage his coloset from col-lg-5 to col-lg-12    
+                            $("#application-details").closest('.col-lg-7').addClass("d-none");
+                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5 d-none').addClass('col-lg-12');
+                            
+                            // hide to col of  #application-details
+            } else {
+                $("#application-list").closest('.col-lg-5').removeClass('d-none').addClass('col-lg-5');
+                $("#application-details").closest('.col-lg-7').removeClass("d-none");
+            }
             
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
@@ -1090,6 +1101,7 @@
         }
 
         function open_modal(obj) {
+            
             let name, title, modal, form, target;
 
             name = $(obj).data('name');
@@ -1249,7 +1261,12 @@
         }
 
         function applicationStatusToggle(type){
-            noApplicationDetailsContent();
+            
+            if (type != 'Apply') {
+                noApplicationDetailsContent();
+                noApplicationWorkerListContent();
+            }
+            
             $("#listingname").removeClass("d-none");
             var applyElement = document.getElementById('Apply');
             var screeningElement = document.getElementById('Screening');
@@ -1334,13 +1351,18 @@
                         //console.log(result.content);
 
                         var files = result.files;
-                        console.log(files);
                         var tbody = $('tbody');
                         tbody.empty(); // Clear the table body
+
                         // Add a row for each file
                         if (files) {
-                        for (var i = 0; i < files.length; i++) {
+
+                            for (var i = 0; i < files.length; i++) {
+
                                 var file = files[i];
+                                /* if(file.type == "resume"){
+                                    file.content = "data:application/pdf;base64,"+file.content;
+                                } */
                                 var base64String = file.content;
 
                                 const mimeType = base64String.match(/^data:(.+);base64,/)[1];
@@ -1362,8 +1384,8 @@
                                 row.append('<td>' + file.type + '</td>');
                                 row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
                                 tbody.append(row);
+                            }
                         }
-                    }
 
                     },
                     error: function(error) {
@@ -1486,10 +1508,6 @@
             }
         }
 
-        $(document).ready(function() {
-            noApplicationDetailsContent();
-            noApplicationWorkerListContent();
-        });
 
         function noApplicationWorkerListContent(){
             $("#application-list").html("<div class='text-center no_details'><span>Select an application status</span></div>");
