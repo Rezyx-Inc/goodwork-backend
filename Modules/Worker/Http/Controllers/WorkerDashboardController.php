@@ -586,7 +586,7 @@ class WorkerDashboardController extends Controller
     if (!empty($data['as_soon_as'])) {
       $ret->where('as_soon_as', '=', $data['as_soon_as']);
     } elseif (!empty($data['start_date'])) {
-      $ret->where('start_date', '<=', $data['start_date']);
+      $ret->where('start_date', '>=', $data['start_date']);
     }
 
     // hidden for now
@@ -595,37 +595,37 @@ class WorkerDashboardController extends Controller
       }
     */
 
-    if (!empty($data['state'])) {
-      $ret->where('job_state', '=', $data['state']);
-    }
+    // if (!empty($data['state'])) {
+    //   $ret->where('job_state', '=', $data['state']);
+    // }
 
-    if (!empty($data['city'])) {
-      $ret->where('job_city', '=', $data['city']);
-    }
+    // if (!empty($data['city'])) {
+    //   $ret->where('job_city', '=', $data['city']);
+    // }
 
-    if ($data['weekly_pay_from'] !== 10) { 
-      $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-    }
+    // if ($data['weekly_pay_from'] !== 10) { 
+    //   $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
+    // }
   
-    if ($data['weekly_pay_to'] !== 10000) {
-      $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
-    }
+    // if ($data['weekly_pay_to'] !== 10000) {
+    //   $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
+    // }
 
-    if ($data['hourly_pay_from'] !== 2) {
-      $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
-    }
+    // if ($data['hourly_pay_from'] !== 2) {
+    //   $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
+    // }
 
-    if ($data['hourly_pay_to'] !== 24) {
-      $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
-    }
+    // if ($data['hourly_pay_to'] !== 24) {
+    //   $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
+    // }
 
-    if ($data['hours_per_week_from'] !== 10) {
-      $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
-    }
+    // if ($data['hours_per_week_from'] !== 10) {
+    //   $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
+    // }
 
-    if ($data['hours_per_week_to'] !== 100) {
-      $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
-    }
+    // if ($data['hours_per_week_to'] !== 100) {
+    //   $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
+    // }
 
 
     if (isset($request->state)) {
