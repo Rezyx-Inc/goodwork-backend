@@ -30,7 +30,6 @@
                     "
             data-bs-toggle="modal" data-bs-target="#job-dtl-Dcouments"><i class="fas fa-plus"></i></a>
 
-
         <br><br>
 
     </div>
@@ -48,11 +47,4 @@
         </tbody>
     </table>
 
-    {{-- Skip && Save --}}
-    <div class="ss-prsn-form-btn-sec">
-        <button type="text" class="ss-prsnl-skip-btn prev-2"> Previous
-        </button>
-        <button id="uploadForm" class="ss-prsnl-save-btn next-2"> Save Files
-        </button>
-    </div>
 </div>
