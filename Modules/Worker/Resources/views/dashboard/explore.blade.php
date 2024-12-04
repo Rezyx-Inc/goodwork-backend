@@ -176,10 +176,10 @@
                                     <div id="slider3"></div>
                                 </div>
                                 <div class="ss-input-slct-grp">
-                                    <label for="cars">Good Work number</label>
+                                    <label for="cars">Job ID</label>
                                     <div class="form-outline">
                                         <input type="text" id="gw" class="gw" name="gw"
-                                            placeholder="Search by Good Work number" value="{{ request('gw') }}">
+                                            placeholder="Search by Job ID" value="{{ request('gw') }}">
                                     </div>
                                     <div id="gwError" class="text-danger" style="display: none; margin-top: 10px;"></div>
                                     <!-- Error message display -->
