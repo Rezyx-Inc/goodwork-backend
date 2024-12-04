@@ -261,7 +261,7 @@ class Job extends Model
                     $match = false;
                 };
                 $profile_info_text = "What kind of professional are you ?";
-                if (!empty($nurse->profession)) {
+                if (!empty($nurse->profession && $job->profession == $nurse->profession)) {
                     $match = true;
                 }
                 // if (!empty($nurse->profession)) {

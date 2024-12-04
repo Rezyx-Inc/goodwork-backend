@@ -30,7 +30,7 @@
                                         $jobdetails->organization_id,
                                     )->first();
                                 @endphp
-                                <p>{{ $organization->organization_name ?? 'Missing Information' }}</p>
+                                <p>{{ $recruiter->organization_name ?? 'Missing Information' }}</p>
                                 </p>
                             </li>
                             <li>

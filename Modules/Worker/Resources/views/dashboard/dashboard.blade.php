@@ -124,7 +124,9 @@
         //let yValues = values;
         const ctx = document.getElementById('recruiterStats');
 
-        const xValues = ['New', 'Offered', 'Onboarding', 'Working', 'Done'];
+        let max = Math.max(...yValues);
+
+        const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
 
 
         new Chart(ctx, {
@@ -151,7 +153,16 @@
                 title: {
                     display: true,
                     text: ""
-                }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: max,
+                            stepSize: 1
+                        }
+                    }]
+                },
             }
         });
     </script>

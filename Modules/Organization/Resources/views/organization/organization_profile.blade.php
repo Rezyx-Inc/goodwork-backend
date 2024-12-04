@@ -32,6 +32,7 @@
                                     <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
                                   </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                                <p><b>{{ $user->organization_name }}</b></p>
                                 <p>{{ $user->id }}</p>
                                 <p>{{ $user->about_me }}</p>
                             </div>
@@ -151,6 +152,14 @@
                                     <!-- first form slide Basic Information -->
                                     <div class="page slide-page">
                                         <div class="row justify-content-center">
+                                            {{-- Organization Name --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>Organization Name</label>
+                                                <input type="text" name="organization_name"
+                                                placeholder="Please enter your organization name"
+                                                value="{{ isset($user->organization_name) ? $user->organization_name : '' }}">
+                                            </div>
+                                            <span class="help-block-org_name"></span>
                                             {{-- First Name --}}
                                             <div class="ss-form-group col-11">
                                                 <label>First Name</label>
@@ -428,6 +437,7 @@
 
         // inputs
         // Basic Info
+        const organization_name = document.querySelector('input[name="organization_name"]');
         const first_name = document.querySelector('input[name="first_name"]');
         const last_name = document.querySelector('input[name="last_name"]');
         const mobile = document.querySelector('input[name="mobile"]');
@@ -451,6 +461,11 @@
 
             let isValid = true;
 
+            if (organization_name.value === '') {
+                $('.help-block-org_name').text('Please enter a organization name');
+                $('.help-block-org_name').addClass('text-danger');
+                isValid = false;
+            }
             if (first_name.value === '') {
                 $('.help-block-first_name').text('Please enter a first name');
                 $('.help-block-first_name').addClass('text-danger');
@@ -462,23 +477,23 @@
                 isValid = false;
             }
 
-            if ( mobile.value === '' ) {
+            // if ( mobile.value === '' ) {
 
-                // don't do anything
+            //     // don't do anything
 
-            }else if ( !regexPhone.test(mobile) && mobile.value !== '' ) {
+            // }else if ( !regexPhone.test(mobile) && mobile.value !== '' ) {
 
-                $('.help-block-mobile').text('Please enter a mobile number');
-                $('.help-block-mobile').addClass('text-danger');
-                isValid = false;
+            //     $('.help-block-mobile').text('Please enter a mobile number');
+            //     $('.help-block-mobile').addClass('text-danger');
+            //     isValid = false;
 
-            }
+            // }
 
-            if (about_me.value === '') {
-                $('.help-block-about_me').text('Please enter a description');
-                $('.help-block-about_me').addClass('text-danger');
-                isValid = false;
-            }
+            // if (about_me.value === '') {
+            //     $('.help-block-about_me').text('Please enter a description');
+            //     $('.help-block-about_me').addClass('text-danger');
+            //     isValid = false;
+            // }
 
             return isValid;
         }
@@ -592,6 +607,7 @@
             });
 
             let formData = new FormData();
+            formData.append('organization_name', organization_name.value);
             formData.append('first_name', first_name.value);
             formData.append('last_name', last_name.value);
             formData.append('mobile', mobile.value);
@@ -615,7 +631,9 @@
                             text: '<i class="fa fa-check"></i> Account Information saved successfully',
                             time: 5
                         });
-
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
                     }
                 },
                 error: function(resp) {

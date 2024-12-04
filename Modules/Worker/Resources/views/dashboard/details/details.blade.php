@@ -156,7 +156,7 @@
                                 <ul>
                                     <li>
                                         <h6>Organization Name</h6>
-                                        <p>{{ $model->organization_name }}</p>
+                                        <p>{{ $model->recruiter->organization_name }}</p>
                                     </li>
                                     <li>
                                         <h6>Date Posted</h6>
@@ -226,11 +226,11 @@
                                                     data-title="What kind of professional are you?" data-filter="Profession"
                                                     data-name="profession" onclick="open_modal(this)">
 
-                                                    @isset($nurse->worker_job_type)
-                                                        {{ $nurse->worker_job_type }}
+                                                    @if (!!$nurse->profession)
+                                                        {{ $nurse->profession }}
                                                     @else
                                                         What kind of professional are you?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -249,11 +249,11 @@
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="What's your specialty?" data-filter="Speciality"
                                                     data-name="specialty" onclick="open_modal(this)">
-                                                    @isset($nurse->specialty)
+                                                    @if (!!$nurse->specialty)
                                                         {{ $nurse->specialty }}
                                                     @else
                                                         What's your specialty?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -271,11 +271,11 @@
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-placeholder="What rate is fair?"
                                                     data-name="worker_actual_hourly_rate" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_actual_hourly_rate)
+                                                    @if (!!$nurse->worker_actual_hourly_rate)
                                                         {{ $nurse->worker_actual_hourly_rate }}
                                                     @else
                                                         What rate is fair?
-                                                    @endisset
+                                                    @endif
                                                 </p>
 
                                             </li>
@@ -304,11 +304,11 @@
                                                     data-title="Ideal hours per week?"
                                                     data-placeholder="Enter number Of Hours/Week"
                                                     data-name="worker_hours_per_week" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_hours_per_week)
+                                                    @if (!!$nurse->worker_hours_per_week)
                                                         {{ $nurse->worker_hours_per_week }}
                                                     @else
                                                         Ideal hours per week?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -326,11 +326,11 @@
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="States you'd like to work?" data-filter="State"
                                                     data-name="worker_facility_state" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_facility_state)
+                                                    @if (!!$nurse->worker_facility_state)
                                                         {{ $nurse->worker_facility_state }}
                                                     @else
                                                         States you'd like to work?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -348,11 +348,11 @@
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="Cities you'd like to work?" data-filter="City"
                                                     data-name="worker_facility_city" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_facility_city)
+                                                    @if (!!$nurse->worker_facility_city)
                                                         {{ $nurse->worker_facility_city }}
                                                     @else
                                                         Do you want to work here ?
-                                                    @endisset
+                                                    @endif
                                                 </p>
 
                                             </li>
@@ -385,11 +385,11 @@
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="Fav shift?" data-filter="shift_time_of_day"
                                                     data-name="worker_shift_time_of_day" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_shift_time_of_day)
+                                                    @if (!!$nurse->worker_shift_time_of_day)
                                                         {{ $nurse->worker_shift_time_of_day }}
                                                     @else
                                                         Fav shift?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -408,12 +408,12 @@
                                                     data-title="Open to jobs with no guaranteed hours?"
                                                     data-placeholder="Enter Guaranteed Hours"
                                                     data-name="worker_guaranteed_hours" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_guaranteed_hours)
+                                                    @if (!!$nurse->worker_guaranteed_hours)
                                                         {{ $nurse->worker_guaranteed_hours }}
                                                     @else
                                                         Open to
                                                         jobs with no guaranteed hours?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -432,11 +432,11 @@
                                                     data-title="Preferred hours per shift"
                                                     data-placeholder="Enter number Of Hours/Shift"
                                                     data-name="worker_hours_shift" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_hours_shift)
+                                                    @if (!!$nurse->worker_hours_shift)
                                                         {{ $nurse->worker_hours_shift }}
                                                     @else
                                                         Preferred hours per shift
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -455,11 +455,11 @@
                                                     data-title="Ideal shifts per week"
                                                     data-placeholder="Enter ideal shift per week"
                                                     data-name="worker_shifts_week" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_shifts_week)
+                                                    @if (!!$nurse->worker_shifts_week)
                                                         {{ $nurse->worker_shifts_week }}
                                                     @else
                                                         Ideal shifts per week
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -478,11 +478,11 @@
                                                     data-title="How many weeks?"
                                                     data-placeholder="Enter prefered weeks per assignment"
                                                     data-name="worker_weeks_assignment" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_weeks_assignment)
+                                                    @if (!!$nurse->worker_weeks_assignment)
                                                         {{ $nurse->worker_weeks_assignment }}
                                                     @else
                                                         How many weeks?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -502,11 +502,11 @@
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Can you start as soon as possible?"
                                                     data-name="worker_as_soon_as_possible" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_as_soon_as_possible)
+                                                    @if (!!$nurse->worker_as_soon_as_possible)
                                                         {{ $nurse->worker_as_soon_as_possible }}
                                                     @else
                                                         Can you start as soon as possible?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -531,11 +531,11 @@
                                                 <p class="profile_info_text" data-target="date"
                                                     data-title="When can you start?" data-name="worker_start_date"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_start_date)
+                                                    @if (!!$nurse->worker_start_date)
                                                         {{ $nurse->worker_start_date }}
                                                     @else
                                                         When can you start?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -562,11 +562,11 @@
                                                 <p class="profile_info_text" data-target="rto" data-title="Any time off?"
                                                     data-placeholder="Any time off?" data-name="rto"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->rto)
+                                                    @if (!!$nurse->rto)
                                                         {{ $nurse->rto }}
                                                     @else
                                                         Any time off?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -600,11 +600,11 @@
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-name="worker_overtime_rate"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_overtime_rate)
+                                                    @if (!!$nurse->worker_overtime_rate)
                                                         {{ $nurse->worker_overtime_rate }}
                                                     @else
                                                         What rate is fair?
-                                                    @endisset
+                                                    @endif
                                                 </p>
 
                                             </li>
@@ -623,11 +623,11 @@
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-placeholder="What rate is fair?"
                                                     data-name="worker_on_call" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_on_call)
+                                                    @if (!!$nurse->worker_on_call)
                                                         {{ $nurse->worker_on_call }}
                                                     @else
                                                         What rate is fair?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -645,11 +645,11 @@
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Is this rate reasonable?"
                                                     data-name="worker_call_back_check" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_call_back_check)
+                                                    @if (!!$nurse->worker_call_back_check)
                                                         {{ $nurse->worker_call_back_check }}
                                                     @else
                                                         Is this rate reasonable?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -667,11 +667,11 @@
                                                 <p class="profile_info_text" data-target="input_number"
                                                     data-title="What rate is fair?" data-placeholder="-"
                                                     data-name="worker_orientation_rate" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_orientation_rate)
+                                                    @if (!!$nurse->worker_orientation_rate)
                                                         {{ $nurse->worker_orientation_rate }}
                                                     @else
                                                         What rate is fair?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -700,11 +700,11 @@
                                                     data-placeholder="Weekly non-taxable amount"
                                                     data-name="worker_weekly_non_taxable_amount_check"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_weekly_non_taxable_amount_check)
+                                                    @if (!!$nurse->worker_weekly_non_taxable_amount_check)
                                                         {{ $nurse->worker_weekly_non_taxable_amount_check }}
                                                     @else
                                                         Are you going to duplicate expenses?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -725,11 +725,11 @@
                                                     data-placeholder="Does this seem fair based on the market?"
                                                     data-name="worker_feels_like_per_hour_check"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_feels_like_per_hour_check)
+                                                    @if (!!$nurse->worker_feels_like_per_hour_check)
                                                         {{ $nurse->worker_feels_like_per_hour_check }}
                                                     @else
                                                         Does this seem fair based on the market?
-                                                    @endisset
+                                                    @endif
                                                 </p>
 
                                             </li>
@@ -762,11 +762,11 @@
                                                     data-title="# of people you have referred?"
                                                     data-placeholder="# of people you have referred?"
                                                     data-name="worker_referral_bonus" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_referral_bonus)
+                                                    @if (!!$nurse->worker_referral_bonus)
                                                         {{ $nurse->worker_referral_bonus }}
                                                     @else
                                                         # of people you have referred?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -786,11 +786,11 @@
                                                     data-placeholder="What kind of bonus do you expect?"
                                                     data-name="worker_sign_on_bonus" onclick="open_modal(this)">
 
-                                                    @isset($nurse->worker_sign_on_bonus)
+                                                    @if (!!$nurse->worker_sign_on_bonus)
                                                         {{ $nurse->worker_sign_on_bonus }}
                                                     @else
                                                         What kind of bonus do you expect?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -809,11 +809,11 @@
                                                     data-title="What are you comparing this to?"
                                                     data-placeholder="What are you comparing this to?"
                                                     data-name="worker_extension_bonus" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_extension_bonus)
+                                                    @if (!!$nurse->worker_extension_bonus)
                                                         {{ $nurse->worker_extension_bonus }}
                                                     @else
                                                         What are you comparing this to?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -832,11 +832,11 @@
                                                     data-title="What kind of bonus do you deserve?"
                                                     data-placeholder="What kind of bonus do you deserve?"
                                                     data-name="worker_completion_bonus" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_completion_bonus)
+                                                    @if (!!$nurse->worker_completion_bonus)
                                                         {{ $nurse->worker_completion_bonus }}
                                                     @else
                                                         What kind of bonus do you deserve?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -855,11 +855,11 @@
                                                     data-title="Other bonuses you want?"
                                                     data-placeholder="Other bonuses you want?"
                                                     data-name="worker_other_bonus" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_other_bonus)
+                                                    @if (!!$nurse->worker_other_bonus)
                                                         {{ $nurse->worker_other_bonus }}
                                                     @else
                                                         Other bonuses you want?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -880,11 +880,11 @@
                                                     data-name="worker_health_insurance"
                                                     data-placeholder="How important is this to you?"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_health_insurance)
+                                                    @if (!!$nurse->worker_health_insurance)
                                                         {{ $nurse->worker_health_insurance }}
                                                     @else
                                                         How much do you want this?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -942,11 +942,11 @@
                                                     data-title="Do you want benefits?"
                                                     data-placeholder="Do you want benefits ?" data-name="worker_benefits"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_benefits)
+                                                    @if (!!$nurse->worker_benefits)
                                                         {{ $nurse->worker_benefits }}
                                                     @else
                                                         Do you want benefits ?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -964,11 +964,11 @@
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="How important is this to you?" data-placeholder=""
                                                     data-name="worker_dental" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_dental)
+                                                    @if (!!$nurse->worker_dental)
                                                         {{ $nurse->worker_dental }}
                                                     @else
                                                         How much do you want this
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -988,11 +988,11 @@
                                                     data-title="How important is this to you?"
                                                     data-placeholder="How important is this to you?"
                                                     data-name="worker_vision" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_vision)
+                                                    @if (!!$nurse->worker_vision)
                                                         {{ $nurse->worker_vision }}
                                                     @else
                                                         How much do you want this?
-                                                    @endisset
+                                                    @endif
                                                 </p>
 
                                             </li>
@@ -1014,11 +1014,11 @@
                                                     data-placeholder="How much do you want this?"
                                                     data-title="How much do you want this?"
                                                     data-name="worker_four_zero_one_k" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_four_zero_one_k)
+                                                    @if (!!$nurse->worker_four_zero_one_k)
                                                         {{ $nurse->worker_four_zero_one_k }}
                                                     @else
                                                         How much do you want this?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1051,11 +1051,11 @@
                                                 <p class="profile_info_text" data-target="dropdown"
                                                     data-title="What setting do you prefer?" data-filter="ClinicalSetting"
                                                     data-name="clinical_setting_you_prefer" onclick="open_modal(this)">
-                                                    @isset($nurse->clinical_setting_you_prefer)
+                                                    @if (!!$nurse->clinical_setting_you_prefer)
                                                         {{ $nurse->clinical_setting_you_prefer }}
                                                     @else
                                                         What setting do you prefer?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1090,12 +1090,12 @@
                                                 <p class="profile_info_text" data-target="input" data-title="What facilities would you like to work at?"
                                                     data-placeholder="Write Name Of Facilities"
                                                     data-name="worker_facilitys_parent_system" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_facilitys_parent_system)
+                                                    @if (!!$nurse->worker_facilitys_parent_system)
                                                         {{ $nurse->worker_facilitys_parent_system }}
                                                     @else
                                                         What
                                                         facilities would you like to work at?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li> --}}
                                         </ul>
@@ -1115,11 +1115,11 @@
                                                     data-filter="AssignmentDuration"
                                                     data-name="facility_shift_cancelation_policy"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->facility_shift_cancelation_policy)
+                                                    @if (!!$nurse->facility_shift_cancelation_policy)
                                                         {{ $nurse->facility_shift_cancelation_policy }}
                                                     @else
                                                         What terms do you prefer?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1138,12 +1138,12 @@
                                                     data-title="What terms do you prefer?"
                                                     data-filter="ContractTerminationPolicy"
                                                     data-name="contract_termination_policy" onclick="open_modal(this)">
-                                                    @isset($nurse->contract_termination_policy)
+                                                    @if (!!$nurse->contract_termination_policy)
                                                         {{ $nurse->contract_termination_policy }}
                                                     @else
                                                         What
                                                         terms do you prefer?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1162,13 +1162,13 @@
                                                     data-title="Where does the IRS think you live?"
                                                     data-placeholder="What's your google validated address ?"
                                                     data-name="distance_from_your_home" onclick="open_modal(this)">
-                                                    @isset($nurse->distance_from_your_home)
+                                                    @if (!!$nurse->distance_from_your_home)
                                                         {{ $nurse->distance_from_your_home }}
                                                     @else
                                                         Where
                                                         does
                                                         the IRS think you live?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1340,13 +1340,13 @@
                                                     data-placeholder="How quickly you can be ready to submit?"
                                                     data-name="worker_urgency" onclick="open_modal(this)">
 
-                                                    @isset($nurse->worker_urgency)
+                                                    @if (!!$nurse->worker_urgency)
                                                         {{ $nurse->worker_urgency }}
                                                     @else
                                                         How quickly you
                                                         can
                                                         be ready to submit?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1366,12 +1366,12 @@
                                                     data-href="{{ route('info-required') }}"
                                                     data-title="How long have you done this? <br/>(The specialty you’re applying for)"
                                                     data-name="worker_experience" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_experience)
+                                                    @if (!!$nurse->worker_experience)
                                                         {{ $nurse->worker_experience }}
                                                     @else
                                                         How long have
                                                         you done this?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1468,12 +1468,12 @@
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Will you do call?" data-name="worker_on_call_check"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_on_call_check)
+                                                    @if (!!$nurse->worker_on_call_check)
                                                         {{ $nurse->worker_on_call_check }}
                                                     @else
                                                         Will you do
                                                         call?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1494,13 +1494,13 @@
                                                     data-title="Do you want Block Scheduling?"
                                                     data-name="block_scheduling" onclick="open_modal(this)">
 
-                                                    @isset($nurse->block_scheduling)
+                                                    @if (!!$nurse->block_scheduling)
                                                         {{ $nurse->block_scheduling }}
                                                     @else
                                                         Do you want
                                                         Block
                                                         Scheduling?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1519,11 +1519,11 @@
                                                 <p class="profile_info_text" data-target="binary"
                                                     data-title="Are you willing to float ?" data-name="float_requirement"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->float_requirement)
+                                                    @if (!!$nurse->float_requirement)
                                                         {{ $nurse->float_requirement }}
                                                     @else
                                                         Are you willing to float ?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1542,12 +1542,12 @@
                                                     data-title="How many patients can you handle?"
                                                     data-placeholder="How many patients can you handle?"
                                                     data-name="worker_patient_ratio" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_patient_ratio)
+                                                    @if (!!$nurse->worker_patient_ratio)
                                                         {{ $nurse->worker_patient_ratio }}
                                                     @else
                                                         How many
                                                         patients can you handle?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1565,12 +1565,12 @@
                                                 <p class="profile_info_text" data-target="multi_select"
                                                     data-title="What EMRs have you used?" data-filter="EMR"
                                                     data-name="worker_emr" onclick="open_modal(this)">
-                                                    @isset($nurse->worker_emr)
+                                                    @if (!!$nurse->worker_emr)
                                                         {{ $nurse->worker_emr }}
                                                     @else
                                                         What
                                                         EMRs have you used?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>
@@ -1604,11 +1604,11 @@
                                                     data-title="What EMRs have you used?"
                                                     data-filter="nurseClassification" data-name="worker_classification"
                                                     onclick="open_modal(this)">
-                                                    @isset($nurse->worker_classification)
+                                                    @if (!!$nurse->worker_classification)
                                                         {{ $nurse->worker_classification }}
                                                     @else
                                                         What's your file cabinet ID?
-                                                    @endisset
+                                                    @endif
                                                 </p>
                                             </li>
                                         </ul>

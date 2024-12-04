@@ -1183,14 +1183,47 @@ span.ui-slider-handle.ui-corner-all.ui-state-default:focus {
 button.ss-fliter-btn {
     border: 0;
     background: #3d2c39;
-    padding: 10px 60px;
+    padding: 10px ;
+    color: #fff;
+    font-size: 18px;
+    width: 100%;
+    border-radius: 100px;
+}
+/* filter reset button */
+span.ss-reset-btn {
+    border: 1px #3d2c39 solid;
+    cursor: pointer;
+    background: #3d2c3998;
+    padding: 10px ;
+    text-align: center;
     color: #fff;
     font-size: 18px;
     width: 100%;
     border-radius: 100px;
 }
 
-.ss-dash-explr-job-dv .ss-fliter-btn{
+/* terms multiselect */
+.ss-prsnl-frm-terms ul {
+    list-style-type: none;
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+}
+.ss-prsnl-frm-terms .terms-content ul {
+    display: flex;
+    align-items: center !important;
+    margin-top: 8px;
+} 
+.ss-prsnl-frm-terms .terms-content ul li:nth-child(1) {
+    width: 90%;
+}
+.ss-prsnl-frm-terms .terms-content ul li:nth-child(2) {
+    width: 40%;
+}
+
+
+
+.ss-dash-explr-job-dv .ss-fliter-btn , .ss-dash-explr-job-dv .ss-reset-btn {
     margin-top: 20px;
 }
 
