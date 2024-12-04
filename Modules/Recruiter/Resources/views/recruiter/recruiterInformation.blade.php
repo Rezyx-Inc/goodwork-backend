@@ -24,8 +24,11 @@
                         <ul>
                             <li>
                                 <h6>Organization Name</h6>
-                                @php 
-                                    $organization = \App\Models\User::where('id', $jobdetails->organization_id)->first();
+                                @php
+                                    $organization = \App\Models\User::where(
+                                        'id',
+                                        $jobdetails->organization_id,
+                                    )->first();
                                 @endphp
                                 <p>{{ $organization->organization_name ?? 'Missing Information' }}</p>
                                 </p>
@@ -472,213 +475,214 @@
                                 </ul>
                             </div>
 
-                    
 
-                    <div class="col-md-12 mb-4 collapse-container">
-                        <p>
-                            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-5" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                Work Info
-                            </a>
-                        </p>
-                    </div>
-                    <div class="row collapse" id="collapse-5">
 
-                        <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
-                            style="display: flex; justify-content: center; align-items: center;">
-
-                            {{--  Urgency --}}
-
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Urgency</p>
-                                <h6>{{ $jobdetails->urgency ?? 'Missing Urgency information' }}</h6>
+                            <div class="col-md-12 mb-4 collapse-container">
+                                <p>
+                                    <a class="btn first-collapse" data-toggle="collapse" href="#collapse-5"
+                                        role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Work Info
+                                    </a>
+                                </p>
                             </div>
+                            <div class="row collapse" id="collapse-5">
+
+                                <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
+                                    style="display: flex; justify-content: center; align-items: center;">
+
+                                    {{--  Urgency --}}
+
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Urgency</p>
+                                        <h6>{{ $jobdetails->urgency ?? 'Missing Urgency information' }}</h6>
+                                    </div>
 
 
-                            {{--  preferred_experience --}}
+                                    {{--  preferred_experience --}}
 
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Experience</p>
-                                <h6>{{ $jobdetails->preferred_experience ?? '0' }} Years</h6>
-                            </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Experience</p>
+                                        <h6>{{ $jobdetails->preferred_experience ?? '0' }} Years</h6>
+                                    </div>
 
-                            {{--  Number of References --}}
+                                    {{--  Number of References --}}
 
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">No of References</p>
-                                <h6>{{ $jobdetails->number_of_references ?? 'Missing  No of References information' }}
-                            </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">No of References</p>
+                                        <h6>{{ $jobdetails->number_of_references ?? 'Missing  No of References information' }}
+                                    </div>
 
-                            {{-- skills  --}}
+                                    {{-- skills  --}}
 
-                            @if (isset($jobdetails->skills))
-                                @foreach (explode(',', $jobdetails->skills) as $value)
-                                    @if (isset($value))
+                                    @if (isset($jobdetails->skills))
+                                        @foreach (explode(',', $jobdetails->skills) as $value)
+                                            @if (isset($value))
+                                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                                    <p class="mt-3">Skills</p>
+                                                    <h6>{{ $value }}</h6>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @else
                                         <div class="col-lg-5 col-md-5 col-sm-12">
                                             <p class="mt-3">Skills</p>
-                                            <h6>{{ $value }}</h6>
+                                            <h6>Missing Skills information</h6>
                                         </div>
                                     @endif
-                                @endforeach
-                            @else
-                                <div class="col-lg-5 col-md-5 col-sm-12">
-                                    <p class="mt-3">Skills</p>
-                                    <h6>Missing Skills information</h6>
-                                </div>
-                            @endif
 
-                            {{--  block_scheduling --}}
+                                    {{--  block_scheduling --}}
 
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Block scheduling</p>
-                                <h6>{{ $jobdetails->block_scheduling == '1' ? 'Yes' : ($jobdetails->block_scheduling == '0' ? 'No' : 'Missing  information') }}
-                                </h6>
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Block scheduling</p>
+                                        <h6>{{ $jobdetails->block_scheduling == '1' ? 'Yes' : ($jobdetails->block_scheduling == '0' ? 'No' : 'Missing  information') }}
+                                        </h6>
+                                    </div>
+
+                                    {{-- float_requirement --}}
+
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Float Requirement</p>
+                                        <h6>{{ $jobdetails->float_requirement == '1' ? 'Yes' : ($jobdetails->float_requirement == '0' ? 'No' : 'Missing  information') }}
+                                        </h6>
+                                    </div>
+
+
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Patient ratio</p>
+                                        <h6>{{ $jobdetails->Patient_ratio ?? 'Missing Patient ratio information' }}
+                                        </h6>
+                                    </div>
+
+
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">EMR</p>
+                                        <h6>{{ $jobdetails->Emr ?? 'Missing EMR information' }}</h6>
+                                    </div>
+
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Unit</p>
+                                        <h6>{{ $jobdetails->Unit ?? 'Missing Unit information' }}</h6>
+                                    </div>
+                                </ul>
                             </div>
 
-                            {{-- float_requirement --}}
-
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Float Requirement</p>
-                                <h6>{{ $jobdetails->float_requirement == '1' ? 'Yes' : ($jobdetails->float_requirement == '0' ? 'No' : 'Missing  information') }}
-                                </h6>
+                            <div class="col-md-12 mb-4 collapse-container">
+                                <p>
+                                    <a class="btn first-collapse" data-toggle="collapse" href="#collapse-6"
+                                        role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        ID & Tax Info
+                                    </a>
+                                </p>
                             </div>
+                            <div class="row collapse" id="collapse-6">
+                                <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
+                                    style="display: flex; justify-content: center; align-items: center;">
 
-
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Patient ratio</p>
-                                <h6>{{ $jobdetails->Patient_ratio ?? 'Missing Patient ratio information' }}</h6>
-                            </div>
-
-
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">EMR</p>
-                                <h6>{{ $jobdetails->Emr ?? 'Missing EMR information' }}</h6>
-                            </div>
-
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Unit</p>
-                                <h6>{{ $jobdetails->Unit ?? 'Missing Unit information' }}</h6>
-                            </div>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-12 mb-4 collapse-container">
-                        <p>
-                            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-6" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                ID & Tax Info
-                            </a>
-                        </p>
-                    </div>
-                    <div class="row collapse" id="collapse-6">
-                        <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
-                            style="display: flex; justify-content: center; align-items: center;">
-
-                            {{-- nurse_classification --}}
-                            @if (isset($jobdetails->nurse_classification))
-                                @foreach (explode(',', $jobdetails->nurse_classification) as $value)
-                                    @if (isset($value))
+                                    {{-- nurse_classification --}}
+                                    @if (isset($jobdetails->nurse_classification))
+                                        @foreach (explode(',', $jobdetails->nurse_classification) as $value)
+                                            @if (isset($value))
+                                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                                    <p class="mt-3">Nurse Classification</p>
+                                                    <h6>{{ $value }}</h6>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @else
                                         <div class="col-lg-5 col-md-5 col-sm-12">
                                             <p class="mt-3">Nurse Classification</p>
-                                            <h6>{{ $value }}</h6>
+                                            <h6>Missing Nurse Classification information</h6>
                                         </div>
                                     @endif
-                                @endforeach
-                            @else
-                                <div class="col-lg-5 col-md-5 col-sm-12">
-                                    <p class="mt-3">Nurse Classification</p>
-                                    <h6>Missing Nurse Classification information</h6>
-                                </div>
-                            @endif
-                        </ul>
-                    </div>
+                                </ul>
+                            </div>
 
-                    <div class="col-md-12 mb-4 collapse-container">
-                        <p>
-                            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-7" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                Medical info
-                            </a>
-                        </p>
-                    </div>
-                    <div class="row collapse" id="collapse-7">
+                            <div class="col-md-12 mb-4 collapse-container">
+                                <p>
+                                    <a class="btn first-collapse" data-toggle="collapse" href="#collapse-7"
+                                        role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Medical info
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="row collapse" id="collapse-7">
 
-                        <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
-                            style="display: flex; justify-content: center; align-items: center;">
-                            {{--  vaccinations --}}
+                                <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
+                                    style="display: flex; justify-content: center; align-items: center;">
+                                    {{--  vaccinations --}}
 
 
-                            @if (isset($jobdetails->vaccinations))
-                                @foreach (explode(',', $jobdetails->vaccinations) as $value)
-                                    @if (isset($value))
+                                    @if (isset($jobdetails->vaccinations))
+                                        @foreach (explode(',', $jobdetails->vaccinations) as $value)
+                                            @if (isset($value))
+                                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                                    <p class="mt-3">Vaccinations & Immunizations</p>
+                                                    <h6>{{ $value }}</h6>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @else
                                         <div class="col-lg-5 col-md-5 col-sm-12">
                                             <p class="mt-3">Vaccinations & Immunizations</p>
-                                            <h6>{{ $value }}</h6>
+                                            <h6>Missing Vaccinations & Immunizations information</h6>
                                         </div>
                                     @endif
-                                @endforeach
-                            @else
-                                <div class="col-lg-5 col-md-5 col-sm-12">
-                                    <p class="mt-3">Vaccinations & Immunizations</p>
-                                    <h6>Missing Vaccinations & Immunizations information</h6>
-                                </div>
-                            @endif
-                        </ul>
-                    </div>
-                    <div class="col-md-12 mb-4 collapse-container">
-                        <p>
-                            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-8" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                Other Info
-                            </a>
-                        </p>
-                    </div>
-                    <div class="row collapse" id="collapse-8">
-
-                        <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
-                            style="display: flex; justify-content: center; align-items: center;">
-
-                            {{-- job_name --}}
-
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Job Name</p>
-                                <h6>{{ $jobdetails->job_name ?? 'Missing Job Name information' }}</h6>
+                                </ul>
                             </div>
-
-                            {{--  scrub_color --}}
-
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Scrub Color</p>
-                                <h6>{{ $jobdetails->scrub_color ?? 'Missing Scrub Color information' }}</h6>
+                            <div class="col-md-12 mb-4 collapse-container">
+                                <p>
+                                    <a class="btn first-collapse" data-toggle="collapse" href="#collapse-8"
+                                        role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Other Info
+                                    </a>
+                                </p>
                             </div>
+                            <div class="row collapse" id="collapse-8">
 
-                            {{-- holiday as skills --}}
+                                <ul class="row ss-s-jb-apl-on-inf-txt-ul mb-4"
+                                    style="display: flex; justify-content: center; align-items: center;">
 
-                            @if (isset($jobdetails->holidays))
-                                @foreach (explode(',', $jobdetails->holidays) as $value)
-                                    @if (isset($value))
+                                    {{-- job_name --}}
+
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Job Name</p>
+                                        <h6>{{ $jobdetails->job_name ?? 'Missing Job Name information' }}</h6>
+                                    </div>
+
+                                    {{--  scrub_color --}}
+
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Scrub Color</p>
+                                        <h6>{{ $jobdetails->scrub_color ?? 'Missing Scrub Color information' }}</h6>
+                                    </div>
+
+                                    {{-- holiday as skills --}}
+
+                                    @if (isset($jobdetails->holidays))
+                                        @foreach (explode(',', $jobdetails->holidays) as $value)
+                                            @if (isset($value))
+                                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                                    <p class="mt-3">Holidays</p>
+                                                    <h6>{{ $value }}</h6>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @else
                                         <div class="col-lg-5 col-md-5 col-sm-12">
                                             <p class="mt-3">Holidays</p>
-                                            <h6>{{ $value }}</h6>
+                                            <h6>Missing Holidays information</h6>
                                         </div>
                                     @endif
-                                @endforeach
-                            @else
-                                <div class="col-lg-5 col-md-5 col-sm-12">
-                                    <p class="mt-3">Holidays</p>
-                                    <h6>Missing Holidays information</h6>
-                                </div>
-                            @endif
 
-                            {{-- professional_state_licensure --}}
+                                    {{-- professional_state_licensure --}}
 
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <p class="mt-3">Professional State Licensure</p>
-                                <h6>{{ $jobdetails->professional_state_licensure ?? 'Missing Professional State Licensure information' }}
-                                </h6>
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        <p class="mt-3">Professional State Licensure</p>
+                                        <h6>{{ $jobdetails->professional_state_licensure ?? 'Missing Professional State Licensure information' }}
+                                        </h6>
+                                    </div>
+                                </ul>
                             </div>
-                        </ul>
-                    </div>
 
 
                     </div>
@@ -802,5 +806,4 @@
                             font-style: normal;
                             width: 100%;
                         }
-                        
                     </style>

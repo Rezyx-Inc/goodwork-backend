@@ -14,7 +14,7 @@ class ProfessionsTableSeeder extends Seeder
             'CMA',
             'Tech / Assist',
             'Therapy',
-            'Physicians',
+            'Physician',
             'PA',
             'CRNA',
             'NP',

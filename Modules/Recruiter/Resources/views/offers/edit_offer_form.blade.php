@@ -1043,7 +1043,7 @@
                 </div>
 
                 <div class="ss-counter-buttons-div">
-                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="editOffer(event)">Save</button>
+                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="editOffer(event)">Send Offer</button>
                 </div>
         </div>
     </div>    
