@@ -212,7 +212,7 @@
                         <p>{{ $value->terms }}</p>
                         <!-- <span>Applied to {{ $jobappliedcount }} {{ $jobappliedcount > 1 ? 'Works' : 'Work'}}</span> -->
                     </li>
-                    <li>Posted on {{ \Carbon\Carbon::parse($value->start_date)->format('M d, Y') }}</li>
+                    <li>Posted on {{ \Carbon\Carbon::parse($value->created_at)->format('M d, Y') }}</li>
                 </ul>
                 <h4>{{ $value->job_name }}</h4>
                 <ul class="ss-cng-appli-slid-ul2 d-block">

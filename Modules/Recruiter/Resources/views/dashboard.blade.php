@@ -74,7 +74,7 @@
                 const activePoints = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
                 if (activePoints.length > 0) {
                     const index = activePoints[0]._index;
-                    const label = chart.data.labels[index];
+                    const label = chart.data.labels[index] == 'New' ? 'Apply' : chart.data.labels[index];
                     const value = chart.data.datasets[0].data[index];
                     window.location = "/recruiter/recruiter-application/?view="+ label;
                 }

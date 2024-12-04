@@ -45,7 +45,8 @@
                     </option>
                     <option value="Submitted">Submitted
                     </option>
-                    <option value="Offered">Offered</option>
+                    <option value="Offered">Make an Offer</option>
+                    <option value="Rejected">Reject</option>
                     <option value="Done">Done</option>
                 </select>
             @else
@@ -61,11 +62,11 @@
                         {{ $offerdetails['status'] === 'Submitted' ? 'selected hidden disabled' : '' }}>Submitted
                     </option>
                     <option value="Offered"
-                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Offered</option>
+                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Make an Offer</option>
                     <option value="Done" {{ $offerdetails['status'] === 'Done' ? 'selected hidden disabled' : '' }}>
                         Done</option>
                     <option value="Onboarding"
-                        {{ $offerdetails['status'] === 'Onboarding hidden disabled' ? 'selected' : '' }}>
+                        {{ $offerdetails['status'] === 'Onboarding' ? 'selected hidden disabled' : '' }}>
                         Onboarding</option>
                     {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
                 </option> --}}
@@ -102,13 +103,13 @@
     {{-- Summary --}}
     <div class="row col-md-12 mb-4 mt-4 collapse-container">
         <p>
-            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-0">
+            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-0" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Summary
             </a>
         </p>
     </div>
 
-    <div class="row mb-4 collapse-static-container" style="padding:0px;" id="collapse-0">
+    <div class="row mb-4 collapse text-center" style="padding:0px;" id="collapse-0">
 
         {{-- type --}}
 
@@ -325,6 +326,20 @@
                             onclick="askWorker(this, 'city', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
                             Worker</a>
                     @endif
+                </p>
+            </div>
+        </div>
+        {{-- Resume --}}
+        <div class="col-md-12">
+            <span class="mt-3">Resume</span>
+        </div>
+
+        <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
+            <div class="col-md-6">
+                <h6>{{ $offerdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+            </div>
+            <div class="col-md-6 ">
+                <p id="resume-placeholder">
                 </p>
             </div>
         </div>
@@ -1467,10 +1482,10 @@
         <div class="col-md-12">
             <span class="mt-3">Patient ratio</span>
         </div>
-        <div class="row {{ $offerdetails->patient_ratio === $userdetails->nurse->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Patient_ratio === $userdetails->nurse->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->patient_ratio ?? 'Missing Patient Ratio Information' }}</h6>
+                <h6>{{ $offerdetails->Patient_ratio ?? 'Missing Patient Ratio Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1488,10 +1503,10 @@
         <div class="col-md-12">
             <span class="mt-3">EMR</span>
         </div>
-        <div class="row {{ $offerdetails->emr === $userdetails->nurse->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Emr === $userdetails->nurse->worker_emr ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->emr ?? 'Missing EMR Information' }}</h6>
+                <h6>{{ $offerdetails->Emr ?? 'Missing EMR Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1509,10 +1524,10 @@
         <div class="col-md-12">
             <span class="mt-3">Unit</span>
         </div>
-        <div class="row {{ $offerdetails->unit === $userdetails->nurse->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->Unit === $userdetails->nurse->worker_unit ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->unit ?? 'Missing Unit Information' }}</h6>
+                <h6>{{ $offerdetails->Unit ?? 'Missing Unit Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -1603,17 +1618,7 @@
 
 @if ($offerdetails->status == 'Screening')
     <div class="ss-counter-buttons-div">
-        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Send
-            1st
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
         <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
-        <button class="ss-reject-offer-btn"
-            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
             Offer</button>
     </div>
 @endif
@@ -1673,18 +1678,17 @@
         return item.trim();
 
     });
-    console.log('skills : ', job_skills_displayname);
 
     $(document).ready(async function() {
 
         worker_files = await get_all_files();
-        console.log('Worker files:', worker_files);
         checkFileMatch('certification');
         checkFileMatch('vaccination');
         checkFileMatch('references');
         checkFileMatch('skills');
-        // checkFileMatch('driving_license');
-        // checkFileMatch('diploma');
+        //checkFileMatch('driving_license');
+        //checkFileMatch('diploma');
+        checkFileMatch('resume');
 
     });
 
@@ -1693,11 +1697,18 @@
         var worker_id = @json($offerdetails['worker_user_id']);
         var offer_id = @json($offerdetails['id']);
         var placeholder = document.getElementById(fileType + '-placeholder');
-        console.log('file type:', fileType);
-        console.log('Placeholder:', placeholder);
 
         if (file.length > 0 && no_files == false) {
-            placeholder.innerHTML = file.join(', ');
+            
+            if(fileType == "resume"){
+            
+                placeholder.innerHTML = "Provided";
+            
+            }else{
+                
+                placeholder.innerHTML = file.join(', ');
+            }
+        
         } else {
             let areaDiv = document.getElementById(fileType);
             areaDiv.classList.add('ss-s-jb-apl-bg-pink');
@@ -1722,8 +1733,6 @@
                     WorkerId: worker_id
                 }),
                 success: function(resp) {
-                    console.log('Success:', resp);
-
                     let jsonResp = JSON.parse(resp);
                     files = jsonResp;
                     resolve(
@@ -1736,7 +1745,6 @@
                     updateWorkerFilesList([], 'vaccination');
                     updateWorkerFilesList([], 'references');
                     updateWorkerFilesList([], 'skills');
-                    console.log('Error:', resp);
                     reject(resp);
                 }
             });
@@ -1748,12 +1756,15 @@
 
         let files = worker_files.filter(file => file.type == type);
         let displayNames = [];
+
         if (type == 'references') {
             displayNames = files.map(file => file.ReferenceInformation.referenceName + ' - ' + file
                 .ReferenceInformation.minTitle);
+
         } else {
             displayNames = files.map(file => file.displayName);
         }
+
         worker_files_displayname_by_type = displayNames;
         return displayNames;
 
@@ -1761,13 +1772,11 @@
 
     async function checkFileMatch(inputName) {
 
-        console.log('Checking files for:', inputName);
         let worker_files_displayname_by_type = [];
 
         try {
 
             worker_files_displayname_by_type = await get_all_files_displayName_by_type(inputName);
-            console.log('Files:', worker_files_displayname_by_type);
 
         } catch (error) {
 
@@ -1836,6 +1845,21 @@
                 check = true;
             }
 
+        } else if (inputName == "resume"){
+            
+            updateWorkerFilesList(worker_files_displayname_by_type, 'resume');
+
+            let is_resume = @json($offerdetails["is_resume"]);
+
+            if (worker_files_displayname_by_type.length > 0 && is_resume) {
+
+                check = true;
+            
+            }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+                check = true;
+            }else{
+                check = false;
+            }
         }
 
         if (check) {
@@ -1851,13 +1875,10 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         var workerId = @json($offerdetails['worker_user_id']);
-        console.log(workerId);
-        console.log('worker id', workerId);
 
         function activeWorkerClass(workerUserId) {
 
             var element = document.getElementById(workerUserId);
-            console.log('element', element);
             element.classList.add('active');
 
         }

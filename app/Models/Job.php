@@ -169,7 +169,8 @@ class Job extends Model
         'facility_state',
         'pay_frequency',
         'benefits',
-        'professional_state_licensure'
+        'professional_state_licensure',
+        'is_resume',
 
     ];
 
@@ -260,7 +261,7 @@ class Job extends Model
                     $match = false;
                 };
                 $profile_info_text = "What kind of professional are you ?";
-                if (!empty($nurse->profession)) {
+                if (!empty($nurse->profession && $job->profession == $nurse->profession)) {
                     $match = true;
                 }
                 // if (!empty($nurse->profession)) {

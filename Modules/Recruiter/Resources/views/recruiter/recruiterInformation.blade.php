@@ -25,9 +25,9 @@
                             <li>
                                 <h6>Organization Name</h6>
                                 @php 
-                                    $organization = \App\Models\User::where('id', $jobdetails->organization_id)->first();
+                                    $recruiter = \App\Models\User::where('id', $jobdetails->recruiter_id)->first();
                                 @endphp
-                                <p>{{ $organization->organization_name ?? 'Missing Information' }}</p>
+                                <p>{{ $recruiter->organization_name ?? 'Missing Information' }}</p>
                                 </p>
                             </li>
                             <li>
@@ -121,6 +121,13 @@
                             <div class="col-lg-5 col-md-5 col-sm-12">
                                 <p class="mt-3">City</p>
                                 <h6>{{ $jobdetails->job_city ?? 'Missing City information' }}</h6>
+                            </div>
+
+                            {{-- is_resume --}}
+
+                            <div class="col-lg-5 col-md-5 col-sm-12">
+                                <p class="mt-3">Resume</p>
+                                <h6>{{ $jobdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
                             </div>
 
 
