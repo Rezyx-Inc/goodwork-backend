@@ -38,8 +38,7 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <p>You're just a few percent away from revenue. Complete your profile and get
-                                            5%.
+                                        <p>You're just a few percent away from revenue. Complete your profile and get 50%.
                                         </p>
                                     </div>
                                 </div>
@@ -261,17 +260,17 @@
                                                     id="SaveBonusInformation"> Save
                                                 </button>
                                                 <!-- <span class="col-12"
-                                                                                                                                                                                                                                                                                                        style="display: block;
+                                                                                                                                                                                                                                                                                                                style="display: block;
                                                color: #000;
                                                font-size: 16px;
                                                font-weight: 500;
                                                margin-top: 0px">Or</span>
-                                                                                                                                                                                                                                                                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                                                                                                                                                                                                                                                                        id="AddStripeAccount"> Add Stripe Account
-                                                                                                                                                                                                                                                                                                    </button>
-                                                                                                                                                                                                                                                                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                                                                                                                                                                                                                                                                        id="AccessToStripeAccount"> Access to your Stripe account
-                                                                                                                                                                                                                                                                                                    </button> -->
+                                                                                                                                                                                                                                                                                                            <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                                                                                                                                                                                                                                                                                id="AddStripeAccount"> Add Stripe Account
+                                                                                                                                                                                                                                                                                                            </button>
+                                                                                                                                                                                                                                                                                                            <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                                                                                                                                                                                                                                                                                id="AccessToStripeAccount"> Access to your Stripe account
+                                                                                                                                                                                                                                                                                                            </button> -->
                                             </div>
                                         </div>
                                     </div>
