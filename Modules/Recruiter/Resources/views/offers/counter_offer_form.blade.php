@@ -1,14 +1,6 @@
 <div>
-    <div class="mb-3">
+    <div class="mb-2 mt-3">
         <h4 class="d-flex align-items-center"><img style="cursor: pointer; margin-right:10px;" onclick="getOneOfferInformation('{{ $offerdetails['id'] }}')" src="{{ URL::asset('recruiter/assets/images/counter-left-img.png') }}"> Send Offer</h4>
-    </div>
-    <div class="ss-job-view-off-text-fst-dv">
-        <p class="mt-3">On behalf of <a href="">Albus Percival , Hogwarts</a> would like to offer <a
-                href="#">{{ $offerdetails['id'] }}</a>
-            to <a href="#">{{ $userdetails->first_name }} {{ $userdetails->last_name }}</a> 
-           
-        </p>
-
     </div>
 </div>
 
@@ -41,8 +33,8 @@
             </div>
 
             {{-- Org Job Id --}}
-
-            <div class="ss-form-group col-md-12">
+            {{-- this job_id here reffer to the id of a job not the org job id, we will hide it for now until we add a field for the org job id in the offer table --}}
+            <div class="ss-form-group col-md-12 d-none">
                 <label>Org Job Id</label>
                 <input type="text" name="job_id" id="job_id"
                     placeholder="Enter Work Id">
@@ -1030,7 +1022,7 @@
                 </div>
 
                 <div class="ss-counter-buttons-div">
-                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="offerSend(event)">Save</button>
+                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="offerSend(event)">Send</button>
                 </div>
         </div>
     </div>    

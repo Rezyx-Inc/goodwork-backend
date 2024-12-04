@@ -306,8 +306,8 @@ class ApplicationController extends Controller
     {
         //return $request->data;
         
-        $validator = Validator::make($request->all(), [
-            'offer_id' => 'required',
+        $validator = Validator::make($request->data, [
+            'id' => 'required',
         ]);
         $responseData = [];
         if ($validator->fails()) {
@@ -317,10 +317,11 @@ class ApplicationController extends Controller
             ];
         } else {
             try {
-                $offer = Offer::where('id', $request->offer_id)->first();
+                $data = $request->data;
+                $offer = Offer::where('id', $data['id'])->first();
 
                 if ($offer) {
-                    $offer->update($request->data);
+                    $offer->update($data);
                     $responseData = [
                         'status' => 'success',
                         'message' => 'Offer Updated Successfully',
@@ -583,17 +584,19 @@ class ApplicationController extends Controller
             $worker_id = $offer->worker_user_id;
             $worker_details = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $worker_details->user_id)->first();
+            $organization = User::where('id', $offer->organization_id)->first();
+            $recruiter = Auth::guard('recruiter')->user();
 
             if ($offer->status == 'Offered') {
                 $offerLogsDiff = OffersLogs::select('details')->where('original_offer_id', $offer_id)->first();
                 if(empty($offerLogsDiff)){
                     $offerLogsDiff = null;
                 }
-                $response['content'] = view('recruiter::offers.new_terms_vs_old_terms', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'diff' => $offerLogsDiff])->render(); 
+                $response['content'] = view('recruiter::offers.new_terms_vs_old_terms', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'diff' => $offerLogsDiff, 'organization' => $organization, 'recruiter' => $recruiter])->render();
                 return response()->json($response);
             }
 
-            $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
+            $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'organization' => $organization, 'recruiter' => $recruiter])->render();
             
             return response()->json($response);
         

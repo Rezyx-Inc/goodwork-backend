@@ -1049,10 +1049,12 @@ function addcertifications(type) {
     
 
     function editOffer(event) {  
+        
         try {
             event.preventDefault();
             getValues(OfferFieldsName);
-
+            getMultiSelectValues();
+            console.log(data);
             let id = document.getElementById('offer_id').value;
             console.log(data.is_resume);
 
@@ -1071,17 +1073,30 @@ function addcertifications(type) {
                     type: 'POST',
                     dataType: 'json',
                     success: function(result) {
+
+                        if(result.status == 'error'){
+                            notie.alert({
+                                type: 'error',
+                                text: '<i class="fa fa-times"></i> '+result.message,
+                                time: 3
+                            });
+                            return null;
+                        }
+
                         notie.alert({
                             type: 'success',
                             text: '<i class="fa fa-check"></i> Offer edited successfully',
                             time: 2
                         });
+
+                        applicationStatus('Offered', id);
+                        
                         setTimeout(() => {
                             //location.reload();
                         }, 2000);
                     },
                     error: function(error) {
-                        // console.log(error);
+                        console.log(error);
                     }
                 });
             } else {

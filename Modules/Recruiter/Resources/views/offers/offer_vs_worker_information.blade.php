@@ -114,7 +114,7 @@
         {{-- type --}}
 
         <div class="col-md-12">
-            <span class="mt-3">Job type</span>
+            <span class="mt-3">Type</span>
         </div>
         <div class="row {{ $offerdetails->type == $userdetails->nurse->worker_job_type ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -203,7 +203,7 @@
         </div>
         {{-- $/hr --}}
         <div class="col-md-12">
-            <span class="mt-3">Actual Hourly rate</span>
+            <span class="mt-3">$/hr</span>
         </div>
         <div class="row {{ $offerdetails->actual_hourly_rate === $userdetails->nurse->worker_actual_hourly_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -232,7 +232,7 @@
         </div>
         {{-- $/wk --}}
         <div class="col-md-12">
-            <span class="mt-3">Weekly Pay</span>
+            <span class="mt-3">$/wk</span>
         </div>
         <div class="row {{ $offerdetails->weekly_pay === $userdetails->nurse->worker_organization_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -261,7 +261,7 @@
         </div>
         {{-- hrs/wk --}}
         <div class="col-md-12">
-            <span class="mt-3">Hours/Week</span>
+            <span class="mt-3">Hrs/Wk</span>
         </div>
         <div class="row {{ $offerdetails->hours_per_week == $userdetails->nurse->worker_hours_per_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -359,7 +359,7 @@
     <div style="margin:auto;" class="row collapse text-center mb-4" id="collapse-1">
 
         <div class="col-md-12">
-            <span class="mt-3">Shift Time of Day</span>
+            <span class="mt-3">Shift Time</span>
         </div>
         <div class="row {{ $offerdetails->preferred_shift_duration == $userdetails->nurse->worker_shift_time_of_day ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -380,7 +380,7 @@
         </div>
         {{-- Guaranteed Hours --}}
         <div class="col-md-12">
-            <span class="mt-3">Guaranteed Hours</span>
+            <span class="mt-3">Guaranteed Hrs/wk</span>
         </div>
         <div class="row {{ $offerdetails->guaranteed_hours == $userdetails->nurse->worker_guaranteed_hours ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -408,7 +408,7 @@
         </div>
         {{-- Hours/Shift --}}
         <div class="col-md-12">
-            <span class="mt-3">Hours/Shift</span>
+            <span class="mt-3">Reg Hrs/Shift</span>
         </div>
         <div class="row {{ $offerdetails->hours_shift == $userdetails->nurse->worker_hours_shift ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -436,7 +436,7 @@
         </div>
         {{-- Shifts/Week --}}
         <div class="col-md-12">
-            <span class="mt-3">Shifts/Week</span>
+            <span class="mt-3">Shifts/Wk</span>
         </div>
         <div class="row {{ $offerdetails->weeks_shift == $userdetails->nurse->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -571,7 +571,7 @@
     <div style="margin:auto;" class="row collapse text-center mb-4" id="collapse-2">
         {{-- Overtime --}}
         <div class="col-md-12">
-            <span class="mt-3">Overtime</span>
+            <span class="mt-3">OT $/Hr</span>
         </div>
         <div class="row {{ $offerdetails->overtime === $userdetails->nurse->worker_overtime_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -599,7 +599,7 @@
         </div>
         {{-- on call --}}
         <div class="col-md-12">
-            <span class="mt-3">On Call Hourly Rate</span>
+            <span class="mt-3">On Call $/Hr</span>
         </div>
         <div class="row {{ $offerdetails->on_call_rate === $userdetails->nurse->worker_on_call ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -628,7 +628,7 @@
         </div>
         {{-- call back --}}
         <div class="col-md-12">
-            <span class="mt-3">Call Back Hourly Rate</span>
+            <span class="mt-3">Call Back $/Hr</span>
         </div>
         <div class="row {{ $offerdetails->call_back_rate === $userdetails->nurse->worker_call_back ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -656,7 +656,7 @@
         </div>
         {{-- Orientation Rate --}}
         <div class="col-md-12">
-            <span class="mt-3">Orientation Rate</span>
+            <span class="mt-3">Orientation $/Hr</span>
         </div>
         <div class="row {{ $offerdetails->orientation_rate === $userdetails->nurse->worker_orientation_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -684,7 +684,7 @@
         </div>
         {{-- Weekly Taxable amount --}}
         <div class="col-md-12">
-            <span class="mt-3">Est. Weekly Taxable amount</span>
+            <span class="mt-3">Taxable/Wk</span>
         </div>
         <div class="row {{ $offerdetails->weekly_taxable_amount === $userdetails->nurse->worker_weekly_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -713,7 +713,7 @@
         </div>
         {{-- Weekly non-taxable amount --}}
         <div class="col-md-12">
-            <span class="mt-3">Est. Weekly non-taxable amount</span>
+            <span class="mt-3">Non-taxable/Wk</span>
         </div>
         <div class="row {{ $offerdetails->weekly_non_taxable_amount === $userdetails->nurse->worker_weekly_non_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -771,13 +771,13 @@
         </div>
 
         {{--  Gw$/Wk --}}
-        <div class="col-md-12">
+        {{-- <div class="col-md-12">
             <span class="mt-3">Est. Goodwork Weekly Amount</span>
         </div>
         <div class="col-md-12">
             <h6>{{ isset($offerdetails->goodwork_weekly_amount) ? '$ ' . number_format($offerdetails->goodwork_weekly_amount) : 'Missing Est. Goodwork Weekly Amount Information' }}
             </h6>
-        </div>
+        </div> --}}
         {{-- Referral Bonus --}}
         <div class="col-md-12">
             <span class="mt-3">Referral Bonus</span>
@@ -839,7 +839,7 @@
         </div>
 
         {{-- Completion Bonus --}}
-        <div class="col-md-12">
+        {{-- <div class="col-md-12">
             <span class="mt-3">Completion Bonus</span>
         </div>
         <div class="row {{ $offerdetails->completion_bonus === $userdetails->nurse->worker_completion_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
@@ -865,7 +865,7 @@
                             '\')">Ask Worker</a>' !!}
                 </p>
             </div>
-        </div>
+        </div> --}}
         {{-- Extension Bonus --}}
         <div class="col-md-12">
             <span class="mt-3">Extension Bonus</span>
@@ -895,7 +895,7 @@
             </div>
         </div>
         {{-- Other Bonus --}}
-        <div class="col-md-12">
+        {{-- <div class="col-md-12">
             <span class="mt-3">Other Bonus</span>
         </div>
         <div class="row {{ $offerdetails->other_bonus === $userdetails->nurse->worker_other_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
@@ -921,6 +921,15 @@
                             '\')">Ask Worker</a>' !!}
                 </p>
             </div>
+        </div> --}}
+
+         {{-- Est. Total Organization Amount --}}
+         <div class="col-md-12">
+            <span class="mt-3">$/Org</span>
+        </div>
+        <div class="col-md-12">
+            <h6> {{ isset($offerdetails->total_organization_amount) ? '$ ' . number_format($offerdetails->total_organization_amount) : 'Missing Est. Total Organization Amount Information' }}
+            </h6>
         </div>
         {{-- Pay Frequency --}}
 
@@ -983,30 +992,7 @@
             </div>
         </div>
 
-        {{-- Est. Total Organization Amount --}}
-        <div class="col-md-12">
-            <span class="mt-3">Est. Total Organization Amount</span>
-        </div>
-        <div class="col-md-12">
-            <h6> {{ isset($offerdetails->total_organization_amount) ? '$ ' . number_format($offerdetails->total_organization_amount) : 'Missing Est. Total Organization Amount Information' }}
-            </h6>
-        </div>
-        {{-- Total Goodwork Amount --}}
-        <div class="col-md-12">
-            <span class="mt-3">Est. Total Goodwork Amount</span>
-        </div>
-        <div class="col-md-12">
-            <h6>{{ isset($offerdetails->total_goodwork_amount) ? '$ ' . number_format($offerdetails->total_goodwork_amount) : 'Missing Est. Total Goodwork Amount Information' }}
-            </h6>
-        </div>
-        {{-- Total Contract Amount --}}
-        <div class="col-md-12">
-            <span class="mt-3">Est. Total Contract Amount</span>
-        </div>
-        <div class="col-md-12">
-            <h6>{{ isset($offerdetails->total_contract_amount) ? '$ ' . number_format($offerdetails->total_contract_amount) : 'Missing Est. Total Contract Amount Information' }}
-            </h6>
-        </div>
+       
     </div>
     {{-- End Pay --}}
     {{-- Location --}}
@@ -1044,7 +1030,7 @@
 
         {{-- Preferred Work Location --}}
         <div class="col-md-12">
-            <span class="mt-3">Preferred Work Location</span>
+            <span class="mt-3">Adress</span>
         </div>
         <div class="row {{ $offerdetails->preferred_work_location === $userdetails->nurse->worker_preferred_work_location ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -1067,7 +1053,7 @@
         {{-- Facility Name --}}
 
         <div class="col-md-12">
-            <span class="mt-3">Facility Name</span>
+            <span class="mt-3">Facility</span>
         </div>
         <div class="row {{ $offerdetails->facility_name === $userdetails->nurse->worker_facility_name ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -1156,7 +1142,7 @@
         </div>
         {{-- Traveler Distance From Facility --}}
         <div class="col-md-12">
-            <span class="mt-3">Traveler Distance From Facility</span>
+            <span class="mt-3">Perm address miles from facility</span>
         </div>
         <div class="row {{ $offerdetails->traveler_distance_from_facility === $userdetails->nurse->distance_from_your_home ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -1289,7 +1275,7 @@
         </div>
 
         {{-- urgency --}}
-        <div class="col-md-12">
+        {{-- <div class="col-md-12">
             <span class="mt-3">Urgency</span>
         </div>
         <div class="row {{ $offerdetails->urgency === $userdetails->nurse->worker_urgency ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
@@ -1318,12 +1304,12 @@
                     @endif
                 </p>
             </div>
-        </div>
+        </div> --}}
 
         {{-- Experience --}}
 
         <div class="col-md-12">
-            <span class="mt-3">Preferred Experience</span>
+            <span class="mt-3">Experience</span>
         </div>
         <div class="row {{ $offerdetails->preferred_experience === $userdetails->nurse->worker_experience ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -1361,7 +1347,7 @@
 
         {{-- Skills --}}
         <div class="col-md-12">
-            <span class="mt-3">Skills</span>
+            <span class="mt-3">Skills checklist</span>
         </div>
 
         @php
@@ -1387,7 +1373,7 @@
             <span class="mt-3">On Call</span>
         </div>
 
-        <div class="row {{ $offerdetails->on_call === $userdetails->nurse->on_call ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div class="row {{ $offerdetails->on_call === $userdetails->nurse->worker_on_call ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
                 <h6>
@@ -1480,7 +1466,7 @@
         </div>
         {{-- Patient ratio --}}
         <div class="col-md-12">
-            <span class="mt-3">Patient ratio</span>
+            <span class="mt-3">Patient Ratio Max</span>
         </div>
         <div class="row {{ $offerdetails->Patient_ratio === $userdetails->nurse->worker_patient_ratio ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
@@ -1616,9 +1602,9 @@
 
 </div>
 
-@if ($offerdetails->status == 'Screening')
+@if ($offerdetails->status == 'Screening' || $offerdetails->status == 'Submitted')
     <div class="ss-counter-buttons-div">
-        <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
+        <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Make
             Offer</button>
     </div>
 @endif
