@@ -540,6 +540,7 @@ class OrganizationController extends Controller
                     'job_id' => 'nullable|string',
                     'job_name' => 'nullable|string',
                     'job_city' => 'nullable|string',
+                    'is_resume' => 'nullable|string',
                     'job_state' => 'nullable|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'nullable|string',
@@ -614,7 +615,7 @@ class OrganizationController extends Controller
                         'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
                         'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                         'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-                        'professional_state_licensure'
+                        'professional_state_licensure', 'is_resume'
                     ];
                 
                     foreach ($fields as $field) {
@@ -627,6 +628,11 @@ class OrganizationController extends Controller
                     $job->created_by = $created_by;
                     $job->active = false;
                     $job->is_open = false;
+
+                    // Check if the is_resume bool is set
+                    if (!isset($request->is_resume)){
+                        $job->is_resume = false;
+                    }
                 
                     $job->save();
                 } catch (Exception $e) {
@@ -641,6 +647,7 @@ class OrganizationController extends Controller
                     'job_name' => 'nullable|string',
                     'job_id' => 'nullable|string',
                     'job_city' => 'required|string',
+                    'is_resume' => 'nullable|string',
                     'job_state' => 'required|string',
                     'weekly_pay' => 'required|numeric',
                     'preferred_specialty' => 'required|string',
@@ -709,7 +716,7 @@ class OrganizationController extends Controller
                     'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
                     'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                     'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
-                    'professional_state_licensure'
+                    'professional_state_licensure', 'is_resume'
                 ];
                 
                 foreach ($fields as $field) {
@@ -722,6 +729,11 @@ class OrganizationController extends Controller
                 $job->created_by = $created_by;
                 $job->active = true;
                 $job->is_open = true;
+
+                // Check if the is_resume bool is set
+                if (!isset($request->is_resume)){
+                    $job->is_resume = false;
+                }
                 
                 $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
                 $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
@@ -790,6 +802,7 @@ class OrganizationController extends Controller
                     'job_name' => 'nullable|string',
                     'job_id' => 'nullable|string',
                     'job_city' => 'nullable|string',
+                    'is_resume' => 'nullable|string',
                     'job_state' => 'nullable|string',
                     'weekly_pay' => 'nullable|numeric',
                     'preferred_specialty' => 'nullable|string',
@@ -862,7 +875,7 @@ class OrganizationController extends Controller
                 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us', 'recency_of_reference',
                 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
                 'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour',
-                'as_soon_as', 'professional_state_licensure'
+                'as_soon_as', 'professional_state_licensure','is_resume'
             ];
             
             foreach ($fields as $field) {
@@ -876,6 +889,11 @@ class OrganizationController extends Controller
             $job->active = false;
             $job->is_open = false;
             
+            // Check if the is_resume bool is set
+            if (!isset($request->is_resume)){
+                $job->is_resume = false;
+            }
+
             // Save the job data to the database
             $job->save();
 
@@ -940,6 +958,7 @@ class OrganizationController extends Controller
                 'job_id' => 'nullable|string',
                 'job_city' => 'required|string',
                 'job_state' => 'required|string',
+                'is_resume' => 'nullable|string',
                 'weekly_pay' => 'required|numeric',
                 'preferred_specialty' => 'required|string',
                 'preferred_work_location' => 'nullable|string',
@@ -1012,7 +1031,7 @@ class OrganizationController extends Controller
                 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy', 'Emr', 'on_call_rate',
                 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
                 'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
-                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as' , 'professional_state_licensure'
+                'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as' , 'professional_state_licensure','is_resume'
             ];
             
             foreach ($fields as $field) {
@@ -1026,6 +1045,10 @@ class OrganizationController extends Controller
             $job->active = true;
             $job->is_open = true;
             
+            // Check if the is_resume bool is set
+            if (!isset($request->is_resume)){
+                $job->is_resume = false;
+            }
             $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
             $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
             $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
