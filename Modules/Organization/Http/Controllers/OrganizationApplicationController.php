@@ -125,7 +125,8 @@ class OrganizationApplicationController extends Controller
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        $statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $id)->select(\DB::raw('status, count(distinct worker_user_id) as count'))->groupBy('status')->get();
+        //$statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $id)->select(\DB::raw('status, count(distinct worker_user_id) as count'))->groupBy('status')->get();
+        $statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
             if ($statusCount) {
                 $statusCounts[$statusCount->status] = $statusCount->count;
@@ -584,7 +585,8 @@ class OrganizationApplicationController extends Controller
                     $statusCounts[$status] = 0;
                 }
 
-                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $organization_id)->select(\DB::raw('status, count(distinct worker_user_id) as count'))->groupBy('status')->get();
+                //$statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $organization_id)->select(\DB::raw('status, count(distinct worker_user_id) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $organization_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;
