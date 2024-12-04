@@ -190,13 +190,13 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    {
-        fieldID: "goodwork_weekly_amount",
-        workerFieldIdMatch: "",
-        displayName: "Gw$/Wk or Gw$/Hr",
-        publishDisabled: false,
-        applyDisabled: true
-    },
+    // {
+    //     fieldID: "goodwork_weekly_amount",
+    //     workerFieldIdMatch: "",
+    //     displayName: "Gw$/Wk or Gw$/Hr",
+    //     publishDisabled: false,
+    //     applyDisabled: true
+    // },
     {
         fieldID: "referral_bonus",
         workerFieldIdMatch: "worker_referral_bonus",
@@ -239,13 +239,13 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: true
     },
-    {
-        fieldID: "total_goodwork_amount",
-        workerFieldIdMatch: "",
-        displayName: "$/Gw",
-        publishDisabled: false,
-        applyDisabled: true
-    },
+    // {
+    //     fieldID: "total_goodwork_amount",
+    //     workerFieldIdMatch: "",
+    //     displayName: "$/Gw",
+    //     publishDisabled: false,
+    //     applyDisabled: true
+    // },
     {
         fieldID: "total_contract_amount",
         workerFieldIdMatch: "",
