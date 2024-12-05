@@ -519,7 +519,8 @@ class WorkerDashboardController extends Controller
     $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
     $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
     $usa = Countries::where(['iso3' => 'USA'])->first();
-    $data['us_states'] = States::where('country_id', $usa->id)->get();
+    //$data['us_states'] = States::where('country_id', $usa->id)->get();
+    $data['us_states'] = State::select('id', 'name')->get();
     
     // Set filter values from the request, use null as the default if not provided
     $data['job_id'] = $request->input('gw', null);

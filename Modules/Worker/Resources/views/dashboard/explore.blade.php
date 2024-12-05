@@ -60,7 +60,7 @@
                                     </select>
                                 </div>
 
-                                <div class="ss-input-slct-grp">
+                                {{-- <div class="ss-input-slct-grp">
                                     <label>State</label>
                                     <select name="state" onchange="get_cities(this)">
                                         <option value="">Select</option>
@@ -71,7 +71,22 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                </div> --}}
+                                <div class="ss-form-group col-md-12">
+                                    <label> State </label>
+                                    <select name="state" id="state">
+                                        <option value="" disabled selected hidden>Select a State</option>
+                                        @foreach ($us_states as $state)
+                                            <option id="{{ $state->id }}" value="{{ $state->name }}">
+                                                {{ $state->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div>
+                                        <span class="helper help-block-job_state"></span>
+                                    </div>
                                 </div>
+
 
                                 <div class="ss-input-slct-grp">
                                     <label>City</label>
@@ -397,6 +412,40 @@
 
 @section('js')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        // get cities according to state :
+
+        const jobState = document.getElementById('state');
+        const jobCity = document.getElementById('city');
+        let citiesData = [];
+        const selectedJobState = jobState.value;
+        const selectedState = $(jobState).find(':selected').attr('id');
+
+        jobState.addEventListener('change', async function() {
+
+            const selectedJobState = this.value;
+            const selectedState = $(this).find(':selected').attr('id');
+
+            await $.get(`/api/cities/${selectedState}`, function(cities) {
+                citiesData = cities;
+            });
+
+            jobCity.innerHTML = '<option value="">Cities</option>';
+
+            citiesData.forEach(function(City) {
+
+                const option = document.createElement('option');
+                option.value = City.name;
+                option.textContent = City.name;
+                jobCity.appendChild(option);
+
+            });
+
+        })
+
+    </script>
+
 
     <script>
                 let terms = []; // Initialize terms as an array to store only values (texts)
