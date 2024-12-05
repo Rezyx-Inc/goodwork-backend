@@ -629,11 +629,11 @@ class WorkerDashboardController extends Controller
 
 
     if (isset($request->state)) {
-      $ret->where('job_state', '=', $data['state']);
+      $ret->where('job_state', 'like', $data['state']);
     }
 
     if (isset($request->city)) {
-      $ret->where('job_city', '=', $data['city']);
+      $ret->where('job_city', 'like', $data['city']);
     }
 
     //return response()->json(['message' =>  $ret->get()]);
