@@ -13,6 +13,14 @@
 
     <div class="ss-form-group">
 
+        {{-- @include('worker::components.custom_multiple_select_input', [
+            'id' => 'certifications',
+            'label' => 'Select Certifications',
+            'name' => 'certifications',
+            'options' => $allKeywords['Type'],
+            'selected' => old('certifications', 'certif1,certif2,certif3'),
+        ]) --}}
+
         <label>Type</label>
         <select name="worker_job_type" id="worker_job_type">
             <option value="" disabled selected hidden>
