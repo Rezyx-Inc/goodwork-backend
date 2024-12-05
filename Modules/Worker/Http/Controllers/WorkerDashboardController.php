@@ -570,15 +570,15 @@ class WorkerDashboardController extends Controller
 
 
     if (!empty($data['job_type'])) {
-      $ret->where('job_type', '=', $data['job_type']);
+      $ret->where('job_type', 'like', $data['job_type']);
     }
 
     if (!empty($data['profession'])) {
-      $ret->where('profession', '=', $data['profession']);
+      $ret->where('profession', 'like', $data['profession']);
     }
 
     if (!empty($data['speciality'])) {
-      $ret->where('preferred_specialty', '=', $data['speciality']);
+      $ret->where('preferred_specialty', 'like', $data['speciality']);
     }
 
     if (!empty($data['terms'])) {
