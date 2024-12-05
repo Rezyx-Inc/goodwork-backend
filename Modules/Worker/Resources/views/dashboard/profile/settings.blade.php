@@ -32,6 +32,10 @@
         width: 100%;
         background: #FFEEEF;
     }
+    .ss-pers-info-form-mn-dv #worker-profile-form .ss-form-group label {
+        text-align: start;
+        padding: 5px 13px;
+    }
 </style>
 
 

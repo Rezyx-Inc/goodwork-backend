@@ -13,14 +13,6 @@
 
     <div class="ss-form-group">
 
-        {{-- @include('worker::components.custom_multiple_select_input', [
-            'id' => 'certifications',
-            'label' => 'Select Certifications',
-            'name' => 'certifications',
-            'options' => $allKeywords['Type'],
-            'selected' => old('certifications', 'certif1,certif2,certif3'),
-        ]) --}}
-
         <label>Type</label>
         <select name="worker_job_type" id="worker_job_type">
             <option value="" disabled selected hidden>
@@ -64,7 +56,7 @@
 
     {{-- Profession --}}
     <div class="ss-form-group">
-        <label>Profession</label>
+        <label>Professions</label>
         <select name="profession" id="profession">
             <option value="" disabled selected hidden>
                 What Kind of Professional are you?
@@ -83,7 +75,7 @@
 
     {{-- Specialty --}}
     <div class="ss-form-group ">
-        <label>Specialty</label>
+        <label>Specialties</label>
         <select name="specialty" id="specialty">
             <option value="" disabled selected hidden>
                 Select Specialty
@@ -103,7 +95,7 @@
     {{-- $/hr --}}
 
     <div class="ss-form-group col-md-12">
-        <label>$/hr</label>
+        <label>Min $/hr</label>
         <input type="number" name="worker_actual_hourly_rate" id="worker_actual_hourly_rate"
             placeholder="Minimum hourly rate you'd consider?"
             value="{{ !empty($worker->worker_actual_hourly_rate) ? $worker->worker_actual_hourly_rate : '' }}">
@@ -113,7 +105,7 @@
     {{-- $/Wk --}}
 
     <div class="ss-form-group col-md-12">
-        <label>$/Wk</label>
+        <label>Min $/Wk</label>
         <input type="number" step="0.01" name="worker_organization_weekly_amount"
             id="worker_organization_weekly_amount" placeholder="Enter Weekly Pay"
             value="{{ !empty($worker->worker_organization_weekly_amount) ? $worker->worker_organization_weekly_amount : '' }}">
@@ -137,7 +129,7 @@
 
     {{-- State Information --}}
     <div class="ss-form-group col-11">
-        <label>State</label>
+        <label>States</label>
         <select name="state" id="state">
 
             <option value="" disabled selected hidden>
@@ -159,7 +151,7 @@
     {{-- city --}}
 
     <div class="ss-form-group">
-        <label>City you'd like to work?</label>
+        <label>Cities</label>
         <select name="city" id="city">
 
             <option value="" disabled selected hidden>
@@ -196,7 +188,7 @@
 
     {{-- Shift Time of Day --}}
     <div class="ss-form-group">
-        <label>Shift Time</label>
+        <label>Shift Times</label>
         <select name="worker_shift_time_of_day" id="shift-of-day">
 
             <option value="" disabled selected hidden>
@@ -219,7 +211,7 @@
 
     {{-- worker_guaranteed_hours --}}
     <div class="ss-form-group">
-        <label>Guaranteed Hrs/wk</label>
+        <label>Min guaranteed Hrs/wk</label>
         <input id="worker_guaranteed_hours" type="number" name="worker_guaranteed_hours"
             placeholder="Enter your guaranteed hours"
             value="{{ !empty($worker->worker_guaranteed_hours) ? $worker->worker_guaranteed_hours : '' }}">
@@ -247,7 +239,7 @@
 
     {{-- Weeks/Assignment --}}
     <div class="ss-form-group">
-        <label>Wks/Contract</label>
+        <label>Min Wks/Contract</label>
         <input id="preferred_assignment_duration" type="number" name="worker_weeks_assignment"
             placeholder="Enter Weeks/Assignment"
             value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}">
@@ -257,25 +249,16 @@
 
     {{-- worker_start_date --}}
     <div class="ss-form-group">
-        <label>Start Date</label>
+        <label>Start Dates</label>
         <input id="worker_start_date" type="date" name="worker_start_date" placeholder="Enter your start date"
             value="{{ !empty($worker->worker_start_date) ? $worker->worker_start_date : '' }}">
     </div>
     <span class="help-block-worker_start_date"></span>
     {{-- End worker_start_date  --}}
 
-    {{-- worker_end_date --}}
-    <div class="ss-form-group">
-        <label>End Date</label>
-        <input id="worker_end_date" type="date" name="worker_end_date" placeholder="Enter your End date"
-            value="{{ !empty($worker->worker_end_date) ? $worker->worker_end_date : '' }}">
-    </div>
-    <span class="help-block-worker_end_date"></span>
-    {{-- End worker_end_date  --}}
-
     {{-- RTO --}}
     <div class="ss-form-group">
-        <label>Rto</label>
+        <label>RTO Dates</label>
         {{-- TODO :: make it a select input --}}
         {{-- <select name="rto" id="rto">
 
@@ -310,6 +293,15 @@
 
 <div class="row collapse" id="collapse-4">
 
+    {{-- worker_overtime --}}
+    <div class="ss-form-group">
+        <label>Min OT $/Hr</label>
+        <input id="worker_overtime" type="number" name="worker_overtime" placeholder="Minimun hourly rate for Overtime?"
+            value="{{ !empty($worker->worker_overtime) ? $worker->worker_overtime : '' }}">
+    </div>
+    <span class="help-block-worker_overtime"></span>
+    {{-- End worker_overtime  --}}
+
     {{-- worker_on_call --}}
     <div class="ss-form-group">
         <label>Min On Call $/Hr</label>
@@ -321,7 +313,7 @@
 
     {{-- worker_call_back --}}
     <div class="ss-form-group">
-        <label>Call Back $/Hr</label>
+        <label>Min Call Back $/Hr</label>
         <input id="worker_call_back" type="number" name="worker_call_back" placeholder="What rate is fair?"
             value="{{ !empty($worker->worker_call_back) ? $worker->worker_call_back : '' }}">
     </div>
@@ -330,7 +322,7 @@
 
     {{-- worker_orientation_rate --}}
     <div class="ss-form-group">
-        <label>Orientation $/Hr</label>
+        <label>Min Orientation $/Hr</label>
         <input id="worker_orientation_rate" type="number" name="worker_orientation_rate"
             placeholder="Is this rate reasonable?"
             value="{{ !empty($worker->worker_orientation_rate) ? $worker->worker_orientation_rate : '' }}">
@@ -340,7 +332,7 @@
 
     {{-- worker_weekly_taxable_amount --}}
     <div class="ss-form-group">
-        <label>Taxable $/Wk</label>
+        <label>Min Taxable $/Wk</label>
         <input id="worker_weekly_taxable_amount" type="number" name="worker_weekly_taxable_amount"
             placeholder="Minimum taxable $ per week?"
             value="{{ !empty($worker->worker_weekly_taxable_amount) ? $worker->worker_weekly_taxable_amount : '' }}">
@@ -350,7 +342,7 @@
 
     {{-- worker_weekly_non_taxable_amount --}}
     <div class="ss-form-group">
-        <label>Non-taxable $/Wk</label>
+        <label>Min Non-taxable $/Wk</label>
         <input id="worker_weekly_non_taxable_amount" type="number" name="worker_weekly_non_taxable_amount"
             placeholder="Minimum Non-taxable $ per week?"
             value="{{ !empty($worker->worker_weekly_non_taxable_amount) ? $worker->worker_weekly_non_taxable_amount : '' }}">
@@ -360,7 +352,7 @@
 
     {{-- worker_feels_like_per_hour --}}
     <div class="ss-form-group">
-        <label>Feels Like $/hr</label>
+        <label>Min Feels Like $/hr</label>
         <input id="worker_feels_like_per_hour" type="number" name="worker_feels_like_per_hour"
             placeholder="Minimum Feels Like $ per hour?"
             value="{{ !empty($worker->worker_feels_like_per_hour) ? $worker->worker_feels_like_per_hour : '' }}">
@@ -444,7 +436,7 @@
 
     {{-- Clinical Setting --}}
     <div class="ss-form-group">
-        <label>Clinical Setting</label>
+        <label>Clinical Settings</label>
         <input type="text" id="clinical_setting" name="clinical_setting_you_prefer"
             placeholder="Enter clinical setting"
             value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}">
@@ -501,7 +493,7 @@
     {{-- worker_facility_city --}}
 
     <div class="ss-form-group col-md-12">
-        <label>Fav States</label>
+        <label>Fav Cities</label>
         <input type="text" name="worker_facility_city" id="worker_facility_city" placeholder="Fav Cities">
     </div>
     <span class="helper help-block-worker_facility_city"></span>
@@ -588,7 +580,7 @@
 
     {{-- Float requirements --}}
     <div class="ss-form-group">
-        <label>Float requirements</label>
+        <label>Float</label>
 
         <select name="float_requirement" class="float_requirement mb-3" id="float_requirement" value="">
 
@@ -608,7 +600,7 @@
 
     {{-- Patient ratio --}}
     <div class="ss-form-group">
-        <label>Patient ratio</label>
+        <label>Patient Ratio Max</label>
         <input type="number" id="Patient_ratio" name="worker_patient_ratio"
             placeholder="Max patients you will take responsibility for?"
             value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}">
@@ -644,26 +636,6 @@
     </div>
     <span class="help-block-worker_unit"></span>
     {{-- End Unit --}}
-
-    {{-- nurse_classification --}}
-    <div class="ss-form-group">
-        <label>Nurse Classification</label>
-        <select name="nurse_classification" id="nurse_classification">
-
-            <option value="" {{ empty($worker->nurse_classification) ? 'selected' : '' }} disabled hidden>
-                Select Nurse Classification
-            </option>
-            @foreach ($allKeywords['NurseClassification'] as $value)
-                <option value="{{ $value->title }}"
-                    {{ !empty($worker->nurse_classification) && $worker->nurse_classification == $value->title ? 'selected' : '' }}>
-                    {{ $value->title }}
-                </option>
-            @endforeach
-        </select>
-        <span class="help-block-nurse_classification"></span>
-    </div>
-    {{-- End nurse_classification  --}}
-
 </div>
 
 
