@@ -59,32 +59,21 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-                                {{-- <div class="ss-input-slct-grp">
-                                    <label>State</label>
-                                    <select name="state" onchange="get_cities(this)">
-                                        <option value="">Select</option>
-                                        @foreach ($us_states as $v)
-                                            <option value="{{ $v->name }}" data-id="{{ $v->id }}"
-                                                {{ $v->name == $state ? 'selected' : '' }}>
-                                                {{ $v->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
+                    
                                 <div class="ss-form-group col-md-12">
                                     <label> State </label>
                                     <select name="state" id="state">
-                                        <option value="" disabled selected hidden>Select a State</option>
+                                        @if (!empty($state))
+                                            <option value="" selected>{{$state}}</option>
+                                        @else
+                                            <option value="" disabled selected hidden>Select a State</option>
+                                        @endif
                                         @foreach ($us_states as $state)
                                             <option id="{{ $state->id }}" value="{{ $state->name }}">
                                                 {{ $state->name }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <div>
-                                        <span class="helper help-block-job_state"></span>
-                                    </div>
                                 </div>
 
 
