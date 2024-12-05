@@ -428,6 +428,13 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
+    {
+        fieldID: "is_resume",
+        workerFieldIdMatch: "worker_is_resume",
+        displayName: "Resume",
+        publishDisabled: false,
+        applyDisabled: false
+    },
     // {
     //     fieldID: "job_name",
     //     workerFieldIdMatch: "",
