@@ -76,7 +76,7 @@
 
                             </div> --}}
                             <div class="form-outer">
-                                <form method="post" id="create_job_form" action="{{ route('addJob.store') }}">
+                                <form method="post" id="create_job_form" action="{{ route('organizationaddJob') }}">
                                     @csrf
                                     <!-- first form slide required inputs for adding jobs -->
 
@@ -228,6 +228,25 @@
                                                     <div> 
                                                     <span class="helper help-block-job_city"></span>
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Resume --}}
+                                            <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
+                                                <div class="row justify-content-center" style="display:flex; align-items:end;">
+                                                    <div class="col-6">
+                                                    <label for="is_resume"
+                                                        style="display:flex; justify-content:center;">Is Required</label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="checkbox" name="is_resume" id="is_resume"
+                                                            value="1" style="box-shadow: none;">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div> 
+                                                <span class="helper help-block-is_resume"></span>
                                                 </div>
                                             </div>
                                             
@@ -770,7 +789,7 @@
                                                 </a>
                                             </p>
                                         </div>
-                                            <div class="row collapse" id="collapse-5">
+                                        <div class="row collapse" id="collapse-5">
                                             {{-- Description --}}
                                             <div class="ss-form-group col-md-12">
                                                 <label>Description</label>
@@ -779,7 +798,8 @@
                                                 <span class="helper help-block-description"></span>
                                                 </div>
                                             </div>
-                                                {{-- Auto Offer --}}
+                                            
+                                            {{-- Auto Offer --}}
                                             <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
                                                 <label style="padding-bottom: 25px; padding-top: 25px;">Urgency</label>
                                                 <div class="row justify-content-center" style="display:flex; align-items:end;">
@@ -1340,7 +1360,7 @@
                                         </div>
                                     </div>
                                     <div class="form-outer">
-                                        <form method="post" id="create_job_form" action="{{ route('addJob.store') }}">
+                                        <form method="post" id="create_job_form" action="{{ route('organizationaddJob') }}">
                                        
                                             @csrf
                                             <!-- first form slide required inputs for adding jobs -->
@@ -1496,6 +1516,25 @@
                                                             <div> 
                                                             <span class="helper help-block-job_cityDraft"></span>
                                                             </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {{-- Resume --}}
+                                                    <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                        <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
+                                                        <div class="row justify-content-center" style="display:flex; align-items:end;">
+                                                            <div class="col-6">
+                                                            <label for="is_resume"
+                                                                style="display:flex; justify-content:center;">Is Required</label>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <input type="checkbox" name="is_resume" id="is_resumeDraft"
+                                                                    value="1" style="box-shadow: none;">
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div> 
+                                                        <span class="helper help-block-is_resumeDraft"></span>
                                                         </div>
                                                     </div>
                                                     
@@ -2427,8 +2466,6 @@
                                                             </div>
                                                         </div>
         
-                                                            
-                    
                                                     <div class="field btns col-12 d-flex justify-content-center">
                                                         <button class="saveDrftBtnDraft">Save as draft</button>
                                                         {{-- <button class="firstNext next">Next</button> --}}
@@ -2505,7 +2542,7 @@
                                     </div>
                                     <div class="form-outer">
                                         
-                                        <form method="post" id="create_job_form" action="{{ route('edit_job') }}">
+                                        <form method="post" id="create_job_form" action="{{ route('organization-edit_job') }}">
                                                 @csrf
                                                 <!-- first form slide required inputs for adding jobs -->
             
@@ -2660,6 +2697,25 @@
                                                                 <div> 
                                                                 <span class="helper help-block-job_city"></span>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {{-- Resume --}}
+                                                        <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
+                                                            <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
+                                                            <div class="row justify-content-center" style="display:flex; align-items:end;">
+                                                                <div class="col-6">
+                                                                <label for="is_resume"
+                                                                    style="display:flex; justify-content:center;">Is Required</label>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <input type="checkbox" name="is_resume" id="is_resumeEdit"
+                                                                        value="1" style="box-shadow: none;">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div> 
+                                                            <span class="helper help-block-is_resume"></span>
                                                             </div>
                                                         </div>
                                                         
@@ -3619,15 +3675,11 @@
 const requiredToSubmit = @json($requiredFieldsToSubmit);
     
    function toggleActiveClass(workerUserId,type) {
-            console.log("test");
-            console.log(workerUserId);
-            console.log(type);
+
             var element = document.getElementById(workerUserId);
-            console.log(element);
             element.classList.add('active');
             
             var allElements = document.getElementsByClassName(type);
-            console.log(allElements);
 
             for (var i = 0; i < allElements.length; i++) {
                 if (allElements[i].classList.contains('active')) {
@@ -4711,6 +4763,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                 'profession': { id: 'perferred_professionDraft', type: 'select' },
                 'job_state': { id: 'job_stateDraft', type: 'select' },
                 'job_city': { id: 'job_cityDraft', type: 'select' },
+                'is_resume': { id: 'is_resumeDraft', type: 'checkbox'},
                 'weekly_pay': { id: 'weekly_payDraft', type: 'number' },
                 'terms': { id: 'termsDraft', type: 'select' },
                 'preferred_assignment_duration': { id: 'preferred_assignment_durationDraft', type: 'number' },
@@ -4779,11 +4832,11 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                     if (field.id === 'urgencyDraft') {
                         element.checked = result[key] === 'Auto Offer';
                     } else {
-                        element.checked = result[key] === '1';
+                        element.checked = Boolean(result[key]);
                     }
                 }
                 else if (field.type === 'radio') {
-                    console.log('radio', result[key]);
+
                     if (result[key] === 'Accept Pending') {
                         document.getElementById('professional_state_licensure_pendingDraft').checked = true;
                     } else {
@@ -5742,6 +5795,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                 'profession': { id: 'perferred_professionDraft', type: 'select' },
                 'job_state': { id: 'job_stateDraft', type: 'select' },
                 'job_city': { id: 'job_cityDraft', type: 'select' },
+                'is_resume': {id: 'is_resumeDraft', type: 'checkbox'},
                 'weekly_pay': { id: 'weekly_payDraft', type: 'number' },
                 'terms': { id: 'termsDraft', type: 'select' },
                 'preferred_assignment_duration': { id: 'preferred_assignment_durationDraft', type: 'number' },
@@ -5826,7 +5880,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                     if (field.id === 'urgencyDraft') {
                         element.checked = result[key] === 'Auto Offer';
                     } else {
-                        element.checked = false;
+                        element.checked = Boolean(result[key]);
                     }
                 }
                 else if (field.type === 'radio') {
@@ -6222,22 +6276,18 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
 
     function validateRequiredMultiCheckFieldsToSubmit(slideFields) {
         
-        console.log('validate requiered multi fields to submit');
-        console.log('slideFields : ',slideFields);
         let access = true;
-        console.log('requiredToSubmit : ',requiredToSubmit);
         const commonElements = slideFields.filter(element => requiredToSubmit.includes(element));
-        console.log('common elements : ',commonElements);
+
         if(commonElements.length > 0) {
 
             commonElements.forEach(element => {
 
                 const elementStr = element;
                 const elementValue = window[elementStr];
-                console.log('from multiselectcheckvalidation : ',elementValue);
 
                 if(Object.keys(elementValue).length === 0) {
-                    console.log('from first check : ',elementValue);
+
                     const htmlElement = document.getElementById(element);
                     const collapseElement = htmlElement.closest('.collapse');
                     collapseElement.classList.add('show');
@@ -6245,7 +6295,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                     $(`.help-block-${element}`).addClass('text-danger');
                     access = false;
                 } else {
-                    console.log('from first check : ',elementValue);
+
                     $(`.help-block-${element}`).text('');
                 }
 
@@ -6354,6 +6404,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
             "start_date",
             "urgency",
             "professional_state_licensure",
+            "is_resume"
         ];
 
         if(validateRequiredMultiCheckFieldsToSubmit(slideFields) && validateRequiredFieldsToSubmit(otherSlideFields) && validateFirst()) { 
@@ -6438,7 +6489,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
     
     const submitBtnDraft = document.querySelector(".submitDraft");
     const saveDrftBtnDraft = document.querySelectorAll(".saveDrftBtnDraft");
-    console.log(saveDrftBtnDraft);
+
     const progressTextDraft = document.querySelectorAll(".stepDraft p");
     const progressCheckDraft = document.querySelectorAll(".stepDraft .check");
     const bulletDraft = document.querySelectorAll(".stepDraft .bullet");
@@ -6773,6 +6824,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
             "start_date",
             "urgency",
             "professional_state_licensure",
+            "is_resume",
         ];
         
         if (validateRequiredMultiCheckFieldsToSubmitDraft(slideFields) && validateRequiredFieldsToSubmitDraft(otherSlideFields) && validateFirstDraft()) {
@@ -7276,6 +7328,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
             'profession': { id: 'perferred_professionEdit', type: 'select' },
             'job_state': { id: 'job_stateEdit', type: 'select' },
             'job_city': { id: 'job_cityEdit', type: 'select' },
+            'is_resume': { id: 'is_resumeEdit', type: 'checkbox'},
             'weekly_pay': { id: 'weekly_payEdit', type: 'number' },
             'terms': { id: 'termsEdit', type: 'select' },
             'preferred_assignment_duration': { id: 'preferred_assignment_durationEdit', type: 'number' },
@@ -7359,7 +7412,7 @@ const requiredToSubmit = @json($requiredFieldsToSubmit);
                     if (field.id === 'urgencyEdit') {
                         element.checked = result[key] === 'Auto Offer';
                     } else {
-                        element.checked = result[key] === '1';
+                        element.checked = Boolean(result[key]);
                     }
                      
             } else if (field.type === 'radio') {

@@ -571,13 +571,13 @@ class WorkerDashboardController extends Controller
     $data['as_soon_as'] = $request->input('as_soon_as', null);
 
     // Pay and hour filters
-    $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
-    $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
-    $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
-    $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
-    $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
-    $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
-
+    $data['weekly_pay_from'] = $request->input('weekly_pay_from');
+    $data['weekly_pay_to'] = $request->input('weekly_pay_to');
+    $data['hourly_pay_from'] = $request->input('hourly_pay_from');
+    $data['hourly_pay_to'] = $request->input('hourly_pay_to');
+    $data['hours_per_week_from'] = $request->input('hours_per_week_from');
+    $data['hours_per_week_to'] = $request->input('hours_per_week_to');
+    
     //return response()->json(['message' => $data['as_soon_as']]); 
 
     $user = auth()->guard('frontend')->user();
@@ -630,14 +630,30 @@ class WorkerDashboardController extends Controller
       }
     */
 
-    // if (!empty($data['state'])) {
-    //   $ret->where('job_state', '=', $data['state']);
-    // }
+    if (!empty($data['weekly_pay_from'])) {
+      $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
 
-    // if (!empty($data['city'])) {
-    //   $ret->where('job_city', '=', $data['city']);
-    // }
+     }
 
+    if (!empty($data['weekly_pay_to'])) {
+      $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
+    }
+
+    if (!empty($data['hourly_pay_from'])) {
+      $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
+    }
+
+    if (!empty($data['hourly_pay_to'])) {
+      $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
+    }
+
+    if (!empty($data['hours_per_week_from'])) {
+      $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
+    }
+    if (!empty($data['hours_per_week_to'])) {
+      $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
+    }
+    
     // if ($data['weekly_pay_from'] !== 10) { 
     //   $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
     // }

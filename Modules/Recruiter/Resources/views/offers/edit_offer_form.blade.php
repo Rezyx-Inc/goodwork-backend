@@ -34,7 +34,8 @@
 
             {{-- Org Job Id --}}
 
-            <div class="ss-form-group col-md-12">
+            {{-- this job_id here reffer to the id of a job not the org job id, we will hide it for now until we add a field for the org job id in the offer table --}}
+            <div class="ss-form-group col-md-12 d-none">
                 <label>Org Job Id</label>
                 <input type="text" name="job_id" id="job_id"
                     placeholder="Enter Work Id">
@@ -1043,7 +1044,7 @@
                 </div>
 
                 <div class="ss-counter-buttons-div">
-                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="editOffer(event)">Save</button>
+                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="editOffer(event)">Send Offer</button>
                 </div>
         </div>
     </div>    

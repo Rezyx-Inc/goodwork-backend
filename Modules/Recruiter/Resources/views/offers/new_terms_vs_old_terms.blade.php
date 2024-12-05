@@ -12,7 +12,14 @@
         </h6>
     </li>
 </ul>
+<div class="ss-job-view-off-text-fst-dv mt-3">
+    <p>
+        <a href="">{{ $recruiter->first_name }} {{ $recruiter->last_name }} </a>
+        On behalf of <a href="">{{$organization->organization_name}}</a>
+        is offering applicant the opportunity as defined by the new terms and additional terms below and attached
+    </p>
 
+</div>
 <div class="row ss-chng-apcon-st-ssele d-flex justify-content-center align-items-center">
     <div class="col-12 row">
         <label class="mb-2">Change Application Status</label>
@@ -184,26 +191,27 @@
     </div>
 
     <div class="ss-counter-buttons-div">
-        <button class="ss-reject-offer-btn"
-            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
+        <button class="ss-acpect-offer-btn"
+            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept
             Offer</button>
     </div>
-    <div class="ss-counter-buttons-div">
+    {{-- <div class="ss-counter-buttons-div">
         <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
             Offer</button>
-    </div>
+    </div> --}}
     {{-- comment the condition for now until we have the counter 1st offer from the worker worked --}}
     {{-- @if (count($offerLogs) > 0) --}}
         <div class="ss-counter-buttons-div">
             <button class="counter-save-for-button" onclick="counterOffer('{{ $offerdetails->id }}')">Counter
                 Offer</button>
         </div>
-        <div class="ss-counter-buttons-div">
-            <button class="ss-acpect-offer-btn"
-                onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'offersend')">Accept
-                Offer</button>
-        </div>
     {{-- @endif --}}
+    <div class="ss-counter-buttons-div">
+        <button class="ss-reject-offer-btn"
+            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
+            Offer</button>
+    </div>
+    
 
 </div>
 
@@ -220,7 +228,8 @@
             {'id': 'weekly_pay', 'display-name': '$/wk'},
             {'id': 'hours_per_week', 'display-name': 'Hrs/Wk'},
             {'id': 'state', 'display-name': 'State'},
-            {'id': 'city', 'display-name': 'City'}
+            {'id': 'city', 'display-name': 'City'},
+            {'id': 'is_resume', 'display-name': 'Resume'}
         ],
         // Shift
         'shift': [
@@ -247,7 +256,6 @@
             {'id': 'sign_on_bonus', 'display-name': 'Sign-On Bonus'},
             {'id': 'extension_bonus', 'display-name': 'Extension Bonus'},
             {'id': 'total_organization_amount', 'display-name': '$/Org'},
-            {'id': 'total_contract_amount', 'display-name': 'Total $'},
             {'id': 'pay_frequency', 'display-name': 'Pay Frequency'},
             {'id': 'benefits', 'display-name': 'Benefits'}
         ],
@@ -281,7 +289,7 @@
         ],
         // ID & Tax Info
         'id-tax-info': [
-            {'id': 'nurse_classification', 'display-name': 'Nurse Classification'}
+            {'id': 'nurse_classification', 'display-name': 'Classification'}
         ],
         // Medical info
         'medical-info': [
@@ -309,7 +317,6 @@
         'sign_on_bonus',
         'extension_bonus',
         'total_organization_amount',
-        'total_contract_amount',
         'traveler_distance_from_facility',
         'number_of_references'
     ];
@@ -342,6 +349,7 @@
             newValue = newValue == 1 ? 'Yes' : 'No';
             oldValue = oldValue == 1 ? 'Yes' : 'No';
         }
+        field == 'is_resume' && (newValue = newValue == 1 ? 'Required' : 'Not Required', oldValue = oldValue == 1 ? 'Required' : 'Not Required');
 
         var fieldDiv = document.createElement('div');
         fieldDiv.className = 'col-md-12';
