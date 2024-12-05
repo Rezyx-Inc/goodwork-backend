@@ -31,7 +31,7 @@ public function index()
     $id = Auth::guard('organization')->user()->id;
     $alljobs = Job::where('organization_id', $id)->get();
 
-    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     foreach ($alljobs as $key => $value) {
