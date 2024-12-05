@@ -500,7 +500,7 @@ class WorkerDashboardController extends Controller
 
   public function explore(Request $request)
   {
-    
+    //dd($request->all());
     // GW Number
     $gwNumber = $request->input('gw', '');
     
@@ -522,12 +522,14 @@ class WorkerDashboardController extends Controller
     $data['us_states'] = States::where('country_id', $usa->id)->get();
     
     // Set filter values from the request, use null as the default if not provided
+    $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
     $data['experience'] = $request->input('experience');
     $data['city'] = $request->input('city');
     $data['state'] = $request->input('state');
     $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+    // dd($request->terms);
     $data['start_date'] = $request->input('start_date', null);
     $data['end_date'] = $request->input('end_date', null);
     $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
@@ -578,10 +580,17 @@ class WorkerDashboardController extends Controller
     if (!empty($data['speciality'])) {
       $ret->where('preferred_specialty', '=', $data['speciality']);
     }
+    if (!empty($data['terms'])) {
+      $ret->where(function ($query) use ($data) {
+          foreach ($data['terms'] as $term) {
+              $query->orWhere('terms', $term);
+          }
+      });
+  }
+  
+  
+  
 
-    if (!empty($data['terms']) && !is_null($request->input('terms'))) {
-      $ret->whereIn('terms', $data['terms']);
-    }
 
     if (!empty($data['as_soon_as'])) {
       $ret->where('as_soon_as', '=', $data['as_soon_as']);
