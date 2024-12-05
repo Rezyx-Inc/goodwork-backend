@@ -9,56 +9,56 @@
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Apply')" id="Apply">
                         <p>New</p>
-                        <span>{{ $statusCounts['Apply'] }} Applicants</span>
+                        <span>{{ $statusCounts['Apply'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Screening Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Screening')" id="Screening">
                         <p>Screening</p>
-                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
+                        <span>{{ $statusCounts['Screening'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Submitted Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Submitted')" id="Submitted">
                         <p>Submitted</p>
-                        <span>{{ $statusCounts['Submitted'] }} Applicants</span>
+                        <span>{{ $statusCounts['Submitted'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Offered Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Offered')" id="Offered">
                         <p>Offered</p>
-                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
+                        <span>{{ $statusCounts['Offered'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
-                        <span>{{ $statusCounts['Onboarding'] }} Applicants</span>
+                        <span>{{ $statusCounts['Onboarding'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
                         <p>Working</p>
-                        <span>{{ $statusCounts['Working'] }} Applicants</span>
+                        <span>{{ $statusCounts['Working'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Done Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Done')" id="Done">
                         <p>Done</p>
-                        <span>{{ $statusCounts['Done'] }} Applicants</span>
+                        <span>{{ $statusCounts['Done'] }} Applications</span>
                     </div>
                 </div>
                 {{-- On Hold Applicants --}}
                 {{-- <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Hold')" id="Hold">
                         <p>Hold</p>
-                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
+                        <span>{{ $statusCounts['Hold'] }} Applications</span>
                     </div>
                 </div> --}}
 
