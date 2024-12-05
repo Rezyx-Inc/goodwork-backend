@@ -36,13 +36,11 @@ public function index()
 
     foreach ($alljobs as $key => $value) {
         if (isset($value->id)) {
-            // $statusCountsQuery = Offer::whereIn('status', $statusList)
-            //     ->select(\DB::raw('status, count(*) as count'))
-            //     ->where('job_id', $value->id)
-            //     ->groupBy('status')
-            //     ->get();
-
-                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+            $statusCountsQuery = Offer::whereIn('status', $statusList)
+                ->select(\DB::raw('status, count(*) as count'))
+                ->where('job_id', $value->id)
+                ->groupBy('status')
+                ->get();
 
             foreach ($statusCountsQuery as $statusCount) {
                 $statusCounts[$statusCount->status] += $statusCount->count;
