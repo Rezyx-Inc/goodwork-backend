@@ -1,14 +1,14 @@
 <ul class="ss-cng-appli-hedpfl-ul">
     <li>
         <span>
-            {{ $offerdetails['worker_user_id'] }}
+            {{ $offerdetails['recruiter_id'] }}
         </span>
         <h6>
-            <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $userdetails->image) }}"
+            <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $organization->image) }}"
                 onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
                 id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
-            {{ $userdetails->first_name }}
-            {{ $userdetails->last_name }}
+            {{ $recruiter->first_name }}
+            {{ $recruiter->last_name }}
         </h6>
     </li>
 </ul>
@@ -16,7 +16,7 @@
     <p>
         <a href="">{{ $recruiter->first_name }} {{ $recruiter->last_name }} </a>
         On behalf of <a href="">{{$organization->organization_name}}</a>
-        is offering <a href="">{{ $userdetails->first_name }} {{ $userdetails->last_name }} </a> the opportunity as defined by the new terms and additional terms below and attached
+        is offering you the opportunity as defined by the new terms and additional terms below and attached
     </p>
 
 </div>

@@ -1,6 +1,6 @@
 <div>
     <div class="mb-2 mt-3">
-        <h4 class="d-flex align-items-center"><img style="cursor: pointer; margin-right:10px;" onclick="getOneOfferInformation('{{ $offerdetails['id'] }}')" src="{{ URL::asset('recruiter/assets/images/counter-left-img.png') }}"> Send Offer</h4>
+        <h4 class="d-flex align-items-center"><img style="cursor: pointer; margin-right:10px;" onclick="getOneOfferInformation('{{ $offerdetails['id'] }}')" src="{{ URL::asset('recruiter/assets/images/counter-left-img.png') }}">Make Offer</h4>
     </div>
 </div>
 
@@ -1022,14 +1022,14 @@
                 </div>
 
                 <div class="ss-counter-buttons-div">
-                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="offerSend(event,'counter')">Send</button>
+                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="offerSend(event,'make')">Send</button>
                 </div>
         </div>
     </div>    
 </form>
 
 
-@include('recruiter::partials.multiselectFunctions')
+@include('worker::partials.multiselectFunctions')
 
 <script>
 
