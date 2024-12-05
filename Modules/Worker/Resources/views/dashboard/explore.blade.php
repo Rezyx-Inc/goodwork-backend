@@ -105,11 +105,14 @@
                                             <div class="ps-0">
                                                 <select class="m-0" id="termsSelect">
                                                     <option value="">Select Terms</option>
-                                                    @foreach ($terms_key as $k => $v)
-                                                        <option value="{{ $v->id }}">{{ $v->title }}</option>
+                                                    @foreach ($terms_key as $term)
+                                                        <option value="{{ $term->id }}" 
+                                                            {{ in_array($term->id, $terms) ? 'selected' : '' }}>
+                                                            {{ $term->title }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
-                                                <input type="hidden" id="termsAllValues" name="selected_terms">
+                                                <input type="hidden" id="termsAllValues" name="terms" value="{{ implode('-', $terms) }}">
                                             </div>
                                         </li>
                                         <li>
@@ -124,6 +127,7 @@
                                         <span class="helper help-block-terms"></span>
                                     </div>
                                 </div>
+                                
                           
                                 <div class="ss-form-group col-md-12" style="margin: 20px 0px;">
                                     <div class="row">
@@ -203,7 +207,7 @@
                                 </div> --}}
 
                                 
-                                <input type="hidden" name="terms" value="" id="job_type">
+                                {{-- <input type="hidden" name="terms" value="" id="job_type"> --}}
                                 {{-- <input type="hidden" name="shifts" value="" id="shift"> --}}
                                 <input type="hidden" name="weekly_pay_from" value="{{ $weekly_pay_from }}"
                                     id="minval">
@@ -395,13 +399,23 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
-        let terms = {}; // Object to store selected terms
+                let terms = []; // Initialize terms as an array to store only values (texts)
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const preselectedTerms = document.getElementById('termsAllValues').value.split('-');
+            preselectedTerms.forEach(termValue => {
+                if (termValue) {
+                    terms.push(termValue); // Add only the value to the array
+                }
+            });
+            updateTermsList();
+        });
 
         function addTerms(type) {
             const selectElement = document.getElementById('termsSelect');
-            const selectedValue = selectElement.value;
+            const selectedValue = selectElement.options[selectElement.selectedIndex].text; // Get the text
         
-            if (!selectedValue) {
+            if (!selectedValue || selectedValue === 'Select Terms') {
                 notie.alert({
                     type: 'error',
                     text: '<i class="fa fa-times"></i> Please select a term.',
@@ -410,16 +424,9 @@
                 return;
             }
         
-                if (!terms.hasOwnProperty(selectedValue)) {
-                    const selectedText = selectElement.options[selectElement.selectedIndex].text;
-            
-                    // Add selected term to the terms object
-                    terms[selectedValue] = selectedText;
-            
-                    // Clear the dropdown selection
-                    selectElement.value = '';
-            
-                // Update the displayed list of selected terms
+            if (!terms.includes(selectedValue)) {
+                terms.push(selectedValue); // Add the text value to the array
+                selectElement.value = ''; // Clear selection
                 updateTermsList();
             } else {
                 notie.alert({
@@ -434,34 +441,30 @@
             const termsContentDiv = document.querySelector('.terms-content');
             let termsHtml = '';
         
-            for (const [key, value] of Object.entries(terms)) {
+            terms.forEach(term => {
                 termsHtml += `
                     <ul class="row w-100" style="list-style: none;">
-                        <li class="col-8">${value}</li>
+                        <li class="col-8">${term}</li>
                         <li class="col-4 text-end">
-                            <button type="button" onclick="removeTerm('${key}')">
+                            <button type="button" onclick="removeTerm('${term}')">
                                 <img src="{{ URL::asset('frontend/img/delete-img.png') }}" />                    
                             </button>
                         </li>
                     </ul>
                 `;
-            }
+            });
         
             termsContentDiv.innerHTML = termsHtml;
         
-            // Update the hidden input field with the selected terms
-            document.getElementById('termsAllValues').value = Object.keys(terms).join(',');
-        
-            //console.log("Selected Terms IDs:", Object.keys(terms));
-            console.log("Selected Terms Texts:", Object.values(terms));
-        
+            // Update the hidden input field with the selected terms (joined by '-')
+            document.getElementById('termsAllValues').value = terms.join('-');
         }
 
-        function removeTerm(termId) {
-                if (terms.hasOwnProperty(termId)) {
-                    delete terms[termId]; // Remove the term from the object
-            
-                    updateTermsList(); // Refresh the list to reflect changes
+        function removeTerm(termValue) {
+            const index = terms.indexOf(termValue);
+            if (index > -1) {
+                terms.splice(index, 1);
+                updateTermsList();
             
                 notie.alert({
                     type: 'success',
@@ -476,7 +479,6 @@
                 });
             }
         }
-
 
     </script>
     
@@ -745,13 +747,13 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
                 //       $('#gwError').text('The GoodWork Number must be followed by numbers after "GWJ".').show();
                 //   } else {
                 // Check if terms input is empty and remove it
-                var termsInput = $('input[name="terms"]');
-                if (termsInput.length && termsInput.val() === '') {
-                    termsInput.remove(); // Remove the empty terms input
-                }
+                // var termsInput = $('input[name="terms"]');
+                // if (termsInput.length && termsInput.val() === '') {
+                //     termsInput.remove(); // Remove the empty terms input
+                // }
 
                 // Get all selected checkboxes with the name "categories[]"
-                const selectedCategories = $("input[name='terms[]']:checked");
+                // const selectedCategories = $("input[name='terms[]']:checked");
 
                 // Extract the values (category names) and join them into a comma-separated string
                 const categoriesString = selectedCategories.map(function() {
@@ -760,7 +762,7 @@ $('#slider .ui-slider-handle:eq(1)').append('<span class="price-range-max value"
                 // Set the categoriesString as the value of the hidden input field
                 $("#job_type").val(categoriesString);
 
-                $(this).find("input[name='terms[]']").remove();
+                // $(this).find("input[name='terms[]']").remove();
 
                 // Change the value of the profession select to the text of the selected option
                 const professionSelect = $("select[name='profession']");
