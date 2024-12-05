@@ -1029,7 +1029,7 @@
 </form>
 
 
-@include('recruiter::partials.multiselectFunctions')
+@include('worker::partials.multiselectFunctions')
 
 <script>
 

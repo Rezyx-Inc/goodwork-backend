@@ -135,6 +135,28 @@ Route::prefix('worker')->group(function () {
             Route::post('match-worker-job', ['uses' => 'WorkerController@match_worker_job', 'as' => 'match-worker-job']);
             // Route::post('my-profile', ['uses' => 'UserController@update', 'as' => 'my-profile.store']);
 
+            // get offers by type
+
+            Route::get('worker-get-offers-by-type', ['uses' => 'WorkerController@get_offers_by_type', 'as'=> 'worker-get-offers-by-type']);
+
+            // get offers of each organization
+
+            Route::get('get-offers-of-each-organization', ['uses' => 'WorkerController@get_offers_of_each_organization', 'as'=> 'get-offers-of-each-organization']);
+
+            // get one offer information
+
+            Route::get('worker-get-one-offer-information', ['uses' => 'WorkerController@get_one_offer_information', 'as'=> 'worker-get-one-offer-information']);
+
+              // get offer information
+
+            Route::get('worker-get-offer-information', ['uses' => 'WorkerController@get_offer_information', 'as'=> 'worker-get-offer-information']);
+
+            // counter offer of each organization
+
+            Route::post('worker-counter-offer', ['uses' => 'WorkerController@worker_counter_offer', 'as'=> 'worker-counter-offer']);
+
+
+
         }
 
     );

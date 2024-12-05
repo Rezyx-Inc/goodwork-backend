@@ -1,15 +1,15 @@
 <ul class="ss-cng-appli-hedpfl-ul">
     <li style="width:55%;">
-        <span>{{ $userdetails->nurse->id }}</span>
+        <span>{{ $userdetails->id }}</span>
         <h6>
             <img width="50px" height="50px"
                 src="{{ URL::asset('public/images/nurses/profile/' . $userdetails->image) }}"
                 onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
                 id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
-            {{ $userdetails->first_name }} {{ $userdetails->last_name }}
+            {{ $userdetails->organization_name }}
         </h6>
     </li>
-    @if ($hasFile == true)
+    {{-- @if ($hasFile == true)
         <li style="margin-right:10px;">
             <a style="cursor:pointer;" class="rounded-pill ss-apply-btn py-2 border-0 px-4" data-target="file"
                 data-hidden_value="Yes" data-href="" data-title="Worker's Files" data-name="diploma"
@@ -21,12 +21,12 @@
             <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
         </li>
-    @else
+    @else --}}
         <li>
             <a onclick="askWorker(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
         </li>
-    @endif
+    {{-- @endif --}}
 </ul>
 <!-- <div class="ss-appli-cng-abt-inf-dv">
     <h5>Applicant summary</h5>

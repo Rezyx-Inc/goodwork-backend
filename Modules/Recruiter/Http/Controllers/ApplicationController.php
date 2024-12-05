@@ -678,6 +678,7 @@ class ApplicationController extends Controller
             
             // update it
             if ($offer) {
+                $data['status'] = 'Offered';
                 $offer->update($data);
                 $jobid = $offer->job_id;
                 $time = now()->toDateTimeString();

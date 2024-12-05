@@ -210,6 +210,7 @@ Route::prefix('recruiter')->group(function () {
         Route::post('update-job-offer', ['uses' => 'ApplicationController@update_job_offer', 'as'=> 'update-job-offer']);
 
         // get offer list by type
+        
 
         Route::get('get-offers-by-type', ['uses' => 'ApplicationController@get_offers_by_type', 'as'=> 'get-offers-by-type']);
 
