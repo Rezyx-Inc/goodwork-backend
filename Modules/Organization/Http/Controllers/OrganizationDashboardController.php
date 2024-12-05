@@ -31,16 +31,18 @@ public function index()
     $id = Auth::guard('organization')->user()->id;
     $alljobs = Job::where('organization_id', $id)->get();
 
-    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     foreach ($alljobs as $key => $value) {
         if (isset($value->id)) {
-            $statusCountsQuery = Offer::whereIn('status', $statusList)
-                ->select(\DB::raw('status, count(*) as count'))
-                ->where('job_id', $value->id)
-                ->groupBy('status')
-                ->get();
+            // $statusCountsQuery = Offer::whereIn('status', $statusList)
+            //     ->select(\DB::raw('status, count(*) as count'))
+            //     ->where('job_id', $value->id)
+            //     ->groupBy('status')
+            //     ->get();
+
+                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('organization_id', $id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
 
             foreach ($statusCountsQuery as $statusCount) {
                 $statusCounts[$statusCount->status] += $statusCount->count;
