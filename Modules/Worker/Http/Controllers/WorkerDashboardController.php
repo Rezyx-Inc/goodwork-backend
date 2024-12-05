@@ -581,7 +581,7 @@ class WorkerDashboardController extends Controller
       $ret->where('preferred_specialty', 'like', $data['speciality']);
     }
 
-    if (!empty($data['terms'])) {
+    if (!empty($data['terms']) && !is_null($request->input('terms')) && is_array($data['terms']) && count($data['terms']) > 0) {
       $ret->where(function ($query) use ($data) {
           foreach ($data['terms'] as $term) {
               $query->orWhere('terms', $term);
