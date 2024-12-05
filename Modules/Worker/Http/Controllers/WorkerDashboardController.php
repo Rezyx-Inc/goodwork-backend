@@ -97,7 +97,7 @@ class WorkerDashboardController extends Controller
 
   // new update function ( new file management )
 
-  public function update_worker_profile(Request $request)
+  public function old_update_worker_profile(Request $request)
   {
     // return $request->all();
     try {
@@ -227,6 +227,39 @@ class WorkerDashboardController extends Controller
 
       $nurse = $nurse->fresh();
       $user = $user->fresh();
+
+      return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
+    } catch (\Exception $e) {
+
+      return response()->json(['msg' => $e->getMessage(), 'status' => false], 500);
+    }
+  }
+
+
+  public function update_worker_profile(Request $request)
+  {
+
+    try {
+
+      $user = Auth::guard('frontend')->user();
+      $nurse = $user->nurse;
+
+      // dd($request->all());
+
+      // Filter request data to only include valid attributes
+      $userAttributes = $request->only($user->getFillable());
+      // Update the user model with the user attributes
+      $user->fill($userAttributes);
+      // Save the updated user model
+      $user->save();
+      $user = $user->fresh();
+
+      // Filter request data to only include valid attributes
+      $nurseAttributes = $request->only($nurse->getFillable());
+      // Update the nurse model with the valid attributes
+      $nurse->fill($nurseAttributes);
+      // // Save the updated nurse model
+      $nurse->save();
 
       return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
     } catch (\Exception $e) {
@@ -501,19 +534,19 @@ class WorkerDashboardController extends Controller
 
   public function explore(Request $request)
   {
-    
+
     // GW Number
     $gwNumber = $request->input('gw', '');
-    
+
     // Build the query
     $ret = Job::where('active', '1');
-    
-    
+
+
     // Initialize data array
     $data = [];
     $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
-    
+
     // Fetch related data
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
@@ -521,7 +554,7 @@ class WorkerDashboardController extends Controller
     $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
     $usa = Countries::where(['iso3' => 'USA'])->first();
     $data['us_states'] = States::where('country_id', $usa->id)->get();
-    
+
     // Set filter values from the request, use null as the default if not provided
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
@@ -535,7 +568,7 @@ class WorkerDashboardController extends Controller
     $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
     $data['job_type'] = $request->input('job_type', null);
     $data['as_soon_as'] = $request->input('as_soon_as', null);
-    
+
     // Pay and hour filters
     $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
     $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
@@ -543,7 +576,7 @@ class WorkerDashboardController extends Controller
     $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
     $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
     $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
-    
+
     //return response()->json(['message' => $data['as_soon_as']]); 
 
     $user = auth()->guard('frontend')->user();
@@ -607,7 +640,7 @@ class WorkerDashboardController extends Controller
     // if ($data['weekly_pay_from'] !== 10) { 
     //   $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
     // }
-  
+
     // if ($data['weekly_pay_to'] !== 10000) {
     //   $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
     // }

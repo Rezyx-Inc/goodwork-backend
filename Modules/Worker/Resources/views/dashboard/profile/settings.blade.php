@@ -59,8 +59,8 @@
         let formData = new FormData(form);
 
         console.log("log formData : ", formData);
-        alert("stop before calling api ");
-        return false;
+        // alert("stop before calling api ");
+        // return false;
 
         $.ajax({
             url: '/worker/update-worker-profile',
