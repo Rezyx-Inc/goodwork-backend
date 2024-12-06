@@ -17,7 +17,7 @@
                             progress and a user-friendly interface, you can efficiently manage multiple placements, ensuring
                             successful matches and satisfied clients.</p>
                         <ul>
-                            <li><a href="{{ route('recruiter-signup') }}">Join Now</a></li>
+                            {{-- <li><a href="{{ route('recruiter-signup') }}">Join Now</a></li> --}}
 
                         </ul>
                     </div>
@@ -228,7 +228,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h2>sign up to explore your career options today!</h2>
-                    <a href="{{ route('recruiter-signup') }}">Sign Up Now</a>
+                    {{-- <a href="{{ route('recruiter-signup') }}">Sign Up Now</a> --}}
                 </div>
             </div>
         </div>

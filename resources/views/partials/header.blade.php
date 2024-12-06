@@ -51,11 +51,11 @@
                                         @elseif (request()->routeIs('for-recruiters'))
                                             @if (!auth()->guard('recruiter')->check())
                                                 <li>
-                                                    <a href="{{ route('recruiter.login') }}">Login</a>
+                                                    <a class="login_style" href="{{ route('recruiter.login') }}">Login</a>
                                                 </li>
-                                                <li>
+                                                {{-- <li>
                                                     <a href="{{ route('recruiter-signup') }}">Join Goodwork</a>
-                                                </li>
+                                                </li> --}}
                                             @else
                                                 <li></li>
                                                 <li>
@@ -92,3 +92,13 @@
     </div>
 </section>
 <!-----header section------>
+
+
+<style>
+    .login_style {
+        background: #3d2c39;
+        color: #ffedee !important;
+        padding: 10px 30px;
+        border-radius: 100px;
+    }
+</style>

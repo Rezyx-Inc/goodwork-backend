@@ -34,7 +34,7 @@
                                         Loading...
                                     </span>
                                     <span id="login"> Log in </span> </button>
-                                <p>Don’t have an account? <a href="{{ route('recruiter-signup') }}">Sign up</a></p>
+                                {{-- <p>Don’t have an account? <a href="{{ route('recruiter-signup') }}">Sign up</a></p> --}}
                             </div>
 
                         </form>
