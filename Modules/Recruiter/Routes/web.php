@@ -22,8 +22,8 @@ Route::prefix('recruiter')->group(function () {
         Route::post('recruiter-login', ['uses' => 'RecruiterAuthController@post_login', 'as' => 'recruiter-login']);
         Route::get('/recruiter-verify', ['uses' => 'RecruiterAuthController@verify', 'as' => 'recruiter.verify']);
         Route::post('recruiter-otp', ['uses' => 'RecruiterAuthController@submit_otp', 'as' => 'recruiter.otp']);
-        Route::get('/signup', ['uses' => 'RecruiterAuthController@get_signup', 'as' => 'recruiter-signup']);
-        Route::post('signup', ['uses' => 'RecruiterAuthController@post_signup', 'as' => 'recruiter.signup']);
+        // Route::get('/signup', ['uses' => 'RecruiterAuthController@get_signup', 'as' => 'recruiter-signup']);
+        // Route::post('signup', ['uses' => 'RecruiterAuthController@post_signup', 'as' => 'recruiter.signup']);
         Route::get('resend-otp', ['uses' => 'RecruiterAuthController@resend_otp', 'as' => 'recruiter.resend-otp']);
 
     });
