@@ -635,7 +635,7 @@
             value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}">
     </div>
     <span class="help-block-worker_unit"></span>
-    {{-- End Unit --}}
+   {{-- End Unit --}}
 </div>
 
 
@@ -653,15 +653,14 @@
 
 
 
+  {{--
 
-<!--
-
-{{-- rest from old form --}}
+<!-- rest from old form -->
 
 <div class="row justify-content-center d-none">
 
 
-    {{-- Licence number --}}
+    <!-- Licence number -->
     <div class="ss-form-group">
         <label>Licence number</label>
         <input type="text" id="nursing_license_number" name="nursing_license_number"
@@ -670,7 +669,7 @@
     </div>
     <span class="help-block-licence"></span>
 
-    {{-- Facility Shift Cancellation Policy --}}
+    <!-- Facility Shift Cancellation Policy -->
     <div class="ss-form-group ">
         <label>Facility Shift Cancellation Policy</label>
         <select name="facility_shift_cancelation_policy" class="facility_shift_cancelation_policy mb-3"
@@ -690,8 +689,8 @@
         </select>
     </div>
     <span class="help-block-facility_shift_cancelation_policy"></span>
-    {{-- End Facility Shift Cancellation Policy --}}
-    {{-- Contract Termination Policy --}}
+    <!-- End Facility Shift Cancellation Policy -->
+    <!-- Contract Termination Policy -->
     <div class="ss-form-group">
         <label>Contract Termination Policy</label>
         <input type="text" id="contract_termination_policy" name="contract_termination_policy"
@@ -699,8 +698,8 @@
             value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
     </div>
     <span class="help-block-contract_termination_policy"></span>
-    {{-- end Contract Termination Policy --}}
-    {{-- Traveler Distance From Facility --}}
+    <!-- end Contract Termination Policy -->
+    <!-- Traveler Distance From Facility -->
     <div class="ss-form-group">
         <label>Distance from your home</label>
         <input type="number" id="traveler_distance_from_facility" name="distance_from_your_home"
@@ -708,20 +707,20 @@
             value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}">
     </div>
     <span class="help-block-traveler_distance_from_facility"></span>
-    {{-- end Traveler Distance From Facility  --}}
+    <!-- end Traveler Distance From Facility  -->
 
-    {{-- Scrub Color --}}
+    <!-- Scrub Color -->
     <div class="ss-form-group">
         <label>Scrub Color</label>
         <input id="scrub_color" type="text" name="worker_scrub_color" placeholder="Enter Scrub Color"
             value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}">
     </div>
     <span class="help-block-worker_scrub_color"></span>
-    {{-- End Scrub Color --}}
-    {{-- added fields to match job details in explore jobs --}}
+    <!-- End Scrub Color -->
+    <!-- added fields to match job details in explore jobs -->
 
-    {{-- nursing_license_state --}}
-    {{-- <div class="ss-form-group">
+    <!-- nursing_license_state -->
+    <!-- <div class="ss-form-group">
         <label>Where are you licensed?</label>
         <select name="nursing_license_state" id="nursing_license_state">
             <option
@@ -734,9 +733,9 @@
             @endforeach
         </select>
         <span class="help-block-nursing_license_state"></span>
-    </div> --}}
-    {{-- End nursing_license_state --}}
-    {{-- worker_eligible_work_in_us --}}
+    </div> -->
+    <!-- End nursing_license_state -->
+    <!-- worker_eligible_work_in_us -->
 
     <div class="ss-form-group">
         <label>Eligible to work in the US</label>
@@ -754,10 +753,10 @@
         <span class="help-block-worker_eligible_work_in_us"></span>
     </div>
 
-    {{-- End worker_eligible_work_in_us --}}
+    <!-- End worker_eligible_work_in_us -->
 
 
-    {{-- worker_facility_state --}}
+    <!-- worker_facility_state -->
 
     <div class="ss-form-group">
         <label>State you'd like to work?</label>
@@ -774,11 +773,11 @@
         </select>
         <span class="help-block-worker_facility_state"></span>
     </div>
-    {{-- End worker_facility_state  --}}
+    <!-- End worker_facility_state  -->
 
 
 
-    {{-- worker_sign_on_bonus --}}
+    <!-- worker_sign_on_bonus -->
 
     <div class="ss-form-group">
         <label>Sign on Bonus</label>
@@ -787,9 +786,9 @@
             value="{{ !empty($worker->worker_sign_on_bonus) ? $worker->worker_sign_on_bonus : '' }}">
     </div>
     <span class="help-block-worker_sign_on_bonus"></span>
-    {{-- End worker_sign_on_bonus  --}}
+    <!-- End worker_sign_on_bonus  -->
 
-    {{-- worker_completion_bonus --}}
+    <!-- worker_completion_bonus -->
     <div class="ss-form-group">
         <label>Completion Bonus</label>
         <input id="worker_completion_bonus" type="number" name="worker_completion_bonus"
@@ -797,9 +796,9 @@
             value="{{ !empty($worker->worker_completion_bonus) ? $worker->worker_completion_bonus : '' }}">
     </div>
     <span class="help-block-worker_completion_bonus"></span>
-    {{-- End worker_completion_bonus  --}}
+    <!-- End worker_completion_bonus  -->
 
-    {{-- worker_extension_bonus --}}
+    <!-- worker_extension_bonus -->
     <div class="ss-form-group">
         <label>Extension Bonus</label>
         <input id="worker_extension_bonus" type="number" name="worker_extension_bonus"
@@ -807,18 +806,18 @@
             value="{{ !empty($worker->worker_extension_bonus) ? $worker->worker_extension_bonus : '' }}">
     </div>
     <span class="help-block-worker_extension_bonus"></span>
-    {{-- End worker_extension_bonus  --}}
+    <!-- End worker_extension_bonus  -->
 
-    {{-- worker_other_bonus --}}
+    <!-- worker_other_bonus -->
     <div class="ss-form-group">
         <label>Other Bonus</label>
         <input id="worker_other_bonus" type="number" name="worker_other_bonus" placeholder="What rate is fair ? "
             value="{{ !empty($worker->worker_other_bonus) ? $worker->worker_other_bonus : '' }}">
     </div>
     <span class="help-block-worker_other_bonus"></span>
-    {{-- End worker_other_bonus  --}}
+    <!-- End worker_other_bonus  -->
 
-    {{-- worker_four_zero_one_k --}}
+    <!-- worker_four_zero_one_k -->
     <div class="ss-form-group">
         <label>401K</label>
         <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
@@ -833,9 +832,9 @@
         </select>
         <span class="help-block-worker_four_zero_one_k"></span>
     </div>
-    {{-- End worker_four_zero_one_k  --}}
+    <!-- End worker_four_zero_one_k  -->
 
-    {{-- worker_health_insurance --}}
+    <!-- worker_health_insurance -->
     <div class="ss-form-group">
         <label>Health Insurance</label>
         <select name="worker_health_insurance" id="worker_health_insurance">
@@ -850,9 +849,9 @@
         </select>
         <span class="help-block-worker_health_insurance"></span>
     </div>
-    {{-- End worker_health_insurance  --}}
+    <!-- End worker_health_insurance  -->
 
-    {{-- worker_dental --}}
+    <!-- worker_dental -->
     <div class="ss-form-group">
         <label>Dental</label>
         <select name="worker_dental" id="worker_dental">
@@ -866,9 +865,9 @@
         </select>
         <span class="help-block-worker_dental"></span>
     </div>
-    {{-- End worker_dental  --}}
+    <!-- End worker_dental  -->
 
-    {{-- worker_vision --}}
+    <!-- worker_vision -->
 
     <div class="ss-form-group">
         <label>Vision</label>
@@ -883,18 +882,18 @@
         </select>
         <span class="help-block-worker_vision"></span>
     </div>
-    {{-- End worker_vision  --}}
+    <!-- End worker_vision  -->
 
-    {{-- worker_overtime_rate --}}
+    <!-- worker_overtime_rate -->
     <div class="ss-form-group">
         <label>Overtime Rate</label>
         <input id="worker_overtime_rate" type="number" name="worker_overtime_rate" placeholder="What rate is fair?"
             value="{{ !empty($worker->worker_overtime_rate) ? $worker->worker_overtime_rate : '' }}">
     </div>
     <span class="help-block-worker_overtime_rate"></span>
-    {{-- End worker_overtime_rate  --}}
+    <!-- End worker_overtime_rate  -->
 
-    {{-- worker_holiday its a date  --}}
+    <!-- worker_holiday its a date  -->
     <div class="ss-form-group">
         <label>Holiday</label>
         <input id="worker_holiday" type="date" name="worker_holiday"
@@ -902,9 +901,9 @@
             value="{{ !empty($worker->worker_holiday) ? \Carbon\Carbon::parse($worker->worker_holiday)->format('Y-m-d') : '' }}">
     </div>
     <span class="help-block-worker_holiday"></span>
-    {{-- End worker_holiday  --}}
+    <!-- End worker_holiday  -->
 
-    {{-- Skip && Save --}}
+    <!-- Skip && Save -->
     <div class="ss-prsn-form-btn-sec row" style="gap:0px;">
         <div class="col-4">
             <button type="text" class="ss-prsnl-skip-btn prev-1 btns_prof_info"> Previous
@@ -922,4 +921,4 @@
     </div>
 </div>
 
--->
+ --}}
