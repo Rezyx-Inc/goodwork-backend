@@ -1229,6 +1229,14 @@ public function recruiters_management()
             $data['success'] = false;
             return response()->json($data);
         }
+
+        // Check if `organization_name` is not empty
+        if (!empty($recruiter->organization_name)) {
+            $recruiter->organization_name = null;
+            $recruiter->save();
+            return response()->json(['success' => true, 'message' => 'Recruiter organization_name cleared']);
+        }
+
         if ($recruiter === null) {
             return response()->json(['success' => false, 'message' => 'Recruiter not found']);
         }
@@ -1322,7 +1330,8 @@ public function recruiters_management()
     public function recruiter_registration(Request $request)
     {
         try{
-                $orgId = Auth::guard('organization')->user()->id;
+                //$orgId = Auth::guard('organization')->user()->id;
+                $orgId = Auth::guard('organization')->user();
 
                 
                 $validator = Validator::make($request->all(), [
@@ -1339,7 +1348,7 @@ public function recruiters_management()
                     return response()->json($data);
 
                 }else{
-
+                    //$recuiter_already_in_Org = User::where(['email'=>$request->email])->whereNull('organization_name')->first();
                     $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
 
                     if (!empty($check)) {
@@ -1349,18 +1358,31 @@ public function recruiters_management()
                         return response()->json($data);
                     }
 
+                    // if (!empty($recuiter_already_in_Org)) {
+                    //     return response()->json([
+                    //         'msg' => 'Recruiter already in Organization',
+                    //         'success' => false,
+                    //     ]);
+                    // } elseif (!empty($check)) {
+                    //     return response()->json([
+                    //         'msg' => 'Already exist.',
+                    //         'success' => false,
+                    //     ]);
+                    // }
+
                     $response = [];
                     $model = User::create([
                         'first_name' => $request->first_name,
                         'last_name' => $request->last_name,
                         'mobile' => $request->mobile,
                         'email' => $request->email,
+                        'organization_name' => $orgId->organization_name,
                         'user_name' => $request->email,
                         'active' => '1',
                         'role' => 'RECRUITER',
                     ]);
 
-                    $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId, [
+                    $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId->id, [
                         'id' => $model->id,
                         'worksAssigned' => 0,
                         'upNext' => true,
@@ -1379,7 +1401,7 @@ public function recruiters_management()
                     $response['success'] = true;
 
                     // sending mail infromation
-                    $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'subject' => 'Registration'];
+                    $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'organization' => $orgId->organization_name,'subject' => 'Registration'];
                     Mail::to($model->email)->send(new register($email_data));
                     
                     return response()->json($response);
@@ -1387,8 +1409,8 @@ public function recruiters_management()
 
         }catch(\Exception $e){
             $data = [];
-            $data['msg'] = $e->getMessage();
-           //$data['msg'] ='We encountered an error. Please try again later.';
+            //$data['msg'] = $e->getMessage();
+            $data['msg'] ='We encountered an error. Please try again later.';
             $data['success'] = false;
             return response()->json($data);
         }
