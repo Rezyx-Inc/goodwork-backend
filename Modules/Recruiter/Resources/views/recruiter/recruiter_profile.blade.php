@@ -32,6 +32,14 @@
                                     <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
                                   </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                                <p><b>
+                                    {{-- {{ $user->organization_name }} --}}
+                                @if($user->organization_name )
+                                    {{$user->organization_name}}
+                                @else 
+                                    ( Missing Organization information )
+                                @endif
+                                </b></p>
                                 <p>{{ $user->id }}</p>
                                 <p>{{ $user->about_me }}</p>
                             </div>

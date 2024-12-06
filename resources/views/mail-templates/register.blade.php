@@ -11,6 +11,9 @@
   </div>
   <div >
     <p>Congratulations! Your registration was successful.</p>
+    @if ($data['organization'])
+    <p>Organization Name: <b>{{$data['organization']}}</b></p>
+    @endif
     <div >
     <p>Thank you,<br> Team Goodwork</p>
     </div>
