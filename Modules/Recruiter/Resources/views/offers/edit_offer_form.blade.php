@@ -1,6 +1,6 @@
 <div>
-    <div class="mb-3">
-        <h4 class="d-flex align-items-center"><img style="cursor: pointer; margin-right:10px;" onclick="getOneOfferInformation('{{ $offerdetails['id'] }}')" src="{{ URL::asset('recruiter/assets/images/counter-left-img.png') }}"> Edit Offer</h4>
+    <div class="mb-2 mt-3">
+        <h4 class="d-flex align-items-center"><img style="cursor: pointer; margin-right:10px;" onclick="getOneOfferInformation('{{ $offerdetails['id'] }}')" src="{{ URL::asset('recruiter/assets/images/counter-left-img.png') }}"> Make Offer</h4>
     </div>
 </div>
 
@@ -33,7 +33,6 @@
             </div>
 
             {{-- Org Job Id --}}
-
             {{-- this job_id here reffer to the id of a job not the org job id, we will hide it for now until we add a field for the org job id in the offer table --}}
             <div class="ss-form-group col-md-12 d-none">
                 <label>Org Job Id</label>
@@ -176,28 +175,6 @@
                 </div>
             </div>
             
-            @if ($offerdetails->status == 'Screening')
-
-            {{-- Resume --}}
-            <div class="row ss-form-group col-md-12 d-flex justify-content-end" style="margin-left: 17px; padding-bottom: 20px;">
-            <label style="padding-bottom: 25px; padding-top: 25px;">Resume</label>
-                <div class="row justify-content-center" style="display:flex; align-items:end;">
-                    <div class="col-6">
-                    <label for="is_resume"
-                        style="display:flex; justify-content:center;">Resume is required</label>
-                    </div>
-                    <div class="col-6">
-                        <input type="checkbox" name="is_resume" id="is_resume"
-                            value="1" style="box-shadow: none;">
-                    </div>
-                </div>
-                
-                <div> 
-                    <span class="helper help-block-is_resume"></span>
-                </div>
-            </div>
-
-            @endif
 
         <div class="col-md-12 mt-4 collapse-container">
             <p>
@@ -288,6 +265,7 @@
                     </div>
                     <div class="row col-lg-6 col-sm-12 col-md-12 col-xs-12"
                         style="display: flex; justify-content: end; align-items:center;">
+                        <input type="hidden" name="as_soon_as" value="0">
                         <input id="as_soon_as" name="as_soon_as" value="1"
                             type="checkbox" style="box-shadow:none; width:auto;"
                             class="col-6">
@@ -356,9 +334,9 @@
                 <select name="on_call" id="on_call">
                     <option value="" disabled selected hidden>Select an answer
                     </option>
-                    <option value="Yes">Yes
+                    <option value="1">Yes
                     </option>
-                    <option value="No">No
+                    <option value="0">No
                     </option>
                 </select>
                 <div> 
@@ -492,7 +470,7 @@
                 </div>
             </div>
             {{-- Benefits --}}
-            <div id="benefits_id" class="d-none ss-form-group ss-prsnl-frm-specialty">
+            <div id="benefits_id" class="ss-form-group ss-prsnl-frm-specialty">
                 <label>Benefits</label>
                 <div class="ss-speilty-exprnc-add-list benefits-content">
                 </div>
@@ -811,9 +789,9 @@
                 <select name="block_scheduling" id="block_scheduling">
                     <option value="" disabled selected hidden>Select an answer
                     </option>
-                    <option value="Yes">Yes
+                    <option value="1">Yes
                     </option>
-                    <option value="No">No
+                    <option value="0">No
                     </option>
                 </select>
                 <div> 
@@ -826,9 +804,9 @@
                 <select name="float_requirement" id="float_requirement">
                     <option value="" disabled selected hidden>Select an answer
                     </option>
-                    <option value="Yes">Yes
+                    <option value="1">Yes
                     </option>
-                    <option value="No">No
+                    <option value="0">No
                     </option>
                 </select>
                 <div> 
@@ -1044,7 +1022,7 @@
                 </div>
 
                 <div class="ss-counter-buttons-div">
-                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="editOffer(event)">Send Offer</button>
+                    <button class="ss-counter-button" id="ss-reject-offer-btn" onclick="offerSend(event,'make')">Send</button>
                 </div>
         </div>
     </div>    

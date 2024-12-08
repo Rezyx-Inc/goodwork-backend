@@ -1,6 +1,9 @@
-@extends('organization::layouts.main')
+@extends('worker::layouts.main')
 
 @section('content')
+
+    <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/style.css')}}" />
+    <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/custom.css')}}" />
     <main style="padding-top: 170px" class="ss-main-body-sec">
         <div class="container">
             <h2>Help your <span class="ss-color-pink">applicants advance!</span></h2>
@@ -9,56 +12,56 @@
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Apply')" id="Apply">
                         <p>New</p>
-                        <span>{{ $statusCounts['Apply'] }} Applications</span>
+                        <span>{{ $statusCounts['Apply'] }} {{ $statusCounts['Apply'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Screening Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Screening')" id="Screening">
                         <p>Screening</p>
-                        <span>{{ $statusCounts['Screening'] }} Applications</span>
+                        <span>{{ $statusCounts['Screening'] }} {{ $statusCounts['Screening'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Submitted Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Submitted')" id="Submitted">
                         <p>Submitted</p>
-                        <span>{{ $statusCounts['Submitted'] }} Applications</span>
+                        <span>{{ $statusCounts['Submitted'] }} {{ $statusCounts['Submitted'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Offered Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Offered')" id="Offered">
                         <p>Offered</p>
-                        <span>{{ $statusCounts['Offered'] }} Applications</span>
+                        <span>{{ $statusCounts['Offered'] }} {{ $statusCounts['Offered'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
-                        <span>{{ $statusCounts['Onboarding'] }} Applications</span>
+                        <span>{{ $statusCounts['Onboarding'] }} {{ $statusCounts['Onboarding'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
                         <p>Working</p>
-                        <span>{{ $statusCounts['Working'] }} Applications</span>
+                        <span>{{ $statusCounts['Working'] }} {{ $statusCounts['Working'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- Done Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Done')" id="Done">
                         <p>Done</p>
-                        <span>{{ $statusCounts['Done'] }} Applications</span>
+                        <span>{{ $statusCounts['Done'] }} {{ $statusCounts['Done'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div>
                 {{-- On Hold Applicants --}}
                 {{-- <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Hold')" id="Hold">
                         <p>Hold</p>
-                        <span>{{ $statusCounts['Hold'] }} Applications</span>
+                        <span>{{ $statusCounts['Hold'] }} {{ $statusCounts['Hold'] == 1 ? 'Application' : 'Applications' }}</span>
                     </div>
                 </div> --}}
 
@@ -86,7 +89,7 @@
             </div>
             <div class="ss-acount-profile">
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 d-none">
                         <div class="ss-account-form-lft-1">
                             <h5 class="mb-4 d-none" id="listingname">New applications</h5>
                             <div id="application-list">
@@ -94,7 +97,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-7">
+                    <div class="col-lg-7 d-none">
                         <div class="ss-change-appli-mn-div">
                             <div class="row" id="application-details">
                             </div>
@@ -184,7 +187,7 @@
                 }
             });
             $.ajax({
-                url: '/organization/send-amount-transfer',
+                url: '/recruiter/send-amount-transfer',
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
@@ -305,7 +308,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: 'POST',
-                    url: "{{ route('organization-send-job-offer') }}",
+                    url: "{{ route('recruiter-send-job-offer') }}",
                     data: formData,
                     dataType: 'json',
                     processData: false,
@@ -407,7 +410,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/get-application-listing') }}",
+                    url: "{{ url('recruiter/get-application-listing') }}",
                     data: {
                         'token': csrfToken,
                         'type': type,
@@ -525,11 +528,21 @@
 
         $(document).ready(function() {
 
-            // selectOfferCycleState
             const urlParams = new URLSearchParams(window.location.search);
             const viewParam = urlParams.get('view');
             selectOfferCycleState(viewParam);
 
+            if (viewParam == 'Apply') {
+                            // chnage his coloset from col-lg-5 to col-lg-12    
+                            $("#application-details").closest('.col-lg-7').addClass("d-none");
+                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5 d-none').addClass('col-lg-12');
+                            
+                            // hide to col of  #application-details
+            } else {
+                $("#application-list").closest('.col-lg-5').removeClass('d-none').addClass('col-lg-5');
+                $("#application-details").closest('.col-lg-7').removeClass("d-none");
+            }
+            
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
                 var $form = $('#send-job-offer');
@@ -546,7 +559,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: 'POST',
-                    url: "{{ route('organization-send-job-offer') }}",
+                    url: "{{ route('recruiter-send-job-offer') }}",
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -588,7 +601,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
                     type: 'POST',
-                    url: "{{ url('organization/organization-create-opportunity') }}/update",
+                    url: "{{ url('recruiter/recruiter-create-opportunity') }}/update",
                     data: formData,
                     dataType: 'json',
                     success: function(data) {
@@ -687,7 +700,7 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             type: 'POST',
-                            url: "{{ url('organization/remove') }}/" + removetype,
+                            url: "{{ url('recruiter/remove') }}/" + removetype,
                             data: formData,
                             dataType: 'json',
                             success: function(data) {
@@ -824,7 +837,7 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             type: 'POST',
-                            url: "{{ url('organization/remove') }}/" + removetype,
+                            url: "{{ url('recruiter/remove') }}/" + removetype,
                             data: formData,
                             dataType: 'json',
                             success: function(data) {
@@ -926,7 +939,7 @@
                                 'X-CSRF-TOKEN': csrfToken
                             },
                             type: 'POST',
-                            url: "{{ url('organization/remove') }}/" + removetype,
+                            url: "{{ url('recruiter/remove') }}/" + removetype,
                             data: formData,
                             dataType: 'json',
                             success: function(data) {
@@ -947,7 +960,7 @@
         }
     </script>
     <script>
-       function askWorker(e, type, workerid,recruiter_id , organization_id, name) {
+       function askWorker(e, type, workerid, recruiter_id , organization_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -956,7 +969,7 @@
             //         headers: {
             //             'X-CSRF-TOKEN': csrfToken
             //         },
-            //         url: "{{ url('organization/ask-organization-notification') }}",
+            //         url: "{{ url('recruiter/ask-recruiter-notification') }}",
             //         data: {
             //             'token': csrfToken,
             //             'worker_id': workerid,
@@ -981,7 +994,7 @@
             // }
 
             // for now just redirecting to messages page
-            let url = "{{ url('organization/organization-messages') }}";
+            let url = "{{ url('recruiter/recruiter-messages') }}";
             window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name;
             // window.location = url;
         }
@@ -1091,6 +1104,7 @@
         }
 
         function open_modal(obj) {
+            
             let name, title, modal, form, target;
 
             name = $(obj).data('name');
@@ -1133,7 +1147,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/get-offer-information') }}",
+                    url: "{{ url('worker/worker-get-offer-information') }}",
                     data: {
                         'token': csrfToken,
                         'offer_id' : offerId,
@@ -1159,7 +1173,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/get-offer-information-for-edit') }}",
+                    url: "{{ url('worker/worker-get-offer-information-for-edit') }}",
                     data: {
                         'token': csrfToken,
                         'offer_id' : offerId,
@@ -1186,7 +1200,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/get-offers-by-type') }}",
+                    url: "{{ url('worker/worker-get-offers-by-type') }}",
                     data: {
                         'token': csrfToken,
                         'type' : type,
@@ -1227,7 +1241,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/get-offers-by-type') }}",
+                    url: "{{ url('recruiter/get-offers-by-type') }}",
                     data: {
                         'token': csrfToken,
                         'type' : type,
@@ -1250,7 +1264,12 @@
         }
 
         function applicationStatusToggle(type){
-            noApplicationDetailsContent();
+            
+            if (type != 'Apply') {
+                noApplicationDetailsContent();
+                noApplicationWorkerListContent();
+            }
+            
             $("#listingname").removeClass("d-none");
             var applyElement = document.getElementById('Apply');
             var screeningElement = document.getElementById('Screening');
@@ -1315,18 +1334,18 @@
             }
         }
 
-        function getOffersOfEachWorker(type,nurseId){
+        function getOffersOfEachOrganization(type,OrganizationId){
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/get-offers-of-each-worker') }}",
+                    url: "{{ url('worker/get-offers-of-each-organization') }}",
                     data: {
                         'token': csrfToken,
                         'type' : type,
-                        'nurse_id': nurseId
+                        'organization_id': OrganizationId
                     },
                     type: 'GET',
                     dataType: 'json',
@@ -1335,13 +1354,18 @@
                         //console.log(result.content);
 
                         var files = result.files;
-                        console.log(files);
                         var tbody = $('tbody');
                         tbody.empty(); // Clear the table body
+
                         // Add a row for each file
                         if (files) {
-                        for (var i = 0; i < files.length; i++) {
+
+                            for (var i = 0; i < files.length; i++) {
+
                                 var file = files[i];
+                                /* if(file.type == "resume"){
+                                    file.content = "data:application/pdf;base64,"+file.content;
+                                } */
                                 var base64String = file.content;
 
                                 const mimeType = base64String.match(/^data:(.+);base64,/)[1];
@@ -1363,8 +1387,8 @@
                                 row.append('<td>' + file.type + '</td>');
                                 row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
                                 tbody.append(row);
+                            }
                         }
-                    }
 
                     },
                     error: function(error) {
@@ -1382,7 +1406,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/get-one-offer-information') }}",
+                    url: "{{ url('worker/worker-get-one-offer-information') }}",
                     data: {
                         'token': csrfToken,
                         'offer_id': offerId
@@ -1410,7 +1434,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
 
-                    url: "{{ url('organization/update-application-status') }}",
+                    url: "{{ url('recruiter/update-application-status') }}",
                     data: {
                         'token': csrfToken,
                         'id': id,
@@ -1459,7 +1483,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('organization/accept-reject-job-offer') }}",
+                    url: "{{ url('recruiter/accept-reject-job-offer') }}",
                     data: {
                         'token': csrfToken,
                         'id': id,
@@ -1487,10 +1511,6 @@
             }
         }
 
-        $(document).ready(function() {
-            noApplicationDetailsContent();
-            noApplicationWorkerListContent();
-        });
 
         function noApplicationWorkerListContent(){
             $("#application-list").html("<div class='text-center no_details'><span>Select an application status</span></div>");
@@ -1511,7 +1531,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
 
-                    url: "{{ url('organization/update-application-status') }}",
+                    url: "{{ url('recruiter/update-application-status') }}",
                     data: {
                         'token': csrfToken,
                         'id': offerId,
@@ -1563,7 +1583,7 @@
             return;
         }
 
-        const url = new URL("{{ url('organization/get-one-offer-information') }}");
+        const url = new URL("{{ url('recruiter/get-one-offer-information') }}");
         url.searchParams.append('token', csrfToken);
         url.searchParams.append('offer_id', offerId);
 
@@ -1613,6 +1633,22 @@
         }
         #application-list{
             height: fit-content;
+        }
+
+        .ss-job-prfle-sec ul li {
+            background: none;
+            padding: 0px;
+            border-radius: 100px;
+            font-size: 16px;
+            display: inline-block;
+            font-weight: 500;
+            color: #3b71ca;
+            height: fit-content;
+        }
+        
+        .ss-job-prfle-sec ul {
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
         }
     </style>
 @endsection

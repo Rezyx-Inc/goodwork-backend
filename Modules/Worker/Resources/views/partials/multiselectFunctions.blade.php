@@ -985,7 +985,7 @@ function addcertifications(type) {
     
 
 
-    function offerSend(event, type) {
+    function offerSend(event,type) {
         
         try {
 
@@ -1014,7 +1014,7 @@ function addcertifications(type) {
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('recruiter/recruiter-counter-offer') }}",
+                    url: "{{ url('worker/worker-counter-offer') }}",
                     data: {
                         'token': csrfToken,
                         'data': data,

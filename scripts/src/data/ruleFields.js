@@ -73,7 +73,13 @@ const ruleFields = [
         publishDisabled: true,
         applyDisabled: false
     },
-
+    {
+        fieldID: "is_resume",
+        workerFieldIdMatch: "worker_is_resume",
+        displayName: "Resume",
+        publishDisabled: false,
+        applyDisabled: false
+    },
     {
         fieldID: "preferred_shift_duration",
         workerFieldIdMatch: "worker_shift_time_of_day",
@@ -428,13 +434,6 @@ const ruleFields = [
         publishDisabled: false,
         applyDisabled: false
     },
-    // {
-    //     fieldID: "job_name",
-    //     workerFieldIdMatch: "",
-    //     displayName: "Job Name ++ Don't want these included for now",
-    //     publishDisabled: false,
-    //     applyDisabled: true
-    // },
     // {
     //     fieldID: "scrub_color",
     //     workerFieldIdMatch: "worker_scrub_color",

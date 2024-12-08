@@ -101,7 +101,9 @@
                                                     aria-hidden="true"></span>
                                                 Loading...
                                             </span>
-                                            <span id="sign"> Save Recruiter </span> </button>
+                                            <span id="sign"> Save Recruiter </span> 
+                                        </button>
+                                        <span class="help-block-email-condition text-center"></span>
                                     </div>
                                 </form>
                             </div>
@@ -521,11 +523,16 @@
                             $('#loading').addClass('d-none');
                             $('#sign').removeClass('d-none');
                             $('#submitBtn').find('input, button').prop('disabled', false);
-                            notie.alert({
+                            if ( response.msg == 'Recruiter already in Organization'){
+                                $('.help-block-email-condition').text(response.msg);
+                                $('.help-block-email-condition').addClass('text-danger');
+                            }else{
+                                notie.alert({
                                 type: 'error',
                                 text: '<i class="fa fa-times"></i> '+response.msg,
                                 time: 2
-                            });
+                                });
+                            }
                             return;
                         }
 
