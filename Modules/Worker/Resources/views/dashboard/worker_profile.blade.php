@@ -3,6 +3,13 @@
 @section('content')
     @php
         $user = auth()->guard('frontend')->user();
+        
+        // formatAmount :: helper function to remove .00 from amount
+        $formatAmount = function ($value) {
+            return !empty($value) && $value != 0
+                ? (fmod($value, 1) == 0 ? intval($value) : $value)
+                : null;
+        };
     @endphp
     <!--Main layout-->
     <main style="padding-top: 130px; padding-bottom: 100px;" class="ss-main-body-sec">
@@ -80,10 +87,10 @@
 
             <div class="ss-opport-mngr-hedr mb-3">
                 <div class="row">
-                    <div class="col-lg-4">
-                        <h4>Opportunities Manager</h4>
-                    </div>
-                    <div class="col-lg-8">
+                    {{-- <div class="col-lg-4">
+                        <h4>titel</h4>
+                    </div> --}}
+                    <div class="col">
                         <ul>
                             <li><button id="profile_settings" onclick="ProfileIinformationDisplay()"
                                     class="ss-darfts-sec-draft-btn">Your Info & Requirements</button></li>

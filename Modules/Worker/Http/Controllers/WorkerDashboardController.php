@@ -261,7 +261,7 @@ class WorkerDashboardController extends Controller
       // // Save the updated nurse model
       $nurse->save();
 
-      // dd($userAttributes, $nurseAttributes);
+      // dd( $nurseAttributes);
       return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
     } catch (\Exception $e) {
 

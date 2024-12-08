@@ -1,94 +1,76 @@
+{{-- collaps 1 --}}
 <div class="col-md-12 my-4 collapse-container">
     <p>
-        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-2" role="button" aria-expanded="false"
+        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-1" role="button" aria-expanded="false"
             aria-controls="collapseExample">
             Summary
         </a>
     </p>
 </div>
 
-<div class="row collapse" id="collapse-2">
+<div class="row collapse" id="collapse-1">
 
     {{-- Type --}}
-
     <div class="ss-form-group">
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'worker_job_type',
+            'label' => 'Type',
+            'placeholder' => 'Select Type',
+            'name' => 'worker_job_type',
+            'options' => $allKeywords['Type'],
+            'option_attribute' => 'title',
+            'selected' => old('worker_job_type', $worker->worker_job_type),
+        ])
 
-        <label>Type</label>
-        <select name="worker_job_type" id="worker_job_type">
-            <option value="" disabled selected hidden>
-                Select Type
-            </option>
-
-            @if (isset($allKeywords['Type']))
-                @foreach ($allKeywords['Type'] as $value)
-                    <option value="{{ $value->title }}"
-                        {{ !$worker->worker_job_type && !empty($worker->worker_job_type) && $worker->worker_job_type == $value->title ? 'selected' : '' }}>
-                        {{ $value->title }}
-                    </option>
-                @endforeach
-            @endif
-
-        </select>
     </div>
     <span class="help-block-worker_job_type"></span>
     {{-- end Type --}}
 
     {{-- Terms --}}
     <div class="ss-form-group">
-        <label>Terms</label>
-        <select name="terms" id="term">
-            <option value="" disabled selected hidden>
-                Select a specefic term
-            </option>
 
-            @if (isset($allKeywords['Terms']))
-                @foreach ($allKeywords['Terms'] as $value)
-                    <option value="{{ $value->id }}"
-                        {{ !$worker->terms && !empty($worker->terms) && $worker->terms == $value->id ? 'selected' : '' }}>
-                        {{ $value->title }}
-                    </option>
-                @endforeach
-            @endif
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'terms',
+            'label' => 'Terms',
+            'placeholder' => 'Select a specefic term',
+            'name' => 'terms',
+            'options' => $allKeywords['Terms'],
+            'option_attribute' => 'title',
+            'selected' => old('terms', $worker->terms),
+        ])
 
-        </select>
     </div>
     <span class="help-block-terms"></span>
 
     {{-- Profession --}}
     <div class="ss-form-group">
-        <label>Professions</label>
-        <select name="profession" id="profession">
-            <option value="" disabled selected hidden>
-                What Kind of Professional are you?
-            </option>
 
-            @foreach ($professions as $profession)
-                <option value="{{ $profession->full_name }}"
-                    {{ !$worker->profession && !empty($worker->profession) && $worker->profession == $profession->full_name ? 'selected' : '' }}>
-                    {{ $profession->full_name }}
-                </option>
-            @endforeach
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'profession',
+            'label' => 'Professions',
+            'placeholder' => 'What kind of Professional are you?',
+            'name' => 'profession',
+            'options' => $allKeywords['Profession'],
+            'option_attribute' => 'title',
+            'selected' => old('profession', $worker->profession),
+        ])
 
-        </select>
     </div>
     <span class="help-block-profession"></span>
 
     {{-- Specialty --}}
     <div class="ss-form-group ">
-        <label>Specialties</label>
-        <select name="specialty" id="specialty">
-            <option value="" disabled selected hidden>
-                Select Specialty
-            </option>
+        
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'specialty',
+            'label' => 'Specialties',
+            'placeholder' => "What's your specialty?",
+            'name' => 'specialty',
+            'options' => $allKeywords['Speciality'],
+            'option_attribute' => 'title',
+            'selected' => old('specialty', $worker->specialty),
+        ])
 
-            @foreach ($specialities as $specialty)
-                <option value="{{ $specialty->full_name }}"
-                    {{ !$worker->specialty && !empty($worker->specialty) && $worker->specialty == $specialty->full_name ? 'selected' : '' }}>
-                    {{ $specialty->full_name }}
-                </option>
-            @endforeach
-
-        </select>
     </div>
     <span class="help-block-specialty"></span>
 
@@ -98,7 +80,7 @@
         <label>Min $/hr</label>
         <input type="number" name="worker_actual_hourly_rate" id="worker_actual_hourly_rate"
             placeholder="Minimum hourly rate you'd consider?"
-            value="{{ !empty($worker->worker_actual_hourly_rate) ? $worker->worker_actual_hourly_rate : '' }}">
+            value="{{ $formatAmount($worker->worker_actual_hourly_rate) }}">
     </div>
     <span class="help-block-specialty"></span>
 
@@ -107,8 +89,8 @@
     <div class="ss-form-group col-md-12">
         <label>Min $/Wk</label>
         <input type="number" step="0.01" name="worker_organization_weekly_amount"
-            id="worker_organization_weekly_amount" placeholder="Enter Weekly Pay"
-            value="{{ !empty($worker->worker_organization_weekly_amount) ? $worker->worker_organization_weekly_amount : '' }}">
+            id="worker_organization_weekly_amount" placeholder="Minimum weekly rate you'd consider?"
+            value="{{ $formatAmount($worker->worker_organization_weekly_amount) }}">
         <div>
             <span class="helper help-block-worker_organization_weekly_amount"></span>
         </div>
@@ -119,8 +101,8 @@
     <div class="ss-form-group col-md-12">
         <label>Hrs/Wk</label>
         <input type="number" step="0.01" name="worker_hours_per_week" id="worker_hours_per_week"
-            placeholder="Enter Weekly Pay"
-            value="{{ !empty($worker->worker_hours_per_week) ? $worker->worker_hours_per_week : '' }}">
+            placeholder="Maximum hours per week you'll work"
+            value="{{ $formatAmount($worker->worker_hours_per_week) }}">
         <div>
             <span class="helper help-block-worker_hours_per_week"></span>
         </div>
@@ -129,21 +111,17 @@
 
     {{-- State Information --}}
     <div class="ss-form-group col-11">
-        <label>States</label>
-        <select name="state" id="state">
+   
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'state',
+            'label' => 'States',
+            'placeholder' => "States you'll work in?",
+            'name' => 'state',
+            'options' => $allKeywords['State'],
+            'option_attribute' => 'title',
+            'selected' => old('state', $worker->state),
+        ])
 
-            <option value="" disabled selected hidden>
-                What State are you located in?
-            </option>
-
-            @foreach ($states as $state)
-                <option value="{{ $state->id }}"
-                    {{ !$worker->state && !empty($worker->state) && $worker->state == $state->id ? 'selected' : '' }}>
-                    {{ $state->name }}
-                </option>
-            @endforeach
-
-        </select>
     </div>
     <span class="help-block-state"></span>
 
@@ -151,32 +129,27 @@
     {{-- city --}}
 
     <div class="ss-form-group">
-        <label>Cities</label>
-        <select name="city" id="city">
+ 
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'city',
+            'label' => 'Cities',
+            'placeholder' => "Cities you'll work in?",
+            'name' => 'city',
+            'options' => $allKeywords['City'],
+            'option_attribute' => 'title',
+            'selected' => old('city', $worker->city),
+        ])
 
-            <option value="" disabled selected hidden>
-                Select a City
-            </option>
-
-            @foreach ($allKeywords['City'] as $value)
-                <option value="{{ $value->title }}"
-                    {{ !$worker->city && !empty($worker->city) && $worker->city == $value->title ? 'selected' : '' }}>
-                    {{ $value->title }}
-                </option>
-            @endforeach
-
-        </select>
         <span class="help-block-city"></span>
-        <span class="help-worker-facility-city">Please select a state first</span>
     </div>
     {{-- End city  --}}
 </div>
 
 
-{{-- collaps 3 --}}
+{{-- collaps 2 --}}
 <div class="col-md-12 my-4 collapse-container">
     <p>
-        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-3" role="button" aria-expanded="false"
+        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-2" role="button" aria-expanded="false"
             aria-controls="collapseExample">
             Shift
         </a>
@@ -184,27 +157,22 @@
 </div>
 
 
-<div class="row collapse" id="collapse-3">
+<div class="row collapse" id="collapse-2">
 
     {{-- Shift Time of Day --}}
     <div class="ss-form-group">
-        <label>Shift Times</label>
-        <select name="worker_shift_time_of_day" id="shift-of-day">
 
-            <option value="" disabled selected hidden>
-                Enter Shift Time of Day
-            </option>
+        
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'worker_shift_time_of_day',
+            'label' => 'Shift Times',
+            'placeholder' => "Shifts you'll work?",
+            'name' => 'worker_shift_time_of_day',
+            'options' => $allKeywords['PreferredShift'],
+            'option_attribute' => 'title',
+            'selected' => old('worker_shift_time_of_day', $worker->worker_shift_time_of_day),
+        ])
 
-            @if (isset($allKeywords['PreferredShift']))
-                @foreach ($allKeywords['PreferredShift'] as $value)
-                    <option value="{{ $value->id }}"
-                        {{ !$worker->worker_shift_time_of_day && !empty($worker->worker_shift_time_of_day) && $worker->worker_shift_time_of_day == $value->id ? 'selected' : '' }}>
-                        {{ $value->title }}
-                    </option>
-                @endforeach
-            @endif
-
-        </select>
     </div>
     <span class="help-block-worker_shift_time_of_day"></span>
     {{-- End Shift Time of Day --}}
@@ -213,8 +181,8 @@
     <div class="ss-form-group">
         <label>Min guaranteed Hrs/wk</label>
         <input id="worker_guaranteed_hours" type="number" name="worker_guaranteed_hours"
-            placeholder="Enter your guaranteed hours"
-            value="{{ !empty($worker->worker_guaranteed_hours) ? $worker->worker_guaranteed_hours : '' }}">
+            placeholder="Minimum guaranteed Hrs/wk"
+            value="{{ $formatAmount($worker->worker_guaranteed_hours) }}">
     </div>
     <span class="help-block-worker_guaranteed_hours"></span>
     {{-- End worker_guaranteed_hours  --}}
@@ -222,8 +190,8 @@
     {{-- Hours/Shift --}}
     <div class="ss-form-group">
         <label>Hrs/Shift</label>
-        <input id="hours_shift" type="number" name="worker_hours_shift" placeholder="Enter Hours/Shift"
-            value="{{ !empty($worker->worker_hours_shift) ? $worker->worker_hours_shift : '' }}">
+        <input id="hours_shift" type="number" name="worker_hours_shift" placeholder="Hours per shift you'll work?"
+            value="{{ $formatAmount($worker->worker_hours_shift) }}">
     </div>
     <span class="help-block-worker_hours_shift"></span>
     {{-- End Hours/Shift --}}
@@ -231,8 +199,8 @@
     {{-- Shifts/Week --}}
     <div class="ss-form-group">
         <label>Shifts/Wk</label>
-        <input id="weeks_shift" type="number" name="worker_shifts_week" placeholder="Enter Shifts/Week"
-            value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}">
+        <input id="weeks_shift" type="number" name="worker_shifts_week" placeholder="Shifts per week?"
+            value="{{ $formatAmount($worker->worker_shifts_week) }}">
     </div>
     <span class="help-block-worker_shifts_week"></span>
     {{-- End Shifts/Week --}}
@@ -241,8 +209,8 @@
     <div class="ss-form-group">
         <label>Min Wks/Contract</label>
         <input id="preferred_assignment_duration" type="number" name="worker_weeks_assignment"
-            placeholder="Enter Weeks/Assignment"
-            value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}">
+            placeholder="How many weeks?"
+            value="{{ $formatAmount($worker->worker_weeks_assignment) }}">
     </div>
     <span class="help-block-worker_weeks_assignment"></span>
     {{-- End Weeks/Assignment --}}
@@ -250,7 +218,7 @@
     {{-- worker_start_date --}}
     <div class="ss-form-group">
         <label>Start Dates</label>
-        <input id="worker_start_date" type="date" name="worker_start_date" placeholder="Enter your start date"
+        <input id="worker_start_date" type="date" name="worker_start_date" placeholder="When can you start?"
             value="{{ !empty($worker->worker_start_date) ? $worker->worker_start_date : '' }}">
     </div>
     <span class="help-block-worker_start_date"></span>
@@ -272,7 +240,7 @@
 
         </select> --}}
 
-        <input id="rto" type="date" name="rto" placeholder="Enter your End date"
+        <input id="rto" type="date" name="rto" placeholder="Any time off?"
             value="{{ !empty($worker->rto) ? $worker->rto : '' }}">
     </div>
     <span class="help-block-rto"></span>
@@ -281,23 +249,23 @@
 </div>
 
 
-{{-- collaps 4 --}}
+{{-- collaps 3 --}}
 <div class="col-md-12 my-4 collapse-container">
     <p>
-        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-4" role="button"
+        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-3" role="button"
             aria-expanded="false" aria-controls="collapseExample">
             Pay
         </a>
     </p>
 </div>
 
-<div class="row collapse" id="collapse-4">
+<div class="row collapse" id="collapse-3">
 
     {{-- worker_overtime --}}
     <div class="ss-form-group">
         <label>Min OT $/Hr</label>
         <input id="worker_overtime" type="number" name="worker_overtime" placeholder="Minimun hourly rate for Overtime?"
-            value="{{ !empty($worker->worker_overtime) ? $worker->worker_overtime : '' }}">
+            value="{{ $formatAmount($worker->worker_overtime) }}">
     </div>
     <span class="help-block-worker_overtime"></span>
     {{-- End worker_overtime  --}}
@@ -305,8 +273,8 @@
     {{-- worker_on_call --}}
     <div class="ss-form-group">
         <label>Min On Call $/Hr</label>
-        <input id="worker_on_call" type="number" name="worker_on_call" placeholder="What rate is fair?"
-            value="{{ !empty($worker->worker_on_call) ? $worker->worker_on_call : '' }}">
+        <input id="worker_on_call" type="number" name="worker_on_call" placeholder="Minimun hourly rate for On Call?"
+            value="{{ $formatAmount($worker->worker_on_call) }}">
     </div>
     <span class="help-block-worker_on_call"></span>
     {{-- End worker_on_call  --}}
@@ -314,8 +282,8 @@
     {{-- worker_call_back --}}
     <div class="ss-form-group">
         <label>Min Call Back $/Hr</label>
-        <input id="worker_call_back" type="number" name="worker_call_back" placeholder="What rate is fair?"
-            value="{{ !empty($worker->worker_call_back) ? $worker->worker_call_back : '' }}">
+        <input id="worker_call_back" type="number" name="worker_call_back" placeholder="Minimun hourly rate for Call Back?"
+            value="{{ $formatAmount($worker->worker_call_back) }}">
     </div>
     <span class="help-block-worker_call_back"></span>
     {{-- End worker_call_back  --}}
@@ -324,8 +292,8 @@
     <div class="ss-form-group">
         <label>Min Orientation $/Hr</label>
         <input id="worker_orientation_rate" type="number" name="worker_orientation_rate"
-            placeholder="Is this rate reasonable?"
-            value="{{ !empty($worker->worker_orientation_rate) ? $worker->worker_orientation_rate : '' }}">
+            placeholder="Minimun hourly rate for Orientation?"
+            value="{{ $formatAmount($worker->worker_orientation_rate) }}">
     </div>
     <span class="help-block-worker_orientation_rate"></span>
     {{-- End worker_orientation_rate  --}}
@@ -335,7 +303,7 @@
         <label>Min Taxable $/Wk</label>
         <input id="worker_weekly_taxable_amount" type="number" name="worker_weekly_taxable_amount"
             placeholder="Minimum taxable $ per week?"
-            value="{{ !empty($worker->worker_weekly_taxable_amount) ? $worker->worker_weekly_taxable_amount : '' }}">
+            value="{{ $formatAmount($worker->worker_weekly_taxable_amount) }}">
     </div>
     <span class="help-block-worker_weekly_taxable_amount"></span>
     {{-- End worker_weekly_taxable_amount  --}}
@@ -345,7 +313,7 @@
         <label>Min Non-taxable $/Wk</label>
         <input id="worker_weekly_non_taxable_amount" type="number" name="worker_weekly_non_taxable_amount"
             placeholder="Minimum Non-taxable $ per week?"
-            value="{{ !empty($worker->worker_weekly_non_taxable_amount) ? $worker->worker_weekly_non_taxable_amount : '' }}">
+            value="{{ $formatAmount($worker->worker_weekly_non_taxable_amount) }}">
     </div>
     <span class="help-block-worker_weekly_non_taxable_amount"></span>
     {{-- End worker_weekly_non_taxable_amount  --}}
@@ -354,8 +322,8 @@
     <div class="ss-form-group">
         <label>Min Feels Like $/hr</label>
         <input id="worker_feels_like_per_hour" type="number" name="worker_feels_like_per_hour"
-            placeholder="Minimum Feels Like $ per hour?"
-            value="{{ !empty($worker->worker_feels_like_per_hour) ? $worker->worker_feels_like_per_hour : '' }}">
+            placeholder="Minimum 'Feels Like' $ per hour?"
+            value="{{ $formatAmount($worker->worker_feels_like_per_hour) }}">
     </div>
     <span class="help-block-worker_feels_like_per_hour"></span>
     {{-- End worker_feels_like_per_hour  --}}
@@ -366,7 +334,7 @@
         <select name="worker_pay_frequency" id="worker_pay_frequency">
 
             <option value="" {{ empty($worker->worker_pay_frequency) ? 'selected' : '' }} disabled>
-                Select a Pay frequency
+                Pay frequency
             </option>
             <option value="Same Day Pay"
                 {{ !empty($worker->worker_pay_frequency) && $worker->worker_pay_frequency == 'Same Day Pay' ? 'selected' : '' }}>
@@ -404,7 +372,7 @@
         <label>Benefits</label>
         <select name="worker_benefits" class="worker_benefits mb-3" id="worker_benefits" value="">
             <option value="" {{ empty($worker->worker_benefits) ? 'selcted' : '' }}>
-                Select your benefits choice
+                Minimum benefits you require?
             </option>
             @if (isset($allKeywords['Benefits']))
                 @foreach ($allKeywords['Benefits'] as $value)
@@ -422,23 +390,23 @@
 
 
 
-{{-- collaps 5 --}}
+{{-- collaps 4 --}}
 <div class="col-md-12 my-4 collapse-container">
     <p>
-        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-5" role="button"
+        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-4" role="button"
             aria-expanded="false" aria-controls="collapseExample">
             Location
         </a>
     </p>
 </div>
 
-<div class="row collapse" id="collapse-5">
+<div class="row collapse" id="collapse-4">
 
     {{-- Clinical Setting --}}
     <div class="ss-form-group">
         <label>Clinical Settings</label>
         <input type="text" id="clinical_setting" name="clinical_setting_you_prefer"
-            placeholder="Enter clinical setting"
+            placeholder="Settings you'll work in?"
             value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}">
     </div>
     <span class="help-block-clinical_setting_you_prefer"></span>
@@ -501,6 +469,37 @@
 </div>
 
 
+{{-- collaps 5 --}}
+<div class="col-md-12 my-4 collapse-container">
+    <p>
+        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-5" role="button"
+            aria-expanded="false" aria-controls="collapseExample">
+            {{-- TODO :: change "Documents" => "Certs & Licences" and fix items order --}}
+            Certs & Licences
+        </a>
+    </p>
+</div>
+
+<div class="row collapse" id="collapse-5">
+
+    {{-- worker_job_location --}}
+    <div class="ss-form-group">
+        @include('worker::components.custom_multiple_select_input', [
+            'id' => 'worker_job_location',
+            'label' => 'Active Professional Licensures',
+            'placeholder' => 'Where are you licensed?',
+            'name' => 'worker_job_location',
+            'options' => $allKeywords['StateCode'],
+            'option_attribute' => 'title',
+            'selected' => old('worker_job_location', $worker->worker_job_location),
+        ])
+
+    </div>
+    <span class="help-block-worker_job_type"></span>
+    {{-- end Type --}}
+
+</div>
+
 {{-- collaps 6 --}}
 <div class="col-md-12 my-4 collapse-container">
     <p>
@@ -535,8 +534,8 @@
     {{-- Experience  --}}
     <div class="ss-form-group">
         <label>Experience in profession</label>
-        <input id="worker_experience" type="number" name="worker_experience" placeholder="Enter your experience"
-            value="{{ !empty($worker->worker_experience) ? $worker->worker_experience : '' }}">
+        <input id="worker_experience" type="number" name="worker_experience" placeholder="Years worked in this profession?"
+            value="{{  $formatAmount($worker->worker_experience)}}">
     </div>
     <span class="help-block-worker_experience"></span>
     {{-- End Experience --}}
@@ -546,7 +545,7 @@
         <label>On Call</label>
         <select name="worker_on_call" id="worker_on_call">
             <option value="" {{ empty($worker->worker_on_call) ? 'selected' : '' }} disabled hidden>
-                Select an option
+                Will you do call?
             </option>
             <option value="Yes"
                 {{ !empty($worker->worker_on_call) && $worker->worker_on_call == 'Yes' ? 'selected' : '' }}>Yes
@@ -564,7 +563,7 @@
 
         <select name="block_scheduling" class="block_scheduling mb-3" id="block_scheduling" value="">
             <option value="" {{ empty($worker->block_scheduling) ? 'selected' : '' }} disabled hidden>
-                Select an option
+                Do you require block scheduling?
             </option>
             <option value="Yes"
                 {{ !empty($worker->block_scheduling) && $worker->block_scheduling == 'Yes' ? 'selected' : '' }}>Yes
@@ -585,7 +584,7 @@
         <select name="float_requirement" class="float_requirement mb-3" id="float_requirement" value="">
 
             <option value="" {{ empty($worker->float_requirement) ? 'selected' : '' }} disabled hidden>
-                Select an option
+                Are you willing float?
             </option>
             <option value="Yes"
                 {{ !empty($worker->float_requirement) && $worker->float_requirement == 'Yes' ? 'selected' : '' }}>Yes
@@ -603,7 +602,7 @@
         <label>Patient Ratio Max</label>
         <input type="number" id="Patient_ratio" name="worker_patient_ratio"
             placeholder="Max patients you will take responsibility for?"
-            value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}">
+            value="{{  $formatAmount($worker->worker_patient_ratio)}}">
     </div>
     <span class="help-block-worker_patient_ratio"></span>
     {{-- End Patient ratio --}}
@@ -613,7 +612,7 @@
         <label>EMR</label>
         <select name="worker_emr" class="emr mb-3" id="emr">
             <option value="" {{ empty($worker->worker_emr) ? 'selected' : '' }} disabled hidden>
-                Select an option
+                What EMRs have you used?
             </option>
             @if (isset($allKeywords['EMR']))
                 @foreach ($allKeywords['EMR'] as $value)
@@ -631,7 +630,7 @@
     {{-- Unit --}}
     <div class="ss-form-group">
         <label>Unit</label>
-        <input id="Unit" type="text" name="worker_unit" placeholder="Enter Unit"
+        <input id="Unit" type="text" name="worker_unit" placeholder="Units you'll work in?"
             value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}">
     </div>
     <span class="help-block-worker_unit"></span>

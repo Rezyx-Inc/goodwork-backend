@@ -7,7 +7,7 @@
         @include('worker::dashboard.profile.settings.professional_info')
         @include('worker::dashboard.profile.settings.personal_info')
 
-        <div class="ss-prsn-form-btn-sec col-11">
+        <div class="ss-prsn-form-btn-sec d-block">
             <button type="text" class="ss-prsnl-save-btn" id="SaveInformation"> Save
             </button>
         </div>

@@ -1,13 +1,13 @@
 <div class="col-md-12 mb-4 collapse-container">
     <p>
-        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-1" role="button" aria-expanded="false"
+        <a class="btn first-collapse" data-toggle="collapse" href="#collapse-8" role="button" aria-expanded="false"
             aria-controls="collapseExample">
             Identity & Tax Info
         </a>
     </p>
 </div>
 
-<div class="row collapse" id="collapse-1">
+<div class="row collapse" id="collapse-8">
     <div class="row justify-content-center">
         
         {{-- nurse_classification --}}
