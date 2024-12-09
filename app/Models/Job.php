@@ -255,11 +255,20 @@ class Job extends Model
         $matches = [
             'profession' => function () use ($job, $nurse) {
 
-                if ($job->profession == $nurse->profession) {
+                $jobProfessions = explode(', ', $job->profession);
+                $nurseProfessions = explode(', ', $nurse->profession);
+
+                // Find matches
+                $matches = array_intersect($jobProfessions, $nurseProfessions);
+                // Check if there is at least one match
+                if (count($matches) > 0) {
+
                     $match = true;
+                    $matchCount = count($matches);
                 } else {
                     $match = false;
-                };
+                    $matchCount = 0;
+                }
                 $profile_info_text = "What kind of professional are you ?";
                 if (!empty($nurse->profession && $job->profession == $nurse->profession)) {
                     $match = true;
@@ -270,7 +279,7 @@ class Job extends Model
                 $value = $nurse->highest_nursing_degree;
                 $type = 'dropdown';
                 $name = 'profession';
-                return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
+                return ['match' => $match, "profile_info_text" => $matches, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'preferred_specialty' => function () use ($job, $nurse) {
                 $profile_info_text = "What’s your specialty ?";
