@@ -35,7 +35,7 @@
                         {{-- Input checkbox --}}
                         <input type="checkbox" id="{{ $id }}-{{ $key }}"
                                name="{{ $name }}-check" value="{{ $title }}"
-                               {{ isset($selected) && !empty($selected) && in_array($title, explode(',', $selected)) ? 'checked' : '' }} />
+                               {{ isset($selected) && !empty($selected) && in_array($title, explode(', ', $selected)) ? 'checked' : '' }} />
                         <label for="{{ $id }}-{{ $key }}"
                                style="display: inline; width: 100%;">{{ $title }}</label>
                     </li>
@@ -63,9 +63,9 @@
                     selectedValues.push(checkbox.value);
                 });
     
-                hiddenInput.value = selectedValues.join(',');
+                hiddenInput.value = selectedValues.join(', ');
                 placeholder.textContent = selectedValues.length > 0 
-                                            ? selectedValues.join(',') 
+                                            ? selectedValues.join(', ') 
                                             : '{{ $placeholder ?? "Select value" }}';
             }
     
