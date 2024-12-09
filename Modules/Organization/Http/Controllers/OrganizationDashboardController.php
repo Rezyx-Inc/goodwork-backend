@@ -321,6 +321,14 @@ public function index()
 
         try {
             $user = Auth::guard('organization')->user();
+
+            // check if the organization name already exist
+            $organization = User::where('organization_name', $request->organization_name)->first();
+            if ($organization && $organization->id != $user->id) {
+                return response()->json(['status' => false, 'message' => 'Organization name already exist.']);
+            }
+
+
             $request->validate([
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
