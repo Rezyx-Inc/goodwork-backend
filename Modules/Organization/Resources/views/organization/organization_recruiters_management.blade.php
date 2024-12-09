@@ -35,20 +35,19 @@
                 </thead>
                 <tbody>
                     @foreach ($recruiters as $item)
-                        <tr>
-                            <td>{{ $item->first_name }}</td>
-                            <td>{{ $item->last_name }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ isset($item->last_login_at) ?  $item->last_login_at : 'NA'}}</td>
-                            <td>{{ $item->created_at }}</td>
-                            <td>{{ $item->assignedJobs()->count() }}</td>
-                            <td style="text-align: center">
-                                <button type="button" onclick="open_modal('#edit_modal'), get_recruiter_data({{$item}})" class="delete" data-id="{{ $item->id }}">Edit Rceruiter</button>
-                                <button type="button" id="delete" class="delete" data-id="{{ $item->id }}">Delete Rceruiter</button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ $item->first_name }}</td>
+                        <td>{{ $item->last_name }}</td>
+                        <td>{{ $item->email }}</td>
+                        <td>{{ isset($item->last_login_at) ? $item->last_login_at : 'NA' }}</td>
+                        <td>{{ $item->created_at }}</td>
+                        <td>{{ $item->assignedJobs()->count() }}</td>
+                        <td style="text-align: center">
+                            <button type="button" onclick="open_modal('#edit_modal'), get_recruiter_data({{ $item }})" class="delete" data-id="{{ $item->id }}">Edit Recruiter</button>
+                            <button type="button" class="delete-recruiter delete" data-id="{{ $item->id }}">Delete Recruiter</button>
+                        </td>
+                    </tr>
                     @endforeach
-
                 </tbody>
             </table>
             <div class="add-recruiters-btn">
@@ -339,10 +338,33 @@
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#delete').click(function() {
-                const keyId = $(this).data('id');
-                console.log("ddddd");
+            // $('#delete').click(function() {
+            //     const keyId = $(this).data('id');
+            //     console.log("ddddd");
                 
+            //     $.ajax({
+            //         url: '/organization/delete-recruiter',
+            //         type: 'POST',
+            //         data: {
+            //             recruiter_id: keyId,
+            //             _token: '{{ csrf_token() }}'
+            //         },
+            //         success: function() {
+            //             notie.alert({
+            //                 type: 'success',
+            //                 text: '<i class="fa fa-check"></i> Deleted Successfully',
+            //                 time: 2
+            //             });
+            //             setTimeout(function() {
+            //                 location.reload();
+            //             }, 800);
+            //         }
+            //     });
+            // });
+
+            $(document).on('click', '.delete-recruiter', function() {
+                const keyId = $(this).data('id');
+
                 $.ajax({
                     url: '/organization/delete-recruiter',
                     type: 'POST',
@@ -362,7 +384,8 @@
                     }
                 });
             });
-            
+
+
             $('#edit').click(function() {
                 let id = document.getElementById('id_edit').value;
                 let first_name = document.getElementById('first_name_edit').value;
