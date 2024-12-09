@@ -57,7 +57,7 @@ class WorkerDashboardController extends Controller
     $user_id = Auth::guard('frontend')->user()->id;
     $id = Nurse::where('user_id', $user_id)->first()->id;
 
-    $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     $statusCountsQuery = Offer::whereIn('status', $statusList)
@@ -113,40 +113,40 @@ class WorkerDashboardController extends Controller
         // Validate fields for ProfessionalInformation
         $request->validate([
 
-          'nursing_license_number' => 'string',
-          'specialty' => 'required|string',
-          'profession' => 'required|string',
-          'terms' => 'required|string',
-          'block_scheduling' => 'required|string',
-          'float_requirement' => 'required|string',
-          'facility_shift_cancelation_policy' => 'required|string',
-          'contract_termination_policy' => 'required|string',
-          'traveler_distance_from_facility' => 'required|string',
-          'clinical_setting' => 'required|string',
-          'Patient_ratio' => 'required|string',
-          'emr' => 'required|string',
-          'Unit' => 'required|string',
-          'scrub_color' => 'required|string',
-          'rto' => 'required|string',
-          'shift_of_day' => 'required|string',
-          'hours_shift' => 'required|string',
-          'preferred_assignment_duration' => 'required|string',
-          'weeks_shift' => 'required|string',
-          'worker_experience' => 'required|string',
-          'worker_eligible_work_in_us' => 'required|string',
-          'worker_facility_city' => 'required|string',
-          'worker_facility_state' => 'required|string',
-          'worker_four_zero_one_k' => 'required|string',
-          'worker_dental' => 'required|string',
-          'worker_overtime_rate' => 'required|string',
-          'worker_on_call' => 'required|string',
-          'worker_call_back' => 'required|string',
-          'worker_on_call_check' => 'required|string',
-          'worker_benefits' => 'required|string',
-          'nurse_classification' => 'required|string',
-          'worker_holiday' => 'required|date',
-          'worker_job_type' => 'required|string',
-          'worker_vision' => 'required|string',
+          'nursing_license_number' => 'nullable|string',
+          'specialty' => 'nullable|string',
+          'profession' => 'nullable|string',
+          'terms' => 'nullable|string',
+          'block_scheduling' => 'nullable|string',
+          'float_requirement' => 'nullable|string',
+          'facility_shift_cancelation_policy' => 'nullable|string',
+          'contract_termination_policy' => 'nullable|string',
+          'traveler_distance_from_facility' => 'nullable|string',
+          'clinical_setting' => 'nullable|string',
+          'Patient_ratio' => 'nullable|string',
+          'Emr' => 'nullable|string',
+          'Unit' => 'nullable|string',
+          'scrub_color' => 'nullable|string',
+          'rto' => 'nullable|string',
+          'shift_of_day' => 'nullable|string',
+          'hours_shift' => 'nullable|string',
+          'preferred_assignment_duration' => 'nullable|string',
+          'weeks_shift' => 'nullable|string',
+          'worker_experience' => 'nullable|string',
+          'worker_eligible_work_in_us' => 'nullable|string',
+          'worker_facility_city' => 'nullable|string',
+          'worker_facility_state' => 'nullable|string',
+          'worker_four_zero_one_k' => 'nullable|string',
+          'worker_dental' => 'nullable|string',
+          'worker_overtime_rate' => 'nullable|string',
+          'worker_on_call' => 'nullable|string',
+          'worker_call_back' => 'nullable|string',
+          'worker_on_call_check' => 'nullable|string',
+          'worker_benefits' => 'nullable|string',
+          'nurse_classification' => 'nullable|string',
+          'worker_holiday' => 'nullable|date',
+          'worker_job_type' => 'nullable|string',
+          'worker_vision' => 'nullable|string',
         ]);
 
         $nurse_data = [];
@@ -165,7 +165,7 @@ class WorkerDashboardController extends Controller
         isset($request->traveler_distance_from_facility) ? ($nurse_data['distance_from_your_home'] = $request->traveler_distance_from_facility) : '';
         isset($request->clinical_setting) ? ($nurse_data['clinical_setting_you_prefer'] = $request->clinical_setting) : '';
         isset($request->Patient_ratio) ? ($nurse_data['worker_patient_ratio'] = $request->Patient_ratio) : '';
-        isset($request->emr) ? ($nurse_data['worker_emr'] = $request->emr) : '';
+        isset($request->Emr) ? ($nurse_data['worker_emr'] = $request->Emr) : '';
         isset($request->Unit) ? ($nurse_data['worker_unit'] = $request->Unit) : '';
         isset($request->scrub_color) ? ($nurse_data['worker_scrub_color'] = $request->scrub_color) : '';
         isset($request->rto) ? ($nurse_data['rto'] = $request->rto) : '';
@@ -195,24 +195,24 @@ class WorkerDashboardController extends Controller
       if ($request->InfoType == 'BasicInformation') {
         //return $request->all();
         $request->validate([
-          'first_name' => 'required|string',
-          'last_name' => 'required|string',
-          'mobile' => 'required|string',
+          'first_name' => 'nullable|string',
+          'last_name' => 'nullable|string',
+          'mobile' => 'nullable|string',
           //'mobile' => ['nullable','regex:/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/'],
-          'zip_code' => 'required|string',
-          'state' => 'required|string',
-          'city' => 'required|string',
-          'address' => 'required|string',
+          'zip_code' => 'nullable|string',
+          'state' => 'nullable|string',
+          'city' => 'nullable|string',
+          'address' => 'nullable|string',
         ]);
         $user_data = [];
         $nurse_data = [];
         isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
         isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
-        isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';
-        isset($request->zip_code) ? ($user_data['zip_code'] = $request->zip_code) : '';
-        isset($request->state) ? ($nurse_data['state'] = $request->state) : '';
-        isset($request->city) ? ($nurse_data['city'] = $request->city) : '';
-        isset($request->address) ? ($nurse_data['address'] = $request->address) : '';
+        $user_data['mobile'] = $request->mobile;
+        $user_data['zip_code'] = $request->zip_code;
+        $nurse_data['state'] = $request->state;
+        $nurse_data['city'] = $request->city;
+        $nurse_data['address'] = $request->address;
 
         if ($request->hasFile('profile_pic')) {
           $file = $request->file('profile_pic');
@@ -231,7 +231,7 @@ class WorkerDashboardController extends Controller
       return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
     } catch (\Exception $e) {
 
-      return response()->json(['msg' => $e->getMessage(), 'status' => false]);
+      return response()->json(['msg' => $e->getMessage(), 'status' => false], 500);
     }
   }
 
@@ -351,47 +351,202 @@ class WorkerDashboardController extends Controller
     return view('worker::dashboard.my_work_journey', $data);
   }
 
+  // public function explore(Request $request)
+  // {
+  //   // GW Number
+  //   $gwNumber = $request->input('gw', '');
+
+  //   // Build the query
+  //   $ret = Job::where('active', '1');
+
+
+  //   // Initialize data array
+  //   $data = [];
+  //   $data['user'] = auth()->guard('frontend')->user();
+  //   $data['jobSaved'] = new JobSaved();
+
+  //   // Fetch related data
+  //   $data['specialities'] = Speciality::select('full_name')->get();
+  //   $data['professions'] = Profession::select('full_name')->get();
+  //   $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
+  //   $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
+  //   $usa = Countries::where(['iso3' => 'USA'])->first();
+  //   $data['us_states'] = States::where('country_id', $usa->id)->get();
+
+  //   // Set filter values from the request, use null as the default if not provided
+  //   $data['profession'] = $request->input('profession');
+  //   $data['speciality'] = $request->input('speciality');
+  //   $data['experience'] = $request->input('experience');
+  //   $data['city'] = $request->input('city');
+  //   $data['state'] = $request->input('state');
+  //   $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+  //   $data['start_date'] = $request->input('start_date', null);
+  //   $data['end_date'] = $request->input('end_date', null);
+  //   $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
+  //   $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
+  //   $data['job_type'] = $request->input('job_type', null);
+  //   $data['as_soon_as'] = $request->input('as_soon_as', null);
+
+  //   // Pay and hour filters
+  //   $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
+  //   $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
+  //   $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
+  //   $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
+  //   $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
+  //   $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
+
+  //   //return response()->json(['message' => $data['as_soon_as']]); 
+
+  //   $user = auth()->guard('frontend')->user();
+
+  //   $nurse = NURSE::where('user_id', $user->id)->first();
+  //   $jobs_id = Offer::where('worker_user_id', $nurse->id)
+  //     ->select('job_id')
+  //     ->get();
+
+  //   if (!empty($gwNumber)) {
+
+  //     if (str_starts_with($gwNumber, 'GWJ')) {
+
+  //       $ret->where('id', $gwNumber);
+  //     } else {
+
+  //       $ret->where('job_id', $gwNumber);
+  //     }
+
+  //     $data['jobs'] = $ret->get();
+  //     return view('worker::dashboard.explore', $data);
+  //   }
+
+
+  //   if (!empty($data['job_type'])) {
+  //     $ret->where('job_type', '=', $data['job_type']);
+  //   }
+
+  //   if (!empty($data['profession'])) {
+  //     $ret->where('profession', '=', $data['profession']);
+  //   }
+
+  //   if (!empty($data['speciality'])) {
+  //     $ret->where('preferred_specialty', '=', $data['speciality']);
+  //   }
+
+  //   if (!empty($data['terms']) && !is_null($request->input('terms'))) {
+  //     $ret->whereIn('terms', $data['terms']);
+  //   }
+
+  //   if (!empty($data['as_soon_as'])) {
+  //     $ret->where('as_soon_as', '=', $data['as_soon_as']);
+  //   } elseif (!empty($data['start_date'])) {
+  //     $ret->where('start_date', '<=', $data['start_date']);
+  //   }
+
+  //   if (!empty($data['shifts'])) {
+  //     $ret->whereIn('preferred_shift', $data['shifts']);
+  //   }
+
+  //   if (!empty($data['state'])) {
+  //     $ret->where('job_state', '=', $data['state']);
+  //   }
+
+  //   if (!empty($data['city'])) {
+  //     $ret->where('job_city', '=', $data['city']);
+  //   }
+
+  //   if (isset($request->weekly_pay_from)) {
+
+  //     $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
+  //   }
+
+  //   if (isset($request->weekly_pay_to)) {
+  //     $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
+  //   }
+
+  //   if (isset($request->hourly_pay_from)) {
+  //     $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
+  //   }
+
+  //   if (isset($request->hourly_pay_to)) {
+  //     $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
+  //   }
+
+  //   if (isset($request->hours_per_week_from)) {
+  //     $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
+  //   }
+
+  //   if (isset($request->hours_per_week_to)) {
+  //     $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
+  //   }
+
+  //   if (isset($request->state)) {
+  //     $ret->where('job_state', '=', $data['state']);
+  //   }
+
+  //   if (isset($request->city)) {
+  //     $ret->where('job_city', '=', $data['city']);
+  //   }
+
+  //   //return response()->json(['message' =>  $ret->get()]);
+  //   $data['jobs'] = $ret->get();
+
+  //   $jobSaved = new JobSaved;
+
+  //   $data['jobSaved'] = $jobSaved;
+
+
+  //   return view('worker::dashboard.explore', $data);
+  // }
+
+
   public function explore(Request $request)
   {
+    //dd($request->all());
     // GW Number
     $gwNumber = $request->input('gw', '');
-
+    
     // Build the query
     $ret = Job::where('active', '1');
-
-
+    
+    
     // Initialize data array
     $data = [];
     $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
-
+    
     // Fetch related data
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
     $data['terms_key'] = Keyword::where(['filter' => 'terms'])->get();
     $data['prefered_shifts'] = Keyword::where(['filter' => 'PreferredShift', 'active' => '1'])->get();
     $usa = Countries::where(['iso3' => 'USA'])->first();
-    $data['us_states'] = States::where('country_id', $usa->id)->get();
-
+    //$data['us_states'] = States::where('country_id', $usa->id)->get();
+    $data['us_states'] = State::select('id', 'name')->get();
+    
     // Set filter values from the request, use null as the default if not provided
+    $data['job_id'] = $request->input('gw', null);
     $data['profession'] = $request->input('profession');
     $data['speciality'] = $request->input('speciality');
     $data['experience'] = $request->input('experience');
     $data['city'] = $request->input('city');
     $data['state'] = $request->input('state');
     $data['terms'] = $request->has('terms') ? explode('-', $request->terms) : [];
+    // dd($request->terms);
     $data['start_date'] = $request->input('start_date', null);
     $data['end_date'] = $request->input('end_date', null);
     $data['start_date'] = $data['start_date'] ? (new DateTime($data['start_date']))->format('Y-m-d') : null;
     $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
-
+    $data['job_type'] = $request->input('job_type', null);
+    $data['as_soon_as'] = $request->input('as_soon_as', null);
+    
     // Pay and hour filters
-    $data['weekly_pay_from'] = $request->input('weekly_pay_from', 10);
-    $data['weekly_pay_to'] = $request->input('weekly_pay_to', 10000);
-    $data['hourly_pay_from'] = $request->input('hourly_pay_from', 2);
-    $data['hourly_pay_to'] = $request->input('hourly_pay_to', 24);
-    $data['hours_per_week_from'] = $request->input('hours_per_week_from', 10);
-    $data['hours_per_week_to'] = $request->input('hours_per_week_to', 100);
+    $data['weekly_pay_from'] = $request->input('weekly_pay_from');
+    $data['weekly_pay_to'] = $request->input('weekly_pay_to');
+    $data['hourly_pay_from'] = $request->input('hourly_pay_from');
+    $data['hourly_pay_to'] = $request->input('hourly_pay_to');
+    $data['hours_per_week_from'] = $request->input('hours_per_week_from');
+    $data['hours_per_week_to'] = $request->input('hours_per_week_to');
+    
+    //return response()->json(['message' => $data['as_soon_as']]); 
 
     $user = auth()->guard('frontend')->user();
 
@@ -411,70 +566,75 @@ class WorkerDashboardController extends Controller
       }
 
       $data['jobs'] = $ret->get();
-      return view('site.explore_jobs', $data);
+      return view('worker::dashboard.explore', $data);
     }
 
 
+    if (!empty($data['job_type'])) {
+      $ret->where('job_type', 'like', $data['job_type']);
+    }
 
     if (!empty($data['profession'])) {
-      $ret->where('profession', '=', $data['profession']);
+      $ret->where('profession', 'like', $data['profession']);
     }
 
     if (!empty($data['speciality'])) {
-      $ret->where('specialty', '=', $data['speciality']);
+      $ret->where('preferred_specialty', 'like', $data['speciality']);
     }
 
-    if (!empty($data['terms']) && !is_null($request->input('terms'))) {
-      $ret->whereIn('terms', $data['terms']);
+    if (!empty($data['terms']) && !is_null($request->input('terms')) && is_array($data['terms']) && count($data['terms']) > 0) {
+      $ret->where(function ($query) use ($data) {
+          foreach ($data['terms'] as $term) {
+              $query->orWhere('terms', $term);
+          }
+      });
+    }
+  
+  
+    if (!empty($data['as_soon_as'])) {
+      $ret->where('as_soon_as', '=', $data['as_soon_as']);
+    } elseif (!empty($data['start_date'])) {
+      $ret->where('start_date', '>=', $data['start_date']);
     }
 
-    if (!empty($data['start_date'])) {
-      $ret->where('start_date', '<=', $data['start_date']);
-    }
+    // hidden for now
+    /* if (!empty($data['shifts'])) {
+        $ret->whereIn('preferred_shift', $data['shifts']);
+      }
+    */
 
-    if (!empty($data['shifts'])) {
-      $ret->whereIn('preferred_shift', $data['shifts']);
-    }
-
-    if (!empty($data['state'])) {
-      $ret->where('job_state', '=', $data['state']);
-    }
-
-    if (!empty($data['city'])) {
-      $ret->where('job_city', '=', $data['city']);
-    }
-
-    if (isset($request->weekly_pay_from)) {
-
+    if (!empty($data['weekly_pay_from'])) {
       $ret->where('weekly_pay', '>=', $data['weekly_pay_from']);
-    }
 
-    if (isset($request->weekly_pay_to)) {
+     }
+
+    if (!empty($data['weekly_pay_to'])) {
       $ret->where('weekly_pay', '<=', $data['weekly_pay_to']);
     }
 
-    if (isset($request->hourly_pay_from)) {
+    if (!empty($data['hourly_pay_from'])) {
       $ret->where('hours_shift', '>=', $data['hourly_pay_from']);
     }
 
-    if (isset($request->hourly_pay_to)) {
+    if (!empty($data['hourly_pay_to'])) {
       $ret->where('hours_shift', '<=', $data['hourly_pay_to']);
     }
 
-    if (isset($request->hours_per_week_from)) {
+    if (!empty($data['hours_per_week_from'])) {
       $ret->where('hours_per_week', '>=', $data['hours_per_week_from']);
     }
-
-    if (isset($request->hours_per_week_to)) {
+    if (!empty($data['hours_per_week_to'])) {
       $ret->where('hours_per_week', '<=', $data['hours_per_week_to']);
     }
+    
+
 
     if (isset($request->state)) {
-      $ret->where('job_state', '=', $data['state']);
+      $ret->where('job_state', 'like', $data['state']);
     }
 
     if (isset($request->city)) {
-      $ret->where('job_city', '=', $data['city']);
+      $ret->where('job_city', 'like', $data['city']);
     }
 
     //return response()->json(['message' =>  $ret->get()]);
@@ -487,6 +647,9 @@ class WorkerDashboardController extends Controller
 
     return view('worker::dashboard.explore', $data);
   }
+
+
+
 
   public function add_save_jobs(Request $request)
   {
@@ -537,6 +700,7 @@ class WorkerDashboardController extends Controller
 
   public function apply_on_jobs(Request $request)
   {
+
     try {
 
       $request->validate([
@@ -545,11 +709,13 @@ class WorkerDashboardController extends Controller
       $response = [];
       $user = auth()->guard('frontend')->user();
       $job = Job::findOrFail($request->jid);
+      // return $job;
       //return response()->json(['data'=>$job], 200);
       $rec = Offer::where(['worker_user_id' => $user->nurse->id, 'job_id' => $request->jid])
         ->whereNull('deleted_at')
         ->first();
       $input = [
+        // Summary
         'job_id' => $request->jid,
         'worked_at_facility_before' => $request->worked_at_facility_before,
         'created_by' => $job->created_by,
@@ -559,50 +725,77 @@ class WorkerDashboardController extends Controller
         'type' => $job->job_type,
         'terms' => $job->terms,
         'profession' => $job->profession,
-        'block_scheduling' => $job->block_scheduling,
-        'float_requirement' => $job->float_requirement,
-        'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
-        'contract_termination_policy' => $job->contract_termination_policy,
-        'traveler_distance_from_facility' => $job->traveler_distance_from_facility,
-        'clinical_setting' => $job->clinical_setting,
-        'Patient_ratio' => $job->Patient_ratio,
-        'Emr' => $job->Emr,
-        'Unit' => $job->Unit,
-        'scrub_color' => $job->scrub_color,
-        'start_date' => $job->start_date,
-        'rto' => $job->rto,
+        'specialty' => $job->preferred_specialty,
+        'actual_hourly_rate' => $job->actual_hourly_rate,
+        'weekly_pay' => $job->weekly_pay,
         'hours_per_week' => $job->hours_per_week,
+        'state' => $job->job_state,
+        'city' => $job->job_city,
+        // Shift
+        'preferred_shift_duration' => $job->preferred_shift_duration,
         'guaranteed_hours' => $job->guaranteed_hours,
         'hours_shift' => $job->hours_shift,
         'weeks_shift' => $job->weeks_shift,
         'preferred_assignment_duration' => $job->preferred_assignment_duration,
+        'start_date' => $job->start_date,
+        'end_date' => $job->end_date,
+        'rto' => $job->rto,
+        'overtime' => $job->overtime,
+        'on_call_rate' => $job->on_call_rate,
+        'call_back_rate' => $job->call_back_rate,
+        'orientation_rate' => $job->orientation_rate,
+        'weekly_taxable_amount' => $job->weekly_taxable_amount,
+        'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
+        'feels_like_per_hour' => $job->feels_like_per_hour,
+        'goodwork_weekly_amount' => $job->goodwork_weekly_amount,
         'referral_bonus' => $job->referral_bonus,
         'sign_on_bonus' => $job->sign_on_bonus,
         'completion_bonus' => $job->completion_bonus,
         'extension_bonus' => $job->extension_bonus,
         'other_bonus' => $job->other_bonus,
-        'four_zero_one_k' => $job->four_zero_one_k,
-        'health_insaurance' => $job->health_insaurance,
-        'dental' => $job->dental,
-        'vision' => $job->vision,
-        'actual_hourly_rate' => $job->actual_hourly_rate,
-        'overtime' => $job->overtime,
-        'holiday' => $job->holiday,
-        'on_call' => $job->on_call,
-        'orientation_rate' => $job->orientation_rate,
-        'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
-        'description' => $job->description,
-        'hours_shift' => $job->hours_shift,
-        'weekly_non_taxable_amount' => $job->weekly_non_taxable_amount,
-        'weekly_taxable_amount' => $job->weekly_taxable_amount,
-        'organization_weekly_amount' => $job->organization_weekly_amount,
+        'pay_frequency' => $job->pay_frequency,
+        'benefits' => $job->benefits,
         'total_organization_amount' => $job->total_organization_amount,
-        'weekly_pay' => $job->weekly_pay,
+        'total_goodwork_amount' => $job->total_goodwork_amount,
+        'total_contract_amount' => $job->total_contract_amount,
+        // Location 
+        'clinical_setting' => $job->clinical_setting,
+        'preferred_work_location' => $job->preferred_work_location,
+        'facility_name' => $job->facility_name,
+        'facilitys_parent_system' => $job->facilitys_parent_system,
+        'facility_shift_cancelation_policy' => $job->facility_shift_cancelation_policy,
+        'contract_termination_policy' => $job->contract_termination_policy,
+        'traveler_distance_from_facility' => $job->traveler_distance_from_facility,
+        'job_location' => $job->job_location,
+        // Certifications
+        'certificate' => $job->certificate,
+        // Work Info
+        'description' => $job->description,
+        'urgency' => $job->urgency,
+        'as_soon_as' => $job->as_soon_as,
+        'preferred_experience' => $job->preferred_experience,
+        'number_of_references' => $job->number_of_references,
+        'skills' => $job->skills,
+        'on_call' => $job->on_call,
+        'block_scheduling' => $job->block_scheduling,
+        'float_requirement' => $job->float_requirement,
+        'Patient_ratio' => $job->Patient_ratio,
+        'Emr' => $job->Emr,
+        'Unit' => $job->Unit,
+        // ID & Tax Info
+        'nurse_classification' => $job->nurse_classification,
+        // Medical Info
+        'vaccinations' => $job->vaccinations,
+        // other
+        'scrub_color' => $job->scrub_color,
+        'holiday' => $job->holiday,
+        'organization_weekly_amount' => $job->organization_weekly_amount,
         'tax_status' => $job->tax_status,
         'status' => 'Apply',
         'recruiter_id' => $job->recruiter_id,
         'organization_id' => $job->organization_id,
       ];
+
       if (empty($rec)) {
         offer::create($input);
         $message = 'Job saved successfully.';
@@ -969,7 +1162,7 @@ class WorkerDashboardController extends Controller
       //$update_array['worker_user_id'] = $nurse->id;
       $update_array['clinical_setting'] = $job_data->clinical_setting != $request->clinical_setting ? $request->clinical_setting : $job_data->clinical_setting;
       $update_array['Patient_ratio'] = $job_data->Patient_ratio != $request->Patient_ratio ? $request->Patient_ratio : $job_data->Patient_ratio;
-      $update_array['emr'] = $job_data->emr != $request->emr ? $request->emr : $job_data->emr;
+      $update_array['Emr'] = $job_data->Emr != $request->Emr ? $request->Emr : $job_data->Emr;
       $update_array['Unit'] = $job_data->Unit != $request->Unit ? $request->Unit : $job_data->Unit;
       $update_array['scrub_color'] = $job_data->scrub_color != $request->scrub_color ? $request->scrub_color : $job_data->scrub_color;
       $update_array['start_date'] = $job_data->start_date != $request->start_date ? $request->start_date : $job_data->start_date;

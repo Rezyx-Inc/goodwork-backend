@@ -80,15 +80,17 @@ module.exports.insertJob = async function (orgaId, jobData) {
       console.log("Invalid field");
       return;
     }
-
+    const emptyValue = " ";
     const lastJobId = await getNewJobId();
 
     const [result] = await pool.query(
       `INSERT INTO jobs 
-            (id, organization_id, job_id, job_type, terms, profession, preferred_specialty, actual_hourly_rate, weekly_pay, hours_per_week, job_state, job_city, preferred_shift_duration, guaranteed_hours, hours_shift, weeks_shift, Preferred_assignment_duration, start_date, end_date, rto, overtime, on_call_rate, call_back_rate, orientation_rate, weekly_taxable_amount, weekly_non_taxable_amount, feels_like_per_hour, goodwork_weekly_amount, referral_bonus, sign_on_bonus, extension_bonus, total_organization_amount, total_goodwork_amount, total_contract_amount, pay_frequency, benefits, clinical_setting, preferred_work_location, facility_name, facilitys_parent_system, facility_shift_cancelation_policy, contract_termination_policy, traveler_distance_from_facility, job_location, certificate, description, urgency, preferred_experience, number_of_references, skills, on_call, block_scheduling, float_requirement, Patient_ratio, Emr, Unit, nurse_classification, vaccinations)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (id, organization_id, created_by, recruiter_id, job_id, job_type, terms, profession, preferred_specialty, actual_hourly_rate, weekly_pay, hours_per_week, job_state, job_city, preferred_shift_duration, guaranteed_hours, hours_shift, weeks_shift, Preferred_assignment_duration, start_date, end_date, rto, overtime, on_call_rate, call_back_rate, orientation_rate, weekly_taxable_amount, weekly_non_taxable_amount, feels_like_per_hour, referral_bonus, sign_on_bonus, extension_bonus, total_organization_amount, pay_frequency, benefits, clinical_setting, preferred_work_location, facility_name, facilitys_parent_system, facility_shift_cancelation_policy, contract_termination_policy, traveler_distance_from_facility, job_location, certificate, description, urgency, preferred_experience, number_of_references, skills, on_call, block_scheduling, float_requirement, Patient_ratio, Emr, Unit, nurse_classification, vaccinations, tax_status, facility_city, facility_state, professional_licensure)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         lastJobId,
+        orgaId,
+        orgaId,
         orgaId,
         jobData["Org Job Id"],
         jobData["Type"],
@@ -115,13 +117,13 @@ module.exports.insertJob = async function (orgaId, jobData) {
         jobData["Taxable/Wk"],
         jobData["Non-taxable/Wk"],
         jobData["Feels Like $/hr"],
-        jobData["Gw$/Wk"],
+        //jobData["Gw$/Wk"],
         jobData["Referral Bonus"],
         jobData["Sign-On Bonus"],
         jobData["Extension Bonus"],
         jobData["$/Org"],
-        jobData["$/Gw"],
-        jobData["Total $"],
+        // jobData["$/Gw"],
+        // jobData["Total $"],
         jobData["Pay Frequency"],
         jobData["Benefits"],
         jobData["Clinical Setting"],
@@ -146,8 +148,14 @@ module.exports.insertJob = async function (orgaId, jobData) {
         jobData["Unit"],
         jobData["Classification"],
         jobData["Vaccinations & Immunizations"],
+        emptyValue,
+        emptyValue,
+        emptyValue,
+        emptyValue,
       ]
     );
+
+
 
     console.log("job inserted", jobData["Org Job Id"]);
     return result;
@@ -232,13 +240,10 @@ module.exports.updateJob = async function (orgaId, jobData) {
             weekly_taxable_amount = ?,
             weekly_non_taxable_amount = ?,
             feels_like_per_hour = ?,
-            goodwork_weekly_amount = ?,
             referral_bonus = ?,
             sign_on_bonus = ?,
             extension_bonus = ?,
             total_organization_amount = ?,
-            total_goodwork_amount = ?,
-            total_contract_amount = ?,
             pay_frequency = ?,
             benefits = ?,
             clinical_setting = ?,
@@ -289,13 +294,13 @@ module.exports.updateJob = async function (orgaId, jobData) {
         jobData["Taxable/Wk"],
         jobData["Non-taxable/Wk"],
         jobData["Feels Like $/hr"],
-        jobData["Gw$/Wk"],
+        // jobData["Gw$/Wk"],
         jobData["Referral Bonus"],
         jobData["Sign-On Bonus"],
         jobData["Extension Bonus"],
         jobData["$/Org"],
-        jobData["$/Gw"],
-        jobData["Total $"],
+        // jobData["$/Gw"],
+        // jobData["Total $"],
         jobData["Pay Frequency"],
         jobData["Benefits"],
         jobData["Clinical Setting"],

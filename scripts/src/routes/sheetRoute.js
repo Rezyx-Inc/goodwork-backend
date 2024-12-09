@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { google } = require('googleapis');
-const { authorize } = require('../gSheet/index');
+const { authorize } = require('../gSheet/services/authService.js');
 var { report } = require("../set.js");
 
 const checkIfSpreadsheetExists = async (auth, organizationId) => {
-  const drive = google.drive({ version: 'v3', auth });
+  
+  const drive = google.drive({ version: 'v3', headers: { Authorization: `Bearer ${auth}` } });
 
   const response = await drive.files.list({
     q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${organizationId}'`,
@@ -29,8 +30,8 @@ router.post('/createSheet', async (req, res) => {
     const auth = await authorize();
 
     // Check if a spreadsheet with the organizationId already exists
-    const existingSpreadsheet = await checkIfSpreadsheetExists(auth, organizationId);
-
+    const existingSpreadsheet = await checkIfSpreadsheetExists(auth.credentials.access_token, organizationId);
+    
     if (existingSpreadsheet) {
       return res.status(400).json({
         success: false,
@@ -39,19 +40,24 @@ router.post('/createSheet', async (req, res) => {
       });
     }
 
-    const sheets = google.sheets({ version: 'v4', auth });
+    const sheets = google.sheets({ version: 'v4', headers: { Authorization: `Bearer ${auth.credentials.access_token}` } });
 
-    // Create a new spreadsheet
-    const response = await sheets.spreadsheets.create({
-      resource: {
-        properties: {
-          title: `${organizationName}[${organizationId}]`,
-        },
+    const drive = google.drive({
+      version: 'v3',
+      headers: {
+        Authorization: `Bearer ${auth.credentials.access_token}`,
       },
-      fields: 'spreadsheetId',
     });
 
-    const spreadsheetId = response.data.spreadsheetId;
+    const response = await drive.files.create({
+      requestBody: {
+        name: `${organizationName}[${organizationId}]`,
+        mimeType: 'application/vnd.google-apps.spreadsheet',
+        parents: ['1xSMyMZyc32joi2NnMTmoIzwmW2VpZfhS']
+      }
+    });
+
+    const spreadsheetId = response.data.id;
 
     // Define the fields to be initialized in the sheet
     const fields = [
@@ -80,13 +86,13 @@ router.post('/createSheet', async (req, res) => {
       'Taxable/Wk',
       'Non-taxable/Wk',
       'Feels Like $/hr',
-      'Gw$/Wk',
+      //'Gw$/Wk',
       'Referral Bonus',
       'Sign-On Bonus',
       'Extension Bonus',
       '$/Org',
-      '$/Gw ',
-      'Total $',
+      // '$/Gw',
+      // 'Total $',
       'Pay Frequency',
       'Benefits',
       'Clinical Setting',
@@ -113,15 +119,13 @@ router.post('/createSheet', async (req, res) => {
       'Vaccinations & Immunizations',
     ];
 
-
-
     // Write the fields as headers in the first row of the sheet
     await sheets.spreadsheets.values.update({
       spreadsheetId,
-      range: 'Sheet1!A1', // Assuming the first sheet is named 'Sheet1' and you want to start at A1
+      range: 'Sheet1!A1',
       valueInputOption: 'RAW',
       resource: {
-        values: [fields], // The fields are written in the first row
+        values: [fields],
       },
     });
 

@@ -4,9 +4,12 @@
 /public/js/app.js
 /public/mix-manifest.json
 /public/storage
+/public/landing/video/
+/scripts/src/gSheet/jsons/
 public/uploads
 /storage/*.key
 /vendor
+/files/*
 .env
 .env.backup
 .phpunit.result.cache
@@ -17,5 +20,5 @@ yarn-error.log
 laravel-echo-server.lock
 package-lock.json
 .rnd
-.rnd
 stripe.exe
+composer.lock

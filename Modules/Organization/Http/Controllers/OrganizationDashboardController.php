@@ -31,7 +31,7 @@ public function index()
     $id = Auth::guard('organization')->user()->id;
     $alljobs = Job::where('organization_id', $id)->get();
 
-    $statusList = ['Apply', 'Offered', 'Onboarding', 'Working', 'Done'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     foreach ($alljobs as $key => $value) {
@@ -324,8 +324,8 @@ public function index()
             $request->validate([
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
-                'mobile' => 'nullable|string',
-                'about_me' => 'required|string',
+                // 'mobile' => 'nullable|string',
+                // 'about_me' => 'required|string',
             ]);
             $user_data = [];
 
@@ -336,6 +336,7 @@ public function index()
                 $user_data['image'] = $filename;
             }
 
+            isset($request->organization_name) ? ($user_data['organization_name'] = $request->organization_name) : '';
             isset($request->first_name) ? ($user_data['first_name'] = $request->first_name) : '';
             isset($request->last_name) ? ($user_data['last_name'] = $request->last_name) : '';
             isset($request->mobile) ? ($user_data['mobile'] = $request->mobile) : '';

@@ -8,6 +8,7 @@ class SpecialitiesTableSeeder extends Seeder
 {
     public function run()
     {
+        DB::table('specialities')->delete();
         $specialties = [
             'Acute Care',
             'Addiction Medicine',

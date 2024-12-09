@@ -2760,6 +2760,7 @@ ul.ss-s-jb-apl-on-inf-txt-ul p {
 
 .ss-jb-apl-oninfrm-mn-dv ul {
     list-style: none;
+    
 }
 
 .ss-chng-apcon-st-ssele label {
@@ -3087,7 +3088,7 @@ ul.ss-s-jb-apl-on-inf-bg-pink li {
     padding: 10px;
     text-align: center;
     width: 100%;
-    margin-top: 25px;
+    margin-top: 11px;
     background: transparent;
 }
 

@@ -23,7 +23,7 @@
                         </h4>
                         <form method="post" action="{{ route('recruiter-login') }}" id="login-form" class="">
                             <div class="ss-form-group">
-                                <input type="text" name="id" placeholder="Enter phone number or email id"><br>
+                                <input type="text" name="id" placeholder="Enter phone number or email"><br>
                                 <span class="help-block-email"></span>
                             </div>
                             <div>
@@ -34,7 +34,7 @@
                                         Loading...
                                     </span>
                                     <span id="login"> Log in </span> </button>
-                                <p>Don’t have an account? <a href="{{ route('recruiter-signup') }}">Sign up</a></p>
+                                {{-- <p>Don’t have an account? <a href="{{ route('recruiter-signup') }}">Sign up</a></p> --}}
                             </div>
 
                         </form>

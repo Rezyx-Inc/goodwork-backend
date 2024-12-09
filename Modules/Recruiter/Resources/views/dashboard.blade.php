@@ -27,15 +27,16 @@
 
 </main>
 <script>
+
     let values = <?php echo json_encode($statusCounts); ?>;
-    
     let yValues = values;
+    
+    let max = Math.max(...yValues);
     const ctx = document.getElementById('recruiterStats');
    
-    const xValues = ['New', 'Offered', 'Onboard', 'Working', 'Done'];
+    const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
     
-    
-    new Chart(ctx, {
+    var chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: xValues,
@@ -59,6 +60,26 @@
             title: {
                 display: true,
                 text: ""
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: max,
+                        stepSize: 1
+                    }
+                }]
+            },
+            onClick: (e) => {
+                const activePoints = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
+                if (activePoints.length > 0) {
+                    const index = activePoints[0]._index;
+                    const label = chart.data.labels[index] == 'New' ? 'Apply' : chart.data.labels[index];
+                    const value = chart.data.datasets[0].data[index];
+                    window.location = "/recruiter/recruiter-application/?view="+ label;
+                }
+
+
             }
         }
     });

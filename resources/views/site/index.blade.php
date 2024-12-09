@@ -12,7 +12,7 @@
             <p>Goodwork has come up with some of the most recognized healthcare jobs. Our portal will help you find your dream nursing job.</p>
             <ul>
                 @guest('frontend')
-                <li><a href="{{route('signup')}}">Create a profile</a></li>
+                <li><a href="{{ route('worker.login') }}">Create a profile</a></li>
                 @endguest
               <li><p>128+ Nurses successfully registered across the world</p></li>
             </ul>

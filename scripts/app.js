@@ -60,7 +60,7 @@ pm2.connect(function(err) {
     });
 
     // Crons management
-    if(process.env.ENABLE_CRONS){
+    if(process.env.ENABLE_CRONS == true){
       console.log("Starting the Cron service.")
       pm2.start({
         script    : crons,

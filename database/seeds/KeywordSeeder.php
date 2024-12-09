@@ -15,6 +15,7 @@ class KeywordSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('keywords')->delete();
         $mainSuperUserId = User::where([
             'email' => 'fulladmin@nurseify.io'
         ])->get()->first()->id;
@@ -451,11 +452,10 @@ class KeywordSeeder extends Seeder
                 '12-hour'
             ],
             'PreferredShift' => [
-                '3x12 Nights or Days',
-                '4x10 Days',
-                '5x8 Days',
-                '4x10 Nights',
-                '5x8 Nights',
+                'Nights & Days',
+                'Days',
+                'Nights',
+                'Nights or Days',
             ],
             'DaisyCategory' => [
                 'Extraordinary Nurse',
@@ -492,7 +492,7 @@ class KeywordSeeder extends Seeder
                 'CMA',
                 'Tech / Assist',
                 'Therapy',
-                'Physicians',
+                'Physician',
                 'PA',
                 'CRNA',
                 'NP',
@@ -542,7 +542,7 @@ class KeywordSeeder extends Seeder
                 'CMA',
                 'Tech / Assist',
                 'Therapy',
-                'Physicians',
+                'Physician',
                 'PA',
                 'CRNA',
                 'NP',
@@ -555,9 +555,12 @@ class KeywordSeeder extends Seeder
                 'Non-Clinical',
             ],
             'Terms'=>[
-                'Shift (PRN, Per Diem)',
-                'Perm (Direct)',
-                'Contract'
+                'Contract (Travel or Local)',
+                'Perm',
+                'Shift',
+                'Contract to Perm',
+                'Contract (Travel only)',
+                'Contract (Local only)',
             ],
             'EMR'=>[
                 'EPIC',

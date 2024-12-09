@@ -77,6 +77,15 @@
             }
         });
     });</script>
+
+        <script>
+            // searchable select
+            $(document).ready(function() {
+                $('.searchable-select').select2({
+                    allowClear: false
+                });
+            });
+        </script>
 </body>
 
 </html>

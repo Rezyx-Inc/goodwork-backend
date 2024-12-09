@@ -2774,11 +2774,10 @@ class WorkerController extends Controller
 
                     }
                     $data['worker_image'] = '';
-Organization
                     $data['job'] = isset($job['number_of_references']) ? $job['number_of_references'] : "";
                     $data['match'] = $worker_ref_num;
                     $data['worker'] = isset($worker_reference_name) ? $worker_reference_name : "";
-                    $data['name'] = 'Reference';OrganizationOrganization
+                    $data['name'] = 'Reference';
                     $data['match_title'] = 'Number Of Reference';
                     $data['update_key'] = 'worker_reference_name';
                     $data['type'] = 'multiple';
@@ -3222,12 +3221,12 @@ Organization
                     $data['update_key'] = 'worker_as_soon_as_posible';
                     $data['type'] = 'checkbox';
                     $data['worker_title'] = 'When can you start?';
-                    $data['job_title'Organizationet($data['job']) && !empty($data['job'])) ? $data['job'] : 'Start Date';
-                    $worker_info[] = $data;Organization
+                    $data['job_title'] = Organizationet($data['job']) && !empty($data['job']) ? $data['job'] : 'Start Date';
+                    $worker_info[] = $data;
                     // End Start Date
 
                     if ($job['rto'] == $job_data['worker_rto']) {
-                        $val = true;Organization
+                        $val = true;
                     } else {
                         $val = false;
                     }
@@ -3246,12 +3245,12 @@ Organization
                         $val = true;
                     } else {
                         $val = false;
-                    }Organization
+                    }
                     $data['job'] = isset($job['preOrganizationhift']) ? $job['preferred_shift'] : "";
                     $data['match'] = $val;
                     $data['worker'] = isset($job_data['worker_shift_time_of_day']) ? $job_data['worker_shift_time_of_day'] : "";
                     $data['name'] = 'Shift';
-                    $data['match_title'] = 'Shift Time of Day';Organization
+                    $data['match_title'] = 'Shift Time of Day';
                     $data['update_key'] = 'worker_shift_time_of_day';
                     $data['type'] = 'dropdown';
                     $data['worker_title'] = 'Fav Shift?';
@@ -3868,11 +3867,11 @@ Organization
             $worker_info = [];
             // $data =  [];
             $data['job'] = 'College Diploma Required';
-            $data['match'] = !empty($job_datOrganizationma']) ? true : false;
+            $data['match'] = !empty($job_datOrganizationma) ? true : false;
             $data['worker'] = !empty($job_data['diploma']) ? url('public/images/nurses/diploma/' . $job_data['diploma']) : "";
             $data['name'] = 'Diploma';
             $data['match_title'] = 'Diploma';
-            $data['update_key'] = 'diploma';OrganizationOrganization
+            $data['update_key'] = 'diploma';
             $data['type'] = 'files';
             $data['worker_title'] = 'Did you really graduate?';
             $data['job_title'] = 'College Diploma Required';
@@ -4321,12 +4320,12 @@ Organization
             $data['name'] = 'Unit';
             $data['match_title'] = 'Unit';
             $data['update_key'] = 'worker_unit';
-            $data['type'] = 'input';Organization
-            $data['worker_title'] = 'Fav UniOrganization
+            $data['type'] = 'input';
+            $data['worker_title'] = 'Fav UniOrganization';
             $data['job_title'] = !empty($job['Unit']) ? $job['Unit'] : 'Unit';
             $worker_info[] = $data;
 
-            $data['job'] = isset($job['Department']) ? $job['Department'] : Organization
+            $data['job'] = isset($job['Department']) ? $job['Department'] : "" ;
             $data['match'] = !empty($job_data['worker_department']) ? true : false;
             $data['worker'] = isset($job_data['worker_department']) ? $job_data['worker_department'] : "";
             $data['name'] = 'Department';
@@ -4345,12 +4344,12 @@ Organization
             $data['update_key'] = 'worker_bed_size';
             $data['type'] = 'input';
             $data['worker_title'] = 'king or california king ?';
-            $data['job_title'] = !empty($joOrganizationize']) ? $job['Bed_Size'] : 'Bed Size';
-            $worker_info[] = $data;Organization
+            $data['job_title'] = !empty($joOrganizationize) ? $job['Bed_Size'] : 'Bed Size';
+            $worker_info[] = $data;
 
             $data['job'] = isset($job['Trauma_Level']) ? $job['Trauma_Level'] : "";
             $data['match'] = !empty($job_data['worker_trauma_level']) ? true : false;
-            $data['worker'] = isset($job_data['worker_trauma_level']) ? $job_data[Organizationtrauma_level'] : "";
+            $data['worker'] = isset($job_data['worker_trauma_level']) ? $job_data['Organizationtrauma_level'] : "";
             $data['name'] = 'Trauma Level';
             $data['match_title'] = 'Trauma Level';
             $data['update_key'] = 'worker_trauma_level';

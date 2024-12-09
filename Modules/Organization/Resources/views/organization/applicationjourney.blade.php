@@ -9,56 +9,56 @@
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Apply')" id="Apply">
                         <p>New</p>
-                        <span>{{ $statusCounts['Apply'] }} Applicants</span>
+                        <span>{{ $statusCounts['Apply'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Screening Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Screening')" id="Screening">
                         <p>Screening</p>
-                        <span>{{ $statusCounts['Screening'] }} Applicants</span>
+                        <span>{{ $statusCounts['Screening'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Submitted Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Submitted')" id="Submitted">
                         <p>Submitted</p>
-                        <span>{{ $statusCounts['Submitted'] }} Applicants</span>
+                        <span>{{ $statusCounts['Submitted'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Offered Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Offered')" id="Offered">
                         <p>Offered</p>
-                        <span>{{ $statusCounts['Offered'] }} Applicants</span>
+                        <span>{{ $statusCounts['Offered'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Onboarding Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Onboarding')" id="Onboarding">
                         <p>Onboarding</p>
-                        <span>{{ $statusCounts['Onboarding'] }} Applicants</span>
+                        <span>{{ $statusCounts['Onboarding'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
                         <p>Working</p>
-                        <span>{{ $statusCounts['Working'] }} Applicants</span>
+                        <span>{{ $statusCounts['Working'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Done Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Done')" id="Done">
                         <p>Done</p>
-                        <span>{{ $statusCounts['Done'] }} Applicants</span>
+                        <span>{{ $statusCounts['Done'] }} Applications</span>
                     </div>
                 </div>
                 {{-- On Hold Applicants --}}
                 {{-- <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Hold')" id="Hold">
                         <p>Hold</p>
-                        <span>{{ $statusCounts['Hold'] }} Applicants</span>
+                        <span>{{ $statusCounts['Hold'] }} Applications</span>
                     </div>
                 </div> --}}
 
@@ -387,7 +387,12 @@
                     doneElement.classList.add("active");
                 }
             }
-            document.getElementById('listingname').innerHTML = type + ' Applications';
+            if(type == 'Apply'){
+                document.getElementById('listingname').innerHTML = 'New Applications';
+            }else if (type != null){
+                document.getElementById('listingname').innerHTML = type + ' Applications';
+            }
+            
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
@@ -519,6 +524,11 @@
 
 
         $(document).ready(function() {
+
+            // selectOfferCycleState
+            const urlParams = new URLSearchParams(window.location.search);
+            const viewParam = urlParams.get('view');
+            selectOfferCycleState(viewParam);
 
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
@@ -937,8 +947,7 @@
         }
     </script>
     <script>
-        function askWorker(e, type, workerid, jobid) {
-            return false;
+       function askWorker(e, type, workerid,recruiter_id , organization_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -973,7 +982,7 @@
 
             // for now just redirecting to messages page
             let url = "{{ url('organization/organization-messages') }}";
-             window.location = url + '?worker_id=' + workerid + '&job_id=' + jobid;
+            window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name;
             // window.location = url;
         }
 
@@ -1143,6 +1152,32 @@
             }
         }
 
+        function ChangeOfferInfo(offerId){
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            if (csrfToken) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    url: "{{ url('organization/get-offer-information-for-edit') }}",
+                    data: {
+                        'token': csrfToken,
+                        'offer_id' : offerId,
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(result) {
+                        $("#application-details").html(result.content);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                console.error('CSRF token not found.');
+            }
+        }
+
         function selectOfferCycleState(type){
             applicationStatusToggle(type);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -1159,7 +1194,21 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
-                        $("#application-list").html(result.content);
+                        if (type == 'Apply') {
+                            // chnage his coloset from col-lg-5 to col-lg-12
+                            
+                            $("#application-details").closest('.col-lg-7').addClass("d-none");
+                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5').addClass('col-lg-12');
+                            $("#application-list").html(result.content);
+                            // hide to col of  #application-details
+                            
+
+                        } else {
+                            $("#application-list").html(result.content);
+                            $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
+                            $("#application-details").closest('.col-lg-7').removeClass("d-none");
+                        }
+                        
                     },
                     error: function(error) {
                         console.log(error);
@@ -1186,6 +1235,8 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
+                        $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
+                        $("#application-details").closest('.col-lg-7').removeClass("d-none");
                         $("#application-list").html(result.content);
                         activeWorkerClass(workerId);
                     },
@@ -1251,7 +1302,11 @@
                     doneElement.classList.add("active");
                 }
             }
-            document.getElementById('listingname').innerHTML = type + ' Applications';
+            if(type == 'Apply'){
+                document.getElementById('listingname').innerHTML = 'New Applications';
+            }else if (type != null){
+                document.getElementById('listingname').innerHTML = type + ' Applications';
+            }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.remove("d-none");
@@ -1277,7 +1332,7 @@
                     dataType: 'json',
                     success: function(result) {
                          $("#application-details").html(result.content);
-                        console.log(result.content);
+                        //console.log(result.content);
 
                         var files = result.files;
                         console.log(files);
@@ -1336,7 +1391,7 @@
                     dataType: 'json',
                     success: function(result) {
                          $("#application-details").html(result.content);
-                        console.log(result.content);
+                        //console.log(result.content);
                     },
                     error: function(error) {
                         console.log(error);

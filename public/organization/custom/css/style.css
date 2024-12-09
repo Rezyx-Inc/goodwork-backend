@@ -2052,7 +2052,7 @@ color: #fff;
     list-style-type: none;
     display: flex;
     gap: 22px;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 
 .ss-form-group.ss-prsnl-frm-specialty ul li:nth-child(1) {width: 90%;}

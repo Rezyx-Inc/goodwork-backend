@@ -201,7 +201,6 @@ class Nurse extends Model implements HasMedia
         'worker_feels_like_per_hour_check',
         'worker_overtime_rate',
 
-
         'worker_weekly_non_taxable_amount_check',
         'worker_call_back_rate',
         'worker_on_call_rate',
@@ -209,7 +208,16 @@ class Nurse extends Model implements HasMedia
         'worker_call_back_check',
         'worker_experience',
         'worker_benefits',
-        'nurse_classification'
+        'nurse_classification',
+
+        'worker_end_date',
+        'worker_preferred_work_location',
+        'worker_facility_name',
+        'worker_job_location',
+        'worker_description',
+        'terms',
+        'worker_hours_shift',
+        'worker_pay_frequency'
 
     ];
     protected static $logName = 'Nurse';

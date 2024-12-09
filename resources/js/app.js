@@ -31,3 +31,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 const app = new Vue({
   el: '#wrapper',
 });
+
+// Searchable select
+import 'select2/dist/css/select2.min.css';
+import 'select2/dist/js/select2.min.js';

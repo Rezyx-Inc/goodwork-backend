@@ -18,9 +18,14 @@
                                         <span class="glyphicon glyphicon-camera"></span>
                                         <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" onchange="loadFile(event)" />
-                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
-                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
+                                    <input id="file" type="file" accept=".heic, .png, .jpeg, .gif"
+                                        onchange="loadFile(event)" />
+                                    @if (isset($user->image))
+                                        <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" />
+                                    @else
+                                        <img src="{{ URL::asset('frontend/img/account-img.png') }}" id="output"
+                                            width="200" />
+                                    @endif
                                 </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p>{{ $worker->id }}</p>
@@ -123,7 +128,8 @@
                                         <label for="option-4" class="option option-4">
                                             <div class="dot"></div>
                                             <ul>
-                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" /></li>
+                                                <li><img src="{{ URL::asset('frontend/img/my-per--con-key.png') }}" />
+                                                </li>
                                                 <li>
                                                     <p>Support</p>
                                                 </li>
@@ -169,769 +175,9 @@
                                 </div>
                             </div>
                             <div class="form-outer">
-                                <form onsubmit="return false;" method="post" action="{{ route('update-worker-profile') }}">
-                                    {{-- <form> --}}
-                                    @csrf
-                                    <!-- first form slide Basic Information -->
-                                    <div class="page slide-page">
-                                        <div class="row justify-content-center">
-                                            {{-- First Name --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>First Name</label>
-                                                <input type="text" name="first_name"
-                                                    placeholder="Please enter your first name"
-                                                    value="{{ isset($user->first_name) ? $user->first_name : '' }}">
-                                            </div>
-                                            <span class="help-block-first_name"></span>
-                                            {{-- Last Name --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Last Name</label>
-                                                <input type="text" name="last_name"
-                                                    placeholder="Please enter your last name"
-                                                    value="{{ isset($user->last_name) ? $user->last_name : '' }}">
-                                            </div>
-                                            <span class="help-block-last_name"></span>
-                                            {{-- Phone Number --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Phone Number</label>
-                                                <input id="contact_number" type="text" name="mobile"
-                                                    placeholder="Please enter your phone number"
-                                                    value="{{ isset($user->mobile) ? $user->mobile : '' }}">
-                                            </div>
-                                            <span class="help-block-mobile"></span>
-                                            {{-- Address Information --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Address</label>
-                                                <input type="text" name="address"
-                                                    placeholder="Please enter your address"
-                                                    value="{{ isset($worker->address) ? $worker->address : '' }}">
-                                            </div>
-                                            <span class="help-block-address"></span>
-                                            {{-- State Information --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>State</label>
-                                                <select name="state" id="job_state">
-                                                    <option value="{{ !empty($worker->state) ? $worker->state : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->state) ? $worker->state : 'What State are you located in?' }}
-                                                    </option>
-                                                    @foreach ($states as $state)
-                                                        <option id="{{ $state->id }}" value="{{ $state->name }}">
-                                                            {{ $state->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <span class="help-block-state"></span>
-                                            {{-- City Information --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>City</label>
-                                                <select name="city" id="job_city" >
-                                                    <option value="{{ !empty($worker->city) ? $worker->city : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->city) ? $worker->city : 'What City are you located in?' }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <span class="help-block-city"></span>
-                                            <span class="help-city">Please select a state first</span>
-                                            {{-- Zip Code Information --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Zip Code</label>
-                                                <input type="number" name="zip_code"
-                                                    placeholder="Please enter your Zip Code"
-                                                    value="{{ isset($user->zip_code) ? $user->zip_code : '' }}">
-                                            </div>
-                                            <span class="help-block-zip_code"></span>
-                                            {{-- Skip && Save --}}
-                                            <div class="ss-prsn-form-btn-sec col-11">
-                                                <button type="text" class="ss-prsnl-save-btn"
-                                                    id="SaveBaiscInformation"> Save
-                                                </button>
-                                                <button type="text" class="ss-prsnl-save-btn firstNext"> Next
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end first form slide Basic Information -->
 
-                                    <!-- second form slide Professional Information -->
-                                    <div class="page slide-page">
-                                        <div class="row justify-content-center">
-                                            {{-- Licence number --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Licence number</label>
-                                                <input type="text" id="nursing_license_number" name="nursing_license_number"
-                                                    placeholder="Enter licence number"
-                                                    value="{{ !empty($worker->nursing_license_number) ? $worker->nursing_license_number : '' }}">
-                                            </div>
-                                            <span class="help-block-licence"></span>
+                                @include('worker::dashboard.profile.settings')
 
-                                            {{-- Profession --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Profession</label>
-                                                <select name="profession" id="profession">
-                                                    <option
-                                                        value="{{ !empty($worker->profession) ? $worker->profession : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->profession) ? $worker->profession : 'What Kind of Professional are you?' }}
-                                                    </option>
-                                                    @foreach ($professions as $profession)
-                                                        <option value="{{ $profession->full_name }}">
-                                                            {{ $profession->full_name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <span class="help-block-profession"></span>
-                                            {{-- Specialty --}}
-                                            <div class="ss-form-group  col-11">
-                                                <label>Specialty</label>
-                                                <select name="specialty" id="specialty">
-                                                    <option
-                                                        value="{{ !empty($worker->specialty) ? $worker->specialty : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->specialty) ? $worker->specialty : 'Select Specialty' }}
-                                                    </option>
-
-                                                    @foreach ($specialities as $specialty)
-                                                        <option value="{{ $specialty->full_name }}">
-                                                            {{ $specialty->full_name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <span class="help-block-specialty"></span>
-                                            {{-- Terms --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Terms</label>
-                                                <select name="terms" id="term">
-                                                    <option value="{{ !empty($worker->terms) ? $worker->terms : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->terms) ? $worker->terms : 'Select a specefic term' }}
-                                                    </option>
-
-                                                    @if (isset($allKeywords['Terms']))
-                                                        @foreach ($allKeywords['Terms'] as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <span class="help-block-terms"></span>
-                                            {{-- Type --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Type</label>
-                                                <select name="worker_job_type" id="worker_job_type">
-                                                    <option value="{{ !empty($worker->worker_job_type) ? $worker->worker_job_type : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_job_type) ? $worker->worker_job_type : 'Select Type' }}
-                                                    </option>
-
-                                                    @if (isset($allKeywords['Type']))
-                                                        @foreach ($allKeywords['Type'] as $value)
-                                                            <option value="{{ $value->title }}">{{ $value->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <span class="help-block-worker_job_type"></span>
-                                            {{-- end Type --}}
-
-                                            {{-- Block scheduling --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Block scheduling</label>
-
-                                                <select name="block_scheduling" class="block_scheduling mb-3"
-                                                    id="block_scheduling" value="">
-                                                    <option
-                                                        value="{{ $worker->block_scheduling == '0' ? 'No' : ($worker->block_scheduling == '1' ? 'Yes' : '') }}" disabled selected hidden>
-
-                                                        {{ $worker->block_scheduling == '0' ? 'No' : ($worker->block_scheduling == '1' ? 'Yes' : 'Select Block scheduling') }}
-                                                    </option>
-
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                            </div>
-                                            <span class="help-block-block_scheduling"></span>
-                                            {{-- end scheduling --}}
-                                            {{-- Float requirements --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Float requirements</label>
-
-                                                <select name="float_requirement" class="float_requirement mb-3"
-                                                    id="float_requirement" value="">
-                                                    <option
-                                                        value="{{ !empty($worker->float_requirement) ? $worker->float_requirement : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->float_requirement) ? $worker->float_requirement : 'Select Float requirements' }}
-                                                    </option>
-
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                            </div>
-                                            <span class="help-block-float_requirement"></span>
-                                            {{-- end Float requirements --}}
-                                            {{-- Facility Shift Cancellation Policy --}}
-                                            <div class="ss-form-group  col-11">
-                                                <label>Facility Shift Cancellation Policy</label>
-                                                <select name="facility_shift_cancelation_policy"
-                                                    class="facility_shift_cancelation_policy mb-3"
-                                                    id="facility_shift_cancelation_policy" value="">
-                                                    <option
-                                                        value="{{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->facility_shift_cancelation_policy) ? $worker->facility_shift_cancelation_policy : 'Select Facility Shift Cancellation Policy' }}
-                                                    </option>
-
-                                                    @if (isset($allKeywords['AssignmentDuration']))
-                                                        @foreach ($allKeywords['AssignmentDuration'] as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->title }}
-                                                            </option>;
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <span class="help-block-facility_shift_cancelation_policy"></span>
-                                            {{-- End Facility Shift Cancellation Policy --}}
-                                            {{-- Contract Termination Policy --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Contract Termination Policy</label>
-                                                <input type="text" id="contract_termination_policy"
-                                                    name="contract_termination_policy"
-                                                    placeholder="Enter Contract Termination Policy"
-                                                    value="{{ !empty($worker->contract_termination_policy) ? $worker->contract_termination_policy : '' }}">
-                                            </div>
-                                            <span class="help-block-contract_termination_policy"></span>
-                                            {{-- end Contract Termination Policy --}}
-                                            {{-- Traveler Distance From Facility --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Distance from your home</label>
-                                                <input type="number" id="traveler_distance_from_facility"
-                                                    name="distance_from_your_home"
-                                                    placeholder="Enter the distance from your home."
-                                                    value="{{ !empty($worker->distance_from_your_home) ? $worker->distance_from_your_home : '' }}">
-                                            </div>
-                                            <span class="help-block-traveler_distance_from_facility"></span>
-                                            {{-- end Traveler Distance From Facility  --}}
-                                            {{-- Clinical Setting --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Clinical Setting</label>
-                                                <input type="text" id="clinical_setting"
-                                                    name="clinical_setting_you_prefer"
-                                                    placeholder="Enter clinical setting"
-                                                    value="{{ !empty($worker->clinical_setting_you_prefer) ? $worker->clinical_setting_you_prefer : '' }}">
-                                            </div>
-                                            <span class="help-block-clinical_setting_you_prefer"></span>
-                                            {{-- End Clinical Setting --}}
-                                            {{-- Patient ratio --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Patient ratio</label>
-                                                <input type="number" id="Patient_ratio" name="worker_patient_ratio"
-                                                    placeholder="How many patients can you handle?"
-                                                    value="{{ !empty($worker->worker_patient_ratio) ? $worker->worker_patient_ratio : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_patient_ratio"></span>
-                                            {{-- End Patient ratio --}}
-                                            {{-- EMR --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>EMR</label>
-                                                <select name="worker_emr" class="emr mb-3" id="emr">
-                                                    <option
-                                                        value="{{ !empty($worker->worker_emr) ? $worker->worker_emr : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_emr) ? $worker->worker_emr : 'Select EMR' }}
-                                                    </option>
-
-                                                    @if (isset($allKeywords['EMR']))
-                                                        @foreach ($allKeywords['EMR'] as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <span class="help-block-worker_emr"></span>
-                                            {{-- End EMR --}}
-                                            {{-- Unit --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Unit</label>
-                                                <input id="Unit" type="text" name="worker_unit"
-                                                    placeholder="Enter Unit"
-                                                    value="{{ !empty($worker->worker_unit) ? $worker->worker_unit : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_unit"></span>
-                                            {{-- End Unit --}}
-                                            {{-- Scrub Color --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Scrub Color</label>
-                                                <input id="scrub_color" type="text" name="worker_scrub_color"
-                                                    placeholder="Enter Scrub Color"
-                                                    value="{{ !empty($worker->worker_scrub_color) ? $worker->worker_scrub_color : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_scrub_color"></span>
-                                            {{-- End Scrub Color --}}
-                                            {{-- RTO --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Rto</label>
-                                                <select name="rto" id="rto">
-                                                    <option value="{{ !empty($worker->rto) ? $worker->rto : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->rto) ? $worker->rto : 'Select Rto' }} </option>
-                                                    <option value="allowed">Allowed
-                                                    </option>
-                                                    <option value="not allowed">Not Allowed
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <span class="help-block-rto"></span>
-                                            {{-- End RTO --}}
-
-                                            {{-- Shift Time of Day --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Shift Time of Day</label>
-                                                <select name="worker_shift_time_of_day" id="shift-of-day">
-                                                    <option
-                                                        value="{{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_shift_time_of_day) ? $worker->worker_shift_time_of_day : 'Enter Shift Time of Day' }}
-                                                    </option>
-                                                    @if (isset($allKeywords['PreferredShift']))
-                                                        @foreach ($allKeywords['PreferredShift'] as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->title }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <span class="help-block-worker_shift_time_of_day"></span>
-                                            {{-- End Shift Time of Day --}}
-
-                                            {{-- Hours/Shift --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Hours/Shift</label>
-                                                <input id="hours_shift" type="number" name="worker_hours_shift"
-                                                    placeholder="Enter Hours/Shift"
-                                                    value="{{ !empty($worker->worker_hours_shift) ? $worker->worker_hours_shift : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_hours_shift"></span>
-                                            {{-- End Hours/Shift --}}
-                                            {{-- Weeks/Assignment --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Weeks/Assignment</label>
-                                                <input id="preferred_assignment_duration" type="number"
-                                                    name="worker_weeks_assignment" placeholder="Enter Weeks/Assignment"
-                                                    value="{{ !empty($worker->worker_weeks_assignment) ? $worker->worker_weeks_assignment : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_weeks_assignment"></span>
-                                            {{-- End Weeks/Assignment --}}
-                                            {{-- Shifts/Week --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Shifts/Week</label>
-                                                <input id="weeks_shift" type="number" name="worker_shifts_week"
-                                                    placeholder="Enter Shifts/Week"
-                                                    value="{{ !empty($worker->worker_shifts_week) ? $worker->worker_shifts_week : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_shifts_week"></span>
-                                            {{-- End Shifts/Week --}}
-                                            {{-- added fields to match job details in explore jobs --}}
-                                            {{-- Experience  --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Experience</label>
-                                                <input id="worker_experience" type="number" name="worker_experience"
-                                                    placeholder="Enter your experience"
-                                                    value="{{ !empty($worker->worker_experience) ? $worker->worker_experience : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_experience"></span>
-                                            {{-- End Experience --}}
-
-
-                                            {{-- nursing_license_state --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Where are you licensed?</label>
-                                                <select name="nursing_license_state" id="nursing_license_state">
-                                                    <option
-                                                        value="{{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->nursing_license_state) ? $worker->nursing_license_state : 'Select a State' }}
-                                                    </option>
-                                                    @foreach ($allKeywords['StateCode'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }} Compact
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-nursing_license_state"></span>
-                                            </div>
-                                            {{-- End nursing_license_state --}}
-                                            {{-- worker_eligible_work_in_us --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Eligible to work in the US</label>
-                                                <select name="worker_eligible_work_in_us" id="worker_eligible_work_in_us">
-                                                    <option
-                                                        value="{{ $worker->worker_eligible_work_in_us == '0' ? 'No' : ($worker->worker_eligible_work_in_us == '1' ? 'Yes' : '') }}" disabled selected hidden>
-
-                                                        {{ $worker->worker_eligible_work_in_us == '0' ? 'No' : ($worker->worker_eligible_work_in_us == '1' ? 'Yes' : 'Select Eligible to work in the US') }}
-                                                    </option>
-                                                    <option value="">Select an option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                                <span class="help-block-worker_eligible_work_in_us"></span>
-                                            </div>
-
-                                            {{-- End worker_eligible_work_in_us --}}
-
-
-                                            {{-- worker_facility_state --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>State you'd like to work?</label>
-                                                <select name="worker_facility_state" id="worker_facility_state">
-                                                    <option
-                                                        value="{{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_facility_state) ? $worker->worker_facility_state : 'Select a State' }}
-                                                    </option>
-                                                    @foreach ($states as $state)
-                                                    <option id="{{ $state->id }}" value="{{ $state->name }}">
-                                                        {{ $state->name }}
-                                                    </option>
-                                                @endforeach
-                                                </select>
-                                                <span class="help-block-worker_facility_state"></span>
-                                            </div>
-                                            {{-- End worker_facility_state  --}}
-
-                                            {{-- worker_facility_city --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>City you'd like to work?</label>
-                                                <select name="worker_facility_city" id="worker_facility_city">
-                                                    <option
-                                                        value="{{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_facility_city) ? $worker->worker_facility_city : 'Select a City' }}
-                                                    </option>
-                                                    @foreach ($allKeywords['City'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-worker_facility_city"></span>
-                                                <span class="help-worker-facility-city">Please select a state first</span>
-                                            </div>
-                                            {{-- End worker_facility_city  --}}
-
-                                            {{-- worker_start_date --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>When can you start?</label>
-                                                <input id="worker_start_date" type="date" name="worker_start_date"
-                                                    placeholder="Enter your start date"
-                                                    value="{{ !empty($worker->worker_start_date) ? $worker->worker_start_date : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_start_date"></span>
-                                            {{-- End worker_start_date  --}}
-
-                                            {{-- worker_guaranteed_hours --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Guaranteed Hours</label>
-                                                <input id="worker_guaranteed_hours" type="number"
-                                                    name="worker_guaranteed_hours"
-                                                    placeholder="Enter your guaranteed hours"
-                                                    value="{{ !empty($worker->worker_guaranteed_hours) ? $worker->worker_guaranteed_hours : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_guaranteed_hours"></span>
-                                            {{-- End worker_guaranteed_hours  --}}
-
-                                            {{-- worker_sign_on_bonus --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Sign on Bonus</label>
-                                                <input id="worker_sign_on_bonus" type="number"
-                                                    name="worker_sign_on_bonus" placeholder="What rate is fair ? "
-                                                    value="{{ !empty($worker->worker_sign_on_bonus) ? $worker->worker_sign_on_bonus : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_sign_on_bonus"></span>
-                                            {{-- End worker_sign_on_bonus  --}}
-
-                                            {{-- worker_completion_bonus --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Completion Bonus</label>
-                                                <input id="worker_completion_bonus" type="number"
-                                                    name="worker_completion_bonus" placeholder="What rate is fair ? "
-                                                    value="{{ !empty($worker->worker_completion_bonus) ? $worker->worker_completion_bonus : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_completion_bonus"></span>
-                                            {{-- End worker_completion_bonus  --}}
-
-                                            {{-- worker_extension_bonus --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Extension Bonus</label>
-                                                <input id="worker_extension_bonus" type="number"
-                                                    name="worker_extension_bonus" placeholder="What rate is fair ? "
-                                                    value="{{ !empty($worker->worker_extension_bonus) ? $worker->worker_extension_bonus : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_extension_bonus"></span>
-                                            {{-- End worker_extension_bonus  --}}
-
-                                            {{-- worker_other_bonus --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Other Bonus</label>
-                                                <input id="worker_other_bonus" type="number" name="worker_other_bonus"
-                                                    placeholder="What rate is fair ? "
-                                                    value="{{ !empty($worker->worker_other_bonus) ? $worker->worker_other_bonus : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_other_bonus"></span>
-                                            {{-- End worker_other_bonus  --}}
-
-                                            {{-- worker_four_zero_one_k --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>401K</label>
-                                                <select name="worker_four_zero_one_k" id="worker_four_zero_one_k">
-                                                    <option
-                                                    value="{{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                                                    {{ $worker->worker_four_zero_one_k == '0' ? 'No' : ($worker->worker_four_zero_one_k == '1' ? 'Yes' : 'Select an option') }}
-                                                    </option>
-
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                                <span class="help-block-worker_four_zero_one_k"></span>
-                                            </div>
-                                            {{-- End worker_four_zero_one_k  --}}
-
-                                            {{-- worker_health_insurance --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Health Insurance</label>
-                                                <select name="worker_health_insurance" id="worker_health_insurance">
-                                                    <option
-                                                    value="{{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                                                    {{ $worker->worker_health_insurance == '0' ? 'No' : ($worker->worker_health_insurance == '1' ? 'Yes' : 'Select an option') }}
-                                                    </option>
-                                                    <option value="">Select an option</option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="2">No</option>
-                                                </select>
-                                                <span class="help-block-worker_health_insurance"></span>
-                                            </div>
-                                            {{-- End worker_health_insurance  --}}
-
-                                            {{-- worker_dental --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Dental</label>
-                                                <select name="worker_dental" id="worker_dental">
-                                                    <option
-                                                        value="{{ $worker->worker_dental == '0' ? 'No' : ($worker->worker_dental == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                                                        {{ $worker->worker_dental == '0' ? 'No' : ($worker->worker_dental == '1' ? 'Yes' : 'Select an option') }}
-                                                    </option>
-                                                    <option value="">do you want this ?</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                                <span class="help-block-worker_dental"></span>
-                                            </div>
-                                            {{-- End worker_dental  --}}
-
-                                            {{-- worker_vision --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Vision</label>
-                                                <select name="worker_vision" id="worker_vision">
-                                                    <option
-                                                    value="{{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                                                    {{ $worker->worker_vision == '0' ? 'No' : ($worker->worker_vision == '1' ? 'Yes' : 'Select an option') }}
-                                                    </option>
-                                                    <option value="">do you want this ?</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                                <span class="help-block-worker_vision"></span>
-                                            </div>
-                                            {{-- End worker_vision  --}}
-
-                                            {{-- worker_overtime_rate --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Overtime Rate</label>
-                                                <input id="worker_overtime_rate" type="number"
-                                                    name="worker_overtime_rate" placeholder="What rate is fair?"
-                                                    value="{{ !empty($worker->worker_overtime_rate) ? $worker->worker_overtime_rate : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_overtime_rate"></span>
-                                            {{-- End worker_overtime_rate  --}}
-
-                                            {{-- worker_holiday its a date  --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Holiday</label>
-                                                <input id="worker_holiday" type="date" name="worker_holiday"
-                                                    placeholder="Any holiday you refuse to work?"
-                                                    value="{{ !empty($worker->worker_holiday) ? \Carbon\Carbon::parse($worker->worker_holiday)->format('Y-m-d') : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_holiday"></span>
-                                            {{-- End worker_holiday  --}}
-
-                                            {{-- worker_on_call_check --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>On Call</label>
-                                                <select name="worker_on_call_check" id="worker_on_call_check">
-                                                    <option
-                                                       value="{{ $worker->worker_on_call_check == '0' ? 'No' : ($worker->worker_on_call_check == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_on_call_check) ? ($worker->worker_on_call_check == 1 ? 'Yes' : 'No') : 'Will you do call?' }}
-                                                    </option>
-                                                    <option value="">Select an option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                                <span class="help-block-worker_on_call_check"></span>
-                                            </div>
-                                            {{-- End worker_call  --}}
-
-                                            {{-- worker_on_call --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>On Call Rate</label>
-                                                <input id="worker_on_call" type="number" name="worker_on_call"
-                                                    placeholder="What rate is fair?"
-                                                    value="{{ !empty($worker->worker_on_call) ? $worker->worker_on_call : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_on_call"></span>
-                                            {{-- End worker_on_call  --}}
-
-                                            {{-- worker_call_back --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>On Call Back Rate</label>
-                                                <input id="worker_call_back" type="number"
-                                                    name="worker_call_back" placeholder="What rate is fair?"
-                                                    value="{{ !empty($worker->worker_call_back) ? $worker->worker_call_back : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_call_back"></span>
-                                            {{-- End worker_call_back  --}}
-
-                                            {{-- worker_orientation_rate --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Orientation Rate</label>
-                                                <input id="worker_orientation_rate" type="number"
-                                                    name="worker_orientation_rate" placeholder="Is this rate reasonable?"
-                                                    value="{{ !empty($worker->worker_orientation_rate) ? $worker->worker_orientation_rate : '' }}">
-                                            </div>
-                                            <span class="help-block-worker_orientation_rate"></span>
-                                            {{-- End worker_orientation_rate  --}}
-
-                                            {{-- worker_benefits --}}
-
-                                            <div class="ss-form-group col-11">
-                                                <label>Worker benefits</label>
-                                                <select name="worker_benefits" class="worker_benefits mb-3"
-                                                    id="worker_benefits" value="">
-                                                    <option
-                                                    value="{{ $worker->worker_benefits == '0' ? 'No' : ($worker->worker_benefits == '1' ? 'Yes' : '') }}" disabled selected hidden>
-                                                        {{ !empty($worker->worker_benefits) ? $worker->worker_benefits : 'Select your benefits choice' }}
-                                                    </option>
-                                                    <option value="1">Yes, Please</option>
-                                                    <option value="2">Preferable</option>
-                                                    <option value="0">No, Thanks</option>
-                                                </select>
-                                            </div>
-                                            <span class="help-block-worker_benefits"></span>
-
-                                            {{-- nurse_classification --}}
-                                            <div class="ss-form-group col-11">
-                                                <label>Nurse Classification</label>
-                                                <select name="nurse_classification" id="nurse_classification">
-                                                    <option
-                                                        value="{{ !empty($worker->nurse_classification) ? $worker->nurse_classification : '' }}" disabled selected hidden>
-                                                        {{ !empty($worker->nurse_classification) ? $worker->nurse_classification : 'Select Nurse Classification' }}
-                                                    </option>
-                                                    @foreach ($allKeywords['NurseClassification'] as $value)
-                                                        <option value="{{ $value->title }}">{{ $value->title }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="help-block-nurse_classification"></span>
-                                            </div>
-                                            {{-- End nurse_classification  --}}
-
-
-                                            {{-- end worker benefits --}}
-
-                                            {{-- Skip && Save --}}
-                                            <div class="ss-prsn-form-btn-sec row col-11" style="gap:0px;">
-                                                <div class="col-4">
-                                                    <button type="text"
-                                                        class="ss-prsnl-skip-btn prev-1 btns_prof_info"> Previous
-                                                    </button>
-                                                </div>
-                                                <div class="col-4">
-                                                    <button type="text"
-                                                        class="ss-prsnl-save-btn next-1 btns_prof_info"> Next
-                                                    </button>
-                                                </div>
-                                                <div class="col-4">
-                                                    <button type="text" class="ss-prsnl-save-btn btns_prof_info"
-                                                        id="SaveProfessionalInformation"> Save
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end second form slide (Profession, Slide) -->
-
-                                    <!-- Third form slide Document management -->
-                                    <div class="page slide-page ">
-                                        <div class="row justify-content-center">
-                                            {{-- Upload Document --}}
-                                            {{-- <div class="ss-form-group">
-                                                <label>Upload Document</label>
-                                                <input type="file" id="document_file" name="files" multiple
-                                                    required><br><br>
-                                                <label class="mt-2" for="file">Choose a file</label>
-                                            </div>
-                                            <span class="help-block-file"></span> --}}
-                                            <div class="ss-form-group "
-                                                style="
-                                                display: flex;
-                                                justify-content: right;
-                                                align-items: center;
-                                            ">
-                                                <span style="margin:0px; margin-right:20px;">Add your documents here
-                                                    !</span>
-                                                <a href="#" onclick="open_modal(this)" class="ss-opr-mngr-plus-sec"
-                                                    style="
-                                                    background: #3d2c39;
-                                                    width: 40px;
-                                                    height: 40px;
-                                                    line-height: 40px;
-                                                    text-align: center;
-                                                    border-radius: 100px;
-                                                    color: #52DEC1 !important;
-                                                    display: flex;
-                                                    justify-content: center;
-                                                    align-items: center;
-                                                    "
-                                                    data-bs-toggle="modal" data-bs-target="#job-dtl-Dcouments"><i
-                                                        class="fas fa-plus"></i></a>
-
-
-                                                <br><br>
-
-                                            </div>
-                                            {{-- manage file table --}}
-                                            <table style="font-size: 16px;" class="table row">
-                                                <thead>
-                                                    <tr class="row">
-                                                        <th class="col-3">Document Name</th>
-                                                        <th class="col-3">Type</th>
-                                                        <th class="col-3">View</th>
-                                                        <th class="col-3">Delete</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-
-                                            {{-- Skip && Save --}}
-                                            <div class="ss-prsn-form-btn-sec">
-                                                <button type="text" class="ss-prsnl-skip-btn prev-2"> Previous
-                                                </button>
-                                                <button id="uploadForm" class="ss-prsnl-save-btn next-2"> Save Files
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end Third form slide Document management -->
-                                    <div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -941,12 +187,12 @@
                     <div class="col-lg-7 bodyAll account_setting d-none">
                         <div class="ss-pers-info-form-mn-dv">
                             <div class="ss-persnl-frm-hed">
-                                <p><span><img
-                                            src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
+                                <p><span><img src="{{ URL::asset('frontend/img/my-per--con-user.png') }}" /></span>Account
                                     Setting</p>
                             </div>
                             <div class="form-outer">
-                                <form onsubmit="return false;" method="post" action="{{ route('update-worker-profile') }}">
+                                <form onsubmit="return false;" method="post"
+                                    action="{{ route('update-worker-profile') }}">
                                     @csrf
                                     <!-- slide Account Setting -->
                                     <div class="page slide-page">
@@ -1081,18 +327,18 @@
                                                 <button type="text" class=" col-12 ss-prsnl-save-btn"
                                                     id="SaveBonusInformation"> Save
                                                 </button>
-                                                <span class="col-12"
-                                                    style="display: block;
+                                                <!-- <span class="col-12"
+                                                        style="display: block;
                                                color: #000;
                                                font-size: 16px;
                                                font-weight: 500;
                                                margin-top: 0px">Or</span>
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                    id="AddStripeAccount"> Add Stripe Account
-                                                </button>
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                    id="AccessToStripeAccount"> Access to your Stripe account
-                                                </button>
+                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                        id="AddStripeAccount"> Add Stripe Account
+                                                    </button>
+                                                    <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
+                                                        id="AccessToStripeAccount"> Access to your Stripe account
+                                                    </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -1191,7 +437,7 @@
                                             <option value="vaccinations">Vaccinations</option>
                                             <option value="references">References</option>
                                             <option value="diploma">Diploma</option>
-                                            <option value="professional_license">Professional License</option>
+                                            <option value="nursing_license_state">Professional License</option>
                                         </select>
                                         <span class="help-block"></span>
                                     </div>
@@ -1215,7 +461,8 @@
                                                     </li>
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
-                                                        style="display: none;" />
+                                                        style="display: none;"
+                                                        accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                 @endforeach
                                             @endif
                                         </ul>
@@ -1241,13 +488,68 @@
                                                     </li>
                                                     <input displayName="{{ $value->title }}" type="file"
                                                         id="upload-{{ $loop->index }}" class="files-upload"
-                                                        style="display: none;" />
+                                                        style="display: none;"
+                                                        accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                 @endforeach
                                             @endif
                                         </ul>
                                         <button class="ss-job-dtl-pop-sv-btn"
                                             onclick="sendMultipleFiles('certification')">Save</button>
                                     </div>
+
+                                    {{-- professional license --}}
+                                    <div class="container-multiselect d-none" id="nursing_license_state">
+                                        <div class="select-btn">
+                                            <span class="btn-text">Select Professional Licensure</span>
+                                            <span class="arrow-dwn">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </span>
+                                        </div>
+                                        <ul class="list-items">
+                                            @if (isset($allKeywords['StateCode']))
+                                                @foreach ($allKeywords['StateCode'] as $value)
+                                                    <li class="item" value="{{ $value->title }}">
+                                                        <span class="checkbox">
+                                                            <i class="fa-solid fa-check check-icon"></i>
+                                                        </span>
+                                                        <span class="item-text">{{ $value->title }}</span>
+                                                    </li>
+                                                    <input displayName="{{ $value->title }}" type="file"
+                                                        id="upload-{{ $loop->index }}" class="files-upload"
+                                                        style="display: none;" />
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('nursing_license_state')">Save</button>
+                                    </div>
+
+                                    {{-- old professional license --}}
+                                    {{-- <div class="d-none" id="professional_license">
+                                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                                        </div>
+                                        <div class="container-multiselect">
+                                            <div class="ss-form-group fileUploadInput"
+                                                style="
+                                                                        display: flex !important;
+                                                                        justify-content: center !important;
+                                                                        align-items: center !important;
+                                                                    ">
+                                                <input hidden displayName="Professional License" type="file"
+                                                    class="files-upload">
+                                                <div class="list-items">
+                                                    <input hidden type="text" name="type"
+                                                        value="Professional License" class="item">
+                                                </div>
+                                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                                    File</button>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <button class="ss-job-dtl-pop-sv-btn"
+                                            onclick="sendMultipleFiles('professional_license')">Save</button>
+                                    </div> --}}
+
 
                                     {{-- driving license --}}
                                     <div class="d-none" id="driving_license">
@@ -1261,7 +563,8 @@
                                             align-items: center;
                                         ">
                                                 <input hidden displayName="Driving Licence" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="driving licence"
                                                         class="item">
@@ -1288,7 +591,7 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Ss number file" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload" accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="ss number file"
                                                         class="item">
@@ -1314,7 +617,8 @@
                                                                         align-items: center;
                                                                     ">
                                                 <input hidden displayName="Other" type="file" class="files-upload">
-                                                <div class="list-items">
+                                                <div class="list-items"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                     <input hidden type="text" name="type" value="other"
                                                         class="item">
                                                 </div>
@@ -1347,7 +651,8 @@
                                                             <span class="item-text">{{ $value->title }}</span>
                                                         </li>
                                                         <input displayName="{{ $value->title }}" type="file"
-                                                            class="files-upload" style="display: none;" />
+                                                            class="files-upload"
+                                                            accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx" />
                                                     @endforeach
                                                 @endif
                                             </ul>
@@ -1403,7 +708,8 @@
                                         <div class="ss-form-group">
                                             <label>Is this from your last assignment?</label>
                                             <select name="recency_of_reference">
-                                                <option value="" disabled selected hidden>Select a recency period</option>
+                                                <option value="" disabled selected hidden>Select a recency period
+                                                </option>
                                                 @if (isset($allKeywords['RecencyOfReference']))
                                                     @foreach ($allKeywords['RecencyOfReference'] as $value)
                                                         <option value="{{ $value->title }}">{{ $value->title }}
@@ -1422,7 +728,8 @@
                                             <label>Upload Image</label>
                                             <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
                                             </div>
-                                            <input type="file" name="image">
+                                            <input type="file" name="image"
+                                                accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                             <button type="button" onclick="open_file(this)">Choose File</button>
                                             <span class="help-block"></span>
                                         </div>
@@ -1439,7 +746,9 @@
                                                                         justify-content: center !important;
                                                                         align-items: center !important;
                                                                     ">
-                                                <input hidden displayName="Diploma" type="file" class="files-upload">
+                                                <input hidden displayName="Diploma" type="file"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx"
+                                                    class="files-upload">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type" value="diploma"
                                                         class="item">
@@ -1468,7 +777,8 @@
                                                                         align-items: center !important;
                                                                     ">
                                                 <input hidden displayName="Professional License" type="file"
-                                                    class="files-upload">
+                                                    class="files-upload"
+                                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
                                                 <div class="list-items">
                                                     <input hidden type="text" name="type"
                                                         value="Professional License" class="item">
@@ -1497,7 +807,6 @@
 
     {{-- get elements - prevent defaults behaviors  --}}
     <script>
-
         // slide control
         const slidePage = document.querySelector(".slide-page");
         const nextBtnFirst = document.querySelector(".firstNext");
@@ -1576,11 +885,11 @@
         const infoType = document.getElementById("information_type");
         // end change info type title
 
-        if(city.value == ''){
+        if (city.value == '') {
             document.querySelector('.help-city').classList.remove('d-none');
         }
 
-        if(worker_facility_city.value == ''){
+        if (worker_facility_city.value == '') {
             document.querySelector('.help-worker-facility-city').classList.remove('d-none');
         }
 
@@ -1663,12 +972,13 @@
             removeAllCheckBox();
             const inputsId = obj.value;
             selectedTypeFile = inputsId;
+            console.log(inputsId);
             //removing d-none class
             document.getElementById(inputsId).classList.remove('d-none');
         }
 
         function HideAllInputsModal() {
-            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'other',
+            var allInputsDivs = ['skills_checklists', 'certificate', 'driving_license', 'nursing_license_state', 'other',
                 'vaccinations',
                 'references',
                 'diploma', 'professional_license'
@@ -1692,7 +1002,7 @@
             const filesSelected = document.querySelectorAll('.files-upload');
 
             // give hight to filesNamesArea
-            const types = ['vaccinations', 'certificate', 'skills_checklists'];
+            const types = ['vaccinations', 'certificate', 'nursing_license_state', 'skills_checklists'];
 
 
             filesSelected.forEach((fileInput) => {
@@ -1736,7 +1046,7 @@
                 item.addEventListener('click', (event) => {
 
                     const uploadInput = item.nextElementSibling;
-                    console.log('this is the next sibling : ', uploadInput)
+                    //console.log('this is the next sibling : ', uploadInput)
                     if (uploadInput) {
                         // class 'checked' check
                         if (item.classList.contains('checked')) {
@@ -1746,7 +1056,7 @@
                                     // Handling file selection
                                     const file = this.files[0];
                                     selectedFiles.push(file.name);
-                                    console.log(selectedFiles);
+                                    //console.log(selectedFiles);
                                 }
                             }, {
                                 once: true //avoid multiple registrations
@@ -1756,7 +1066,7 @@
                             if (index > -1) {
                                 selectedFiles.splice(index, 1);
                             }
-                            console.log(selectedFiles);
+                            //console.log(selectedFiles);
 
                         }
                     }
@@ -1776,14 +1086,15 @@
         function sendMultipleFiles(type) {
 
             const fileInputs = document.querySelectorAll('.files-upload');
-            console.log('this is my file inputs values', fileInputs);
+            //console.log('this is my file inputs values', fileInputs);
 
             const fileReadPromises = [];
             let worker_id = '{!! $worker->id !!}';
-            console.log(worker_id);
+            //console.log(worker_id);
             var workerId = worker_id;
 
             if (type == 'references') {
+
                 let referenceName = document.querySelector('input[name="name"]').value;
                 let referencePhone = document.querySelector('input[name="phone"]').value;
                 let referenceEmail = document.querySelector('input[name="reference_email"]').value;
@@ -1800,7 +1111,9 @@
                     minTitle: referenceMinTitle,
                     isLastAssignment: referenceRecency == 1 ? true : false
                 }
-                console.log(referenceInfo);
+
+                //console.log(referenceInfo);
+
                 if (referenceInfo == null) {
                     notie.alert({
                         type: 'error',
@@ -1809,8 +1122,11 @@
                     });
                     return;
                 }
+
                 let readerPromise = new Promise((resolve, reject) => {
+
                     const reader = new FileReader();
+
                     reader.onload = function(event) {
                         resolve({
                             name: referenceImage.name,
@@ -1824,18 +1140,26 @@
 
                     reader.onerror = reject;
                     reader.readAsDataURL(referenceImage);
+
                 });
+
                 fileReadPromises.push(readerPromise);
                 removeAllCheckBox();
 
             } else {
+
                 fileInputs.forEach((input, index) => {
+
                     let displayName = input.getAttribute("displayName");
+
                     if (input.files[0]) {
+
                         const file = input.files[0];
-                        console.log('this is the file', file);
+
                         const readerPromise = new Promise((resolve, reject) => {
+
                             const reader = new FileReader();
+
                             reader.onload = function(event) {
                                 resolve({
                                     name: file.name,
@@ -1845,15 +1169,17 @@
                                     displayName: displayName || file.name,
                                 });
                             };
+
                             reader.onerror = reject;
                             reader.readAsDataURL(file);
-                            console.log('this is the reader promise', file);
+
                         });
 
                         fileReadPromises.push(readerPromise);
                     }
                 });
             }
+
             if (fileReadPromises.length == 0) {
                 notie.alert({
                     type: 'error',
@@ -1865,11 +1191,12 @@
 
 
             Promise.all(fileReadPromises).then(files => {
-                console.log(files);
+                //console.log(files);
                 var body = {
                     workerId: workerId,
                     files: files
                 };
+
                 fetch('/worker/add-docs', {
                         method: 'POST',
                         headers: {
@@ -1884,12 +1211,13 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data); // Handle success
+                        //console.log(data); // Handle success
                         notie.alert({
                             type: 'success',
                             text: '<i class="fa fa-check"></i> Files uploaded successfully',
                             time: 3
                         });
+                        refreshDocsList();
                         closeModal();
                         // reload the page
                         // setTimeout(() => {
@@ -1897,17 +1225,23 @@
                         // }, 2000);
                     })
                     .catch(error => {
-                        console.error('Error:', error); // Handle errors
+                        //console.error('Error:', error); // Handle errors
                     });
+
             }).catch(error => {
                 console.error('Error reading files:', error); // Handle file read errors
             });
+
             // clear files inputs
             fileInputs.forEach((input) => {
                 input.value = '';
             });
+
             selectedFiles = [];
             removeAllCheckBox();
+
+            // refresh the table
+            refreshDocList(workerId);
 
         }
 
@@ -1930,13 +1264,13 @@
                 if (item.classList.contains("checked")) {
                     // add item
                     selectedValues.push(value);
-                    console.log(selectedValues);
+                    //console.log(selectedValues);
                 } else {
                     // remove item
                     const index = selectedValues.indexOf(value);
                     if (index > -1) {
                         selectedValues.splice(index, 1);
-                        console.log(selectedValues);
+                        //console.log(selectedValues);
                     }
                 }
                 let btnText = document.querySelector(".btn-text");
@@ -1952,78 +1286,15 @@
 
     <script type="text/javascript">
         // loding states cities docs on page load
+        @php
+            $worker_id = $worker->id;
+        @endphp
+        const worker_id = '{!! $worker_id !!}';
 
-        $(document).ready(function() {
-            if (@json($type == 'profile')) {
-                document.getElementById('option-1').checked = true;
-                ProfileIinformationDisplay();
+        refreshDocList(worker_id);
 
-            } else {
-                document.getElementById('option-2').checked = true;
-                AccountSettingDisplay();
-            }
-            const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
-            const AddStripeAccount = document.getElementById('AddStripeAccount');
-
-            $('#contact_number').mask('+1 (999) 999-9999');
-            $('#new_contact_number').mask('+1 (999) 999-9999');
-            $('#phone_number_payment').mask('+1 (999) 999-9999');
-            $('#routing_number_payment').mask('999-999-999');
-            $('#bank_account_payment_number').mask('9999-9999-9999');
-            // solution of the case that we got - when we type a caracter :
-            // $('#bank_account_payment_number').on('input', function() {
-            // var inputValue = $(this).val();
-            // var numericValue = inputValue.replace(/[^0-9]/g, '');
-            // var formattedValue = numericValue.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
-            // $(this).val(formattedValue);
-            // });
-            // or we should use a nother plugin
-
-
-            let account_tier = '{{ $progress_percentage }}';
-            if (account_tier > 67) {
-                document.getElementById('profile_incomplete').classList.add('d-none');
-                document.getElementById('profile_complete').classList.remove('d-none');
-            }
-            // -----------------------------  Profile Setting area  ---------------------------- //
-
-            // loading cities according to the selected state
-            $('#job_state').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#job_city');
-
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="" disabled selected hidden>Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                    document.querySelector('.help-city').style.display = 'none';
-                });
-            });
-            // end loading cities according to the selected state
-
-            // loading cities according to the selected state
-            $('#worker_facility_state').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#worker_facility_city');
-
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append('<option value="" disabled selected hidden>Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                    document.querySelector('.help-worker-facility-city').style.display = 'none';
-                });
-            });
-
-            // loding docs list and dispatch them on the table (consume api : /list-docs)
-            @php
-                $worker_id = $worker->id;
-            @endphp
-            const worker_id = '{!! $worker_id !!}';
-
+        // refresh docs list fun 
+        function refreshDocsList() {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2096,7 +1367,7 @@
                                     resp = JSON.parse(resp);
                                     const base64String = resp.content.data;
                                     console.log("the resp base64",
-                                    resp);
+                                        resp);
 
                                     const mimeType = base64String.match(
                                         /^data:(.+);base64,/)[1];
@@ -2132,7 +1403,7 @@
 
                                     const extension = mimeType.split('/')[
                                         1
-                                        ];
+                                    ];
                                     downloadLink.setAttribute('download',
                                         `document.${extension}`
                                     );
@@ -2159,29 +1430,76 @@
                     console.log('Error:', resp);
                 }
             });
+        }
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/worker/check-onboarding-status',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    access: true
-                }),
-                success: function(resp) {
-                    console.log(resp);
-                    if (resp.status) {
-                        AccessToStripeAccount.classList.remove('d-none');
+        $(document).ready(function() {
+            if (@json($type == 'profile')) {
+                document.getElementById('option-1').checked = true;
+                ProfileIinformationDisplay();
 
-                    } else {
-                        console.log(resp);
-                        AddStripeAccount.classList.remove('d-none');
-                    }
-                }
+            } else {
+                document.getElementById('option-2').checked = true;
+                AccountSettingDisplay();
+            }
+            // const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
+            // const AddStripeAccount = document.getElementById('AddStripeAccount');
+
+            $('#contact_number').mask('+1 (999) 999-9999');
+            $('#new_contact_number').mask('+1 (999) 999-9999');
+            $('#phone_number_payment').mask('+1 (999) 999-9999');
+            $('#routing_number_payment').mask('999-999-999');
+            $('#bank_account_payment_number').mask('9999-9999-9999');
+            // solution of the case that we got - when we type a caracter :
+            // $('#bank_account_payment_number').on('input', function() {
+            // var inputValue = $(this).val();
+            // var numericValue = inputValue.replace(/[^0-9]/g, '');
+            // var formattedValue = numericValue.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
+            // $(this).val(formattedValue);
+            // });
+            // or we should use a nother plugin
+
+
+            let account_tier = '{{ $progress_percentage }}';
+            if (account_tier > 67) {
+                document.getElementById('profile_incomplete').classList.add('d-none');
+                document.getElementById('profile_complete').classList.remove('d-none');
+            }
+            // -----------------------------  Profile Setting area  ---------------------------- //
+
+            // loading cities according to the selected state
+            $('#job_state').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#job_city');
+
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append(
+                        '<option value="" disabled selected hidden>Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                    document.querySelector('.help-city').style.display = 'none';
+                });
             });
+            // end loading cities according to the selected state
+
+            // loading cities according to the selected state
+            $('#worker_facility_state').change(function() {
+                const selectedState = $(this).find(':selected').attr('id');
+                const CitySelect = $('#worker_facility_city');
+
+                $.get(`/api/cities/${selectedState}`, function(data) {
+                    CitySelect.empty();
+                    CitySelect.append(
+                        '<option value="" disabled selected hidden>Select City</option>');
+                    $.each(data, function(index, city) {
+                        CitySelect.append(new Option(city.name, city.name));
+                    });
+                    document.querySelector('.help-worker-facility-city').style.display = 'none';
+                });
+            });
+
+            // loding docs list and dispatch them on the table (consume api : /list-docs)
         });
 
 
@@ -2194,117 +1512,292 @@
                 $('.help-block-first_name').text('Please enter a first name');
                 $('.help-block-first_name').addClass('text-danger');
                 isValid = false;
-            }else{
+            } else {
                 $('.help-block-first_name').text('');
             }
             if (last_name.value === '') {
                 $('.help-block-last_name').text('Please enter a last name');
                 $('.help-block-last_name').addClass('text-danger');
                 isValid = false;
-            }   else{
+            } else {
                 $('.help-block-last_name').text('');
             }
 
-            if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
-                $('.help-block-mobile').text('Please enter a mobile number');
-                $('.help-block-mobile').addClass('text-danger');
-                isValid = false;
-            }else{
-                $('.help-block-mobile').text('');
-            }
-            if (address.value === '') {
-                $('.help-block-address').text('Please enter an address');
-                $('.help-block-address').addClass('text-danger');
-                isValid = false;
-            } else{
-                $('.help-block-address').text('');
-            }
-            if (city.value === '') {
-                $('.help-block-city').text('Please enter a city');
-                $('.help-block-city').addClass('text-danger');
-                isValid = false;
-            } else{
-                $('.help-block-city').text('');
-            }
-            if (state.value === '') {
-                $('.help-block-state').text('Please enter a state');
-                $('.help-block-state').addClass('text-danger');
-                isValid = false;
-            }   else{
-                $('.help-block-state').text('');
-            }
-            if (zip_code.value === '') {
-                $('.help-block-zip_code').text('Please enter a zip code');
-                $('.help-block-zip_code').addClass('text-danger');
-                isValid = false;
-            }   else{
-                $('.help-block-zip_code').text('');
-            }
+            // if ((!regexPhone.test(mobile)) && (mobile.value === '')) {
+            //     $('.help-block-mobile').text('Please enter a mobile number');
+            //     $('.help-block-mobile').addClass('text-danger');
+            //     isValid = false;
+            // }else{
+            //     $('.help-block-mobile').text('');
+            // }
+            // if (address.value === '') {
+            //     $('.help-block-address').text('Please enter an address');
+            //     $('.help-block-address').addClass('text-danger');
+            //     isValid = false;
+            // } else{
+            //     $('.help-block-address').text('');
+            // }
+            // if (city.value === '') {
+            //     $('.help-block-city').text('Please enter a city');
+            //     $('.help-block-city').addClass('text-danger');
+            //     isValid = false;
+            // } else{
+            //     $('.help-block-city').text('');
+            // }
+            // if (state.value === '') {
+            //     $('.help-block-state').text('Please enter a state');
+            //     $('.help-block-state').addClass('text-danger');
+            //     isValid = false;
+            // }   else{
+            //     $('.help-block-state').text('');
+            // }
+            // if (zip_code.value === '') {
+            //     $('.help-block-zip_code').text('Please enter a zip code');
+            //     $('.help-block-zip_code').addClass('text-danger');
+            //     isValid = false;
+            // }   else{
+            //     $('.help-block-zip_code').text('');
+            // }
             return isValid;
         }
         // end validation basic information
         // validation professional information
         function validateProfessionalInfo() {
 
-                var isValid = true;
+            var isValid = true;
 
-                const fields = [
-                    { field: profession, errorClass: 'help-block-profession', errorMessage: 'Please enter a profession' },
-                    { field: specialty, errorClass: 'help-block-specialty', errorMessage: 'Please enter a specialty' },
-                    { field: terms, errorClass: 'help-block-terms', errorMessage: 'Please enter a term' },
-                    { field: worker_job_type, errorClass: 'help-block-worker_job_type', errorMessage: 'Please enter a worker type' },
-                    { field: block_scheduling, errorClass: 'help-block-block_scheduling', errorMessage: 'Please enter a block scheduling' },
-                    { field: float_requirement, errorClass: 'help-block-float_requirement', errorMessage: 'Please enter a float requirement' },
-                    { field: facility_shift_cancelation_policy, errorClass: 'help-block-facility_shift_cancelation_policy', errorMessage: 'Please enter a facility shift cancelation policy' },
-                    { field: contract_termination_policy, errorClass: 'help-block-contract_termination_policy', errorMessage: 'Please enter a contract termination policy' },
-                    { field: traveler_distance_from_facility, errorClass: 'help-block-traveler_distance_from_facility', errorMessage: 'Please enter the Distance from your home' },
-                    { field: clinical_setting, errorClass: 'help-block-clinical_setting_you_prefer', errorMessage: 'Please enter a clinical setting' },
-                    { field: Patient_ratio, errorClass: 'help-block-worker_patient_ratio', errorMessage: 'Please enter a patient ratio' },
-                    { field: emr, errorClass: 'help-block-worker_emr', errorMessage: 'Please enter an EMR' },
-                    { field: Unit, errorClass: 'help-block-worker_unit', errorMessage: 'Please enter a unit' },
-                    { field: scrub_color, errorClass: 'help-block-worker_scrub_color', errorMessage: 'Please enter a scrub color' },
-                    { field: rto, errorClass: 'help-block-rto', errorMessage: 'Please enter an RTO' },
-                    { field: shift_of_day, errorClass: 'help-block-worker_shift_time_of_day', errorMessage: 'Please enter a shift time of day' },
-                    { field: hours_shift, errorClass: 'help-block-worker_hours_shift', errorMessage: 'Please enter hours per shift' },
-                    { field: preferred_assignment_duration, errorClass: 'help-block-worker_weeks_assignment', errorMessage: 'Please enter a preferred assignment duration' },
-                    { field: weeks_shift, errorClass: 'help-block-worker_shifts_week', errorMessage: 'Please enter a weeks shift' },
-                    { field: worker_experience, errorClass: 'help-block-worker_experience', errorMessage: 'Please enter worker experience' },
-                    { field: worker_eligible_work_in_us, errorClass: 'help-block-worker_eligible_work_in_us', errorMessage: 'Please enter worker eligible work in us' },
-                    { field: nursing_license_state, errorClass: 'help-block-nursing_license_state', errorMessage: 'Please enter a nursing license state' },
-                    { field: worker_facility_city, errorClass: 'help-block-worker_facility_city', errorMessage: 'Please enter a worker facility city' },
-                    { field: worker_facility_state, errorClass: 'help-block-worker_facility_state', errorMessage: 'Please enter a worker facility state' },
-                    { field: worker_start_date, errorClass: 'help-block-worker_start_date', errorMessage: 'Please enter a worker start date' },
-                    { field: worker_guaranteed_hours, errorClass: 'help-block-worker_guaranteed_hours', errorMessage: 'Please enter worker guaranteed hours' },
-                    { field: worker_sign_on_bonus, errorClass: 'help-block-worker_sign_on_bonus', errorMessage: 'Please enter a worker sign on bonus' },
-                    { field: worker_completion_bonus, errorClass: 'help-block-worker_completion_bonus', errorMessage: 'Please enter a worker completion bonus' },
-                    { field: worker_extension_bonus, errorClass: 'help-block-worker_extension_bonus', errorMessage: 'Please enter a worker extension bonus' },
-                    { field: worker_other_bonus, errorClass: 'help-block-worker_other_bonus', errorMessage: 'Please enter a worker other bonus' },
-                    { field: worker_four_zero_one_k, errorClass: 'help-block-worker_four_zero_one_k', errorMessage: 'Please enter a worker four zero one k' },
-                    { field: worker_health_insurance, errorClass: 'help-block-worker_health_insurance', errorMessage: 'Please enter worker health insurance' },
-                    { field: worker_dental, errorClass: 'help-block-worker_dental', errorMessage: 'Please enter worker dental' },
-                    { field: worker_vision, errorClass: 'help-block-worker_vision', errorMessage: 'Please enter worker vision' },
-                    { field: worker_overtime_rate, errorClass: 'help-block-worker_overtime_rate', errorMessage: 'Please enter worker overtime rate' },
-                    { field: worker_holiday, errorClass: 'help-block-worker_holiday', errorMessage: 'Please enter worker holiday' },
-                    { field: worker_on_call_check, errorClass: 'help-block-worker_on_call_check', errorMessage: 'Please enter worker on call check' },
-                    { field: worker_on_call, errorClass: 'help-block-worker_on_call', errorMessage: 'Please enter worker on call rate' },
-                    { field: worker_call_back, errorClass: 'help-block-worker_call_back', errorMessage: 'Please enter worker on call back rate' },
-                    { field: worker_orientation_rate, errorClass: 'help-block-worker_orientation_rate', errorMessage: 'Please enter worker orientation rate' },
-                    { field: worker_benefits, errorClass: 'help-block-worker_benefits', errorMessage: 'Please enter worker benefits' },
-                    { field: nurse_classification, errorClass: 'help-block-nurse_classification', errorMessage: 'Please enter a worker classification' },
-                    { field: nursing_license_number, errorClass: 'help-block-licence', errorMessage: 'Please enter a licence number' }
-                ];
+            const fields = [{
+                    field: profession,
+                    errorClass: 'help-block-profession',
+                    errorMessage: 'Please enter a profession'
+                },
+                {
+                    field: specialty,
+                    errorClass: 'help-block-specialty',
+                    errorMessage: 'Please enter a specialty'
+                },
+                {
+                    field: terms,
+                    errorClass: 'help-block-terms',
+                    errorMessage: 'Please enter a term'
+                },
+                {
+                    field: worker_job_type,
+                    errorClass: 'help-block-worker_job_type',
+                    errorMessage: 'Please enter a worker type'
+                },
+                {
+                    field: block_scheduling,
+                    errorClass: 'help-block-block_scheduling',
+                    errorMessage: 'Please enter a block scheduling'
+                },
+                {
+                    field: float_requirement,
+                    errorClass: 'help-block-float_requirement',
+                    errorMessage: 'Please enter a float requirement'
+                },
+                {
+                    field: facility_shift_cancelation_policy,
+                    errorClass: 'help-block-facility_shift_cancelation_policy',
+                    errorMessage: 'Please enter a facility shift cancelation policy'
+                },
+                {
+                    field: contract_termination_policy,
+                    errorClass: 'help-block-contract_termination_policy',
+                    errorMessage: 'Please enter a contract termination policy'
+                },
+                {
+                    field: traveler_distance_from_facility,
+                    errorClass: 'help-block-traveler_distance_from_facility',
+                    errorMessage: 'Please enter the Distance from your home'
+                },
+                {
+                    field: clinical_setting,
+                    errorClass: 'help-block-clinical_setting_you_prefer',
+                    errorMessage: 'Please enter a clinical setting'
+                },
+                {
+                    field: Patient_ratio,
+                    errorClass: 'help-block-worker_patient_ratio',
+                    errorMessage: 'Please enter a patient ratio'
+                },
+                {
+                    field: emr,
+                    errorClass: 'help-block-worker_emr',
+                    errorMessage: 'Please enter an EMR'
+                },
+                {
+                    field: Unit,
+                    errorClass: 'help-block-worker_unit',
+                    errorMessage: 'Please enter a unit'
+                },
+                {
+                    field: scrub_color,
+                    errorClass: 'help-block-worker_scrub_color',
+                    errorMessage: 'Please enter a scrub color'
+                },
+                {
+                    field: rto,
+                    errorClass: 'help-block-rto',
+                    errorMessage: 'Please enter an RTO'
+                },
+                {
+                    field: shift_of_day,
+                    errorClass: 'help-block-worker_shift_time_of_day',
+                    errorMessage: 'Please enter a shift time of day'
+                },
+                {
+                    field: hours_shift,
+                    errorClass: 'help-block-worker_hours_shift',
+                    errorMessage: 'Please enter hours per shift'
+                },
+                {
+                    field: preferred_assignment_duration,
+                    errorClass: 'help-block-worker_weeks_assignment',
+                    errorMessage: 'Please enter a preferred assignment duration'
+                },
+                {
+                    field: weeks_shift,
+                    errorClass: 'help-block-worker_shifts_week',
+                    errorMessage: 'Please enter a weeks shift'
+                },
+                {
+                    field: worker_experience,
+                    errorClass: 'help-block-worker_experience',
+                    errorMessage: 'Please enter worker experience'
+                },
+                {
+                    field: worker_eligible_work_in_us,
+                    errorClass: 'help-block-worker_eligible_work_in_us',
+                    errorMessage: 'Please enter worker eligible work in us'
+                },
+                {
+                    field: nursing_license_state,
+                    errorClass: 'help-block-nursing_license_state',
+                    errorMessage: 'Please enter a nursing license state'
+                },
+                {
+                    field: worker_facility_city,
+                    errorClass: 'help-block-worker_facility_city',
+                    errorMessage: 'Please enter a worker facility city'
+                },
+                {
+                    field: worker_facility_state,
+                    errorClass: 'help-block-worker_facility_state',
+                    errorMessage: 'Please enter a worker facility state'
+                },
+                {
+                    field: worker_start_date,
+                    errorClass: 'help-block-worker_start_date',
+                    errorMessage: 'Please enter a worker start date'
+                },
+                {
+                    field: worker_guaranteed_hours,
+                    errorClass: 'help-block-worker_guaranteed_hours',
+                    errorMessage: 'Please enter worker guaranteed hours'
+                },
+                {
+                    field: worker_sign_on_bonus,
+                    errorClass: 'help-block-worker_sign_on_bonus',
+                    errorMessage: 'Please enter a worker sign on bonus'
+                },
+                {
+                    field: worker_completion_bonus,
+                    errorClass: 'help-block-worker_completion_bonus',
+                    errorMessage: 'Please enter a worker completion bonus'
+                },
+                {
+                    field: worker_extension_bonus,
+                    errorClass: 'help-block-worker_extension_bonus',
+                    errorMessage: 'Please enter a worker extension bonus'
+                },
+                {
+                    field: worker_other_bonus,
+                    errorClass: 'help-block-worker_other_bonus',
+                    errorMessage: 'Please enter a worker other bonus'
+                },
+                {
+                    field: worker_four_zero_one_k,
+                    errorClass: 'help-block-worker_four_zero_one_k',
+                    errorMessage: 'Please enter a worker four zero one k'
+                },
+                {
+                    field: worker_health_insurance,
+                    errorClass: 'help-block-worker_health_insurance',
+                    errorMessage: 'Please enter worker health insurance'
+                },
+                {
+                    field: worker_dental,
+                    errorClass: 'help-block-worker_dental',
+                    errorMessage: 'Please enter worker dental'
+                },
+                {
+                    field: worker_vision,
+                    errorClass: 'help-block-worker_vision',
+                    errorMessage: 'Please enter worker vision'
+                },
+                {
+                    field: worker_overtime_rate,
+                    errorClass: 'help-block-worker_overtime_rate',
+                    errorMessage: 'Please enter worker overtime rate'
+                },
+                {
+                    field: worker_holiday,
+                    errorClass: 'help-block-worker_holiday',
+                    errorMessage: 'Please enter worker holiday'
+                },
+                {
+                    field: worker_on_call_check,
+                    errorClass: 'help-block-worker_on_call_check',
+                    errorMessage: 'Please enter worker on call check'
+                },
+                {
+                    field: worker_on_call,
+                    errorClass: 'help-block-worker_on_call',
+                    errorMessage: 'Please enter worker on call rate'
+                },
+                {
+                    field: worker_call_back,
+                    errorClass: 'help-block-worker_call_back',
+                    errorMessage: 'Please enter worker on call back rate'
+                },
+                {
+                    field: worker_orientation_rate,
+                    errorClass: 'help-block-worker_orientation_rate',
+                    errorMessage: 'Please enter worker orientation rate'
+                },
+                {
+                    field: worker_benefits,
+                    errorClass: 'help-block-worker_benefits',
+                    errorMessage: 'Please enter worker benefits'
+                },
+                {
+                    field: nurse_classification,
+                    errorClass: 'help-block-nurse_classification',
+                    errorMessage: 'Please enter a worker classification'
+                },
+                {
+                    field: nursing_license_number,
+                    errorClass: 'help-block-licence',
+                    errorMessage: 'Please enter a licence number'
+                }
+            ];
 
-                // Validate fields
-                fields.forEach(({ field, errorClass, errorMessage }) => {
-                    if (field.value === '') {
-                        $(`.${errorClass}`).text(errorMessage).addClass('text-danger');
-                        isValid = false;
-                    } else {
-                        $(`.${errorClass}`).text('').removeClass('text-danger');
-                    }
-                });
+            // Validate fields
+            fields.forEach(({
+                field,
+                errorClass,
+                errorMessage
+            }) => {
+                if (field.value === '') {
+                    $(`.${errorClass}`).text(errorMessage).addClass('text-danger');
+                    isValid = false;
+                } else {
+                    $(`.${errorClass}`).text('').removeClass('text-danger');
+                }
+            });
 
-                return isValid;
+            return isValid;
         }
         // end validation professional information
         // validation document management
@@ -2348,7 +1841,7 @@
             const emailRegex_payment = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (($('input[name="email_payment"]').val() === '') || (!emailRegex_payment.test($(
                     'input[name="email_payment"]').val()))) {
-                console.log(email_payment.value);
+                //console.log(email_payment.value);
                 $('.help-block-email_payment').text('Please enter a valid email');
                 $('.help-block-email_payment').addClass('text-danger');
                 isValid = false;
@@ -2400,10 +1893,11 @@
 
         SaveBaiscInformation.addEventListener("click", function(event) {
             event.preventDefault();
+            // inputs validation
             if (!validateBasicInfo()) {
                 return;
             }
-            console.log(first_name.value);
+            //console.log(first_name.value);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2429,7 +1923,7 @@
                 cache: false,
                 processData: false,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2460,9 +1954,10 @@
         const SaveProfessionalInformation = document.getElementById("SaveProfessionalInformation");
         SaveProfessionalInformation.addEventListener("click", function(event) {
             event.preventDefault();
-            if (!validateProfessionalInfo()) {
-                return;
-            }
+            // validation on inputs
+            // if (!validateProfessionalInfo()) {
+            //     return;
+            // }
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2521,7 +2016,7 @@
                     InfoType: "ProfessionalInformation"
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2571,7 +2066,7 @@
                     phone_number_payment: phone_number_payment.value,
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2618,7 +2113,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2632,7 +2127,7 @@
 
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -2644,8 +2139,9 @@
 
         // end account disactivating
 
+        /*
         // creating a stripe account
-
+        
         AddStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
             $('#disactivate_account').addClass('d-none');
@@ -2664,7 +2160,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2673,12 +2169,12 @@
                         });
                         $('#loading_disableOption').addClass('d-none');
                         $('#disactivate_account').removeClass('d-none');
-                        console.log(resp);
+                        //console.log(resp);
                         window.location.href = resp.account_link;
                     }
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -2690,7 +2186,7 @@
 
         // end creating stripe account
 
-        // redirecting to login stripe link
+        // start redirecting to login stripe link
 
         AccessToStripeAccount.addEventListener("click", function(event) {
             $('#loading_disableOption').removeClass('d-none');
@@ -2710,7 +2206,7 @@
                     access: true
                 }),
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2723,7 +2219,7 @@
                     }
                 },
                 error: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     notie.alert({
                         type: 'error',
                         text: resp,
@@ -2734,9 +2230,9 @@
         });
 
 
-        // redirecting to login stripe link
+        // end redirecting to login stripe link
 
-
+        */
         // upload files
         document.getElementById('uploadForm').addEventListener('click', function(event) {
             event.preventDefault();
@@ -2744,7 +2240,7 @@
                 return;
             }
 
-            console.log(worker_id);
+            //console.log(worker_id);
             var workerId = worker_id;
             var filesInput = document.getElementById('document_file');
             var files = Array.from(filesInput.files);
@@ -2780,7 +2276,7 @@
                     contentType: 'application/json',
                     data: JSON.stringify(body),
                     success: function(resp) {
-                        console.log(resp);
+                        //console.log(resp);
                         ajaxindicatorstop();
                         if (resp.ok) {
                             notie.alert({
@@ -2888,7 +2384,7 @@
                 contentType: false,
                 data: formData,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2974,7 +2470,7 @@
                 cache: false,
                 processData: false,
                 success: function(resp) {
-                    console.log(resp);
+                    //console.log(resp);
                     if (resp.status) {
                         notie.alert({
                             type: 'success',
@@ -2998,6 +2494,143 @@
                 }
             });
         };
+
+        function refreshDocList(worker_id) {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('list-docs') }}',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    WorkerId: worker_id
+                }),
+                success: function(resp) {
+                    var data;
+                    try {
+                        // Try to manually parse the response as JSON
+                        data = JSON.parse(resp);
+                        //console.log(data);
+                    } catch (e) {
+                        // If parsing fails, assume resp is already a JavaScript object
+                        data = resp;
+                    }
+
+                    var tbody = $('.table tbody');
+                    tbody.empty();
+                    data.forEach(function(file) {
+                        var row = $('<tr>');
+                        row.attr('class', 'row');
+                        //row.append($('<td class="col-3 td-table" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">').text(file.name.substring(0,20)));
+                        row.append($('<td class="col-3 td-table">').text(file.displayName));
+                        row.append($('<td class="col-3 td-table">').text(file.type));
+                        //console.log(file.id);
+                        var deleteButton = $('<button>').text('Delete Document').addClass(
+                            'delete').attr('data-id', file.id);
+                        deleteButton.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('del-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function() {
+                                    row.remove();
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+                        var viewFile = $('<button>').text('View Document').addClass('delete')
+                            .attr('data-id', file.id);
+                        viewFile.click(function(event) {
+                            event.preventDefault();
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]')
+                                        .attr('content')
+                                },
+                                url: '{{ route('get-doc') }}',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    bsonId: file.id
+                                }),
+                                success: function(resp) {
+                                    resp = JSON.parse(resp);
+                                    const base64String = resp.content.data;
+                                    //console.log("the resp base64",resp);
+
+                                    const mimeType = base64String.match(
+                                        /^data:(.+);base64,/)[1];
+
+
+                                    const base64Data = base64String.split(
+                                        ',')[1];
+
+
+                                    const byteCharacters = atob(base64Data);
+                                    const byteNumbers = new Array(
+                                        byteCharacters.length);
+                                    for (let i = 0; i < byteCharacters
+                                        .length; i++) {
+                                        byteNumbers[i] = byteCharacters
+                                            .charCodeAt(i);
+                                    }
+                                    const byteArray = new Uint8Array(
+                                        byteNumbers);
+
+
+                                    const blob = new Blob([byteArray], {
+                                        type: mimeType
+                                    });
+
+
+                                    const blobUrl = URL.createObjectURL(
+                                        blob);
+                                    const downloadLink = document
+                                        .createElement('a');
+                                    downloadLink.href = blobUrl;
+
+
+                                    const extension = mimeType.split('/')[
+                                        1
+                                    ];
+                                    downloadLink.setAttribute('download',
+                                        `document.${extension}`
+                                    );
+
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(
+                                        downloadLink);
+                                },
+                                error: function(resp) {
+                                    console.log('Error:', resp);
+                                }
+                            });
+                        });
+
+
+                        row.append($('<td class="col-3 td-table">').append(viewFile));
+                        row.append($('<td class="col-3 td-table">').append(deleteButton));
+
+                        tbody.append(row);
+                    });
+                },
+                error: function(resp) {
+                    console.log('Error:', resp);
+                }
+            });
+        }
     </script>
 @stop
 

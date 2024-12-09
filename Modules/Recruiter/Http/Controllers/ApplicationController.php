@@ -12,9 +12,10 @@ use URL;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NotificationOffer;
+use Carbon\Carbon;
 // ************ models ************
 /** Models */
-use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword};
+use App\Models\{Job, Offer, Nurse, User, OffersLogs, States, Cities, Keyword ,Speciality, Profession, State};
 
 class ApplicationController extends Controller
 {
@@ -99,6 +100,7 @@ class ApplicationController extends Controller
         $id = $recruiter->id;
         $offers = Offer::where('status', 'Onboarding')->where('recruiter_id', $id)->get();
 
+        // Move this to a separate cron task
         foreach ($offers as $offer) {
 
             if($offer->as_soon_as == '1'){
@@ -126,10 +128,18 @@ class ApplicationController extends Controller
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
+        
+        // Count unique workers applying
+        //$statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
+
+        // Count unique applications per worker
         $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
         foreach ($statusCountsQuery as $statusCount) {
+            
             if ($statusCount) {
+
                 $statusCounts[$statusCount->status] = $statusCount->count;
+            
             } else {
                 $statusCounts[$statusCount->status] = 0;
             }
@@ -193,6 +203,7 @@ class ApplicationController extends Controller
                 $update_array['type'] = isset($request->type) ? $request->type : $job_data->job_type;
                 $update_array['terms'] = isset($request->terms) ? $request->terms : $job_data->terms;
                 $update_array['profession'] = isset($request->profession) ? $request->profession : $job_data->profession;
+                $update_array['specialty'] = isset($request->specialty) ? $request->specialty : $job_data->preferred_specialty;
 
                 $update_array['block_scheduling'] = isset($request->block_scheduling) ? $request->block_scheduling : $job_data->block_scheduling;
                 $update_array['float_requirement'] = isset($request->float_requirement) ? $request->float_requirement : $job_data->float_requirement;
@@ -215,6 +226,7 @@ class ApplicationController extends Controller
                 $update_array['hours_shift'] = isset($request->hours_shift) ? $request->hours_shift : $job_data->hours_shift;
                 $update_array['weeks_shift'] = isset($request->weeks_shift) ? $request->weeks_shift : $job_data->weeks_shift;
                 $update_array['preferred_assignment_duration'] = isset($request->preferred_assignment_duration) ? $request->preferred_assignment_duration : $job_data->preferred_assignment_duration;
+                $update_array['preferred_shift_duration'] = isset($request->preferred_shift_duration) ? $request->preferred_shift_duration : $job_data->preferred_shift_duration;
                 $update_array['referral_bonus'] = isset($request->referral_bonus) ? $request->referral_bonus : $job_data->referral_bonus;
                 $update_array['sign_on_bonus'] = isset($request->sign_on_bonus) ? $request->sign_on_bonus : $job_data->sign_on_bonus;
                 $update_array['completion_bonus'] = isset($request->completion_bonus) ? $request->completion_bonus : $job_data->completion_bonus;
@@ -288,6 +300,81 @@ class ApplicationController extends Controller
     }
 
 
+    // change real offer infromation with the request->all() data
+
+    public function update_job_offer(Request $request)
+    {
+        //return $request->data;
+        
+        $validator = Validator::make($request->data, [
+            'id' => 'required',
+        ]);
+        $responseData = [];
+        if ($validator->fails()) {
+            $responseData = [
+                'status' => 'error',
+                'message' => $validator->errors()->first(),
+            ];
+        } else {
+            try {
+                $data = $request->data;
+                $offer = Offer::where('id', $data['id'])->first();
+
+                if ($offer) {
+                    $offer->update($data);
+                    $responseData = [
+                        'status' => 'success',
+                        'message' => 'Offer Updated Successfully',
+                    ];
+                } else {
+                    $responseData = [
+                        'status' => 'error',
+                        'message' => 'Offer not found',
+                    ];
+                }
+
+            } catch (\Exception $e) {
+                $responseData = [
+                    'status' => 'error',
+                    'message' => $e->getMessage(),
+                ];
+            }
+        }
+        return response()->json($responseData);
+    }
+
+        // get information for from edit 
+
+        public function get_offer_information_for_edit(Request $request)
+        {
+            try {
+                $offer_id = $request->offer_id;
+                $offerdetails = Offer::where('id', $offer_id)->first();
+                // the one who counter an offer or send the first offer
+                $user_id = $offerdetails->created_by;
+                $userdetails = User::where('id', $user_id)->first();
+
+                $specialities = Speciality::select('full_name')->get();
+                $professions = Profession::select('full_name')->get();
+                $applyCount = array();
+                // send the states
+                $states = State::select('id', 'name')->get();
+                $distinctFilters = Keyword::distinct()->pluck('filter');
+                $allKeywords = [];
+                foreach ($distinctFilters as $filter) {
+                    $keywords = Keyword::where('filter', $filter)->get();
+                    $allKeywords[$filter] = $keywords;
+                }
+
+
+                $response['content'] = view('recruiter::offers.edit_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails, 'allKeywords' => $allKeywords, 'states' => $states, 'specialities' => $specialities, 'professions' => $professions])->render();
+                //return new JsonResponse($response, 200);
+                return response()->json($response);
+    
+            } catch (\Exception $ex) {
+                return response()->json(["message" => $ex->getMessage()]);
+            }
+        }
 
     // get offer information for form counter
     public function get_offer_information(Request $request)
@@ -298,7 +385,20 @@ class ApplicationController extends Controller
             // the one who counter an offer or send the first offer
             $user_id = $offerdetails->created_by;
             $userdetails = User::where('id', $user_id)->first();
-            $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails])->render();
+            $specialities = Speciality::select('full_name')->get();
+            $professions = Profession::select('full_name')->get();
+            $applyCount = array();
+            // send the states
+            $states = State::select('id', 'name')->get();
+            $distinctFilters = Keyword::distinct()->pluck('filter');
+            $allKeywords = [];
+            foreach ($distinctFilters as $filter) {
+                $keywords = Keyword::where('filter', $filter)->get();
+                $allKeywords[$filter] = $keywords;
+            }
+             
+            $response['content'] = view('recruiter::offers.counter_offer_form', ['offerdetails' => $offerdetails, 'userdetails' => $userdetails, 'allKeywords' => $allKeywords, 'states' => $states, 'specialities' => $specialities, 'professions' => $professions])->render();
+            
             //return new JsonResponse($response, 200);
             return response()->json($response);
 
@@ -307,51 +407,133 @@ class ApplicationController extends Controller
         }
     }
 
+
+    
     // get worker infromation of each offer type
     public function get_offers_by_type(Request $request)
     {
+
         try {
             $type = $request->type;
-            $recruiter = Auth::guard('recruiter')->user();
-            $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
+            if( $type == 'Apply'){
+                    try {
+                        $type = $request->type;
+                        $recruiter = Auth::guard('recruiter')->user();
+                        $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
+                    
+                        $nurses = [];
+                        $offerData = [];
+                        foreach ($offerLists as $value) {
 
-            $nurses = [];
-            $offerData = [];
-            foreach ($offerLists as $value) {
-                if ($value && !in_array($value->worker_user_id, $nurses)) {
-                    $nurses[] = $value->worker_user_id;
-                    $nurse = Nurse::where('id', $value->worker_user_id)->first();
-                    $user = User::where('id', $nurse->user_id)->first();
-                    $offerData[] = [
-                        'type' => $type,
-                        'workerUserId' => $value->worker_user_id,
-                        'image' => $user->image,
-                        'firstName' => $user->first_name,
-                        'lastName' => $user->last_name,
-                        'hourlyPayRate' => $nurse->facility_hourly_pay_rate ?? null,
-                        'city' => $nurse->city ?? null,
-                        'state' => $nurse->state ?? null,
-                        'muSpecialty' => $nurse->mu_specialty ?? null,
-                        'specialty' => $nurse->specialty ?? null,
-                    ];
-                }
+                                $nurses[] = $value->worker_user_id;
+                                $nurse = Nurse::where('id', $value->worker_user_id)->first();
+                                $user = User::where('id', $nurse->user_id)->first();
+                                $nowDate = Carbon::now();
+
+                                $recently_added = $nowDate->isSameDay($value->created_at);
+                                if($recently_added == false){
+                                    $recently_added = $value->created_at->diffForHumans();
+                                }
+                                
+                                $offerData[] = [
+                                    'offerId' => $value->id,
+                                    'workerUserId' => $value->worker_user_id,
+                                    'image' => $user->image,
+                                    'firstName' => $user->first_name,
+                                    'lastName' => $user->last_name,
+                                    'city' => $value->city ?? null,
+                                    'state' => $value->state ?? null,
+                                    'profession' => $value->profession ?? null,
+                                    'specialty' => $value->specialty ?? null,
+                                    'facilityName' => $value->facility_name ?? null,
+                                    'preferred_shift_duration' => $value->preferred_shift_duration ?? null,
+                                    'JobId' => $value->job_id,
+                                    'status' => $value->status,
+                                    'recently_added' => $recently_added
+                                ];
+                            
+                        }
+                        if (empty($offerData)) {
+                            $noApplications = true;
+                        } else {
+                            $noApplications = false;
+                        }
+                            $response['content'] = view('recruiter::offers.applications', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
+
+
+                        //return new JsonResponse($response, 200);
+                        return response()->json($response);
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
+            }else{
+                    try{
+
+                    $recruiter = Auth::guard('recruiter')->user();
+                    $offerLists = Offer::where('status', $type)->where('recruiter_id', $recruiter->id)->get();
+                    
+                    $nurses = [];
+                    $offerData = [];
+
+                    foreach ($offerLists as $value) {
+
+                        if ($value && !in_array($value->worker_user_id, $nurses)) {
+                            $nurses[] = $value->worker_user_id;
+                            $nurse = Nurse::where('id', $value->worker_user_id)->first();
+                            $user = User::where('id', $nurse->user_id)->first();
+
+                            $nowDate = Carbon::now();
+
+                            $recently_added = $nowDate->isSameDay($value->created_at);
+                            if($recently_added == false){
+                                $recently_added = $value->created_at->diffForHumans();
+                            }
+
+                            $offerData[] = [
+                                'type' => $type,
+                                'workerUserId' => $value->worker_user_id,
+                                'image' => $user->image,
+                                'firstName' => $user->first_name,
+                                'lastName' => $user->last_name,
+                                'hourlyPayRate' => $nurse->worker_actual_hourly_rate ?? null,
+                                'city' => $nurse->city ?? null,
+                                'state' => $nurse->state ?? null,
+                                'profession' => $nurse->profession ?? null,
+                                'specialty' => $nurse->specialty ?? null,
+                                'recently_added' => $recently_added
+                            ];
+                        }
+                    }
+                    if (empty($offerData)) {
+                        $noApplications = true;
+                    } else {
+                        $noApplications = false;
+                    }
+                    $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
+                    //return new JsonResponse($response, 200);
+                    return response()->json($response);
+
+                    } catch (\Exception $ex) {
+                        return response()->json(["message" => $ex->getMessage()]);
+                    }
             }
-            if (empty($offerData)) {
-                $noApplications = true;
-            } else {
-                $noApplications = false;
-            }
-            $response['content'] = view('recruiter::offers.workers_cards_information', ['noApplications' => $noApplications, 'offerData' => $offerData])->render();
-            //return new JsonResponse($response, 200);
-            return response()->json($response);
-        } catch (\Exception $ex) {
+        }catch (\Exception $ex) {
+
             return response()->json(["message" => $ex->getMessage()]);
+
         }
+    }
+
+    // get worker infromation of each offer type
+    public function get_applications(Request $request)
+    {
+        
     }
 
     function get_offers_of_each_worker(Request $request)
     {
         try {
+
             $recruiter = Auth::guard('recruiter')->user();
             $recruiter_id = $recruiter->id;
             $worker_id = $request->nurse_id;
@@ -360,27 +542,33 @@ class ApplicationController extends Controller
             $user = User::where('id', $nurse->user_id)->first();
             $offers = Offer::where(['status' => $type, 'worker_user_id' => $request->nurse_id, 'recruiter_id' => $recruiter->id])->get();
             $jobappliedcount = Offer::where(['status' => $type, 'worker_user_id' => $worker_id, 'recruiter_id' => $recruiter->id])->count();
+
             // file availablity check
             $hasFile = false;
             $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
+
+	        // return response()->json($fileresponse->json());	
             if (!empty($fileresponse->json()['files'])) {
                 $hasFile = true;
-
+		
                 foreach ($fileresponse->json()['files'] as $file) {
-                    $files[] = [
-                        'name' => $file['name'],
-                        'content' => $file['content'],
-                        'type' => $file['type']
-                    ];
+		            if(isset($file['content']) && isset($file['name']) && isset($file['type'])){	
+                        $files[] = [
+                            'name' => $file['name'],
+                            'content' => $file['content'],
+                            'type' => $file['type']
+                        ];
+		            }      
                 }
             }
+
             $response['content'] = view('recruiter::offers.workers_complete_information', ['type' => $type, 'hasFile' => $hasFile, 'userdetails' => $user, 'nursedetails' => $nurse, 'jobappliedcount' => $jobappliedcount, 'offerdetails' => $offers])->render();
             $response['files'] = $files;
-            //return response()->json(['response'=>$response]);
-            //return new JsonResponse($response, 200);
+
             return response()->json($response);
+
         } catch (\Exeption $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -388,17 +576,30 @@ class ApplicationController extends Controller
 
     function get_one_offer_information(Request $request)
     {
-
+        // return $request->all();
         try {
             $offer_id = $request->offer_id;
             $offer = Offer::where('id', $offer_id)->first();
+            $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
             $worker_id = $offer->worker_user_id;
             $worker_details = Nurse::where('id', $worker_id)->first();
             $user = User::where('id', $worker_details->user_id)->first();
-            $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
-            $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs])->render();
-            //return new JsonResponse($response, 200);
+            $organization = User::where('id', $offer->organization_id)->first();
+            $recruiter = Auth::guard('recruiter')->user();
+
+            if ($offer->status == 'Offered') {
+                $offerLogsDiff = OffersLogs::select('details')->where('original_offer_id', $offer_id)->first();
+                if(empty($offerLogsDiff)){
+                    $offerLogsDiff = null;
+                }
+                $response['content'] = view('recruiter::offers.new_terms_vs_old_terms', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'diff' => $offerLogsDiff, 'organization' => $organization, 'recruiter' => $recruiter])->render();
+                return response()->json($response);
+            }
+
+            $response['content'] = view('recruiter::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'organization' => $organization, 'recruiter' => $recruiter])->render();
+            
             return response()->json($response);
+        
         } catch (\Exception $ex) {
             return response()->json(["message" => $ex->getMessage()]);
         }
@@ -428,7 +629,7 @@ class ApplicationController extends Controller
                 foreach ($statusList as $status) {
                     $statusCounts[$status] = 0;
                 }
-                $statusCountsQuery = Offer::whereIn('status', $statusList)->where('recruiter_id', $recruiter_id)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+                $statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
                 foreach ($statusCountsQuery as $statusCount) {
                     if ($statusCount) {
                         $statusCounts[$statusCount->status] = $statusCount->count;
@@ -447,15 +648,37 @@ class ApplicationController extends Controller
 
     public function recruiter_counter_offer(Request $request)
     {
+        
         try {
             $recruiter = Auth::guard('recruiter')->user();
             $recruiter_id = $recruiter->id;
             $full_name = $recruiter->first_name . ' ' . $recruiter->last_name;
             $offer_id = $request->id;
             $data = $request->data;
+            $diff = $request->diff;
             $offer = Offer::where('id', $offer_id)->first();
+
+            if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
+                $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
+                $offerLog->update([
+                    'details' => json_encode($diff),
+                ]);
+                
+            }else{
+                OffersLogs::create([
+                    'counter_offer_by' => $recruiter_id,
+                    'nurse_id' => $offer['worker_user_id'],
+                    'organization_recruiter_id' => $offer['organization_id'],
+                    'original_offer_id' => $offer_id,
+                    'details' => json_encode($diff),
+                    'status' => 'Counter Offer'
+                ]);
+            }
+
+            
             // update it
             if ($offer) {
+                $data['status'] = 'Offered';
                 $offer->update($data);
                 $jobid = $offer->job_id;
                 $time = now()->toDateTimeString();
@@ -566,5 +789,40 @@ class ApplicationController extends Controller
             return response()->json(["message" => $e->getMessage()]);
         }
 
+    }
+
+    public function listDocs(Request $request)
+    {
+        try {
+            $workerId = $request->WorkerId;
+            //return response()->json(['workerId' => $workerId]);
+
+            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            
+            if ($response->successful()) {
+                
+                return $response->body();
+
+            } else {
+                return response()->json(['success' => false], $response->status());
+            }
+
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function getDoc(Request $request)
+    {
+        try {
+            $bsonId = $request->input('bsonId');
+            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+
+            // Pass through the response from Node.js API
+            return $response->body();
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 }

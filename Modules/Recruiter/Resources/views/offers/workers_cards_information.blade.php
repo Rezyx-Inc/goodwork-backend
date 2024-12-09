@@ -9,7 +9,7 @@
                     <span class="mb-3">{{ $data['workerUserId'] }}</span>
                 </li>
                 <li class="w-50">
-                    <p>Recently Added</p>
+                    <p>{{ gettype($data['recently_added']) == 'boolean' ? 'Recently Added' : $data['recently_added'] }}</p>
                 </li>
             </ul>
         </div>
@@ -23,17 +23,19 @@
         </ul>
         <ul class="row ss-expl-applicion-ul2 worker-cards">
             @if ($data['hourlyPayRate'])
-                <li class="col-7" ><a href="#">Hourly pay rate {{ $data['hourlyPayRate'] }} $</a></li>
+                <li class="col-5" ><a href="#">Hourly rate ${{ number_format($data['hourlyPayRate']) }} </a></li>
             @endif
             @if ($data['city'] && $data['state'])
-                <li class="col-5"><a href="#">{{ $data['city'] }}, {{ $data['state'] }}</a></li>
+                <li class="col-7"><a href="#">{{ $data['city'] }}, {{ $data['state'] }}</a></li>
             @endif
-            @if ($data['muSpecialty'])
-                <li class="col-6"><a href="#">{{ $data['muSpecialty'] }}</a></li>
-            @endif
-            @if ($data['specialty'])
+            @if ($data['profession'] && $data['specialty'])
+                <li class="col-12"><a href="#">{{ $data['profession'] }} , {{ $data['specialty'] }}</a></li>
+            @elseif ($data['specialty'])
                 <li class="col-6"><a href="#">{{ $data['specialty'] }}</a></li>
+            @elseif ($data['profession'])
+                <li class="col-6"><a href="#">{{ $data['profession'] }}</a></li>
             @endif
+
         </ul>
 </div>
 @endforeach
