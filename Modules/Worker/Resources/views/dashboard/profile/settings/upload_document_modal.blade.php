@@ -25,6 +25,7 @@
                             <option value="vaccinations">Vaccinations</option>
                             <option value="references">References</option>
                             <option value="diploma">Diploma</option>
+                            <option value="resume">Resume</option>
                             <option value="nursing_license_state">Professional License</option>
                         </select>
                         <span class="help-block"></span>
@@ -161,6 +162,33 @@
                         </div>
                         <button class="ss-job-dtl-pop-sv-btn"
                             onclick="sendMultipleFiles('driving_license')">Save</button>
+                    </div>
+                    {{-- Resume --}}
+                    <div class="d-none" id="resume">
+                        <div style="margin-bottom:60px;" class="row" id="uploaded-files-names">
+                        </div>
+                        <div class="container-multiselect">
+                            <div class="ss-form-group fileUploadInput"
+                                style="
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                        ">
+                                <input hidden displayName="Resume" type="file" class="files-upload"
+                                    accept="image/heic, image/png, image/jpeg, application/pdf, .doc, .docx">
+                                <div class="list-items">
+                                    <input hidden type="text" name="type" value="resume"
+                                        class="item">
+                                </div>
+
+                                <button class="col-5" type="button" onclick="open_file(this)">Choose
+                                    File</button>
+                                <span class="help-block"></span>
+
+                            </div>
+                        </div>
+                        <button class="ss-job-dtl-pop-sv-btn"
+                            onclick="sendMultipleFiles('resume')">Save</button>
                     </div>
                     {{-- ss number --}}
                     {{-- <div class="d-none" id="ss_number">
