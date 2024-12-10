@@ -1688,7 +1688,46 @@ class WorkerController extends Controller
 
     }
 
+    public function updateApplicationStatus(Request $request)
+    {
+        $worker = Auth::guard('frontend')->user();
+        $worker_id = $worker->nurse->id;
+        $full_name = $worker->first_name . ' ' . $worker->last_name;
+        $offer_id = $request->id;
+        $offer = Offer::where('id', $offer_id)->first();
+        $status = $request->status;
+        $jobid = $offer->job_id;
 
+        if (isset($jobid)) {
+            $job = Offer::where(['id' => $offer_id])->update(['status' => $status]);
+            if ($job) {
+                // send notification to the worker
+                $time = now()->toDateTimeString();
+                $receiver = $offer->recruiter_id;
+                $job_name = Job::where('id', $jobid)->first()->job_name;
+                event(new NotificationOffer($status, false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $offer_id));
+                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                $statusCounts = [];
+                $offerLists = [];
+                foreach ($statusList as $status) {
+                    $statusCounts[$status] = 0;
+                }
+                $statusCountsQuery = Offer::where('worker_user_id', $worker_id)->whereIn('status', $statusList)->select(\DB::raw('status, count(*) as count'))->groupBy('status')->get();
+                foreach ($statusCountsQuery as $statusCount) {
+                    if ($statusCount) {
+                        $statusCounts[$statusCount->status] = $statusCount->count;
+                    } else {
+                        $statusCounts[$statusCount->status] = 0;
+                    }
+                }
+                return response()->json(['message' => 'Update Successfully', 'type' => $status, 'statusCounts' => $statusCounts]);
+            } else {
+                return response()->json(['message' => 'Something went wrong! Please check']);
+            }
+        } else {
+            return response()->json(['message' => 'Something went wrong! Please check']);
+        }
+    }
 
 
 }

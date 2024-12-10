@@ -17,10 +17,10 @@
 
     <div class="ss-jb-apply-on-inf-hed-rec row">
         <div class="col-md-6">
-            <h5 class="mt-3 mb-3 text-center">Job Information</h5>
+            <h5 class="mt-3 mb-3 text-center">Worker Information</h5>
         </div>
         <div class="col-md-6">
-            <h5 class="mt-3 mb-3 text-center">Worker Information</h5>
+            <h5 class="mt-3 mb-3 text-center">Job Information</h5>
         </div>
     </div>
 
@@ -44,17 +44,17 @@
             style="margin:auto;">
             <div class="col-md-6">
                 <h6>
-                    {{ $offerdetails->type ?? 'Missing job type Information' }}
+                    {{ $userdetails->nurse->worker_job_type ?? 'Missing job type Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @isset($userdetails->nurse->worker_job_type)
-                        {{ $userdetails->nurse->worker_job_type }}
+                    
+                    @isset($offerdetails->type)
+                        {{ $offerdetails->type }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_job_type', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'type', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endisset
                 </p>
             </div>
@@ -67,17 +67,16 @@
             style="margin:auto;">
             <div class="col-md-6">
                 <h6>
-                    {{ $offerdetails->terms ?? 'Missing job terms Information' }}
+                    {{ $userdetails->nurse->terms ?? 'Missing job terms Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @isset($userdetails->nurse->terms)
-                        {{ $userdetails->nurse->terms }}
+                    @isset($offerdetails->terms)
+                        {{ $offerdetails->terms }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'terms', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'terms', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endisset
                 </p>
             </div>
@@ -98,8 +97,7 @@
                         {{ $userdetails->nurse->profession }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'profession', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'profession', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endisset
                 </p>
             </div>
@@ -110,17 +108,16 @@
         <div class="row {{ $offerdetails->specialty == $userdetails->nurse->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->specialty ?? 'Missing Specialty Information' }}
+                <h6>{{  $userdetails->nurse->specialty  ?? 'Missing Specialty Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->specialty)
-                        {{ $userdetails->nurse->specialty }}
+                    @if ($offerdetails->specialty)
+                        {{ $offerdetails->specialty }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'nursing_specialty', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'specialty', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -132,14 +129,14 @@
         <div class="row {{ $offerdetails->actual_hourly_rate === $userdetails->nurse->worker_actual_hourly_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->actual_hourly_rate) ? number_format($offerdetails->actual_hourly_rate) : 'Missing Actual Hourly Rate Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_actual_hourly_rate) ? number_format($userdetails->nurse->worker_actual_hourly_rate) : 'Missing Actual Hourly Rate Information' }}
                 </h6>
             </div>
             <div class="col-md-6">
                 <p>
-                    {!! isset($userdetails->nurse->worker_actual_hourly_rate)
-                        ? number_format($userdetails->nurse->worker_actual_hourly_rate)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_actual_hourly_rate\', \'' .
+                    {!! isset($offerdetails->actual_hourly_rate)
+                        ? number_format($offerdetails->actual_hourly_rate)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'actual_hourly_rate\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -149,7 +146,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
 
                 </p>
             </div>
@@ -161,14 +158,14 @@
         <div class="row {{ $offerdetails->weekly_pay === $userdetails->nurse->worker_organization_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->weekly_pay) ? number_format($offerdetails->weekly_pay) : 'Missing Weekly Pay Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_organization_weekly_amount) ? number_format($userdetails->nurse->worker_organization_weekly_amount) : 'Missing Weekly Pay Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_organization_weekly_amount)
-                        ? number_format($userdetails->nurse->worker_organization_weekly_amount)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_organization_weekly_amount\', \'' .
+                    {!! isset($offerdetails->weekly_pay)
+                        ? number_format($offerdetails->weekly_pay)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weekly_pay\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -178,7 +175,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
 
                 </p>
             </div>
@@ -190,14 +187,14 @@
         <div class="row {{ $offerdetails->hours_per_week == $userdetails->nurse->worker_hours_per_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->hours_per_week) ? number_format($offerdetails->hours_per_week) : 'Missing Hours/Week Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_hours_per_week) ? number_format($userdetails->nurse->worker_hours_per_week) : 'Missing Hours/Week Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_hours_per_week)
-                        ? number_format($userdetails->nurse->worker_hours_per_week)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_per_week\', \'' .
+                    {!! isset($offerdetails->hours_per_week)
+                        ? number_format($offerdetails->hours_per_week)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'hours_per_week\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -207,7 +204,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -218,16 +215,15 @@
         <div class="row {{ $offerdetails->state == $userdetails->nurse->state ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->state ?? 'Missing State Information' }}</h6>
+                <h6>{{ $userdetails->nurse->state ?? 'Missing State Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->state)
-                        {{ $userdetails->nurse->state }}
+                    @if ($offerdetails->state)
+                        {{ $offerdetails->state }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'state', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'state', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -239,16 +235,15 @@
         <div class="row {{ $offerdetails->city == $userdetails->nurse->city ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->city ?? 'Missing City Information' }}</h6>
+                <h6>{{ $userdetails->nurse->city ?? 'Missing City Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->city)
-                        {{ $userdetails->nurse->city }}
+                    @if ($offerdetails->city)
+                        {{ $offerdetails->city}}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'city', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'city', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -288,16 +283,15 @@
         <div class="row {{ $offerdetails->preferred_shift_duration == $userdetails->nurse->worker_shift_time_of_day ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->preferred_shift_duration ?? 'Missing Shift Time of Day Information' }}</h6>
+                <h6>{{ $userdetails->nurse->worker_shift_time_of_day ?? 'Missing Shift Time of Day Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_shift_time_of_day)
-                        {{ $userdetails->nurse->worker_shift_time_of_day }}
+                    @if ($offerdetails->preferred_shift_duration)
+                        {{ $offerdetails->preferred_shift_duration }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_shift_time_of_day', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'preferred_shift_duration', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -309,14 +303,14 @@
         <div class="row {{ $offerdetails->guaranteed_hours == $userdetails->nurse->worker_guaranteed_hours ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->guaranteed_hours) ? number_format($offerdetails->guaranteed_hours) : 'Missing Guaranteed Hours Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_guaranteed_hours) ? number_format($userdetails->nurse->worker_guaranteed_hours) : 'Missing Guaranteed Hours Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_guaranteed_hours)
-                        ? number_format($userdetails->nurse->worker_guaranteed_hours)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_guaranteed_hours\', \'' .
+                    {!! isset($offerdetails->guaranteed_hours)
+                        ? number_format($offerdetails->guaranteed_hours)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'guaranteed_hours\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -326,7 +320,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -337,14 +331,14 @@
         <div class="row {{ $offerdetails->hours_shift == $userdetails->nurse->worker_hours_shift ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->hours_shift) ? number_format($offerdetails->hours_shift) : 'Missing Hours/Shift Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_hours_shift) ? number_format($userdetails->nurse->worker_hours_shift) : 'Missing Hours/Shift Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_hours_shift)
-                        ? number_format($userdetails->nurse->worker_hours_shift)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_hours_shift\', \'' .
+                    {!! isset($offerdetails->hours_shift)
+                        ? number_format($offerdetails->hours_shift)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'worker_hours_shift\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -354,7 +348,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -365,14 +359,14 @@
         <div class="row {{ $offerdetails->weeks_shift == $userdetails->nurse->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->weeks_shift) ? number_format($offerdetails->weeks_shift) : 'Missing Shifts/Week Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_shifts_week) ? number_format($userdetails->nurse->worker_shifts_week) : 'Missing Shifts/Week Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_shifts_week)
-                        ? number_format($userdetails->nurse->worker_shifts_week)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_shifts_week\', \'' .
+                    {!! isset($offerdetails->weeks_shift)
+                        ? number_format($offerdetails->weeks_shift)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weeks_shift\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -382,7 +376,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -393,14 +387,14 @@
         <div class="row {{ $offerdetails->preferred_assignment_duration == $userdetails->nurse->worker_weeks_assignment ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->preferred_assignment_duration) ? number_format($offerdetails->preferred_assignment_duration) : 'Missing Wks/Contract Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_weeks_assignment) ? number_format($userdetails->nurse->worker_weeks_assignment) : 'Missing Wks/Contract Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_weeks_assignment)
-                        ? number_format($userdetails->nurse->worker_weeks_assignment)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weeks_assignment\', \'' .
+                    {!! isset($offerdetails->preferred_assignment_duration)
+                        ? number_format($offerdetails->preferred_assignment_duration)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'preferred_assignment_duration\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -410,7 +404,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
                 </p>
             </div>
@@ -422,16 +416,15 @@
         <div class="row {{ $offerdetails->start_date == $userdetails->nurse->worker_start_date ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->start_date ?? 'As Soon As Possible' }}</h6>
+                <h6>{{ $userdetails->nurse->worker_start_date ?? 'As Soon As Possible' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_start_date)
-                        {{ $userdetails->nurse->worker_start_date }}
+                    @if ($offerdetails->start_date )
+                        {{ $offerdetails->start_date  }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_start_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'start_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -444,16 +437,15 @@
         <div class="row {{ $offerdetails->end_date == $userdetails->nurse->worker_end_date ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->end_date ?? 'Missing End Date Information' }}</h6>
+                <h6>{{ $userdetails->nurse->worker_end_date ?? 'Missing End Date Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_end_date)
-                        {{ $userdetails->nurse->worker_end_date }}
+                    @if ($offerdetails->end_date)
+                        {{ $offerdetails->end_date }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_end_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'worker_end_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -467,16 +459,15 @@
         <div class="row {{ $offerdetails->rto === $userdetails->nurse->rto ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->rto ?? 'Missing RTO Information' }}</h6>
+                <h6>{{ $userdetails->nurse->rto ?? 'Missing RTO Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->rto)
-                        {{ $userdetails->nurse->rto }}
+                    @if ($offerdetails->rto)
+                        {{ $offerdetails->rto }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'rto', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'rto', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -500,14 +491,14 @@
         <div class="row {{ $offerdetails->overtime === $userdetails->nurse->worker_overtime_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6> {{ isset($offerdetails->overtime) ? number_format($offerdetails->overtime) : 'Missing Overtime Information' }}
+                <h6> {{ isset($userdetails->nurse->worker_overtime_rate) ? number_format($userdetails->nurse->worker_overtime_rate) : 'Missing Overtime Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_overtime_rate)
-                        ? number_format($userdetails->nurse->worker_overtime_rate)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_overtime_rate\', \'' .
+                    {!! isset($offerdetails->overtime)
+                        ? number_format($offerdetails->overtime)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'overtime\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -517,7 +508,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -528,15 +519,15 @@
         <div class="row {{ $offerdetails->on_call_rate === $userdetails->nurse->worker_on_call ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6> {{ isset($offerdetails->on_call_rate) ? '$ ' . number_format($offerdetails->on_call_rate) : 'Missing On Call Information' }}
+                <h6> {{ isset($userdetails->nurse->worker_on_call) ? '$ ' . number_format($userdetails->nurse->worker_on_call) : 'Missing On Call Information' }}
                 </h6>
 
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_on_call)
-                        ? '$ ' . number_format($userdetails->nurse->worker_on_call)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_on_call\', \'' .
+                    {!! isset($offerdetails->on_call_rate)
+                        ? '$ ' . number_format($offerdetails->on_call_rate)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'on_call_rate\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -546,7 +537,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -557,14 +548,14 @@
         <div class="row {{ $offerdetails->call_back_rate === $userdetails->nurse->worker_call_back ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->call_back_rate) ? '$ ' . number_format($offerdetails->call_back_rate) : 'Missing Call Back Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_call_back) ? '$ ' . number_format($userdetails->nurse->worker_call_back) : 'Missing Call Back Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_call_back)
-                        ? '$ ' . number_format($userdetails->nurse->worker_call_back)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_call_back\', \'' .
+                    {!! isset($offerdetails->call_back_rate)
+                        ? '$ ' . number_format($offerdetails->call_back_rate)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'call_back_rate\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -574,7 +565,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -585,14 +576,14 @@
         <div class="row {{ $offerdetails->orientation_rate === $userdetails->nurse->worker_orientation_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->orientation_rate) ? '$ ' . number_format($offerdetails->orientation_rate) : 'Missing Orientation Rate Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_orientation_rate) ? '$ ' . number_format($userdetails->nurse->worker_orientation_rate) : 'Missing Orientation Rate Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_orientation_rate)
-                        ? '$ ' . number_format($userdetails->nurse->worker_orientation_rate)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_orientation_rate\', \'' .
+                    {!! isset($offerdetails->orientation_rate)
+                        ? '$ ' . number_format($offerdetails->orientation_rate)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'orientation_rate\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -602,7 +593,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -613,14 +604,14 @@
         <div class="row {{ $offerdetails->weekly_taxable_amount === $userdetails->nurse->worker_weekly_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6> {{ isset($offerdetails->weekly_taxable_amount) ? '$ ' . number_format($offerdetails->weekly_taxable_amount) : 'Missing Est. Weekly Taxable amount Information' }}
+                <h6> {{ isset($userdetails->nurse->worker_weekly_taxable_amount ) ? '$ ' . number_format($userdetails->nurse->worker_weekly_taxable_amount ) : 'Missing Est. Weekly Taxable amount Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_weekly_taxable_amount)
-                        ? '$ ' . number_format($userdetails->nurse->worker_weekly_taxable_amount)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weekly_taxable_amount\', \'' .
+                    {!! isset($offerdetails->weekly_taxable_amount)
+                        ? '$ ' . number_format($offerdetails->weekly_taxable_amount)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weekly_taxable_amount\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -630,7 +621,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
 
                 </p>
             </div>
@@ -642,14 +633,14 @@
         <div class="row {{ $offerdetails->weekly_non_taxable_amount === $userdetails->nurse->worker_weekly_non_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->weekly_non_taxable_amount) ? '$ ' . number_format($offerdetails->weekly_non_taxable_amount) : 'Missing Est. Weekly non-taxable amount Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_weekly_non_taxable_amount) ? '$ ' . number_format($userdetails->nurse->worker_weekly_non_taxable_amount) : 'Missing Est. Weekly non-taxable amount Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_weekly_non_taxable_amount)
-                        ? '$ ' . number_format($userdetails->nurse->worker_weekly_non_taxable_amount)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_weekly_non_taxable_amount\', \'' .
+                    {!! isset($offerdetails->weekly_non_taxable_amount)
+                        ? '$ ' . number_format($offerdetails->weekly_non_taxable_amount)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'weekly_non_taxable_amount\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -659,7 +650,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -672,14 +663,14 @@
         <div class="row {{ $offerdetails->feels_like_per_hour === $userdetails->nurse->worker_feels_like_per_hour ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->feels_like_per_hour) ? '$ ' . number_format($offerdetails->feels_like_per_hour) : 'Missing Feels Like Per Hour Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_feels_like_per_hour) ? '$ ' . number_format($userdetails->nurse->worker_feels_like_per_hour) : 'Missing Feels Like Per Hour Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_feels_like_per_hour)
-                        ? '$ ' . number_format($userdetails->nurse->worker_feels_like_per_hour)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_feels_like_per_hour\', \'' .
+                    {!! isset($offerdetails->feels_like_per_hour)
+                        ? '$ ' . number_format($offerdetails->feels_like_per_hour)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'feels_like_per_hour\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -689,7 +680,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -709,15 +700,15 @@
         <div class="row {{ $offerdetails->referral_bonus === $userdetails->nurse->worker_referral_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6> {{ isset($offerdetails->referral_bonus) ? '$ ' . number_format($offerdetails->referral_bonus) : 'Missing Referral Bonus Information' }}
+                <h6> {{ isset($userdetails->nurse->worker_referral_bonus) ? '$ ' . number_format($userdetails->nurse->worker_referral_bonus) : 'Missing Referral Bonus Information' }}
                 </h6>
 
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_referral_bonus)
-                        ? '$ ' . number_format($userdetails->nurse->worker_referral_bonus)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_referral_bonus\', \'' .
+                    {!! isset($offerdetails->referral_bonus)
+                        ? '$ ' . number_format($offerdetails->referral_bonus)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'referral_bonus\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -727,7 +718,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -740,14 +731,14 @@
         <div class="row {{ $offerdetails->sign_on_bonus === $userdetails->nurse->worker_sign_on_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->sign_on_bonus) ? '$ ' . number_format($offerdetails->sign_on_bonus) : 'Missing Sign-On Bonus Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_sign_on_bonus) ? '$ ' . number_format($userdetails->nurse->worker_sign_on_bonus) : 'Missing Sign-On Bonus Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_sign_on_bonus)
-                        ? '$ ' . number_format($userdetails->nurse->worker_sign_on_bonus)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_sign_on_bonus\', \'' .
+                    {!! isset($offerdetails->sign_on_bonus)
+                        ? '$ ' . number_format($offerdetails->sign_on_bonus)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'sign_on_bonus\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -757,7 +748,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -769,14 +760,14 @@
         <div class="row {{ $offerdetails->extension_bonus === $userdetails->nurse->worker_extension_bonus ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($offerdetails->extension_bonus) ? '$ ' . number_format($offerdetails->extension_bonus) : 'Missing Extension Bonus Information' }}
+                <h6>{{ isset($userdetails->nurse->worker_extension_bonus) ? '$ ' . number_format($userdetails->nurse->worker_extension_bonus) : 'Missing Extension Bonus Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    {!! isset($userdetails->nurse->worker_extension_bonus)
-                        ? '$ ' . number_format($userdetails->nurse->worker_extension_bonus)
-                        : '<a style="cursor: pointer;" onclick="askWorker(this, \'worker_extension_bonus\', \'' .
+                    {!! isset($offerdetails->extension_bonus)
+                        ? '$ ' . number_format($offerdetails->extension_bonus)
+                        : '<a style="cursor: pointer;" onclick="askRecruiter(this, \'worker_extension_bonus\', \'' .
                             $userdetails->nurse->id .
                             '\', \'' .
                             $offerdetails->recruiter_id .
@@ -786,7 +777,7 @@
                             $userdetails->first_name .
                             ' ' .
                             $userdetails->last_name .
-                            '\')">Ask Worker</a>' !!}
+                            '\')">Ask Recruiter</a>' !!}
                 </p>
             </div>
         </div>
@@ -810,16 +801,15 @@
             style="margin:auto;">
 
             <div class="col-md-6">
-                <h6>{{ $offerdetails->pay_frequency ?? 'Missing Pay Frequency Information' }}</h6>
+                <h6>{{ $userdetails->nurse->worker_pay_frequency ?? 'Missing Pay Frequency Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_pay_frequency)
-                        {{ $userdetails->nurse->worker_pay_frequency }}
+                    @if ($offerdetails->pay_frequency)
+                        {{ $offerdetails->pay_frequency }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_pay_frequency', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'pay_frequency', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -846,16 +836,15 @@
         <div class="row {{ $benefitsMatch ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ !empty($offerBenefits) ? implode(', ', $offerBenefits) : 'Missing Benefits Information' }}</h6>
+                <h6>{{ !empty($userBenefits) ? implode(', ', $userBenefits) : 'Missing Benefits Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if (!empty($userBenefits))
-                        {{ implode(', ', $userBenefits) }}
+                    @if (!empty($offerBenefits))
+                        {{ implode(', ', $offerBenefits) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_benefits', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'benefits', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -882,16 +871,15 @@
         <div class="row {{ $offerdetails->clinical_setting === $userdetails->nurse->clinical_setting_you_prefer ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->clinical_setting ?? 'Missing Clinical Setting Information' }}</h6>
+                <h6>{{ $userdetails->nurse->clinical_setting_you_prefer ?? 'Missing Clinical Setting Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->clinical_setting_you_prefer)
-                        {{ $userdetails->nurse->clinical_setting_you_prefer }}
+                    @if ($offerdetails->clinical_setting)
+                        {{ $offerdetails->clinical_setting }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'clinical_setting_you_prefer', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'clinical_setting', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -904,16 +892,15 @@
         <div class="row {{ $offerdetails->preferred_work_location === $userdetails->nurse->worker_preferred_work_location ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->preferred_work_location ?? 'Missing Preferred Work Location Information' }}</h6>
+                <h6>{{ $userdetails->nurse->worker_preferred_work_location ?? 'Missing Preferred Work Location Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_preferred_work_location)
-                        {{ $userdetails->nurse->worker_preferred_work_location }}
+                    @if ($offerdetails->preferred_work_location)
+                        {{ $offerdetails->preferred_work_location }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_preferred_work_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'preferred_work_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -927,16 +914,15 @@
         <div class="row {{ $offerdetails->facility_name === $userdetails->nurse->worker_facility_name ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->facility_name ?? 'Missing Facility Name Information' }}</h6>
+                <h6>{{ $userdetails->nurse->worker_facility_name ?? 'Missing Facility Name Information' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_facility_name)
-                        {{ $userdetails->nurse->worker_facility_name }}
+                    @if ($offerdetails->facility_name)
+                        {{ $offerdetails->facility_name }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_facility_name', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'facility_name', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -950,17 +936,16 @@
             style="margin:auto;">
 
             <div class="col-md-6">
-                <h6>{{ $offerdetails->facilitys_parent_system ?? 'Missing Facility\'s Parent System Information' }}
+                <h6>{{ $userdetails->nurse->worker_facilitys_parent_system ?? 'Missing Facility\'s Parent System Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->worker_facilitys_parent_system)
-                        {{ $userdetails->nurse->worker_facilitys_parent_system }}
+                    @if ($offerdetails->facilitys_parent_system)
+                        {{ $offerdetails->facilitys_parent_system }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_facilitys_parent_system', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'facilitys_parent_system', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -972,17 +957,16 @@
         <div class="row {{ $offerdetails->facility_shift_cancelation_policy === $userdetails->nurse->facility_shift_cancelation_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->facility_shift_cancelation_policy ?? 'Missing Facility Shift Cancellation Policy Information' }}
+                <h6>{{  $userdetails->nurse->facility_shift_cancelation_policy ?? 'Missing Facility Shift Cancellation Policy Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->facility_shift_cancelation_policy)
-                        {{ $userdetails->nurse->facility_shift_cancelation_policy }}
+                    @if ($offerdetails->facility_shift_cancelation_policy)
+                        {{ $offerdetails->facility_shift_cancelation_policy }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'facility_shift_cancelation_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'facility_shift_cancelation_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -994,17 +978,16 @@
         <div class="row {{ $offerdetails->contract_termination_policy === $userdetails->nurse->contract_termination_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->contract_termination_policy ?? 'Missing Contract Termination Policy Information' }}
+                <h6>{{ $userdetails->nurse->contract_termination_policy ?? 'Missing Contract Termination Policy Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->contract_termination_policy)
-                        {{ $userdetails->nurse->contract_termination_policy }}
+                    @if ($offerdetails->contract_termination_policy)
+                        {{ $offerdetails->contract_termination_policy }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'contract_termination_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'contract_termination_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1016,17 +999,16 @@
         <div class="row {{ $offerdetails->traveler_distance_from_facility === $userdetails->nurse->distance_from_your_home ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $offerdetails->traveler_distance_from_facility ?? 'Missing Traveler Distance From Facility Information' }}
-                    {{ $offerdetails->traveler_distance_from_facility ? 'miles Maximum' : '' }}</h6>
+                <h6>{{ $userdetails->nurse->distance_from_your_home ?? 'Missing Traveler Distance From Facility Information' }}
+                    {{ $userdetails->nurse->distance_from_your_home ? 'miles Maximum' : '' }}</h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if ($userdetails->nurse->distance_from_your_home)
-                        {{ $userdetails->nurse->distance_from_your_home }}
+                    @if ($offerdetails->traveler_distance_from_facility)
+                        {{ $offerdetails->traveler_distance_from_facility }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'distance_from_your_home', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'traveler_distance_from_facility', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1065,17 +1047,16 @@
         <div class="row {{ $licensesMatch ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ !empty($offerLicenses) ? implode(', ', $offerLicenses) : 'Missing Professional Licensure Information' }}
+                <h6>{{ !empty($userLicenses) ? implode(', ', $userLicenses) : 'Missing Professional Licensure Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
-                    @if (!empty($userLicenses))
-                        {{ implode(', ', $userLicenses) }}
+                    @if (!empty($offerLicenses))
+                        {{ implode(', ', $offerLicenses) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'job_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'job_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1092,19 +1073,21 @@
         @endphp
 
         <div id="certification" class="row d-flex align-items-center" style="margin:auto;">
-            <div class="col-md-6">
-                <h6>{{ !empty($offerCertificates) ? implode(', ', $offerCertificates) : 'Missing Certifications Information' }}
-                </h6>
-            </div>
             <div class="col-md-6 ">
                 <p id="certification-placeholder">
                 </p>
             </div>
+            <div class="col-md-6 ">
+                <p>
+                    @if (!empty($offerCertificates))
+                        {{ implode(', ', $offerCertificates) }}
+                    @else
+                        <a style="cursor: pointer;"
+                            onclick="askRecruiter(this, 'certificate', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                    @endif
+                </p>
+            </div>
         </div>
-
-
-
-
     </div>
 
     {{-- End Certifications --}}
@@ -1136,8 +1119,7 @@
                         {{ $userdetails->nurse->worker_description }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_description', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'worker_description', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1160,8 +1142,7 @@
                         {{ $userdetails->nurse->worker_experience . ' Year(s)' }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_experience', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'worker_experience', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1172,13 +1153,13 @@
             <span class="mt-3">References</span>
         </div>
         <div id="references" class="row d-flex align-items-center" style="margin:auto;">
-            <div class="col-md-6">
-                <h6>{{ $offerdetails->number_of_references . ' Reference(s)' ?? 'Missing References Information' }}
-                </h6>
-            </div>
             <div class="col-md-6 ">
                 <p id="references-placeholder">
                 </p>
+            </div>
+            <div class="col-md-6">
+                <h6>{{ $offerdetails->number_of_references . ' Reference(s)' ?? 'Missing References Information' }}
+                </h6>
             </div>
         </div>
 
@@ -1194,13 +1175,13 @@
         @endphp
 
         <div id="skills" class="row d-flex align-items-center" style="margin:auto;">
-            <div class="col-md-6">
-                <h6>{{ !empty($offerSkills) ? implode(', ', $offerSkills) : 'Missing Skills Information' }}</h6>
-            </div>
             <div class="col-md-6 ">
                 <p id="skills-placeholder">
                 </p>
             </div>
+            <div class="col-md-6">
+                <h6>{{ !empty($offerSkills) ? implode(', ', $offerSkills) : 'Missing Skills Information' }}</h6>
+            </div>    
         </div>
 
 
@@ -1231,8 +1212,7 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'on_call', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'on_call', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1264,8 +1244,7 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'block_scheduling', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'block_scheduling', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1295,8 +1274,7 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'float_requirement', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'float_requirement', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1316,8 +1294,7 @@
                         {{ $userdetails->nurse->worker_patient_ratio }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_patient_ratio', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'worker_patient_ratio', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1337,8 +1314,7 @@
                         {{ $userdetails->nurse->worker_emr }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_emr', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'worker_emr', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1358,8 +1334,7 @@
                         {{ $userdetails->nurse->worker_unit }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'worker_unit', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'worker_unit', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1393,8 +1368,7 @@
                         {{ $userdetails->nurse->nurse_classification }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askWorker(this, 'nurse_classification', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Worker</a>
+                            onclick="askRecruiter(this, 'nurse_classification', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1425,13 +1399,13 @@
         @endphp
 
         <div id="vaccination" class="row d-flex align-items-center" style="margin:auto;">
-            <div class="col-md-6">
-                <h6>{{ !empty($offerVaccinations) ? implode(', ', $offerVaccinations) : 'Missing Vaccinations Information' }}
-                </h6>
-            </div>
             <div class="col-md-6 ">
                 <p id="vaccination-placeholder">
                 </p>
+            </div>
+            <div class="col-md-6">
+                <h6>{{ !empty($offerVaccinations) ? implode(', ', $offerVaccinations) : 'Missing Vaccinations Information' }}
+                </h6>
             </div>
         </div>
 
@@ -1535,8 +1509,7 @@
         } else {
             let areaDiv = document.getElementById(fileType);
             areaDiv.classList.add('ss-s-jb-apl-bg-pink');
-            placeholder.innerHTML = '<a style="cursor: pointer;" onclick="askWorker(this, \'' + fileType + '\', \'' +
-                worker_id + '\', \'' + offer_id + '\')">Ask Worker</a>';
+            placeholder.innerHTML = '<h6>Missing ' + fileType + ' Information';
         }
 
     }

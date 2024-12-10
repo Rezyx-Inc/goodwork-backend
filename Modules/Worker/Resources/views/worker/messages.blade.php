@@ -276,6 +276,14 @@
             var messagesArea = $('.messages-area');
             messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
 
+            const urlParams = new URLSearchParams(window.location.search);
+                const idWorker = urlParams.get('worker_id');
+                const nameworker = urlParams.get('name');
+                const idOrganization = urlParams.get('organization_id');
+                if (idWorker && nameworker && idOrganization) {
+                    getPrivateMessages(idWorker, nameworker, idOrganization);
+                }
+
             $('.messages-area').scroll(function() {
 
                 if ($(this).scrollTop() == 0) { // If the scrollbar is at the top

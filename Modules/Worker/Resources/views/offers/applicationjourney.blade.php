@@ -623,39 +623,6 @@
             }
         }
 
-
-
-
-        setInterval(function() {
-            $(document).ready(function() {
-                $('.application-job-slider-owl').owlCarousel({
-                    items: 3,
-                    loop: true,
-                    autoplay: true,
-                    autoplayTimeout: 5000,
-                    margin: 20,
-                    nav: false,
-                    dots: false,
-                    navText: ['<span class="fa fa-angle-left  fa-2x"></span>',
-                        '<span class="fas fa fa-angle-right fa-2x"></span>'
-                    ],
-                    responsive: {
-                        0: {
-                            items: 1
-                        },
-                        480: {
-                            items: 2
-                        },
-                        768: {
-                            items: 3
-                        },
-                        992: {
-                            items: 2
-                        }
-                    }
-                })
-            })
-        }, 3000)
     </script>
     <script>
         var speciality = {};
@@ -960,7 +927,7 @@
         }
     </script>
     <script>
-       function askWorker(e, type, workerid, recruiter_id , organization_id, name) {
+       function askRecruiter(e, type, workerid, recruiter_id , organization_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -994,7 +961,7 @@
             // }
 
             // for now just redirecting to messages page
-            let url = "{{ url('recruiter/recruiter-messages') }}";
+            let url = "{{ url('worker/messages') }}";
             window.location = url + '?worker_id=' + workerid + '&organization_id=' + organization_id + '&recruiter_id=' + recruiter_id + '&name=' + name;
             // window.location = url;
         }
@@ -1241,7 +1208,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('recruiter/get-offers-by-type') }}",
+                    url: "{{ url('worker/worker-get-offers-by-type') }}",
                     data: {
                         'token': csrfToken,
                         'type' : type,
@@ -1434,7 +1401,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
 
-                    url: "{{ url('recruiter/update-application-status') }}",
+                    url: "{{ url('worker/worker-update-application-status') }}",
                     data: {
                         'token': csrfToken,
                         'id': id,
@@ -1531,7 +1498,7 @@
                         'X-CSRF-TOKEN': csrfToken
                     },
 
-                    url: "{{ url('recruiter/update-application-status') }}",
+                    url: "{{ url('worker/worker-update-application-status') }}",
                     data: {
                         'token': csrfToken,
                         'id': offerId,
@@ -1583,7 +1550,7 @@
             return;
         }
 
-        const url = new URL("{{ url('recruiter/get-one-offer-information') }}");
+        const url = new URL("{{ url('worker/worker-get-one-offer-information') }}");
         url.searchParams.append('token', csrfToken);
         url.searchParams.append('offer_id', offerId);
 
