@@ -7,10 +7,10 @@
         @include('worker::dashboard.profile.settings.professional_info')
         @include('worker::dashboard.profile.settings.personal_info')
 
-        <div class="ss-prsn-form-btn-sec d-block">
+        {{-- <div class="ss-prsn-form-btn-sec d-block">
             <button type="text" class="ss-prsnl-save-btn" id="SaveInformation"> Save
             </button>
-        </div>
+        </div> --}}
     </div>
 </form>
 
@@ -40,6 +40,42 @@
 
 
 <script>
+
+    // Save on page exit
+    window.addEventListener('beforeunload', function() {
+        // Call the saveData function to send the AJAX request
+        saveInfos();
+    });
+
+    function saveInfos() {
+        // Perform basic validation if needed
+        if (!validateBasicInfo()) {
+            return; // Skip the save if validation fails
+        }
+
+        // Get the form element
+        let form = document.getElementById('worker-profile-form');
+        let formData = new FormData(form);
+
+        // Send the data silently using fetch with keepalive
+        fetch('/worker/update-worker-profile', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            keepalive: true // Ensures the request completes even if the page unloads
+        }).then(response => {
+            console.log("Silent save successful");
+        }).catch(error => {
+            console.error("Silent save failed", error);
+        });
+    }
+
+</script>
+
+{{-- save using btn save click --}}
+{{-- <script>
     // Save Basic Information
     const SaveInformation = document.getElementById("SaveInformation");
 
@@ -100,4 +136,4 @@
 
     });
     // end Saving Basic Information
-</script>
+</script> --}}
