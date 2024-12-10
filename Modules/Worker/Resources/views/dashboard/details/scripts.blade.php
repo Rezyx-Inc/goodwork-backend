@@ -981,6 +981,21 @@
                 if (worker_files_displayname_by_type.length > 0) {
                     check = true;
                 }
+            
+            } else if (inputName == "resume"){
+            
+                let is_resume = @json($model["is_resume"]);
+
+                if (worker_files_displayname_by_type.length > 0 && is_resume) {
+
+                    check = true;
+                
+                }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+                    check = true;
+                }else{
+                    check = false;
+                }
+
             } else if (inputName == 'diploma') {
                 if (worker_files_displayname_by_type.length > 0) {
                     check = true;
@@ -1079,6 +1094,7 @@
             }
             let diploma = [];
             let driving_license = [];
+            let resume = [];
 
             let worked_bfore = dataToSend['worked_at_facility_before'];
 
@@ -1091,6 +1107,12 @@
             }
             try {
                 driving_license = await get_all_files_displayName_by_type('driving_license');
+
+            } catch (error) {
+                console.error('Failed to get files:', error);
+            }
+            try {
+                resume = await get_all_files_displayName_by_type('resume');
 
             } catch (error) {
                 console.error('Failed to get files:', error);
@@ -1136,6 +1158,7 @@
             checkFileMatch('skills');
             checkFileMatch('driving_license');
             checkFileMatch('diploma');
+            checkFileMatch('resume');
 
             $('input[name="phone[]"]').mask('(999) 999-9999');
         });
