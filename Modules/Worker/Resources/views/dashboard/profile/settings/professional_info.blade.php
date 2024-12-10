@@ -110,7 +110,7 @@
 
 
     {{-- State Information --}}
-    <div class="ss-form-group col-11">
+    <div class="ss-form-group">
    
         @include('worker::components.custom_multiple_select_input', [
             'id' => 'state',
