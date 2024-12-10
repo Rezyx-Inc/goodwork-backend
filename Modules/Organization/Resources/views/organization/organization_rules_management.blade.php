@@ -29,8 +29,8 @@ $faker = app('Faker\Generator');
                     <td>
                         <div class="form-check">
 
-                            <input id="apply_{{$item["fieldID"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
-                            @if($item['applyDisabled']) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["fieldID"]}}">
+                            <input id="apply_{{$item["workerFieldIdMatch"]}}" onclick="triggerSaveKeysChanges()" class="form-check-input"
+                            @if($item['applyDisabled']) disabled @endif   type="checkbox" name="requiredToApply[]" value="{{$item["workerFieldIdMatch"]}}">
 
                         </div>
                     </td>
