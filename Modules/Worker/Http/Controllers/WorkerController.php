@@ -320,10 +320,42 @@ class WorkerController extends Controller
     }
 
 
-    public function get_messages()
+    public function get_messages(Request $request)
     {
 
         $id = Auth::guard('frontend')->user()->id;
+        // $nurse = Nurse::where('user_id', $id)->first();
+        // $nurse_user_id = $nurse->id;
+        $name = $request->input('name');
+        $recruiter_id = $request->input('recruiter_id');
+        $organization_id = $request->input('organization_id');
+
+        if (isset($recruiter_id) && isset($organization_id)) {
+            
+            // Check if a room with the given worker_id and recruiter_id already exists
+            $room = DB::connection('mongodb')->collection('chat')->where('workerId', $id)->where('organizationId', $organization_id)->first();
+            
+            // If the room doesn't exist, create a new one
+            if (!$room) {
+                DB::connection('mongodb')->collection('chat')->insert([
+                    'workerId' => $id,
+                    'recruiterId' => $recruiter_id,
+                    'organizationId' => $organization_id, // Replace this with the actual organizationId
+                    'lastMessage' => $this->timeAgo(now()),
+                    'isActive' => true,
+                    'messages' => [],
+                ]);
+
+                // Call the get_private_messages function
+                $request->query->set('recruiterId', $recruiter_id);
+                $request->query->set('organizationId', $organization_id); // Replace this with the actual organizationId
+                return $this->get_direct_private_messages($request);
+            }else{
+                $request->query->set('recruiterId', $recruiter_id);
+                $request->query->set('organizationId', $organization_id);
+                return $this->get_direct_private_messages($request);
+            }
+        }
 
         $rooms = DB::connection('mongodb')->collection('chat')
             ->raw(function ($collection) use ($id) {
@@ -370,12 +402,12 @@ class WorkerController extends Controller
         foreach ($rooms as $room) {
             //$user = User::where('id', $room->organizationId)->select("first_name","last_name")->get();
             $user = User::select('first_name', 'last_name' , 'image')
-                ->where('id', $room->recruiterId)
+                ->where('id', $room->organizationId)
                 ->get()
                 ->first();
 
             if ($user) {
-                $name = $user->fullName;
+                $name = $user->organization_name;
             } else {
                 // Handle the case where no user is found
                 $name = 'Default Name';
@@ -406,6 +438,118 @@ class WorkerController extends Controller
         //return $data;
         //dd($data);
         return view('worker::worker/messages', compact('id', 'data'));
+    }
+
+    public function get_direct_private_messages(Request $request)
+    {
+        $idOrganization = $request->query('organizationId');
+        $idRecruiter = $request->query('recruiterId');
+        $page = $request->query('page', 1);
+
+        $idWorker = Auth::guard('frontend')->user()->id;
+
+        // Calculate the number of messages to skip
+        $skip = ($page - 1) * 10;
+
+        // we need to set the recruiter static since we dont have a relation between those three roles yet so we choose "GWU000005"
+
+        $chat = DB::connection('mongodb')
+            ->collection('chat')
+            ->raw(function ($collection) use ($idOrganization, $idRecruiter, $idWorker, $skip) {
+                return $collection
+                    ->aggregate([
+                        [
+                            '$match' => [
+                                'organizationId' => $idOrganization,
+                                // 'recruiterId'=> $idRecruiter,
+                                // for now until get the offer works
+                                'recruiterId' => $idRecruiter,
+
+                                'workerId' => $idWorker,
+                            ],
+                        ],
+                        [
+                            '$project' => [
+                                'messages' => [
+                                    '$slice' => ['$messages', $skip, 10],
+                                ],
+                            ],
+                        ],
+                    ])
+                    ->toArray();
+            });
+        // {{ $room['workerId'] }}','{{ $room['fullName'] }}','{{ $room['organizationId'] }}')"
+        $direct = true;
+        $rooms = DB::connection('mongodb')
+            ->collection('chat')
+            ->raw(function ($collection) use ($idWorker) {
+                return $collection
+                    ->aggregate([
+                        [
+                            '$match' => [
+                                //'recruiterId' => $id,
+                                // for now until get the offer works
+                                'workerId' => $idWorker,
+                            ],
+                        ],
+                        [
+                            '$project' => [
+                                'organizationId' => 1,
+                                'workerId' => 1,
+                                'recruiterId' => 1,
+                                'lastMessage' => 1,
+                                'isActive' => 1,
+                                'messages' => [
+                                    '$slice' => ['$messages', 1],
+                                ],
+                            ],
+                        ],
+                    ])
+                    ->toArray();
+            });
+
+        //return response()->json(['rooms',$rooms]);
+
+        $data = [];
+        $data_User = [];
+        foreach ($rooms as $room) {
+            //$user = User:select :where('id', $room->workerId);
+            //$nurse = Nurse::where('id', $room->workerId)->first();
+            $user = User::select('organization_name')
+                ->where('id', $room->organizationId)
+                ->get()
+                ->first();
+
+            if ($user) {
+                $name = $user->organization_name;
+            } else {
+                // Handle the case where no user is found
+                $name = 'Default Name';
+            }
+
+            $data_User['fullName'] = $name;
+            $data_User['lastMessage'] = $this->timeAgo($room->lastMessage);
+            $data_User['recruiterId'] = $room->recruiterId;
+            $data_User['isActive'] = $room->isActive;
+            $data_User['organizationId'] = $room->organizationId;
+            $data_User['messages'] = $room->messages;
+
+            array_push($data, $data_User);
+        }
+        $recruiter = User::select('first_name', 'last_name')
+            ->where('id', $idOrganization)
+            ->get()
+            ->first();
+
+        if ($recruiter) {
+            $nameworker = $user->organization_name;
+        } else {
+            // Handle the case where no user is found
+            $nameworker = 'Default Name';
+        }
+        $id = Auth::guard('frontend')->user()->id;
+        return view('worker::worker/messages', compact('idWorker', 'idOrganization', 'direct', 'id', 'data', 'nameworker'));
+
     }
 
     public function timeAgo($time = NULL)

@@ -23,7 +23,7 @@
         </li>
     @else --}}
         <li>
-            <a onclick="askRecruiter(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')"
+            <a onclick="askRecruiter(this, 'nursing_profession', '{{ $nursedetails['id'] }}', '{{ $offerdetails[0]->recruiter_id }}', '{{ $offerdetails[0]->organization_id }}', '{{ $userdetails->organization_name }}')"
                 class="rounded-pill ss-apply-btn py-2 border-0 px-4" style="cursor: pointer;">Chat Now</a>
         </li>
     {{-- @endif --}}

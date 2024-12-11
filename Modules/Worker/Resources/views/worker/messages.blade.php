@@ -1,9 +1,6 @@
 @extends('worker::layouts.main')
 
 @section('content')
-    @php
-        $faker = app('Faker\Generator');
-    @endphp
 
     <script type="text/javascript" src="{{ URL::asset('frontend/vendor/mask/jquery.mask.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -277,12 +274,12 @@
             messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
 
             const urlParams = new URLSearchParams(window.location.search);
-                const idWorker = urlParams.get('worker_id');
-                const nameworker = urlParams.get('name');
-                const idOrganization = urlParams.get('organization_id');
-                if (idWorker && nameworker && idOrganization) {
-                    getPrivateMessages(idWorker, nameworker, idOrganization);
-                }
+            const idRecruiter = urlParams.get('recruiter_id');
+            const namerecruiter = urlParams.get('name');
+            const idOrganization = urlParams.get('organization_id');
+            if (idRecruiter && namerecruiter && idOrganization) {
+                getPrivateMessages(idRecruiter,idOrganization, namerecruiter);
+            }
 
             $('.messages-area').scroll(function() {
 
@@ -475,7 +472,17 @@
                                     <div onclick="getPrivateMessages('{{ $room['recruiterId'] }}','{{ $room['organizationId'] }}','{{ $room['fullName'] }}')"
                                         class="ss-mesg-sml-div">
                                         <ul class="ss-msg-user-ul-dv">
-                                            <li><img class="img_msg" src="{{ URL::asset($room['recruiterImage']) }}" /></li>
+                                            @php
+                                            // Models
+                                                $organization = App\Models\User::find($room['organizationId']);  
+                                            
+                                                @endphp
+                                                @if(isset($organization))       
+
+                                                <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $organization->image) }}"
+                                                    onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
+                                                    id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                                @endif
                                             <li>
                                                 <h5>{{ $room['fullName'] }}</h5>
                                                 <p id="room_{{ $room['recruiterId'] }}">
