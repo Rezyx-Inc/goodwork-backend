@@ -261,9 +261,13 @@ class RecruiterAuthController extends Controller
                 if (!empty($user)) {
                     $response['success'] = true;
                     $response['msg'] = 'You are logged in successfully.';
-                    $input = [];
-                    $input['otp'] = null;
-                    $user->update($input);
+                    // $input = [];
+                    // $input['otp'] = null;
+                    // $user->update($input);
+                    $user->update([
+                        'otp' => null,
+                        'last_login_at' => now()->format('Y-m-d H:i:s') // Explicitly format the date
+                    ]);
                     // Auth::guard('frontend')->login($user, true);
                     Auth::guard('recruiter')->login($user, true);
                     session()->forget('otp_user_id');
