@@ -321,6 +321,16 @@ public function index()
 
         try {
             $user = Auth::guard('organization')->user();
+
+            $oldOrganizationName = $user->organization_name;
+
+            // check if the organization name already exist
+            $organization = User::where('organization_name', $request->organization_name)->first();
+            if ($organization && $organization->id != $user->id) {
+                return response()->json(['status' => false, 'message' => 'Organization name already exist.']);
+            }
+
+
             $request->validate([
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
@@ -343,6 +353,19 @@ public function index()
             isset($request->about_me) ? ($user_data['about_me'] = $request->about_me) : '';
 
             $user->update($user_data);
+
+            // If the organization name changes then update recruiter org name
+            if (isset($user_data['organization_name']) && $user_data['organization_name'] !== $oldOrganizationName) {
+                // all recruiters registered with this org
+                $recruiters = User::where('role', 'RECRUITER')
+                    ->where('organization_name', $oldOrganizationName)
+                    ->get();
+
+                foreach ($recruiters as $recruiter) {
+                    $recruiter->update(['organization_name' => $user_data['organization_name']]);
+                }
+            }
+
 
             $user = $user->fresh();
 

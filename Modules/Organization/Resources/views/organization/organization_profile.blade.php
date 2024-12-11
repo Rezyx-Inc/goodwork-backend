@@ -634,12 +634,18 @@
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);
+                    }else{
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa-solid fa-xmark"></i>' + resp.message,
+                            time: 5
+                        });
                     }
                 },
                 error: function(resp) {
                     notie.alert({
                         type: 'error',
-                        text: '<i class="fa fa-check"></i>' + resp.message,
+                        text: '<i class="fa fa-check"></i>' + "resp.message",
                         time: 5
                     });
                 }
