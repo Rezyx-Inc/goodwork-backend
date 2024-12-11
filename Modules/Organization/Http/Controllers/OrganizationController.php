@@ -1215,6 +1215,10 @@ public function recruiters_management()
         $recruiter_id = $request->recruiter_id;
         $recruiter = User::find($recruiter_id);
 
+        if ($recruiter === null) {
+            return response()->json(['success' => false, 'message' => 'Recruiter not found']);
+        }
+
         $orgId = Auth::guard('organization')->user()->id;
 
         $scriptResponse = Http::post('http://localhost:4545/organizations/deleteRecruiter/' . $orgId, [
@@ -1229,6 +1233,10 @@ public function recruiters_management()
             $data['success'] = false;
             return response()->json($data);
         }
+
+        // Clear `recruiter_id` in jobs associated with this recruiter and organization
+        Job::where('organization_id', $orgId)->where('recruiter_id', $recruiter_id)->update(['recruiter_id' => null]);
+
 
         // Check if `organization_name` is not empty
         if (!empty($recruiter->organization_name)) {
@@ -1348,27 +1356,30 @@ public function recruiters_management()
                     return response()->json($data);
 
                 }else{
-                    //$recuiter_already_in_Org = User::where(['email'=>$request->email])->whereNull('organization_name')->first();
+                    $recruiterAlreadyInOrg = User::where('email', $request->email)->whereNotNull('organization_name')->first();
+                                    
                     $check = User::where(['email'=>$request->email])->whereNull('deleted_at')->first();
 
-                    if (!empty($check)) {
-                        $data = [];
-                        $data['msg'] ='Already exist.';
-                        $data['success'] = false;
-                        return response()->json($data);
-                    }
-
-                    // if (!empty($recuiter_already_in_Org)) {
-                    //     return response()->json([
-                    //         'msg' => 'Recruiter already in Organization',
-                    //         'success' => false,
-                    //     ]);
-                    // } elseif (!empty($check)) {
-                    //     return response()->json([
-                    //         'msg' => 'Already exist.',
-                    //         'success' => false,
-                    //     ]);
+                    // if (!empty($check)) {
+                    //     $data = [];
+                    //     $data['msg'] ='Already exist.';
+                    //     $data['success'] = false;
+                    //     return response()->json($data);
                     // }
+
+                    if (!empty($recruiterAlreadyInOrg)) {
+                        return response()->json([
+                            'msg' => 'Recruiter already in Organization',
+                            'code' => 99,
+                            'success' => false,
+                        ]);
+                    } elseif (!empty($check)) {
+                        return response()->json([
+                            'msg' => 'Already exist.',
+                            'code' => 88,
+                            'success' => false,
+                        ]);
+                    }
 
                     $response = [];
                     $model = User::create([

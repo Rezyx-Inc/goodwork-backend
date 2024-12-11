@@ -52,9 +52,6 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
         // Assign based on type
         if (header === 'Job ID') {
           rowObject[header] = value; // Keep 'job_id' as a string
-        } else if ((header === 'On Call?' && value === '')
-          || (header === 'Floating Required' && value === '')) {
-          rowObject[header] = 0;
         } else if (isNumeric) {
           rowObject[header] = parseFloat(value); // Convert to number if fully numeric
         } else if (isBoolean) {
