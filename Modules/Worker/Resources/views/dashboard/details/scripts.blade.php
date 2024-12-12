@@ -1218,6 +1218,14 @@
             $(modal).modal('show');
         }
 
+        function open_multiselect_modal(obj) {
+            
+            let target = $(obj).data('target');
+            let target_modal = '#' + target + '_modal';
+
+            $(target_modal).modal('show');
+        }
+
         function close_modal(obj) {
             let target = $(obj).data('target');
             $(target).modal('hide');

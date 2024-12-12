@@ -1396,15 +1396,18 @@ class WorkerController extends Controller
         $user = auth()->guard('frontend')->user();
 
         $id = $user->id;
-        $model = Nurse::where('user_id', $id)->first();
+        $nurse = Nurse::where('user_id', $id)->first();
         $inputFields = collect($request->all())->filter(function ($value) {
             return $value !== null;
         });
 
         $inputFields->put('updated_at', Carbon::now());
-        // dd($inputFields);
-        $model->fill($inputFields->all());
-        $model->save();
+
+        // Filter request data to only include valid attributes
+        $inputFields = $inputFields->only($nurse->getFillable());
+
+        $nurse->fill($inputFields->all());
+        $nurse->save();
         return new JsonResponse(['success' => true, 'msg' => 'Updated successfully.'], 200);
     }
 

@@ -3,6 +3,15 @@
 @section('css')
 @stop
 @section('content')
+
+    {{-- helpers --}}
+    @php
+        function truncateText($text, $limit = 35) {
+            return mb_strimwidth($text, 0, $limit, '...');
+        }
+    @endphp
+
+
     <!--Main layout-->
     <main style="padding-top: 130px" class="ss-main-body-sec">
         <div class="container">
@@ -167,7 +176,7 @@
                                         <p>{{ $model->job_type }}</p>
                                     </li>
                                     <li>
-                                        <h6>Terms</h6>
+                                        <h6>Terms</h6> 
                                         <p>{{ $model->terms }}</p>
                                     </li>
 
@@ -222,12 +231,12 @@
                                             <li>
                                                 <span>Your Profession</span>
 
-                                                <p class="profile_info_text" data-target="dropdown"
+                                                <p class="profile_info_text" data-target="profession"
                                                     data-title="What kind of professional are you?" data-filter="Profession"
-                                                    data-name="profession" onclick="open_modal(this)">
+                                                    data-name="profession" onclick="open_multiselect_modal(this)">
 
                                                     @if (!!$nurse->profession)
-                                                        {{ $nurse->profession }}
+                                                        <p>{{ truncateText($nurse->profession) }}</p>
                                                     @else
                                                         What kind of professional are you?
                                                     @endif
@@ -1847,6 +1856,7 @@
             --}}
             <!----------------job-details pop-up modals ---------------->
             @include('worker::dashboard.details.modals')
+            @include('worker::dashboard.details.new_inputs_modals')
 
 
         </div>
