@@ -1637,7 +1637,7 @@ class WorkerController extends Controller
                             $offerData[] = [
                                 'type' => $type,
                                 'OrganizationId' => $value->organization_id,
-                                'image' => $user->image,
+                                'image' => isset($user->image) ? $user->image : '',
                                 'organization_name' => $user->organization_name,
                                 'recently_added' => $recently_added
                             ];
