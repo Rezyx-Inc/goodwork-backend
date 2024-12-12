@@ -42,7 +42,7 @@
                     </div>
                 </div>
                     {{-- create form --}}
-                        @include('recruiter::recruiter.opportunitiesmanager.create_job');
+                        @include('recruiter::recruiter.opportunitiesmanager.create_job')
                     {{-- end create job from --}}
 
                 {{-- End Creat work --}}
