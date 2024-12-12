@@ -850,8 +850,6 @@
                 $('.help-block-email').text('Please enter a valid email');
                 $('.help-block-email').addClass('text-danger');
                 isValid = false;
-            }else{
-                $('.help-verif-otp').text('');
             }
 
             // code validation for email
