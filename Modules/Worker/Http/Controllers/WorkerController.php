@@ -1438,7 +1438,7 @@ class WorkerController extends Controller
                                 $offerData[] = [
                                     'offerId' => $value->id,
                                     'workerUserId' => $value->worker_user_id,
-                                    'image' => $user->image,
+                                    'image' => isset($user->image) ? $user->image : '',
                                     'firstName' => $user->first_name,
                                     'lastName' => $user->last_name,
                                     'city' => $value->city ?? null,
