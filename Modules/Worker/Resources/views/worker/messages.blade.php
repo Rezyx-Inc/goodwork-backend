@@ -76,6 +76,7 @@
             document.getElementById('fullName').innerHTML = fullName;
             document.getElementById('empty_room').classList.add("d-none");
             document.getElementById('body_room').classList.remove("d-none");
+            document.getElementsByClassName('ss-rply-msg-input')[0].classList.remove("d-none");
 
             // Set the global organization id
             idOrganization_Global = idOrganization;
@@ -118,7 +119,7 @@
                 ${messageContent}
                 <span>${message.messageTime}</span>
             </div>
-        `;
+         `;
             }
 
             // Listen for NewMessage event on the goodwork_database_messages channel : PUBLIC MESSAGES
@@ -178,7 +179,7 @@
                 ${messageContent}
                 <span>${time}</span>
             </div>
-        `;
+         `;
                     }
 
                     // Create the HTML for each message and prepend it to the messages area
@@ -188,9 +189,10 @@
                     });
 
                     let messagesArea = $('.messages-area');
-                    messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+                    //messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
 
                 });
+                focusOnInput();
         }
 
         function createRealMessageHTML(message) {
@@ -271,7 +273,7 @@
             });
 
             var messagesArea = $('.messages-area');
-            messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
+            //messagesArea.scrollTop(messagesArea.prop('scrollHeight'));
 
             const urlParams = new URLSearchParams(window.location.search);
             const idRecruiter = urlParams.get('recruiter_id');
@@ -291,7 +293,7 @@
 
                     // Make an AJAX request to the API
                     $.get('/worker/getMessages?page=' + page + '&organizationId=' + idOrganization_Global +
-                        '&recruiterId=GWU000005',
+                        '&recruiterId=' + idRecruiter_Global,
                         function(data) {
 
                             // Parse the returned data
@@ -448,10 +450,19 @@
                 });
             }
         }
+        function focusOnInput() {
+            var inputField = document.getElementById('messageEnvoye');
+            if (inputField) {
+                inputField.focus();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            focusOnInput();
+        });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <main style="padding-top: 130px" class="ss-main-body-sec">
+    <main style="padding-top: 100px" class="ss-main-body-sec">
 
         <div class="container" id="recruiters_messages">
             <div class="ss-message-pg-mn-div">
@@ -525,14 +536,18 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-7 ">
-                        <div id="empty_room" class="ss-msg-rply-mn-div ">
+                    <div class="col-lg-7 ss-msg-rply-mn-div">
+                        <div id="empty_room" >
                             <h5 class="empty_room">no chat was chosen</h5>
                         </div>
-                        <div id="body_room" class="d-none ss-msg-rply-mn-div messages-area parentMessages">
+                        <div id="body_room" class="d-none prv-msg-rply-mn-div messages-area parentMessages">
                             <div class="ss-msg-rply-profile-sec">
                                 <ul>
-                                    <li><img src="{{ URL::asset('frontend/img/msg-rply-box-img.png') }}" /></li>
+                                    <li>
+                                        <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $organization->image) }}"
+                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
+                                        id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
+                                    </li>
                                     <li>
                                         <p id="fullName"></p>
                                     </li>
@@ -551,36 +566,37 @@
                             </div>
                             <div class="private-messages">
                             </div>
-                            <div class="ss-rply-msg-input">
-                                <input type="text" id="messageEnvoye" name="fname"
-                                    placeholder="Express yourself here!">
-                                <input type="file" id="fileInput" style="display: none;">
-                                <button id="fileUpload" type="button"><img
-                                        src="{{ URL::asset('frontend/img/msg-rply-btn.png') }}" /></button>
+                            
+                        </div>
+                        <div class="ss-rply-msg-input d-none">
+                            <input type="text" id="messageEnvoye" name="fname"
+                                placeholder="Express yourself here!">
+                            <input type="file" id="fileInput" style="display: none;">
+                            <button class="upload-file" id="fileUpload" type="button"><img
+                                    src="{{ URL::asset('frontend/img/msg-rply-btn.png') }}" /></button>
 
-                            </div>
-                            <div class="row" style="margin-top: 25px;">
-                                <div class="row justify-content-end" id="fileInfo" style="display: none;">
-                                    <div class="col-6">
-                                        <span style=" margin-left: 16px;" id="fileName"></span>
-                                    </div>
-                                    <div style=" display: flex;
-                                justify-content: end;
+                        </div>
+                        <div class="row" style="margin: 15px 0;">
+                            <div class="row justify-content-end" id="fileInfo" style="display: none;">
+                                <div class="col-6">
+                                    <span style=" margin-left: 16px;" id="fileName"></span>
+                                </div>
+                                <div style=" display: flex;
+                            justify-content: end;
 
-                                "
-                                        class="col-6">
-                                        <button
-                                            style="width: 30%;
-                                    border-radius: 100px;
-                                "
-                                            class="ss-prsnl-save-btn button" id="deleteFile">Delete</button>
-                                        <button
-                                            style="width: 30%;
-                                    border-radius: 100px;
-                                    margin-left: 10px;
-                                "
-                                            class="ss-prsnl-save-btn button" id="sendFile">Send</button>
-                                    </div>
+                            "
+                                    class="col-6">
+                                    <button
+                                        style="width: 30%;
+                                border-radius: 100px;
+                            "
+                                        class="ss-prsnl-save-btn button" id="deleteFile">Delete</button>
+                                    <button
+                                        style="width: 30%;
+                                border-radius: 100px;
+                                margin-left: 10px;
+                            "
+                                        class="ss-prsnl-save-btn button" id="sendFile">Send</button>
                                 </div>
                             </div>
                         </div>
@@ -610,13 +626,44 @@
             position: relative;
         }
 
-
         .ss-msg-rply-mn-div {
+            padding: 0px;
+        }
+
+        .prv-msg-rply-mn-div {
             position: relative;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            padding: 30px;
         }
+        
+        .prv-msg-rply-mn-div::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .prv-msg-rply-mn-div::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .prv-msg-rply-mn-div::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .prv-msg-rply-mn-div::-webkit-scrollbar-thumb:active {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .prv-msg-rply-mn-div::-webkit-scrollbar-track-piece:start {
+            background: transparent;
+            margin-top: 80px;
+        }
+
+        .prv-msg-rply-mn-div::-webkit-scrollbar-track-piece:end {
+            background: transparent;
+            margin-bottom: 10px;
+        }  
 
         .ss-rply-msg-input {
             margin-top: auto;
@@ -627,14 +674,18 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            /* other styles */
+            padding: 0 20px;
+        }
+
+        .upload-file{
+            padding-right: 30px;
         }
 
         .empty_room {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 80vh;
         }
 
         #loading,

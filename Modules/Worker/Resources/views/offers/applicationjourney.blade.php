@@ -1450,7 +1450,7 @@
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    url: "{{ url('recruiter/accept-reject-job-offer') }}",
+                    url: "{{ url('worker/worker-accept-reject-job-offer') }}",
                     data: {
                         'token': csrfToken,
                         'id': id,
