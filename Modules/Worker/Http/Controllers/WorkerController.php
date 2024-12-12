@@ -1582,7 +1582,7 @@ class WorkerController extends Controller
                                 $offerData[] = [
                                     'offerId' => $value->id,
                                     'workerUserId' => $value->worker_user_id,
-                                    'image' => isset($user->image) ? $user->image : '',
+                                    'image' => $user->image,
                                     'firstName' => $user->first_name,
                                     'lastName' => $user->last_name,
                                     'city' => $value->city ?? null,
@@ -1637,7 +1637,7 @@ class WorkerController extends Controller
                             $offerData[] = [
                                 'type' => $type,
                                 'OrganizationId' => $value->organization_id,
-                                'image' => isset($user->image) ? $user->image : '',
+                                'image' => $user->image,
                                 'organization_name' => $user->organization_name,
                                 'recently_added' => $recently_added
                             ];
