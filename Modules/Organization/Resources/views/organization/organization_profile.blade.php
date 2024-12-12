@@ -228,6 +228,14 @@
                                                     placeholder="Please enter your new user name">
                                             </div>
                                             <span class="help-block-user_name"></span> --}}
+                                            {{-- Email Information --}}
+                                            <div class="ss-form-group col-11">
+                                                <label>New Email</label>
+                                                <input type="text" name="email"
+                                                    placeholder="Please enter your new Email">
+                                            </div>
+                                            <span class="help-block-email"></span>
+                                            <input class="help-verif-otp" type="d-none">
                                             {{-- Change Password --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Password</label>
@@ -255,14 +263,7 @@
                                                     placeholder="Please enter your new phone number">
                                             </div>
                                             <span class="help-block-new_mobile"></span>
-                                            {{-- Email Information --}}
-                                            {{-- <div class="ss-form-group col-11">
-                                                <label>New Email</label>
-                                                <input type="text" name="email"
-                                                    placeholder="Please enter your new Email">
-                                            </div>
-                                            <span class="help-block-email"></span>
-                                            <span class="help-block-validation"></span> --}}
+                                            <span class="help-block-validation"></span>
                                             {{-- Skip && Save --}}
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
@@ -812,7 +813,7 @@
         const password = document.querySelector('input[name="password"]');
         const new_mobile = document.querySelector('input[name="new_mobile"]');
         const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
-        //const email = document.querySelector('input[name="email"]');
+        const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
         // account setting validation here
@@ -824,7 +825,7 @@
             $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
-            inputs = [password, new_mobile /*, email, user_name*/];
+            inputs = [password, new_mobile , email /*, user_name*/];
 
             // Add the value of the selected radio button to the inputs array, if a radio button is selected
             const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
@@ -840,15 +841,21 @@
                 $('.help-block-validation').text('Please fill at least one field');
                 $('.help-block-validation').addClass('text-danger');
                 isValid = false;
+                
             }
 
-            // Email validation
-            // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            // if (!emailRegex.test(email.value)) {
-            //     $('.help-block-email').text('Please enter a valid email');
-            //     $('.help-block-email').addClass('text-danger');
-            //     isValid = false;
-            // }
+            //Email validation
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email.value)) {
+                $('.help-block-email').text('Please enter a valid email');
+                $('.help-block-email').addClass('text-danger');
+                isValid = false;
+            }else{
+                $('.help-verif-otp').text('');
+            }
+
+            // code validation for email
+
 
             // User name validation
             // const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
@@ -877,9 +884,12 @@
         SaveAccountInformation.addEventListener("click", function(event) {
             event.preventDefault();
             if (!validateAccountSettingInformation()) {
+                console.log('no');
+                
                 return;
             }
-
+            console.log("yes");
+            
             // clear form data from empty values
             const formData = new FormData();
             inputs.forEach(input => {
