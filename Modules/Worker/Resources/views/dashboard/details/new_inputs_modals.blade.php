@@ -22,14 +22,71 @@
                             'options' => $allKeywords['Profession'],
                             'option_attribute' => 'title',
                             'selected' => old('profession', $nurse->profession),
+                            'onChange' => 'multi_select_change',
                         ])
                     </div>
                 </div>
             </div>
         </div>
     </div>
+        
+    {{-- worker_job_type Modal --}}
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="worker_job_type_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="ss-pop-cls-vbtn">
+                    <button type="button" class="btn-close" data-target="#worker_job_type_modal" onclick="close_modal(this)"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body mt-3">
+                    {{-- worker_job_type --}}
+                    <div class="ss-form-group">
+                        @include('worker::components.custom_multiple_select_input', [
+                            'id' => 'worker_job_type',
+                            'label' => 'Type',
+                            'placeholder' => 'Select Type',
+                            'name' => 'worker_job_type',
+                            'options' => $allKeywords['Type'],
+                            'option_attribute' => 'title',
+                            'selected' => old('worker_job_type', $nurse->worker_job_type),
+                            'onChange' => 'multi_select_change',
+                        ])
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    {{-- terms Modal --}}
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="terms_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="ss-pop-cls-vbtn">
+                    <button type="button" class="btn-close" data-target="#terms_modal" onclick="close_modal(this)"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body mt-3">
+                    {{-- terms --}}
+                    <div class="ss-form-group">
+                        @include('worker::components.custom_multiple_select_input', [
+                            'id' => 'terms',
+                            'label' => 'Terms',
+                            'placeholder' => 'Select a specefic term',
+                            'name' => 'terms',
+                            'options' => $allKeywords['Terms'],
+                            'option_attribute' => 'title',
+                            'selected' => old('terms', $nurse->terms),
+                            'onChange' => 'multi_select_change',
+                        ])
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </form>

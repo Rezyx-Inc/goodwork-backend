@@ -8,6 +8,7 @@
             'options' => $allKeywords['Type'],
             'option_attribute' => 'title',
             'selected' => old('worker_job_type', $worker->worker_job_type),
+            'onChange' => 'myCustomFunction' // Pass your JS function as a string here
         ]) 
 --}}
 
@@ -64,11 +65,25 @@
                 selectedValues.push(checkbox.value);
             });
 
+            // put joined vals to a variable if length > 0 or null
+            const joinedVals = selectedValues.length > 0 ? selectedValues.join(', ') : null;
+
             // Update the hidden input and placeholder
-            hiddenInput.value = selectedValues.join(', ');
-            placeholder.textContent = selectedValues.length > 0 
-                                        ? selectedValues.join(', ') 
+            hiddenInput.value = joinedVals;
+            placeholder.textContent = joinedVals
+                                        ? joinedVals 
                                         : '{{ $placeholder ?? "Select value" }}';
+
+            
+            // Execute the custom onChange function if provided
+            const onChangeFunctionName = "{{ $onChange ?? '' }}";
+            if (onChangeFunctionName && typeof window[onChangeFunctionName] === 'function') {
+                window[onChangeFunctionName]({
+                    id: '{{ $id }}',
+                    name: '{{ $name }}',
+                    value: joinedVals
+                });
+            }
         }
 
         // Add change listener to checkboxes to handle selection changes

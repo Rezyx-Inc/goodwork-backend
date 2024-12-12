@@ -221,6 +221,56 @@
                                         </li>
                                     </ul>
 
+
+                                    @if (isset($model->job_type))
+                                        <ul id="worker_job_type"
+                                            class="ss-s-jb-apl-on-inf-txt-ul type_item {{ $matches['job_type']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Type</span>
+                                                <h6>{{ $model->job_type }}</h6>
+                                            </li>
+                                            <li>
+                                                <span>Your Type</span>
+
+                                                <p class="profile_info_text" data-target="worker_job_type"
+                                                    data-title="Your Type !"
+                                                    data-name="worker_job_type" onclick="open_multiselect_modal(this)">
+
+                                                    @if (!!$nurse->worker_job_type)
+                                                        {{ truncateText($nurse->worker_job_type) }}
+                                                    @else
+                                                        Your Type !
+                                                    @endif
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+
+                                    @if (isset($model->terms))
+                                        <ul id="terms"
+                                            class="ss-s-jb-apl-on-inf-txt-ul terms_item {{ $matches['terms']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+                                            <li>
+                                                <span>Terms</span>
+                                                <h6>{{ $model->terms }}</h6>
+                                            </li>
+                                            <li>
+                                                <span>Your Terms</span>
+
+                                                <p class="profile_info_text" data-target="terms"
+                                                    data-title="What kind of termsal are you?"
+                                                    data-name="terms" onclick="open_multiselect_modal(this)">
+
+                                                    @if (!!$nurse->terms)
+                                                        {{ truncateText($nurse->terms) }}
+                                                    @else
+                                                        Your Terms !
+                                                    @endif
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    @endif
+
                                     @if (isset($model->profession))
                                         <ul id="profession"
                                             class="ss-s-jb-apl-on-inf-txt-ul profession_item {{ $matches['profession']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
@@ -236,7 +286,7 @@
                                                     data-name="profession" onclick="open_multiselect_modal(this)">
 
                                                     @if (!!$nurse->profession)
-                                                        <p>{{ truncateText($nurse->profession) }}</p>
+                                                        {{ truncateText($nurse->profession) }}
                                                     @else
                                                         What kind of professional are you?
                                                     @endif

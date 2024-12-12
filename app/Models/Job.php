@@ -253,7 +253,58 @@ class Job extends Model
         $nurse = Nurse::where('user_id', $user->id)->first();
         $job = $this;
         $matches = [
+            
+
+
+            'job_type' => function () use ($job, $nurse) {
+                $match = false;
+                $matchCount = 0;
+
+                $job_jobType = explode(', ', $job->job_type);
+                $nurse_jobType = explode(', ', $nurse->worker_job_type);
+
+                // Find matches
+                $matches = array_intersect($job_jobType, $nurse_jobType);
+                // Check if there is at least one match
+                if (count($matches) > 0) {
+
+                    $match = true;
+                    $matchCount = count($matches);
+                } 
+
+                $value = $nurse->worker_job_type;
+                $type = 'input';
+                $name = 'worker_job_type';
+                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
+            },
+            
+            'terms' => function () use ($job, $nurse) {
+
+                $match = false;
+                $matchCount = 0;
+
+                $jobTerms = explode(', ', $job->terms);
+                $nurseTerms = explode(', ', $nurse->terms);
+
+                // Find matches
+                $matches = array_intersect($jobTerms, $nurseTerms);
+                // Check if there is at least one match
+                if (count($matches) > 0) {
+
+                    $match = true;
+                    $matchCount = count($matches);
+                } 
+
+                $value = $nurse->terms;
+                $type = 'dropdown';
+                $name = 'terms';
+                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
+             },
+
             'profession' => function () use ($job, $nurse) {
+
+                $match = false;
+                $matchCount = 0;
 
                 $jobProfessions = explode(', ', $job->profession);
                 $nurseProfessions = explode(', ', $nurse->profession);
@@ -262,24 +313,14 @@ class Job extends Model
                 $matches = array_intersect($jobProfessions, $nurseProfessions);
                 // Check if there is at least one match
                 if (count($matches) > 0) {
-
                     $match = true;
                     $matchCount = count($matches);
-                } else {
-                    $match = false;
-                    $matchCount = 0;
                 }
-                $profile_info_text = "What kind of professional are you ?";
-                if (!empty($nurse->profession && $job->profession == $nurse->profession)) {
-                    $match = true;
-                }
-                // if (!empty($nurse->profession)) {
-                //     $profile_info_text = "You are a very professional " . $nurse->profession;
-                // }
-                $value = $nurse->highest_nursing_degree;
+
+                $value = $nurse->profession;
                 $type = 'dropdown';
                 $name = 'profession';
-                return ['match' => $match, "profile_info_text" => $matches, 'value' => $value, 'name' => $name, 'type' => $type];
+                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'preferred_specialty' => function () use ($job, $nurse) {
                 $profile_info_text = "What’s your specialty ?";
@@ -867,14 +908,6 @@ class Job extends Model
                 $value = $nurse->worker_unit;
                 $type = 'input';
                 $name = 'worker_unit';
-                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
-            },
-
-            'job_type' => function () use ($job, $nurse) {
-                $match = ($job->field == $nurse->worker_job_type);
-                $value = $nurse->worker_job_type;
-                $type = 'input';
-                $name = 'worker_job_type';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
 

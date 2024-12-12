@@ -1219,16 +1219,26 @@
         }
 
         function open_multiselect_modal(obj) {
-            
             let target = $(obj).data('target');
             let target_modal = '#' + target + '_modal';
-
+            
             $(target_modal).modal('show');
         }
 
         function close_modal(obj) {
             let target = $(obj).data('target');
             $(target).modal('hide');
+        }
+
+        function multi_select_change(id, name, value) {
+            console.log("changed", id, name, value);
+
+            let element =  $('#' + id).find('p[data-name="' + id + '"]');
+
+            // TODO :: if value is null put the element title else put the value
+            // TODO :: check the match for item color 
+
+            // element.html(value);
         }
     </script>
 @stop
