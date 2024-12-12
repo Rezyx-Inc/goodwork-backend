@@ -10,7 +10,7 @@
     <h3 >Hi <b>{{$data['name']}}</b>,</h3>
   </div>
   <div >
-    <p>Congratulations! Your registration was successful.</p>
+    <p>Congratulations!  you have been invited by <b>{{$data['organization'] ?? '(missing organization name)'}}</b> to Goodwork.</p>
     <div >
     <p>Thank you,<br> Team Goodwork</p>
     </div>
