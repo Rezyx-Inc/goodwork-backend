@@ -74,7 +74,7 @@
                         @include('worker::components.custom_multiple_select_input', [
                             'id' => 'terms',
                             'label' => 'Terms',
-                            'placeholder' => 'Select a specefic term',
+                            'placeholder' => 'Select Terms',
                             'name' => 'terms',
                             'options' => $allKeywords['Terms'],
                             'option_attribute' => 'title',
@@ -87,6 +87,131 @@
             </div>
         </div>
     </div>
+
+
+    {{-- specialty Modal --}}
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="specialty_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="ss-pop-cls-vbtn">
+                    <button type="button" class="btn-close" data-target="#specialty_modal" onclick="close_modal(this)"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body mt-3">
+                    {{-- specialty --}}
+                    <div class="ss-form-group">
+
+                        @include('worker::components.custom_multiple_select_input', [
+                            'id' => 'specialty',
+                            'label' => 'What\'s your specialty?',
+                            'placeholder' => 'Select your specialty',
+                            'name' => 'specialty',
+                            'options' => $allKeywords['Speciality'],
+                            'option_attribute' => 'title',
+                            'selected' => old('specialty', $nurse->specialty),
+                            'onChange' => 'multi_select_change',
+                        ])
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- state Modal --}}
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="state_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="ss-pop-cls-vbtn">
+                    <button type="button" class="btn-close" data-target="#state_modal" onclick="close_modal(this)"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body mt-3">
+                    {{-- state --}}
+                    <div class="ss-form-group">
+                        
+                        @include('worker::components.custom_multiple_select_input', [
+                            'id' => 'state',
+                            'label' => 'States you\'d like to work?',
+                            'placeholder' => 'Select states',
+                            'name' => 'state',
+                            'options' => $allKeywords['State'],
+                            'option_attribute' => 'title',
+                            'selected' => old('state', $nurse->state),
+                            'onChange' => 'multi_select_change',
+                        ])
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- city Modal --}}
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="city_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="ss-pop-cls-vbtn">
+                    <button type="button" class="btn-close" data-target="#city_modal" onclick="close_modal(this)"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body mt-3">
+                    {{-- city --}}
+                    <div class="ss-form-group">
+                        
+                        @include('worker::components.custom_multiple_select_input', [
+                            'id' => 'city',
+                            'label' => 'Cities you\'d like to work?',
+                            'placeholder' => 'Select cities',
+                            'name' => 'city',
+                            'options' => $allKeywords['City'],
+                            'option_attribute' => 'title',
+                            'selected' => old('city', $nurse->city),
+                            'onChange' => 'multi_select_change',
+                        ])
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- worker_shift_time_of_day Modal --}}
+    <div class="modal fade ss-jb-dtl-pops-mn-dv" id="worker_shift_time_of_day_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="ss-pop-cls-vbtn">
+                    <button type="button" class="btn-close" data-target="#worker_shift_time_of_day_modal" onclick="close_modal(this)"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body mt-3">
+                    {{-- worker_shift_time_of_day --}}
+                    <div class="ss-form-group">
+                        
+                        @include('worker::components.custom_multiple_select_input', [
+                            'id' => 'worker_shift_time_of_day',
+                            'label' => 'Fav shift?',
+                            'placeholder' => 'Select shifts',
+                            'name' => 'worker_shift_time_of_day',
+                            'options' => $allKeywords['PreferredShift'],
+                            'option_attribute' => 'title',
+                            'selected' => old('worker_shift_time_of_day', $nurse->worker_shift_time_of_day),
+                            'onChange' => 'multi_select_change',
+                        ])
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 </form>

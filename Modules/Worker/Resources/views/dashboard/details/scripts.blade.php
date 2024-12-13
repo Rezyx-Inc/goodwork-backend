@@ -1233,6 +1233,10 @@
         // for job modal attr if not like nurse attr
         const job_attr_mapping = {
             'worker_job_type': 'job_type',
+            'specialty': 'preferred_specialty',
+            'state': 'job_state',
+            'city': 'job_city',
+            'worker_shift_time_of_day': 'preferred_shift_duration'
         } 
 
         function multi_select_match_with_worker(workerField, InsertedValue) {
@@ -1243,15 +1247,16 @@
             if (job_attr_mapping[workerField]) {
                 workerField = job_attr_mapping[workerField];
             }
-            
+
             let job_vals = job[workerField]?.split(', ');
             let nurse_vals = InsertedValue.split(', ');
+            console.log(workerField, job_vals, nurse_vals, job);
             
             // Find matches
-            let matches = job_vals.filter(val => nurse_vals.includes(val));
+            let matches = job_vals?.filter(val => nurse_vals.includes(val));
 
             // Check if there is at least one match
-            if (matches.length > 0) {
+            if (!!matches && matches.length > 0) {
                 match = true;
                 matchCount = matches.length;
             }

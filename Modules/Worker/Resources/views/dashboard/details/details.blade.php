@@ -305,11 +305,11 @@
                                             {{-- <li><p data-bs-toggle="modal" data-bs-target="#job-dtl-checklist">What's your specialty?</p></li> --}}
                                             <li>
                                                 <span>Your Specialty</span>
-                                                <p class="profile_info_text" data-target="dropdown"
+                                                <p class="profile_info_text" data-target="specialty"
                                                     data-title="What's your specialty?" data-filter="Speciality"
-                                                    data-name="specialty" onclick="open_modal(this)">
+                                                    data-name="specialty" onclick="open_multiselect_modal(this)">
                                                     @if (!!$nurse->specialty)
-                                                        {{ $nurse->specialty }}
+                                                        {{ truncateText($nurse->specialty) }}
                                                     @else
                                                         What's your specialty?
                                                     @endif
@@ -374,7 +374,7 @@
                                     @endif
 
                                     @if (isset($model->job_state))
-                                        <ul id="worker_facility_state"
+                                        <ul id="state"
                                             class="ss-s-jb-apl-on-inf-txt-ul job_state_item {{ $matches['job_state']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                             <li>
                                                 <span>Facility State</span>
@@ -382,11 +382,11 @@
                                             </li>
                                             <li>
                                                 <span>Your Facility State</span>
-                                                <p class="profile_info_text" data-target="dropdown"
+                                                <p class="profile_info_text" data-target="state"
                                                     data-title="States you'd like to work?" data-filter="State"
-                                                    data-name="worker_facility_state" onclick="open_modal(this)">
-                                                    @if (!!$nurse->worker_facility_state)
-                                                        {{ $nurse->worker_facility_state }}
+                                                    data-name="state" onclick="open_multiselect_modal(this)">
+                                                    @if (!!$nurse->state)
+                                                        {{  truncateText($nurse->state) }}
                                                     @else
                                                         States you'd like to work?
                                                     @endif
@@ -396,7 +396,7 @@
                                     @endif
 
                                     @if (isset($model->job_city))
-                                        <ul id="worker_facility_city"
+                                        <ul id="city"
                                             class="ss-s-jb-apl-on-inf-txt-ul job_city_item {{ $matches['job_city']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                             <li>
                                                 <span>Facility City</span>
@@ -404,11 +404,11 @@
                                             </li>
                                             <li>
                                                 <span>Your Facility City</span>
-                                                <p class="profile_info_text" data-target="dropdown"
+                                                <p class="profile_info_text" data-target="city"
                                                     data-title="Cities you'd like to work?" data-filter="City"
-                                                    data-name="worker_facility_city" onclick="open_modal(this)">
-                                                    @if (!!$nurse->worker_facility_city)
-                                                        {{ $nurse->worker_facility_city }}
+                                                    data-name="city" onclick="open_multiselect_modal(this)">
+                                                    @if (!!$nurse->city)
+                                                        {{ $nurse->city }}
                                                     @else
                                                         Do you want to work here ?
                                                     @endif
@@ -447,17 +447,17 @@
                                         </li>
                                     </ul>
 
-                                    @if (isset($model->preferred_shift))
+                                    @if (isset($model->preferred_shift_duration))
                                         <ul id="worker_shift_time_of_day" class="ss-s-jb-apl-on-inf-txt-ul">
                                             <li>
                                                 <span>Shift Time Of Day</span>
-                                                <h6>{{ $model->preferred_shift }} </h6>
+                                                <h6>{{ $model->preferred_shift_duration }} </h6>
                                             </li>
                                             <li>
                                                 <span>Your Shift Time Of Day</span>
-                                                <p class="profile_info_text" data-target="dropdown"
+                                                <p class="profile_info_text" data-target="worker_shift_time_of_day"
                                                     data-title="Fav shift?" data-filter="shift_time_of_day"
-                                                    data-name="worker_shift_time_of_day" onclick="open_modal(this)">
+                                                    data-name="worker_shift_time_of_day" onclick="open_multiselect_modal(this)">
                                                     @if (!!$nurse->worker_shift_time_of_day)
                                                         {{ $nurse->worker_shift_time_of_day }}
                                                     @else
