@@ -989,6 +989,14 @@ function addcertifications(type) {
         
         try {
 
+            var message = '';
+
+            if (type == 'counter') {
+                message = 'Counter offer sent successfully';
+            } else if (type == 'make') {
+                message = 'Offer sent successfully';
+            }
+
             event.preventDefault();
             
             getValues(OfferFieldsName);
@@ -1026,7 +1034,7 @@ function addcertifications(type) {
                     success: function(result) {
                         notie.alert({
                             type: 'success',
-                            text: '<i class="fa fa-check"></i> Counter Offer Sent',
+                            text: '<i class="fa fa-check"></i> ' + message,
                             time: 2
                         });
                         setTimeout(() => {

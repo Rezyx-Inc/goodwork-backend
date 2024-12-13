@@ -156,7 +156,7 @@
                                 <ul>
                                     <li>
                                         <h6>Organization Name</h6>
-                                        <p>{{ $model->recruiter->organization_name }}</p>
+                                        <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}</p>
                                     </li>
                                     <li>
                                         <h6>Date Posted</h6>
@@ -374,16 +374,17 @@
                                         </li>
                                     </ul>
 
-                                    @if (isset($model->preferred_shift))
-                                        <ul id="worker_shift_time_of_day" class="ss-s-jb-apl-on-inf-txt-ul">
+                                    @if (isset($model->preferred_shift_duration))
+                                        <ul id="worker_shift_time_of_day" 
+                                            class="ss-s-jb-apl-on-inf-txt-ul preferred_shift_item {{ $matches['preferred_shift_duration']['match'] ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
                                             <li>
                                                 <span>Shift Time Of Day</span>
-                                                <h6>{{ $model->preferred_shift }} </h6>
+                                                <h6>{{ $model->preferred_shift_duration }} </h6>
                                             </li>
                                             <li>
                                                 <span>Your Shift Time Of Day</span>
                                                 <p class="profile_info_text" data-target="dropdown"
-                                                    data-title="Fav shift?" data-filter="shift_time_of_day"
+                                                    data-title="Fav shift?" data-filter="PreferredShift"
                                                     data-name="worker_shift_time_of_day" onclick="open_modal(this)">
                                                     @if (!!$nurse->worker_shift_time_of_day)
                                                         {{ $nurse->worker_shift_time_of_day }}

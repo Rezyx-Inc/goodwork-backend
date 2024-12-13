@@ -20,63 +20,6 @@
     </p>
 
 </div>
-<div class="row ss-chng-apcon-st-ssele d-flex justify-content-center align-items-center">
-    <div class="col-12 row">
-        <label class="mb-2">Change Application Status</label>
-    </div>
-    <div class="col-12 row d-flex justify-content-center align-items-center">
-        <div class="col-9">
-            @if ($offerdetails['status'] === 'Screening')
-                <select name="status" id="status application-status">
-                    <option value="" disabled hidden>Select Status</option>
-                    <option value="Screening"
-                        {{ $offerdetails['status'] === 'Screening' ? 'selected hidden disabled' : '' }}>Screening
-                    </option>
-                    <option value="Submitted">Submitted
-                    </option>
-                    <option value="Offered">Offered</option>
-                    <option value="Done">Done</option>
-                </select>
-            @else
-                <select name="status" id="status application-status">
-                    <option value="" disabled hidden>Select Status</option>
-                    @if ($offerdetails['status'] === 'Apply')
-                        <option value="Apply" selected hidden disabled>Apply</option>
-                    @endif
-                    <option value="Screening"
-                        {{ $offerdetails['status'] === 'Screening' ? 'selected hidden disabled' : '' }}>Screening
-                    </option>
-                    <option value="Submitted"
-                        {{ $offerdetails['status'] === 'Submitted' ? 'selected hidden disabled' : '' }}>Submitted
-                    </option>
-                    <option value="Offered"
-                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Offered</option>
-                    <option value="Done" {{ $offerdetails['status'] === 'Done' ? 'selected hidden disabled' : '' }}>
-                        Done</option>
-                    <option value="Onboarding"
-                        {{ $offerdetails['status'] === 'Onboarding' ? 'selected hidden disabled' : '' }}>
-                        Onboarding</option>
-                    {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
-                </option> --}}
-                    <option value="Rejected"
-                        {{ $offerdetails['status'] === 'Rejected' ? 'selected hidden disabled' : '' }}>Rejected
-                    </option>
-                    <option value="Blocked"
-                        {{ $offerdetails['status'] === 'Blocked' ? 'selected hidden disabled' : '' }}>Blocked
-                    </option>
-                    <option value="Hold" {{ $offerdetails['status'] === 'Hold' ? 'selected hidden disabled' : '' }}>
-                        Hold</option>
-                </select>
-            @endif
-        </div>
-        <div class="col-3">
-
-            <button class="counter-save-for-button" style="margin-top:0px;"
-                onclick="applicationStatus(document.getElementById('status application-status').value, '{{ $offerdetails->id }}')">Change
-                Status</button>
-        </div>
-    </div>
-</div>
 <div class="ss-jb-apl-oninfrm-mn-dv">
     <div class="ss-jb-apply-on-inf-hed-rec row">
         <div class="col-md-6">
