@@ -1229,16 +1229,73 @@
             let target = $(obj).data('target');
             $(target).modal('hide');
         }
+        
+        // for job modal attr if not like nurse attr
+        const job_attr_mapping = {
+            'worker_job_type': 'job_type',
+        } 
 
-        function multi_select_change(id, name, value) {
-            console.log("changed", id, name, value);
+        function multi_select_match_with_worker(workerField, InsertedValue) {
+            let match = false;
+            let matchCount = 0;
+            var job = @json($model);
 
-            let element =  $('#' + id).find('p[data-name="' + id + '"]');
+            if (job_attr_mapping[workerField]) {
+                workerField = job_attr_mapping[workerField];
+            }
+            
+            let job_vals = job[workerField]?.split(', ');
+            let nurse_vals = InsertedValue.split(', ');
+            
+            // Find matches
+            let matches = job_vals.filter(val => nurse_vals.includes(val));
 
-            // TODO :: if value is null put the element title else put the value
-            // TODO :: check the match for item color 
+            // Check if there is at least one match
+            if (matches.length > 0) {
+                match = true;
+                matchCount = matches.length;
+            }
+            
+            return match;
+        }
 
-            // element.html(value);
+
+        function multi_select_change({id, name, value}) {
+
+            if (!id || !name) {
+                console.error("Missing 'id' or 'name' in function call");
+                return;
+            }
+
+            const parentSelector = '#' + CSS.escape(id);
+            const childSelector = `p[data-name="${name}"]`;
+
+            // Find the element
+            let element = $(parentSelector).find(childSelector);
+            
+            // if value is null put the element title else put the value
+            if(value == null) {
+                element.text(element.data('title'));
+            } else {
+                element.text(truncateText(value));
+            }
+
+            // check the match for item color 
+            if (multi_select_match_with_worker(id, value)) {
+                    let areaDiv = document.getElementById(id);
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                } else {
+                    let areaDiv = document.getElementById(id);
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                }
+
+        }
+
+        // Helper function
+        function truncateText(text, limit = 35) {
+            return text.length > limit ? text.substring(0, limit) + '...' : text;
         }
     </script>
 @stop
