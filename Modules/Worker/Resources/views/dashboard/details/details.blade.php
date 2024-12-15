@@ -425,7 +425,7 @@
                                             <h6>{{ $model->is_resume ? 'Required' : 'Not Required' }}</h6>
                                         </li>
                                         <li>
-                                            <p class="profile_info_text" data-target="resume_file_modal" data-hidden_name="resume_cer"
+                                            <p class="profile_info_text" data-target="resume_file" data-hidden_name="resume_cer"
                                                 data-hidden_value="Yes" data-href="{{ route('info-required') }}"
                                                 data-title="Upload your latest resume" data-name="resume"
                                                 onclick="open_modal(this)">Upload your latest resume</p>
