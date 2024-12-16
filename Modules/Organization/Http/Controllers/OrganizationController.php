@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\register;
-use App\Mail\Register_recruiter;
+use App\Mail\RegisterRecruiter;
 
 
 class OrganizationController extends Controller
@@ -1414,7 +1414,7 @@ public function recruiters_management()
 
                     // sending mail infromation
                     $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'organization' => $orgId->organization_name,'subject' => 'Registration'];
-                    Mail::to($model->email)->send(new Register_recruiter($email_data));
+                    Mail::to($model->email)->send(new RegisterRecruiter($email_data));
                     
                     return response()->json($response);
                 }
