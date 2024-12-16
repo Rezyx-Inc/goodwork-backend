@@ -744,6 +744,10 @@ class OrganizationController extends Controller
                 $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
                 $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
                 
+                if (!isset($job->recruiter_id)){
+                    $job->recruiter_id = $job->organization_id;
+                }
+
                 // Save the job data to the database
                 $job->save();
 
