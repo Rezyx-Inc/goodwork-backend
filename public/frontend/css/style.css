@@ -2086,7 +2086,9 @@ color: #fff;
     font-size: 15px;
 }
 
-.ss-pers-info-form-mn-dv .ss-form-group select {
+.ss-pers-info-form-mn-dv .ss-form-group select,
+.ss-pers-info-form-mn-dv .ss-form-group .select-btn ,
+.ss-pers-info-form-mn-dv .ss-form-group .list-items{
     border: 2px solid #3D2C39 !important;
     width: 100%;
     padding: 10px !important;

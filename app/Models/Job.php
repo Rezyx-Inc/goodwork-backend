@@ -253,40 +253,148 @@ class Job extends Model
         $nurse = Nurse::where('user_id', $user->id)->first();
         $job = $this;
         $matches = [
+            
+
+
+            'job_type' => function () use ($job, $nurse) {
+                $match = false;
+                $matchCount = 0;
+
+                $job_jobType = explode(', ', $job->job_type);
+                $nurse_jobType = explode(', ', $nurse->worker_job_type);
+
+                // Find matches
+                $matches = array_intersect($job_jobType, $nurse_jobType);
+                // Check if there is at least one match
+                if (count($matches) > 0) {
+
+                    $match = true;
+                    $matchCount = count($matches);
+                } 
+
+                $value = $nurse->worker_job_type;
+                $type = 'input';
+                $name = 'worker_job_type';
+                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
+            },
+            
+            'terms' => function () use ($job, $nurse) {
+
+                $match = false;
+                $matchCount = 0;
+
+                $jobVal = explode(', ', $job->terms);
+                $nurseVal = explode(', ', $nurse->terms);
+
+                // Find matches
+                $matches = array_intersect($jobVal, $nurseVal);
+                // Check if there is at least one match
+                if (count($matches) > 0) {
+
+                    $match = true;
+                    $matchCount = count($matches);
+                } 
+
+                $value = $nurse->terms;
+                $type = 'dropdown';
+                $name = 'terms';
+                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
+             },
+
             'profession' => function () use ($job, $nurse) {
 
-                if ($job->profession == $nurse->profession) {
+                $match = false;
+                $matchCount = 0;
+
+                $jobVal = explode(', ', $job->profession);
+                $nurseVal = explode(', ', $nurse->profession);
+
+                // Find matches
+                $matches = array_intersect($jobVal, $nurseVal);
+                // Check if there is at least one match
+                if (count($matches) > 0) {
                     $match = true;
-                } else {
-                    $match = false;
-                };
-                $profile_info_text = "What kind of professional are you ?";
-                if (!empty($nurse->profession && $job->profession == $nurse->profession)) {
-                    $match = true;
+                    $matchCount = count($matches);
                 }
-                // if (!empty($nurse->profession)) {
-                //     $profile_info_text = "You are a very professional " . $nurse->profession;
-                // }
-                $value = $nurse->highest_nursing_degree;
+
+                $value = $nurse->profession;
                 $type = 'dropdown';
                 $name = 'profession';
-                return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
+                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'preferred_specialty' => function () use ($job, $nurse) {
-                $profile_info_text = "What’s your specialty ?";
-                // if (!empty($nurse->specialty)) {
-                //     $profile_info_text = "You are very special in " . $nurse->specialty;
-                // }
-                if (!empty($nurse->specialty) && $job->preferred_specialty == $nurse->specialty) {
+                
+                $match = false;
+                $matchCount = 0;
+
+                $jobVal = explode(', ', $job->preferred_specialty);
+                $nurseVal = explode(', ', $nurse->specialty);
+
+                // Find matches
+                $matches = array_intersect($jobVal, $nurseVal);
+                
+                // Check if there is at least one match
+                if (count($matches) > 0) {
                     $match = true;
-                } else {
-                    $match = false;
+                    $matchCount = count($matches);
                 }
+
+                $profile_info_text = "What’s your specialty ?";
+                
                 $value = $nurse->specialty;
                 $type = 'dorpdown';
                 $name = 'specialty';
                 return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
             },
+            
+            'job_state' => function () use ($job, $nurse) {
+                $profile_info_text = "Do you want to work here?";
+
+                $match = false;
+                $matchCount = 0;
+
+                $jobVal = explode(', ', $job->job_state);
+                $nurseVal = explode(', ', $nurse->state);
+
+                // Find matches
+                $matches = array_intersect($jobVal, $nurseVal);
+                
+                // Check if there is at least one match
+                if (count($matches) > 0) {
+                    $match = true;
+                    $matchCount = count($matches);
+                }
+                
+                $value = $nurse->state;
+                $type = 'input';
+                $name = 'state';
+                return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
+            },
+            
+            'job_city' => function () use ($job, $nurse) {
+                $profile_info_text = "Do you want to work here?";
+                
+                $match = false;
+                $matchCount = 0;
+
+                $jobVal = explode(', ', $job->job_city);
+                $nurseVal = explode(', ', $nurse->city);
+
+                // Find matches
+                $matches = array_intersect($jobVal, $nurseVal);
+                
+                // Check if there is at least one match
+                if (count($matches) > 0) {
+                    $match = true;
+                    $matchCount = count($matches);
+                }
+                
+                $value = $nurse->city;
+                $type = 'input';
+                $name = 'city';
+                return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
+            },
+
             'float_requirement' => function () use ($job, $nurse) {
                 $match = ($job->float_requirement == $nurse->float_requirement);
                 $profile_info_text = "Are you willing to float?";
@@ -333,28 +441,6 @@ class Job extends Model
                 $value = $nurse->worker_experience;
                 $type = 'dorpdown';
                 $name = 'worker_experience';
-                return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
-            },
-            'job_city' => function () use ($job, $nurse) {
-                $profile_info_text = "Do you want to work here?";
-                // if (!empty($nurse->worker_facility_city)) {
-                //     $profile_info_text = "You are down to work in " . $job->worker_facility_city;
-                // }
-                $match = ($job->job_city == $nurse->worker_facility_city);
-                $value = $nurse->worker_facility_city;
-                $type = 'input';
-                $name = 'worker_facility_city';
-                return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
-            },
-            'job_state' => function () use ($job, $nurse) {
-                $profile_info_text = "Do you want to work here?";
-                // if (!empty($nurse->worker_facility_state)) {
-                //     $profile_info_text = "You are down to work in " . $job->worker_facility_state;
-                // }
-                $match = ($job->job_state == $nurse->worker_facility_state);
-                $value = $nurse->worker_facility_state;
-                $type = 'input';
-                $name = 'worker_facility_state';
                 return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
             },
             'as_soon_as' => function () use ($job, $nurse) {
@@ -874,14 +960,6 @@ class Job extends Model
                 $value = $nurse->worker_unit;
                 $type = 'input';
                 $name = 'worker_unit';
-                return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
-            },
-
-            'job_type' => function () use ($job, $nurse) {
-                $match = ($job->field == $nurse->worker_job_type);
-                $value = $nurse->worker_job_type;
-                $type = 'input';
-                $name = 'worker_job_type';
                 return ['match' => $match, 'value' => $value, 'name' => $name, 'type' => $type];
             },
 
