@@ -40,6 +40,13 @@
                         <span>{{ $statusCounts['Onboarding'] }} Applications</span>
                     </div>
                 </div>
+                {{-- Clearad to start Applicants --}}
+                <div style="flex: 1 1 0px;">
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Cleared_to_Start')" id="Cleared_to_Start">
+                        <p>Cleared to Start</p>
+                        <span>{{ $statusCounts['Cleared_to_Start'] }} Applications</span>
+                    </div>
+                </div>
                 {{-- Working Applicants --}}
                 <div style="flex: 1 1 0px;">
                     <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Working')" id="Working">
@@ -339,6 +346,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedToStartElement = document.getElementById('Cleared_to_Start');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -360,6 +368,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedToStartElement.classList.contains("active")) {
+                clearedToStartElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -946,8 +957,10 @@
             }
         }
     </script>
+
+    
     <script>
-       function askWorker(e, type, workerid,recruiter_id , organization_id, name) {
+        function askWorker(e, type, workerid,recruiter_id , organization_id, name) {
             // when we have the notification system inmplemented we will use this :
 
             // var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -990,7 +1003,7 @@
             localStorage.setItem('nurse_id', id);
         }
         const numberOfReferencesField = document.getElementById('number_of_references');
-        if (numberOfReferencesField) {
+            if (numberOfReferencesField) {
             numberOfReferencesField.addEventListener('input', function() {
                 if (numberOfReferencesField.value.length > 9) {
                     numberOfReferencesField.value = numberOfReferencesField.value.substring(0, 9);
@@ -1257,6 +1270,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
+            var clearedToStartElement = document.getElementById('Cleared_to_Start');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -1277,6 +1291,9 @@
             }
             if (onboardingElement.classList.contains("active")) {
                 onboardingElement.classList.remove("active");
+            }
+            if (clearedToStartElement.classList.contains("active")) {
+                clearedToStartElement.classList.remove("active");
             }
             if (workingElement.classList.contains("active")) {
                 workingElement.classList.remove("active");
@@ -1305,7 +1322,13 @@
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
             }else if (type != null){
-                document.getElementById('listingname').innerHTML = type + ' Applications';
+                if (type == 'Cleared_to_Start') {
+                    document.getElementById('listingname').innerHTML = 'Cleared to Start Applications';
+
+                }else{
+                    document.getElementById('listingname').innerHTML = type + ' Applications';
+                }
+                
             }
             if (type == 'Done' || type == 'Rejected' || type == 'Blocked' || type == 'Hold') {
 
@@ -1425,7 +1448,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared_to_Start', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
@@ -1526,7 +1549,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared_to_Start', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
