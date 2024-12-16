@@ -212,7 +212,8 @@ class Nurse extends Model implements HasMedia
 
         'worker_end_date',
         'worker_preferred_work_location',
-        'worker_facility_name',
+        // worker_facility_name need to be added to db
+        // 'worker_facility_name',
         'worker_job_location',
         'worker_description',
         'terms',
@@ -278,8 +279,5 @@ class Nurse extends Model implements HasMedia
         return $this->hasMany(NurseReference::class);
     }
 
-    public function profile_percentage()
-    {
-
-    }
+    public function profile_percentage() {}
 }
