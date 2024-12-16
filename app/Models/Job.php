@@ -465,6 +465,22 @@ class Job extends Model
                 $name = 'worker_hours_per_week';
                 return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
             },
+            'preferred_shift_duration' => function () use ($job, $nurse) {
+
+                if ($job->preferred_shift_duration == $nurse->worker_shift_time_of_day) {
+                    $match = true;
+                } else {
+                    $match = false;
+                };
+                $profile_info_text = "Fav shift?";
+                if (!empty($nurse->worker_shift_time_of_day && $job->preferred_shift_duration == $nurse->worker_shift_time_of_day)) {
+                    $match = true;
+                }
+                $value = $nurse->worker_shift_time_of_day;
+                $type = 'dropdown';
+                $name = 'worker_shift_time_of_day';
+                return ['match' => $match, "profile_info_text" => $profile_info_text, 'value' => $value, 'name' => $name, 'type' => $type];
+            },
             'guaranteed_hours' => function () use ($job, $nurse) {
                 $profile_info_text = "Open to job with no guaranteed hours?";
                 // if (!empty($nurse->worker_guaranteed_hours)) {

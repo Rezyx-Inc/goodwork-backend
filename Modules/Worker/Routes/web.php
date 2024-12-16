@@ -155,6 +155,10 @@ Route::prefix('worker')->group(function () {
 
             Route::post('worker-counter-offer', ['uses' => 'WorkerController@worker_counter_offer', 'as'=> 'worker-counter-offer']);
 
+            // update worker offer stateus
+            Route::post('worker-update-application-status', ['uses' => 'WorkerController@updateApplicationStatus', 'as' => 'worker-update-application-status']);
+
+            Route::post('worker-accept-reject-job-offer', ['uses' => 'WorkerController@AcceptOrRejectJobOffer', 'as' => 'worker-accept-reject-job-offer']);
 
 
         }

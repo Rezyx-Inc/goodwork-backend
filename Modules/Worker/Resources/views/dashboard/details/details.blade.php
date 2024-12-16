@@ -165,7 +165,7 @@
                                 <ul>
                                     <li>
                                         <h6>Organization Name</h6>
-                                        <p>{{ $model->recruiter->organization_name }}</p>
+                                        <p>{{ $model->recruiter->organization_name ? $model->recruiter->organization_name : 'Missing information' }}</p>
                                     </li>
                                     <li>
                                         <h6>Date Posted</h6>
@@ -449,6 +449,7 @@
 
                                     @if (isset($model->preferred_shift_duration))
                                         <ul id="worker_shift_time_of_day" class="ss-s-jb-apl-on-inf-txt-ul">
+
                                             <li>
                                                 <span>Shift Time Of Day</span>
                                                 <h6>{{ $model->preferred_shift_duration }} </h6>
@@ -458,6 +459,7 @@
                                                 <p class="profile_info_text" data-target="worker_shift_time_of_day"
                                                     data-title="Fav shift?" data-filter="shift_time_of_day"
                                                     data-name="worker_shift_time_of_day" onclick="open_multiselect_modal(this)">
+
                                                     @if (!!$nurse->worker_shift_time_of_day)
                                                         {{ $nurse->worker_shift_time_of_day }}
                                                     @else
