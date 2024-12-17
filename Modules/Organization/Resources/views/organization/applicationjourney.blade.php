@@ -42,9 +42,9 @@
                 </div>
                 {{-- Clearad to start Applicants --}}
                 <div style="flex: 1 1 0px;">
-                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Cleared_to_Start')" id="Cleared_to_Start">
-                        <p>Cleared to Start</p>
-                        <span>{{ $statusCounts['Cleared_to_Start'] }} Applications</span>
+                    <div class="ss-job-prfle-sec" onclick="selectOfferCycleState('Cleared')" id="Cleared">
+                        <p>Cleared</p>
+                        <span>{{ $statusCounts['Cleared'] }} Applications</span>
                     </div>
                 </div>
                 {{-- Working Applicants --}}
@@ -346,7 +346,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
-            var clearedToStartElement = document.getElementById('Cleared_to_Start');
+            var clearedToStartElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -1192,6 +1192,8 @@
         }
 
         function selectOfferCycleState(type){
+            console.log("type ===============================================================================",type);
+            
             applicationStatusToggle(type);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             if (csrfToken) {
@@ -1270,7 +1272,7 @@
             var submittedElement = document.getElementById('Submitted');
             var offeredElement = document.getElementById('Offered');
             var onboardingElement = document.getElementById('Onboarding');
-            var clearedToStartElement = document.getElementById('Cleared_to_Start');
+            var clearedToStartElement = document.getElementById('Cleared');
             var workingElement = document.getElementById('Working');
             var doneElement = document.getElementById('Done');
             var holdElement = document.getElementById('Hold');
@@ -1322,7 +1324,7 @@
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
             }else if (type != null){
-                if (type == 'Cleared_to_Start') {
+                if (type == 'Cleared') {
                     document.getElementById('listingname').innerHTML = 'Cleared to Start Applications';
 
                 }else{
@@ -1448,7 +1450,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared_to_Start', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);
@@ -1549,7 +1551,7 @@
                             text: result.message,
                             time: 5
                         });
-                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared_to_Start', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                        const statusKeys = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
 
                         statusKeys.forEach(key => {
                             $(`#${key} span`).text(`${result.statusCounts[key]} Applicants`);

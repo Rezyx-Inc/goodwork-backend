@@ -99,7 +99,7 @@
                     <option value="Onboarding"
                         {{ $offerdetails['status'] === 'Onboarding hidden disabled' ? 'selected' : '' }}>
                         Onboarding</option>
-                    <option value="Cleared to Start"
+                    <option value="Cleared"
                         {{ $offerdetails['status'] === 'Cleared to Start hidden disabled' ? 'selected' : '' }}>
                         Cleared to Start</option>
                     {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
