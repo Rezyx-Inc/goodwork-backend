@@ -75,8 +75,8 @@
                     <option value="Screening"
                         {{ $offerdetails['status'] === 'Screening' ? 'selected hidden disabled' : '' }}>Screening
                     </option>
-                    <option value="Submitted">Submitted
-                    </option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Offered">Make an Offer</option>
                     <option value="Offered">Offered</option>
                     <option value="Done">Done</option>
                 </select>
@@ -93,7 +93,7 @@
                         {{ $offerdetails['status'] === 'Submitted' ? 'selected hidden disabled' : '' }}>Submitted
                     </option>
                     <option value="Offered"
-                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Offered</option>
+                        {{ $offerdetails['status'] === 'Offered' ? 'selected hidden disabled' : '' }}>Make an Offer</option>
                     <option value="Done" {{ $offerdetails['status'] === 'Done' ? 'selected hidden disabled' : '' }}>
                         Done</option>
                     <option value="Onboarding"
@@ -1635,18 +1635,7 @@
 
 @if ($offerdetails->status == 'Screening')
     <div class="ss-counter-buttons-div">
-        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Send
-            1st
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
-        <button class="ss-counter-button" onclick="ChangeOfferInfo('{{ $offerdetails->id }}')">Change
-            Offer</button>
-    </div>
-    <div class="ss-counter-buttons-div">
-        <button class="ss-reject-offer-btn"
-            onclick="AcceptOrRejectJobOffer('{{ $offerdetails->id }}', '{{ $offerdetails->job_id }}', 'rejectcounter')">Reject
-            Offer</button>
+        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Make Offer</button>
     </div>
 @endif
 
