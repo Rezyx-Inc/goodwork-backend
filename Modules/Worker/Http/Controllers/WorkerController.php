@@ -781,7 +781,7 @@ class WorkerController extends Controller
         } 
 
         
-        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];
 
@@ -1778,7 +1778,7 @@ class WorkerController extends Controller
 
     public function worker_counter_offer(Request $request)
     {
-        
+
         try {
             $worker = Auth::guard('frontend')->user();
             $worker_id = $worker->nurse->id;
@@ -1786,8 +1786,11 @@ class WorkerController extends Controller
             $offer_id = $request->id;
             $data = $request->data;
             $diff = $request->diff;
+            
             $offer = Offer::where('id', $offer_id)->first();
+
             if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
+                
                 $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
                 $offerLog->update([
                     'details' => json_encode($diff),
@@ -1804,10 +1807,12 @@ class WorkerController extends Controller
                 ]);
             }
 
-            
+
             // update it
             if ($offer) {
+                
                 $data['status'] = 'Offered';
+      
                 $offer->update($data);
                 $jobid = $offer->job_id;
                 $time = now()->toDateTimeString();
@@ -1853,7 +1858,7 @@ class WorkerController extends Controller
                 $receiver = $offer->recruiter_id;
                 $job_name = Job::where('id', $jobid)->first()->job_name;
                 event(new NotificationOffer($status, false, $time, $receiver, $worker_id, $full_name, $jobid, $job_name, $offer_id));
-                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
                 $statusCounts = [];
                 $offerLists = [];
                 foreach ($statusList as $status) {

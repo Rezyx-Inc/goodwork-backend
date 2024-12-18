@@ -56,6 +56,9 @@
                     <option value="Onboarding"
                         {{ $offerdetails['status'] === 'Onboarding' ? 'selected hidden disabled' : '' }}>
                         Onboarding</option>
+                    <option value="Cleared"
+                        {{ $offerdetails['status'] === 'Cleared' ? 'selected hidden disabled' : '' }}>
+                        Cleared to Start</option>
                     {{-- <option value="Working" {{ $offerdetails['status'] === 'Working' ? 'selected' : '' }}>Working
                 </option> --}}
                     <option value="Rejected"

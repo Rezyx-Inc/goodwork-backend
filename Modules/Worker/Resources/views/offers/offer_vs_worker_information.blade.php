@@ -1522,7 +1522,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '{{ route('list-worker-docs') }}',
+                url: '{{ route('list-docs') }}',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
