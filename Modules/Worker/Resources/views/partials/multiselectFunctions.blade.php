@@ -801,8 +801,6 @@ function addcertifications(type) {
                 'hours_per_week': { id: 'hours_per_week', type: 'number' },
                 'state': { id: 'state', type: 'select' },
                 'city': { id: 'city', type: 'select' },
-                'is_resume': { id: 'is_resume', type: 'checkbox'},
-
                 'guaranteed_hours': { id: 'guaranteed_hours', type: 'number' },
                 'hours_shift': { id: 'hours_shift', type: 'number' },
                 'weeks_shift': { id: 'weeks_shift', type: 'number' },
@@ -854,6 +852,7 @@ function addcertifications(type) {
                 'job_name': { id: 'job_name', type: 'text' },
                 'holiday': { id: 'holiday', type: 'date' },
                 'professional_state_licensure': { id: 'professional_state_licensure_pending', type: 'radio' },
+                'is_resume': { id: 'is_resume', type: 'checkbox'},
 
             };
 
@@ -926,40 +925,45 @@ function addcertifications(type) {
     function getValues(OfferFieldsName) {
         
         try {
-            for (const key in OfferFieldsName) {
+            for (let fieldKey in OfferFieldsName) {
 
-                if (OfferFieldsName.hasOwnProperty(key)) {
-
-                    const element = OfferFieldsName[key];
-
+                if (OfferFieldsName.hasOwnProperty(fieldKey)) {
+                    const element = OfferFieldsName[fieldKey];
+                    
                     if (element.type == 'number') {
-
-                        data[key] = document.getElementById(element.id).value;
-
+                        
+                        data[fieldKey] = document.getElementById(element.id).value;
+                        
                     } else if (element.type == 'select') {
-
-                        data[key] = document.getElementById(element.id).value;
-
+                        
+                        data[fieldKey] = document.getElementById(element.id).value;
+                        
                     } else if (element.type == 'checkbox') {
 
                         if(element.id == 'urgency'){
 
-                            data[key] = document.getElementById(element.id).checked ? 'Auto Offer' : null;
+                            data[fieldKey] = document.getElementById(element.id).checked ? 'Auto Offer' : null;
                             continue;
                         }
 
-                        data[key] = document.getElementById(element.id).checked ? 1 : 0;
+                        if(element.id == 'is_resume' && !document.getElementById(element.id) ){
+                            data[fieldKey] = 0;
+                            continue;
+                        }
+
+                        data[fieldKey] = document.getElementById(element.id).checked ? 1 : 0;
                         
                     } else if (element.type == 'date') {
                         if (element.id == 'holiday'){
                             continue
                         }
-                        data[key] = document.getElementById(element.id).value;
+                        data[fieldKey] = document.getElementById(element.id).value;
                     } else if (element.type == 'text') {
-                        data[key] = document.getElementById(element.id).value;
+                        data[fieldKey] = document.getElementById(element.id).value;
                     } else if (element.type == 'radio') {
-                        data[key] = document.getElementById(element.id).checked ? 1 : 0;
+                        data[fieldKey] = document.getElementById(element.id).checked ? 1 : 0;
                     }
+
                 }
             }
         } catch (error) {
@@ -986,9 +990,9 @@ function addcertifications(type) {
 
 
     function offerSend(event,type) {
-        
-        try {
 
+        try {
+            
             event.preventDefault();
             
             getValues(OfferFieldsName);
