@@ -1778,7 +1778,7 @@ class WorkerController extends Controller
 
     public function worker_counter_offer(Request $request)
     {
-        
+
         try {
             $worker = Auth::guard('frontend')->user();
             $worker_id = $worker->nurse->id;
@@ -1786,8 +1786,11 @@ class WorkerController extends Controller
             $offer_id = $request->id;
             $data = $request->data;
             $diff = $request->diff;
+            
             $offer = Offer::where('id', $offer_id)->first();
+
             if(OffersLogs::where('original_offer_id', $offer_id)->exists()){
+                
                 $offerLog = OffersLogs::where('original_offer_id', $offer_id)->first();
                 $offerLog->update([
                     'details' => json_encode($diff),
@@ -1804,10 +1807,12 @@ class WorkerController extends Controller
                 ]);
             }
 
-            
+
             // update it
             if ($offer) {
+                
                 $data['status'] = 'Offered';
+      
                 $offer->update($data);
                 $jobid = $offer->job_id;
                 $time = now()->toDateTimeString();
