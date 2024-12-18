@@ -994,7 +994,6 @@ function addcertifications(type) {
         try {
             
             event.preventDefault();
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OfferFieldsName',OfferFieldsName);
             
             getValues(OfferFieldsName);
             getMultiSelectValues();
