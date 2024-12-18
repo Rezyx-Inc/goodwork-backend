@@ -306,7 +306,7 @@
                 var formData = new FormData($form[0]);
                 // Append the new attribute
                 formData.append('funcionalityType', formtype);
-                console.log(formData);
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -398,6 +398,7 @@
                     doneElement.classList.add("active");
                 }
             }
+
             if(type == 'Apply'){
                 document.getElementById('listingname').innerHTML = 'New Applications';
             }else if (type != null){
@@ -410,10 +411,11 @@
             } else {
                 document.getElementById("ss-appli-done-hed-btn-dv").classList.add("d-none");
             }
+
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
             if (csrfToken) {
-                console.log(formtype);
-                console.log(type);
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
@@ -445,7 +447,8 @@
                         tbody.empty(); // Clear the table body
                         // Add a row for each file
                         if (files) {
-                        for (var i = 0; i < files.length; i++) {
+
+                            for (var i = 0; i < files.length; i++) {
                                 var file = files[i];
                                 var base64String = file.content;
 
@@ -469,8 +472,8 @@
                                 row.append('<td>' + file.type + '</td>');
                                 row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
                                 tbody.append(row);
+                            }
                         }
-                    }
                     },
                     error: function(error) {
                         console.log(error);
@@ -1192,7 +1195,6 @@
         }
 
         function selectOfferCycleState(type){
-            console.log("type ===============================================================================",type);
             
             applicationStatusToggle(type);
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
