@@ -2,6 +2,7 @@
 
 @section('content')
 
+@include('worker::offers.new_inputs_modals')
     <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/style.css')}}" />
     <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/custom.css')}}" />
     <main style="padding-top: 170px" class="ss-main-body-sec">

@@ -606,7 +606,8 @@ class KeywordSeeder extends Seeder
                 'Hospice Center',
                 'Dialysis Center',
                 'Remote/Virtual',
-                'Home Care'
+                'Home Care',
+                'Skilled Nursing'
             ],
             'Vaccinations'=>[
                 'Flu',

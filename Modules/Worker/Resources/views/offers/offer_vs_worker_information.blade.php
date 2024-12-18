@@ -1,3 +1,11 @@
+
+@php
+    function truncateText($text, $limit = 35)
+    {
+        return mb_strimwidth($text, 0, $limit, '...');
+    }
+@endphp
+@include('worker::offers.modals')
 <ul class="ss-cng-appli-hedpfl-ul">
     <li>
         <span>
@@ -27,7 +35,8 @@
     {{-- Summary --}}
     <div class="row col-md-12 mb-4 mt-4 collapse-container">
         <p>
-            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-0" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn first-collapse" data-toggle="collapse" href="#collapse-0" role="button" aria-expanded="false"
+                aria-controls="collapseExample">
                 Summary
             </a>
         </p>
@@ -40,21 +49,30 @@
         <div class="col-md-12">
             <span class="mt-3">Type</span>
         </div>
-        <div class="row {{ $offerdetails->type == $userdetails->nurse->worker_job_type ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id='worker_job_type' class="row {{ $offerdetails->type == $userdetails->nurse->worker_job_type ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>
-                    {{ $userdetails->nurse->worker_job_type ?? 'Missing job type Information' }}
-                </h6>
+
+                <p class="profile_info_text" data-target="worker_job_type" data-title="Your Type !"
+                    data-name="worker_job_type" onclick="open_multiselect_modal(this)">
+
+                    @if (!!$userdetails->nurse->worker_job_type)
+                        {{ truncateText($userdetails->nurse->worker_job_type) }}
+                    @else
+                        Your Type !
+                    @endif
+                </p>
+
             </div>
             <div class="col-md-6 ">
                 <p>
-                    
+
                     @isset($offerdetails->type)
                         {{ $offerdetails->type }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'type', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'type', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endisset
                 </p>
             </div>
@@ -63,12 +81,20 @@
         <div class="col-md-12">
             <span class="mt-3">Terms</span>
         </div>
-        <div class="row {{ $offerdetails->terms == $userdetails->nurse->terms ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="terms" class="row {{ $offerdetails->terms == $userdetails->nurse->terms ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>
-                    {{ $userdetails->nurse->terms ?? 'Missing job terms Information' }}
-                </h6>
+                
+                <p class="profile_info_text" data-target="terms" data-title="What kind of terms are you?"
+                    data-name="terms" onclick="open_multiselect_modal(this)">
+
+                    @if (!!$userdetails->nurse->terms)
+                        {{ truncateText($userdetails->nurse->terms) }}
+                    @else
+                        What kind of terms are you?
+                    @endif
+                </p>
+
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -76,7 +102,8 @@
                         {{ $offerdetails->terms }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'terms', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'terms', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endisset
                 </p>
             </div>
@@ -84,12 +111,19 @@
         <div class="col-md-12">
             <span class="mt-3">Profession</span>
         </div>
-        <div class="row {{ $offerdetails->profession == $userdetails->nurse->profession ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="profession" class="row {{ $offerdetails->profession == $userdetails->nurse->profession ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>
-                    {{ $offerdetails->profession ?? 'Missing Profession Information' }}
-                </h6>
+                <p class="profile_info_text" data-target="profession" data-title="What kind of professional are you?"
+                    data-name="profession" onclick="open_multiselect_modal(this)">
+
+                    @if (!!$userdetails->nurse->profession)
+                        {{ truncateText($userdetails->nurse->profession) }}
+                    @else
+                        What kind of professional are you?
+                    @endif
+                </p>
+
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -97,7 +131,8 @@
                         {{ $userdetails->nurse->profession }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'profession', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'profession', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endisset
                 </p>
             </div>
@@ -105,11 +140,18 @@
         <div class="col-md-12">
             <span class="mt-3">Specialty</span>
         </div>
-        <div class="row {{ $offerdetails->specialty == $userdetails->nurse->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="specialty" class="row {{ $offerdetails->specialty == $userdetails->nurse->specialty ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{  $userdetails->nurse->specialty  ?? 'Missing Specialty Information' }}
-                </h6>
+                <p class="profile_info_text" data-target="specialty" data-title="What's your specialty?"
+                    data-name="specialty" onclick="open_multiselect_modal(this)">
+
+                    @if (!!$userdetails->nurse->specialty)
+                        {{ truncateText($userdetails->nurse->specialty) }}
+                    @else
+                        What's your specialty?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -117,7 +159,8 @@
                         {{ $offerdetails->specialty }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'specialty', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'specialty', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -126,11 +169,21 @@
         <div class="col-md-12">
             <span class="mt-3">$/hr</span>
         </div>
-        <div class="row {{ $offerdetails->actual_hourly_rate === $userdetails->nurse->worker_actual_hourly_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_actual_hourly_rate" class="row {{ $offerdetails->actual_hourly_rate === $userdetails->nurse->worker_actual_hourly_rate ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($userdetails->nurse->worker_actual_hourly_rate) ? number_format($userdetails->nurse->worker_actual_hourly_rate) : 'Missing Actual Hourly Rate Information' }}
-                </h6>
+                {{-- <h6>{{ isset($userdetails->nurse->worker_actual_hourly_rate) ? number_format($userdetails->nurse->worker_actual_hourly_rate) : 'Missing Actual Hourly Rate Information' }}
+                </h6> --}}
+
+                <p class="profile_info_text" data-target="input_number"
+                                                    data-title="What rate is fair?" data-placeholder="What rate is fair?"
+                                                    data-name="worker_actual_hourly_rate" onclick="open_modal(this)">
+                                                    @if (isset($userdetails->nurse->worker_actual_hourly_rate))
+                                                        {{ number_format($userdetails->nurse->worker_actual_hourly_rate) }}
+                                                    @else
+                                                        What rate is fair?
+                                                    @endif
+                </p>
             </div>
             <div class="col-md-6">
                 <p>
@@ -141,7 +194,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -155,11 +208,18 @@
         <div class="col-md-12">
             <span class="mt-3">$/wk</span>
         </div>
-        <div class="row {{ $offerdetails->weekly_pay === $userdetails->nurse->worker_organization_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_organization_weekly_amount" class="row {{ $offerdetails->weekly_pay === $userdetails->nurse->worker_organization_weekly_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($userdetails->nurse->worker_organization_weekly_amount) ? number_format($userdetails->nurse->worker_organization_weekly_amount) : 'Missing Weekly Pay Information' }}
-                </h6>
+                <p class="profile_info_text" data-target="input_number"
+                    data-title="What rate is fair?" data-placeholder="What rate is fair?"
+                    data-name="worker_organization_weekly_amount" onclick="open_modal(this)">
+                    @if (isset($userdetails->nurse->worker_organization_weekly_amount))
+                        {{ number_format($userdetails->nurse->worker_organization_weekly_amount) }}
+                    @else
+                        What rate is fair?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -170,7 +230,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -184,11 +244,20 @@
         <div class="col-md-12">
             <span class="mt-3">Hrs/Wk</span>
         </div>
-        <div class="row {{ $offerdetails->hours_per_week == $userdetails->nurse->worker_hours_per_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_hours_per_week" class="row {{ $offerdetails->hours_per_week == $userdetails->nurse->worker_hours_per_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($userdetails->nurse->worker_hours_per_week) ? number_format($userdetails->nurse->worker_hours_per_week) : 'Missing Hours/Week Information' }}
-                </h6>
+                {{-- <h6>{{ isset($userdetails->nurse->worker_hours_per_week) ? number_format($userdetails->nurse->worker_hours_per_week) : 'Missing Hours/Week Information' }}
+                </h6> --}}
+                <p class="profile_info_text" data-target="input_number"
+                    data-title="What rate is fair?" data-placeholder="Ideal hours per week?"
+                    data-name="worker_hours_per_week" onclick="open_modal(this)">
+                    @if (isset($userdetails->nurse->worker_hours_per_week))
+                        {{ number_format($userdetails->nurse->worker_hours_per_week) }}
+                    @else
+                        Ideal hours per week?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -199,7 +268,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -212,10 +281,18 @@
         <div class="col-md-12">
             <span class="mt-3">State</span>
         </div>
-        <div class="row {{ $offerdetails->state == $userdetails->nurse->state ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="state" class="row {{ $offerdetails->state == $userdetails->nurse->state ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $userdetails->nurse->state ?? 'Missing State Information' }}</h6>
+                <p class="profile_info_text" data-target="state" data-title="States you'd like to work?"
+                    data-name="state" onclick="open_multiselect_modal(this)">
+
+                    @if (!!$userdetails->nurse->state)
+                        {{ truncateText($userdetails->nurse->state) }}
+                    @else
+                        States you'd like to work?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -223,7 +300,8 @@
                         {{ $offerdetails->state }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'state', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'state', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -232,18 +310,27 @@
         <div class="col-md-12">
             <span class="mt-3">City</span>
         </div>
-        <div class="row {{ $offerdetails->city == $userdetails->nurse->city ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="city" class="row {{ $offerdetails->city == $userdetails->nurse->city ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $userdetails->nurse->city ?? 'Missing City Information' }}</h6>
+                <p class="profile_info_text" data-target="city" data-title="Cities you'd like to work?"
+                    data-name="city" onclick="open_multiselect_modal(this)">
+
+                    @if (!!$userdetails->nurse->city)
+                        {{ truncateText($userdetails->nurse->city) }}
+                    @else
+                         Cities you'd like to work?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
                     @if ($offerdetails->city)
-                        {{ $offerdetails->city}}
+                        {{ $offerdetails->city }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'city', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'city', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -280,10 +367,19 @@
         <div class="col-md-12">
             <span class="mt-3">Shift Time</span>
         </div>
-        <div class="row {{ $offerdetails->preferred_shift_duration == $userdetails->nurse->worker_shift_time_of_day ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_shift_time_of_day" class="row {{ $offerdetails->preferred_shift_duration == $userdetails->nurse->worker_shift_time_of_day ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $userdetails->nurse->worker_shift_time_of_day ?? 'Missing Shift Time of Day Information' }}</h6>
+                {{-- <h6>{{ $userdetails->nurse->worker_shift_time_of_day ?? 'Missing Shift Time of Day Information' }}</h6> --}}
+                <p class="profile_info_text" data-target="worker_shift_time_of_day" data-title="Fav shift?"
+                    data-name="worker_shift_time_of_day" onclick="open_multiselect_modal(this)">
+
+                    @if (!!$userdetails->nurse->worker_shift_time_of_day)
+                        {{ truncateText($userdetails->nurse->worker_shift_time_of_day) }}
+                    @else
+                        Fav shift?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -291,7 +387,8 @@
                         {{ $offerdetails->preferred_shift_duration }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'preferred_shift_duration', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'preferred_shift_duration', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -300,11 +397,20 @@
         <div class="col-md-12">
             <span class="mt-3">Guaranteed Hrs/wk</span>
         </div>
-        <div class="row {{ $offerdetails->guaranteed_hours == $userdetails->nurse->worker_guaranteed_hours ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_guaranteed_hours" class="row {{ $offerdetails->guaranteed_hours == $userdetails->nurse->worker_guaranteed_hours ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($userdetails->nurse->worker_guaranteed_hours) ? number_format($userdetails->nurse->worker_guaranteed_hours) : 'Missing Guaranteed Hours Information' }}
-                </h6>
+                {{-- <h6>{{ isset($userdetails->nurse->worker_guaranteed_hours) ? number_format($userdetails->nurse->worker_guaranteed_hours) : 'Missing Guaranteed Hours Information' }}
+                </h6> --}}
+                <p class="profile_info_text" data-target="input_number"
+                data-title="What rate is fair?" data-placeholder="Open to jobs with no guaranteed hours?"
+                data-name="worker_guaranteed_hours" onclick="open_modal(this)">
+                    @if (isset($userdetails->nurse->worker_guaranteed_hours))
+                        {{ number_format($userdetails->nurse->worker_guaranteed_hours) }}
+                    @else
+                        Open to jobs with no guaranteed hours?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -315,7 +421,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -328,11 +434,21 @@
         <div class="col-md-12">
             <span class="mt-3">Reg Hrs/Shift</span>
         </div>
-        <div class="row {{ $offerdetails->hours_shift == $userdetails->nurse->worker_hours_shift ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_hours_shift" class="row {{ $offerdetails->hours_shift == $userdetails->nurse->worker_hours_shift ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($userdetails->nurse->worker_hours_shift) ? number_format($userdetails->nurse->worker_hours_shift) : 'Missing Hours/Shift Information' }}
-                </h6>
+                {{-- <h6>{{ isset($userdetails->nurse->worker_hours_shift) ? number_format($userdetails->nurse->worker_hours_shift) : 'Missing Hours/Shift Information' }}
+                </h6> --}}
+                <p class="profile_info_text" data-target="input_number"
+                data-title="What rate is fair?" data-placeholder="Preferred hours per shift"
+                data-name="worker_hours_shift" onclick="open_modal(this)">
+                    @if (isset($userdetails->nurse->worker_hours_shift))
+                        {{ number_format($userdetails->nurse->worker_hours_shift) }}
+                    @else
+                        Preferred hours per shift
+                    @endif
+                </p>
+
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -343,7 +459,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -356,11 +472,20 @@
         <div class="col-md-12">
             <span class="mt-3">Shifts/Wk</span>
         </div>
-        <div class="row {{ $offerdetails->weeks_shift == $userdetails->nurse->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_shifts_week" class="row {{ $offerdetails->weeks_shift == $userdetails->nurse->worker_shifts_week ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($userdetails->nurse->worker_shifts_week) ? number_format($userdetails->nurse->worker_shifts_week) : 'Missing Shifts/Week Information' }}
-                </h6>
+                {{-- <h6>{{ isset($userdetails->nurse->worker_shifts_week) ? number_format($userdetails->nurse->worker_shifts_week) : 'Missing Shifts/Week Information' }}
+                </h6> --}}
+                <p class="profile_info_text" data-target="input_number"
+                data-title="What rate is fair?" data-placeholder="Ideal shifts per week"
+                data-name="worker_shifts_week" onclick="open_modal(this)">
+                    @if (isset($userdetails->nurse->worker_shifts_week))
+                        {{ number_format($userdetails->nurse->worker_shifts_week) }}
+                    @else
+                        Ideal shifts per week
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -371,7 +496,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -384,11 +509,20 @@
         <div class="col-md-12">
             <span class="mt-3">Wks/Contract</span>
         </div>
-        <div class="row {{ $offerdetails->preferred_assignment_duration == $userdetails->nurse->worker_weeks_assignment ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
+        <div id="worker_weeks_assignment" class="row {{ $offerdetails->preferred_assignment_duration == $userdetails->nurse->worker_weeks_assignment ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ isset($userdetails->nurse->worker_weeks_assignment) ? number_format($userdetails->nurse->worker_weeks_assignment) : 'Missing Wks/Contract Information' }}
-                </h6>
+                {{-- <h6>{{ isset($userdetails->nurse->worker_weeks_assignment) ? number_format($userdetails->nurse->worker_weeks_assignment) : 'Missing Wks/Contract Information' }}
+                </h6> --}}
+                <p class="profile_info_text" data-target="input_number"
+                data-title="What rate is fair?" data-placeholder="How many weeks?"
+                data-name="worker_weeks_assignment" onclick="open_modal(this)">
+                    @if (isset($userdetails->nurse->worker_weeks_assignment))
+                        {{ number_format($userdetails->nurse->worker_weeks_assignment) }}
+                    @else
+                        How many weeks?
+                    @endif
+                </p>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -399,7 +533,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -413,22 +547,48 @@
         <div class="col-md-12">
             <span class="mt-3">Start Date</span>
         </div>
-        <div class="row {{ $offerdetails->start_date == $userdetails->nurse->worker_start_date ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
-            style="margin:auto;">
-            <div class="col-md-6">
-                <h6>{{ $userdetails->nurse->worker_start_date ?? 'As Soon As Possible' }}</h6>
+        @if (isset($offerdetails->as_soon_as) && $offerdetails->as_soon_as == '1')
+            <div 
+                class="row ss-s-jb-apl-on-inf-txt-ul as_soon_as_item">
+                <div class="col-md-6">
+                    <p class="profile_info_text" data-target="binary"
+                        data-title="Can you start as soon as possible?"
+                        data-name="worker_as_soon_as_possible" onclick="open_modal(this)">
+                        @if (!!$userdetails->nurse->worker_as_soon_as_possible)
+                            {{ $userdetails->nurse->worker_as_soon_as_possible }}
+                        @else
+                            Can you start as soon as possible?
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-6">
+
+                    <h6>As soon as possible</h6>
+                </div>
             </div>
-            <div class="col-md-6 ">
-                <p>
-                    @if ($offerdetails->start_date )
-                        {{ $offerdetails->start_date  }}
-                    @else
-                        <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'start_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
-                    @endif
-                </p>
+        
+        @else
+            <div id="worker_start_date"
+                class="row ss-s-jb-apl-on-inf-txt-ul start_date_item {{ $offerdetails->start_date == $userdetails->nurse->worker_start_date ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }}">
+               
+                <div class="col-md-6">
+                   
+                    <p class="profile_info_text" data-target="date"
+                        data-title="When can you start?" data-name="worker_start_date"
+                        onclick="open_modal(this)">
+                        @if (!!$userdetails->nurse->worker_start_date)
+                            {{ $userdetails->nurse->worker_start_date }}
+                        @else
+                            When can you start?
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h6>{{ $offerdetails->start_date ?? 'As Soon As Possible' }} </h6>
+                </div>
             </div>
-        </div>
+        
+        @endif
         {{-- End Date --}}
 
         <div class="col-md-12">
@@ -445,7 +605,8 @@
                         {{ $offerdetails->end_date }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_end_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'worker_end_date', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -467,7 +628,8 @@
                         {{ $offerdetails->rto }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'rto', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'rto', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -503,7 +665,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -532,7 +694,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -560,7 +722,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -588,7 +750,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -604,7 +766,7 @@
         <div class="row {{ $offerdetails->weekly_taxable_amount === $userdetails->nurse->worker_weekly_taxable_amount ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6> {{ isset($userdetails->nurse->worker_weekly_taxable_amount ) ? '$ ' . number_format($userdetails->nurse->worker_weekly_taxable_amount ) : 'Missing Est. Weekly Taxable amount Information' }}
+                <h6> {{ isset($userdetails->nurse->worker_weekly_taxable_amount) ? '$ ' . number_format($userdetails->nurse->worker_weekly_taxable_amount) : 'Missing Est. Weekly Taxable amount Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
@@ -616,7 +778,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -645,7 +807,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -675,7 +837,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -713,7 +875,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -743,7 +905,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -772,7 +934,7 @@
                             '\', \'' .
                             $offerdetails->recruiter_id .
                             '\', \'' .
-                             $offerdetails->organization_id .
+                            $offerdetails->organization_id .
                             '\', \'' .
                             $userdetails->first_name .
                             ' ' .
@@ -783,8 +945,8 @@
         </div>
         {{-- Other Bonus --}}
 
-         {{-- Est. Total Organization Amount --}}
-         <div class="col-md-12">
+        {{-- Est. Total Organization Amount --}}
+        <div class="col-md-12">
             <span class="mt-3">$/Org</span>
         </div>
         <div class="col-md-12">
@@ -809,7 +971,8 @@
                         {{ $offerdetails->pay_frequency }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'pay_frequency', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'pay_frequency', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -844,13 +1007,14 @@
                         {{ implode(', ', $offerBenefits) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'benefits', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'benefits', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
         </div>
 
-       
+
     </div>
     {{-- End Pay --}}
     {{-- Location --}}
@@ -871,7 +1035,8 @@
         <div class="row {{ $offerdetails->clinical_setting === $userdetails->nurse->clinical_setting_you_prefer ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $userdetails->nurse->clinical_setting_you_prefer ?? 'Missing Clinical Setting Information' }}</h6>
+                <h6>{{ $userdetails->nurse->clinical_setting_you_prefer ?? 'Missing Clinical Setting Information' }}
+                </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -879,7 +1044,8 @@
                         {{ $offerdetails->clinical_setting }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'clinical_setting', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'clinical_setting', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -892,7 +1058,8 @@
         <div class="row {{ $offerdetails->preferred_work_location === $userdetails->nurse->worker_preferred_work_location ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{ $userdetails->nurse->worker_preferred_work_location ?? 'Missing Preferred Work Location Information' }}</h6>
+                <h6>{{ $userdetails->nurse->worker_preferred_work_location ?? 'Missing Preferred Work Location Information' }}
+                </h6>
             </div>
             <div class="col-md-6 ">
                 <p>
@@ -900,7 +1067,8 @@
                         {{ $offerdetails->preferred_work_location }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'preferred_work_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'preferred_work_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -922,7 +1090,8 @@
                         {{ $offerdetails->facility_name }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'facility_name', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'facility_name', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -945,7 +1114,8 @@
                         {{ $offerdetails->facilitys_parent_system }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'facilitys_parent_system', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'facilitys_parent_system', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -957,7 +1127,7 @@
         <div class="row {{ $offerdetails->facility_shift_cancelation_policy === $userdetails->nurse->facility_shift_cancelation_policy ? 'ss-s-jb-apl-bg-blue' : 'ss-s-jb-apl-bg-pink' }} d-flex align-items-center"
             style="margin:auto;">
             <div class="col-md-6">
-                <h6>{{  $userdetails->nurse->facility_shift_cancelation_policy ?? 'Missing Facility Shift Cancellation Policy Information' }}
+                <h6>{{ $userdetails->nurse->facility_shift_cancelation_policy ?? 'Missing Facility Shift Cancellation Policy Information' }}
                 </h6>
             </div>
             <div class="col-md-6 ">
@@ -966,7 +1136,8 @@
                         {{ $offerdetails->facility_shift_cancelation_policy }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'facility_shift_cancelation_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'facility_shift_cancelation_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -987,7 +1158,8 @@
                         {{ $offerdetails->contract_termination_policy }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'contract_termination_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'contract_termination_policy', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1008,7 +1180,8 @@
                         {{ $offerdetails->traveler_distance_from_facility }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'traveler_distance_from_facility', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'traveler_distance_from_facility', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1056,7 +1229,8 @@
                         {{ implode(', ', $offerLicenses) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'job_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'job_location', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1083,7 +1257,8 @@
                         {{ implode(', ', $offerCertificates) }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'certificate', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'certificate', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1119,7 +1294,8 @@
                         {{ $userdetails->nurse->worker_description }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_description', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'worker_description', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1142,7 +1318,8 @@
                         {{ $userdetails->nurse->worker_experience . ' Year(s)' }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_experience', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'worker_experience', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1181,7 +1358,7 @@
             </div>
             <div class="col-md-6">
                 <h6>{{ !empty($offerSkills) ? implode(', ', $offerSkills) : 'Missing Skills Information' }}</h6>
-            </div>    
+            </div>
         </div>
 
 
@@ -1212,7 +1389,8 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'on_call', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'on_call', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1244,7 +1422,8 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'block_scheduling', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'block_scheduling', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1274,7 +1453,8 @@
                         No
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'float_requirement', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'float_requirement', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1294,7 +1474,8 @@
                         {{ $userdetails->nurse->worker_patient_ratio }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_patient_ratio', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'worker_patient_ratio', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1314,7 +1495,8 @@
                         {{ $userdetails->nurse->worker_emr }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_emr', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'worker_emr', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1334,7 +1516,8 @@
                         {{ $userdetails->nurse->worker_unit }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'worker_unit', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'worker_unit', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1368,7 +1551,8 @@
                         {{ $userdetails->nurse->nurse_classification }}
                     @else
                         <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'nurse_classification', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask Recruiter</a>
+                            onclick="askRecruiter(this, 'nurse_classification', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                            Recruiter</a>
                     @endif
                 </p>
             </div>
@@ -1415,7 +1599,7 @@
 
 @if ($offerdetails->status == 'Screening' || $offerdetails->status == 'Submitted')
     <div class="ss-counter-buttons-div">
-        <button class="ss-counter-button" onclick="counterOffer('{{ $offerdetails->id }}')" >Make
+        <button class="ss-counter-button" onclick="counterOffer('{{ $offerdetails->id }}')">Make
             Offer</button>
     </div>
 @endif
@@ -1444,7 +1628,111 @@
 @endif
 
 </div>
+
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        var workerId = @json($offerdetails['worker_user_id']);
+
+        function activeWorkerClass(workerUserId) {
+
+            var element = document.getElementById(workerUserId);
+            element.classList.add('active');
+
+        }
+
+        // trim description control
+
+        let description = document.getElementById('job_description');
+
+        if (description) {
+            let descriptionText = description.innerText;
+            if (descriptionText.length > 100) {
+                description.innerText = descriptionText.substring(0, 100) + '...';
+                let readMore = document.createElement('a');
+                readMore.id = 'read-more';
+                readMore.innerText = ' Read More';
+                readMore.href = 'javascript:void(0)';
+                // add a function to onclick
+                readMore.onclick = readMoreDescreption;
+                description.appendChild(readMore);
+            }
+        }
+
+
+        // end trim description control
+
+        const items = document.querySelectorAll('.list-items .item');
+        //store selected file values
+
+        items.forEach((item, index) => {
+            item.addEventListener('click', (event) => {
+                if (event.target.closest('.checkbox')) {
+                    return;
+                }
+                const uploadInput = item.nextElementSibling;
+                if (uploadInput) {
+                    // class 'checked' check
+                    if (item.classList.contains('checked')) {
+                        uploadInput.click();
+                        uploadInput.addEventListener('change', function() {
+                            if (this.files.length > 0) {
+                                // Handling file selection
+                                const file = this.files[0];
+                                selectedFiles.push(file.name);
+                            }
+                        }, {
+                            once: true //avoid multiple registrations
+                        });
+                    } else {
+                        const index = selectedFiles.indexOf(uploadInput.files[0].name);
+                        if (index > -1) {
+                            selectedFiles.splice(index, 1);
+                        }
+
+                    }
+                }
+            });
+        });
+
+
+    });
+
+    const selectBtn = document.querySelectorAll(".select-btn"),
+
+        items = document.querySelectorAll(".item");
+
+
+    selectBtn.forEach(selectBtn => {
+        selectBtn.addEventListener("click", () => {
+            selectBtn.classList.toggle("open");
+        });
+    });
+
+    items.forEach(item => {
+        item.addEventListener("click", () => {
+            const value = item.getAttribute('value');
+            item.classList.toggle("checked");
+
+            if (item.classList.contains("checked")) {
+                // add item
+                selectedValues.push(value);
+            } else {
+                // remove item
+                const index = selectedValues.indexOf(value);
+                if (index > -1) {
+                    selectedValues.splice(index, 1);
+                }
+            }
+            let btnText = document.querySelector(".btn-text");
+            if (selectedValues.length > 0) {
+                btnText.innerText = `${selectedValues.length} Selected`;
+            } else {
+                btnText.innerText = "Select Language";
+            }
+        });
+    })
+
     var worker_files_displayname_by_type = [];
     var worker_files = [];
     var no_files = false;
@@ -1496,16 +1784,16 @@
         var placeholder = document.getElementById(fileType + '-placeholder');
 
         if (file.length > 0 && no_files == false) {
-            
-            if(fileType == "resume"){
-            
+
+            if (fileType == "resume") {
+
                 placeholder.innerHTML = "Provided";
-            
-            }else{
-                
+
+            } else {
+
                 placeholder.innerHTML = file.join(', ');
             }
-        
+
         } else {
             let areaDiv = document.getElementById(fileType);
             areaDiv.classList.add('ss-s-jb-apl-bg-pink');
@@ -1641,19 +1929,19 @@
                 check = true;
             }
 
-        } else if (inputName == "resume"){
-            
+        } else if (inputName == "resume") {
+
             updateWorkerFilesList(worker_files_displayname_by_type, 'resume');
 
-            let is_resume = @json($offerdetails["is_resume"]);
+            let is_resume = @json($offerdetails['is_resume']);
 
             if (worker_files_displayname_by_type.length > 0 && is_resume) {
 
                 check = true;
-            
-            }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+
+            } else if (worker_files_displayname_by_type.length > 0 && !is_resume) {
                 check = true;
-            }else{
+            } else {
                 check = false;
             }
         }
@@ -1668,17 +1956,324 @@
     }
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+    
+var offer_fields_vs_worker_fields = {
+    'type': 'worker_job_type',
+    'terms': 'terms',
+    'profession': 'profession',
+    'specialty': 'specialty',
+    'actual_hourly_rate': 'worker_actual_hourly_rate',
+    'weekly_pay': 'worker_organization_weekly_amount',
+    'hours_per_week': 'worker_hours_per_week',
+    'state': 'state',
+    'city': 'city',
+    'preferred_shift_duration': 'worker_shift_time_of_day',
+    'guaranteed_hours': 'worker_guaranteed_hours',
+    'hours_shift': 'worker_hours_shift',
+    'weeks_shift': 'worker_shifts_week',
+    'preferred_assignment_duration': 'worker_weeks_assignment',
+    'start_date': 'worker_start_date',
+    'end_date': 'worker_end_date',
+    'rto': 'rto',
+    'overtime': 'worker_overtime_rate',
+    'on_call_rate': 'worker_on_call',
+    'call_back_rate': 'worker_call_back',
+    'orientation_rate': 'worker_orientation_rate',
+    'weekly_taxable_amount': 'worker_weekly_taxable_amount',
+    'weekly_non_taxable_amount': 'worker_weekly_non_taxable_amount',
+    'feels_like_per_hour': 'worker_feels_like_per_hour',
+    'referral_bonus': 'worker_referral_bonus',
+    'sign_on_bonus': 'worker_sign_on_bonus',
+    'extension_bonus': 'worker_extension_bonus',
+    'pay_frequency': 'worker_pay_frequency',
+    'benefits': 'worker_benefits',
+    'clinical_setting': 'clinical_setting_you_prefer',
+    'preferred_work_location': 'worker_preferred_work_location',
+    'facility_name': 'worker_facility_name',
+    'facilitys_parent_system': 'worker_facilitys_parent_system',
+    'facility_shift_cancelation_policy': 'facility_shift_cancelation_policy',
+    'contract_termination_policy': 'contract_termination_policy',
+    'traveler_distance_from_facility': 'distance_from_your_home',
+    'job_location': 'worker_job_location',
+    'certificate': 'certificate',
+    'description': 'worker_description',
+    'preferred_experience': 'worker_experience',
+    'number_of_references': 'number_of_references',
+    'skills': 'skills',
+    'on_call': 'worker_on_call',
+    'block_scheduling': 'block_scheduling',
+    'float_requirement': 'float_requirement',
+    'Patient_ratio': 'worker_patient_ratio',
+    'Emr': 'worker_emr',
+    'Unit': 'worker_unit',
+    'nurse_classification': 'nurse_classification',
+    'vaccinations': 'worker_vaccination'
+};
 
-        var workerId = @json($offerdetails['worker_user_id']);
 
-        function activeWorkerClass(workerUserId) {
+var offer = @json($offerdetails);
 
-            var element = document.getElementById(workerUserId);
-            element.classList.add('active');
+var numberFields = [
+        'actual_hourly_rate',
+        'weekly_pay',
+        'hours_per_week',
+        'guaranteed_hours',
+        'hours_shift',
+        'weeks_shift',
+        'preferred_assignment_duration',
+        'overtime',
+        'on_call_rate',
+        'call_back_rate',
+        'orientation_rate',
+        'weekly_taxable_amount',
+        'weekly_non_taxable_amount',
+        'feels_like_per_hour',
+        'referral_bonus',
+        'sign_on_bonus',
+        'extension_bonus',
+        'total_organization_amount',
+        'traveler_distance_from_facility',
+        'number_of_references'
+    ];
 
+var dateFields = [
+    'start_date',
+];
+
+var timeFields = [
+    'hours_per_week',
+    'worker_weeks_assignment',
+    'guaranteed_hours',
+    'preferred_assignment_duration',
+    'hours_shift',
+    'weeks_shift',
+]
+
+var rateFields = [
+        'actual_hourly_rate',
+        'weekly_pay',
+        'overtime',
+        'on_call_rate',
+        'call_back_rate',
+        'orientation_rate',
+        'weekly_taxable_amount',
+        'weekly_non_taxable_amount',
+        'feels_like_per_hour',
+        'referral_bonus',
+        'sign_on_bonus',
+        'extension_bonus',
+        'total_organization_amount',
+        'traveler_distance_from_facility',
+        'number_of_references'
+];
+
+
+    numberFields.forEach(function(field) {
+        if (offer[field] != null) {
+            offer[field] = Number(offer[field]);
         }
     });
+
+
+
+
+    function open_multiselect_modal(obj) {
+        let target = $(obj).data('target');
+        let target_modal = '#' + target + '_modal';
+
+        console.log(target_modal);
+
+        $(target_modal).modal('show');
+    }
+
+    function open_modal(obj) {
+            let name, title, modal, form, target;
+
+            name = $(obj).data('name');
+            title = $(obj).data('title');
+            target = $(obj).data('target');
+
+            modal = '#' + target + '_modal';
+            form = modal + '_form';
+            $(form).find('h4').html(title);
+            // TODO :: check if there is already data selected and set it to the input
+            switch (target) {
+                case 'input':
+                    $(form).find('input[type="text"]').attr('name', name);
+                    $(form).find('input[type="text"]').attr('placeholder', $(obj).data('placeholder'));
+                    break;
+                case 'input_number':
+                    $(form).find('input[type="number"]').attr('name', name);
+                    $(form).find('input[type="number"]').attr('placeholder', $(obj).data('placeholder'));
+                    break;
+                case 'binary':
+                    $(form).find('input[type="radio"]').attr('name', name);
+                    break;
+                case 'rto':
+                    $(form).find('input[type="radio"]').attr('name', name);
+                    break;
+                case 'dropdown':
+                    $(form).find('select').attr('name', name);
+                    get_dropdown(obj);
+                    break;
+                case 'date':
+                    $(form).find('input[type="date"]').attr('name', name);
+                    break;
+                default:
+                    break;
+            }
+
+            $(modal).modal('show');
+        }
+
+    function getOfferFieldIdByValue(value) {
+        return Object.keys(offer_fields_vs_worker_fields).find(key => offer_fields_vs_worker_fields[key] === value);
+    }
+
+    function multi_select_match_with_worker(workerField, InsertedValue) {
+        console.log('called');
+            let match = false;
+            if (workerField == 'worker_job_type' || workerField == 'terms' || workerField == 'profession' || workerField == 'specialty' || workerField == 'state' || workerField == 'city') {
+                console.log('inserted value:', InsertedValue);  
+                let workerFieldArray = InsertedValue.split(',');
+                
+                let workerFieldArrayTrimmed = workerFieldArray.map(function(item) {
+                    return item.trim();
+                });
+                let offerField = getOfferFieldIdByValue(workerField);
+                let offerFieldArray = offer[offerField].split(',');
+                console.log('offerFieldArray:', offerFieldArray);
+                let offerFieldArrayTrimmed = offerFieldArray.map(function(item) {
+                    return item.trim();
+                });
+                match = workerFieldArrayTrimmed.some(element => offerFieldArrayTrimmed.includes(element));
+                console.log('match:', match);
+            } else {
+                let offerField = getOfferFieldIdByValue(workerField);
+                console.log('offerField value :', offer[offerField]);
+                console.log('InsertedValue value :', InsertedValue);
+                
+                if (rateFields.includes(offerField)) {
+                    match = InsertedValue <= offer[offerField];
+                } else if(timeFields.includes(offerField)) {
+                    match = InsertedValue >= offer[offerField];
+                } else if( dateFields.includes(offerField)) {
+                    let insertedDate = new Date(InsertedValue);
+                    let offerDate = new Date(offer[offerField]);
+                    match = insertedDate <= offerDate;
+                } else {
+                    match = InsertedValue == offer[offerField];
+                }
+
+            }
+            return match;
+    }
+
+    function multi_select_change({
+        id,
+        name,
+        value
+    }) {
+
+        console.log(id, name, value);
+
+        if (!id || !name) {
+            console.error("Missing 'id' or 'name' in function call");
+            return;
+        }
+
+        const parentSelector = '#' + CSS.escape(id);
+        const childSelector = `p[data-name="${name}"]`;
+
+        // Find the element
+        let element = $(parentSelector).find(childSelector);
+
+        // if value is null put the element title else put the value
+        if (value == null) {
+            element.text(element.data('title'));
+        } else {
+            element.text(truncateText(value));
+        }
+
+        // check if the value match with the worker field
+
+        let match = multi_select_match_with_worker(name, value);
+
+        let DivElement = document.getElementById(name);
+        if (DivElement) {
+            if (match) {
+                DivElement.classList.remove('ss-s-jb-apl-bg-pink');
+                DivElement.classList.add('ss-s-jb-apl-bg-blue');
+            } else {
+                DivElement.classList.remove('ss-s-jb-apl-bg-blue');
+                DivElement.classList.add('ss-s-jb-apl-bg-pink');
+            }
+        } else {
+            console.log('Element not found for ID:', name);
+        }
+    }
+
+    
+    function truncateText(text, limit = 35) {
+            return text.length > limit ? text.substring(0, limit) + '...' : text;
+        }
+
+    function saveData(event, type) {
+
+        event.preventDefault();
+        // types : input, date, binary, file, input_number, dropdown
+        
+        let form = event.target.closest('form');
+        console.log('form', form);
+
+        // Get the single input element
+        let input = form.querySelector('input');
+        let name = input.name;
+        let value = input.value;
+
+        console.log('Input name:', name);
+        console.log('Input value:', value);
+
+        // Call the multi_select_match_with_worker function
+        let match = multi_select_match_with_worker(name, value);
+            console.log('Match:', match);
+        let element = document.getElementById(name);
+        // get the data-name child element
+        let childElement = element.querySelector('p[data-name="' + name + '"]');
+        childElement.innerText = value;
+
+        if (element) {
+            if (match) {
+                element.classList.remove('ss-s-jb-apl-bg-pink');
+                element.classList.add('ss-s-jb-apl-bg-blue');
+            } else {
+                element.classList.remove('ss-s-jb-apl-bg-blue');
+                console.log(element);
+                element.classList.add('ss-s-jb-apl-bg-pink');
+            }
+        } else {
+            console.log('Element not found for ID:', name);
+        }
+
+        let formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // need modal close heeeere
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    
 </script>
 
 <style>
@@ -1702,5 +2297,22 @@
 
     .green-bg {
         background-color: rgb(82, 222, 193);
+    }
+
+    .item-elem label {
+        display: block;
+        color: #3D2C39;
+        font-size: 14px;
+        padding-bottom: 4px;
+        font-weight: 500;
+        margin-left: 6px;
+    }
+
+    .profile_info_text {
+        font-size: 14px;
+        color: #333;
+        cursor: pointer;
+        font-weight: 500;
+        text-decoration: underline;
     }
 </style>

@@ -788,7 +788,12 @@ class WorkerController extends Controller
         foreach ($statusList as $status) {
             $statusCounts[$status] = 0;
         }
-        
+        $distinctFilters = Keyword::distinct()->pluck('filter');
+        $allKeywords = [];
+        foreach ($distinctFilters as $filter) {
+            $keywords = Keyword::where('filter', $filter)->get();
+            $allKeywords[$filter] = $keywords;
+        }
         // Count unique workers applying
         //$statusCountsQuery = Offer::where('recruiter_id', $recruiter->id)->whereIn('status', $statusList)->select(\DB::raw('status, count(distinct worker_user_id ) as count'))->groupBy('status')->get();
 
@@ -805,7 +810,8 @@ class WorkerController extends Controller
             }
         }
         $status_count_draft = Offer::where('is_draft', true)->count();
-        return view('worker::offers/applicationjourney', compact('statusCounts', 'status_count_draft'));
+        $nurse = $worker;
+        return view('worker::offers/applicationjourney', compact('statusCounts', 'status_count_draft', 'allKeywords', 'nurse'));
     }
 
     public function explore(Request $request)
@@ -1959,5 +1965,47 @@ class WorkerController extends Controller
 
     }
 
+    
+    public function worker_update_information(Request $request)
+    {
+        try {
+            $worker = Auth::guard('frontend')->user();
+            $worker_id = $worker->nurse->id;
+
+            $worker = Nurse::find($worker_id);
+            if (!$worker) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Worker not found',
+                ], 404);
+            }
+        
+            $update_array = $request->all();
+
+            $fillableFields = (new Nurse)->getFillable();
+            $filteredData = array_filter(
+                $update_array,
+                function ($key) use ($fillableFields) {
+                    return in_array($key, $fillableFields);
+                },
+                ARRAY_FILTER_USE_KEY
+            );
+
+            $worker->update($filteredData);
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Information updated successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            \Log::error('Error updating worker information: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'msg' => 'An error occurred while updating information',
+            ], 500);
+        }
+    }
 
 }

@@ -160,6 +160,10 @@ Route::prefix('worker')->group(function () {
 
             Route::post('worker-accept-reject-job-offer', ['uses' => 'WorkerController@AcceptOrRejectJobOffer', 'as' => 'worker-accept-reject-job-offer']);
 
+            // update worker information
+
+            Route::post('worker-update-information', ['uses' => 'WorkerController@worker_update_information', 'as' => 'worker-update-information']);
+
 
         }
 
