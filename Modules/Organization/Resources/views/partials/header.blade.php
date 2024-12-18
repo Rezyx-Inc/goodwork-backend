@@ -105,10 +105,6 @@ function handleOfferNotificationClick(event) {
 }
 
 $(document).ready (function () {
-  console.log('{{ $unreadOffersNotificationsCount }}');
-
-  console.log('Offer Notification Messages :' , offerNotificationMessages );
-  console.log(offerNotificationMessages)
 
   if('{{ $unreadOffersNotificationsCount }}' > 0){
 
@@ -157,7 +153,6 @@ function handleNotificationClick(event) {
         type: 'POST',
         data: data,
         success: function(response) {
-            console.log('Success:', response);
             // Handle success response
             // Navigate to a new page after the AJAX call is successful
             window.location.href = '{{ route("organization-messages") }}';
@@ -188,7 +183,6 @@ function handleJobNotificationClick(event , senderId){
       type: 'POST',
       data: data,
       success: function(response) {
-          console.log('Success:', response);
           // Handle success response
           // Navigate to a new page after the AJAX call is successful
            window.location.href = '{{ route("organization-application") }}';
@@ -203,229 +197,246 @@ function handleJobNotificationClick(event , senderId){
 
 
   $(document).ready(function(){
-    console.log('{{ $unreadNotificationsCount }}');
 
     let notificationMessages = @json($notificationMessages);
 
-  console.log('Notification Messages :' , notificationMessages );
-  console.log(notificationMessages)
+    if('{{ $unreadNotificationsCount }}' > 0){
 
+      let none_notification = document.getElementById('none_notification');
+      if(none_notification){
+        none_notification.classList.add('d-none');
+      }
 
+      let count = document.getElementById('notifications_counter');
+      // count.innerHTML = parseInt(count.innerHTML) + 1;
+      count.classList.remove('d-none');
+      let list_of_notifications = document.getElementById('list_of_notifications');
+      list_of_notifications.innerHTML = '';
 
-  if('{{ $unreadNotificationsCount }}' > 0){
-    let none_notification = document.getElementById('none_notification');
-    if(none_notification){
-      none_notification.classList.add('d-none');
+      notificationMessages.forEach(notification => {
+
+        let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
+        let li = document.createElement('li');
+        let a = document.createElement('a');
+        a.id = notification.sender;
+        a.classList.add('dropdown-item');
+        a.href = "{{route('organization-messages')}}";
+        a.setAttribute('onclick', 'handleNotificationClick(event)');
+        a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
+        li.appendChild(a);
+        list_of_notifications.appendChild(li);
+
+      });
     }
-
-    let count = document.getElementById('notifications_counter');
-                    // count.innerHTML = parseInt(count.innerHTML) + 1;
-                    count.classList.remove('d-none');
-                    let list_of_notifications = document.getElementById('list_of_notifications');
-  list_of_notifications.innerHTML = '';
-  notificationMessages.forEach(notification => {
-    let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
-    let li = document.createElement('li');
-    let a = document.createElement('a');
-    a.id = notification.sender;
-    a.classList.add('dropdown-item');
-    a.href = "{{route('organization-messages')}}";
-    a.setAttribute('onclick', 'handleNotificationClick(event)');
-    a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
-    li.appendChild(a);
-    list_of_notifications.appendChild(li);
-  });
-  }
 
 
   let notificationJobs = @json($jobsNotificationMessages);
-  console.log('Notification Jobs :' , notificationJobs );
+
   if('{{$unreadJobsNotificationsCount}}' > 0){
+
+    let none_notification = document.getElementById('none_notification');
+
+    if(none_notification){
+      none_notification.classList.add('d-none');
+    }
+
+    let count = document.getElementById('notifications_counter');
+    // count.innerHTML = parseInt(count.innerHTML) + 1;
+    if(count){
+      count.classList.remove('d-none');
+    }
+
+    let list_of_notifications = document.getElementById('list_of_notifications');
+    notificationJobs.forEach(notification => {
+
+      let li = document.createElement('li');
+      let a = document.createElement('a');
+      a.id = notification.jobId;
+      a.classList.add('dropdown-item');
+      a.href = "{{route('organization-application')}}";
+      a.setAttribute('onclick', 'handleJobNotificationClick(event, "' + notification.sender + '")');
+      a.innerHTML =  notification.full_name + ' applied to job ' + notification.job_name ;
+      li.appendChild(a);
+      list_of_notifications.appendChild(li);
+    });
+  }
+
+
+  var user_id = '{{ $user->id }}';
+  var PrivateChannelNotification = 'private-notification.' + user_id;
+  window.Echo.private(PrivateChannelNotification)
+  .listen('NotificationMessage', (event) => {
+
+    // remove none notification message if there is any
     let none_notification = document.getElementById('none_notification');
     if(none_notification){
       none_notification.classList.add('d-none');
     }
+
+    // preparing the new notification if there is no notification of the current sender
+    let new_notification = {
+                              "id": event.sender,
+                              "numOfMessagesStr": 1,
+                              "sender": event.sender,
+                              "full_name": event.full_name,
+                              "job_name": event.job_name,
+                              "jobId": event.jobId
+                          };
+
+    // this is for checking if a notification of a specefic sender is already there
+    let check_for_notification = false;
+
+    // if there is no notifications in the db then add the new notification
+    if(notificationMessages.length == 0){
+
+      notificationMessages.push(new_notification);
+
+    }else{
+
+      // if there is already a notification of the sender then increment the number of messages by 1 of that specific sender
+      notificationMessages.forEach(notification => {
+
+        if(notification.sender == event.sender){
+
+          let numOfMessages = parseInt(notification.numOfMessagesStr) + 1;
+          notification.numOfMessagesStr = numOfMessages;
+          check_for_notification = true;
+          return;
+        }
+
+      });
+
+      if(check_for_notification == false){
+        notificationMessages.push(new_notification);
+      }
+    }
+
     let count = document.getElementById('notifications_counter');
-                    // count.innerHTML = parseInt(count.innerHTML) + 1;
-                    if(count){
-                      count.classList.remove('d-none');
-                    }
 
-                    let list_of_notifications = document.getElementById('list_of_notifications');
+    notificationMessages.forEach(notification => {
 
-  notificationJobs.forEach(notification => {
+      if(notification.sender == event.sender){
 
-    let li = document.createElement('li');
-    let a = document.createElement('a');
-    a.id = notification.jobId;
-    a.classList.add('dropdown-item');
-    a.href = "{{route('organization-application')}}";
-    a.setAttribute('onclick', 'handleJobNotificationClick(event, "' + notification.sender + '")');
-    a.innerHTML =  notification.full_name + ' applied to job ' + notification.job_name ;
-    li.appendChild(a);
-    list_of_notifications.appendChild(li);
+        let notification_list = document.getElementById(notification.sender);
+
+        if(notification_list){
+
+          notification_list.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + ' messages.';
+
+        }else{
+
+          let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
+          let li = document.createElement('li');
+          let a = document.createElement('a');
+          a.id = notification.sender;
+          a.classList.add('dropdown-item');
+          a.href = "{{route('organization-messages')}}";
+          a.setAttribute('onclick', 'handleNotificationClick(event)');
+          a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
+          li.appendChild(a);
+          list_of_notifications.appendChild(li);
+
+        }
+      }
+    });
+
+    count.classList.remove('d-none');
+
   });
-  }
-
-
-
-
-    var user_id = '{{ $user->id }}';
-    var PrivateChannelNotification = 'private-notification.' + user_id;
-    window.Echo.private(PrivateChannelNotification)
-                .listen('NotificationMessage', (event) => {
-
-                  // remove none notification message if there is any
-                  let none_notification = document.getElementById('none_notification');
-                  if(none_notification){
-                    none_notification.classList.add('d-none');
-                  }
-
-                  // preparing the new notification if there is no notification of the current sender
-                  let new_notification = {
-                                            "id": event.sender,
-                                            "numOfMessagesStr": 1,
-                                            "sender": event.sender,
-                                            "full_name": event.full_name,
-                                            "job_name": event.job_name,
-                                            "jobId": event.jobId
-                                        };
-
-                    // this is for checking if a notification of a specefic sender is already there
-                  let check_for_notification = false;
-                    // if there is no notifications in the db then add the new notification
-                    if(notificationMessages.length == 0){
-                      notificationMessages.push(new_notification);
-                    }else{
-                      // if there is already a notification of the sender then increment the number of messages by 1 of that specific sender
-                      notificationMessages.forEach(notification => {
-                        if(notification.sender == event.sender){
-                          let numOfMessages = parseInt(notification.numOfMessagesStr) + 1;
-                          notification.numOfMessagesStr = numOfMessages;
-                          check_for_notification = true;
-                          return;
-                        }
-                      });
-                      if(check_for_notification == false){
-                        notificationMessages.push(new_notification);
-                      }
-                    }
-
-                    console.log('New Notification :', event);
-                    let count = document.getElementById('notifications_counter');
-
-                    notificationMessages.forEach(notification => {
-
-                      if(notification.sender == event.sender){
-                        let notification_list = document.getElementById(notification.sender);
-                        if(notification_list){
-                          notification_list.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + ' messages.';
-                        }else{
-                          let message = notification.numOfMessagesStr > 1 ? ' messages' : ' message';
-                          let li = document.createElement('li');
-                          let a = document.createElement('a');
-                          a.id = notification.sender;
-                          a.classList.add('dropdown-item');
-                          a.href = "{{route('organization-messages')}}";
-                          a.setAttribute('onclick', 'handleNotificationClick(event)');
-                          a.innerHTML = notification.full_name + ' sent you ' + notification.numOfMessagesStr + message;
-                          li.appendChild(a);
-                          list_of_notifications.appendChild(li);
-                        }
-                      }
-                    });
-                    count.classList.remove('d-none');
-
-                    console.log(list_of_notifications);
-                    console.log(count);
-                });
 });
 
 window.Echo.private('private-job-notification.' + '{{ $user->id }}')
 .listen('NotificationJob', (e) => {
-        console.log('Notification Message :', e);
-        let count = document.getElementById('notifications_counter');
 
-                    if(count){
-                      count.classList.remove('d-none');
-                    }
-        let none_notification = document.getElementById('none_notification');
-        if(none_notification){
-          none_notification.classList.add('d-none');
-        }
-        let li = document.createElement('li');
-        let a = document.createElement('a');
-        a.id = e.jobId;
-        a.classList.add('dropdown-item');
-        a.href = "{{route('organization-application')}}";
-        a.setAttribute('onclick', 'handleJobNotificationClick(event, "' + e.sender + '")');
-        a.innerHTML =  e.full_name + ' applied to job ' + e.job_name ;
-        li.appendChild(a);
-        list_of_notifications.appendChild(li);
-    });
+  let count = document.getElementById('notifications_counter');
 
+  if(count){
+    count.classList.remove('d-none');
+  }
+  let none_notification = document.getElementById('none_notification');
+  if(none_notification){
+    none_notification.classList.add('d-none');
+  }
+  let li = document.createElement('li');
+  let a = document.createElement('a');
+  a.id = e.jobId;
+  a.classList.add('dropdown-item');
+  a.href = "{{route('organization-application')}}";
+  a.setAttribute('onclick', 'handleJobNotificationClick(event, "' + e.sender + '")');
+  a.innerHTML =  e.full_name + ' applied to job ' + e.job_name ;
+  li.appendChild(a);
+  list_of_notifications.appendChild(li);
+});
 
-    var offer_status_messages = {
-    "Offered": "Counter your offer for the job",
-    "Rejected": "rejected your offer for the job",
-    "Hold": "accept your offer for the job"
+var offer_status_messages = {
+
+  "Offered": "Counter your offer for the job",
+  "Rejected": "rejected your offer for the job",
+  "Hold": "accept your offer for the job"
+
 };
 
 window.Echo.private('private-offer-notification.' + '{{ $user->id }}')
 .listen('NotificationOffer', (e) => {
+
   // remove none notification message if there is any
   let none_notification = document.getElementById('none_notification');
-                  if(none_notification){
-                    none_notification.classList.add('d-none');
-                  }
+  if(none_notification){
+    none_notification.classList.add('d-none');
+  }
 
-                  let new_offer_notification = {
-                                            "id": e.sender,
-                                            "type": e.type,
-                                            "sender": e.sender,
-                                            "full_name": e.full_name,
-                                            "job_name": e.job_name,
-                                            "offer_id": e.offer_id
-                                        };
+  let new_offer_notification = {
+    "id": e.sender,
+    "type": e.type,
+    "sender": e.sender,
+    "full_name": e.full_name,
+    "job_name": e.job_name,
+    "offer_id": e.offer_id
+  };
 
-                    // this is for checking if a notification of a specefic sender is already there
-                  offerNotificationMessages.forEach(notification => {
-                    if(notification.offer_id == e.offerId){
-                      // delete the notification
-                      let element = document.getElementById(notification.offer_id);
-                          if (element) {
-                            let parent_li = element.parentElement;
-                            if (parent_li) {
-                              parent_li.remove();
-                            }else{
-                              console.log('Parent Element not found:', notification.offer_id);
-                            }
-                          } else {
-                              console.log('Element not found:', notification.offer_id);
-                          }
+  // this is for checking if a notification of a specefic sender is already there
+  offerNotificationMessages.forEach(notification => {
 
-                    }
-                  });
+    if(notification.offer_id == e.offerId){
 
-    console.log('Offer Notification Message :', e);
-    let status = e.type;
-    let message = e.full_name +' ' + offer_status_messages[status] + ' "' + e.job_name + '"';
-    console.log(message);
-    let count = document.getElementById('notifications_counter');
-    count.classList.remove('d-none');
-    let list_of_notifications = document.getElementById('list_of_notifications');
-    let li = document.createElement('li');
-    let a = document.createElement('a');
-    a.id = e.offerId;
-    a.classList.add('dropdown-item');
-    a.href = "{{route('organization-application')}}";
-    a.innerHTML = message;
-    a.setAttribute('snd', e.sender); // Add the 'snd' attribute with the value of notification.sender
-    a.setAttribute('onclick', 'handleOfferNotificationClick(event)');
-    li.appendChild(a);
-    list_of_notifications.appendChild(li);
-    console.log(list_of_notifications);
-    console.log(count);
+      // delete the notification
+      let element = document.getElementById(notification.offer_id);
+
+      if (element) {
+
+        let parent_li = element.parentElement;
+
+        if (parent_li) {
+
+          parent_li.remove();
+
+        }else{
+          //console.log('Parent Element not found:', notification.offer_id);
+        }
+
+      } else {
+          //console.log('Element not found:', notification.offer_id);
+      }
+    }
+  });
+
+
+  let status = e.type;
+  let message = e.full_name +' ' + offer_status_messages[status] + ' "' + e.job_name + '"';
+
+  let count = document.getElementById('notifications_counter');
+  count.classList.remove('d-none');
+  let list_of_notifications = document.getElementById('list_of_notifications');
+  let li = document.createElement('li');
+  let a = document.createElement('a');
+  a.id = e.offerId;
+  a.classList.add('dropdown-item');
+  a.href = "{{route('organization-application')}}";
+  a.innerHTML = message;
+  a.setAttribute('snd', e.sender); // Add the 'snd' attribute with the value of notification.sender
+  a.setAttribute('onclick', 'handleOfferNotificationClick(event)');
+  li.appendChild(a);
+  list_of_notifications.appendChild(li);
 
 });
 </script>
