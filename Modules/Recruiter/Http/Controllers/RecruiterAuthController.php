@@ -180,7 +180,7 @@ class RecruiterAuthController extends Controller
                 return view('recruiter::auth.verify', $data);
             }
         }
-        return redirect()->route('recruiter::recruiter.dashboard');
+        return redirect()->route('recruiter-dashboard');
     }
 
     public function post_signup(Request $request) {
