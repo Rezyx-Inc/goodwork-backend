@@ -367,7 +367,7 @@
         @if (in_array($offerdetails->status, array('Screening','Submitted')))
             {{-- Resume --}}
             <div class="col-md-12">
-                <span class="mt-3">Resume sssssssss</span>
+                <span class="mt-3">Resume</span>
             </div>
 
             <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
