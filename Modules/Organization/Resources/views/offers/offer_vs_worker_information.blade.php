@@ -364,6 +364,23 @@
             </div>
         </div>
 
+        @if (in_array($offerdetails->status, array('Screening','Submitted')))
+            {{-- Resume --}}
+            <div class="col-md-12">
+                <span class="mt-3">Resume sssssssss</span>
+            </div>
+
+            <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
+                <div class="col-md-6">
+                    <h6>{{ $offerdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+                </div>
+                <div class="col-md-6 ">
+                    <p id="resume-placeholder">
+                    </p>
+                </div>
+            </div>
+        @endif
+
     </div>
     {{-- End  Summary --}}
     {{-- Shift --}}
@@ -1638,7 +1655,7 @@
 
 @if ($offerdetails->status == 'Screening')
     <div class="ss-counter-buttons-div">
-        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Make Offer</button>
+        <button class="ss-acpect-offer-btn" onclick="applicationStatus('Offered', '{{ $offerdetails->id }}')">Make an Offer</button>
     </div>
 @endif
 
@@ -1697,16 +1714,16 @@
         return item.trim();
 
     });
-    console.log('skills : ', job_skills_displayname);
 
     $(document).ready(async function() {
 
         worker_files = await get_all_files();
-        console.log('Worker files:', worker_files);
+
         checkFileMatch('certification');
         checkFileMatch('vaccination');
         checkFileMatch('references');
         checkFileMatch('skills');
+        checkFileMatch('resume');
         // checkFileMatch('driving_license');
         // checkFileMatch('diploma');
 
@@ -1717,8 +1734,6 @@
         var worker_id = @json($offerdetails['worker_user_id']);
         var offer_id = @json($offerdetails['id']);
         var placeholder = document.getElementById(fileType + '-placeholder');
-        console.log('file type:', fileType);
-        console.log('Placeholder:', placeholder);
 
         if (file.length > 0 && no_files == false) {
             placeholder.innerHTML = file.join(', ');
@@ -1746,7 +1761,6 @@
                     WorkerId: worker_id
                 }),
                 success: function(resp) {
-                    console.log('Success:', resp);
 
                     let jsonResp = JSON.parse(resp);
                     files = jsonResp;
@@ -1760,7 +1774,7 @@
                     updateWorkerFilesList([], 'vaccination');
                     updateWorkerFilesList([], 'references');
                     updateWorkerFilesList([], 'skills');
-                    console.log('Error:', resp);
+                    updateWorkerFilesList([], 'resume');
                     reject(resp);
                 }
             });
@@ -1785,13 +1799,11 @@
 
     async function checkFileMatch(inputName) {
 
-        console.log('Checking files for:', inputName);
         let worker_files_displayname_by_type = [];
 
         try {
 
             worker_files_displayname_by_type = await get_all_files_displayName_by_type(inputName);
-            console.log('Files:', worker_files_displayname_by_type);
 
         } catch (error) {
 
@@ -1804,12 +1816,8 @@
 
         if (inputName == 'certification') {
 
-            const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element =>
-                worker_files_displayname_by_type.includes(element));
+            const is_job_certif_exist_in_worker_files = job_certification_displayname.every(element => worker_files_displayname_by_type.includes(element));
             updateWorkerFilesList(worker_files_displayname_by_type, 'certification');
-            // console.log('job certification job name :', job_certification_displayname);
-            // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type);
-            // console.log('is_job_certif_exist_in_worker_files', is_job_certif_exist_in_worker_files);
 
             if (is_job_certif_exist_in_worker_files) {
                 check = true;
@@ -1817,12 +1825,8 @@
 
         } else if (inputName == 'vaccination') {
 
-            const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element =>
-                worker_files_displayname_by_type.includes(element));
+            const is_job_vaccin_exist_in_worker_files = job_vaccination_displayname.every(element => worker_files_displayname_by_type.includes(element));
             updateWorkerFilesList(worker_files_displayname_by_type, 'vaccination');
-            // console.log('job vaccination job name :', job_vaccination_displayname);
-            // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type);
-            // console.log('is_job_vaccin_exist_in_worker_files', is_job_vaccin_exist_in_worker_files);
 
             if (is_job_vaccin_exist_in_worker_files) {
                 check = true;
@@ -1837,12 +1841,8 @@
 
         } else if (inputName == 'skills') {
 
-            const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element =>
-                worker_files_displayname_by_type.includes(element));
+            const is_job_skill_exist_in_worker_files = job_skills_displayname.every(element => worker_files_displayname_by_type.includes(element));
             updateWorkerFilesList(worker_files_displayname_by_type, 'skills');
-            // console.log('job skills job name :', job_skills_displayname)
-            // console.log('worker_files_displayname_by_type', worker_files_displayname_by_type);
-            // console.log('is_job_skill_exist_in_worker_files', is_job_skill_exist_in_worker_files);
 
             if (is_job_skill_exist_in_worker_files) {
                 check = true;
@@ -1860,6 +1860,21 @@
                 check = true;
             }
 
+        } else if (inputName == "resume"){
+
+            updateWorkerFilesList(worker_files_displayname_by_type, 'resume');
+
+            let is_resume = @json($offerdetails["is_resume"]);
+
+            if (worker_files_displayname_by_type.length > 0 && is_resume) {
+
+                check = true;
+
+            }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+                check = true;
+            }else{
+                check = false;
+            }
         }
 
         if (check) {
@@ -1875,15 +1890,11 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         var workerId = @json($offerdetails['worker_user_id']);
-        console.log(workerId);
-        console.log('worker id', workerId);
 
         function activeWorkerClass(workerUserId) {
 
             var element = document.getElementById(workerUserId);
-            console.log('element', element);
             element.classList.add('active');
-
         }
     });
 
