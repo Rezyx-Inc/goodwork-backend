@@ -18,12 +18,16 @@
                 <option value="" {{ empty($worker->nurse_classification) ? 'selected' : '' }} disabled hidden>
                     Select Nurse Classification
                 </option>
-                @foreach ($allKeywords['NurseClassification'] as $value)
-                    <option value="{{ $value->title }}"
-                        {{ !empty($worker->nurse_classification) && $worker->nurse_classification == $value->title ? 'selected' : '' }}>
-                        {{ $value->title }}
-                    </option>
-                @endforeach
+                @if(!empty($allKeywords['NurseClassification']))
+                    @foreach ($allKeywords['NurseClassification'] as $value)
+                        <option value="{{ $value->title }}"
+                            {{ !empty($worker->nurse_classification) && $worker->nurse_classification == $value->title ? 'selected' : '' }}>
+                            {{ $value->title }}
+                        </option>
+                    @endforeach
+                @else
+                    <option value="" disabled>No classifications available</option>
+                @endif
             </select>
             <span class="help-block-nurse_classification"></span>
         </div>
