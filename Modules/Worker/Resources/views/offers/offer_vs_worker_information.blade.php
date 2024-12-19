@@ -248,20 +248,22 @@
                 </p>
             </div>
         </div>
-        {{-- Resume --}}
-        <div class="col-md-12">
-            <span class="mt-3">Resume</span>
-        </div>
+        @if (in_array($offerdetails->status, array('Screening','Submitted')))
+            {{-- Resume --}}
+            <div class="col-md-12">
+                <span class="mt-3">Resume</span>
+            </div>
 
-        <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
-            <div class="col-md-6">
-                <h6>{{ $offerdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+            <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
+                <div class="col-md-6">
+                    <h6>{{ $offerdetails->is_resume ? 'Required' : 'Not Required' }}</h6>
+                </div>
+                <div class="col-md-6 ">
+                    <p id="resume-placeholder">
+                    </p>
+                </div>
             </div>
-            <div class="col-md-6 ">
-                <p id="resume-placeholder">
-                </p>
-            </div>
-        </div>
+        @endif
 
     </div>
     {{-- End  Summary --}}
