@@ -45,6 +45,7 @@ use Stripe\Charge;
 use Stripe\Payout;
 use Stripe\PaymentIntent;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 class ApiOrganizationController extends Controller
 {
     /**
@@ -1702,7 +1703,7 @@ class ApiOrganizationController extends Controller
             ]);
 
             // Set it to true by default for now
-            $active = true;
+            $active = "true";
 
             $created_by = $request->organization_id;
 
@@ -1927,7 +1928,7 @@ class ApiOrganizationController extends Controller
                 // Save the job data to the database
                 $job->save();
 
-                $AssignmentResponse = Http::post('http://localhost:'. env(FILE_API_PORT) .'/organizations/assignUpNextRecruiter', [
+                $AssignmentResponse = Http::post('http://localhost:'. env("FILE_API_PORT") .'/organizations/assignUpNextRecruiter', [
                     'id' => $job->organization_id,
                 ]);
 
@@ -1947,7 +1948,7 @@ class ApiOrganizationController extends Controller
         } catch (QueryException $e) {
 
             // Log the error
-            Log::error('Error saving job: ' . $e->getMessage());
+            //Log::error('Error saving job: ' . $e->getMessage());
 
             // Handle the error gracefully - display a generic error message or redirect with an error status
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -1955,7 +1956,7 @@ class ApiOrganizationController extends Controller
         } catch (\Exception $e) {
 
             // Handle other exceptions
-            Log::error('Exception: ' . $e->getMessage());
+            //Log::error('Exception: ' . $e->getMessage());
 
             // Display a generic error message or redirect with an error status
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
