@@ -1940,7 +1940,7 @@ class ApiOrganizationController extends Controller
 
             } else {
 
-                return response()->json(['success'> false, 'message' => 'Please Try Again Later']);
+                return response()->json(['success' => false, 'message' => 'Please Try Again Later']);
             }
 
             return response()->json(['success' => true, 'message' => 'Job added successfully!']);
