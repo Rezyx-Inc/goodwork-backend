@@ -1,0 +1,315 @@
+Org Job Id,Type,Employment,Profession,Specialty,$/hr,$wk,State,City,Resume,Shift Time,Hrs/Wk,Guaranteed Hrs/wk,Hrs/Shift,Shift/Wk,Wks/Contract,Start Date,End Date
+2578540,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,66.7368,2669.472,FL,Tampa,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2614119,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Pediatrics,72.54,2611.44,CA,Murrieta,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2635261,Clinical,Contract (Travel only),Respiratory / Neuro Diagnostics,RRT-NICU,50.778,2031.12,FL,Tampa,TRUE,Nights,40,40,8,5,13,1/20/2025,4/21/2025
+2639242,Clinical,Contract (Travel only),Registered Nurse,Labor and Delivery,69.42,2499.12,MN,Redwood Falls,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2664439,Clinical,Contract (Travel only),Registered Nurse,OB/GYN,69.42,2776.8,MN,Redwood Falls,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2666844,Clinical,Contract (Travel only),Registered Nurse,Mother-Baby / Couplet Care / Post Partum,69.42,2499.12,MN,Redwood Falls,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2668399,Clinical,Contract (Travel only),Registered Nurse,Medical Surgical,69.42,2776.8,MN,Redwood Falls,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2668577,Clinical,Contract (Travel only),Radiology / Cardiology,X-Ray Tech,69.42,2499.12,RI,North Providence,TRUE,Evenings,36,36,12,3,13,1/6/2025,4/7/2025
+2674088,Clinical,Contract (Travel only),Radiology / Cardiology,Ultrasound Tech Maternal Fetal,72.54,2901.6,CA,Orange,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2676217,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Pediatrics,72.54,2611.44,CA,San Diego,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2679484,Clinical,Contract (Travel only),Registered Nurse,Labor and Delivery,70.2,2808,CA,Pomona,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2685368,Clinical,Contract (Travel only),Registered Nurse,Labor and Delivery,70.2,2527.2,CA,Pomona,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2690023,Clinical,Contract (Travel only),Registered Nurse,CVPICU,80.34,3213.6,CA,West Hollywood,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2691032,Clinical,Contract (Travel only),Radiology / Cardiology,Electrophysiology Tech,79.56,2864.16,MN,Coon Rapids,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2695165,Clinical,Contract (Travel only),Registered Nurse,Medical Surgical Oncology,50.7,2028,GA,Augusta,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2696920,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,66.3,2386.8,TN,Knoxville,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2696925,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,66.3,2652,TN,Knoxville,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2699826,Clinical,Contract (Travel only),Registered Nurse,CVOR,80.34,2892.24,MI,Lansing,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2701154,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Acute Care Hospital,65.52,2620.8,GA,Fayetteville,TRUE,Days,40,40,8,5,13,1/27/2025,4/28/2025
+2702372,Clinical,Contract (Travel only),Dietary Services,Dietitian,52.26,1881.36,GA,Fayetteville,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2703333,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,76.44,3057.6,MN,Monticello,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2703348,Clinical,Contract (Travel only),Therapy/Rehabilitation,SLP Outpatient,78.624,2830.464,AK,Anchorage,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2704829,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Acute Care Hospital,61.62,2464.8,IN,Lafayette,TRUE,Days,40,40,8,5,13,1/7/2025,4/8/2025
+2705540,Clinical,Contract (Travel only),Registered Nurse,Medical Surgical,50.7,1825.2,GA,Augusta,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2705784,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,89.856,3594.24,OR,Portland,TRUE,Days,40,40,8,5,13,1/21/2025,4/22/2025
+2707090,Clinical,Contract (Travel only),Respiratory / Neuro Diagnostics,RRT,65.52,2358.72,CT,Manchester,TRUE,Evenings,36,36,12,3,13,1/6/2025,4/7/2025
+2707360,Clinical,Contract (Travel only),Registered Nurse,Case Manager,65.52,2620.8,CA,West Hollywood,TRUE,Days,40,0,8,5,13,1/6/2025,4/7/2025
+2708661,Clinical,Contract (Travel only),Radiology / Cardiology,Ultrasound Tech Maternal Fetal,72.54,2611.44,CA,Orange,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2709116,Clinical,Contract (Travel only),Registered Nurse,Medical Surgical,50.7,2028,GA,Augusta,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2712029,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,71.136,2560.896,MT,Missoula,TRUE,Evenings,36,36,12,3,13,1/6/2025,4/7/2025
+2715566,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,78.624,3144.96,CA,Burbank,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2721673,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Acute Care Hospital,59.904,2156.544,WA,Walla Walla,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2721899,Clinical,Contract (Travel only),Radiology / Cardiology,X-Ray Tech,69.42,2776.8,RI,North Providence,TRUE,Evenings,40,40,8,5,13,1/6/2025,4/7/2025
+2721902,Clinical,Contract (Travel only),Radiology / Cardiology,Interventional Radiology,84.24,3032.64,RI,Providence,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2722328,Clinical,Contract (Travel only),Registered Nurse,NICU,71.136,2845.44,CA,Santa Rosa,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2722416,Clinical,Contract (Travel only),LVN / LPN,Outpatient Clinic,46.8,1684.8,CA,Los Angeles,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2723323,Clinical,Contract (Travel only),Radiology / Cardiology,Interventional Radiology,84.24,3369.6,RI,Providence,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2723599,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Outpatient,65.52,2358.72,CT,South Windsor,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2723630,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Pediatrics,72.54,2901.6,CA,San Diego,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2724535,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,76.44,2751.84,MN,Sauk Centre,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2725282,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,89.856,3594.24,AK,Anchorage,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2726073,Clinical,Contract (Travel only),Registered Nurse,NICU,71.136,2560.896,CA,Santa Rosa,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2726335,Clinical,Contract (Travel only),Therapy/Rehabilitation,SLP Inpatient Rehab,71.136,2845.44,CA,Napa,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2727362,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Acute Care Hospital,80.8704,2911.3344,AK,Seward,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2727776,Clinical,Contract (Travel only),Radiology / Cardiology,Mammography Tech,71.136,2845.44,CA,Fortuna,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2727841,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,44.928,1617.408,CA,Apple Valley,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2728414,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Outpatient,63.648,2545.92,OR,Seaside,TRUE,Days,40,40,8,5,13,1/21/2025,4/22/2025
+2729449,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2611.44,NC,Greensboro,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2730224,Clinical,Contract (Travel only),Registered Nurse,Case Manager,71.136,2845.44,CA,Mission Viejo,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2731768,Clinical,Contract (Travel only),Therapy/Rehabilitation,SLP Acute Care Hospital,62.8992,2264.3712,CA,Fullerton,TRUE,Days,36,36,12,3,13,1/21/2025,4/22/2025
+2732103,Clinical,Contract (Travel only),Radiology / Cardiology,Electrophysiology Tech,78.624,3144.96,MT,Missoula,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2732118,Clinical,Contract (Travel only),Radiology / Cardiology,Electrophysiology Tech,78.624,2830.464,MT,Missoula,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2732924,Clinical,Contract (Travel only),Radiology / Cardiology,MRI Tech,73.32,2932.8,NC,Greensboro,TRUE,Days,40,40,8,5,13,1/14/2025,4/15/2025
+2669936,Clinical,Contract (Travel only),Therapy/Rehabilitation,SLP Pediatrics,72.54,2611.44,CA,Pomona,TRUE,Days,36,0,12,3,13,1/14/2025,4/15/2025
+2679919,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,66.3,2652,TN,Knoxville,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2682601,Clinical,Contract (Travel only),Registered Nurse,Home Health,32.643,1175.148,FL,Dunedin,TRUE,Days,36,36,12,3,13,2/3/2025,5/5/2025
+2690294,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,66.7368,2669.472,FL,Clearwater,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2694740,Clinical,Contract (Travel only),Registered Nurse,Utilization Review,69.42,2499.12,MI,Lansing,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2696704,Clinical,Contract (Travel only),Registered Nurse,Home Health,32.643,1305.72,FL,Dunedin,TRUE,Days,40,40,8,5,13,2/3/2025,5/5/2025
+2700596,Clinical,Contract (Travel only),Registered Nurse,Case Manager,69.42,2499.12,MI,Lansing,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2701983,Clinical,Contract (Travel only),Laboratory,Pathologists Assistant,86.112,3444.48,OR,Portland,TRUE,Days,40,40,8,5,13,1/21/2025,4/22/2025
+2710232,Clinical,Contract (Travel only),Radiology / Cardiology,Nuclear Medicine Tech,71.136,2560.896,CA,Santa Rosa,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2710726,Clinical,Contract (Travel only),Registered Nurse,PACU,62.985,2519.4,MN,Minneapolis,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2710942,Clinical,Contract (Travel only),Registered Nurse,Labor and Delivery,70.2,2527.2,CA,Pomona,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2710945,Clinical,Contract (Travel only),Registered Nurse,Labor and Delivery,70.2,2808,CA,Pomona,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2711510,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Acute Care Hospital,71.136,2560.896,CA,Apple Valley,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2712511,Clinical,Contract (Travel only),Social Services,LICSW (Licensed Independent Clinical Social Worker),69.42,2776.8,WA,Seattle,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2713150,Clinical,Contract (Travel only),Registered Nurse,ICU,54.6,1965.6,GA,Snellville,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2713683,Clinical,Contract (Travel only),Respiratory / Neuro Diagnostics,RRT-NICU,67.392,2695.68,OR,Portland,TRUE,Nights,40,40,8,5,13,1/21/2025,4/22/2025
+2713687,Clinical,Contract (Travel only),Respiratory / Neuro Diagnostics,RRT-NICU,67.392,2426.112,OR,Portland,TRUE,Nights,36,36,12,3,13,1/21/2025,4/22/2025
+2717416,Clinical,Contract (Travel only),Registered Nurse,Clinical Research Nurse (CRN),76.44,3057.6,CA,Los Angeles,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2718189,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,76.44,2751.84,IN,Carmel,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2720376,Clinical,Contract (Travel only),Registered Nurse,Case Manager,80.8704,3234.816,AK,Anchorage,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2722024,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,49.4208,1779.1488,CA,Napa,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2722669,Clinical,Contract (Travel only),Social Services,LCSW (Licensed Clinical Social Worker),63.648,2545.92,WA,Everett,TRUE,Days,40,40,8,5,13,1/27/2025,4/28/2025
+2723861,Clinical,Contract (Travel only),Registered Nurse,Case Manager,71.136,2560.896,CA,Napa,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2724425,Clinical,Contract (Travel only),Radiology / Cardiology,MRI Tech,80.028,3201.12,MN,Minneapolis,TRUE,Evenings,40,40,8,5,13,1/13/2025,4/14/2025
+2725875,Clinical,Contract (Travel only),Radiology / Cardiology,Nuclear Medicine Tech,78.624,2830.464,CA,Torrance,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2726533,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,78.624,3144.96,OR,Seaside,TRUE,Nights,40,40,8,5,13,1/21/2025,4/22/2025
+2727260,Clinical,Contract (Travel only),Radiology / Cardiology,X-Ray Tech,63.648,2291.328,OR,Portland,TRUE,Evenings,36,36,12,3,13,1/21/2025,4/22/2025
+2727360,Clinical,Contract (Travel only),Radiology / Cardiology,X-Ray Tech,63.648,2545.92,OR,Portland,TRUE,Nights,40,0,8,5,13,1/21/2025,4/22/2025
+2727361,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Outpatient,80.8704,2911.3344,AK,Seward,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2727777,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,44.928,1797.12,CA,Apple Valley,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2727837,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,44.928,1617.408,CA,Apple Valley,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2728149,Clinical,Contract (Travel only),Radiology / Cardiology,Echo Tech/Cardiac Sonographer,67.392,2695.68,OR,Portland,TRUE,Days,40,40,8,5,13,1/21/2025,4/22/2025
+2728216,Clinical,Contract (Travel only),Respiratory / Neuro Diagnostics,Polysomnographer / Sleep Tech,51.48,1853.28,MN,Willmar,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2728301,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,88.14,3525.6,CA,Los Angeles,TRUE,Days,40,40,8,5,13,12/30/2024,3/31/2025
+2728308,Clinical,Contract (Travel only),Radiology / Cardiology,Interventional Radiology,88.14,3173.04,CA,Los Angeles,TRUE,Days,36,36,12,3,13,12/30/2024,3/31/2025
+2728310,Clinical,Contract (Travel only),Radiology / Cardiology,Interventional Radiology,88.14,3525.6,CA,Los Angeles,TRUE,Days,40,40,8,5,13,12/30/2024,3/31/2025
+2728803,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Outpatient,63.648,2291.328,OR,Seaside,TRUE,Days,36,36,12,3,13,1/21/2025,4/22/2025
+2637613,Clinical,Contract (Travel only),Social Services,LCSW (Licensed Clinical Social Worker),63.648,2545.92,WA,Everett,TRUE,Days,40,40,8,5,13,1/27/2025,4/28/2025
+2651083,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Pediatrics,74.1,2667.6,CA,Pomona,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2677300,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Acute Care Hospital,61.62,2464.8,IN,Lafayette,TRUE,Days,40,40,8,5,13,1/7/2025,4/8/2025
+2681996,Clinical,Contract (Travel only),Social Services,LMSW (Licensed Masters of Social Worker),63.648,2291.328,WA,Edmonds,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2708757,Clinical,Contract (Travel only),Registered Nurse,PCU,60.06,2402.4,TN,Knoxville,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2717634,Clinical,Contract (Travel only),Registered Nurse,Cath Lab,78.624,2830.464,CA,Santa Monica,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2721731,Clinical,Contract (Travel only),Respiratory / Neuro Diagnostics,RRT-NICU,67.392,2695.68,OR,Portland,TRUE,Nights,40,40,8,5,13,1/21/2025,4/22/2025
+2722890,Clinical,Contract (Travel only),Registered Nurse,Case Manager,71.136,2560.896,CA,Torrance,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2725886,Clinical,Contract (Travel only),Registered Nurse,Case Manager,78.624,3144.96,CA,Eureka,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2728208,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,74.88,2695.68,CA,Petaluma,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2674601,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Pediatrics,72.54,2901.6,CA,San Diego,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2681798,Clinical,Contract (Travel only),Registered Nurse,Labor and Delivery,70.2,2527.2,CA,Pomona,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2683168,Clinical,Contract (Travel only),Surgical Services,CVOR Tech,65.52,2620.8,GA,Macon,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2705793,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,49.4208,1779.1488,CA,Eureka,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2707547,Clinical,Contract (Travel only),Respiratory / Neuro Diagnostics,EEG Tech,56.16,2246.4,IN,Indianapolis,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2712110,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,82.368,2965.248,AK,Anchorage,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2720277,Clinical,Contract (Travel only),Registered Nurse,Case Manager,71.136,2845.44,CA,Mission Viejo,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2722288,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,49.4208,1779.1488,CA,Petaluma,TRUE,Days,36,0,12,3,13,1/13/2025,4/14/2025
+2713638,Clinical,Contract (Travel only),Registered Nurse,Case Manager,71.136,2845.44,CA,Mission Hills,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2727693,Clinical,Contract (Travel only),Surgical Services,Certified OR Tech / Surgical Tech (CST),63.648,2291.328,OR,Portland,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2730548,Clinical,Contract (Travel only),Radiology / Cardiology,Radiation Therapist,86.112,3444.48,CA,Eureka,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2707072,Clinical,Contract (Travel only),Radiology / Cardiology,X-Ray Tech,65.52,2358.72,CA,Pomona,TRUE,Evenings,36,36,12,3,13,1/14/2025,4/15/2025
+2714046,Clinical,Contract (Travel only),Registered Nurse,Medical Surgical,59.904,2396.16,CA,Fortuna,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2716267,Clinical,Contract (Travel only),Radiology / Cardiology,Echo Tech/Cardiac Sonographer,74.88,2695.68,CA,Mission Viejo,TRUE,Days,36,36,12,3,13,1/21/2025,4/22/2025
+2732522,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,61.62,2464.8,AL,Tuscaloosa,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2670963,Clinical,Contract (Travel only),Registered Nurse,Neuro ICU,60.06,2162.16,TN,Knoxville,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2722372,Clinical,Contract (Travel only),CNA / Nurse Assistant,LTC,48.672,1946.88,AK,Seward,TRUE,Nights,40,40,8,5,13,1/7/2025,4/8/2025
+2606551,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Home Health,78.624,2830.464,AK,Anchorage,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2671404,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Acute Care Hospital,74.88,2995.2,CA,Santa Rosa,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2673181,Clinical,Contract (Travel only),Therapy/Rehabilitation,SLP Home Health,74.88,2695.68,CA,Santa Rosa,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2696007,Clinical,Contract (Travel only),Laboratory,Phlebotomist,32.76,1310.4,NC,Burlington,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2698086,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Home Health,74.88,2695.68,CA,Santa Rosa,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2702435,Clinical,Contract (Travel only),Laboratory,Microbiology Tech,68.64,2745.6,NC,Greensboro,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2704494,Clinical,Contract (Travel only),Therapy/Rehabilitation,SLP Home Health,71.136,2560.896,WA,Lacey,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2707588,Clinical,Contract (Travel only),Therapy/Rehabilitation,COTA Home Health,56.16,2246.4,WA,Walla Walla,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2708022,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,76.44,2751.84,IN,Fishers,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2710982,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,66.3,2652,NC,Greensboro,TRUE,Days,40,40,8,5,13,1/14/2025,4/15/2025
+2714590,Clinical,Contract (Travel only),Registered Nurse,LTC,67.392,2426.112,AK,Anchorage,TRUE,Evenings,36,36,12,3,13,1/13/2025,4/14/2025
+2715431,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Home Health,74.88,2995.2,WA,Lacey,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2715664,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Acute Care Hospital,65.52,2358.72,RI,Providence,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2718468,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,90.675,3627,OR,Portland,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2720065,Clinical,Contract (Travel only),Registered Nurse,ER,81.9,2948.4,WI,Madison,TRUE,Nights,36,36,12,3,13,1/19/2025,4/20/2025
+2720088,Clinical,Contract (Travel only),Registered Nurse,ER,81.9,3276,WI,Madison,TRUE,Days,40,40,8,5,13,3/2/2025,6/1/2025
+2724917,Clinical,Contract (Travel only),Radiology / Cardiology,Nuclear Medicine Tech,74.88,2695.68,CA,Fullerton,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2725169,Clinical,Contract (Travel only),Surgical Services,Sterile Processing Tech (SPT),42.9,1716,WI,Madison,TRUE,Nights,40,0,8,5,13,1/12/2025,4/13/2025
+2727027,Clinical,Contract (Travel only),Registered Nurse,ICU,78,2808,WI,Madison,TRUE,Nights,36,36,12,3,13,2/9/2025,5/11/2025
+2727097,Clinical,Contract (Travel only),Registered Nurse,ICU,78,3120,WI,Madison,TRUE,Nights,40,40,8,5,13,2/2/2025,5/4/2025
+2727114,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2611.44,NC,Greensboro,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2727813,Clinical,Contract (Travel only),Radiology / Cardiology,Echo Tech/Cardiac Sonographer,83.46,3338.4,WI,Madison,TRUE,Days,40,40,8,5,13,1/26/2025,4/27/2025
+2728729,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2728761,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2589.6,NC,Greensboro,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2730212,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2730243,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2589.6,NC,Greensboro,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2730249,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2730250,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2589.6,NC,Greensboro,TRUE,Nights,40,40,8,5,13,1/28/2025,4/29/2025
+2730329,Clinical,Contract (Travel only),Registered Nurse,Wound Care,66.3,2386.8,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2730332,Clinical,Contract (Travel only),Registered Nurse,Wound Care,66.3,2652,NC,Greensboro,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2731381,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Home Health,78.624,2830.464,WA,Everett,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2731848,Clinical,Contract (Travel only),Registered Nurse,IMC,81.9,3276,WI,Madison,TRUE,Days,40,40,8,5,13,2/23/2025,5/25/2025
+2732289,Clinical,Contract (Travel only),Registered Nurse,ER,64.3968,2318.2848,CA,Apple Valley,TRUE,Nights,36,36,12,3,13,1/13/2025,4/14/2025
+2732292,Clinical,Contract (Travel only),Registered Nurse,ER,64.3968,2575.872,CA,Apple Valley,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2732332,Clinical,Contract (Travel only),Registered Nurse,IMC,81.9,2948.4,WI,Madison,TRUE,Nights,36,36,12,3,13,2/2/2025,5/4/2025
+2732372,Clinical,Contract (Travel only),Registered Nurse,NICU,78,3120,WI,Madison,TRUE,Nights,40,40,8,5,13,1/5/2025,4/6/2025
+2732379,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,78,2808,WI,Madison,TRUE,Nights,36,36,12,3,13,1/9/2025,4/10/2025
+2732383,Clinical,Contract (Travel only),Registered Nurse,IMC,81.9,3276,WI,Madison,TRUE,Days,40,40,8,5,13,2/24/2025,5/26/2025
+2732387,Clinical,Contract (Travel only),Registered Nurse,ICU,78,2808,WI,Madison,TRUE,Days,36,36,12,3,13,1/26/2025,4/27/2025
+2732392,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,78,3120,WI,Madison,TRUE,Nights,40,40,8,5,13,2/2/2025,5/4/2025
+2732428,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Home Health,74.88,2695.68,OR,Portland,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2686980,Clinical,Contract (Travel only),Home Health/Hospice Aide,Certified Home Health/Hospice Aide,37.44,1497.6,WA,Everett,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2695903,Clinical,Contract (Travel only),Registered Nurse,CVOR,85.8,3088.8,WI,Madison,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2710839,Clinical,Contract (Travel only),Pharmacy,Pharmacy Tech Inpatient,50.7,2028,NC,Greensboro,TRUE,Days,40,40,8,5,13,1/14/2025,4/15/2025
+2711737,Clinical,Contract (Travel only),Registered Nurse,Home Health,32.643,1175.148,FL,Tampa,TRUE,Days,36,0,12,3,13,2/3/2025,5/5/2025
+2711738,Clinical,Contract (Travel only),Registered Nurse,Home Health,32.643,1305.72,FL,Tampa,TRUE,Days,40,40,8,5,13,2/3/2025,5/5/2025
+2711739,Clinical,Contract (Travel only),Registered Nurse,Home Health,32.643,1175.148,FL,Tampa,TRUE,Days,36,36,12,3,13,2/3/2025,5/5/2025
+2713029,Clinical,Contract (Travel only),Registered Nurse,LTC,67.392,2695.68,AK,Anchorage,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2716802,Clinical,Contract (Travel only),Radiology / Cardiology,Nuclear Medicine Tech,80.34,2892.24,CA,West Hollywood,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2717268,Clinical,Contract (Travel only),Social Services,LMSW (Licensed Masters of Social Worker),63.648,2545.92,WA,Everett,TRUE,Nights,40,40,8,5,13,1/27/2025,4/28/2025
+2717417,Clinical,Contract (Travel only),Registered Nurse,Oncology,76.44,2751.84,CA,Los Angeles,TRUE,Days,36,36,12,3,13,1/13/2025,4/14/2025
+2728746,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2589.6,NC,Greensboro,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2729464,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Burlington,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2729597,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2901.6,NC,Greensboro,TRUE,Days,40,40,8,5,13,1/14/2025,4/15/2025
+2730239,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2730254,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2589.6,NC,Greensboro,TRUE,Days,40,40,8,5,13,1/14/2025,4/15/2025
+2730260,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Greensboro,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2732341,Clinical,Contract (Travel only),Surgical Services,Sterile Processing Tech (SPT),42.9,1716,WI,Madison,TRUE,Nights,40,40,8,5,13,1/12/2025,4/13/2025
+2716141,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2611.44,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2724818,Clinical,Contract (Travel only),Therapy/Rehabilitation,PT Acute Care Hospital,71.136,2845.44,CA,Santa Rosa,TRUE,Days,40,40,8,5,13,1/13/2025,4/14/2025
+2728720,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2732310,Clinical,Contract (Travel only),Registered Nurse,MS/Tele Float,78,3120,WI,Madison,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2732400,Clinical,Contract (Travel only),Registered Nurse,NICU,78,2808,WI,Madison,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2689868,Clinical,Contract (Travel only),LVN / LPN,Outpatient Clinic,46.8,1872,CA,Beverly Hills,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2712872,Clinical,Contract (Travel only),Radiology / Cardiology,Nuclear Medicine Tech,74.1,2667.6,SC,Spartanburg,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2728128,Clinical,Contract (Travel only),Registered Nurse,Operating Room,81.9,3276,WI,Madison,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2728608,Clinical,Contract (Travel only),Registered Nurse,Ortho,64.74,2330.64,NC,Greensboro,TRUE,Nights,36,36,12,3,13,1/14/2025,4/15/2025
+2728613,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2589.6,NC,Greensboro,TRUE,Nights,40,40,8,5,13,1/14/2025,4/15/2025
+2730253,Clinical,Contract (Travel only),Registered Nurse,PCU,64.74,2330.64,NC,Greensboro,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2730487,Clinical,Contract (Travel only),Registered Nurse,MS/Tele Float,78,3120,WI,Madison,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2732167,Clinical,Contract (Travel only),Registered Nurse,Dialysis,62.4,2246.4,NC,Greensboro,TRUE,Days,36,36,12,3,13,1/14/2025,4/15/2025
+2732396,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,78,3120,WI,Madison,TRUE,Nights,40,0,8,5,13,1/6/2025,4/7/2025
+2728197,Clinical,Contract (Travel only),Registered Nurse,Operating Room,81.9,2948.4,WI,Madison,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2727720,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,70.2,2808,WI,Madison,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2731914,Clinical,Contract (Travel only),Registered Nurse,Dialysis,67.86,2442.96,WI,Madison,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2728500,Clinical,Contract (Travel only),Surgical Services,OR Tech / Surgical Tech,70.2,2808,WI,Madison,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2712547,Clinical,Contract (Travel only),Radiology / Cardiology,Interventional Radiology,76.44,2751.84,IN,Indianapolis,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2716631,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2901.6,IN,Indianapolis,TRUE,Nights,40,40,8,5,13,1/13/2025,4/14/2025
+2716652,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2611.44,IN,Indianapolis,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2716853,Clinical,Contract (Travel only),Radiology / Cardiology,Interventional Radiology,76.44,3057.6,IN,Indianapolis,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2722145,Clinical,Contract (Travel only),Radiology / Cardiology,Interventional Radiology,76.44,2751.84,IN,Indianapolis,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2703374,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2901.6,IN,Indianapolis,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2703372,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,72.54,2611.44,IN,Indianapolis,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2711430,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,70.3872,2815.488,AK,Ketchikan,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2711434,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,70.3872,2533.9392,AK,Ketchikan,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2712792,Clinical,Contract (Travel only),Registered Nurse,LTC,70.3872,2815.488,AK,Ketchikan,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2726931,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,70.3872,2533.9392,AK,Ketchikan,TRUE,Nights,36,36,12,3,13,1/20/2025,4/21/2025
+2726935,Clinical,Contract (Travel only),Registered Nurse,ICU,71.136,2845.44,AK,Ketchikan,TRUE,Nights,40,40,8,5,13,1/20/2025,4/21/2025
+2727315,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,70.3872,2533.9392,AK,Ketchikan,TRUE,Days,36,36,12,3,13,2/3/2025,5/5/2025
+2727333,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,70.3872,2815.488,AK,Ketchikan,TRUE,Days,40,40,8,5,13,2/3/2025,5/5/2025
+2712104,Clinical,Contract (Travel only),Registered Nurse,Operating Room,78.624,2830.464,AK,Ketchikan,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2713716,Clinical,Contract (Travel only),Registered Nurse,ER,71.136,2845.44,AK,Ketchikan,TRUE,Nights,40,40,8,5,13,1/20/2025,4/21/2025
+2726763,Clinical,Contract (Travel only),Registered Nurse,Medical Surgical,70.3872,2533.9392,AK,Ketchikan,TRUE,Days,36,36,12,3,13,1/20/2025,4/21/2025
+2726926,Clinical,Contract (Travel only),Registered Nurse,MS/Tele,70.3872,2815.488,AK,Ketchikan,TRUE,Nights,40,40,8,5,13,1/20/2025,4/21/2025
+2726928,Clinical,Contract (Travel only),Registered Nurse,LTC,70.3872,2533.9392,AK,Ketchikan,TRUE,Nights,36,36,12,3,13,1/20/2025,4/21/2025
+2727231,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,76.3776,3055.104,OR,Springfield,TRUE,Nights,40,40,8,5,13,1/20/2025,4/21/2025
+2727336,Clinical,Contract (Travel only),Registered Nurse,LTC,70.3872,2533.9392,AK,Ketchikan,TRUE,Days,36,36,12,3,13,2/3/2025,5/5/2025
+2715267,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Acute Care Hospital,65.52,2620.8,CA,Visalia,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2726922,Clinical,Contract (Travel only),Registered Nurse,ER,71.136,2560.896,AK,Ketchikan,TRUE,Nights,36,0,12,3,13,1/20/2025,4/21/2025
+2727248,Clinical,Contract (Travel only),Radiology / Cardiology,Echo Tech/Cardiac Sonographer,74.1312,2965.248,OR,Springfield,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2646825,Clinical,Contract (Travel only),Dietary Services,Dietitian,69.42,2499.12,CA,Lynwood,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2673049,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,54.6,2184,MI,Garden City,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2699138,Clinical,Contract (Travel only),Radiology / Cardiology,CT Tech,61.62,2218.32,CA,Lynwood,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2707338,Clinical,Contract (Travel only),Registered Nurse,CVOR,76.44,3057.6,CA,Redding,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2710745,Clinical,Contract (Travel only),Registered Nurse,Cath Lab,84.24,3032.64,CA,Chino,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2720379,Clinical,Contract (Travel only),Therapy/Rehabilitation,OT Acute Care Hospital,46.8,1872,MI,Garden City,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2730943,Clinical,Contract (Travel only),Registered Nurse,ICU,71.136,2560.896,AK,Ketchikan,TRUE,Nights,36,36,12,3,13,2/9/2025,5/11/2025
+2731311,Clinical,Contract (Travel only),Medical Assistant,Medical Assistant,27.7056,1108.224,OR,Eugene,TRUE,Days,40,40,8,5,13,1/20/2025,4/21/2025
+2672030,Clinical,Contract (Travel only),Registered Nurse,Telemetry,50.7,1825.2,CA,Inglewood,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2686285,Clinical,Contract (Travel only),Registered Nurse,ER,61.62,2464.8,CA,Victorville,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2686286,Clinical,Contract (Travel only),Registered Nurse,ER,61.62,2218.32,CA,Victorville,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2710279,Clinical,Contract (Travel only),Registered Nurse,Operating Room,46.8,1872,KS,Kansas City,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2715839,Clinical,Contract (Travel only),Registered Nurse,ICU,50.7,1825.2,OH,East Liverpool,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2716182,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,72.54,2901.6,TX,Dallas,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2679883,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,84.24,3032.64,CA,Inglewood,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2699137,Clinical,Contract (Travel only),Registered Nurse,ER,65.52,2620.8,CA,Lynwood,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2662851,Clinical,Contract (Travel only),Registered Nurse,ICU,76.44,2751.84,CA,Redding,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2687946,Clinical,Contract (Travel only),Registered Nurse,Telemetry,65.52,2620.8,CA,Redding,TRUE,Days,40,40,8,5,13,1/6/2025,4/7/2025
+2688757,Clinical,Contract (Travel only),Radiology / Cardiology,Cath Lab Tech,72.54,2611.44,TX,Mesquite,TRUE,Days,36,36,12,3,13,1/6/2025,4/7/2025
+2693959,Clinical,Contract (Travel only),Registered Nurse,ICU,61.62,2464.8,CA,Garden Grove,TRUE,Nights,40,40,8,5,13,1/6/2025,4/7/2025
+2705479,Clinical,Contract (Travel only),Registered Nurse,ER,76.44,2751.84,CA,Redding,TRUE,Nights,36,36,12,3,13,1/6/2025,4/7/2025
+2517464,Clinical,Shift,Radiology / Cardiology,Cath Lab Tech,84.084,3363.36,CA,Los Angeles,TRUE,Nights,40,40,8,5,,12/30/2024,12/29/2025
+2659533,Clinical,Shift,Registered Nurse,NICU,76.44,2751.84,CA,Los Angeles,TRUE,Nights,36,36,12,3,,12/30/2024,12/29/2025
+2701337,Clinical,Shift,Radiology / Cardiology,Nuclear Medicine Tech,77.1264,3085.056,CA,Orange,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2701464,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Mission Hills,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2701580,Clinical,Shift,Registered Nurse,ER,64.3968,2575.872,CA,San Pedro,TRUE,Nights,40,0,8,5,,1/6/2025,1/5/2026
+2705800,Clinical,Shift,Radiology / Cardiology,Nuclear Medicine Tech,77.1264,2776.5504,CA,Torrance,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2705827,Clinical,Shift,Radiology / Cardiology,X-Ray Tech,59.904,2396.16,CA,Mission Viejo,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2705840,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2156.544,CA,Mission Viejo,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2705905,Clinical,Shift,Radiology / Cardiology,Nuclear Medicine Tech,77.1264,3085.056,CA,Santa Monica,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2705911,Clinical,Shift,Radiology / Cardiology,Nuclear Medicine Tech,77.1264,2776.5504,CA,Santa Monica,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2705916,Clinical,Shift,Radiology / Cardiology,CT Tech,63.648,2545.92,CA,Santa Monica,TRUE,Evenings,40,40,8,5,,1/6/2025,1/5/2026
+2705944,Clinical,Shift,Radiology / Cardiology,Nuclear Medicine Tech,77.1264,2776.5504,CA,Burbank,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2706019,Clinical,Shift,Radiology / Cardiology,Nuclear Medicine Tech,77.1264,3085.056,CA,Fullerton,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2706021,Clinical,Shift,Radiology / Cardiology,CT Tech,63.648,2291.328,CA,Apple Valley,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2706047,Clinical,Shift,Registered Nurse,Telemetry,59.904,2396.16,CA,Apple Valley,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2706052,Clinical,Shift,Radiology / Cardiology,CT Tech,63.648,2291.328,CA,Apple Valley,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2726397,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Tarzana,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2726413,Clinical,Shift,Registered Nurse,Telemetry,59.904,2156.544,CA,Tarzana,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2732279,Clinical,Shift,ER Tech,ER Tech,37.44,1497.6,CA,Apple Valley,TRUE,Nights,40,40,8,5,,1/13/2025,1/12/2026
+2732280,Clinical,Shift,ER Tech,ER Tech,37.44,1347.84,CA,Apple Valley,TRUE,Days,36,36,12,3,,1/13/2025,1/12/2026
+2732385,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2396.16,CA,Apple Valley,TRUE,Nights,40,40,8,5,,1/13/2025,1/12/2026
+2732386,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2156.544,CA,Apple Valley,TRUE,Days,36,36,12,3,,1/13/2025,1/12/2026
+2628349,Clinical,Shift,ER Tech,ER Tech,32.1984,1287.936,WA,Walla Walla,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2688666,Clinical,Shift,Registered Nurse,Labor and Delivery,80.262,2889.432,CA,Los Angeles,TRUE,Nights,36,36,12,3,,12/30/2024,12/29/2025
+2701371,Clinical,Shift,Registered Nurse,ER,64.3968,2575.872,CA,Santa Monica,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2701471,Clinical,Shift,Registered Nurse,PCU,64.3968,2318.2848,CA,Torrance,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2726403,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Tarzana,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2726408,Clinical,Shift,Registered Nurse,Labor and Delivery,78.624,2830.464,CA,Tarzana,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2686727,Clinical,Shift,Registered Nurse,NICU,64.3968,2575.872,CA,Fullerton,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2705846,Clinical,Shift,Registered Nurse,Telemetry,59.904,2156.544,CA,Mission Viejo,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2705857,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2396.16,CA,Mission Viejo,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2705808,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Mission Viejo,TRUE,Days,36,0,12,3,,1/6/2025,1/5/2026
+2705831,Clinical,Shift,Radiology / Cardiology,X-Ray Tech,59.904,2396.16,CA,Mission Viejo,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2671579,Clinical,Shift,Radiology / Cardiology,X-Ray Tech,68.796,2476.656,CA,West Hollywood,TRUE,Days,36,36,12,3,,12/30/2024,12/29/2025
+2686391,Clinical,Shift,Registered Nurse,NICU,64.3968,2575.872,CA,Torrance,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2688663,Clinical,Shift,Registered Nurse,Labor and Delivery,80.262,2889.432,CA,Los Angeles,TRUE,Days,36,36,12,3,,12/30/2024,12/29/2025
+2124463,Clinical,Shift,Radiology / Cardiology,Cath Lab Tech,84.084,3363.36,CA,Los Angeles,TRUE,Days,40,40,8,5,,12/30/2024,12/29/2025
+2688643,Clinical,Shift,Registered Nurse,NICU,76.44,2751.84,CA,Los Angeles,TRUE,Days,36,36,12,3,,12/30/2024,12/29/2025
+2686435,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Mission Viejo,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2686666,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Burbank,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2701349,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Orange,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2701365,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Santa Monica,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2701478,Clinical,Shift,Radiology / Cardiology,CT Tech,63.648,2545.92,CA,Laguna Beach,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2701480,Clinical,Shift,Registered Nurse,ER,64.3968,2318.2848,CA,Mission Viejo,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2705724,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Mission Hills,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2705731,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Mission Hills,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2705806,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Mission Viejo,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2705881,Clinical,Shift,Registered Nurse,ER,64.3968,2318.2848,CA,Mission Viejo,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2705904,Clinical,Shift,Registered Nurse,Labor and Delivery,78.624,3144.96,CA,Santa Monica,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2705941,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Burbank,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2719830,Clinical,Shift,ER Tech,ER Tech,32.1984,1287.936,WA,Walla Walla,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2726226,Clinical,Shift,Registered Nurse,Mother-Baby / Couplet Care / Post Partum,59.904,2156.544,CA,Tarzana,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2726227,Clinical,Shift,Registered Nurse,Mother-Baby / Couplet Care / Post Partum,59.904,2396.16,CA,Tarzana,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2726393,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2156.544,CA,Tarzana,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2726415,Clinical,Shift,Registered Nurse,Mother-Baby / Couplet Care / Post Partum,59.904,2396.16,CA,Tarzana,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2729645,Clinical,Shift,Registered Nurse,Labor and Delivery,78.624,2830.464,CA,Torrance,TRUE,Days,36,36,12,3,,1/13/2025,1/12/2026
+2705900,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Santa Monica,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2732390,Clinical,Shift,CNA / Nurse Assistant,Medical Surgical,37.44,1347.84,CA,Apple Valley,TRUE,Days,36,36,12,3,,1/13/2025,1/12/2026
+2732391,Clinical,Shift,CNA / Nurse Assistant,Medical Surgical,37.44,1497.6,CA,Apple Valley,TRUE,Nights,40,0,8,5,,1/15/2025,1/14/2026
+2686627,Clinical,Shift,Registered Nurse,Labor and Delivery,78.624,2830.464,CA,Santa Monica,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2705950,Clinical,Shift,Registered Nurse,ICU,64.3968,2575.872,CA,Burbank,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2718020,Clinical,Shift,ER Tech,ER Tech,32.1984,1159.1424,WA,Spokane,TRUE,Days,36,36,12,3,,1/2/2025,1/1/2026
+2687371,Clinical,Shift,Registered Nurse,ER,64.3968,2575.872,CA,Mission Viejo,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2701327,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Orange,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2705896,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2396.16,CA,Santa Monica,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2705969,Clinical,Shift,Registered Nurse,ER,64.3968,2318.2848,CA,Burbank,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2483177,Clinical,Shift,Registered Nurse,ER,34.398,1375.92,FL,Titusville,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2693436,Clinical,Shift,Registered Nurse,ER,64.3968,2318.2848,CA,Mission Viejo,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2693479,Clinical,Shift,Registered Nurse,Labor and Delivery,78.624,3144.96,CA,Torrance,TRUE,Nights,40,40,8,5,,1/13/2025,1/12/2026
+2686672,Clinical,Shift,Registered Nurse,ICU,64.3968,2318.2848,CA,Burbank,TRUE,Days,36,36,12,3,,1/6/2025,1/5/2026
+2705954,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2396.16,CA,Burbank,TRUE,Nights,40,40,8,5,,1/6/2025,1/5/2026
+2686709,Clinical,Shift,Registered Nurse,Labor and Delivery,78.624,2830.464,CA,Fullerton,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2705959,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2396.16,CA,Burbank,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2701314,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2156.544,CA,Orange,TRUE,Nights,36,36,12,3,,1/6/2025,1/5/2026
+2705888,Clinical,Shift,Registered Nurse,MS/Tele,59.904,2396.16,CA,Santa Monica,TRUE,Days,40,40,8,5,,1/6/2025,1/5/2026
+2582038,Clinical,Shift,Registered Nurse,Medical Surgical,57.33,2063.88,MA,Bradford,TRUE,Days,36,36,12,3,,1/13/2025,1/12/2026
