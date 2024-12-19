@@ -64,7 +64,7 @@
         @include('worker::components.custom_multiple_select_input', [
             'id' => 'specialty',
             'label' => 'Specialties',
-            'placeholder' => "What's your specialty?",
+            'placeholder' => "What is your specialty?",
             'name' => 'specialty',
             'options' => $allKeywords['Speciality'],
             'option_attribute' => 'title',
@@ -115,7 +115,7 @@
         @include('worker::components.custom_multiple_select_input', [
             'id' => 'state',
             'label' => 'States',
-            'placeholder' => "States you'll work in?",
+            'placeholder' => "States you will work in?",
             'name' => 'state',
             'options' => $allKeywords['State'],
             'option_attribute' => 'title',
@@ -133,7 +133,7 @@
         @include('worker::components.custom_multiple_select_input', [
             'id' => 'city',
             'label' => 'Cities',
-            'placeholder' => "Cities you'll work in?",
+            'placeholder' => "Cities you will work in?",
             'name' => 'city',
             'options' => $allKeywords['City'],
             'option_attribute' => 'title',
@@ -166,7 +166,7 @@
         @include('worker::components.custom_multiple_select_input', [
             'id' => 'worker_shift_time_of_day',
             'label' => 'Shift Times',
-            'placeholder' => "Shifts you'll work?",
+            'placeholder' => "Shifts you will work?",
             'name' => 'worker_shift_time_of_day',
             'options' => $allKeywords['PreferredShift'],
             'option_attribute' => 'title',
