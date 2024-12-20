@@ -263,21 +263,8 @@
                                             {{-- Skip && Save --}}
                                             <div
                                                 class="ss-prsn-form-btn-sec row col-11 d-flex justify-content-center align-items-center">
-                                                <button type="text" class=" col-12 ss-prsnl-save-btn"
-                                                    id="SaveBonusInformation"> Save
+                                                <button type="text" class=" col-12 ss-prsnl-save-btn" id="SaveBonusInformation"> Save
                                                 </button>
-                                                <!-- <span class="col-12"
-                                                                                                                                                                                                                                                                                                                                                                    style="display: block;
-                                               color: #000;
-                                               font-size: 16px;
-                                               font-weight: 500;
-                                               margin-top: 0px">Or</span>
-                                                                                                                                                                                                                                                                                                                                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                                                                                                                                                                                                                                                                                                                                    id="AddStripeAccount"> Add Stripe Account
-                                                                                                                                                                                                                                                                                                                                                                </button>
-                                                                                                                                                                                                                                                                                                                                                                <button type="text" class=" col-12 ss-prsnl-save-btn d-none"
-                                                                                                                                                                                                                                                                                                                                                                    id="AccessToStripeAccount"> Access to your Stripe account
-                                                                                                                                                                                                                                                                                                                                                                </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -1995,7 +1982,7 @@
             $('.disable_account').removeClass('d-none');
         }
 
-        var loadFile = function(event) {
+        function loadFile(event) {
             var image = document.getElementById("output");
             image.src = URL.createObjectURL(event.target.files[0]);
 
