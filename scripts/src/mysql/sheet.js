@@ -82,6 +82,7 @@ module.exports.insertJob = async function (orgaId, jobData) {
     //   return;
     // }
     const emptyValue = " ";
+    const zeroInt = 0;
     const lastJobId = await getNewJobId();
 
     let results = await pool.query(
@@ -108,9 +109,9 @@ module.exports.insertJob = async function (orgaId, jobData) {
         jobData["Guaranteed Hrs/wk"],
         jobData["Hrs/Shift"],
         jobData["Shift/Wk"],
-        jobData["Wks/Contract"],
-        moment(jobData["Start Date"].replace(/[/-]/g, "-")).format("MM-DD-YYYY"),
-        moment(jobData["End Date"].replace(/[/-]/g, "-")).format("MM-DD-YYYY"),
+        Number(jobData["Wks/Contract"]),
+        moment(jobData["Start Date"], ["MM/DD/YYYY", "MM-DD-YYYY"]).format("YYYY-MM-DD"),
+        moment(jobData["End Date"].replace(/[/-]/g, "-")).format("YYYY-MM-DD"),
         jobData["RTO"],
         jobData["OT $/Hr"],
         jobData["On Call $/Hr"],
@@ -142,9 +143,9 @@ module.exports.insertJob = async function (orgaId, jobData) {
         jobData["Experience"],
         jobData["References"],
         jobData["Skills checklist"],
-        emptyValue,//jobData["On Call?"],
+        zeroInt,//jobData["On Call?"],
         jobData["Block scheduling"],
-        emptyValue,//jobData["Floating Required"],
+        zeroInt,//jobData["Floating Required"],
         jobData["Patient Ratio Max"],
         jobData["EMR"],
         jobData["Unit"],
