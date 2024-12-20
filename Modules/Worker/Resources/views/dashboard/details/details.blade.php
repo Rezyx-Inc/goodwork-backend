@@ -1769,9 +1769,6 @@
                                 </ul>
 
                                 <div class="ss-job-apl-on-app-btn">
-                                    <button id="applyButton" data-id="{{ $model->id }}"
-                                        onclick="match_worker_with_jobs_update(dataToSend)">Save
-                                    </button>
                                     @if (!$model->checkIfApplied())
                                         <button id="applyButton" data-id="{{ $model->id }}"
                                             onclick="check_required_files_before_sent(this)">Apply
