@@ -77,7 +77,6 @@
                     </option>
                     <option value="Submitted">Submitted</option>
                     <option value="Offered">Make an Offer</option>
-                    <option value="Offered">Offered</option>
                     <option value="Done">Done</option>
                 </select>
             @else
