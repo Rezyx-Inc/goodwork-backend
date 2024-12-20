@@ -6,7 +6,7 @@
 /public/storage
 /public/landing/video/
 /scripts/src/gSheet/jsons/
-public/uploads
+public/uploads/*
 /storage/*.key
 /vendor
 /files/*
