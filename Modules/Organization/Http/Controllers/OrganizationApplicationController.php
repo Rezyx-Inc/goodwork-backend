@@ -118,7 +118,7 @@ class OrganizationApplicationController extends Controller
 
         } 
 
-        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
         $statusCounts = [];
         $offerLists = [];
 
@@ -578,7 +578,7 @@ class OrganizationApplicationController extends Controller
                 $receiver = $offer->worker_user_id;
                 $job_name = Job::where('id', $jobid)->first()->job_name;
                 event(new NotificationOffer($status, false, $time, $receiver, $organization_id, $full_name, $jobid, $job_name, $offer_id));
-                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Working', 'Rejected', 'Blocked', 'Hold'];
+                $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Done', 'Onboarding', 'Cleared', 'Working', 'Rejected', 'Blocked', 'Hold'];
                 $statusCounts = [];
                 $offerLists = [];
                 foreach ($statusList as $status) {
