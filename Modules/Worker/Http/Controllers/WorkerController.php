@@ -1364,7 +1364,7 @@ class WorkerController extends Controller
 
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-            ])->withBody($body, 'application/json')->post('http://localhost:' . config('app.file_api_port') . '/documents/get-docs');
+            ])->withBody($body, 'application/json')->post('http://localhost:' . config('app.file_api_port') . '/documents/add-docs');
             return $response;
             if ($response->successful()) {
                 return response()->json([
