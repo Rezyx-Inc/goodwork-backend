@@ -131,37 +131,59 @@ router.post('/manuelRecruiterAssignment/:orgId', async (req, res) => {
 
 
 router.post('/assignUpNextRecruiter', async (req, res) => {
+
     if (!Object.keys(req.body).length) {
-        return res.status(400).send("Empty request");
+        return res.status(400).send({success: false, message: "Empty request"});
     }
 
     try {
-        const org = await Organizations.findOne({ orgId: req.body.id });
+
+        var org = await Organizations.findOne({ orgId: req.body.id });
+
         if (!org) {
-            return res.status(404).send("Organization not found.");
+            return res.status(400).send({success: false, message: "Organization not found."});
         }
 
-        const upNextRecruiter = org.recruiters.find((recruiter) => recruiter.upNext === true);
-
-        if (!upNextRecruiter) {
-            return res.status(404).send("Up next recruiter not found.");
+        if (org.recruiters.length == 0) {
+            return res.status(400).send({success: false, message: "No recruiters to assign."});
         }
 
-        upNextRecruiter.worksAssigned = upNextRecruiter.worksAssigned + 1;
-        upNextRecruiter.upNext = false;
+        if(org.recruiters.length == 1){
+
+            var upNextRecruiter = org.recruiters[0];
+            upNextRecruiter.worksAssigned = upNextRecruiter.worksAssigned + 1;
+
+        }else{
+
+            var upNextRecruiter;
+
+            for (let i = 0; i < org.recruiters.length; i++){
+
+                var len = org.recruiters.length;
+                var next = org.recruiters[(i+1)%len];
+
+                if(org.recruiters[i].upNext === true){
+                    upNextRecruiter = org.recruiters[i];
+                    next.upNext = true;
+                    break;
+                }
+            }
+
+            upNextRecruiter.worksAssigned++;
+            upNextRecruiter.upNext = false;
+        }
 
         await org.save();
 
         // i want to return it with the recruiter id
-        res.status(200).send(upNextRecruiter.id);
+        res.status(200).send({success: true, data: upNextRecruiter.id});
 
     } catch (err) {
 
-        console.error("Unable to save organization.", err);
-        res.status(500).send("Unable to save organization.");
+        res.status(500).send({success: false, message: "Unable to save organization."});
     }
-}
-);
+
+});
 
     
 

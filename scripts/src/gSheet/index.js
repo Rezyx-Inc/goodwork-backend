@@ -171,33 +171,33 @@ async function getDataAndSaveAsJson(auth, spreadsheetId, spreadsheetName) {
 
     // get the organization ID
     //let OrgaId = spreadsheetName.match(/\[(.*?)\]/)[1];
+    // Daniel's org id
     const OrgaId = "GWU000007";
 
     //let jobdbId = await queries.insertJob(OrgaId, job);
-    let recruiterID = null;
 
-    recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
+    for (const job of json) {
 
-    if (recruiterID !== "Up next recruiter not found.") {
-      for (const job of json) {
-        try {
+      try {
+
+        let recruiterID = null;
+
+        recruiterID = await axios.post("http://localhost:4545/organizations/assignUpNextRecruiter", { id: OrgaId });
+        recruiterID = recruiterID.data;
+
+        if(recruiterID.success){
 
           await queries.insertJob(OrgaId, job);
 
           await queries.updateJobRecruiterID(job["Org Job Id"], recruiterID.data);
 
-        } catch (err) {
-          console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
         }
+
+      } catch (err) {
+        console.error(`Error in job with ID ${job["Org Job Id"]}:`, err);
       }
-    }else {
-      console.log("No recruiter found for this organization");
     }
     
-    //}
-
-
-
   } catch (err) {
     console.error('Error fetching or saving data:', err);
   }
