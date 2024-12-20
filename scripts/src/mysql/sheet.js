@@ -1,4 +1,5 @@
 const { pool } = require('./mysql.js');
+const moment = require('moment');
 
 async function validateFields(jobData) {
   try {
@@ -75,40 +76,41 @@ async function validateFields(jobData) {
 module.exports.insertJob = async function (orgaId, jobData) {
   try {
 
-    const isValid = await validateFields(jobData);
-    if (!isValid) {
-      console.log("Invalid field");
-      return;
-    }
+    // const isValid = await validateFields(jobData);
+    // if (!isValid) {
+    //   console.log("Invalid field");
+    //   return;
+    // }
     const emptyValue = " ";
     const lastJobId = await getNewJobId();
 
-    const [result] = await pool.query(
+    let results = await pool.query(
       `INSERT INTO jobs 
-            (id, organization_id, created_by, recruiter_id, job_id, job_type, terms, profession, preferred_specialty, actual_hourly_rate, weekly_pay, hours_per_week, job_state, job_city, preferred_shift_duration, guaranteed_hours, hours_shift, weeks_shift, Preferred_assignment_duration, start_date, end_date, rto, overtime, on_call_rate, call_back_rate, orientation_rate, weekly_taxable_amount, weekly_non_taxable_amount, feels_like_per_hour, referral_bonus, sign_on_bonus, extension_bonus, total_organization_amount, pay_frequency, benefits, clinical_setting, preferred_work_location, facility_name, facilitys_parent_system, facility_shift_cancelation_policy, contract_termination_policy, traveler_distance_from_facility, job_location, certificate, description, urgency, preferred_experience, number_of_references, skills, on_call, block_scheduling, float_requirement, Patient_ratio, Emr, Unit, nurse_classification, vaccinations, tax_status, facility_city, facility_state, professional_licensure)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (id, created_at, organization_id, created_by, recruiter_id, job_id, job_type, terms, profession, preferred_specialty, actual_hourly_rate, weekly_pay, hours_per_week, job_state, job_city, preferred_shift_duration, guaranteed_hours, hours_shift, weeks_shift, Preferred_assignment_duration, start_date, end_date, rto, overtime, on_call_rate, call_back_rate, orientation_rate, weekly_taxable_amount, weekly_non_taxable_amount, feels_like_per_hour, referral_bonus, sign_on_bonus, extension_bonus, total_organization_amount, pay_frequency, benefits, clinical_setting, preferred_work_location, facility_name, facilitys_parent_system, facility_shift_cancelation_policy, contract_termination_policy, traveler_distance_from_facility, job_location, certificate, description, urgency, preferred_experience, number_of_references, skills, on_call, block_scheduling, float_requirement, Patient_ratio, Emr, Unit, nurse_classification, vaccinations, tax_status, facility_city, facility_state, professional_licensure, is_resume)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         lastJobId,
+        moment().format("YYYY-MM-DD HH:mm:ss"),
         orgaId,
         orgaId,
         orgaId,
         jobData["Org Job Id"],
         jobData["Type"],
-        jobData["Terms *"],
-        jobData["Profession *"],
-        jobData["Specialty *"],
-        jobData["$/hr *"],
-        jobData["$/Wk *"],
-        jobData["Hrs/Wk *"],
-        jobData["State *"],
-        jobData["City *"],
+        jobData["Employment"],
+        jobData["Profession"],
+        jobData["Specialty"],
+        jobData["$/hr"],
+        jobData["$wk"],
+        jobData["Hrs/Wk"],
+        jobData["State"],
+        jobData["City"],
         jobData["Shift Time"],
         jobData["Guaranteed Hrs/wk"],
         jobData["Hrs/Shift"],
-        jobData["Shifts/Wk"],
+        jobData["Shift/Wk"],
         jobData["Wks/Contract"],
-        jobData["Start Date"],
-        jobData["End Date"],
+        moment(jobData["Start Date"].replace(/[/-]/g, "-")).format("MM-DD-YYYY"),
+        moment(jobData["End Date"].replace(/[/-]/g, "-")).format("MM-DD-YYYY"),
         jobData["RTO"],
         jobData["OT $/Hr"],
         jobData["On Call $/Hr"],
@@ -140,9 +142,9 @@ module.exports.insertJob = async function (orgaId, jobData) {
         jobData["Experience"],
         jobData["References"],
         jobData["Skills checklist"],
-        jobData["On Call?"],
+        emptyValue,//jobData["On Call?"],
         jobData["Block scheduling"],
-        jobData["Floating Required"],
+        emptyValue,//jobData["Floating Required"],
         jobData["Patient Ratio Max"],
         jobData["EMR"],
         jobData["Unit"],
@@ -152,13 +154,15 @@ module.exports.insertJob = async function (orgaId, jobData) {
         emptyValue,
         emptyValue,
         emptyValue,
+        jobData["Resume"]== "TRUE" ? "1" : "0",
+
       ]
     );
 
 
 
-    console.log("job inserted", jobData["Org Job Id"]);
-    return result;
+    console.log("job inserted", lastJobId);
+    return lastJobId;
   } catch (err) {
     console.error('Error inserting job:', err);
     throw err;
@@ -365,5 +369,23 @@ module.exports.deleteJob = async function (orgaId, jobId) {
   }
 };
 
+
+module.exports.updateJobRecruiterID = async function (jobdbId, recruiter_id) {
+  try {
+    console.log(jobdbId, recruiter_id);
+    
+    const [result] = await pool.query(
+      `UPDATE jobs SET recruiter_id = ? WHERE job_id = ?`,
+      [recruiter_id, jobdbId]
+    );
+
+    console.log('Job updated successfully:', jobdbId);
+    return result;
+  } catch (err) {
+    console.error('Error updating job:', err.message);
+    throw err;
+  }
+  
+}
 
 
