@@ -126,7 +126,7 @@
 
         let max = Math.max(...yValues);
 
-        const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared' 'Working'];
+        const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working'];
 
 
         new Chart(ctx, {

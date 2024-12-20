@@ -373,15 +373,14 @@ module.exports.deleteJob = async function (orgaId, jobId) {
 
 module.exports.updateJobRecruiterID = async function (jobdbId, recruiter_id) {
   try {
-    console.log(jobdbId, recruiter_id);
     
     const [result] = await pool.query(
       `UPDATE jobs SET recruiter_id = ? WHERE job_id = ?`,
       [recruiter_id, jobdbId]
     );
 
-    console.log('Job updated successfully:', jobdbId);
     return result;
+
   } catch (err) {
     console.error('Error updating job:', err.message);
     throw err;
