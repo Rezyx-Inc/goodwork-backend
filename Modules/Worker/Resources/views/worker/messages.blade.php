@@ -544,7 +544,8 @@
                             <div class="ss-msg-rply-profile-sec">
                                 <ul>
                                     <li>
-                                        <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . $organization->image) }}"
+
+                                        <img width="50px" height="50px" src="{{ URL::asset('images/nurses/profile/' . ($organization->image ?? 'default.png') ) }}"
                                         onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/profile-pic-big.png') }}';"
                                         id="preview" style="object-fit: cover;" class="rounded-3" alt="Profile Picture">
                                     </li>
