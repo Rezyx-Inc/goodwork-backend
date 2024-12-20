@@ -495,7 +495,7 @@
         ])
 
     </div>
-    <span class="help-block-worker_job_type"></span>
+    <span class="help-block-worker_job_location"></span>
     {{-- end Type --}}
 
 </div>
