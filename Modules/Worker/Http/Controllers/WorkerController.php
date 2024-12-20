@@ -1741,7 +1741,14 @@ class WorkerController extends Controller
                 return response()->json($response);
             }
 
-            $response['content'] = view('worker::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'organization' => $organization, 'recruiter' => $recruiter])->render();
+            $distinctFilters = Keyword::distinct()->pluck('filter');
+            $allKeywords = [];
+            foreach ($distinctFilters as $filter) {
+                $keywords = Keyword::where('filter', $filter)->get();
+                $allKeywords[$filter] = $keywords;
+            }
+
+            $response['content'] = view('worker::offers.offer_vs_worker_information', ['userdetails' => $user, 'offerdetails' => $offer, 'offerLogs' => $offerLogs, 'organization' => $organization, 'recruiter' => $recruiter , 'allKeywords' => $allKeywords])->render();
             
             return response()->json($response);
         

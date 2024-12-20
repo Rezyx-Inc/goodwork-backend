@@ -656,6 +656,13 @@ class KeywordSeeder extends Seeder
                 'same terms as facility',
                 'no preference'
             ],
+            'FacilityShiftCancellationPolicy' => [
+                '1 shift/wk',
+                '1 shift/2wks',
+                '3 shifts/13wks',
+                'no shift cancelations',
+                'no preference'
+            ],
             'State'=>State::all()->pluck('name')->toArray(),
             'StateCode'=>State::all()->pluck('iso2')->toArray(),
             'City'=> Cities::all()->pluck('name')->toArray(),

@@ -2,7 +2,8 @@
 
 @section('content')
 
-@include('worker::offers.new_inputs_modals')
+@include('worker::offers.modals')
+@include('worker::offers.multiselect_dynamic_modal')
     <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/style.css')}}" />
     <link rel="stylesheet" href="{{URL::asset('recruiter/custom/css/custom.css')}}" />
     <main style="padding-top: 170px" class="ss-main-body-sec">
@@ -173,6 +174,17 @@
         </div>
 
     </main>
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var selectBtn = document.querySelectorAll(".select-btn");
+        selectBtn.forEach(btnElement => {
+            btnElement.addEventListener("click", () => {
+                btnElement.classList.toggle("open");
+            });
+        });
+    });
+</script>
     <script>
 
         const AddStripe = document.getElementById("AddStripe");
@@ -533,16 +545,10 @@
             const viewParam = urlParams.get('view');
             selectOfferCycleState(viewParam);
 
-            if (viewParam == 'Apply') {
-                            // chnage his coloset from col-lg-5 to col-lg-12    
-                            $("#application-details").closest('.col-lg-7').addClass("d-none");
-                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5 d-none').addClass('col-lg-12');
-                            
-                            // hide to col of  #application-details
-            } else {
+            
                 $("#application-list").closest('.col-lg-5').removeClass('d-none').addClass('col-lg-5');
                 $("#application-details").closest('.col-lg-7').removeClass("d-none");
-            }
+            
             
             $('#send-job-offer').on('submit', function(event) {
                 event.preventDefault();
@@ -1176,20 +1182,12 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(result) {
-                        if (type == 'Apply') {
-                            // chnage his coloset from col-lg-5 to col-lg-12
-                            
-                            $("#application-details").closest('.col-lg-7').addClass("d-none");
-                            $("#application-list").closest('.col-lg-5').removeClass('col-lg-5').addClass('col-lg-12');
-                            $("#application-list").html(result.content);
-                            // hide to col of  #application-details
-                            
+                       
 
-                        } else {
                             $("#application-list").html(result.content);
                             $("#application-list").closest('.col-lg-12').removeClass('col-lg-12').addClass('col-lg-5');
                             $("#application-details").closest('.col-lg-7').removeClass("d-none");
-                        }
+                        
                         
                     },
                     error: function(error) {
@@ -1233,10 +1231,10 @@
 
         function applicationStatusToggle(type){
             
-            if (type != 'Apply') {
+            
                 noApplicationDetailsContent();
                 noApplicationWorkerListContent();
-            }
+            
             
             $("#listingname").removeClass("d-none");
             var applyElement = document.getElementById('Apply');

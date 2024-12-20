@@ -65,7 +65,7 @@
                 <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
                     <form name="certification" method="post" action="{{ route('worker-upload-files') }}"
                         id="certification_file_modal_form" class="modal-form" enctype="multipart/form-data">
-                        @csrf
+                        
                         <div class="ss-job-dtl-pop-frm-sml-dv"></div>
                         <h4></h4>
                         {{-- certification --}}
@@ -117,7 +117,7 @@
                 <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
                     <form name="vaccination" method="post" action="{{ route('worker-upload-files') }}"
                         id="vaccination_file_modal_form" class="modal-form" enctype="multipart/form-data">
-                        @csrf
+                        
                         <div class="ss-job-dtl-pop-frm-sml-dv"></div>
                         <h4></h4>
                         <div class="container-multiselect" id="vaccinations">
@@ -254,7 +254,6 @@
                         id="skills_file_modal_form" class="modal-form" enctype="multipart/form-data">
                         <div class="ss-job-dtl-pop-frm-sml-dv"></div>
                         <h4></h4>
-                        @csrf
                         {{-- skills --}}
                         <div class="container-multiselect" id="skills_checklists">
                             <div class="select-btn">
@@ -336,37 +335,6 @@
 </div>
 
 
-{{-- driving_licence Modal --}}
-{{-- <div class="modal fade ss-jb-dtl-pops-mn-dv" id="ss_number_file_modal" data-bs-backdrop="static"
-                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="ss-pop-cls-vbtn">
-                            <button type="button" class="btn-close" data-target="#ss_number_file_modal"
-                                onclick="close_modal(this)" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="ss-job-dtl-pop-form">
-                                <form method="post" action="{{ route('my-profile.store') }}"
-                                    id="ss_number_file_modal_form" class="modal-form">
-                                    <div class="ss-job-dtl-pop-frm-sml-dv">
-                                        <div></div>
-                                    </div>
-                                    <h4></h4>
-                                    <div class="ss-form-group">
-                                        <input type="number" name="worker_ss_number" placeholder="">
-                                        <span class="help-block"></span>
-                                    </div>
-
-                                    <button type="submit" class="ss-job-dtl-pop-sv-btn"
-                                        onclick="saveData(event,'input_number')">Save</button>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div> --}}
 
 {{-- resume Modal --}}
 <div class="modal fade ss-jb-dtl-pops-mn-dv" id="resume_file_modal" data-bs-backdrop="static"
@@ -383,9 +351,8 @@
                         id="resume_file_modal_form" class="modal-form" enctype="multipart/form-data">
                         <div class="ss-job-dtl-pop-frm-sml-dv"></div>
                         <h4></h4>
-                        @csrf
-                        {{-- Resume --}}
-                        <div id="resume">
+                        
+                        {{-- Resume Upload Not Working yet--}}
                             <div class="container-multiselect"
                                 style="justify-content: center;display: flex;margin-bottom: 30px;">
                                 <div class="ss-form-group fileUploadInput"
@@ -405,7 +372,7 @@
                                 </div>
                             </div>
                             <button onclick="saveData(event,'file')" class="ss-job-dtl-pop-sv-btn">Save</button>
-                        </div>
+                        
                     </form>
                 </div>
             </div>
@@ -512,9 +479,9 @@
             </div>
             <div class="modal-body">
                 <div class="ss-job-dtl-pop-form">
-                    <form method="post" action="{{ route('my-profile.store') }}" id="binary_modal_form"
+                    <form method="post" action="{{ route('worker-update-information') }}" id="binary_modal_form"
                         class="modal-form">
-                        @csrf
+                        
                         <div class="ss-job-dtl-pop-frm-sml-dv">
                             <div></div>
                         </div>
@@ -522,14 +489,14 @@
                         <ul class="ss-jb-dtlpop-chck">
                             <li>
                                 <label>
-                                    <input type="radio" name="radio" name="" value="1">
+                                    <input type="radio" name="radio" name="binary" value="1">
                                     <span>Yes</span>
                                 </label>
                             </li>
 
                             <li>
                                 <label>
-                                    <input type="radio" name="radio" name="" value="0">
+                                    <input type="radio" name="radio" name="binary" value="0">
                                     <span>No</span>
                                 </label>
                             </li>
@@ -607,9 +574,8 @@
             </div>
             <div class="modal-body">
                 <div class="ss-job-dtl-pop-form">
-                    <form method="post" action="{{ route('my-profile.store') }}" id="rto_modal_form"
+                    <form method="post" action="{{ route('worker-update-information') }}" id="rto_modal_form"
                         class="modal-form">
-                        @csrf
                         <div class="ss-job-dtl-pop-frm-sml-dv">
                             <div></div>
                         </div>
@@ -617,19 +583,19 @@
                         <ul class="ss-jb-dtlpop-chck">
                             <li>
                                 <label>
-                                    <input type="radio" name="radio" name="rto" value="allowed">
+                                    <input type="radio" name="rto" value="allowed">
                                     <span>Allowed</span>
                                 </label>
                             </li>
 
                             <li>
                                 <label>
-                                    <input type="radio" name="radio" name="rto" value="not allowed">
+                                    <input type="radio" name="rto" value="not allowed">
                                     <span>Not Allowed</span>
                                 </label>
                             </li>
                         </ul>
-                        <button class="ss-job-dtl-pop-sv-btn">Save</button>
+                        <button class="ss-job-dtl-pop-sv-btn" onclick="saveData(event,'rto')">Save</button>
                     </form>
                 </div>
             </div>
@@ -652,9 +618,9 @@
             </div>
             <div class="modal-body">
                 <div class="ss-job-dtl-pop-form">
-                    <form method="post" action="{{ route('my-profile.store') }}" id="input_modal_form"
+                    <form method="post" action="{{ route('worker-update-information') }}" id="input_modal_form"
                         class="modal-form">
-                        @csrf
+                        
                         <div class="ss-job-dtl-pop-frm-sml-dv">
                             <div></div>
                         </div>
@@ -766,83 +732,107 @@
     </div>
 </div>
 
-
-
-<!-----------What's your specialty?------------>
-<!-- Modal -->
-
-{{-- <div class="modal fade ss-jb-dtl-pops-mn-dv" id="job-dtl-References" data-bs-backdrop="static"
-                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="ss-pop-cls-vbtn">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                id="references-modal-form-btn"></button>
+{{-- worker_pay_frequency  all keywords pay frequency --}}
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="pay_frequency_modal" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="ss-pop-cls-vbtn">
+                <button type="button" class="btn-close" data-target="#pay_frequency_modal"
+                    onclick="close_modal(this)" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ss-job-dtl-pop-form">
+                    <form method="post" action="{{ route('my-profile.store') }}" id="pay_frequency_modal_form"
+                        class="modal-form">
+                        <h4></h4>
+                        <div class="ss-form-group">
+                            <select name="worker_pay_frequency">
+                                @if (isset($allKeywords['PayFrequency']))
+                                    @foreach ($allKeywords['PayFrequency'] as $value)
+                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
                         </div>
-                        <div class="modal-body">
-                            <div class="ss-job-dtl-pop-form ss-job-dtl-pop-form-refrnc">
-                                <form name="" method="post" action="{{ route('references.store') }}" id="ref-modal-form"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="ss-job-dtl-pop-frm-sml-dv">
-                                        <div></div>
-                                    </div>
-                                    <h4>Who are your References?</h4>
-                                    <div class="ss-form-group">
-                                        <label>Reference Name</label>
-                                        <input type="text" name="name[]" placeholder="Name of Reference">
-                                        <span class="help-block"></span>
-                                    </div>
-                                    <div class="ss-form-group">
-                                        <label>Phone Number</label>
-                                        <input type="text" name="phone[]" placeholder="Phone Number of Reference">
-                                        <span class="help-block"></span>
-                                    </div>
-
-                                    <div class="ss-form-group">
-                                        <label>Email</label>
-                                        <input type="text" name="email[]" placeholder="Email of Reference">
-                                        <span class="help-block"></span>
-                                    </div>
-
-                                    <div class="ss-form-group">
-                                        <label>Date Referred</label>
-                                        <input type="date" name="date_referred[]">
-                                        <span class="help-block"></span>
-                                    </div>
-
-                                    <div class="ss-form-group">
-                                        <label>Min Title of Reference</label>
-                                        <input type="text" name="min_title_of_reference[]"
-                                            placeholder="Min Title of Reference">
-                                        <span class="help-block"></span>
-                                    </div>
-                                    <div class="ss-form-group">
-                                        <label>Is this from your last assignment?</label>
-                                        <select name="recency_of_reference[]">
-                                            <option value="">Select</option>
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
-                                        </select>
-                                        <span class="help-block"></span>
-                                    </div>
-
-                                    <div class="ss-form-group fileUploadInput">
-                                        <label>Upload Image</label>
-                                        <input type="file" name="image[]">
-                                        <button type="button" onclick="open_file(this)">Choose File</button>
-                                        <span class="help-block"></span>
-                                    </div>
-
-                                    <button class="ss-job-dtl-pop-sv-btn"
-                                        onclick="saveData(event,'file')">Save</button>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
+                        <button class="ss-job-dtl-pop-sv-btn" onclick="saveData(event,'pay_frequency')">Save</button>
+                    </form>
                 </div>
-            </div> --}}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{--  facility_shift_cancelation_policy all keywords FacilityShiftCancellationPolicy --}}
+
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="facility_shift_cancelation_policy_modal" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="ss-pop-cls-vbtn">
+                <button type="button" class="btn-close" data-target="#facility_shift_cancelation_policy_modal"
+                    onclick="close_modal(this)" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ss-job-dtl-pop-form">
+                    <form method="post" action="{{ route('worker-update-information') }}"
+                        id="facility_shift_cancelation_policy_modal_form" class="modal-form">
+                        <h4></h4>
+                        <div class="ss-form-group">
+                            <select name="facility_shift_cancelation_policy">
+                                @if (isset($allKeywords['FacilityShiftCancellationPolicy']))
+                                    @foreach ($allKeywords['FacilityShiftCancellationPolicy'] as $value)
+                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <button class="ss-job-dtl-pop-sv-btn"
+                            onclick="saveData(event,'facility_shift_cancelation_policy')">Save</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{-- contract_termination_policy ContractTerminationPolicy --}}
+
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="contract_termination_policy_modal" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="ss-pop-cls-vbtn">
+                <button type="button" class="btn-close" data-target="#contract_termination_policy_modal"
+                    onclick="close_modal(this)" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ss-job-dtl-pop-form">
+                    <form method="post" action="{{ route('worker-update-information') }}"
+                        id="contract_termination_policy_modal_form" class="modal-form">
+                        <h4></h4>
+                        <div class="ss-form-group">
+                            <select name="contract_termination_policy">
+                                @if (isset($allKeywords['ContractTerminationPolicy']))
+                                    @foreach ($allKeywords['ContractTerminationPolicy'] as $value)
+                                        <option value="{{ $value->title }}">{{ $value->title }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <button class="ss-job-dtl-pop-sv-btn"
+                            onclick="saveData(event,'contract_termination_policy')">Save</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 
 
 <!-----------Upload your latest skills checklist------------>

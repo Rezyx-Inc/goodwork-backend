@@ -55,7 +55,7 @@
                 },
                 success: function(response) {
                     console.log('response', response);
-                    if (response.status === 'success') {
+                    if (response.success == true) {
                         notie.alert({
                             type: 'success',
                             text: '<i class="fa fa-check"></i> Information updated successfully',
