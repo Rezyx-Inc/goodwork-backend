@@ -26,7 +26,10 @@ class UpdateWorkerBenefitsToNurses extends Migration
     public function down()
     {
         Schema::table('nurses', function (Blueprint $table) {
-            $table->string('worker_benefits')->change();
+            // Replace null values with a default before making non-nullable
+            DB::table('nurses')->whereNull('worker_benefits')
+                ->update(['worker_benefits' => '']);
+            $table->string('worker_benefits')->nullable(false)->change();
         });
     }
 }
