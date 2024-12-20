@@ -606,7 +606,8 @@ class KeywordSeeder extends Seeder
                 'Hospice Center',
                 'Dialysis Center',
                 'Remote/Virtual',
-                'Home Care'
+                'Home Care',
+                'Skilled Nursing'
             ],
             'Vaccinations'=>[
                 'Flu',
@@ -653,6 +654,13 @@ class KeywordSeeder extends Seeder
                 '2 weeks notice',
                 '30 days notice',
                 'same terms as facility',
+                'no preference'
+            ],
+            'FacilityShiftCancellationPolicy' => [
+                '1 shift/wk',
+                '1 shift/2wks',
+                '3 shifts/13wks',
+                'no shift cancelations',
                 'no preference'
             ],
             'State'=>State::all()->pluck('name')->toArray(),
