@@ -155,7 +155,7 @@ class WorkerController extends Controller
 
             if (isset($recruiter_id)) {
 
-                $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
+                $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
                     'id' => $recruiter_id,
                 ]);
                 $requiredFields = $requiredFields->json();
@@ -168,7 +168,7 @@ class WorkerController extends Controller
             } else {
 
                 $organization_id = $data['model']->organization_id;
-                $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+                $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                     'id' => $organization_id,
                 ]);
                 $requiredFields = $requiredFields->json();
@@ -1388,7 +1388,7 @@ class WorkerController extends Controller
             $workerId = $request->WorkerId;
             //return response()->json(['workerId' => $workerId]);
 
-            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
             if ($response->successful()) {
                 return $response->body();
             } else {
@@ -1403,7 +1403,7 @@ class WorkerController extends Controller
     {
         try {
             $bsonId = $request->input('bsonId');
-            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
 
             // Pass through the response from Node.js API
             return $response->body();
@@ -1417,7 +1417,7 @@ class WorkerController extends Controller
     {
         $bsonId = $request->input('bsonId');
 
-        $response = Http::post('http://localhost:4545/documents/del-doc', ['bsonId' => $bsonId]);
+        $response = Http::post('http://localhost:'. config('app.file_api_port') .'/documents/del-doc', ['bsonId' => $bsonId]);
         if ($response->successful()) {
             return response()->json(['success' => true]);
         } else {

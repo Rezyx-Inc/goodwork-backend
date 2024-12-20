@@ -391,7 +391,7 @@ class OrganizationApplicationController extends Controller
                         $type = $request->type;
                         $organization = Auth::guard('organization')->user();
                         $organization_id = Auth::guard('organization')->user()->id;
-                        // $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $organization_id);
+                        // $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $organization_id);
                         // $responseData = $scriptResponse->json();
                         // $allRecruiters = [];
                         // $ids = [];
@@ -541,7 +541,7 @@ class OrganizationApplicationController extends Controller
             $offerLogs = OffersLogs::where('original_offer_id', $offer_id)->get();
 
             $orgId = Auth::guard('organization')->user()->id;
-            $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
+            $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
             $responseData = $scriptResponse->json();
             $allRecruiters = [];
             $ids = [];
@@ -732,7 +732,7 @@ class OrganizationApplicationController extends Controller
             $workerId = $request->WorkerId;
             //return response()->json(['workerId' => $workerId]);
 
-            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
             if ($response->successful()) {
                 return $response->body();
             } else {
@@ -749,7 +749,7 @@ class OrganizationApplicationController extends Controller
     {
         try {
             $bsonId = $request->input('bsonId');
-            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
 
             // Pass through the response from Node.js API
             return $response->body();

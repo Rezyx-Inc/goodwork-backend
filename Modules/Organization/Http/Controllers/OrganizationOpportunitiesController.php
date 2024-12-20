@@ -32,7 +32,7 @@ class OrganizationOpportunitiesController extends Controller
     public function index()
     {
         $organization_id = Auth::guard('organization')->user()->id;
-        $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $organization_id);
+        $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $organization_id);
         $responseData = $scriptResponse->json();
         $allRecruiters = [];
         $ids = [];
@@ -74,7 +74,7 @@ class OrganizationOpportunitiesController extends Controller
         }
 
         $orgId = Auth::guard('organization')->user()->id;
-        $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+        $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
             'id' => $orgId,
         ]);
         $requiredFields = $requiredFields->json();
@@ -1782,7 +1782,7 @@ class OrganizationOpportunitiesController extends Controller
         } elseif ($request->type == 'drafts') {
         } else{
             $orgId = Auth::guard('organization')->user()->id;
-            $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
+            $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
             $responseData = $scriptResponse->json();
             $allRecruiters = [];
             $ids = [];

@@ -797,7 +797,7 @@ class ApplicationController extends Controller
             $workerId = $request->WorkerId;
             //return response()->json(['workerId' => $workerId]);
 
-            $response = Http::get('http://localhost:4545/documents/list-docs', ['workerId' => $workerId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/list-docs', ['workerId' => $workerId]);
             
             if ($response->successful()) {
                 
@@ -817,7 +817,7 @@ class ApplicationController extends Controller
     {
         try {
             $bsonId = $request->input('bsonId');
-            $response = Http::get('http://localhost:4545/documents/get-doc', ['bsonId' => $bsonId]);
+            $response = Http::get('http://localhost:'. config('app.file_api_port') .'/documents/get-doc', ['bsonId' => $bsonId]);
 
             // Pass through the response from Node.js API
             return $response->body();

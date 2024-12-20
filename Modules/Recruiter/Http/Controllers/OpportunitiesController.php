@@ -58,7 +58,7 @@ class OpportunitiesController extends Controller
 
         }
 
-        $requiredFields = Http::post('http://localhost:4545/organizations/checkRecruiter', [
+        $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/checkRecruiter', [
             'id' => $recruiter_id,
         ]);
 

@@ -751,7 +751,7 @@ class OrganizationController extends Controller
                 // Save the job data to the database
                 $job->save();
 
-                $AssignmentResponse = Http::post('http://localhost:4545/organizations/assignUpNextRecruiter', [
+                $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/assignUpNextRecruiter', [
                     'id' => $job->organization_id,
                 ]);
 
@@ -1196,7 +1196,7 @@ public function recruiters_management()
 {
     $orgId = Auth::guard('organization')->user()->id;
 
-    $scriptResponse = Http::get('http://localhost:4545/organizations/getRecruiters/' . $orgId);
+    $scriptResponse = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getRecruiters/' . $orgId);
 
    
 
@@ -1226,7 +1226,7 @@ public function recruiters_management()
 
         $orgId = Auth::guard('organization')->user()->id;
 
-        $scriptResponse = Http::post('http://localhost:4545/organizations/deleteRecruiter/' . $orgId, [
+        $scriptResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/deleteRecruiter/' . $orgId, [
             'id' => $recruiter_id,
         ]);
 
@@ -1398,7 +1398,7 @@ public function recruiters_management()
                         'role' => 'RECRUITER',
                     ]);
 
-                    $scriptResponse = Http::post('http://localhost:4545/organizations/addRecruiter/' . $orgId->id, [
+                    $scriptResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/addRecruiter/' . $orgId->id, [
                         'id' => $model->id,
                         'worksAssigned' => 0,
                         'upNext' => true,
@@ -1527,8 +1527,8 @@ public function recruiters_management()
             // $columns = Schema::getColumnListing('jobs');
             // $columns = array_diff($columns, ['id','import_id','facility_id','created_at','updated_at','created_by','deleted_at','recruiter_id','organization_id']);
             $orgId = Auth::guard('organization')->user()->id;
-            $columns = Http::get('http://localhost:4545/organizations/getFieldsRules');
-            $requiredFields = Http::post('http://localhost:4545/organizations/get-preferences', [
+            $columns = Http::get('http://localhost:'. config('app.file_api_port') .'/organizations/getFieldsRules');
+            $requiredFields = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/get-preferences', [
                 'id' => $orgId,
             ]);
             $requiredFields = $requiredFields->json();
@@ -1554,7 +1554,7 @@ public function recruiters_management()
         try{
 
             $orgId = Auth::guard('organization')->user()->id;
-            $response = Http::post('http://localhost:4545/organizations/add-preferences', [
+            $response = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/add-preferences', [
                 'id' => $orgId,
                 'preferences' => $request->preferences,
             ]);
@@ -1579,7 +1579,7 @@ public function recruiters_management()
             $job = Job::where('id', $jobId)->first();
             $orgId = Auth::guard('organization')->user()->id;
 
-            $AssignmentResponse = Http::post('http://localhost:4545/organizations/manuelRecruiterAssignment/' . $orgId, [
+            $AssignmentResponse = Http::post('http://localhost:'. config('app.file_api_port') .'/organizations/manuelRecruiterAssignment/' . $orgId, [
                 'id' => $recruiterId,
             ]);
 

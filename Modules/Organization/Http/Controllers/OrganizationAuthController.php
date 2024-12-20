@@ -252,7 +252,7 @@ class OrganizationAuthController extends Controller
 
           /*
           // call local api to create spreadsheet
-          $response = Http::post('http://localhost:4545/sheets/createSheet', [
+          $response = Http::post('http://localhost:'. config('app.file_api_port') .'/sheets/createSheet', [
             'organizationId' => $model->id,
             'organizationName' => $model->organization_name
           ]);
