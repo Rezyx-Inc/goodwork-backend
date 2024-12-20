@@ -465,12 +465,12 @@
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
 
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="' + file.name + '"></a></td>');
                                 tbody.append(row);
                             }
                         }
@@ -1381,14 +1381,15 @@
                                 const byteArray = new Uint8Array(byteNumbers);
                                 const blob = new Blob([byteArray], { type: mimeType });
                                 const blobUrl = URL.createObjectURL(blob);
+
                                 const downloadLink = document.createElement('a');
                                 downloadLink.href = blobUrl;
                                 const extension = mimeType.split('/')[1];
-                                downloadLink.setAttribute('download', `document.${extension}`);
+                                downloadLink.setAttribute('download', file.name);
                                 var row = $('<tr></tr>');
                                 row.append('<td>' + file.name + '</td>');
                                 row.append('<td>' + file.type + '</td>');
-                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="document.' + extension + '"></a></td>');
+                                row.append('<td><a href="javascript:void(0);" onclick="this.nextElementSibling.click()">Download</a><a style="display:none;" href="'+ downloadLink.href +'" download="'+ file.name + '"></a></td>');
                                 tbody.append(row);
                         }
                     }
