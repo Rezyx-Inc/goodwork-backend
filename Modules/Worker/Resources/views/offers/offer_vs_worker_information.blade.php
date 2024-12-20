@@ -324,31 +324,32 @@
                 <span class="mt-3">Resume</span>
             </div>
 
-        <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
-            <div class="col-md-6">
-                <p id="resume-placeholder" class="profile_info_text" data-target="resume_file" data-title="Resume"
-                    data-name="resume" onclick="open_modal(this)">
-                    @if (!!$userdetails->nurse->resume)
-                        {{ truncateText($userdetails->nurse->resume) }}
-                    @else
-                        Resume
-                    @endif
-                </p>
-            </div>
-            <div class="col-md-6 ">
-                {{-- is_resume required or ask recruiter --}}
-                <p>
-                    @if ($offerdetails->is_resume_required)
-                        Required
-                    @else
-                        <a style="cursor: pointer;"
-                            onclick="askRecruiter(this, 'is_resume_required', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
-                            Recruiter</a>
-                    @endif
-                </p>
+            <div id="resume" class="row d-flex align-items-center" style="margin:auto;">
+                <div class="col-md-6">
+                    <p id="resume-placeholder" class="profile_info_text" data-target="resume_file" data-title="Resume"
+                        data-name="resume" onclick="open_modal(this)">
+                        @if (!!$userdetails->nurse->resume)
+                            {{ truncateText($userdetails->nurse->resume) }}
+                        @else
+                            Resume
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-6 ">
+                    {{-- is_resume required or ask recruiter --}}
+                    <p>
+                        @if ($offerdetails->is_resume_required)
+                            Required
+                        @else
+                            <a style="cursor: pointer;"
+                                onclick="askRecruiter(this, 'is_resume_required', '{{ $userdetails->nurse->id }}', '{{ $offerdetails->recruiter_id }}','{{ $offerdetails->organization_id }}', '{{ $userdetails->first_name }} {{ $userdetails->last_name }}')">Ask
+                                Recruiter</a>
+                        @endif
+                    </p>
 
+                </div>
             </div>
-        </div>
+        @endif
 
     </div>
     {{-- End  Summary --}}
