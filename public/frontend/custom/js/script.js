@@ -613,6 +613,60 @@ function apply_on_jobs(obj,worked_at_facility_before,reload_page = true)
     })
 }
 
+// update nurse information
+function update_nurse_information(data_to_send, notify = false)
+{
+    
+    // Get the form element
+    let nurse_form_inputs = document.getElementById('nurse_form_inputs');
+
+    // Create a FormData object
+    let nurse_form_inputs_formData = new FormData(nurse_form_inputs);
+
+    let form_inputs = {};
+    // Loop through FormData to access each input's name and value
+    nurse_form_inputs_formData.forEach((value, key) => {
+        //  append to data_to_send
+        form_inputs = {
+            ...form_inputs,
+            [key]: value
+        }
+    });
+
+    data_to_send = {
+        ...data_to_send,
+        ...form_inputs
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: full_path + 'worker/match-worker-job',
+        type: 'POST',
+        dataType: 'json',
+        data: data_to_send,
+        success: function (resp) {
+            console.log(resp);
+            ajaxindicatorstop();
+            if (notify && resp.success) {
+                notie.alert({
+                    type: 'success',
+                    text: '<i class="fa fa-check"></i> ' + resp.msg,
+                    time: 3
+                });
+            }
+        },
+        error: function (resp) {
+            console.log(resp);
+            ajaxindicatorstop();
+        }
+    })
+                    
+}
 
 function match_worker_with_jobs_update(data_to_send)
 {
