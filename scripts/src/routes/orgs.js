@@ -147,15 +147,15 @@ router.post('/assignUpNextRecruiter', async (req, res) => {
         if (org.recruiters.length == 0) {
             return res.status(400).send({success: false, message: "No recruiters to assign."});
         }
-
+        
+        var upNextRecruiter;
+        
         if(org.recruiters.length == 1){
 
-            var upNextRecruiter = org.recruiters[0];
+            upNextRecruiter = org.recruiters[0];
             upNextRecruiter.worksAssigned = upNextRecruiter.worksAssigned + 1;
 
         }else{
-
-            var upNextRecruiter;
 
             for (let i = 0; i < org.recruiters.length; i++){
 
