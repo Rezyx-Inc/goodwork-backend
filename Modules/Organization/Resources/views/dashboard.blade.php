@@ -34,7 +34,7 @@
 
     const ctx = document.getElementById('organizationStats');
 
-    const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Working'];
+    const xValues = ['New', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working'];
 
 
     var chart = new Chart(ctx, {
@@ -49,6 +49,8 @@
                     '#FF6370',
                     '#73B0CD',
                     '#66B2FF',
+                    '#C292D0',
+                    '#66BBBB',
                 ]
 
             }]

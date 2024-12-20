@@ -630,6 +630,27 @@ function match_worker_with_jobs_update(data_to_send)
                 btnClass: 'btn-green',
                 action: function () {
 
+                    // Get the form element
+                    let nurse_form_inputs = document.getElementById('nurse_form_inputs');
+
+                    // Create a FormData object
+                    let nurse_form_inputs_formData = new FormData(nurse_form_inputs);
+
+                    let form_inputs = {};
+                    // Loop through FormData to access each input's name and value
+                    nurse_form_inputs_formData.forEach((value, key) => {
+                        //  append to data_to_send
+                        form_inputs = {
+                            ...form_inputs,
+                            [key]: value
+                        }
+                    });
+
+                    data_to_send = {
+                        ...data_to_send,
+                        ...form_inputs
+                    }
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

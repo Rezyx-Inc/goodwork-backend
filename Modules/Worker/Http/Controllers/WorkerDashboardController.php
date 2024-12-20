@@ -57,7 +57,7 @@ class WorkerDashboardController extends Controller
     $user_id = Auth::guard('frontend')->user()->id;
     $id = Nurse::where('user_id', $user_id)->first()->id;
 
-    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboard', 'Working'];
+    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working'];
     $statusCounts = array_fill_keys($statusList, 0);
 
     $statusCountsQuery = Offer::whereIn('status', $statusList)
@@ -97,7 +97,7 @@ class WorkerDashboardController extends Controller
 
   // new update function ( new file management )
 
-  public function update_worker_profile(Request $request)
+  public function old_update_worker_profile(Request $request)
   {
     // return $request->all();
     try {
@@ -235,6 +235,40 @@ class WorkerDashboardController extends Controller
     }
   }
 
+
+  public function update_worker_profile(Request $request)
+  {
+
+    try {
+
+      $user = Auth::guard('frontend')->user();
+      $nurse = $user->nurse;
+
+      // dd($request->all());
+
+      // Filter request data to only include valid attributes
+      $userAttributes = $request->only($user->getFillable());
+      // Update the user model with the user attributes
+      $user->fill($userAttributes);
+      // Save the updated user model
+      $user->save();
+      $user = $user->fresh();
+
+      // Filter request data to only include valid attributes
+      $nurseAttributes = $request->only($nurse->getFillable());
+      // Update the nurse model with the valid attributes
+      $nurse->fill($nurseAttributes);
+      // // Save the updated nurse model
+      $nurse->save();
+
+      // dd( $nurseAttributes);
+      return response()->json(['msg' => $request->all(), 'user' => $user, 'nurse' => $nurse, 'status' => true]);
+    } catch (\Exception $e) {
+
+      return response()->json(['msg' => $e->getMessage(), 'status' => false], 500);
+    }
+  }
+
   // function to update the account setting
 
   public function update_worker_account_setting(Request $request)
@@ -334,6 +368,7 @@ class WorkerDashboardController extends Controller
     $data['progress_percentage'] = $progress * 33 + 1;
     $data['type'] = $type;
 
+    // dd($data['worker']->toArray());
     return view('worker::dashboard.worker_profile', $data);
   }
 
@@ -503,16 +538,16 @@ class WorkerDashboardController extends Controller
     //dd($request->all());
     // GW Number
     $gwNumber = $request->input('gw', '');
-    
+
     // Build the query
     $ret = Job::where('active', '1');
-    
-    
+
+
     // Initialize data array
     $data = [];
     $data['user'] = auth()->guard('frontend')->user();
     $data['jobSaved'] = new JobSaved();
-    
+
     // Fetch related data
     $data['specialities'] = Speciality::select('full_name')->get();
     $data['professions'] = Profession::select('full_name')->get();
@@ -537,7 +572,7 @@ class WorkerDashboardController extends Controller
     $data['shifts'] = $request->has('shifts') ? explode('-', $request->shifts) : [];
     $data['job_type'] = $request->input('job_type', null);
     $data['as_soon_as'] = $request->input('as_soon_as', null);
-    
+
     // Pay and hour filters
     $data['weekly_pay_from'] = $request->input('weekly_pay_from');
     $data['weekly_pay_to'] = $request->input('weekly_pay_to');

@@ -981,6 +981,21 @@
                 if (worker_files_displayname_by_type.length > 0) {
                     check = true;
                 }
+            
+            } else if (inputName == "resume"){
+            
+                let is_resume = @json($model["is_resume"]);
+
+                if (worker_files_displayname_by_type.length > 0 && is_resume) {
+
+                    check = true;
+                
+                }else if (worker_files_displayname_by_type.length > 0 && !is_resume){
+                    check = true;
+                }else{
+                    check = false;
+                }
+
             } else if (inputName == 'diploma') {
                 if (worker_files_displayname_by_type.length > 0) {
                     check = true;
@@ -1079,6 +1094,7 @@
             }
             let diploma = [];
             let driving_license = [];
+            let resume = [];
 
             let worked_bfore = dataToSend['worked_at_facility_before'];
 
@@ -1091,6 +1107,12 @@
             }
             try {
                 driving_license = await get_all_files_displayName_by_type('driving_license');
+
+            } catch (error) {
+                console.error('Failed to get files:', error);
+            }
+            try {
+                resume = await get_all_files_displayName_by_type('resume');
 
             } catch (error) {
                 console.error('Failed to get files:', error);
@@ -1136,20 +1158,21 @@
             checkFileMatch('skills');
             checkFileMatch('driving_license');
             checkFileMatch('diploma');
+            checkFileMatch('resume');
 
             $('input[name="phone[]"]').mask('(999) 999-9999');
         });
 
-        function init_profile_info_text() {
-            // map on matches
-            for (const key of Object.keys(matches)) {
+        // function init_profile_info_text() {
+        //     // map on matches
+        //     for (const key of Object.keys(matches)) {
 
-                if (matches[key].profile_info_text) {
-                    // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
-                    $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
-                }
-            }
-        }
+        //         if (matches[key].profile_info_text) {
+        //             // console.log(">>>>>>>>>>>>>>>>", key, matches[key].profile_info_text);
+        //             $(`.${key}_item .profile_info_text`).text(matches[key].profile_info_text);
+        //         }
+        //     }
+        // }
 
         function open_file(obj) {
             $(obj).parent().find('input[type="file"]').click();
@@ -1195,9 +1218,89 @@
             $(modal).modal('show');
         }
 
+        function open_multiselect_modal(obj) {
+            let target = $(obj).data('target');
+            let target_modal = '#' + target + '_modal';
+            
+            $(target_modal).modal('show');
+        }
+
         function close_modal(obj) {
             let target = $(obj).data('target');
             $(target).modal('hide');
+        }
+        
+        // for job modal attr if not like nurse attr
+        const job_attr_mapping = {
+            'worker_job_type': 'job_type',
+            'specialty': 'preferred_specialty',
+            'state': 'job_state',
+            'city': 'job_city',
+            'worker_shift_time_of_day': 'preferred_shift_duration'
+        } 
+
+        function multi_select_match_with_worker(workerField, InsertedValue) {
+            let match = false;
+            let matchCount = 0;
+            var job = @json($model);
+
+            if (job_attr_mapping[workerField]) {
+                workerField = job_attr_mapping[workerField];
+            }
+
+            let job_vals = job[workerField]?.split(', ');
+            let nurse_vals = InsertedValue.split(', ');
+            console.log(workerField, job_vals, nurse_vals, job);
+            
+            // Find matches
+            let matches = job_vals?.filter(val => nurse_vals.includes(val));
+
+            // Check if there is at least one match
+            if (!!matches && matches.length > 0) {
+                match = true;
+                matchCount = matches.length;
+            }
+            
+            return match;
+        }
+
+
+        function multi_select_change({id, name, value}) {
+
+            if (!id || !name) {
+                console.error("Missing 'id' or 'name' in function call");
+                return;
+            }
+
+            const parentSelector = '#' + CSS.escape(id);
+            const childSelector = `p[data-name="${name}"]`;
+
+            // Find the element
+            let element = $(parentSelector).find(childSelector);
+            
+            // if value is null put the element title else put the value
+            if(value == null) {
+                element.text(element.data('title'));
+            } else {
+                element.text(truncateText(value));
+            }
+
+            // check the match for item color 
+            if (multi_select_match_with_worker(id, value)) {
+                    let areaDiv = document.getElementById(id);
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                } else {
+                    let areaDiv = document.getElementById(id);
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                }
+
+        }
+
+        // Helper function
+        function truncateText(text, limit = 35) {
+            return text.length > limit ? text.substring(0, limit) + '...' : text;
         }
     </script>
 @stop

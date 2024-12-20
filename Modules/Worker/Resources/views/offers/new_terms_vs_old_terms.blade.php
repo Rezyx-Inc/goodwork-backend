@@ -172,7 +172,6 @@
             {'id': 'hours_per_week', 'display-name': 'Hrs/Wk'},
             {'id': 'state', 'display-name': 'State'},
             {'id': 'city', 'display-name': 'City'},
-            {'id': 'is_resume', 'display-name': 'Resume'}
         ],
         // Shift
         'shift': [
@@ -292,7 +291,6 @@
             newValue = newValue == 1 ? 'Yes' : 'No';
             oldValue = oldValue == 1 ? 'Yes' : 'No';
         }
-        field == 'is_resume' && (newValue = newValue == 1 ? 'Required' : 'Not Required', oldValue = oldValue == 1 ? 'Required' : 'Not Required');
 
         var fieldDiv = document.createElement('div');
         fieldDiv.className = 'col-md-12';

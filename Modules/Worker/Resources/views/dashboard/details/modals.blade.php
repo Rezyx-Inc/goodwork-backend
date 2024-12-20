@@ -367,6 +367,53 @@
                     </div>
                 </div>
             </div> --}}
+
+{{-- resume Modal --}}
+<div class="modal fade ss-jb-dtl-pops-mn-dv" id="resume_file_modal" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="ss-pop-cls-vbtn">
+                <button type="button" class="btn-close" data-target="#resume_file_modal"
+                    onclick="close_modal(this)" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ss-job-dtl-pop-form ss-jb-dtl-pop-chos-dv">
+                    <form name="resume" method="post" action="{{ route('worker-upload-files') }}"
+                        id="resume_file_modal_form" class="modal-form" enctype="multipart/form-data">
+                        <div class="ss-job-dtl-pop-frm-sml-dv"></div>
+                        <h4></h4>
+                        @csrf
+                        {{-- Resume --}}
+                        <div id="resume">
+                            <div class="container-multiselect"
+                                style="justify-content: center;display: flex;margin-bottom: 30px;">
+                                <div class="ss-form-group fileUploadInput"
+                                    style="
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                    ">
+                                    <input name="resume" displayName="Resume" type="file"
+                                        class="files-upload" style="padding: 0px;">
+                                    <div class="list-items">
+                                        <input hidden type="text" name="type" value="resume"
+                                            class="item">
+                                    </div>
+                                    <button type="button" onclick="open_file(this)">Choose File</button>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                            <button onclick="collect_data(event,'file')" class="ss-job-dtl-pop-sv-btn">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 {{-- diploma Modal --}}
 <div class="modal fade ss-jb-dtl-pops-mn-dv" id="diploma_file_modal" data-bs-backdrop="static"
     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

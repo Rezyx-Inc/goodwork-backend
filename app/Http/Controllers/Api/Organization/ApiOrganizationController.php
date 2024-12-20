@@ -45,6 +45,7 @@ use Stripe\Charge;
 use Stripe\Payout;
 use Stripe\PaymentIntent;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 class ApiOrganizationController extends Controller
 {
     /**
@@ -1694,212 +1695,271 @@ class ApiOrganizationController extends Controller
 
     public function addJobStore(Request $request)
     {
-        //return response()->json($request->all());
+        try{
 
-        try {
-        $validator = \Validator::make($request->all(), [
-            'api_key' => 'required',
-            'organization_id' => 'required'
-        ]);
-
-        try {
-
-            $created_by = $request->organization_id;
-            // Validate the form data
-            $validatedData = [];
-            $validatedData = $request->validate([
-
-                'job_type' => 'required|string',
-                'job_name' => 'required|string',
-                'job_city' => 'required|string',
-                'job_state' => 'required|string',
-                'weekly_pay' => 'required|numeric',
-                'profession' => 'required|string',
-                'preferred_specialty' => 'required|string',
-                'preferred_work_location' => 'nullable|string',
-                'preferred_experience' => 'nullable|integer',
-                'description' => 'nullable|string',
-                'terms' => 'nullable|string',
-                'start_date' => 'nullable|date',
-                'hours_shift' => 'nullable|integer',
-                'facility_shift_cancelation_policy' => 'nullable|string',
-                'traveler_distance_from_facility' => 'nullable|string',
-                'clinical_setting' => 'nullable|string',
-                'Patient_ratio' => 'nullable|string',
-                'Unit' => 'nullable|string',
-                'scrub_color' => 'nullable|string',
-                'rto' => 'nullable|string',
-                'guaranteed_hours' => 'nullable|string',
-                'weeks_shift' => 'nullable|string',
-                'referral_bonus' => 'nullable|string',
-                'sign_on_bonus' => 'nullable|string',
-                'completion_bonus' => 'nullable|numeric',
-                'extension_bonus' => 'nullable|numeric',
-                'other_bonus' => 'nullable|numeric',
-                'actual_hourly_rate' => 'nullable|numeric',
-                'overtime' => 'nullable|string',
-                'holiday' => 'nullable|string',
-                'orientation_rate' => 'nullable|string',
-                'on_call' => 'nullable|string',
-                'on_call_rate' => 'nullable|string',
-                'call_back_rate' => 'nullable|string',
-                'weekly_non_taxable_amount' => 'nullable|string',
-                'Emr' => 'nullable|string',
-                'preferred_assignment_duration' => 'nullable|string',
-                'block_scheduling' => 'nullable|string',
-                'contract_termination_policy' => 'nullable|string',
-                'job_location' => 'nullable|string',
-                'vaccinations' => 'nullable|string',
-                'number_of_references' => 'nullable|integer',
-                'min_title_of_reference' => 'nullable|string',
-                'eligible_work_in_us' => 'nullable|boolean',
-                'recency_of_reference' => 'nullable|integer',
-                'certificate' => 'nullable|string',
-                'preferred_shift_duration' => 'nullable|string',
-                'skills' => 'nullable|string',
-                'urgency' => 'nullable|string',
-                'facilitys_parent_system' => 'nullable|string',
-                'facility_name' => 'nullable|string',
-                'nurse_classification' => 'nullable|string',
-                'pay_frequency' => 'nullable|string',
-                'benefits' => 'nullable|string',
-                'feels_like_per_hour' => 'nullable|string',
+            $validator = \Validator::make($request->all(), [
+                'api_key' => 'required',
+                'organization_id' => 'required'
             ]);
 
-            $job = new Job();
-            $job->job_type = $validatedData['job_type'];
-            $job->type = $validatedData['job_type'];
-            $job->job_name = $validatedData['job_name'];
-            $job->job_city = $validatedData['job_city'];
-            $job->job_state = $validatedData['job_state'];
-            $job->weekly_pay = $validatedData['weekly_pay'];
-            $job->preferred_specialty = $validatedData['preferred_specialty'];
-            $job->description = $validatedData['description'];
-            $job->start_date = $validatedData['start_date'];
-            $job->hours_shift = $validatedData['hours_shift'];
-            $job->preferred_experience = $validatedData['preferred_experience'];
-            $job->facility_shift_cancelation_policy = $validatedData['facility_shift_cancelation_policy'];
-            $job->traveler_distance_from_facility = $validatedData['traveler_distance_from_facility'];
-            $job->clinical_setting = $validatedData['clinical_setting'];
-            $job->Patient_ratio = $validatedData['Patient_ratio'];
-            $job->Unit = $validatedData['Unit'];
-            $job->scrub_color = $validatedData['scrub_color'];
-            $job->rto = $validatedData['rto'];
-            $job->guaranteed_hours = $validatedData['guaranteed_hours'];
-            $job->weeks_shift = $validatedData['weeks_shift'];
-            $job->referral_bonus = $validatedData['referral_bonus'];
-            $job->sign_on_bonus = $validatedData['sign_on_bonus'];
-            $job->completion_bonus = $validatedData['completion_bonus'];
-            $job->extension_bonus = $validatedData['extension_bonus'];
-            $job->other_bonus = $validatedData['other_bonus'];
-            $job->actual_hourly_rate = $validatedData['actual_hourly_rate'];
-            $job->overtime = $validatedData['overtime'];
-            $job->holiday = $validatedData['holiday'];
-            $job->orientation_rate = $validatedData['orientation_rate'];
-            $job->on_call = $validatedData['on_call'];
-            $job->call_back_rate = $validatedData['call_back_rate'];
-            $job->weekly_non_taxable_amount = $validatedData['weekly_non_taxable_amount'];
-            $job->profession = $validatedData['profession'];
-            $job->specialty = $validatedData['preferred_specialty'];
-            $job->organization_id = $created_by;
-            $job->created_by = $created_by;
-            $job->active = true;
-            $job->is_open = true;
-            $job->terms = $validatedData['terms'];
-            $job->preferred_work_location = $validatedData['preferred_work_location'];
-            $job->preferred_assignment_duration = $validatedData['preferred_assignment_duration'];
-            $job->block_scheduling = $validatedData['block_scheduling'];
-            $job->contract_termination_policy = $validatedData['contract_termination_policy'];
-            $job->Emr = $validatedData['Emr'];
-            $job->on_call_rate = $validatedData['on_call_rate'];
+            // Set it to true by default for now
+            $active = "true";
 
-            // added fields from sheets
-            if (isset($validatedData['job_location'])) {
-                $job->job_location = $validatedData['job_location'];
-            }
-            if (isset($validatedData['vaccinations'])) {
-                $job->vaccinations = $validatedData['vaccinations'];
-            }
-            if (isset($validatedData['number_of_references'])) {
-                $job->number_of_references = $validatedData['number_of_references'];
-            }
-            if (isset($validatedData['min_title_of_reference'])) {
-                $job->min_title_of_reference = $validatedData['min_title_of_reference'];
-            }
-            if (isset($validatedData['eligible_work_in_us'])) {
-                $job->eligible_work_in_us = $validatedData['eligible_work_in_us'];
-            }
-            if (isset($validatedData['recency_of_reference'])) {
-                $job->recency_of_reference = $validatedData['recency_of_reference'];
-            }
-            if (isset($validatedData['certificate'])) {
-                $job->certificate = $validatedData['certificate'];
-            }
-            if (isset($validatedData['preferred_shift_duration'])) {
-                $job->preferred_shift_duration = $validatedData['preferred_shift_duration'];
-            }
-            if (isset($validatedData['skills'])) {
-                $job->skills = $validatedData['skills'];
-            }
-            if (isset($validatedData['urgency'])) {
-                $job->urgency = $validatedData['urgency'];
-            }
-            if (isset($validatedData['facilitys_parent_system'])) {
-                $job->facilitys_parent_system = $validatedData['facilitys_parent_system'];
-            }
-            if (isset($validatedData['facility_name'])) {
-                $job->facility_name = $validatedData['facility_name'];
+            $created_by = $request->organization_id;
+
+            // $active = $activeRequest['active'];
+            $validatedData = [];
+
+            if ($active == 'false') {
+
+                $validatedData = $request->validate([
+                    'job_type' => 'nullable|string',
+                    'job_id' => 'nullable|string',
+                    'job_name' => 'nullable|string',
+                    'job_city' => 'nullable|string',
+                    'is_resume' => 'nullable|string',
+                    'job_state' => 'nullable|string',
+                    'weekly_pay' => 'nullable|numeric',
+                    'preferred_specialty' => 'nullable|string',
+                    'preferred_work_location' => 'nullable|string',
+                    'description' => 'nullable|string',
+                    'terms' => 'nullable|string',
+                    'start_date' => 'nullable|date',
+                    'hours_shift' => 'nullable|integer',
+                    'hours_per_week' => 'nullable|integer',
+                    'preferred_experience' => 'nullable|integer',
+                    'facility_shift_cancelation_policy' => 'nullable|string',
+                    'traveler_distance_from_facility' => 'nullable|string',
+                    'clinical_setting' => 'nullable|string',
+                    'Patient_ratio' => 'nullable|string',
+                    'Unit' => 'nullable|string',
+                    'scrub_color' => 'nullable|string',
+                    'rto' => 'nullable|string',
+                    'guaranteed_hours' => 'nullable|string',
+
+                    'weeks_shift' => 'nullable|string',
+                    'referral_bonus' => 'nullable|string',
+                    'sign_on_bonus' => 'nullable|string',
+                    'completion_bonus' => 'nullable|string',
+                    'extension_bonus' => 'nullable|string',
+                    'other_bonus' => 'nullable|string',
+                    'actual_hourly_rate' => 'nullable|string',
+                    'overtime' => 'nullable|string',
+                    'holiday' => 'nullable|string',
+                    'orientation_rate' => 'nullable|string',
+                    'on_call' => 'nullable|string',
+                    'on_call_rate' => 'nullable|string',
+                    'call_back_rate' => 'nullable|string',
+                    'weekly_non_taxable_amount' => 'nullable|string',
+                    'profession' => 'nullable|string',
+
+                    'Emr' => 'nullable|string',
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'block_scheduling' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string',
+
+                    'job_location' => 'nullable|string',
+                    'vaccinations' => 'nullable|string',
+                    'number_of_references' => 'nullable|integer',
+                    'min_title_of_reference' => 'nullable|string',
+                    'eligible_work_in_us' => 'nullable|boolean',
+                    'recency_of_reference' => 'nullable|integer',
+                    'certificate' => 'nullable|string',
+                    'skills' => 'nullable|string',
+                    'urgency' => 'nullable|string',
+                    'facilitys_parent_system' => 'nullable|string',
+                    'facility_name' => 'nullable|string',
+                    'nurse_classification' => 'nullable|string',
+                    'pay_frequency' => 'nullable|string',
+                    'benefits' => 'nullable|string',
+                    'feels_like_per_hour' => 'nullable|string',
+                    'preferred_shift_duration' => 'nullable|string',
+                    'as_soon_as' => 'nullable|integer',
+                    'professional_state_licensure' => 'nullable|string',
+                ]);
+
+                $job = new Job();
+
+                try {
+                    $fields = [
+                        'job_type', 'type', 'job_id', 'job_name', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
+                        'active', 'description', 'start_date', 'hours_shift', 'hours_per_week', 'preferred_experience',
+                        'facility_shift_cancelation_policy', 'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio',
+                        'Unit', 'scrub_color', 'rto', 'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus',
+                        'completion_bonus', 'extension_bonus', 'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday',
+                        'orientation_rate', 'on_call', 'on_call_rate', 'call_back_rate', 'weekly_non_taxable_amount', 'profession',
+                        'specialty', 'terms', 'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy',
+                        'Emr', 'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
+                        'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
+                        'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
+                        'professional_state_licensure', 'is_resume'
+                    ];
+
+                    foreach ($fields as $field) {
+                        if (isset($validatedData[$field])) {
+                            $job->$field = $validatedData[$field];
+                        }
+                    }
+
+                    $job->organization_id = $created_by;
+                    $job->created_by = $created_by;
+                    $job->active = false;
+                    $job->is_open = false;
+
+                    // Check if the is_resume bool is set
+                    if (!isset($request->is_resume)){
+                        $job->is_resume = false;
+                    }
+
+                    $job->save();
+                } catch (Exception $e) {
+                    return response()->json(['success' => false, 'message' => $e->getMessage()]);
+                }
+
+            } elseif ($active == "true") {
+                //return request()->all();
+
+                $validatedData = $request->validate([
+
+                    'job_type' => 'required|string',
+                    'job_name' => 'nullable|string',
+                    'job_id' => 'nullable|string',
+                    'job_city' => 'required|string',
+                    'is_resume' => 'nullable|string',
+                    'job_state' => 'required|string',
+                    'weekly_pay' => 'required|numeric',
+                    'preferred_specialty' => 'required|string',
+                    'preferred_work_location' => 'nullable|string',
+                    'preferred_experience' => 'nullable|integer',
+                    'description' => 'nullable|string',
+                    'terms' => 'nullable|string',
+                    'start_date' => 'nullable|date',
+                    'hours_shift' => 'nullable|integer',
+                    'facility_shift_cancelation_policy' => 'nullable|string',
+                    'traveler_distance_from_facility' => 'nullable|string',
+                    'clinical_setting' => 'nullable|string',
+                    'Patient_ratio' => 'nullable|string',
+                    'Unit' => 'nullable|string',
+                    'scrub_color' => 'nullable|string',
+                    'rto' => 'nullable|string',
+                    'guaranteed_hours' => 'nullable|string',
+                    'weeks_shift' => 'nullable|string',
+                    'referral_bonus' => 'nullable|string',
+                    'sign_on_bonus' => 'nullable|string',
+                    'completion_bonus' => 'nullable|numeric',
+                    'extension_bonus' => 'nullable|numeric',
+                    'other_bonus' => 'nullable|numeric',
+                    'actual_hourly_rate' => 'nullable|numeric',
+                    'overtime' => 'nullable|string',
+                    'holiday' => 'nullable|string',
+                    'orientation_rate' => 'nullable|string',
+                    'on_call' => 'nullable|string',
+                    'on_call_rate' => 'nullable|string',
+                    'call_back_rate' => 'nullable|string',
+                    'weekly_non_taxable_amount' => 'nullable|string',
+                    'profession' => 'nullable|string',
+                    'Emr' => 'nullable|string',
+                    'preferred_assignment_duration' => 'nullable|string',
+                    'block_scheduling' => 'nullable|string',
+                    'contract_termination_policy' => 'nullable|string',
+                    'job_location' => 'nullable|string',
+                    'vaccinations' => 'nullable|string',
+                    'number_of_references' => 'nullable|integer',
+                    'min_title_of_reference' => 'nullable|string',
+                    'eligible_work_in_us' => 'nullable|boolean',
+                    'recency_of_reference' => 'nullable|integer',
+                    'certificate' => 'nullable|string',
+                    'preferred_shift_duration' => 'nullable|string',
+                    'skills' => 'nullable|string',
+                    'urgency' => 'nullable|string',
+                    'facilitys_parent_system' => 'nullable|string',
+                    'facility_name' => 'nullable|string',
+                    'nurse_classification' => 'nullable|string',
+                    'pay_frequency' => 'nullable|string',
+                    'benefits' => 'nullable|string',
+                    'feels_like_per_hour' => 'nullable|string',
+                    'as_soon_as' => 'nullable|integer',
+                    'professional_state_licensure' => 'nullable|string',
+                ]);
+
+                $job = new Job();
+                $fields = [
+                    'job_type', 'type', 'job_name', 'job_id', 'job_city', 'job_state', 'weekly_pay', 'preferred_specialty',
+                    'description', 'start_date', 'hours_shift', 'preferred_experience', 'facility_shift_cancelation_policy',
+                    'traveler_distance_from_facility', 'clinical_setting', 'Patient_ratio', 'Unit', 'scrub_color', 'rto',
+                    'guaranteed_hours', 'weeks_shift', 'referral_bonus', 'sign_on_bonus', 'completion_bonus', 'extension_bonus',
+                    'other_bonus', 'actual_hourly_rate', 'overtime', 'holiday', 'orientation_rate', 'on_call', 'call_back_rate',
+                    'weekly_non_taxable_amount', 'profession', 'specialty', 'terms', 'preferred_work_location',
+                    'preferred_assignment_duration', 'block_scheduling', 'contract_termination_policy', 'Emr', 'on_call_rate',
+                    'job_location', 'vaccinations', 'number_of_references', 'min_title_of_reference', 'eligible_work_in_us',
+                    'recency_of_reference', 'certificate', 'preferred_shift_duration', 'skills', 'urgency', 'facilitys_parent_system',
+                    'facility_name', 'nurse_classification', 'pay_frequency', 'benefits', 'feels_like_per_hour', 'as_soon_as',
+                    'professional_state_licensure', 'is_resume'
+                ];
+
+                foreach ($fields as $field) {
+                    if (isset($validatedData[$field])) {
+                        $job->$field = $validatedData[$field];
+                    }
+                }
+
+                $job->organization_id = $created_by;
+                $job->created_by = $created_by;
+                $job->active = true;
+                $job->is_open = true;
+
+                // Check if the is_resume bool is set
+                if (!isset($request->is_resume)){
+                    $job->is_resume = false;
+                }
+
+                $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
+                $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
+                $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
+                $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
+                $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
+                $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
+                $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
+
+                if (!isset($job->recruiter_id)){
+                    $job->recruiter_id = $job->organization_id;
+                }
+
+                // Save the job data to the database
+                $job->save();
+
+                $AssignmentResponse = Http::post('http://localhost:'. env("FILE_API_PORT") .'/organizations/assignUpNextRecruiter', [
+                    'id' => $job->organization_id,
+                ]);
+
+                if ($AssignmentResponse->status() == 200) {
+                    $recruiterId = $AssignmentResponse->body();
+                    $job->recruiter_id = $recruiterId;
+                    $job->save();
+                }
+
+            } else {
+
+                return response()->json(['success' => false, 'message' => 'Please Try Again Later']);
             }
 
-
-            if (isset($validatedData['nurse_classification'])) {
-                $job->nurse_classification = $validatedData['nurse_classification'];
-            }
-            if (isset($validatedData['pay_frequency'])) {
-                $job->pay_frequency = $validatedData['pay_frequency'];
-            }
-            if (isset($validatedData['benefits'])) {
-                $job->benefits = $validatedData['benefits'];
-            }
-            if (isset($validatedData['feels_like_per_hour'])) {
-                $job->feels_like_per_hour = $validatedData['feels_like_per_hour'];
-            }
-            // end added fields from sheets
-
-        } catch (Exception $e) {
-
-            return response()->json(['success' => false, 'message' => $e->getMessage()]);
-        }
-
-        $job->hours_per_week = $job->weeks_shift * $job->hours_shift;
-        $job->weekly_taxable_amount = $job->hours_per_week * $job->actual_hourly_rate;
-        $job->organization_weekly_amount = $job->weekly_taxable_amount + $job->weekly_non_taxable_amount;
-        $job->total_organization_amount = ($job->preferred_assignment_duration * $job->organization_weekly_amount) + ($job->sign_on_bonus + $job->completion_bonus);
-        $job->goodwork_weekly_amount = ($job->organization_weekly_amount) * 0.05;
-        $job->total_goodwork_amount = $job->goodwork_weekly_amount * $job->preferred_assignment_duration;
-        $job->total_contract_amount = $job->total_goodwork_amount + $job->total_organization_amount;
-
-        // Save the job data to the database
-        $job->save();
-
-        return response()->json(['success' => true, 'message' => 'Job added successfully!']);
+            return response()->json(['success' => true, 'message' => 'Job added successfully!']);
 
         } catch (QueryException $e) {
+
             // Log the error
-            Log::error('Error saving job: ' . $e->getMessage());
+            //Log::error('Error saving job: ' . $e->getMessage());
 
             // Handle the error gracefully - display a generic error message or redirect with an error status
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
-            //return redirect()->route('organization-opportunities-manager')->with('error', 'Failed to add job. Please try again later.');
-            // return response()->json(['success' => false, 'message' =>$e->getMessage()]);
+
         } catch (\Exception $e) {
+
             // Handle other exceptions
-            Log::error('Exception: ' . $e->getMessage());
+            //Log::error('Exception: ' . $e->getMessage());
 
             // Display a generic error message or redirect with an error status
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
-            //return redirect()->route('organization-opportunities-manager')->with('error', 'Try again later');
-            //return response()->json(['success' => false, 'message' => $request->input('') ]);
         }
     }
 
