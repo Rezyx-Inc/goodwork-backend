@@ -545,7 +545,7 @@ class ApplicationController extends Controller
 
             // file availablity check
             $hasFile = false;
-            $urlDocs = 'http://localhost:' . config('app.file_api_port') . '/documents/get-docs';
+            $urlDocs = 'http://localhost:' . env('FILE_API_PORT') . '/documents/get-docs';
             $fileresponse = Http::post($urlDocs, ['workerId' => $worker_id]);
             $files = [];
 
