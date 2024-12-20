@@ -912,15 +912,11 @@
                                     bsonId: file.id
                                 }),
                                 success: function(resp) {
+
                                     resp = JSON.parse(resp);
+
                                     const base64String = resp.content.data;
-                                    console.log("the resp base64",
-                                        resp);
-
-                                    const mimeType = base64String.match(
-                                        /^data:(.+);base64,/)[1];
-
-
+                                    const mimeType = base64String.match(/^data:(.+);base64,/)[1];
                                     const base64Data = base64String.split(
                                         ',')[1];
 
@@ -952,9 +948,7 @@
                                     const extension = mimeType.split('/')[
                                         1
                                     ];
-                                    downloadLink.setAttribute('download',
-                                        `document.${extension}`
-                                    );
+                                    downloadLink.setAttribute('download',file.name);
 
                                     document.body.appendChild(downloadLink);
                                     downloadLink.click();
@@ -2154,7 +2148,7 @@
                                         1
                                     ];
                                     downloadLink.setAttribute('download',
-                                        `document.${extension}`
+                                        file.name
                                     );
 
                                     document.body.appendChild(downloadLink);
