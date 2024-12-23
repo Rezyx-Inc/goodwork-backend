@@ -1416,9 +1416,25 @@ public function recruiters_management()
                     $response['msg'] = 'Registered successfully!';
                     $response['success'] = true;
 
-                    // sending mail infromation
-                    $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'organization' => $orgId->organization_name,'subject' => 'Registration'];
-                    Mail::to($model->email)->send(new RegisterRecruiter($email_data));
+                    try {
+                        // Sending mail information
+                        $email_data = [
+                            'url' => config('app.url'),
+                            'name' => $model->first_name . ' ' . $model->last_name,
+                            'organization' => $orgId->organization_name,
+                            'subject' => 'Registration'
+                        ];
+                        
+                        Mail::to($model->email)->send(new RegisterRecruiter($email_data));
+                        
+                    } catch (\Exception $e) {
+                        $data = [];
+                        $data['ERmsg'] ='Error sending email to recruiter: ' . $e->getMessage();
+                        $data['msg'] ='Failed to send registration email. Please try again later.';
+                        $data['success'] = false;
+                        return response()->json($data);
+                    }
+                    
                     
                     return response()->json($response);
                 }

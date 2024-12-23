@@ -15,8 +15,9 @@
             </p>
             <p>
                 You can log in using your email address at 
-                <a href= "{{ strpos(url()->current(), 'staging') == false || strpos(url()->current(), 'dev') == false ? 'http://localhost:8000' : config('app.url') }}/recruiter/login"
-                    target="_blank" style="color: blue;">Goodwork Recruiter login page.</a>
+                {{-- <a href= "{{ strpos(url()->current(), 'staging') == false || strpos(url()->current(), 'dev') == false ? 'http://localhost:8000' : config('app.url') }}/recruiter/login"
+                    target="_blank" style="color: blue;">Goodwork Recruiter login page.</a> --}}
+                <a href= "{{ $data['url'] }}/recruiter/login" target="_blank" style="color: blue;">Goodwork Recruiter login page.</a>
             </p>
             <p>We look forward to working with you!</p>
             <div>
