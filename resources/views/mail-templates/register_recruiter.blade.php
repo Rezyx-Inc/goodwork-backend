@@ -14,10 +14,9 @@
                 Congratulations! you have been invited by <b>{{ $data['organization'] ?? 'an Organization' }}</b> to Goodwork.
             </p>
             <p>
-                You can log in using your email address at the following link:
-                <br>
+                You can log in using your email address at 
                 <a href= "{{ strpos(url()->current(), 'staging') == false || strpos(url()->current(), 'dev') == false ? 'http://localhost:8000' : config('app.url') }}/recruiter/login"
-                    target="_blank" style="color: blue;">Click here to log in</a>
+                    target="_blank" style="color: blue;">Goodwork Recruiter login page.</a>
             </p>
             <p>We look forward to working with you!</p>
             <div>
