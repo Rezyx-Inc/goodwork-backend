@@ -738,6 +738,8 @@ class WorkerDashboardController extends Controller
 
     try {
 
+      DB::beginTransaction();
+
       $request->validate([
         'jid' => 'required',
       ]);
@@ -850,10 +852,13 @@ class WorkerDashboardController extends Controller
       $time = now()->toDateTimeString();
       event(new NotificationJob('Apply', false, $time, $job->created_by, $user->id, $user->full_name, $request->jid, $job->job_name));
 
+      DB::commit();
+
       return new JsonResponse(['success' => true, 'msg' => 'Applied to job successfully'], 200);
     } catch (\Exception $e) {
-      //return redirect()->route('worker.dashboard')->with('error', $e->getmessage());
-      return response()->json(["message" => $e->getmessage()]);
+      DB::rollBack();
+      // return err
+      return response()->json(["success" => false,"message" => "Something went wrong." ] , 500);
     }
   }
 
