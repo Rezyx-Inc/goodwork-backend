@@ -343,12 +343,6 @@
     {{-- get elements - prevent defaults behaviors  --}}
     <script>
         // slide control
-        const slidePage = document.querySelector(".slide-page");
-        const nextBtnFirst = document.querySelector(".firstNext");
-        const prevBtnSec = document.querySelector(".prev-1");
-        const nextBtnSec = document.querySelector(".next-1");
-        const prevBtnThird = document.querySelector(".prev-2");
-        const nextBtnThird = document.querySelector(".next-2");
         const progress = document.getElementById("progress");
         // end slide control
 
@@ -385,7 +379,7 @@
         const worker_experience = document.querySelector('input[name="worker_experience"]');
         const worker_eligible_work_in_us = document.querySelector('select[name="worker_eligible_work_in_us"]');
         const nursing_license_state = document.querySelector('select[name="nursing_license_state"]');
-        const worker_facility_city = document.querySelector('select[name="worker_facility_city"]');
+        const worker_facility_city = document.querySelector('input[name="worker_facility_city"]');
         const worker_facility_state = document.querySelector('select[name="worker_facility_state"]');
         const worker_start_date = document.querySelector('input[name="worker_start_date"]');
         const worker_guaranteed_hours = document.querySelector('input[name="worker_guaranteed_hours"]');
@@ -425,46 +419,9 @@
         }
 
         if (worker_facility_city.value == '') {
-            document.querySelector('.help-worker-facility-city').classList.remove('d-none');
+            document.querySelector('.help-block-worker_facility_city').classList.remove('d-none');
         }
 
-        // next and prev buttons
-        nextBtnFirst.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "-25%";
-            progress.style.width = "66%";
-            // img need to be modified
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
-        });
-
-        nextBtnSec.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "-50%";
-            progress.style.width = "100%";
-            // img need to be modified
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-refren.png') }}' /></span>Document management";
-
-        });
-
-        prevBtnSec.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "0%";
-            progress.style.width = "25%";
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-user.png') }}' /></span>Basic Information";
-
-        });
-
-        prevBtnThird.addEventListener("click", function(event) {
-            event.preventDefault();
-            slidePage.style.marginLeft = "-25%";
-            progress.style.width = "75%";
-            infoType.innerHTML =
-                "<span><img src='{{ URL::asset('frontend/img/my-per--con-vaccine.png') }}' /></span>Professional Information";
-
-        });
         // end next and prev buttons
     </script>
 
@@ -574,8 +531,7 @@
             });
 
 
-            const items = document.querySelectorAll('.list-items .item').filter(item => !
-                item.querySelector('.custom-elem'));;
+            const items = document.querySelectorAll('.list-items .item');
             //store selected file values
 
             items.forEach((item, index) => {
@@ -754,10 +710,6 @@
                         });
                         refreshDocsList();
                         closeModal();
-                        // reload the page
-                        // setTimeout(() => {
-                        //     location.reload();
-                        // }, 2000);
                     })
                     .catch(error => {
                         //console.error('Error:', error); // Handle errors
@@ -774,9 +726,6 @@
 
             selectedFiles = [];
             removeAllCheckBox();
-
-            // refresh the table
-            refreshDocList(workerId);
 
         }
 
@@ -963,11 +912,9 @@
 
         $(document).ready(function() {
             if (@json($type == 'profile')) {
-                document.getElementById('option-1').checked = true;
                 ProfileIinformationDisplay();
 
             } else {
-                document.getElementById('option-2').checked = true;
                 AccountSettingDisplay();
             }
             // const AccessToStripeAccount = document.getElementById('AccessToStripeAccount');
@@ -994,41 +941,6 @@
                 document.getElementById('profile_complete').classList.remove('d-none');
             }
             // -----------------------------  Profile Setting area  ---------------------------- //
-
-            // loading cities according to the selected state
-            $('#job_state').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#job_city');
-
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append(
-                        '<option value="" disabled selected hidden>Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                    document.querySelector('.help-city').style.display = 'none';
-                });
-            });
-            // end loading cities according to the selected state
-
-            // loading cities according to the selected state
-            $('#worker_facility_state').change(function() {
-                const selectedState = $(this).find(':selected').attr('id');
-                const CitySelect = $('#worker_facility_city');
-
-                $.get(`/api/cities/${selectedState}`, function(data) {
-                    CitySelect.empty();
-                    CitySelect.append(
-                        '<option value="" disabled selected hidden>Select City</option>');
-                    $.each(data, function(index, city) {
-                        CitySelect.append(new Option(city.name, city.name));
-                    });
-                    document.querySelector('.help-worker-facility-city').style.display = 'none';
-                });
-            });
-
-            // loding docs list and dispatch them on the table (consume api : /list-docs)
         });
 
 
@@ -1417,156 +1329,6 @@
 
         // end bonus validation
 
-        // Save Basic Information
-        const SaveBaiscInformation = document.getElementById("SaveBaiscInformation");
-
-        SaveBaiscInformation.addEventListener("click", function(event) {
-            event.preventDefault();
-            // inputs validation
-            if (!validateBasicInfo()) {
-                return;
-            }
-            //console.log(first_name.value);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            let formData = new FormData();
-            formData.append('first_name', first_name.value);
-            formData.append('last_name', last_name.value);
-            formData.append('mobile', mobile.value);
-            formData.append('address', address.value);
-            formData.append('city', city.value);
-            formData.append('state', state.value);
-            formData.append('zip_code', zip_code.value);
-            formData.append('InfoType', "BasicInformation");
-            formData.append('profile_pic', $('#file')[0].files[0]);
-
-            $.ajax({
-                url: '/worker/update-worker-profile',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(resp) {
-                    //console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Basic Information saved successfully.',
-                            time: 5
-                        });
-
-                        setTimeout(function() {
-                            location.reload();
-                        }, 2000);
-
-                    }
-
-                },
-                error: function(resp) {
-                    notie.alert({
-                        type: 'error',
-                        text: '<i class="fa fa-check"></i>' + resp.message,
-                        time: 5
-                    });
-                }
-            });
-
-        });
-        // end Saving Basic Information
-
-        // Save Professional Information
-        const SaveProfessionalInformation = document.getElementById("SaveProfessionalInformation");
-        SaveProfessionalInformation.addEventListener("click", function(event) {
-            event.preventDefault();
-            // validation on inputs
-            // if (!validateProfessionalInfo()) {
-            //     return;
-            // }
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '/worker/update-worker-profile',
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    profession: profession.value,
-                    specialty: specialty.value,
-                    terms: terms.value,
-                    nursing_license_number: nursing_license_number.value,
-                    worker_job_type: worker_job_type.value,
-                    block_scheduling: block_scheduling.value,
-                    float_requirement: float_requirement.value,
-                    facility_shift_cancelation_policy: facility_shift_cancelation_policy.value,
-                    contract_termination_policy: contract_termination_policy.value,
-                    traveler_distance_from_facility: traveler_distance_from_facility.value,
-                    clinical_setting: clinical_setting.value,
-                    Patient_ratio: Patient_ratio.value,
-                    emr: emr.value,
-                    Unit: Unit.value,
-                    scrub_color: scrub_color.value,
-                    rto: rto.value,
-                    shift_of_day: shift_of_day.value,
-                    hours_shift: hours_shift.value,
-                    preferred_assignment_duration: preferred_assignment_duration.value,
-                    weeks_shift: weeks_shift.value,
-                    worker_experience: worker_experience.value,
-                    worker_eligible_work_in_us: worker_eligible_work_in_us.value,
-                    nursing_license_state: nursing_license_state.value,
-                    worker_facility_city: worker_facility_city.value,
-                    worker_facility_state: worker_facility_state.value,
-                    worker_start_date: worker_start_date.value,
-                    worker_guaranteed_hours: worker_guaranteed_hours.value,
-                    worker_sign_on_bonus: worker_sign_on_bonus.value,
-                    worker_completion_bonus: worker_completion_bonus.value,
-                    worker_extension_bonus: worker_extension_bonus.value,
-                    worker_other_bonus: worker_other_bonus.value,
-                    worker_four_zero_one_k: worker_four_zero_one_k.value,
-                    worker_health_insurance: worker_health_insurance.value,
-                    worker_dental: worker_dental.value,
-                    worker_vision: worker_vision.value,
-                    worker_overtime_rate: worker_overtime_rate.value,
-                    worker_holiday: worker_holiday.value,
-                    worker_on_call_check: worker_on_call_check.value,
-                    worker_on_call: worker_on_call.value,
-                    worker_call_back: worker_call_back.value,
-                    worker_orientation_rate: worker_orientation_rate.value,
-                    worker_benefits: worker_benefits.value,
-                    nurse_classification: nurse_classification.value,
-
-                    InfoType: "ProfessionalInformation"
-                }),
-                success: function(resp) {
-                    //console.log(resp);
-                    if (resp.status) {
-                        notie.alert({
-                            type: 'success',
-                            text: '<i class="fa fa-check"></i> Professional Information saved successfully',
-                            time: 5
-                        });
-                        setTimeout(function() {
-                            location.reload();
-                        }, 2000);
-                    }
-                },
-                error: function(resp) {
-                    notie.alert({
-                        type: 'error',
-                        text: '<i class="fa fa-check"></i>' + resp.message,
-                        time: 5
-                    });
-                }
-            });
-        });
-        // end Saving Professional Information
 
         // Save Bonus Transfer
         const SaveBonusInformation = document.getElementById("SaveBonusInformation");
@@ -1762,71 +1524,6 @@
         // end redirecting to login stripe link
 
         */
-        // upload files
-        document.getElementById('uploadForm').addEventListener('click', function(event) {
-            event.preventDefault();
-            if (!validateDocumentManagement()) {
-                return;
-            }
-
-            //console.log(worker_id);
-            var workerId = worker_id;
-            var filesInput = document.getElementById('document_file');
-            var files = Array.from(filesInput.files);
-
-            var workerId = '{!! $worker->id !!}';
-            Promise.all(files.map(file => {
-                return new Promise((resolve, reject) => {
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
-                        resolve({
-                            name: file.name,
-                            content: event.target.result.split(',')[1]
-                        });
-                    };
-                    reader.readAsDataURL(file);
-                });
-            })).then(files => {
-                var body = {
-                    workerId: workerId,
-                    files: files
-                };
-
-                /// using ajax
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '/worker/add-docs',
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify(body),
-                    success: function(resp) {
-                        //console.log(resp);
-                        ajaxindicatorstop();
-                        if (resp.ok) {
-                            notie.alert({
-                                type: 'success',
-                                text: '<i class="fa fa-check"></i> Files uploaded successfully',
-                                time: 5
-                            });
-
-                        }
-                    },
-                    error: function(resp) {
-                        notie.alert({
-                            type: 'error',
-                            text: '<i class="fa fa-check"></i> Error ! Please try again later .',
-                            time: 5
-                        });
-                    }
-                });
-            });
-        });
-        // end upload files
 
         // --------------------------- end Profile Setting area  ---------------------------- //
 

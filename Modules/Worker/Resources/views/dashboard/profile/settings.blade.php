@@ -47,6 +47,11 @@
         saveInfos();
     });
 
+    // Save change every 50 seconds
+    setInterval(() => {
+        saveInfos();
+    }, 50000);
+
     function saveInfos() {
         // Perform basic validation if needed
         if (!validateBasicInfo()) {
