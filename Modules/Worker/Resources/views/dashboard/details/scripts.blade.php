@@ -1001,14 +1001,16 @@
                     check = true;
                 }
             }
-            if (check) {
-                areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
-                areaDiv.classList.add('ss-s-jb-apl-bg-blue');
-            } else {
-                areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
-                areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+            if(areaDiv) {
+                if (check) {
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                } else {
+                    areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                    areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                }
             }
-
+            
 
         }
 
@@ -1252,7 +1254,8 @@
             }
 
             let job_vals = job[workerField]?.split(', ');
-            let nurse_vals = InsertedValue.split(', ');
+            let nurse_vals = InsertedValue ? InsertedValue.split(', ') : [];
+
             console.log(workerField, job_vals, nurse_vals, job);
             
             // Find matches
@@ -1291,12 +1294,16 @@
             // check the match for item color 
             if (multi_select_match_with_worker(id, value)) {
                     let areaDiv = document.getElementById(id);
-                    areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
-                    areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                    if (areaDiv) {
+                        areaDiv.classList.remove('ss-s-jb-apl-bg-pink');
+                        areaDiv.classList.add('ss-s-jb-apl-bg-blue');
+                    }
                 } else {
                     let areaDiv = document.getElementById(id);
-                    areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
-                    areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                    if (areaDiv) {
+                        areaDiv.classList.remove('ss-s-jb-apl-bg-blue');
+                        areaDiv.classList.add('ss-s-jb-apl-bg-pink');
+                    }
                 }
 
         }
