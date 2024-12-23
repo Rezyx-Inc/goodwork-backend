@@ -1773,6 +1773,12 @@
                                         <button id="applyButton" data-id="{{ $model->id }}"
                                             onclick="check_required_files_before_sent(this)">Apply
                                             Now</button>
+                                        {{-- btn hidden -- content is loading --}}
+                                        <button id="applyButtonLoading" class="btn btn-primary ss-job-apl-on-app-btn d-none" type="button">
+                                            <span class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true"></span>
+                                            <span class="sr-only">Loading...</span>
+                                        </button>
                                     @endif
                                 </div>
 
