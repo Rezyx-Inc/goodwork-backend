@@ -578,7 +578,6 @@ function apply_on_jobs(obj,worked_at_facility_before,reload_page = true)
             worked_at_facility_before: worked_at_facility_before,
         },
         success: function (resp) {
-            console.log(resp);
             ajaxindicatorstop();
             if (resp.success) {
                 notie.alert({
@@ -656,7 +655,6 @@ function update_nurse_information(data_to_send, notify = false)
         dataType: 'json',
         data: data_to_send,
         success: function (resp) {
-            console.log(resp);
             ajaxindicatorstop();
             if (notify && resp.success) {
                 notie.alert({
@@ -667,7 +665,6 @@ function update_nurse_information(data_to_send, notify = false)
             }
         },
         error: function (resp) {
-            console.log(resp);
             ajaxindicatorstop();
         }
     })

@@ -6,11 +6,6 @@
     <div class=" page slide-page">
         @include('worker::dashboard.profile.settings.professional_info')
         @include('worker::dashboard.profile.settings.personal_info')
-
-        {{-- <div class="ss-prsn-form-btn-sec d-block">
-            <button type="text" class="ss-prsnl-save-btn" id="SaveInformation"> Save
-            </button>
-        </div> --}}
     </div>
 </form>
 
@@ -47,6 +42,11 @@
         saveInfos();
     });
 
+    // Save change every 50 seconds
+    setInterval(() => {
+        saveInfos();
+    }, 50000);
+
     function saveInfos() {
         // Perform basic validation if needed
         if (!validateBasicInfo()) {
@@ -66,74 +66,10 @@
             },
             keepalive: true // Ensures the request completes even if the page unloads
         }).then(response => {
-            console.log("Silent save successful");
+            // console.log("Silent save successful");
         }).catch(error => {
-            console.error("Silent save failed", error);
+            // console.error("Silent save failed", error);
         });
     }
 
 </script>
-
-{{-- save using btn save click --}}
-{{-- <script>
-    // Save Basic Information
-    const SaveInformation = document.getElementById("SaveInformation");
-
-    SaveInformation.addEventListener("click", function(event) {
-        event.preventDefault();
-        // inputs validation
-        if (!validateBasicInfo()) {
-            return;
-        }
-        //console.log(first_name.value);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        // Get the form element
-        let form = document.getElementById('worker-profile-form');
-
-        // Create FormData object
-        let formData = new FormData(form);
-
-        console.log("log formData : ", formData);
-        // alert("stop before calling api ");
-        // return false;
-
-        $.ajax({
-            url: '/worker/update-worker-profile',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(resp) {
-                //console.log(resp);
-                if (resp.status) {
-                    notie.alert({
-                        type: 'success',
-                        text: '<i class="fa fa-check"></i> Basic Information saved successfully.',
-                        time: 5
-                    });
-
-                    setTimeout(function() {
-                        location.reload();
-                    }, 2000);
-
-                }
-
-            },
-            error: function(resp) {
-                notie.alert({
-                    type: 'error',
-                    text: '<i class="fa fa-check"></i>' + resp.message,
-                    time: 5
-                });
-            }
-        });
-
-    });
-    // end Saving Basic Information
-</script> --}}

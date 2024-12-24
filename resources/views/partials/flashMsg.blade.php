@@ -3,7 +3,7 @@
 @php
 Session::forget('success');
 @endphp
-<script>
+<script type="module">
     var success_msg = $('#success_msg').val();
     $(document).ready(function () {
         notie.alert({
@@ -21,7 +21,7 @@ Session::forget('success');
 @php
 Session::forget('error');
 @endphp
-<script>
+<script type="module">
     var error_msg = $('#error_msg').val();
     $(document).ready(function () {
         console.log('ho');

@@ -146,9 +146,10 @@
                                     <li>
                                         <p>Recruiter</p>
                                     </li>
-                                    <li><img width="50px"
-                                            src="{{ URL::asset('images/nurses/profile/' . $model->recruiter->image) }}"
-                                            onerror="this.onerror=null;this.src='{{ USER_IMG }}';" />{{ $model->recruiter->first_name }}
+                                    <li>
+                                        <img width="50px" 
+                                            src="{{ $model->recruiter && $model->recruiter->image ? URL::asset('images/nurses/profile/' . $model->recruiter->image) : URL::asset('/frontend/img/profile-icon-img.png') }}" 
+                                            alt="Recruiter Image" loading="lazy" />{{ $model->recruiter->first_name }}
                                         {{ $model->recruiter->last_name }}</li>
                                 </ul>
 
