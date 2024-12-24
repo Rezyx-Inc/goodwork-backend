@@ -1256,7 +1256,6 @@
             let job_vals = job[workerField]?.split(', ');
             let nurse_vals = InsertedValue ? InsertedValue.split(', ') : [];
 
-            console.log(workerField, job_vals, nurse_vals, job);
             
             // Find matches
             let matches = job_vals?.filter(val => nurse_vals.includes(val));
