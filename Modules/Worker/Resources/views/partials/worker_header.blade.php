@@ -69,7 +69,7 @@ $user = auth()->guard('frontend')->user();
   <!-- Container wrapper -->
 </nav>
 
-<script>
+<script type="module">
 
 var offerNotificationMessages = @json($offersNotificationMessages);
 

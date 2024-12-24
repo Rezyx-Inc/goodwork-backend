@@ -32,19 +32,21 @@
     $route_name = request()->route()->getName();
     @endphp
     <body>
-        <script>$(document).ready(function() {
-            $.ajaxSetup({
-                xhrFields: {
-                    withCredentials: true
-                },
-                beforeSend: function(xhr) {
-                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    if (csrfToken) {
-                        xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        <script type="module">
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    beforeSend: function(xhr) {
+                        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                        if (csrfToken) {
+                            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                        }
                     }
-                }
+                });
             });
-        });</script>
+        </script>
         <script src="{{URL::asset('landing/js/jquery.min.js')}}"></script>
         @if(!in_array($route_name, $no_header_pages))
         @include('partials.header')
