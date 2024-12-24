@@ -61,6 +61,12 @@ Route::prefix('organization')->group(function () {
 
         // new post route for account setting updating
         Route::post('update-organization-account-setting',['uses' => 'OrganizationDashboardController@update_organization_account_setting', 'as' => 'update-organization-account-setting']);
+        
+        // new post route for verify the new email
+        Route::post('verify-new-email',['uses' => 'OrganizationDashboardController@verify_new_email', 'as' => 'verify-new-email']);
+        
+        // Route::post('send-verification-code',['uses' => 'OrganizationDashboardController@sendVerificationCode', 'as' => 'send-verification-code']);
+        // Route::post('verify-email',['uses' => 'OrganizationDashboardController@verifyEmail', 'as' => 'verify-email']);
 
         // sending support tickets
         Route::post('send-support-ticket',['uses' => 'OrganizationDashboardController@send_support_ticket', 'as' => 'organization-send_support_ticket']);

@@ -25,12 +25,13 @@
                             <div class="ss-my-profil-img-div">
                                 <div class="profile-pic">
                                     <label class="-label" for="file">
-                                      <span class="glyphicon glyphicon-camera"></span>
-                                      <span>Change Image</span>
+                                        <span class="glyphicon glyphicon-camera"></span>
+                                        <span>Change Image</span>
                                     </label>
-                                    <input id="file" type="file" onchange="loadFile(event)"/>
-                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200" onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';"/>
-                                  </div>
+                                    <input id="file" type="file" onchange="loadFile(event)" />
+                                    <img src="{{ asset('uploads/' . $user->image) }}" id="output" width="200"
+                                        onerror="this.onerror=null;this.src='{{ URL::asset('frontend/img/account-img.png') }}';" />
+                                </div>
                                 <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                 <p><b>{{ $user->organization_name }}</b></p>
                                 <p>{{ $user->id }}</p>
@@ -156,8 +157,8 @@
                                             <div class="ss-form-group col-11">
                                                 <label>Organization Name</label>
                                                 <input type="text" name="organization_name"
-                                                placeholder="Please enter your organization name"
-                                                value="{{ isset($user->organization_name) ? $user->organization_name : '' }}">
+                                                    placeholder="Please enter your organization name"
+                                                    value="{{ isset($user->organization_name) ? $user->organization_name : '' }}">
                                             </div>
                                             <span class="help-block-org_name"></span>
                                             {{-- First Name --}}
@@ -228,6 +229,29 @@
                                                     placeholder="Please enter your new user name">
                                             </div>
                                             <span class="help-block-user_name"></span> --}}
+
+                                            {{-- Email Information --}}
+                                            <div class="ss-form-group col-9">
+                                                <label>New Email</label>
+                                                <input type="text" name="email"
+                                                    placeholder="Please enter your new Email">
+                                            </div>
+                                            <button type="text" class="mt-3 col-11 w-50 ss-prsnl-save-btn rounded-5"
+                                                id="sendOTPforVerifyEmail">
+                                                Send OTP
+                                            </button>
+                                            <span class="help-block-email"></span>
+
+                                            {{-- OTP for new mail --}}
+                                            <div class="ss-form-group col-7 d-flex align-items-center">
+                                                <label class="me-3">OTP:</label>
+                                                <input type="text" name="otp"
+                                                    placeholder="Please check your email for OTP">
+                                            </div>
+                                            <span class="help-block-otp"></span>
+
+                                            {{-- <input class="help-verif-otp" type="d-none"> --}}
+
                                             {{-- Change Password --}}
                                             <div class="ss-form-group col-11">
                                                 <label>New Password</label>
@@ -255,6 +279,9 @@
                                                     placeholder="Please enter your new phone number">
                                             </div>
                                             <span class="help-block-new_mobile"></span>
+
+                                            <span class="help-block-validation"></span>
+
                                             {{-- Email Information --}}
                                             {{-- <div class="ss-form-group col-11">
                                                 <label>New Email</label>
@@ -359,7 +386,8 @@
                                 </form> --}}
                                 <p style="
                                 margin-top: 20px;
-                            ">Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
+                            ">
+                                    Please contact us at <span style="font-weight: 500">support@goodwork.com</span></p>
                             </div>
 
                         </div>
@@ -622,7 +650,7 @@
                 data: formData,
                 contentType: false,
                 cache: false,
-                processData:false,
+                processData: false,
                 success: function(resp) {
                     console.log(resp);
                     if (resp.status) {
@@ -634,7 +662,7 @@
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);
-                    }else{
+                    } else {
                         notie.alert({
                             type: 'error',
                             text: '<i class="fa-solid fa-xmark"></i>' + resp.message,
@@ -812,7 +840,7 @@
         const password = document.querySelector('input[name="password"]');
         const new_mobile = document.querySelector('input[name="new_mobile"]');
         const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
-        //const email = document.querySelector('input[name="email"]');
+        const email = document.querySelector('input[name="email"]');
         var inputs = [];
 
         // account setting validation here
@@ -824,7 +852,7 @@
             $('.help-block-user_name').text('');
             let isValid = true;
             // Create an array of all inputs
-            inputs = [password, new_mobile /*, email, user_name*/];
+            inputs = [password, new_mobile, email /*, user_name*/ ];
 
             // Add the value of the selected radio button to the inputs array, if a radio button is selected
             const twoFactorAuth = document.querySelector('input[name="twoFa"]:checked');
@@ -842,13 +870,6 @@
                 isValid = false;
             }
 
-            // Email validation
-            // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            // if (!emailRegex.test(email.value)) {
-            //     $('.help-block-email').text('Please enter a valid email');
-            //     $('.help-block-email').addClass('text-danger');
-            //     isValid = false;
-            // }
 
             // User name validation
             // const userNameRegex = /^[a-zA-Z\s]{1,255}$/;
@@ -861,7 +882,9 @@
 
             // New mobile number validation
             const regexNewPhone = /^\+1 \(\d{3}\) \d{3}-\d{4}$/;
-            if (!regexNewPhone.test(new_mobile.value)) {
+            if (new_mobile.value === '' || new_mobile.value === null) {
+                isValid = true;
+            } else if (!regexNewPhone.test(new_mobile.value)) {
                 $('.help-block-new_mobile').text('Please enter a valid mobile number');
                 $('.help-block-new_mobile').addClass('text-danger');
                 isValid = false;
@@ -871,6 +894,103 @@
         }
         // end account setting validation
 
+        // email validation here
+        function validateEmail() {
+            $('.help-block-email').text('');
+            let isValid = true;
+            inputs = [email];
+
+            //Email validation
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email.value)) {
+                $('.help-block-email').text('Please enter a valid email');
+                $('.help-block-email').addClass('text-danger');
+                isValid = false;
+            } else {
+                notie.alert({
+                    type: 'success',
+                    text: '<i class="fa fa-check"></i> OTP sent to your email, please check your email',
+                    time: 8
+                });
+
+                // Send OTP to email
+                $.ajax({
+                    url: '/organization/verify-new-email',
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: email.value,
+                    success: function(resp) {
+                        console.log(resp);
+                        if (resp.status) {
+                            notie.alert({
+                                type: 'success',
+                                text: '<i class="fa fa-check"></i> ' + resp.message,
+                                time: 5
+                            });
+
+                        } else {
+                            notie.alert({
+                                type: 'error',
+                                text: '<i class="fa fa-check"></i> ' + resp.message,
+                                time: 5
+                            });
+                        }
+                    },
+                    error: function(resp) {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> Please try again later !',
+                            time: 5
+                        });
+                    }
+                });
+                isValid = false;
+                return isValid;
+            }
+
+        }
+
+        // send OTP for email verification
+        const sendOTPforVerifyEmail = document.getElementById('sendOTPforVerifyEmail');
+        sendOTPforVerifyEmail.addEventListener('click', function() {
+            event.preventDefault();
+            if (!validateEmail()) {
+                return;
+            }
+            // Send OTP to email
+            $.ajax({
+                url: "{{ route('verify-new-email') }}",
+                type: 'POST',
+                data: {
+                    email: document.getElementById('email').value,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(resp) {
+                    if (resp.status == 'success') {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                    } else {
+                        notie.alert({
+                            type: 'error',
+                            text: '<i class="fa fa-check"></i> ' + resp.message,
+                            time: 5
+                        });
+                    }
+                },
+                error: function(resp) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i> ' + resp.message,
+                        time: 5
+                    });
+                }
+            });
+
+        });
 
         // send request to update here
         const SaveAccountInformation = document.getElementById('SaveAccountInformation');
@@ -968,47 +1088,46 @@
             $('.disable_account').removeClass('d-none');
         }
 
-        var loadFile = function (event) {
-  var image = document.getElementById("output");
-  image.src = URL.createObjectURL(event.target.files[0]);
+        var loadFile = function(event) {
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
 
-  // sending image to server
+            // sending image to server
 
-    var formData = new FormData();
-    formData.append('profile_pic', $('#file')[0].files[0]);
+            var formData = new FormData();
+            formData.append('profile_pic', $('#file')[0].files[0]);
 
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: '/organization/update-organization-profile-image',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (resp) {
-            console.log(resp);
-            if (resp.status) {
-                notie.alert({
-                    type: 'success',
-                    text: '<i class="fa fa-check"></i> Account Information saved successfully',
-                    time: 5
-                });
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/organization/update-organization-profile-image',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(resp) {
+                    console.log(resp);
+                    if (resp.status) {
+                        notie.alert({
+                            type: 'success',
+                            text: '<i class="fa fa-check"></i> Account Information saved successfully',
+                            time: 5
+                        });
 
-            }
-        },
-        error: function (resp) {
-            notie.alert({
-                type: 'error',
-                text: '<i class="fa fa-check"></i>' + resp.message,
-                time: 5
+                    }
+                },
+                error: function(resp) {
+                    notie.alert({
+                        type: 'error',
+                        text: '<i class="fa fa-check"></i>' + resp.message,
+                        time: 5
+                    });
+                }
             });
-        }
-    });
 
-};
-
+        };
     </script>
 
 @stop
@@ -1387,54 +1506,49 @@
     /* for the image  */
 
     .profile-pic {
-  color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: all .3s ease;
-}
+        color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: all .3s ease;
+    }
 
-.profile-pic input {
-  display: none;
-}
+    .profile-pic input {
+        display: none;
+    }
 
-.profile-pic img {
-  position: absolute;
-  object-fit: cover;
-  width: 165px;
-  height: 165px;
-  box-shadow: 0 0 10px 0 rgba(255,255,255,.35);
-  border-radius: 100px;
-  z-index: 0;
-}
+    .profile-pic img {
+        position: absolute;
+        object-fit: cover;
+        width: 165px;
+        height: 165px;
+        box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+        border-radius: 100px;
+        z-index: 0;
+    }
 
-.profile-pic .-label {
-  cursor: pointer;
-  height: 165px;
-  width: 165px;
-}
+    .profile-pic .-label {
+        cursor: pointer;
+        height: 165px;
+        width: 165px;
+    }
 
-.profile-pic:hover .-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0,0,0,.8);
-  z-index: 10000;
-  color: rgb(250,250,250);
-  transition: background-color .2s ease-in-out;
-  border-radius: 100px;
-  margin-bottom: 0;
-}
+    .profile-pic:hover .-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, .8);
+        z-index: 10000;
+        color: rgb(250, 250, 250);
+        transition: background-color .2s ease-in-out;
+        border-radius: 100px;
+        margin-bottom: 0;
+    }
 
-.profile-pic span {
-  display: inline-flex;
-  padding: .2em;
-  height: 2em;
-}
-
-
-
-
+    .profile-pic span {
+        display: inline-flex;
+        padding: .2em;
+        height: 2em;
+    }
 </style>
-

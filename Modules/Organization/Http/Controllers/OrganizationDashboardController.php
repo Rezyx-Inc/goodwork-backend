@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\support;
 use Illuminate\Support\Facades\Http;
+use App\Mail\VerifyNewMail;
+
 /** Models */
+
 use App\Models\{Profession, Speciality, Notification, User, Nurse, Follows, NurseReference, Job, Offer, NurseAsset, Keyword, Facility, Availability, Countries, States, Cities, JobSaved, State};
 
 define('USER_IMG_ORGANIZATION', asset('public/frontend/img/profile-pic-big.png'));
@@ -26,32 +29,32 @@ class OrganizationDashboardController extends Controller
      * @return Renderable
      */
 
-public function index()
-{
-    $id = Auth::guard('organization')->user()->id;
-    $alljobs = Job::where('organization_id', $id)->get();
+    public function index()
+    {
+        $id = Auth::guard('organization')->user()->id;
+        $alljobs = Job::where('organization_id', $id)->get();
 
-    $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working'];
-    $statusCounts = array_fill_keys($statusList, 0);
+        $statusList = ['Apply', 'Screening', 'Submitted', 'Offered', 'Onboarding', 'Cleared', 'Working'];
+        $statusCounts = array_fill_keys($statusList, 0);
 
-    foreach ($alljobs as $key => $value) {
-        if (isset($value->id)) {
-            $statusCountsQuery = Offer::whereIn('status', $statusList)
-                ->select(\DB::raw('status, count(*) as count'))
-                ->where('job_id', $value->id)
-                ->groupBy('status')
-                ->get();
+        foreach ($alljobs as $key => $value) {
+            if (isset($value->id)) {
+                $statusCountsQuery = Offer::whereIn('status', $statusList)
+                    ->select(\DB::raw('status, count(*) as count'))
+                    ->where('job_id', $value->id)
+                    ->groupBy('status')
+                    ->get();
 
-            foreach ($statusCountsQuery as $statusCount) {
-                $statusCounts[$statusCount->status] += $statusCount->count;
+                foreach ($statusCountsQuery as $statusCount) {
+                    $statusCounts[$statusCount->status] += $statusCount->count;
+                }
             }
         }
+
+        $statusCounts = array_values($statusCounts);
+
+        return view('organization::dashboard', compact('statusCounts'));
     }
-
-    $statusCounts = array_values($statusCounts);
-
-    return view('organization::dashboard', compact('statusCounts'));
-}
 
 
     /**
@@ -114,7 +117,7 @@ public function index()
         //
     }
 
-    public function profile( Request $request)
+    public function profile(Request $request)
     {
         $id = Auth::guard('organization')->user()->id;
         // facility_id qualities about_me are been added in user table
@@ -339,9 +342,9 @@ public function index()
             ]);
             $user_data = [];
 
-            if($request->hasFile('profile_pic')){
+            if ($request->hasFile('profile_pic')) {
                 $file = $request->file('profile_pic');
-                $filename = time() . $user->id .'.'. $file->getClientOriginalExtension();
+                $filename = time() . $user->id . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('uploads'), $filename);
                 $user_data['image'] = $filename;
             }
@@ -407,6 +410,77 @@ public function index()
             return response()->json(['status' => false, 'message' => 'An error occurred while updating the account settings']);
         }
     }
+
+    public function verify_new_email(Request $request)
+    {
+        try {
+
+            $user = Auth::guard('organization')->user();
+            dd($request->all(), $user);
+            return $request->all();
+
+            $user->email_verified_at = null;
+            $user->save();
+
+            // sending mail infromation
+            $email_data = ['name' => $model->first_name . ' ' . $model->last_name, 'organization' => $orgId->organization_name, 'subject' => 'Registration'];
+            Mail::to($model->email)->send(new VerifyNewMail($email_data));
+
+            return response()->json(['status' => true, 'message' => 'Email verification link sent successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => 'An error occurred while sending the email verification link']);
+        }
+    }
+    public function verifyEmail(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'verification_code' => 'required|digits:4',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $validator->errors()->first(),
+        ]);
+    }
+
+    $user = Auth::guard('organization')->user();
+
+    if (!$user) {
+        return response()->json(['status' => 'error', 'message' => 'User not authenticated']);
+    }
+
+    if ($user->verification_code === $request->verification_code) {
+        $user->update(['isVerified' => true, 'verification_code' => null]);
+
+        return response()->json(['status' => 'success', 'message' => 'Email verified successfully']);
+    }
+
+    return response()->json(['status' => 'error', 'message' => 'Invalid verification code']);
+}
+
+    public function sendVerificationCode(Request $request)
+    {
+        try {
+            $user = Auth::guard('organization')->user();
+
+            if (!$user) {
+                return response()->json(['status' => 'error', 'message' => 'User not authenticated']);
+            }
+
+            $verificationCode = rand(1000, 9999); // Generate 4-digit code
+            $user->update(['verification_code' => $verificationCode]);
+
+            // Send the code via email
+            Mail::to($user->email)->send(new VerifyNewMail($verificationCode));
+
+            return response()->json(['status' => 'success', 'message' => 'Verification code sent to your email']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+
 
     public function send_support_ticket(Request $request)
     {
