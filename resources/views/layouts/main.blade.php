@@ -18,7 +18,7 @@
         <link href="{{URL::asset('landing/css/style.css')}}" rel="stylesheet" >
         <link href="{{URL::asset('landing/css/style.css')}}" rel="stylesheet" >
         <link rel='stylesheet' href='{{URL::asset('landing/css/owl.carousel.css')}}'>
-        <script src="https://kit.fontawesome.com/69b12198c3.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/3d90fa36a2.js" crossorigin="anonymous"></script>
         {{-- jquery confirm --}}
         <link href="{{ URL::asset('backend/vendors/confirm/jquery-confirm.min.css') }}" rel="stylesheet">
         {{-- <link href="{{ URL::asset('backend/vendors/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"> --}}
