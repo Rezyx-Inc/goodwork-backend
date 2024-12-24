@@ -192,7 +192,10 @@ router.get("/list-docs", async (req, res) => {
 
     let doc = await Docs.findOne({ workerId: req.query.workerId })
         .then((docs) => {
-            
+            if (!docs) {
+                return res.status(200).json([]);
+            }
+
             var list = [];
             for (let file of docs.files) {
                 if (file.type == "references") {
