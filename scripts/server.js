@@ -1,3 +1,12 @@
+/****** some notes: *****
+
+ - max 25 files per user
+ - file size max 5mb
+ - max upload at once 130mb
+ - integrations server is useful only in dev
+
+*/
+
 require("dotenv").config();
 
 const mongoose = require("mongoose");
@@ -10,7 +19,7 @@ var { report } = require("./src/set.js");
 
 app.use(
   cors({
-    origin: ["http://127.0.0.1:8000", "http://localhost:8000"],
+    origin: ["http://127.0.0.1:8000", "http://localhost:8000", "http://127.0.0.1", "http://localhost"],
   })
 );
 
@@ -19,6 +28,8 @@ const integrationsRoute = require('./src/routes/integrations');
 const paymentsRoute = require('./src/routes/Payments');
 const orgsRoute = require('./src/routes/orgs')
 const sheetRoute = require('./src/routes/sheetRoute');
+
+const createGlobalRuleFields = require('./src/functions/createGlobalRuleFields.js');
 
 app.use(bodyParser.json({ limit: "130mb" }));
 app.use(process.env.FILE_API_BASE_PATH, docsRoute);
@@ -30,7 +41,7 @@ app.use(process.env.SHEET_API_BASE_PATH, sheetRoute);
 
 // Root Route
 app.get("/", (req, res) => {
-  res.send("need to do something with this");
+  res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 });
 
 //Connect to DB
@@ -38,8 +49,8 @@ mongoose
   .connect(process.env.MONGODB_FILES_URI)
   .then(() => {
 
-    console.log("Connected to MongoDB");
-    const createGlobalRuleFields = require('./src/functions/createGlobalRuleFields.js');
+    console.log("SERVER START : Connected to MongoDB");
+
     createGlobalRuleFields();
 
   })
@@ -57,11 +68,3 @@ process.on("uncaughtException", async function (ercc) {
   console.log(ercc);
  // report("Unexpected Server exit | uncaughtException");
 });
-
-/*
-some notes:
- - max 25 files per user
- - file size max 5mb
- - max upload at once 130mb
- - integrations server is useful only in dev
-*/
