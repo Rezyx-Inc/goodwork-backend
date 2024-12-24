@@ -165,7 +165,7 @@ router.post('/createSheet', async (req, res) => {
 
   } catch (error) {
     console.error('Error creating spreadsheet:', error);
-    report(`Error creating spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
+    report('error', 'sheetRoute.js',`Unable to create a spreadsheet for ${organizationName}-${organizationId} : ${error.message}`);
     return res.status(500).json({
       success: false,
       message: 'Internal server error'
