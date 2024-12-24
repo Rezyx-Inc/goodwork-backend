@@ -50,14 +50,13 @@ mongoose
   .then(() => {
 
     console.log("SERVER START : Connected to MongoDB");
-
     createGlobalRuleFields();
 
   })
   .catch((error) => {
 
     console.error("Error connecting to MongoDB:", error);
-    report(error);
+    report('error', 'server.js', 'MongoDB connection : ' + error);
 
   });
 
@@ -66,5 +65,5 @@ app.listen(process.env.FILE_API_PORT);
 // catches uncaught exceptions
 process.on("uncaughtException", async function (ercc) {
   console.log(ercc);
- // report("Unexpected Server exit | uncaughtException");
+  report('error', 'server.js', "Unexpected Server exit | uncaughtException");
 });
